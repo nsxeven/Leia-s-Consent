@@ -66,6 +66,26 @@ label dev_sandbox:
 
     gf "That's enough for the first systems test."
 
-    "Try saving here, quitting the game, and loading the save again. The names and stat values should still be intact."
+    "Save the game now, quit completely, reopen Leia's Consent, and load this save. After loading, use the verification menu to confirm the names and stats survived."
 
-    return
+    jump dev_verify_state
+
+
+label dev_verify_state:
+
+    menu:
+        "Show current character names":
+            "You: [player_name]\nGirlfriend: [girlfriend_name]\nFriend: [friend_name]"
+            jump dev_verify_state
+
+        "Open Developer Panel to check stats":
+            call screen dev_panel
+            jump dev_verify_state
+
+        "Repeat save/load instructions":
+            "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
+            "If you return to this same verification menu, your save position persisted. Then check the names and Developer Panel above."
+            jump dev_verify_state
+
+        "Finish systems test and return to the main menu":
+            return
