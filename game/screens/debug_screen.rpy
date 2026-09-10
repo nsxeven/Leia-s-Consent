@@ -18,7 +18,7 @@ screen dev_panel():
         padding (35, 30)
 
         vbox:
-            spacing 16
+            spacing 14
 
             hbox:
                 xfill True
@@ -41,6 +41,10 @@ screen dev_panel():
                 text "NTR Tendency: [ntr_score()]" size 26
                 text "Money: $[money]" size 26
 
+            text "Equipped Outfit: [current_outfit_name()]   Owned Outfits: [len(valid_owned_outfit_ids())]" size 20
+            if last_wear_route:
+                text "Last Wear Path: [last_wear_route]" size 19
+
             if modified_save:
                 text "MODIFIED SAVE" size 20 color "#ff9a9a"
 
@@ -55,6 +59,15 @@ screen dev_panel():
 
                 textbutton "+$1,000":
                     action Function(debug_add_money, 1000)
+
+            hbox:
+                spacing 12
+
+                textbutton "Unlock All Outfits":
+                    action Function(debug_unlock_all_outfits)
+
+                textbutton "Reset Wardrobe":
+                    action Function(debug_reset_wardrobe)
 
             viewport:
                 xfill True
