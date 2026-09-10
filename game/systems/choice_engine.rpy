@@ -114,3 +114,9 @@ init python:
             _choice_effect_text(choice_id, exact=True),
             choice_id,
         )
+
+
+    def choice_preview_text():
+        """Safe live preview used by the choice-mode screen."""
+        base_text = "Encourage {}'s curiosity".format(renpy.store.girlfriend_name)
+        return format_choice("dev_encourage_curiosity", base_text)
