@@ -5,7 +5,20 @@ default player_name = "Ryan"
 default girlfriend_name = "Leia"
 default friend_name = "Julian"
 
+# Economy.
 default money = 500
+default last_money_change = 0
+default last_money_reason = ""
+
+# Wardrobe state. Static outfit definitions live in systems/outfits_data.rpy.
+default owned_outfits = ["casual_default"]
+default equipped_outfit = "casual_default"
+default last_wear_route = "default_comfort"
+default last_shop_message = ""
+default last_wardrobe_message = ""
+
+# Development-only test flag so the wardrobe allowance is not repeatedly granted.
+default dev_wardrobe_reward_claimed = False
 
 default relationship_stats = {
     "love": 50,
