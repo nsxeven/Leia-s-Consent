@@ -30,6 +30,10 @@ screen dev_panel():
                     action Return()
 
             text "Prototype tools — values edited here mark the save as modified." size 20
+            text "Choice Mode: [choice_mode_label()]   Choices Recorded: [len(choice_history)]" size 20
+
+            if last_choice_id:
+                text "Last Choice ID: [last_choice_id]" size 20
 
             hbox:
                 spacing 50

@@ -1,5 +1,5 @@
 # Save-game state defaults.
-# These values belong to an individual playthrough.
+# These values belong to an individual playthrough unless marked persistent.
 
 default player_name = "Ryan"
 default girlfriend_name = "Leia"
@@ -28,3 +28,10 @@ default player_stats = {
 }
 
 default modified_save = False
+
+# Choice audit trail for debugging and future route logic.
+default choice_history = []
+default last_choice_id = None
+
+# Player preference: survives across save slots and new games.
+default persistent.choice_display_mode = "normal"

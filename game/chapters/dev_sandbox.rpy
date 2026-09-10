@@ -45,28 +45,36 @@ label dev_sandbox:
     "Current NTS tendency: [nts_score()]."
     "Current NTR tendency: [ntr_score()]."
 
-    menu:
-        "Encourage [girlfriend_name]'s curiosity":
-            $ change_stat("partner", "curiosity", 5)
-            $ change_stat("player", "acceptance", 3)
-            $ change_stat("relationship", "momentum", 1)
+    "Next we'll test the choice engine. You can switch between all four display modes and watch the live preview change."
 
+    call screen choice_mode_screen
+
+    jump dev_choice_test
+
+
+label dev_choice_test:
+
+    $ encourage_choice_text = format_choice("dev_encourage_curiosity", "Encourage {}'s curiosity".format(girlfriend_name))
+    $ protective_choice_text = format_choice("dev_be_protective", "Be more protective")
+
+    menu:
+        "[encourage_choice_text]":
+            $ apply_choice("dev_encourage_curiosity")
             gf "You're surprisingly open-minded about this."
 
-        "Be more protective":
-            $ change_stat("relationship", "trust", 3)
-            $ change_stat("player", "jealousy", 3)
-            $ change_stat("partner", "boundary_looseness", -2)
-
+        "[protective_choice_text]":
+            $ apply_choice("dev_be_protective")
             gf "You're being a little protective today."
 
-    "Open the panel once more to see how the choice changed the state."
+    "The choice was applied using the central choice-effect table rather than hard-coded stat changes in this scene."
+
+    "Open the Developer Panel once more to see the new values."
 
     call screen dev_panel
 
-    gf "That's enough for the first systems test."
+    gf "That's enough for the current systems test."
 
-    "Save the game now, quit completely, reopen Leia's Consent, and load this save. After loading, use the verification menu to confirm the names and stats survived."
+    "Save the game now, quit completely, reopen Leia's Consent, and load this save. After loading, use the verification menu to confirm the names, stats, and choice state survived."
 
     jump dev_verify_state
 
@@ -82,10 +90,23 @@ label dev_verify_state:
             call screen dev_panel
             jump dev_verify_state
 
+        "Open Choice Display Mode settings":
+            call screen choice_mode_screen
+            jump dev_verify_state
+
+        "Show recorded choice state":
+            "Last choice ID: [last_choice_id]\nChoices recorded this playthrough: [len(choice_history)]"
+            jump dev_verify_state
+
         "Repeat save/load instructions":
             "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
-            "If you return to this same verification menu, your save position persisted. Then check the names and Developer Panel above."
+            "If you return to this same verification menu, your save position persisted. Then check the names, Developer Panel, and recorded choice state above."
             jump dev_verify_state
+
+        "Test another choice":
+            "This will apply another set of stat effects and add another choice ID to the history."
+            call screen choice_mode_screen
+            jump dev_choice_test
 
         "Finish systems test and return to the main menu":
             return
