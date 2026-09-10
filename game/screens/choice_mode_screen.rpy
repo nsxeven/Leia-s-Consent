@@ -53,7 +53,7 @@ screen choice_mode_screen():
             null height 10
 
             text "LIVE PREVIEW" size 28
-            text "[format_choice('dev_encourage_curiosity', 'Encourage ' + girlfriend_name + \"'s curiosity\')]" size 23
+            text "[choice_preview_text()]" size 23
 
             null height 10
 
