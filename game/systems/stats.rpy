@@ -39,8 +39,11 @@ init python:
 
 
     def debug_add_money(amount):
-        """Developer-only currency editing."""
-        renpy.store.money = max(0, renpy.store.money + amount)
+        """Developer-only currency editing with the same no-negative rule as the economy."""
+        old_money = renpy.store.money
+        renpy.store.money = max(0, renpy.store.money + int(amount))
+        renpy.store.last_money_change = renpy.store.money - old_money
+        renpy.store.last_money_reason = "Developer money edit"
         renpy.store.modified_save = True
         return renpy.store.money
 
