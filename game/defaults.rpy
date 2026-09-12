@@ -50,6 +50,7 @@ default modified_save = False
 default choice_history = []
 default last_choice_id = None
 
-# Player preferences: survive across save slots and new games.
+# Player preferences/unlocks: survive across save slots and new games.
 default persistent.choice_display_mode = "normal"
 default persistent.full_transparency_notice_seen = False
+default persistent.gallery_unlocked = []
