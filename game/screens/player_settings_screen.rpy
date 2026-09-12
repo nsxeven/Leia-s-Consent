@@ -88,91 +88,96 @@ screen player_settings_screen():
                         xalign 1.0
                         action Return()
 
-            text "Choose how much of the game's underlying relationship system you want to see. This changes only the information shown to you — never story outcomes, stat changes, or difficulty." size 19 color "#b9aabb"
+            use lc_scroll_body:
 
-            hbox:
-                spacing 18
-                xfill True
-
-                for mode_id in PLAYER_TRANSPARENCY_MODES:
-                    use transparency_mode_card(mode_id)
-
-            if current_mode == "developer":
-                frame:
+                vbox:
+                    spacing 20
                     xfill True
-                    background Solid("#3b252d")
-                    padding (20, 13)
 
-                    text "Developer override is currently active. Selecting any player mode above will return to the normal player-facing transparency system." size 17 color "#f0cbd8"
+                    text "Choose how much of the game's underlying relationship system you want to see. This changes only the information shown to you — never story outcomes, stat changes, or difficulty." size 19 color "#b9aabb"
 
-            elif current_mode == "full":
-                frame:
-                    xfill True
-                    background Solid("#30242e")
-                    padding (20, 13)
-
-                    text "Full Transparency can reveal relationship trends or progression requirements before they become obvious through the story." size 17 color "#d7c1cf"
-
-            hbox:
-                spacing 20
-                xfill True
-                yfill True
-
-                frame:
-                    xsize 760
-                    yfill True
-                    background Solid("#211c25")
-                    padding (26, 22)
-
-                    vbox:
-                        spacing 17
+                    hbox:
+                        spacing 18
                         xfill True
 
-                        text "WHAT YOU'LL SEE" size 27 color "#ffffff"
-                        text current_info["description"] size 17 color "#a99ba8" line_spacing 3
+                        for mode_id in PLAYER_TRANSPARENCY_MODES:
+                            use transparency_mode_card(mode_id)
 
-                        for label, description in visibility_rows:
-                            use transparency_detail_row(label, description)
+                    if current_mode == "developer":
+                        frame:
+                            xfill True
+                            background Solid("#3b252d")
+                            padding (20, 13)
 
-                frame:
-                    xfill True
-                    yfill True
-                    background Solid("#211c25")
-                    padding (26, 22)
+                            text "Developer override is currently active. Selecting any player mode above will return to the normal player-facing transparency system." size 17 color "#f0cbd8"
 
-                    vbox:
-                        spacing 14
+                    elif current_mode == "full":
+                        frame:
+                            xfill True
+                            background Solid("#30242e")
+                            padding (20, 13)
+
+                            text "Full Transparency can reveal relationship trends or progression requirements before they become obvious through the story." size 17 color "#d7c1cf"
+
+                    hbox:
+                        spacing 20
                         xfill True
 
-                        text "LIVE EXAMPLES" size 27 color "#ffffff"
-                        text "These examples update immediately when you change modes." size 16 color "#a99ba8"
+                        frame:
+                            xsize 760
+                            background Solid("#211c25")
+                            padding (26, 22)
+
+                            vbox:
+                                spacing 17
+                                xfill True
+
+                                text "WHAT YOU'LL SEE" size 27 color "#ffffff"
+                                text current_info["description"] size 17 color "#a99ba8" line_spacing 3
+
+                                for label, description in visibility_rows:
+                                    use transparency_detail_row(label, description)
 
                         frame:
                             xfill True
-                            background Solid("#2b242e")
-                            padding (18, 15)
+                            background Solid("#211c25")
+                            padding (26, 22)
 
                             vbox:
-                                spacing 7
-                                text "CHOICE" size 17 color "#f1a8c8"
-                                text "[transparency_choice_preview()]" size 18 color "#eee7ed" line_spacing 3
+                                spacing 14
+                                xfill True
 
-                        frame:
-                            xfill True
-                            background Solid("#2b242e")
-                            padding (18, 15)
+                                text "LIVE EXAMPLES" size 27 color "#ffffff"
+                                text "These examples update immediately when you change modes." size 16 color "#a99ba8"
 
-                            vbox:
-                                spacing 7
-                                text "STATUS" size 17 color "#f1a8c8"
-                                text "[transparency_status_preview()]" size 18 color "#eee7ed"
+                                frame:
+                                    xfill True
+                                    background Solid("#2b242e")
+                                    padding (18, 15)
 
-                        frame:
-                            xfill True
-                            background Solid("#2b242e")
-                            padding (18, 15)
+                                    vbox:
+                                        spacing 7
+                                        text "CHOICE" size 17 color "#f1a8c8"
+                                        text "[transparency_choice_preview()]" size 18 color "#eee7ed" line_spacing 3
 
-                            vbox:
-                                spacing 7
-                                text "WARDROBE" size 17 color "#f1a8c8"
-                                text "[transparency_wardrobe_preview()]" size 16 color "#eee7ed" line_spacing 3
+                                frame:
+                                    xfill True
+                                    background Solid("#2b242e")
+                                    padding (18, 15)
+
+                                    vbox:
+                                        spacing 7
+                                        text "STATUS" size 17 color "#f1a8c8"
+                                        text "[transparency_status_preview()]" size 18 color "#eee7ed"
+
+                                frame:
+                                    xfill True
+                                    background Solid("#2b242e")
+                                    padding (18, 15)
+
+                                    vbox:
+                                        spacing 7
+                                        text "WARDROBE" size 17 color "#f1a8c8"
+                                        text "[transparency_wardrobe_preview()]" size 16 color "#eee7ed" line_spacing 3
+
+                    null height 20
