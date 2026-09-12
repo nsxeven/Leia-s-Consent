@@ -42,6 +42,8 @@ screen dev_panel():
                 text "Money: $[money]" size 26
 
             text "Equipped Outfit: [current_outfit_name()]   Owned Outfits: [len(valid_owned_outfit_ids())]" size 20
+            text "Leia Sprite: [leia_pose] / [leia_expression]" size 20
+
             if last_wear_route:
                 text "Last Wear Path: [last_wear_route]" size 19
 
@@ -68,6 +70,9 @@ screen dev_panel():
 
                 textbutton "Reset Wardrobe":
                     action Function(debug_reset_wardrobe)
+
+                textbutton "Reset Leia Sprite":
+                    action Function(debug_reset_leia_sprite)
 
             viewport:
                 xfill True
