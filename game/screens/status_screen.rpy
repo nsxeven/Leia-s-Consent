@@ -83,7 +83,7 @@ screen status_screen():
                     xalign 1.0
                     spacing 8
 
-                    text "Display: [choice_mode_label()]" size 20 color "#e0d4df" xalign 1.0
+                    text "Display: [transparency_mode_label()]" size 20 color "#e0d4df" xalign 1.0
 
                     textbutton "Close":
                         xalign 1.0
