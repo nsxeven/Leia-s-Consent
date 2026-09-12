@@ -41,6 +41,9 @@ label dev_systems_menu:
     mc "Choose which system you want to test."
 
     menu:
+        "Gallery shell test":
+            jump dev_gallery_test
+
         "Player Settings / Transparency test":
             call screen player_settings_screen
             jump dev_systems_menu
@@ -67,6 +70,50 @@ label dev_systems_menu:
 
         "Finish systems test and return to the main menu":
             return
+
+
+label dev_gallery_test:
+
+    scene bg dev
+
+    "The Gallery shell uses persistent unlocks. These belong to the player profile rather than one save slot."
+    "Final CG art and replay labels do not exist yet, so this test uses placeholder cards and previews."
+
+    jump dev_gallery_lab
+
+
+label dev_gallery_lab:
+
+    menu:
+        "Open Gallery":
+            call screen gallery_screen
+            jump dev_gallery_lab
+
+        "Unlock Chapter 1 — CG 01":
+            $ debug_unlock_gallery_entry("ch01_cg01")
+            jump dev_gallery_lab
+
+        "Unlock all placeholder CGs":
+            $ debug_unlock_all_gallery()
+            jump dev_gallery_lab
+
+        "Reset all Gallery unlocks":
+            $ debug_reset_gallery()
+            jump dev_gallery_lab
+
+        "Show Gallery unlock state":
+            $ unlocked_gallery_names = [get_gallery_entry(gallery_id)["title"] for gallery_id in gallery_all_ids() if is_gallery_unlocked(gallery_id)]
+            $ unlocked_gallery_text = ", ".join(unlocked_gallery_names) if unlocked_gallery_names else "None"
+            "Unlocked: [gallery_unlocked_count()] / [gallery_total_count()]\nEntries: [unlocked_gallery_text]"
+            jump dev_gallery_lab
+
+        "How do I test persistence?":
+            "Unlock at least one CG, quit the game completely, reopen it, start or load any playthrough, and return here. The Gallery unlock should still be present."
+            "Gallery unlocks are intentionally persistent across save slots and New Game."
+            jump dev_gallery_lab
+
+        "Back to systems menu":
+            jump dev_systems_menu
 
 
 label dev_sprite_test:
@@ -208,6 +255,10 @@ label dev_wardrobe_lab:
 label dev_verify_state:
 
     menu:
+        "Open Gallery":
+            call screen gallery_screen
+            jump dev_verify_state
+
         "Open Player Settings / Transparency":
             call screen player_settings_screen
             jump dev_verify_state
@@ -255,7 +306,7 @@ label dev_verify_state:
         "Repeat save/load instructions":
             "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
             "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
-            "Transparency is a player-wide preference, so confirm your selected Immersive / Insight / Full Transparency mode also survived after restarting the game."
+            "Transparency and Gallery unlocks are player-wide preferences/progression, so confirm they also survive restarting the game and moving between save slots."
             jump dev_verify_state
 
         "Back to systems menu":
