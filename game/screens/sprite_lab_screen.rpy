@@ -17,6 +17,7 @@ screen sprite_lab_controls():
         vbox:
             spacing 16
             xfill True
+            yfill True
 
             hbox:
                 xfill True
@@ -25,36 +26,41 @@ screen sprite_lab_controls():
                     xalign 1.0
                     action Return()
 
-            text "Placeholder art only — this screen proves state + layering before final assets." size 19
+            use lc_scroll_body:
 
-            text "Current pose: [leia_pose_label()]" size 23
-            text "Expression: [leia_expression_label()]" size 23
-            text "Outfit: [current_outfit_name()]" size 23
+                vbox:
+                    spacing 16
+                    xfill True
 
-            null height 8
-            text "POSE" size 28
+                    text "Placeholder art only — this screen proves state + layering before final assets." size 19
 
-            for pose_id, pose_label in LEIA_POSES:
-                textbutton "[pose_label]":
-                    action Function(set_leia_pose, pose_id)
-                    selected leia_pose == pose_id
+                    text "Current pose: [leia_pose_label()]" size 23
+                    text "Expression: [leia_expression_label()]" size 23
+                    text "Outfit: [current_outfit_name()]" size 23
 
-            null height 8
-            text "EXPRESSION" size 28
+                    null height 8
+                    text "POSE" size 28
 
-            for expression_id, expression_label in LEIA_EXPRESSIONS:
-                textbutton "[expression_label]":
-                    action Function(set_leia_expression, expression_id)
-                    selected leia_expression == expression_id
+                    for pose_id, pose_label in LEIA_POSES:
+                        textbutton "[pose_label]":
+                            action Function(set_leia_pose, pose_id)
+                            selected leia_pose == pose_id
 
-            null height 8
-            text "OUTFIT" size 28
-            text "Outfit is intentionally controlled by the Wardrobe system, not this sprite panel." size 19
-            text "Equip an owned outfit in Wardrobe and Leia should refresh automatically." size 19
+                    null height 8
+                    text "EXPRESSION" size 28
 
-            null height 8
-            textbutton "Reset pose + expression":
-                action Function(debug_reset_leia_sprite)
+                    for expression_id, expression_label in LEIA_EXPRESSIONS:
+                        textbutton "[expression_label]":
+                            action Function(set_leia_expression, expression_id)
+                            selected leia_expression == expression_id
 
-            textbutton "Close controls":
-                action Return()
+                    null height 8
+                    text "OUTFIT" size 28
+                    text "Outfit is intentionally controlled by the Wardrobe system, not this sprite panel." size 19
+                    text "Equip an owned outfit in Wardrobe and Leia should refresh automatically." size 19
+
+                    null height 8
+                    textbutton "Reset pose + expression":
+                        action Function(debug_reset_leia_sprite)
+
+                    null height 20
