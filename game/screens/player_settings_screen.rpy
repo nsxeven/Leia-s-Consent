@@ -10,7 +10,7 @@ screen transparency_mode_card(mode_id):
     frame:
         xsize 520
         ysize 255
-        background Solid("#3b2a38") if selected else Solid("#211c25")
+        background (Solid("#3b2a38") if selected else Solid("#211c25"))
         padding (24, 22)
 
         vbox:
