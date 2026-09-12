@@ -101,7 +101,7 @@ init python:
         path = passing_wear_path(outfit_id)
         if path is None:
             renpy.store.last_wear_route = None
-            renpy.store.last_wardrobe_message = "{} owns it, but she is not comfortable wearing {} yet.".format(
+            renpy.store.last_wardrobe_message = "{} isn't comfortable wearing {} yet.".format(
                 renpy.store.girlfriend_name,
                 outfit["name"],
             )
@@ -110,10 +110,11 @@ init python:
 
         renpy.store.equipped_outfit = outfit_id
         renpy.store.last_wear_route = path["id"]
-        renpy.store.last_wardrobe_message = "{} agreed to wear {} via: {}.".format(
+        # Keep the visible result message route-neutral. Exact path information is
+        # revealed separately by Full Transparency / Developer UI where appropriate.
+        renpy.store.last_wardrobe_message = "{} is now wearing {}.".format(
             renpy.store.girlfriend_name,
             outfit["name"],
-            path["label"],
         )
         refresh_leia_sprite_if_visible()
         renpy.restart_interaction()
