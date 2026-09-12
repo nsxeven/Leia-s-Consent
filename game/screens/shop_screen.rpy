@@ -1,38 +1,6 @@
 # Player-facing outfit shop.
 # Purchasing adds ownership only; wear acceptance remains a separate Wardrobe decision.
 
-screen shop_outfit_card(outfit_id, selected_outfit_id):
-
-    $ outfit = get_outfit(outfit_id)
-    $ outfit_name_value = outfit["name"]
-    $ outfit_cost_value = outfit["cost"]
-    $ category_value = outfit_category_label(outfit_id)
-    $ state_label = shop_item_status_label(outfit_id)
-    $ state_color = shop_item_status_color(outfit_id)
-    $ is_selected = selected_outfit_id == outfit_id
-
-    button:
-        xfill True
-        padding (20, 18)
-        background (Solid("#3b2a38") if is_selected else Solid("#211c25"))
-        hover_background Solid("#30242f")
-        action SetScreenVariable("shop_selected_outfit", outfit_id)
-
-        vbox:
-            spacing 7
-            xfill True
-
-            hbox:
-                xfill True
-                text "[outfit_name_value]" size 23 color "#ffffff"
-                text "$[outfit_cost_value]" size 20 color "#eee7ed" xalign 1.0
-
-            hbox:
-                xfill True
-                text "[category_value]" size 15 color "#a99ba8"
-                text "[state_label]" size 14 color state_color xalign 1.0
-
-
 screen shop_screen():
 
     modal True
@@ -134,7 +102,34 @@ screen shop_screen():
                                     xfill True
 
                                     for outfit_id in shop_outfit_ids():
-                                        use shop_outfit_card(outfit_id, shop_selected_outfit)
+                                        $ card_outfit = get_outfit(outfit_id)
+                                        $ card_name = card_outfit["name"]
+                                        $ card_cost = card_outfit["cost"]
+                                        $ card_category = outfit_category_label(outfit_id)
+                                        $ card_state_label = shop_item_status_label(outfit_id)
+                                        $ card_state_color = shop_item_status_color(outfit_id)
+                                        $ card_selected = shop_selected_outfit == outfit_id
+
+                                        button:
+                                            xfill True
+                                            padding (20, 18)
+                                            background (Solid("#3b2a38") if card_selected else Solid("#211c25"))
+                                            hover_background Solid("#30242f")
+                                            action SetScreenVariable("shop_selected_outfit", outfit_id)
+
+                                            vbox:
+                                                spacing 7
+                                                xfill True
+
+                                                hbox:
+                                                    xfill True
+                                                    text "[card_name]" size 23 color "#ffffff"
+                                                    text "$[card_cost]" size 20 color "#eee7ed" xalign 1.0
+
+                                                hbox:
+                                                    xfill True
+                                                    text "[card_category]" size 15 color "#a99ba8"
+                                                    text "[card_state_label]" size 14 color card_state_color xalign 1.0
 
                     frame:
                         xfill True
