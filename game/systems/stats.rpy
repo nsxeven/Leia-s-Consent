@@ -32,10 +32,12 @@ init python:
 
 
     def debug_change_stat(group_name, stat_name, amount):
-        """Developer-only stat editing. Marks the save as manually modified."""
+        """Developer-only stat editing. Keeps the panel open and shows a small notification."""
         new_value = change_stat(group_name, stat_name, amount)
         renpy.store.modified_save = True
-        return new_value
+        renpy.notify("{}: {}".format(stat_name.replace("_", " ").title(), new_value))
+        renpy.restart_interaction()
+        return None
 
 
     def debug_add_money(amount):
@@ -45,7 +47,9 @@ init python:
         renpy.store.last_money_change = renpy.store.money - old_money
         renpy.store.last_money_reason = "Developer money edit"
         renpy.store.modified_save = True
-        return renpy.store.money
+        renpy.notify("Money: ${}".format(renpy.store.money))
+        renpy.restart_interaction()
+        return None
 
 
     def nts_score():
