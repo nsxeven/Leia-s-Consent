@@ -89,45 +89,52 @@ screen status_screen():
                         xalign 1.0
                         action Return()
 
-            frame:
-                xfill True
-                background Solid("#2a222c")
-                padding (26, 20)
+            use lc_scroll_body:
 
                 vbox:
-                    spacing 9
+                    spacing 22
+                    xfill True
+
+                    frame:
+                        xfill True
+                        background Solid("#2a222c")
+                        padding (26, 20)
+
+                        vbox:
+                            spacing 9
+
+                            hbox:
+                                xfill True
+                                text "[girlfriend_name] right now" size 27 color "#ffffff"
+                                text "Current outfit: [current_outfit_name()]" size 18 color "#b9aabb" xalign 1.0
+
+                            text "[leia_overview_text()]" size 20 color "#e8dfe7" line_spacing 4
+
+                    text "[status_mode_note()]" size 17 color "#8f8291"
 
                     hbox:
+                        spacing 20
                         xfill True
-                        text "[girlfriend_name] right now" size 27 color "#ffffff"
-                        text "Current outfit: [current_outfit_name()]" size 18 color "#b9aabb" xalign 1.0
 
-                    text "[leia_overview_text()]" size 20 color "#e8dfe7" line_spacing 4
+                        vbox:
+                            spacing 20
+                            xsize 525
 
-            text "[status_mode_note()]" size 17 color "#8f8291"
+                            use status_section("RELATIONSHIP", relationship_rows)
 
-            hbox:
-                spacing 20
-                xfill True
-                yfill True
+                        vbox:
+                            spacing 20
+                            xsize 525
 
-                vbox:
-                    spacing 20
-                    xsize 525
+                            use status_section(girlfriend_name.upper(), leia_rows)
 
-                    use status_section("RELATIONSHIP", relationship_rows)
+                        vbox:
+                            spacing 20
+                            xsize 525
 
-                vbox:
-                    spacing 20
-                    xsize 525
+                            use status_section(player_name.upper(), ryan_rows)
 
-                    use status_section(girlfriend_name.upper(), leia_rows)
+                            if route_rows:
+                                use status_section("ROUTE TENDENCIES", route_rows)
 
-                vbox:
-                    spacing 20
-                    xsize 525
-
-                    use status_section(player_name.upper(), ryan_rows)
-
-                    if route_rows:
-                        use status_section("ROUTE TENDENCIES", route_rows)
+                    null height 20
