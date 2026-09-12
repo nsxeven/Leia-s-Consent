@@ -30,14 +30,14 @@ label dev_vertical_slice:
             $ set_leia_expression("neutral")
             gf "Maybe something simple, then. I like that you're not trying to rush me."
 
-    "The choice has now changed the real central stats and has been recorded in choice history."
+    $ renpy.notify("Choice applied and recorded in central choice history.")
 
     if not dev_vertical_slice_reward_claimed:
         $ earn_money(400, "Integrated slice wardrobe budget")
         $ dev_vertical_slice_reward_claimed = True
-        "For this development slice, you receive a one-time $400 wardrobe budget. Current money: $[money]."
+        $ renpy.notify("One-time $400 slice budget added. Money: ${}".format(money))
     else:
-        "The development wardrobe budget was already claimed. Current money: $[money]."
+        $ renpy.notify("Slice budget already claimed. Money: ${}".format(money))
 
     mc "Let's see what's available."
     call screen shop_screen
@@ -61,10 +61,10 @@ label dev_vertical_slice:
         gf "I think I'll stay in this for now."
         mc "That's completely fine."
 
-    "The dialogue above branched from the actual equipped outfit, and the same outfit state is controlling the visible Leia sprite."
+    $ renpy.notify("Outfit state is now driving Leia's visible sprite and branch dialogue.")
 
     $ unlock_gallery("ch01_cg01")
-    "Development Gallery milestone unlocked: Chapter 1 — CG 01 placeholder."
+    $ renpy.notify("Gallery unlocked: Chapter 1 — CG 01 placeholder.")
 
     call screen gallery_screen
 
@@ -76,43 +76,33 @@ label dev_vertical_slice_checkpoint:
     scene bg dev
     show leia
 
-    "INTEGRATION CHECKPOINT"
-    "Current state: $[money] • [current_outfit_name()] • [leia_pose_label()] • [leia_expression_label()]"
-    "Last choice: [last_choice_id] • Recorded choices: [len(choice_history)]"
+    $ dev_notify_checkpoint_state()
+    $ checkpoint_action = renpy.call_screen("dev_vertical_slice_checkpoint_screen")
 
-    menu:
-        "Open Status":
-            call screen status_screen
-            jump dev_vertical_slice_checkpoint
-
-        "Open Wardrobe":
-            call screen wardrobe_screen
-            jump dev_vertical_slice_checkpoint
-
-        "Open Shop":
-            call screen shop_screen
-            jump dev_vertical_slice_checkpoint
-
-        "Open Gallery":
-            call screen gallery_screen
-            jump dev_vertical_slice_checkpoint
-
-        "Open Transparency Settings":
-            call screen player_settings_screen
-            jump dev_vertical_slice_checkpoint
-
-        "Open Developer Panel":
-            call screen dev_panel
-            jump dev_vertical_slice_checkpoint
-
-        "Save/load checkpoint instructions":
-            "Open Save from the quick menu and save this exact checkpoint. Quit the game completely, reopen it, and load that save."
-            "After loading, this checkpoint should resume with the same money, outfit, Leia pose/expression, stats, and choice history. The Gallery unlock and transparency preference should also still exist because they are persistent."
-            jump dev_vertical_slice_checkpoint
-
-        "Restart the integrated slice":
-            jump dev_vertical_slice
-
-        "Back to systems menu":
-            hide leia
-            jump dev_systems_menu
+    if checkpoint_action == "status":
+        call screen status_screen
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "wardrobe":
+        call screen wardrobe_screen
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "shop":
+        call screen shop_screen
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "gallery":
+        call screen gallery_screen
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "settings":
+        call screen player_settings_screen
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "developer":
+        call screen dev_panel
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "save_help":
+        "Open Save from the quick menu and save this exact checkpoint. Quit the game completely, reopen it, and load that save."
+        "After loading, this checkpoint should resume with the same money, outfit, Leia pose/expression, stats, and choice history. The Gallery unlock and transparency preference should also still exist because they are persistent."
+        jump dev_vertical_slice_checkpoint
+    elif checkpoint_action == "restart":
+        jump dev_vertical_slice
+    else:
+        hide leia
+        jump dev_systems_menu
