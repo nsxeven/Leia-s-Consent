@@ -41,6 +41,10 @@ label dev_systems_menu:
     mc "Choose which system you want to test."
 
     menu:
+        "Player Status screen test":
+            call screen status_screen
+            jump dev_systems_menu
+
         "Sprite System test":
             jump dev_sprite_test
 
@@ -200,6 +204,10 @@ label dev_wardrobe_lab:
 label dev_verify_state:
 
     menu:
+        "Open Player Status screen":
+            call screen status_screen
+            jump dev_verify_state
+
         "Show current character names":
             "You: [player_name]\nGirlfriend: [girlfriend_name]\nFriend: [friend_name]"
             jump dev_verify_state
