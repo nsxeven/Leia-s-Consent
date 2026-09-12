@@ -41,6 +41,9 @@ label dev_systems_menu:
     mc "Choose which system you want to test."
 
     menu:
+        "Integrated systems slice (Phase 9)":
+            jump dev_vertical_slice
+
         "Gallery shell test":
             jump dev_gallery_test
 
@@ -255,6 +258,9 @@ label dev_wardrobe_lab:
 label dev_verify_state:
 
     menu:
+        "Open Integrated systems slice":
+            jump dev_vertical_slice
+
         "Open Gallery":
             call screen gallery_screen
             jump dev_verify_state
