@@ -19,6 +19,9 @@ init python:
 
     LEIA_OUTFIT_ATTRIBUTES = {
         "casual_default": "outfit_casual",
+        # Temporary placeholder mapping until dedicated swimwear sprite art exists.
+        "pool_conservative": "outfit_casual",
+        "pool_bolder": "outfit_casual",
         "date_night_dress": "outfit_date",
         "after_hours_dress": "outfit_after_hours",
     }
