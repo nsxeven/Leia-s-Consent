@@ -1,70 +1,15 @@
 # Scrollable development systems menu.
-# Called explicitly by dev_systems_menu so it never runs during unrelated interactions.
+# Uses the same titled/scrollable developer template as the other sandbox menus.
 
 screen dev_systems_menu_screen():
-
-    modal True
-    zorder 260
-
-    add Solid("#17151a")
-
-    frame:
-        xalign 0.5
-        yalign 0.5
-        xsize 1220
-        ysize 920
-        background Solid("#1d1a20")
-        padding (36, 30)
-
-        vbox:
-            spacing 22
-            xfill True
-            yfill True
-
-            text "SYSTEMS TEST MENU" size 42 color "#ffffff" xalign 0.5
-            text "Choose which system you want to test." size 20 color "#aaa0aa" xalign 0.5
-
-            use lc_scroll_body:
-                vbox:
-                    spacing 14
-                    xfill True
-
-                    textbutton "Integrated systems slice (Phase 9)":
-                        xfill True
-                        action Return("vertical_slice")
-
-                    textbutton "Gallery shell test":
-                        xfill True
-                        action Return("gallery")
-
-                    textbutton "Player Settings / Transparency test":
-                        xfill True
-                        action Return("settings")
-
-                    textbutton "Player Status screen test":
-                        xfill True
-                        action Return("status")
-
-                    textbutton "Sprite System test":
-                        xfill True
-                        action Return("sprite")
-
-                    textbutton "Economy + Wardrobe test":
-                        xfill True
-                        action Return("economy")
-
-                    textbutton "Choice Engine test":
-                        xfill True
-                        action Return("choice")
-
-                    textbutton "Open Developer Panel":
-                        xfill True
-                        action Return("developer")
-
-                    textbutton "Open verification / save-state menu":
-                        xfill True
-                        action Return("verify")
-
-                    textbutton "Finish systems test and return to the main menu":
-                        xfill True
-                        action Return("finish")
+    use dev_menu_shell("SYSTEMS TEST MENU", "Choose which system you want to test."):
+        textbutton "Integrated systems slice (Phase 9)" action Return("vertical_slice") xfill True
+        textbutton "Gallery shell test" action Return("gallery") xfill True
+        textbutton "Player Settings / Transparency test" action Return("settings") xfill True
+        textbutton "Player Status screen test" action Return("status") xfill True
+        textbutton "Sprite System test" action Return("sprite") xfill True
+        textbutton "Economy + Wardrobe test" action Return("economy") xfill True
+        textbutton "Choice Engine test" action Return("choice") xfill True
+        textbutton "Open Developer Panel" action Return("developer") xfill True
+        textbutton "Open verification / save-state menu" action Return("verify") xfill True
+        textbutton "Finish systems test and return to the main menu" action Return("finish") xfill True
