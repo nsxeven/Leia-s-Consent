@@ -40,39 +40,34 @@ label dev_systems_menu:
     gf "The Leia's Consent development sandbox is running."
     mc "Choose which system you want to test."
 
-    menu:
-        "Integrated systems slice (Phase 9)":
-            jump dev_vertical_slice
+    call screen dev_systems_menu_screen
+    $ dev_systems_selection = _return
 
-        "Gallery shell test":
-            jump dev_gallery_test
+    if dev_systems_selection == "vertical_slice":
+        jump dev_vertical_slice
+    elif dev_systems_selection == "gallery":
+        jump dev_gallery_test
+    elif dev_systems_selection == "settings":
+        call screen player_settings_screen
+        jump dev_systems_menu
+    elif dev_systems_selection == "status":
+        call screen status_screen
+        jump dev_systems_menu
+    elif dev_systems_selection == "sprite":
+        jump dev_sprite_test
+    elif dev_systems_selection == "economy":
+        jump dev_economy_wardrobe_test
+    elif dev_systems_selection == "choice":
+        jump dev_choice_intro
+    elif dev_systems_selection == "developer":
+        call screen dev_panel
+        jump dev_systems_menu
+    elif dev_systems_selection == "verify":
+        jump dev_verify_state
+    elif dev_systems_selection == "finish":
+        return
 
-        "Player Settings / Transparency test":
-            call screen player_settings_screen
-            jump dev_systems_menu
-
-        "Player Status screen test":
-            call screen status_screen
-            jump dev_systems_menu
-
-        "Sprite System test":
-            jump dev_sprite_test
-
-        "Economy + Wardrobe test":
-            jump dev_economy_wardrobe_test
-
-        "Choice Engine test":
-            jump dev_choice_intro
-
-        "Open Developer Panel":
-            call screen dev_panel
-            jump dev_systems_menu
-
-        "Open verification / save-state menu":
-            jump dev_verify_state
-
-        "Finish systems test and return to the main menu":
-            return
+    jump dev_systems_menu
 
 
 label dev_gallery_test:
