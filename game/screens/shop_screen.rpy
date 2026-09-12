@@ -38,7 +38,9 @@ screen shop_screen():
                 yfill True
                 mousewheel True
                 draggable True
+                pagekeys True
                 scrollbars "vertical"
+                side_yfill True
 
                 vbox:
                     spacing 18
