@@ -115,6 +115,7 @@ init python:
             outfit["name"],
             path["label"],
         )
+        refresh_leia_sprite_if_visible()
         renpy.restart_interaction()
         return True
 
@@ -218,4 +219,5 @@ init python:
         renpy.store.last_shop_message = "Wardrobe reset to defaults."
         renpy.store.last_wardrobe_message = ""
         renpy.store.modified_save = True
+        refresh_leia_sprite_if_visible()
         renpy.restart_interaction()

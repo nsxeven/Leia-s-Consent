@@ -41,6 +41,9 @@ label dev_systems_menu:
     mc "Choose which system you want to test."
 
     menu:
+        "Sprite System test":
+            jump dev_sprite_test
+
         "Economy + Wardrobe test":
             jump dev_economy_wardrobe_test
 
@@ -56,6 +59,55 @@ label dev_systems_menu:
 
         "Finish systems test and return to the main menu":
             return
+
+
+label dev_sprite_test:
+
+    scene bg dev
+    show leia
+
+    gf "This is placeholder art. We're testing whether my pose, expression, and wardrobe state can work as one sprite system."
+
+    "Pose and expression belong to the sprite controller. Outfit is deliberately inherited from the existing Wardrobe system."
+
+    jump dev_sprite_lab
+
+
+label dev_sprite_lab:
+
+    menu:
+        "Open pose + expression controls":
+            call screen sprite_lab_controls
+            jump dev_sprite_lab
+
+        "Open Wardrobe to change the visible outfit":
+            call screen wardrobe_screen
+            jump dev_sprite_lab
+
+        "Unlock all current outfits for sprite testing":
+            $ debug_unlock_all_outfits()
+            "All current outfits are now owned. Use Wardrobe to equip one. Normal wear requirements still apply."
+            jump dev_sprite_lab
+
+        "Open Developer Panel":
+            call screen dev_panel
+            jump dev_sprite_lab
+
+        "Show exact sprite state":
+            "Pose: [leia_pose] ([leia_pose_label()])\nExpression: [leia_expression] ([leia_expression_label()])\nOutfit ID: [equipped_outfit]\nOutfit: [current_outfit_name()]"
+            jump dev_sprite_lab
+
+        "How do I test outfit switching?":
+            "Unlock or purchase an outfit, then equip it through Wardrobe. When the Wardrobe closes, the placeholder clothing layer on [girlfriend_name] should already be different."
+            "If After Hours Dress is refused, either satisfy one of its wear paths or use the Developer Panel to raise the required stats."
+            jump dev_sprite_lab
+
+        "Continue to save/load verification":
+            jump dev_verify_state
+
+        "Back to systems menu":
+            hide leia
+            jump dev_systems_menu
 
 
 label dev_choice_intro:
@@ -152,6 +204,13 @@ label dev_verify_state:
             "You: [player_name]\nGirlfriend: [girlfriend_name]\nFriend: [friend_name]"
             jump dev_verify_state
 
+        "Open Sprite System test":
+            jump dev_sprite_test
+
+        "Show sprite state":
+            "Pose: [leia_pose] ([leia_pose_label()])\nExpression: [leia_expression] ([leia_expression_label()])\nOutfit ID: [equipped_outfit]\nOutfit: [current_outfit_name()]"
+            jump dev_verify_state
+
         "Open Developer Panel":
             call screen dev_panel
             jump dev_verify_state
@@ -179,7 +238,7 @@ label dev_verify_state:
 
         "Repeat save/load instructions":
             "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
-            "After loading, confirm your names, money, owned outfits, equipped outfit, last wear path, stats, and choice history all survived."
+            "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
             jump dev_verify_state
 
         "Back to systems menu":
