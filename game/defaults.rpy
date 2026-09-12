@@ -21,8 +21,9 @@ default last_wardrobe_message = ""
 default leia_pose = "p01"
 default leia_expression = "neutral"
 
-# Development-only test flag so the wardrobe allowance is not repeatedly granted.
+# Development-only test flags so sandbox allowances are not repeatedly granted.
 default dev_wardrobe_reward_claimed = False
+default dev_vertical_slice_reward_claimed = False
 
 default relationship_stats = {
     "love": 50,
