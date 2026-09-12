@@ -41,6 +41,10 @@ label dev_systems_menu:
     mc "Choose which system you want to test."
 
     menu:
+        "Player Settings / Transparency test":
+            call screen player_settings_screen
+            jump dev_systems_menu
+
         "Player Status screen test":
             call screen status_screen
             jump dev_systems_menu
@@ -173,8 +177,8 @@ label dev_wardrobe_lab:
             call screen wardrobe_screen
             jump dev_wardrobe_lab
 
-        "Open Choice / Transparency Mode":
-            call screen choice_mode_screen
+        "Open Player Transparency Settings":
+            call screen player_settings_screen
             jump dev_wardrobe_lab
 
         "Open Developer Panel":
@@ -190,7 +194,7 @@ label dev_wardrobe_lab:
 
         "How do I test the gated outfit?":
             "First buy After Hours Dress, then ask [girlfriend_name] to wear it at the default stats. It should be refused."
-            "Switch the transparency mode to Developer and reopen Wardrobe. You will see every wear path, its exact thresholds, your current values, and PASS/FAIL markers."
+            "Use Player Transparency Settings to compare Immersive, Insight, and Full Transparency. For the internal PASS/FAIL view, use Developer mode from the Choice Engine test."
             "For the quickest successful path, raise Curiosity to at least 30 and Exhibitionism to at least 20 in the Developer Panel, then ask her to wear it again."
             jump dev_wardrobe_lab
 
@@ -204,6 +208,10 @@ label dev_wardrobe_lab:
 label dev_verify_state:
 
     menu:
+        "Open Player Settings / Transparency":
+            call screen player_settings_screen
+            jump dev_verify_state
+
         "Open Player Status screen":
             call screen status_screen
             jump dev_verify_state
@@ -223,7 +231,7 @@ label dev_verify_state:
             call screen dev_panel
             jump dev_verify_state
 
-        "Open Choice Display Mode settings":
+        "Open Developer Choice Display controls":
             call screen choice_mode_screen
             jump dev_verify_state
 
@@ -247,6 +255,7 @@ label dev_verify_state:
         "Repeat save/load instructions":
             "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
             "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
+            "Transparency is a player-wide preference, so confirm your selected Immersive / Insight / Full Transparency mode also survived after restarting the game."
             jump dev_verify_state
 
         "Back to systems menu":
