@@ -20,37 +20,6 @@ screen outfit_style_meter(label, value):
             right_bar Solid("#3a303d")
 
 
-screen wardrobe_outfit_card(outfit_id, selected_outfit_id):
-
-    $ outfit = get_outfit(outfit_id)
-    $ outfit_name_value = outfit["name"]
-    $ category_value = outfit_category_label(outfit_id)
-    $ status_value = outfit_status_short(outfit_id)
-    $ status_color_value = outfit_status_color(outfit_id)
-    $ is_selected = selected_outfit_id == outfit_id
-
-    button:
-        xfill True
-        padding (20, 18)
-        background (Solid("#3b2a38") if is_selected else Solid("#211c25"))
-        hover_background Solid("#30242f")
-        action SetScreenVariable("wardrobe_selected_outfit", outfit_id)
-
-        vbox:
-            spacing 7
-            xfill True
-
-            hbox:
-                xfill True
-                text "[outfit_name_value]" size 23 color "#ffffff"
-                text "[category_value]" size 15 color "#a99ba8" xalign 1.0
-
-            text "[status_value]" size 16 color status_color_value
-
-            if equipped_outfit == outfit_id:
-                text "CURRENT OUTFIT" size 14 color "#f1a8c8"
-
-
 screen wardrobe_screen():
 
     modal True
@@ -147,7 +116,33 @@ screen wardrobe_screen():
                                 xfill True
 
                                 for outfit_id in valid_owned_outfit_ids():
-                                    use wardrobe_outfit_card(outfit_id, wardrobe_selected_outfit)
+                                    $ card_outfit = get_outfit(outfit_id)
+                                    $ card_name = card_outfit["name"]
+                                    $ card_category = outfit_category_label(outfit_id)
+                                    $ card_status = outfit_status_short(outfit_id)
+                                    $ card_status_color = outfit_status_color(outfit_id)
+                                    $ card_selected = wardrobe_selected_outfit == outfit_id
+
+                                    button:
+                                        xfill True
+                                        padding (20, 18)
+                                        background (Solid("#3b2a38") if card_selected else Solid("#211c25"))
+                                        hover_background Solid("#30242f")
+                                        action SetScreenVariable("wardrobe_selected_outfit", outfit_id)
+
+                                        vbox:
+                                            spacing 7
+                                            xfill True
+
+                                            hbox:
+                                                xfill True
+                                                text "[card_name]" size 23 color "#ffffff"
+                                                text "[card_category]" size 15 color "#a99ba8" xalign 1.0
+
+                                            text "[card_status]" size 16 color card_status_color
+
+                                            if equipped_outfit == outfit_id:
+                                                text "CURRENT OUTFIT" size 14 color "#f1a8c8"
 
                 frame:
                     xfill True
