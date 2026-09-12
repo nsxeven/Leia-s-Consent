@@ -207,59 +207,60 @@ label dev_wardrobe_lab:
 
 label dev_verify_state:
 
-    menu:
-        "Open Player Settings / Transparency":
-            call screen player_settings_screen
-            jump dev_verify_state
+    call screen dev_verify_menu
+    $ dev_verify_action = _return
 
-        "Open Player Status screen":
-            call screen status_screen
-            jump dev_verify_state
+    if dev_verify_action == "settings":
+        call screen player_settings_screen
+        jump dev_verify_state
 
-        "Show current character names":
-            "You: [player_name]\nGirlfriend: [girlfriend_name]\nFriend: [friend_name]"
-            jump dev_verify_state
+    elif dev_verify_action == "status":
+        call screen status_screen
+        jump dev_verify_state
 
-        "Open Sprite System test":
-            jump dev_sprite_test
+    elif dev_verify_action == "names":
+        "You: [player_name]\nGirlfriend: [girlfriend_name]\nFriend: [friend_name]"
+        jump dev_verify_state
 
-        "Show sprite state":
-            "Pose: [leia_pose] ([leia_pose_label()])\nExpression: [leia_expression] ([leia_expression_label()])\nOutfit ID: [equipped_outfit]\nOutfit: [current_outfit_name()]"
-            jump dev_verify_state
+    elif dev_verify_action == "sprite_test":
+        jump dev_sprite_test
 
-        "Open Developer Panel":
-            call screen dev_panel
-            jump dev_verify_state
+    elif dev_verify_action == "sprite_state":
+        "Pose: [leia_pose] ([leia_pose_label()])\nExpression: [leia_expression] ([leia_expression_label()])\nOutfit ID: [equipped_outfit]\nOutfit: [current_outfit_name()]"
+        jump dev_verify_state
 
-        "Open Developer Choice Display controls":
-            call screen choice_mode_screen
-            jump dev_verify_state
+    elif dev_verify_action == "dev_panel":
+        call screen dev_panel
+        jump dev_verify_state
 
-        "Show recorded choice state":
-            "Last choice ID: [last_choice_id]\nChoices recorded this playthrough: [len(choice_history)]"
-            jump dev_verify_state
+    elif dev_verify_action == "choice_display":
+        call screen choice_mode_screen
+        jump dev_verify_state
 
-        "Open Outfit Shop":
-            call screen shop_screen
-            jump dev_verify_state
+    elif dev_verify_action == "choice_state":
+        "Last choice ID: [last_choice_id]\nChoices recorded this playthrough: [len(choice_history)]"
+        jump dev_verify_state
 
-        "Open Wardrobe":
-            call screen wardrobe_screen
-            jump dev_verify_state
+    elif dev_verify_action == "shop":
+        call screen shop_screen
+        jump dev_verify_state
 
-        "Show economy + wardrobe state":
-            $ owned_name_list = ", ".join(outfit_name(outfit_id) for outfit_id in valid_owned_outfit_ids())
-            "Money: $[money]\nOwned: [owned_name_list]\nEquipped: [current_outfit_name()]\nLast wear path: [last_wear_route]"
-            jump dev_verify_state
+    elif dev_verify_action == "wardrobe":
+        call screen wardrobe_screen
+        jump dev_verify_state
 
-        "Repeat save/load instructions":
-            "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
-            "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
-            "Transparency is a player-wide preference, so confirm your selected Immersive / Insight / Full Transparency mode also survived after restarting the game."
-            jump dev_verify_state
+    elif dev_verify_action == "economy_state":
+        $ owned_name_list = ", ".join(outfit_name(outfit_id) for outfit_id in valid_owned_outfit_ids())
+        "Money: $[money]\nOwned: [owned_name_list]\nEquipped: [current_outfit_name()]\nLast wear path: [last_wear_route]"
+        jump dev_verify_state
 
-        "Back to systems menu":
-            jump dev_systems_menu
+    elif dev_verify_action == "save_load":
+        "While this verification flow is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
+        "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
+        "Transparency is a player-wide preference, so confirm your selected Immersive / Insight / Full Transparency mode also survived after restarting the game."
+        jump dev_verify_state
 
-        "Finish systems test and return to the main menu":
-            return
+    elif dev_verify_action == "finish":
+        return
+
+    jump dev_systems_menu
