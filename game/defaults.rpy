@@ -21,6 +21,10 @@ default last_wardrobe_message = ""
 default leia_pose = "p01"
 default leia_expression = "neutral"
 
+# Generic story state. Flags are booleans; values hold resolved outcomes or other story data.
+default story_flags = {}
+default story_values = {}
+
 # Development-only test flags so sandbox allowances are not repeatedly granted.
 default dev_wardrobe_reward_claimed = False
 default dev_vertical_slice_reward_claimed = False
