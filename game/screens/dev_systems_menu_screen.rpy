@@ -1,70 +1,93 @@
 # Scrollable development systems menu.
-# Keeps the sandbox launcher usable as more test entries are added.
+# This overlays the original Ren'Py menu while the sandbox launcher label is active,
+# preventing the growing list of test entries from being cropped at 1080p.
+
+init python:
+    if "dev_systems_menu_screen" not in config.overlay_screens:
+        config.overlay_screens.append("dev_systems_menu_screen")
+
 
 screen dev_systems_menu_screen():
 
-    modal True
-    zorder 220
+    if renpy.get_label() == "dev_systems_menu":
 
-    add Solid("#17151a")
+        modal True
+        zorder 260
 
-    frame:
-        xalign 0.5
-        yalign 0.5
-        xsize 1220
-        ysize 920
-        background Solid("#1d1a20")
-        padding (36, 30)
+        add Solid("#17151a")
 
-        vbox:
-            spacing 22
-            xfill True
-            yfill True
+        frame:
+            xalign 0.5
+            yalign 0.5
+            xsize 1220
+            ysize 920
+            background Solid("#1d1a20")
+            padding (36, 30)
 
-            text "SYSTEMS TEST MENU" size 42 color "#ffffff" xalign 0.5
-            text "Choose which system you want to test." size 20 color "#aaa0aa" xalign 0.5
+            vbox:
+                spacing 22
+                xfill True
+                yfill True
 
-            use lc_scroll_body:
-                vbox:
-                    spacing 14
-                    xfill True
+                text "SYSTEMS TEST MENU" size 42 color "#ffffff" xalign 0.5
+                text "Choose which system you want to test." size 20 color "#aaa0aa" xalign 0.5
 
-                    textbutton "Integrated systems slice (Phase 9)":
+                use lc_scroll_body:
+                    vbox:
+                        spacing 14
                         xfill True
-                        action Return("vertical_slice")
 
-                    textbutton "Gallery shell test":
-                        xfill True
-                        action Return("gallery")
+                        textbutton "Integrated systems slice (Phase 9)":
+                            xfill True
+                            action Jump("dev_vertical_slice")
 
-                    textbutton "Player Settings / Transparency test":
-                        xfill True
-                        action Return("settings")
+                        textbutton "Gallery shell test":
+                            xfill True
+                            action Jump("dev_gallery_test")
 
-                    textbutton "Player Status screen test":
-                        xfill True
-                        action Return("status")
+                        textbutton "Player Settings / Transparency test":
+                            xfill True
+                            action Jump("dev_systems_settings_helper")
 
-                    textbutton "Sprite System test":
-                        xfill True
-                        action Return("sprite")
+                        textbutton "Player Status screen test":
+                            xfill True
+                            action Jump("dev_systems_status_helper")
 
-                    textbutton "Economy + Wardrobe test":
-                        xfill True
-                        action Return("economy")
+                        textbutton "Sprite System test":
+                            xfill True
+                            action Jump("dev_sprite_test")
 
-                    textbutton "Choice Engine test":
-                        xfill True
-                        action Return("choice")
+                        textbutton "Economy + Wardrobe test":
+                            xfill True
+                            action Jump("dev_economy_wardrobe_test")
 
-                    textbutton "Open Developer Panel":
-                        xfill True
-                        action Return("developer")
+                        textbutton "Choice Engine test":
+                            xfill True
+                            action Jump("dev_choice_intro")
 
-                    textbutton "Open verification / save-state menu":
-                        xfill True
-                        action Return("verify")
+                        textbutton "Open Developer Panel":
+                            xfill True
+                            action Jump("dev_systems_panel_helper")
 
-                    textbutton "Finish systems test and return to the main menu":
-                        xfill True
-                        action Return("finish")
+                        textbutton "Open verification / save-state menu":
+                            xfill True
+                            action Jump("dev_verify_state")
+
+                        textbutton "Finish systems test and return to the main menu":
+                            xfill True
+                            action MainMenu(confirm=False)
+
+
+label dev_systems_settings_helper:
+    call screen player_settings_screen
+    jump dev_systems_menu
+
+
+label dev_systems_status_helper:
+    call screen status_screen
+    jump dev_systems_menu
+
+
+label dev_systems_panel_helper:
+    call screen dev_panel
+    jump dev_systems_menu
