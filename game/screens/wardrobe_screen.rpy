@@ -28,14 +28,14 @@ screen wardrobe_screen():
                     action Return()
 
             text "Equipped: [current_outfit_name()]" size 27
-            text "Transparency mode: [choice_mode_label()]" size 20
+            text "Transparency mode: [transparency_mode_label()]" size 20
 
             if current_choice_mode() == "normal":
-                text "Normal mode hides outfit requirement details." size 19
+                text "Immersive mode hides outfit requirement details." size 19
             elif current_choice_mode() == "insight":
                 text "Insight mode shows the types of progression paths that could make an outfit comfortable." size 19
             elif current_choice_mode() == "full":
-                text "Full Cheat mode shows exact stat thresholds." size 19
+                text "Full Transparency shows exact stat thresholds." size 19
             else:
                 text "Developer mode shows exact thresholds, current values, pass/fail state, and internal path IDs." size 19
 
@@ -47,7 +47,9 @@ screen wardrobe_screen():
                 yfill True
                 mousewheel True
                 draggable True
+                pagekeys True
                 scrollbars "vertical"
+                side_yfill True
 
                 vbox:
                     spacing 18
