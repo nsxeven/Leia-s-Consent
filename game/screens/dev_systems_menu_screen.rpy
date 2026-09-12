@@ -4,6 +4,7 @@
 screen dev_systems_menu_screen():
     use dev_menu_shell("SYSTEMS TEST MENU", "Choose which system you want to test."):
         textbutton "Integrated systems slice (Phase 9)" action Return("vertical_slice") xfill True
+        textbutton "Story State foundation test" action Jump("dev_story_state_test") xfill True
         textbutton "Gallery shell test" action Return("gallery") xfill True
         textbutton "Player Settings / Transparency test" action Return("settings") xfill True
         textbutton "Player Status screen test" action Return("status") xfill True

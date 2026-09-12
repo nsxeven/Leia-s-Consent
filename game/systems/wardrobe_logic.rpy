@@ -76,6 +76,36 @@ init python:
         return True
 
 
+    def grant_story_outfit(outfit_id, equip=False):
+        """Grant a non-shop outfit from story progression without spending money.
+
+        Granting does not bypass Leia's wear rules. If equip=True, the outfit is
+        equipped only when its normal wear path is currently valid.
+        """
+        outfit = get_outfit(outfit_id)
+
+        if not outfit.get("story_grant", False):
+            raise ValueError("Outfit '{}' is not marked as story-grantable".format(outfit_id))
+
+        if outfit_id not in renpy.store.owned_outfits:
+            renpy.store.owned_outfits.append(outfit_id)
+
+        equipped = False
+        if equip:
+            path = passing_wear_path(outfit_id)
+            if path is not None:
+                renpy.store.equipped_outfit = outfit_id
+                renpy.store.last_wear_route = path["id"]
+                renpy.store.last_wardrobe_message = "{} is now wearing {}.".format(
+                    renpy.store.girlfriend_name,
+                    outfit["name"],
+                )
+                refresh_leia_sprite_if_visible()
+                equipped = True
+
+        return equipped if equip else True
+
+
     def passing_wear_path(outfit_id):
         """Return the first wear path currently satisfied, or None."""
         outfit = get_outfit(outfit_id)
@@ -94,7 +124,7 @@ init python:
         outfit = get_outfit(outfit_id)
 
         if not owns_outfit(outfit_id):
-            renpy.store.last_wardrobe_message = "{} has not been purchased yet.".format(outfit["name"])
+            renpy.store.last_wardrobe_message = "{} has not been obtained yet.".format(outfit["name"])
             renpy.restart_interaction()
             return False
 

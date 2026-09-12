@@ -7,6 +7,7 @@ init python:
         "casual": "Casual",
         "date": "Date",
         "bold": "Bold",
+        "swimwear": "Swimwear",
     }
 
 

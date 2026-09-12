@@ -41,6 +41,16 @@ init python:
         ],
     }
 
+    # Behavioral metadata is deliberately separate from stat effects. Later scenes
+    # can react to patterns such as encouragement/protectiveness without checking
+    # a long list of specific choice IDs.
+    CHOICE_TAGS = {
+        "dev_encourage_curiosity": ("encouraging", "participating", "open"),
+        "dev_be_protective": ("protective", "cautious"),
+    }
+
+    STANCE_TAGS = ("encouraging", "neutral", "protective")
+
 
     def current_choice_mode():
         """Return a valid global choice-display mode."""
@@ -71,6 +81,11 @@ init python:
         return list(CHOICE_EFFECTS[choice_id])
 
 
+    def get_choice_tags(choice_id):
+        """Return immutable behavioral tags for a stable choice ID."""
+        return tuple(CHOICE_TAGS.get(choice_id, ()))
+
+
     def apply_choice(choice_id):
         """Apply the real effects for a choice and record the selection."""
         for group_name, stat_name, amount in get_choice_effects(choice_id):
@@ -79,6 +94,53 @@ init python:
         renpy.store.last_choice_id = choice_id
         renpy.store.choice_history.append(choice_id)
         return choice_id
+
+
+    def choice_ids_with_prefix(prefix, choice_ids=None):
+        """Return recorded choices whose stable IDs begin with a chapter/event prefix."""
+        source = renpy.store.choice_history if choice_ids is None else choice_ids
+        return [choice_id for choice_id in source if choice_id.startswith(prefix)]
+
+
+    def choice_tag_count(tag, choice_ids=None):
+        """Count how often a behavioral tag appears in the selected choice history."""
+        source = renpy.store.choice_history if choice_ids is None else choice_ids
+        return sum(1 for choice_id in source if tag in get_choice_tags(choice_id))
+
+
+    def choice_tag_counts(choice_ids=None):
+        """Return counts for every behavioral tag represented in the selected history."""
+        source = renpy.store.choice_history if choice_ids is None else choice_ids
+        counts = {}
+        for choice_id in source:
+            for tag in get_choice_tags(choice_id):
+                counts[tag] = counts.get(tag, 0) + 1
+        return counts
+
+
+    def choice_stance(choice_ids=None):
+        """Summarize encouraging/neutral/protective behavior without creating hard routes."""
+        source = renpy.store.choice_history if choice_ids is None else choice_ids
+        counts = {tag: choice_tag_count(tag, source) for tag in STANCE_TAGS}
+        highest = max(counts.values()) if counts else 0
+
+        if highest <= 0:
+            return "neutral"
+
+        leaders = [tag for tag, count in counts.items() if count == highest]
+        if len(leaders) != 1:
+            return "mixed"
+        return leaders[0]
+
+
+    def chapter_choice_ids(chapter_id):
+        """Convention: real chapter choice IDs begin with e.g. 'ch01_'."""
+        prefix = chapter_id if chapter_id.endswith("_") else chapter_id + "_"
+        return choice_ids_with_prefix(prefix)
+
+
+    def chapter_stance(chapter_id):
+        return choice_stance(chapter_choice_ids(chapter_id))
 
 
     def _choice_effect_text(choice_id, exact=False):
@@ -109,10 +171,13 @@ init python:
         if mode == "full":
             return "{}\n[{}]".format(base_text, _choice_effect_text(choice_id, exact=True))
 
-        return "{}\n[{}]  [ID: {}]".format(
+        tags = get_choice_tags(choice_id)
+        tag_text = " • Tags: {}".format(", ".join(tags)) if tags else ""
+        return "{}\n[{}]  [ID: {}]{}".format(
             base_text,
             _choice_effect_text(choice_id, exact=True),
             choice_id,
+            tag_text,
         )
 
 
