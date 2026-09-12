@@ -21,8 +21,9 @@ default last_wardrobe_message = ""
 default leia_pose = "p01"
 default leia_expression = "neutral"
 
-# Development-only test flag so the wardrobe allowance is not repeatedly granted.
+# Development-only test flags so sandbox allowances are not repeatedly granted.
 default dev_wardrobe_reward_claimed = False
+default dev_vertical_slice_reward_claimed = False
 
 default relationship_stats = {
     "love": 50,
@@ -50,6 +51,7 @@ default modified_save = False
 default choice_history = []
 default last_choice_id = None
 
-# Player preferences: survive across save slots and new games.
+# Player preferences/unlocks: survive across save slots and new games.
 default persistent.choice_display_mode = "normal"
 default persistent.full_transparency_notice_seen = False
+default persistent.gallery_unlocked = []

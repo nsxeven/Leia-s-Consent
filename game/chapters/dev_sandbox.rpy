@@ -3,6 +3,7 @@
 
 image bg dev = Solid("#17151a")
 
+
 label dev_name_setup:
 
     scene bg dev
@@ -28,7 +29,6 @@ label dev_name_setup:
             jump dev_name_setup
 
 
-# Compatibility entry point retained from the first development milestone.
 label dev_sandbox:
     jump dev_systems_menu
 
@@ -36,37 +36,79 @@ label dev_sandbox:
 label dev_systems_menu:
 
     scene bg dev
+    $ dev_systems_action = renpy.call_screen("dev_systems_menu_screen")
 
-    gf "The Leia's Consent development sandbox is running."
-    mc "Choose which system you want to test."
+    if dev_systems_action == "vertical_slice":
+        jump dev_vertical_slice
 
-    menu:
-        "Player Settings / Transparency test":
-            call screen player_settings_screen
-            jump dev_systems_menu
+    elif dev_systems_action == "gallery":
+        jump dev_gallery_test
 
-        "Player Status screen test":
-            call screen status_screen
-            jump dev_systems_menu
+    elif dev_systems_action == "settings":
+        call screen player_settings_screen
+        jump dev_systems_menu
 
-        "Sprite System test":
-            jump dev_sprite_test
+    elif dev_systems_action == "status":
+        call screen status_screen
+        jump dev_systems_menu
 
-        "Economy + Wardrobe test":
-            jump dev_economy_wardrobe_test
+    elif dev_systems_action == "sprite":
+        jump dev_sprite_test
 
-        "Choice Engine test":
-            jump dev_choice_intro
+    elif dev_systems_action == "economy":
+        jump dev_economy_wardrobe_test
 
-        "Open Developer Panel":
-            call screen dev_panel
-            jump dev_systems_menu
+    elif dev_systems_action == "choice":
+        jump dev_choice_intro
 
-        "Open verification / save-state menu":
-            jump dev_verify_state
+    elif dev_systems_action == "developer":
+        call screen dev_panel
+        jump dev_systems_menu
 
-        "Finish systems test and return to the main menu":
-            return
+    elif dev_systems_action == "verify":
+        jump dev_verify_state
+
+    else:
+        return
+
+
+label dev_gallery_test:
+
+    scene bg dev
+
+    "The Gallery shell uses persistent unlocks. These belong to the player profile rather than one save slot."
+    "Final CG art and replay labels do not exist yet, so this test uses placeholder cards and previews."
+
+    jump dev_gallery_lab
+
+
+label dev_gallery_lab:
+
+    $ gallery_action = renpy.call_screen("dev_gallery_lab_screen")
+
+    if gallery_action == "open":
+        call screen gallery_screen
+        jump dev_gallery_lab
+
+    elif gallery_action == "unlock_one":
+        $ debug_unlock_gallery_entry("ch01_cg01")
+        jump dev_gallery_lab
+
+    elif gallery_action == "unlock_all":
+        $ debug_unlock_all_gallery()
+        jump dev_gallery_lab
+
+    elif gallery_action == "reset":
+        $ debug_reset_gallery()
+        jump dev_gallery_lab
+
+    elif gallery_action == "persistence_help":
+        "Unlock at least one CG, quit the game completely, reopen it, start or load any playthrough, and return here. The Gallery unlock should still be present."
+        "Gallery unlocks are intentionally persistent across save slots and New Game."
+        jump dev_gallery_lab
+
+    else:
+        jump dev_systems_menu
 
 
 label dev_sprite_test:
@@ -75,7 +117,6 @@ label dev_sprite_test:
     show leia
 
     gf "This is placeholder art. We're testing whether my pose, expression, and wardrobe state can work as one sprite system."
-
     "Pose and expression belong to the sprite controller. Outfit is deliberately inherited from the existing Wardrobe system."
 
     jump dev_sprite_lab
@@ -83,39 +124,31 @@ label dev_sprite_test:
 
 label dev_sprite_lab:
 
-    menu:
-        "Open pose + expression controls":
-            call screen sprite_lab_controls
-            jump dev_sprite_lab
+    $ sprite_action = renpy.call_screen("dev_sprite_lab_screen")
 
-        "Open Wardrobe to change the visible outfit":
-            call screen wardrobe_screen
-            jump dev_sprite_lab
+    if sprite_action == "controls":
+        call screen sprite_lab_controls
+        jump dev_sprite_lab
 
-        "Unlock all current outfits for sprite testing":
-            $ debug_unlock_all_outfits()
-            "All current outfits are now owned. Use Wardrobe to equip one. Normal wear requirements still apply."
-            jump dev_sprite_lab
+    elif sprite_action == "wardrobe":
+        call screen wardrobe_screen
+        jump dev_sprite_lab
 
-        "Open Developer Panel":
-            call screen dev_panel
-            jump dev_sprite_lab
+    elif sprite_action == "developer":
+        call screen dev_panel
+        jump dev_sprite_lab
 
-        "Show exact sprite state":
-            "Pose: [leia_pose] ([leia_pose_label()])\nExpression: [leia_expression] ([leia_expression_label()])\nOutfit ID: [equipped_outfit]\nOutfit: [current_outfit_name()]"
-            jump dev_sprite_lab
+    elif sprite_action == "outfit_help":
+        "Unlock or purchase an outfit, then equip it through Wardrobe. When the Wardrobe closes, the placeholder clothing layer on [girlfriend_name] should already be different."
+        "If After Hours Dress is refused, either satisfy one of its wear paths or use the Developer Panel to raise the required stats."
+        jump dev_sprite_lab
 
-        "How do I test outfit switching?":
-            "Unlock or purchase an outfit, then equip it through Wardrobe. When the Wardrobe closes, the placeholder clothing layer on [girlfriend_name] should already be different."
-            "If After Hours Dress is refused, either satisfy one of its wear paths or use the Developer Panel to raise the required stats."
-            jump dev_sprite_lab
+    elif sprite_action == "verify":
+        jump dev_verify_state
 
-        "Continue to save/load verification":
-            jump dev_verify_state
-
-        "Back to systems menu":
-            hide leia
-            jump dev_systems_menu
+    else:
+        hide leia
+        jump dev_systems_menu
 
 
 label dev_choice_intro:
@@ -141,7 +174,7 @@ label dev_choice_test:
             $ apply_choice("dev_be_protective")
             gf "You're being a little protective today."
 
-    "The choice was applied using the central choice-effect table rather than hard-coded stat changes in this scene."
+    $ renpy.notify("Choice applied and recorded in central choice history.")
     call screen dev_panel
     jump dev_verify_state
 
@@ -155,9 +188,9 @@ label dev_economy_wardrobe_test:
     if not dev_wardrobe_reward_claimed:
         $ earn_money(250, "Wardrobe test allowance")
         $ dev_wardrobe_reward_claimed = True
-        "Economy test: you received a one-time $250 wardrobe allowance. You now have $[money]."
+        $ renpy.notify("One-time wardrobe allowance added. Money: ${}".format(money))
     else:
-        "The one-time wardrobe allowance was already claimed. Current money: $[money]."
+        $ renpy.notify("Wardrobe allowance already claimed. Money: ${}".format(money))
 
     "Open the shop. Try buying Date Night Dress and After Hours Dress."
     call screen shop_screen
@@ -168,99 +201,83 @@ label dev_economy_wardrobe_test:
 
 label dev_wardrobe_lab:
 
-    menu:
-        "Open Outfit Shop":
-            call screen shop_screen
-            jump dev_wardrobe_lab
+    $ wardrobe_action = renpy.call_screen("dev_wardrobe_lab_screen")
 
-        "Open Wardrobe":
-            call screen wardrobe_screen
-            jump dev_wardrobe_lab
+    if wardrobe_action == "shop":
+        call screen shop_screen
+        jump dev_wardrobe_lab
 
-        "Open Player Transparency Settings":
-            call screen player_settings_screen
-            jump dev_wardrobe_lab
+    elif wardrobe_action == "wardrobe":
+        call screen wardrobe_screen
+        jump dev_wardrobe_lab
 
-        "Open Developer Panel":
-            call screen dev_panel
-            jump dev_wardrobe_lab
+    elif wardrobe_action == "settings":
+        call screen player_settings_screen
+        jump dev_wardrobe_lab
 
-        "Show current economy + wardrobe state":
-            $ owned_name_list = ", ".join(outfit_name(outfit_id) for outfit_id in valid_owned_outfit_ids())
-            "Money: $[money]\nOwned: [owned_name_list]\nEquipped: [current_outfit_name()]\nLast wear path: [last_wear_route]"
-            if last_money_reason:
-                "Last money change: [last_money_change] ([last_money_reason])"
-            jump dev_wardrobe_lab
+    elif wardrobe_action == "developer":
+        call screen dev_panel
+        jump dev_wardrobe_lab
 
-        "How do I test the gated outfit?":
-            "First buy After Hours Dress, then ask [girlfriend_name] to wear it at the default stats. It should be refused."
-            "Use Player Transparency Settings to compare Immersive, Insight, and Full Transparency. For the internal PASS/FAIL view, use Developer mode from the Choice Engine test."
-            "For the quickest successful path, raise Curiosity to at least 30 and Exhibitionism to at least 20 in the Developer Panel, then ask her to wear it again."
-            jump dev_wardrobe_lab
+    elif wardrobe_action == "gated_help":
+        "First buy After Hours Dress, then ask [girlfriend_name] to wear it at the default stats. It should be refused."
+        "Use Player Transparency Settings to compare Immersive, Insight, and Full Transparency. For the internal PASS/FAIL view, use Developer mode from the Choice Engine test."
+        "For the quickest successful path, raise Curiosity to at least 30 and Exhibitionism to at least 20 in the Developer Panel, then ask her to wear it again."
+        jump dev_wardrobe_lab
 
-        "Continue to save/load verification":
-            jump dev_verify_state
+    elif wardrobe_action == "verify":
+        jump dev_verify_state
 
-        "Back to systems menu":
-            jump dev_systems_menu
+    else:
+        jump dev_systems_menu
 
 
 label dev_verify_state:
 
-    call screen dev_verify_menu
-    $ dev_verify_action = _return
+    $ verify_action = renpy.call_screen("dev_verify_state_screen")
 
-    if dev_verify_action == "settings":
+    if verify_action == "vertical_slice":
+        jump dev_vertical_slice
+
+    elif verify_action == "gallery":
+        call screen gallery_screen
+        jump dev_verify_state
+
+    elif verify_action == "settings":
         call screen player_settings_screen
         jump dev_verify_state
 
-    elif dev_verify_action == "status":
+    elif verify_action == "status":
         call screen status_screen
         jump dev_verify_state
 
-    elif dev_verify_action == "names":
-        "You: [player_name]\nGirlfriend: [girlfriend_name]\nFriend: [friend_name]"
-        jump dev_verify_state
-
-    elif dev_verify_action == "sprite_test":
+    elif verify_action == "sprite":
         jump dev_sprite_test
 
-    elif dev_verify_action == "sprite_state":
-        "Pose: [leia_pose] ([leia_pose_label()])\nExpression: [leia_expression] ([leia_expression_label()])\nOutfit ID: [equipped_outfit]\nOutfit: [current_outfit_name()]"
-        jump dev_verify_state
-
-    elif dev_verify_action == "dev_panel":
+    elif verify_action == "developer":
         call screen dev_panel
         jump dev_verify_state
 
-    elif dev_verify_action == "choice_display":
+    elif verify_action == "choice_controls":
         call screen choice_mode_screen
         jump dev_verify_state
 
-    elif dev_verify_action == "choice_state":
-        "Last choice ID: [last_choice_id]\nChoices recorded this playthrough: [len(choice_history)]"
-        jump dev_verify_state
-
-    elif dev_verify_action == "shop":
+    elif verify_action == "shop":
         call screen shop_screen
         jump dev_verify_state
 
-    elif dev_verify_action == "wardrobe":
+    elif verify_action == "wardrobe":
         call screen wardrobe_screen
         jump dev_verify_state
 
-    elif dev_verify_action == "economy_state":
-        $ owned_name_list = ", ".join(outfit_name(outfit_id) for outfit_id in valid_owned_outfit_ids())
-        "Money: $[money]\nOwned: [owned_name_list]\nEquipped: [current_outfit_name()]\nLast wear path: [last_wear_route]"
-        jump dev_verify_state
-
-    elif dev_verify_action == "save_load":
-        "While this verification flow is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
+    elif verify_action == "save_help":
+        "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
         "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
-        "Transparency is a player-wide preference, so confirm your selected Immersive / Insight / Full Transparency mode also survived after restarting the game."
+        "Transparency and Gallery unlocks are player-wide preferences/progression, so confirm they also survive restarting the game and moving between save slots."
         jump dev_verify_state
 
-    elif dev_verify_action == "finish":
+    elif verify_action == "finish":
         return
 
-    jump dev_systems_menu
+    else:
+        jump dev_systems_menu
