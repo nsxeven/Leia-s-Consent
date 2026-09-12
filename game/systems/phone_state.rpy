@@ -146,39 +146,63 @@ init python:
         return "Message"
 
 
+    def _phone_next_debug_batch():
+        """Return the next developer seed number based on currently stored test batches."""
+        batch_numbers = []
+
+        for thread_id in list(renpy.store.phone_messages.keys()):
+            for message in _phone_ensure_thread(thread_id):
+                message_id = message.get("id", "")
+                if message_id.startswith("dev_phone_seed_"):
+                    parts = message_id.split("_")
+                    if len(parts) >= 5:
+                        try:
+                            batch_numbers.append(int(parts[3]))
+                        except ValueError:
+                            pass
+
+        return (max(batch_numbers) + 1) if batch_numbers else 1
+
+
     def phone_debug_seed_messages():
-        """Developer-only placeholder content for UI testing."""
-        added_any = False
+        """Add a fresh batch of developer-only messages every time this is pressed.
 
-        added_any = phone_add_message(
+        Story messages remain idempotent when they use stable IDs. Repeated batches
+        are only for stress-testing unread counts, scrolling, and image attachments.
+        """
+        batch = _phone_next_debug_batch()
+        batch_tag = "{:03d}".format(batch)
+
+        phone_add_message(
             "leia",
             "leia",
-            text="[DEV] Phone shell online. This thread can later hold story texts and selfies.",
-            message_id="dev_phone_leia_01",
+            text="[DEV {}] Phone shell test message from {}.".format(batch_tag, renpy.store.girlfriend_name),
+            message_id="dev_phone_seed_{}_leia_text".format(batch_tag),
             mark_unread=True,
-        ) or added_any
+        )
 
-        added_any = phone_add_message(
+        phone_add_message(
             "group",
             "julian",
-            text="[DEV] Placeholder group chat message.",
-            message_id="dev_phone_group_01",
+            text="[DEV {}] Placeholder group chat message.".format(batch_tag),
+            message_id="dev_phone_seed_{}_group_text".format(batch_tag),
             mark_unread=True,
-        ) or added_any
+        )
 
-        added_any = phone_add_message(
+        phone_add_message(
             "leia",
             "leia",
-            text="[DEV] Image attachments are scaffolded already.",
-            message_id="dev_phone_leia_photo_01",
-            attachment_id="dev_placeholder_photo",
-            attachment_label="Placeholder Leia photo",
+            text="[DEV {}] Image attachment stress test.".format(batch_tag),
+            message_id="dev_phone_seed_{}_leia_photo".format(batch_tag),
+            attachment_id="dev_placeholder_photo_{}".format(batch_tag),
+            attachment_label="Placeholder Leia photo — batch {}".format(batch),
             mark_unread=True,
-        ) or added_any
+        )
 
-        if added_any:
-            renpy.store.modified_save = True
-        return added_any
+        renpy.store.modified_save = True
+        renpy.notify("Added developer phone message batch {}.".format(batch))
+        renpy.restart_interaction()
+        return True
 
 
     def phone_debug_clear_messages():
@@ -189,3 +213,5 @@ init python:
         }
         renpy.store.phone_last_open_thread = None
         renpy.store.modified_save = True
+        renpy.notify("Developer phone messages cleared.")
+        renpy.restart_interaction()
