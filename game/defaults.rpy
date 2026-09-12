@@ -17,6 +17,10 @@ default last_wear_route = "default_comfort"
 default last_shop_message = ""
 default last_wardrobe_message = ""
 
+# Leia sprite state. Outfit remains controlled by equipped_outfit above.
+default leia_pose = "p01"
+default leia_expression = "neutral"
+
 # Development-only test flag so the wardrobe allowance is not repeatedly granted.
 default dev_wardrobe_reward_claimed = False
 
