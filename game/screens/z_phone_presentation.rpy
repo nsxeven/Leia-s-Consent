@@ -135,7 +135,7 @@ screen phone_first_use_tutorial():
         yalign 0.5
         xsize 700
         padding (36, 32)
-        background Solid("#fafafd")
+        background Frame("gui/phone/rounded_white.svg", 28, 28)
 
         vbox:
             spacing 16
@@ -153,8 +153,8 @@ screen phone_first_use_tutorial():
                 xsize 220
                 ysize 56
                 padding (0, 0)
-                background Solid("#0a84ff")
-                hover_background Solid("#409cff")
+                background Frame("gui/phone/rounded_button_blue.svg", 24, 24)
+                hover_background Frame("gui/phone/rounded_button_blue_hover.svg", 24, 24)
                 text_idle_color "#ffffff"
                 text_hover_color "#ffffff"
                 text_xalign 0.5
