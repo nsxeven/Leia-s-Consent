@@ -80,7 +80,7 @@ screen phone_notification_banner():
 
                 hbox:
                     xfill True
-                    text "[phone_notification_current['app']]" size 17 color "#6e6e73" bold True
+                    text "[phone_notification_app_label(phone_notification_current['app'])]" size 17 color "#6e6e73" bold True
                     text "now" size 15 color "#8e8e93" xalign 1.0
 
                 text "[phone_notification_current['title']]" size 22 color "#111111" bold True
