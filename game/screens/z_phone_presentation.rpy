@@ -20,25 +20,44 @@ transform phone_notification_slide:
 screen phone_quick_access():
 
     zorder 110
+    default hud_hovered = False
 
     if phone_unlocked and phone_hud_enabled and quick_menu and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen"):
         fixed:
             xalign 0.985
             yalign 0.91
-            xsize 102
-            ysize 102
+            xsize 108
+            ysize 108
 
-            imagebutton:
-                xalign 0.5
-                yalign 0.5
-                idle Transform("gui/phone/icons/phone.png", xysize=(74, 74), alpha=0.94)
-                hover Transform("gui/phone/icons/phone.png", xysize=(82, 82), alpha=1.0)
+            if hud_hovered:
+                add "gui/phone/icon_glow.svg":
+                    xysize (106, 106)
+                    xalign 0.5
+                    yalign 0.5
+
+                add "gui/phone/icons/phone.png":
+                    xysize (84, 84)
+                    xalign 0.5
+                    yalign 0.5
+            else:
+                add "gui/phone/icons/phone.png":
+                    xysize (74, 74)
+                    xalign 0.5
+                    yalign 0.5
+                    alpha 0.94
+
+            button:
+                xfill True
+                yfill True
+                background None
+                hover_background None
                 action Show("phone_screen")
-                focus_mask True
+                hovered SetScreenVariable("hud_hovered", True)
+                unhovered SetScreenVariable("hud_hovered", False)
 
             if phone_total_unread() > 0:
                 fixed:
-                    xpos 58
+                    xpos 61
                     ypos 1
                     xsize 42
                     ysize 32
@@ -76,20 +95,24 @@ screen phone_notification_banner():
                 xsize 652
                 spacing 2
 
-                hbox:
+                fixed:
                     xfill True
                     ysize 25
-                    spacing 7
 
-                    add phone_app_icon_path(phone_notification_current["app"]):
-                        xysize (22, 22)
+                    hbox:
+                        xalign 0.0
                         yalign 0.5
+                        spacing 7
 
-                    text "[phone_notification_current['app']]":
-                        size 17
-                        color "#6e6e73"
-                        bold True
-                        yalign 0.5
+                        add phone_app_icon_path(phone_notification_current["app"]):
+                            xysize (22, 22)
+                            yalign 0.5
+
+                        text "[phone_notification_current['app']]":
+                            size 17
+                            color "#6e6e73"
+                            bold True
+                            yalign 0.5
 
                     text "now":
                         size 15
