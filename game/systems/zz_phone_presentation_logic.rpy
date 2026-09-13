@@ -6,14 +6,15 @@ init python:
     PHONE_NOTIFICATION_BODY_MAX = 72
     PHONE_NOTIFICATION_TITLE_MAX = 32
 
-    PHONE_NOTIFICATION_APP_ICONS = {
-        "Messages": "💬",
-        "Photos": "🖼",
-        "Shop": "🛍",
-        "Online Shop": "🛍",
-        "Delivery": "📦",
-        "Orders": "📦",
-        "Wallet": "👛",
+    PHONE_APP_ICON_PATHS = {
+        "Phone": "gui/phone/icons/phone.png",
+        "Messages": "gui/phone/icons/messages.png",
+        "Photos": "gui/phone/icons/photos.png",
+        "Shop": "gui/phone/icons/shop.png",
+        "Online Shop": "gui/phone/icons/shop.png",
+        "Delivery": "gui/phone/icons/delivery.png",
+        "Orders": "gui/phone/icons/delivery.png",
+        "Wallet": "gui/phone/icons/wallet.png",
     }
 
     def phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX):
@@ -33,11 +34,17 @@ init python:
 
         return shortened.rstrip(" ,.;:-") + "..."
 
-    def phone_notification_app_label(app):
-        """Return a prototype-friendly app label with a small emoji icon."""
+    def phone_app_icon_path(app):
+        """Return the custom UI icon for a phone app, with Phone as fallback."""
         clean = (app or "Phone").strip()
-        icon = PHONE_NOTIFICATION_APP_ICONS.get(clean, "📱")
-        return "{} {}".format(icon, clean)
+        return PHONE_APP_ICON_PATHS.get(clean, PHONE_APP_ICON_PATHS["Phone"])
+
+    def phone_unread_badge_label(count=None):
+        """Return a compact unread badge value suitable for the Phone HUD."""
+        value = phone_total_unread() if count is None else int(count)
+        if value > 99:
+            return "99+"
+        return str(max(0, value))
 
     def set_phone_unlocked(value=True):
         renpy.store.phone_unlocked = bool(value)
