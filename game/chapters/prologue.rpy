@@ -44,7 +44,7 @@ label prologue_start:
     mc "Nobody."
     friend "You are literally looking at her."
     mc "I'm observing the room."
-    friend "Very academically."
+    friend "You can't make it any more obvious."
 
     "The groups merged eventually. Not because of fate. Not because [friend_name] had a plan."
     "Mostly because somebody dragged two chairs over and suddenly everyone was talking over everyone else."
