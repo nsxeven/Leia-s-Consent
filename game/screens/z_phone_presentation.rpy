@@ -84,9 +84,6 @@ screen phone_notification_banner():
             xsize 700
             ysize 116
 
-            # Render the rounded card as one complete image instead of a nine-slice
-            # Frame. This avoids the visible seams/gaps that can appear with SVG
-            # slicing at some window scales.
             add "gui/phone/notification_card.svg"
 
             vbox:
@@ -131,34 +128,35 @@ screen phone_first_use_tutorial():
     modal True
     zorder 650
 
-    add Solid("#00000099")
+    add Solid("#00000066")
 
     frame:
         xalign 0.5
         yalign 0.5
         xsize 700
-        padding (34, 30)
-        background Solid("#17171df7")
+        padding (36, 32)
+        background Solid("#fafafd")
 
         vbox:
             spacing 16
             xfill True
 
-            text "PHONE UNLOCKED" size 32 color "#ffffff" bold True xalign 0.5
-            text "Messages, photos, purchases, deliveries, and other updates can appear on Ryan's phone as the story progresses." size 20 color "#dedee4" text_align 0.5 xalign 0.5 line_spacing 5
-            text "New activity can appear as a notification at the top of the screen. The badge on the Phone shows how many unread messages are waiting." size 18 color "#bdbdc6" text_align 0.5 xalign 0.5 line_spacing 4
+            add "gui/phone/icons/phone.png" xysize (92, 92) xalign 0.5
+            text "PHONE UNLOCKED" size 31 color "#1c1c1e" bold True xalign 0.5
+            text "Messages, photos, purchases, deliveries, and other updates can appear on Ryan's phone as the story progresses." size 20 color "#3a3a3c" text_align 0.5 xalign 0.5 line_spacing 5
+            text "New activity can appear as a notification at the top of the screen. The badge on the Phone shows how many unread messages are waiting." size 18 color "#8e8e93" text_align 0.5 xalign 0.5 line_spacing 4
 
             null height 4
 
             textbutton "Got it":
                 xalign 0.5
                 xsize 220
-                ysize 58
+                ysize 56
                 padding (0, 0)
-                background Solid("#2c2c2e")
-                hover_background Solid("#48484a")
+                background Solid("#0a84ff")
+                hover_background Solid("#409cff")
                 text_idle_color "#ffffff"
-                text_hover_color "#8ecbff"
+                text_hover_color "#ffffff"
                 text_xalign 0.5
                 text_yalign 0.5
                 action [SetField(persistent, "phone_tutorial_seen", True), Hide("phone_first_use_tutorial")]
