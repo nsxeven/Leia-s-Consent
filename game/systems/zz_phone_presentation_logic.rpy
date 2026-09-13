@@ -3,8 +3,8 @@
 
 init python:
 
-    PHONE_NOTIFICATION_BODY_MAX = 88
-    PHONE_NOTIFICATION_TITLE_MAX = 34
+    PHONE_NOTIFICATION_BODY_MAX = 72
+    PHONE_NOTIFICATION_TITLE_MAX = 32
 
     def phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX):
         """Return a compact single-line notification preview with a clean ellipsis."""
@@ -109,9 +109,17 @@ init python:
 
         return added
 
+    def debug_reset_phone_tutorial():
+        persistent.phone_tutorial_seen = False
+        renpy.notify("Phone tutorial reset. It will appear at the next Phone unlock.")
+        return None
+
     def phone_unlock_with_tutorial():
         set_phone_unlocked(True)
-        if not persistent.phone_tutorial_seen:
+
+        # Release behaviour: tutorial is shown once globally.
+        # Developer behaviour: always show it so repeated New Game tests can verify the flow.
+        if (not persistent.phone_tutorial_seen) or bool(config.developer):
             renpy.show_screen("phone_first_use_tutorial")
         else:
             renpy.notify("Phone unlocked.")
