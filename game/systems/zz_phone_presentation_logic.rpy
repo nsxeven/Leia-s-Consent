@@ -6,6 +6,16 @@ init python:
     PHONE_NOTIFICATION_BODY_MAX = 72
     PHONE_NOTIFICATION_TITLE_MAX = 32
 
+    PHONE_NOTIFICATION_APP_ICONS = {
+        "Messages": "💬",
+        "Photos": "🖼",
+        "Shop": "🛍",
+        "Online Shop": "🛍",
+        "Delivery": "📦",
+        "Orders": "📦",
+        "Wallet": "👛",
+    }
+
     def phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX):
         """Return a compact single-line notification preview with a clean ellipsis."""
         clean = " ".join((text or "").split())
@@ -22,6 +32,12 @@ init python:
                 shortened = word_boundary
 
         return shortened.rstrip(" ,.;:-") + "..."
+
+    def phone_notification_app_label(app):
+        """Return a prototype-friendly app label with a small emoji icon."""
+        clean = (app or "Phone").strip()
+        icon = PHONE_NOTIFICATION_APP_ICONS.get(clean, "📱")
+        return "{} {}".format(icon, clean)
 
     def set_phone_unlocked(value=True):
         renpy.store.phone_unlocked = bool(value)
