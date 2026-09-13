@@ -1,4 +1,4 @@
-# Phone presentation screens: native Ren'Py UI, no image assets required.
+# Phone presentation screens: native Ren'Py UI, no image-generation assets required.
 
 default phone_unlocked = False
 default phone_hud_enabled = True
@@ -64,9 +64,9 @@ screen phone_notification_banner():
             at phone_notification_slide
             xalign 0.5
             yalign 0.0
-            xsize 680
-            padding (24, 18)
-            background Solid("#17171df2")
+            xsize 720
+            padding (26, 20)
+            background Frame("gui/phone/notification_card.svg", 28, 28)
 
             vbox:
                 spacing 5
@@ -74,11 +74,11 @@ screen phone_notification_banner():
 
                 hbox:
                     xfill True
-                    text "[phone_notification_current['app']]" size 17 color "#d7d7dd" bold True
-                    text "now" size 15 color "#9999a2" xalign 1.0
+                    text "[phone_notification_current['app']]" size 17 color "#6e6e73" bold True
+                    text "now" size 15 color "#8e8e93" xalign 1.0
 
-                text "[phone_notification_current['title']]" size 23 color "#ffffff" bold True
-                text "[phone_notification_current['body']]" size 19 color "#eeeeF2" line_spacing 2
+                text "[phone_notification_current['title']]" size 23 color "#111111" bold True
+                text "[phone_notification_current['body']]" size 19 color "#2c2c2e" line_spacing 2
 
         timer 3.75 action Function(phone_finish_notification)
 
@@ -110,4 +110,6 @@ screen phone_first_use_tutorial():
             textbutton "Got it":
                 xalign 0.5
                 xsize 220
+                text_xalign 0.5
+                text_align 0.5
                 action [SetField(persistent, "phone_tutorial_seen", True), Hide("phone_first_use_tutorial")]
