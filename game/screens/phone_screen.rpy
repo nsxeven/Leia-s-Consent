@@ -25,7 +25,7 @@ screen phone_screen():
         yalign 0.5
         xsize 660
         ysize 1010
-        background Frame("gui/phone/rounded_shell.svg", 30, 30)
+        background Frame("gui/phone/rounded_shell.png", 30, 30)
         padding (14, 14)
 
         vbox:
@@ -43,19 +43,19 @@ screen phone_screen():
                     yalign 0.5
                     xsize 126
                     ysize 9
-                    background Frame("gui/phone/rounded_light.svg", 20, 20)
+                    background Frame("gui/phone/rounded_light.png", 20, 20)
 
                 frame:
                     xpos 518
                     yalign 0.5
                     xsize 12
                     ysize 12
-                    background Frame("gui/phone/rounded_light.svg", 20, 20)
+                    background Frame("gui/phone/rounded_light.png", 20, 20)
 
             frame:
                 xfill True
                 yfill True
-                background Frame("gui/phone/rounded_screen.svg", 28, 28)
+                background Frame("gui/phone/rounded_screen.png", 28, 28)
                 padding (22, 18)
 
                 vbox:
@@ -242,7 +242,7 @@ screen phone_screen():
                         if current_choice_mode() == "developer":
                             frame:
                                 xfill True
-                                background Frame("gui/phone/rounded_pink.svg", 24, 24)
+                                background Frame("gui/phone/rounded_pink.png", 24, 24)
                                 padding (16, 14)
 
                                 vbox:
@@ -250,13 +250,13 @@ screen phone_screen():
                                     text "DEVELOPER PHONE TOOLS" size 14 color "#c53e71" bold True
                                     textbutton "Add placeholder messages + image attachment":
                                         background None
-                                        hover_background Frame("gui/phone/rounded_white.svg", 22, 22)
+                                        hover_background Frame("gui/phone/rounded_white.png", 22, 22)
                                         text_idle_color "#1c1c1e"
                                         text_hover_color "#007aff"
                                         action Function(phone_debug_seed_messages)
                                     textbutton "Clear all phone messages":
                                         background None
-                                        hover_background Frame("gui/phone/rounded_white.svg", 22, 22)
+                                        hover_background Frame("gui/phone/rounded_white.png", 22, 22)
                                         text_idle_color "#1c1c1e"
                                         text_hover_color "#007aff"
                                         action Function(phone_debug_clear_messages)
@@ -282,8 +282,8 @@ screen phone_screen():
                                         xfill True
                                         ysize 94
                                         padding (12, 10)
-                                        background (Frame("gui/phone/rounded_blue.svg", 24, 24) if unread_count > 0 else Frame("gui/phone/rounded_white.svg", 24, 24))
-                                        hover_background Frame("gui/phone/rounded_blue.svg", 24, 24)
+                                        background (Frame("gui/phone/rounded_blue.png", 24, 24) if unread_count > 0 else Frame("gui/phone/rounded_white.png", 24, 24))
+                                        hover_background Frame("gui/phone/rounded_blue.png", 24, 24)
                                         action [
                                             Function(phone_mark_thread_read, thread_id),
                                             SetScreenVariable("phone_thread", thread_id),
@@ -333,7 +333,7 @@ screen phone_screen():
                                 if not thread_messages:
                                     frame:
                                         xfill True
-                                        background Frame("gui/phone/rounded_white.svg", 24, 24)
+                                        background Frame("gui/phone/rounded_white.png", 24, 24)
                                         padding (18, 18)
                                         text "No messages yet." size 15 color "#8e8e93" xalign 0.5
 
@@ -355,7 +355,7 @@ screen phone_screen():
                                         frame:
                                             xmaximum 455
                                             xalign (1.0 if from_player else 0.0)
-                                            background (Frame("gui/phone/bubble_outgoing.svg", 30, 30) if from_player else Frame("gui/phone/bubble_incoming.svg", 30, 30))
+                                            background (Frame("gui/phone/bubble_outgoing.png", 30, 30) if from_player else Frame("gui/phone/bubble_incoming.png", 30, 30))
                                             padding ((17, 12, 20, 15) if from_player else (20, 12, 17, 15))
 
                                             vbox:
@@ -368,7 +368,7 @@ screen phone_screen():
                                                     frame:
                                                         xfill True
                                                         ysize 176
-                                                        background Frame("gui/phone/rounded_white.svg", 24, 24)
+                                                        background Frame("gui/phone/rounded_white.png", 24, 24)
                                                         padding (14, 12)
 
                                                         vbox:
@@ -384,14 +384,14 @@ screen phone_screen():
 
                         frame:
                             xfill True
-                            background Frame("gui/phone/rounded_blue.svg", 24, 24)
+                            background Frame("gui/phone/rounded_blue.png", 24, 24)
                             padding (15, 13)
                             text "Buying adds an outfit to [girlfriend_name]'s Wardrobe. Whether she wants to wear it is handled separately." size 14 color "#2c2c2e" line_spacing 3
 
                         if last_shop_message:
                             frame:
                                 xfill True
-                                background Frame("gui/phone/rounded_yellow.svg", 24, 24)
+                                background Frame("gui/phone/rounded_yellow.png", 24, 24)
                                 padding (14, 11)
                                 text "[last_shop_message]" size 14 color "#4a3a16"
 
@@ -416,7 +416,7 @@ screen phone_screen():
 
                                     frame:
                                         xfill True
-                                        background Frame("gui/phone/rounded_white.svg", 24, 24)
+                                        background Frame("gui/phone/rounded_white.png", 24, 24)
                                         padding (16, 15)
 
                                         vbox:
@@ -426,7 +426,7 @@ screen phone_screen():
                                             frame:
                                                 xfill True
                                                 ysize 118
-                                                background Frame("gui/phone/rounded_light.svg", 24, 24)
+                                                background Frame("gui/phone/rounded_light.png", 24, 24)
                                                 padding (10, 10)
 
                                                 vbox:
@@ -449,8 +449,8 @@ screen phone_screen():
                                                 textbutton "Buy for $[phone_outfit_cost]":
                                                     xfill True
                                                     ysize 46
-                                                    background Frame("gui/phone/rounded_button_blue.svg", 24, 24)
-                                                    hover_background Frame("gui/phone/rounded_button_blue_hover.svg", 24, 24)
+                                                    background Frame("gui/phone/rounded_button_blue.png", 24, 24)
+                                                    hover_background Frame("gui/phone/rounded_button_blue_hover.png", 24, 24)
                                                     text_idle_color "#ffffff"
                                                     text_hover_color "#ffffff"
                                                     text_xalign 0.5
@@ -460,7 +460,7 @@ screen phone_screen():
                                                 textbutton "Need $[phone_outfit_cost] — You have $[money]":
                                                     xfill True
                                                     ysize 46
-                                                    background Frame("gui/phone/rounded_light.svg", 24, 24)
+                                                    background Frame("gui/phone/rounded_light.png", 24, 24)
                                                     text_idle_color "#8e8e93"
                                                     text_xalign 0.5
                                                     text_yalign 0.5
@@ -469,7 +469,7 @@ screen phone_screen():
                                                 textbutton "Owned":
                                                     xfill True
                                                     ysize 46
-                                                    background Frame("gui/phone/rounded_green.svg", 24, 24)
+                                                    background Frame("gui/phone/rounded_green.png", 24, 24)
                                                     text_idle_color "#26734d"
                                                     text_xalign 0.5
                                                     text_yalign 0.5
@@ -478,7 +478,7 @@ screen phone_screen():
                                                 textbutton "Locked":
                                                     xfill True
                                                     ysize 46
-                                                    background Frame("gui/phone/rounded_light.svg", 24, 24)
+                                                    background Frame("gui/phone/rounded_light.png", 24, 24)
                                                     text_idle_color "#8e8e93"
                                                     text_xalign 0.5
                                                     text_yalign 0.5
@@ -488,7 +488,7 @@ screen phone_screen():
 
                         frame:
                             xfill True
-                            background Frame("gui/phone/rounded_white.svg", 26, 26)
+                            background Frame("gui/phone/rounded_white.png", 26, 26)
                             padding (24, 24)
 
                             vbox:
@@ -498,7 +498,7 @@ screen phone_screen():
                                 text "Story photos and received image attachments will collect here as they are unlocked." size 15 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
                                 frame:
                                     xfill True
-                                    background Frame("gui/phone/rounded_light.svg", 22, 22)
+                                    background Frame("gui/phone/rounded_light.png", 22, 22)
                                     padding (16, 14)
                                     text "No photos yet." size 14 color "#8e8e93" xalign 0.5
 
@@ -506,7 +506,7 @@ screen phone_screen():
 
                         frame:
                             xfill True
-                            background Frame("gui/phone/rounded_white.svg", 26, 26)
+                            background Frame("gui/phone/rounded_white.png", 26, 26)
                             padding (24, 24)
 
                             vbox:
@@ -518,7 +518,7 @@ screen phone_screen():
                                 if last_money_reason:
                                     frame:
                                         xfill True
-                                        background Frame("gui/phone/rounded_light.svg", 22, 22)
+                                        background Frame("gui/phone/rounded_light.png", 22, 22)
                                         padding (14, 12)
                                         vbox:
                                             spacing 4
@@ -527,7 +527,7 @@ screen phone_screen():
                                 else:
                                     frame:
                                         xfill True
-                                        background Frame("gui/phone/rounded_light.svg", 22, 22)
+                                        background Frame("gui/phone/rounded_light.png", 22, 22)
                                         padding (14, 12)
                                         text "No transactions recorded yet." size 14 color "#8e8e93" xalign 0.5
 
@@ -535,7 +535,7 @@ screen phone_screen():
 
                         frame:
                             xfill True
-                            background Frame("gui/phone/rounded_white.svg", 26, 26)
+                            background Frame("gui/phone/rounded_white.png", 26, 26)
                             padding (24, 24)
 
                             vbox:
@@ -545,7 +545,7 @@ screen phone_screen():
                                 text "Orders from the Shop will appear here when delivery events are introduced." size 15 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
                                 frame:
                                     xfill True
-                                    background Frame("gui/phone/rounded_light.svg", 22, 22)
+                                    background Frame("gui/phone/rounded_light.png", 22, 22)
                                     padding (16, 14)
                                     text "Nothing on the way." size 14 color "#8e8e93" xalign 0.5
 
@@ -559,4 +559,4 @@ screen phone_screen():
                     yalign 0.5
                     xsize 118
                     ysize 5
-                    background Frame("gui/phone/rounded_light.svg", 20, 20)
+                    background Frame("gui/phone/rounded_light.png", 20, 20)
