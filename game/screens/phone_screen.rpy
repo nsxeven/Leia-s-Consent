@@ -13,6 +13,7 @@ screen phone_screen():
 
     default phone_app = "home"
     default phone_thread = None
+    default hovered_app = None
 
     key "K_ESCAPE" action Hide("phone_screen")
 
@@ -107,88 +108,118 @@ screen phone_screen():
                             spacing 12
                             xalign 0.5
 
-                            button:
+                            fixed:
                                 xsize 180
                                 ysize 205
-                                padding (10, 12)
-                                background Solid("#211c24")
-                                hover_background Solid("#302832")
-                                action SetScreenVariable("phone_app", "messages")
 
-                                vbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    spacing 5
-                                    add "gui/phone/icons/messages.png" xysize (108, 108) xalign 0.5
-                                    text "Messages" size 18 color "#ffffff" xalign 0.5
-                                    if phone_total_unread() > 0:
-                                        text "● [phone_unread_badge_label()] unread" size 13 color "#f06b70" xalign 0.5
-                                    else:
-                                        text "No unread" size 12 color "#857987" xalign 0.5
+                                if hovered_app == "messages":
+                                    add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
+                                    add "gui/phone/icons/messages.png" xysize (118, 118) xalign 0.5 ypos 6
+                                else:
+                                    add "gui/phone/icons/messages.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                            button:
+                                text "Messages" size 18 color "#ffffff" xalign 0.5 ypos 132
+                                if phone_total_unread() > 0:
+                                    text "● [phone_unread_badge_label()] unread" size 13 color "#f06b70" xalign 0.5 ypos 160
+                                else:
+                                    text "No unread" size 12 color "#857987" xalign 0.5 ypos 160
+
+                                button:
+                                    xfill True
+                                    yfill True
+                                    background None
+                                    hover_background None
+                                    action SetScreenVariable("phone_app", "messages")
+                                    hovered SetScreenVariable("hovered_app", "messages")
+                                    unhovered SetScreenVariable("hovered_app", None)
+
+                            fixed:
                                 xsize 180
                                 ysize 205
-                                padding (10, 12)
-                                background Solid("#211c24")
-                                hover_background Solid("#302832")
-                                action SetScreenVariable("phone_app", "photos")
 
-                                vbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    spacing 5
-                                    add "gui/phone/icons/photos.png" xysize (108, 108) xalign 0.5
-                                    text "Photos" size 18 color "#ffffff" xalign 0.5
-                                    text "Camera roll" size 12 color "#857987" xalign 0.5
+                                if hovered_app == "photos":
+                                    add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
+                                    add "gui/phone/icons/photos.png" xysize (118, 118) xalign 0.5 ypos 6
+                                else:
+                                    add "gui/phone/icons/photos.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                            button:
+                                text "Photos" size 18 color "#ffffff" xalign 0.5 ypos 132
+                                text "Camera roll" size 12 color "#857987" xalign 0.5 ypos 160
+
+                                button:
+                                    xfill True
+                                    yfill True
+                                    background None
+                                    hover_background None
+                                    action SetScreenVariable("phone_app", "photos")
+                                    hovered SetScreenVariable("hovered_app", "photos")
+                                    unhovered SetScreenVariable("hovered_app", None)
+
+                            fixed:
                                 xsize 180
                                 ysize 205
-                                padding (10, 12)
-                                background Solid("#211c24")
-                                hover_background Solid("#302832")
-                                action SetScreenVariable("phone_app", "shop")
 
-                                vbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    spacing 5
-                                    add "gui/phone/icons/shop.png" xysize (108, 108) xalign 0.5
-                                    text "Shop" size 18 color "#ffffff" xalign 0.5
-                                    text "[len(shop_outfit_ids())] items" size 12 color "#857987" xalign 0.5
+                                if hovered_app == "shop":
+                                    add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
+                                    add "gui/phone/icons/shop.png" xysize (118, 118) xalign 0.5 ypos 6
+                                else:
+                                    add "gui/phone/icons/shop.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                            button:
+                                text "Shop" size 18 color "#ffffff" xalign 0.5 ypos 132
+                                text "[len(shop_outfit_ids())] items" size 12 color "#857987" xalign 0.5 ypos 160
+
+                                button:
+                                    xfill True
+                                    yfill True
+                                    background None
+                                    hover_background None
+                                    action SetScreenVariable("phone_app", "shop")
+                                    hovered SetScreenVariable("hovered_app", "shop")
+                                    unhovered SetScreenVariable("hovered_app", None)
+
+                            fixed:
                                 xsize 180
                                 ysize 205
-                                padding (10, 12)
-                                background Solid("#211c24")
-                                hover_background Solid("#302832")
-                                action SetScreenVariable("phone_app", "wallet")
 
-                                vbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    spacing 5
-                                    add "gui/phone/icons/wallet.png" xysize (108, 108) xalign 0.5
-                                    text "Wallet" size 18 color "#ffffff" xalign 0.5
-                                    text "$[money]" size 12 color "#857987" xalign 0.5
+                                if hovered_app == "wallet":
+                                    add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
+                                    add "gui/phone/icons/wallet.png" xysize (118, 118) xalign 0.5 ypos 6
+                                else:
+                                    add "gui/phone/icons/wallet.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                            button:
+                                text "Wallet" size 18 color "#ffffff" xalign 0.5 ypos 132
+                                text "$[money]" size 12 color "#857987" xalign 0.5 ypos 160
+
+                                button:
+                                    xfill True
+                                    yfill True
+                                    background None
+                                    hover_background None
+                                    action SetScreenVariable("phone_app", "wallet")
+                                    hovered SetScreenVariable("hovered_app", "wallet")
+                                    unhovered SetScreenVariable("hovered_app", None)
+
+                            fixed:
                                 xsize 180
                                 ysize 205
-                                padding (10, 12)
-                                background Solid("#211c24")
-                                hover_background Solid("#302832")
-                                action SetScreenVariable("phone_app", "delivery")
 
-                                vbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    spacing 5
-                                    add "gui/phone/icons/delivery.png" xysize (108, 108) xalign 0.5
-                                    text "Delivery" size 18 color "#ffffff" xalign 0.5
-                                    text "Orders" size 12 color "#857987" xalign 0.5
+                                if hovered_app == "delivery":
+                                    add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
+                                    add "gui/phone/icons/delivery.png" xysize (118, 118) xalign 0.5 ypos 6
+                                else:
+                                    add "gui/phone/icons/delivery.png" xysize (108, 108) xalign 0.5 ypos 11
+
+                                text "Delivery" size 18 color "#ffffff" xalign 0.5 ypos 132
+                                text "Orders" size 12 color "#857987" xalign 0.5 ypos 160
+
+                                button:
+                                    xfill True
+                                    yfill True
+                                    background None
+                                    hover_background None
+                                    action SetScreenVariable("phone_app", "delivery")
+                                    hovered SetScreenVariable("hovered_app", "delivery")
+                                    unhovered SetScreenVariable("hovered_app", None)
 
                             null width 180 height 205
 
