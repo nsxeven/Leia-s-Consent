@@ -313,7 +313,7 @@ screen phone_screen():
                                                             padding (8, 3)
                                                             text "[unread_count]" size 12 color "#ffffff" bold True
 
-                                                text "[thread_preview]" size 14 color "#6d6d72" max_width 430
+                                                text "[thread_preview]" size 14 color "#6d6d72" xmaximum 430
 
                     elif phone_app == "thread":
 
