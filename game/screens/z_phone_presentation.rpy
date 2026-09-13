@@ -111,5 +111,4 @@ screen phone_first_use_tutorial():
                 xalign 0.5
                 xsize 220
                 text_xalign 0.5
-                text_align 0.5
                 action [SetField(persistent, "phone_tutorial_seen", True), Hide("phone_first_use_tutorial")]
