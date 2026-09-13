@@ -3,6 +3,26 @@
 
 init python:
 
+    PHONE_NOTIFICATION_BODY_MAX = 88
+    PHONE_NOTIFICATION_TITLE_MAX = 34
+
+    def phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX):
+        """Return a compact single-line notification preview with a clean ellipsis."""
+        clean = " ".join((text or "").split())
+        if len(clean) <= max_chars:
+            return clean
+
+        cutoff = max(4, max_chars - 3)
+        shortened = clean[:cutoff].rstrip()
+
+        # Prefer ending at a word boundary when that does not throw away too much text.
+        if " " in shortened:
+            word_boundary = shortened.rsplit(" ", 1)[0].rstrip()
+            if len(word_boundary) >= int(cutoff * 0.72):
+                shortened = word_boundary
+
+        return shortened.rstrip(" ,.;:-") + "..."
+
     def set_phone_unlocked(value=True):
         renpy.store.phone_unlocked = bool(value)
         renpy.restart_interaction()
@@ -26,8 +46,8 @@ init python:
     def phone_queue_notification(app, title, body, kind="message"):
         item = {
             "app": app,
-            "title": title,
-            "body": body,
+            "title": phone_notification_preview(title, PHONE_NOTIFICATION_TITLE_MAX),
+            "body": phone_notification_preview(body, PHONE_NOTIFICATION_BODY_MAX),
             "kind": kind,
         }
         renpy.store.phone_notification_queue.append(item)
