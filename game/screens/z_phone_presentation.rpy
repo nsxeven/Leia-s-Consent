@@ -64,21 +64,23 @@ screen phone_notification_banner():
             at phone_notification_slide
             xalign 0.5
             yalign 0.0
-            xsize 720
-            padding (26, 20)
-            background Frame("gui/phone/notification_card.svg", 28, 28)
+            xsize 700
+            ysize 116
+            padding (26, 17)
+            background Frame("gui/phone/notification_card.svg", 30, 30)
 
             vbox:
-                spacing 5
+                spacing 3
                 xfill True
+                yalign 0.5
 
                 hbox:
                     xfill True
                     text "[phone_notification_current['app']]" size 17 color "#6e6e73" bold True
                     text "now" size 15 color "#8e8e93" xalign 1.0
 
-                text "[phone_notification_current['title']]" size 23 color "#111111" bold True
-                text "[phone_notification_current['body']]" size 19 color "#2c2c2e" line_spacing 2
+                text "[phone_notification_current['title']]" size 22 color "#111111" bold True
+                text "[phone_notification_current['body']]" size 18 color "#2c2c2e"
 
         timer 3.75 action Function(phone_finish_notification)
 
