@@ -60,19 +60,23 @@ screen phone_notification_banner():
     zorder 620
 
     if phone_notification_current:
-        frame:
+        fixed:
             at phone_notification_slide
             xalign 0.5
             yalign 0.0
             xsize 700
             ysize 116
-            padding (26, 17)
-            background Frame("gui/phone/notification_card.svg", 30, 30)
+
+            # Render the rounded card as one complete image instead of a nine-slice
+            # Frame. This avoids the visible seams/gaps that can appear with SVG
+            # slicing at some window scales.
+            add "gui/phone/notification_card.svg"
 
             vbox:
+                xpos 26
+                ypos 16
+                xsize 648
                 spacing 3
-                xfill True
-                yalign 0.5
 
                 hbox:
                     xfill True
@@ -112,5 +116,12 @@ screen phone_first_use_tutorial():
             textbutton "Got it":
                 xalign 0.5
                 xsize 220
+                ysize 58
+                padding (0, 0)
+                background Solid("#2c2c2e")
+                hover_background Solid("#48484a")
+                text_idle_color "#ffffff"
+                text_hover_color "#8ecbff"
                 text_xalign 0.5
+                text_yalign 0.5
                 action [SetField(persistent, "phone_tutorial_seen", True), Hide("phone_first_use_tutorial")]
