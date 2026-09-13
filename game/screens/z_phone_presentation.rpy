@@ -1,4 +1,4 @@
-# Phone presentation screens: native Ren'Py UI, no image-generation assets required.
+# Phone presentation screens using the custom phone icon set.
 
 default phone_unlocked = False
 default phone_hud_enabled = True
@@ -22,37 +22,35 @@ screen phone_quick_access():
     zorder 110
 
     if phone_unlocked and phone_hud_enabled and quick_menu and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen"):
-        button:
+        fixed:
             xalign 0.985
             yalign 0.91
-            xsize 86
-            ysize 116
-            padding (8, 8)
-            background Solid("#171319")
-            hover_background Solid("#3a2a37")
-            action Show("phone_screen")
+            xsize 102
+            ysize 102
 
-            vbox:
+            imagebutton:
                 xalign 0.5
                 yalign 0.5
-                spacing 4
+                idle Transform("gui/phone/icons/phone.png", xysize=(74, 74), alpha=0.94)
+                hover Transform("gui/phone/icons/phone.png", xysize=(82, 82), alpha=1.0)
+                action Show("phone_screen")
+                focus_mask True
 
+            if phone_total_unread() > 0:
                 frame:
-                    xalign 0.5
-                    xsize 38
-                    ysize 58
-                    background Solid("#29222c")
-                    padding (4, 4)
-                    text "P" size 24 color "#f1a8c8" xalign 0.5 yalign 0.5
+                    xpos 63
+                    ypos 4
+                    xminimum 30
+                    yminimum 30
+                    padding (7, 4)
+                    background Solid("#e5484d")
 
-                text "PHONE" size 11 color "#ffffff" xalign 0.5
-
-                if phone_total_unread() > 0:
-                    frame:
+                    text "[phone_unread_badge_label()]":
+                        size 13
+                        color "#ffffff"
+                        bold True
                         xalign 0.5
-                        background Solid("#d94a67")
-                        padding (7, 3)
-                        text "[phone_total_unread()]" size 11 color "#ffffff" xalign 0.5
+                        yalign 0.5
 
 
 screen phone_notification_banner():
@@ -73,15 +71,31 @@ screen phone_notification_banner():
             add "gui/phone/notification_card.svg"
 
             vbox:
-                xpos 26
-                ypos 16
-                xsize 648
-                spacing 3
+                xpos 24
+                ypos 13
+                xsize 652
+                spacing 2
 
                 hbox:
                     xfill True
-                    text "[phone_notification_app_label(phone_notification_current['app'])]" size 17 color "#6e6e73" bold True
-                    text "now" size 15 color "#8e8e93" xalign 1.0
+                    ysize 25
+                    spacing 7
+
+                    add phone_app_icon_path(phone_notification_current["app"]):
+                        xysize (22, 22)
+                        yalign 0.5
+
+                    text "[phone_notification_current['app']]":
+                        size 17
+                        color "#6e6e73"
+                        bold True
+                        yalign 0.5
+
+                    text "now":
+                        size 15
+                        color "#8e8e93"
+                        xalign 1.0
+                        yalign 0.5
 
                 text "[phone_notification_current['title']]" size 22 color "#111111" bold True
                 text "[phone_notification_current['body']]" size 18 color "#2c2c2e"
