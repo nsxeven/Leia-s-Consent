@@ -2,4 +2,4 @@
 # Keep this file intentionally small; story content lives in chapter files.
 
 label start:
-    jump dev_name_setup
+    jump prologue_name_setup
