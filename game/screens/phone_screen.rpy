@@ -1,5 +1,5 @@
 # Diegetic in-game phone hub.
-# Core app logic remains lightweight; presentation uses the custom icon set.
+# Bright, playful phone presentation with familiar modern mobile UI patterns.
 
 init python:
     if "phone_quick_access" not in config.overlay_screens:
@@ -17,84 +17,100 @@ screen phone_screen():
 
     key "K_ESCAPE" action Hide("phone_screen")
 
-    add Solid("#000000aa")
+    # Keep the world visible behind the handset while making the phone easy to read.
+    add Solid("#00000066")
 
     frame:
         xalign 0.5
         yalign 0.5
         xsize 660
         ysize 1010
-        background Solid("#0d0b0f")
-        padding (16, 16)
+        background Solid("#e9e9ee")
+        padding (14, 14)
 
         vbox:
-            spacing 10
+            spacing 8
             xfill True
             yfill True
 
-            # Simple fictional handset speaker / camera area.
-            hbox:
+            # Fictional handset speaker / camera area.
+            fixed:
                 xfill True
-                ysize 26
-
-                null width 240
+                ysize 28
 
                 frame:
-                    xsize 130
-                    ysize 10
+                    xalign 0.5
                     yalign 0.5
-                    background Solid("#29232b")
+                    xsize 126
+                    ysize 9
+                    background Solid("#b9bac2")
 
                 frame:
+                    xpos 518
+                    yalign 0.5
                     xsize 12
                     ysize 12
-                    yalign 0.5
-                    xoffset 12
-                    background Solid("#3b323d")
+                    background Solid("#c4c5cc")
 
             frame:
                 xfill True
                 yfill True
-                background Solid("#19151d")
-                padding (24, 20)
+                background Solid("#f7f7fa")
+                padding (22, 18)
 
                 vbox:
-                    spacing 16
+                    spacing 14
                     xfill True
                     yfill True
 
-                    hbox:
+                    # App header.
+                    fixed:
                         xfill True
+                        ysize 74
 
                         vbox:
-                            spacing 2
-                            text "LEIA'S CONSENT" size 16 color "#a99ba8"
+                            xpos 0
+                            ypos 2
+                            spacing 1
+
+                            text "LEIA'S CONSENT" size 13 color "#8e8e93"
+
                             if phone_app == "home":
-                                text "PHONE" size 30 color "#ffffff"
+                                text "Phone" size 30 color "#1c1c1e" bold True
                             elif phone_app == "messages":
-                                text "MESSAGES" size 30 color "#ffffff"
+                                text "Messages" size 30 color "#1c1c1e" bold True
                             elif phone_app == "thread":
-                                text "[phone_thread_label(phone_thread)]" size 30 color "#ffffff"
+                                text "[phone_thread_label(phone_thread)]" size 27 color "#1c1c1e" bold True
                             elif phone_app == "shop":
-                                text "ONLINE SHOP" size 30 color "#ffffff"
+                                text "Shop" size 30 color "#1c1c1e" bold True
                             elif phone_app == "photos":
-                                text "PHOTOS" size 30 color "#ffffff"
+                                text "Photos" size 30 color "#1c1c1e" bold True
                             elif phone_app == "wallet":
-                                text "WALLET" size 30 color "#ffffff"
+                                text "Wallet" size 30 color "#1c1c1e" bold True
                             elif phone_app == "delivery":
-                                text "DELIVERIES" size 30 color "#ffffff"
+                                text "Delivery" size 30 color "#1c1c1e" bold True
 
                         vbox:
                             xalign 1.0
-                            spacing 4
+                            ypos 1
+                            spacing 5
 
-                            text "$[money]" size 18 color "#ffffff" xalign 1.0
+                            text "$[money]" size 16 color "#3a3a3c" xalign 1.0
                             textbutton "Close":
                                 xalign 1.0
+                                background None
+                                hover_background None
+                                text_idle_color "#007aff"
+                                text_hover_color "#5ac8fa"
                                 action Hide("phone_screen")
 
                     if phone_app != "home":
-                        textbutton "← Back":
+                        textbutton ("‹ Messages" if phone_app == "thread" else "‹ Phone"):
+                            background None
+                            hover_background None
+                            text_idle_color "#007aff"
+                            text_hover_color "#5ac8fa"
+                            text_size 17
                             action [
                                 SetScreenVariable("phone_app", "messages") if phone_app == "thread" else SetScreenVariable("phone_app", "home"),
                                 SetScreenVariable("phone_thread", None) if phone_app != "thread" else NullAction(),
@@ -102,7 +118,7 @@ screen phone_screen():
 
                     if phone_app == "home":
 
-                        text "Ryan's apps" size 15 color "#a99ba8" xalign 0.5
+                        text "Ryan's apps" size 14 color "#8e8e93" xalign 0.5
 
                         grid 3 2:
                             spacing 12
@@ -118,11 +134,11 @@ screen phone_screen():
                                 else:
                                     add "gui/phone/icons/messages.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                                text "Messages" size 18 color "#ffffff" xalign 0.5 ypos 132
+                                text "Messages" size 18 color "#1c1c1e" xalign 0.5 ypos 132
                                 if phone_total_unread() > 0:
-                                    text "● [phone_unread_badge_label()] unread" size 13 color "#f06b70" xalign 0.5 ypos 160
+                                    text "● [phone_unread_badge_label()] unread" size 13 color "#ff3b30" xalign 0.5 ypos 160
                                 else:
-                                    text "No unread" size 12 color "#857987" xalign 0.5 ypos 160
+                                    text "No unread" size 12 color "#8e8e93" xalign 0.5 ypos 160
 
                                 button:
                                     xfill True
@@ -143,8 +159,8 @@ screen phone_screen():
                                 else:
                                     add "gui/phone/icons/photos.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                                text "Photos" size 18 color "#ffffff" xalign 0.5 ypos 132
-                                text "Camera roll" size 12 color "#857987" xalign 0.5 ypos 160
+                                text "Photos" size 18 color "#1c1c1e" xalign 0.5 ypos 132
+                                text "Camera roll" size 12 color "#8e8e93" xalign 0.5 ypos 160
 
                                 button:
                                     xfill True
@@ -165,8 +181,8 @@ screen phone_screen():
                                 else:
                                     add "gui/phone/icons/shop.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                                text "Shop" size 18 color "#ffffff" xalign 0.5 ypos 132
-                                text "[len(shop_outfit_ids())] items" size 12 color "#857987" xalign 0.5 ypos 160
+                                text "Shop" size 18 color "#1c1c1e" xalign 0.5 ypos 132
+                                text "[len(shop_outfit_ids())] items" size 12 color "#8e8e93" xalign 0.5 ypos 160
 
                                 button:
                                     xfill True
@@ -187,8 +203,8 @@ screen phone_screen():
                                 else:
                                     add "gui/phone/icons/wallet.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                                text "Wallet" size 18 color "#ffffff" xalign 0.5 ypos 132
-                                text "$[money]" size 12 color "#857987" xalign 0.5 ypos 160
+                                text "Wallet" size 18 color "#1c1c1e" xalign 0.5 ypos 132
+                                text "$[money]" size 12 color "#8e8e93" xalign 0.5 ypos 160
 
                                 button:
                                     xfill True
@@ -209,8 +225,8 @@ screen phone_screen():
                                 else:
                                     add "gui/phone/icons/delivery.png" xysize (108, 108) xalign 0.5 ypos 11
 
-                                text "Delivery" size 18 color "#ffffff" xalign 0.5 ypos 132
-                                text "Orders" size 12 color "#857987" xalign 0.5 ypos 160
+                                text "Delivery" size 18 color "#1c1c1e" xalign 0.5 ypos 132
+                                text "Orders" size 12 color "#8e8e93" xalign 0.5 ypos 160
 
                                 button:
                                     xfill True
@@ -226,20 +242,26 @@ screen phone_screen():
                         if current_choice_mode() == "developer":
                             frame:
                                 xfill True
-                                background Solid("#2a2027")
+                                background Solid("#fff0f5")
                                 padding (16, 14)
 
                                 vbox:
                                     spacing 8
-                                    text "DEVELOPER PHONE TOOLS" size 15 color "#f1a8c8"
+                                    text "DEVELOPER PHONE TOOLS" size 14 color "#c53e71" bold True
                                     textbutton "Add placeholder messages + image attachment":
+                                        background None
+                                        hover_background Solid("#ffe3ee")
+                                        text_idle_color "#1c1c1e"
+                                        text_hover_color "#007aff"
                                         action Function(phone_debug_seed_messages)
                                     textbutton "Clear all phone messages":
+                                        background None
+                                        hover_background Solid("#ffe3ee")
+                                        text_idle_color "#1c1c1e"
+                                        text_hover_color "#007aff"
                                         action Function(phone_debug_clear_messages)
 
                     elif phone_app == "messages":
-
-                        text "Threads use stable internal IDs, so renamed characters still display correctly." size 14 color "#a99ba8"
 
                         viewport:
                             xfill True
@@ -249,7 +271,7 @@ screen phone_screen():
                             scrollbars "vertical"
 
                             vbox:
-                                spacing 12
+                                spacing 1
                                 xfill True
 
                                 for thread_id in PHONE_THREAD_ORDER:
@@ -259,26 +281,39 @@ screen phone_screen():
 
                                     button:
                                         xfill True
-                                        padding (18, 16)
-                                        background (Solid("#352735") if unread_count > 0 else Solid("#242027"))
-                                        hover_background Solid("#3a303b")
+                                        ysize 94
+                                        padding (10, 10)
+                                        background (Solid("#f0f7ff") if unread_count > 0 else Solid("#ffffff"))
+                                        hover_background Solid("#e8f2ff")
                                         action [
                                             Function(phone_mark_thread_read, thread_id),
                                             SetScreenVariable("phone_thread", thread_id),
                                             SetScreenVariable("phone_app", "thread"),
                                         ]
 
-                                        vbox:
-                                            spacing 6
+                                        hbox:
+                                            spacing 12
                                             xfill True
+                                            yalign 0.5
 
-                                            hbox:
+                                            add "gui/phone/icons/messages.png" xysize (54, 54) yalign 0.5
+
+                                            vbox:
+                                                spacing 4
                                                 xfill True
-                                                text "[thread_name]" size 21 color "#ffffff"
-                                                if unread_count > 0:
-                                                    text "[unread_count] NEW" size 13 color "#f1a8c8" xalign 1.0
+                                                yalign 0.5
 
-                                            text "[thread_preview]" size 14 color "#b8a8b5"
+                                                hbox:
+                                                    xfill True
+                                                    text "[thread_name]" size 19 color "#1c1c1e" bold (unread_count > 0)
+                                                    if unread_count > 0:
+                                                        frame:
+                                                            xalign 1.0
+                                                            background Solid("#ff3b30")
+                                                            padding (8, 3)
+                                                            text "[unread_count]" size 12 color "#ffffff" bold True
+
+                                                text "[thread_preview]" size 14 color "#6d6d72" max_width 430
 
                     elif phone_app == "thread":
 
@@ -299,9 +334,9 @@ screen phone_screen():
                                 if not thread_messages:
                                     frame:
                                         xfill True
-                                        background Solid("#242027")
+                                        background Solid("#ffffff")
                                         padding (18, 18)
-                                        text "No messages yet. Story messages will appear here as the relationship develops." size 15 color "#b8a8b5"
+                                        text "No messages yet." size 15 color "#8e8e93" xalign 0.5
 
                                 for message in thread_messages:
                                     $ message_sender = phone_sender_label(message.get("sender", "system"))
@@ -309,51 +344,58 @@ screen phone_screen():
                                     $ message_text = message.get("text", "")
                                     $ attachment_id = message.get("attachment_id")
                                     $ attachment_label = message.get("attachment_label", "Photo attachment")
+                                    $ bubble_bg = Solid("#0a84ff") if from_player else Solid("#e9e9eb")
+                                    $ bubble_text = "#ffffff" if from_player else "#1c1c1e"
 
-                                    frame:
-                                        xmaximum 470
-                                        xalign (1.0 if from_player else 0.0)
-                                        background (Solid("#3a2a38") if from_player else Solid("#272229"))
-                                        padding (16, 13)
+                                    vbox:
+                                        xfill True
+                                        spacing 4
 
-                                        vbox:
-                                            spacing 7
-                                            xfill True
+                                        if not from_player:
+                                            text "[message_sender]" size 12 color "#8e8e93" xalign 0.0
 
-                                            text "[message_sender]" size 13 color "#f1a8c8"
+                                        frame:
+                                            xmaximum 455
+                                            xalign (1.0 if from_player else 0.0)
+                                            background bubble_bg
+                                            padding (15, 11)
 
-                                            if message_text:
-                                                text "[message_text]" size 16 color "#ffffff" line_spacing 3
+                                            vbox:
+                                                spacing 8
 
-                                            if attachment_id:
-                                                frame:
-                                                    xfill True
-                                                    ysize 210
-                                                    background Solid("#18151b")
-                                                    padding (14, 14)
+                                                if message_text:
+                                                    text "[message_text]" size 16 color bubble_text line_spacing 3
 
-                                                    vbox:
-                                                        xalign 0.5
-                                                        yalign 0.5
-                                                        spacing 8
-                                                        add "gui/phone/icons/photos.png" xysize (70, 70) xalign 0.5
-                                                        text "[attachment_label]" size 13 color "#a99ba8" xalign 0.5
-                                                        text "Asset: [attachment_id]" size 11 color "#776d77" xalign 0.5
+                                                if attachment_id:
+                                                    frame:
+                                                        xfill True
+                                                        ysize 176
+                                                        background Solid("#ffffff")
+                                                        padding (14, 12)
+
+                                                        vbox:
+                                                            xalign 0.5
+                                                            yalign 0.5
+                                                            spacing 7
+                                                            add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
+                                                            text "[attachment_label]" size 13 color "#3a3a3c" xalign 0.5
+                                                            if current_choice_mode() == "developer":
+                                                                text "Asset: [attachment_id]" size 10 color "#8e8e93" xalign 0.5
 
                     elif phone_app == "shop":
 
                         frame:
                             xfill True
-                            background Solid("#2a242d")
+                            background Solid("#eaf4ff")
                             padding (15, 13)
-                            text "Buying an outfit only adds it to [girlfriend_name]'s Wardrobe. Her willingness to wear it remains a separate mechanic." size 14 color "#e1d6df" line_spacing 3
+                            text "Buying adds an outfit to [girlfriend_name]'s Wardrobe. Whether she wants to wear it is handled separately." size 14 color "#2c2c2e" line_spacing 3
 
                         if last_shop_message:
                             frame:
                                 xfill True
-                                background Solid("#30242e")
+                                background Solid("#fff5d9")
                                 padding (14, 11)
-                                text "[last_shop_message]" size 14 color "#eadde7"
+                                text "[last_shop_message]" size 14 color "#4a3a16"
 
                         viewport:
                             xfill True
@@ -377,7 +419,7 @@ screen phone_screen():
 
                                     frame:
                                         xfill True
-                                        background Solid("#242027")
+                                        background Solid("#ffffff")
                                         padding (16, 15)
 
                                         vbox:
@@ -386,91 +428,130 @@ screen phone_screen():
 
                                             frame:
                                                 xfill True
-                                                ysize 125
-                                                background Solid("#1b171e")
+                                                ysize 118
+                                                background Solid("#f2f2f7")
                                                 padding (10, 10)
 
                                                 vbox:
                                                     xalign 0.5
                                                     yalign 0.5
-                                                    spacing 5
-                                                    add "gui/phone/icons/shop.png" xysize (68, 68) xalign 0.5
-                                                    text "[phone_outfit['asset_id']]" size 10 color "#817681" xalign 0.5
+                                                    spacing 4
+                                                    add "gui/phone/icons/shop.png" xysize (66, 66) xalign 0.5
+                                                    if current_choice_mode() == "developer":
+                                                        text "[phone_outfit['asset_id']]" size 9 color "#8e8e93" xalign 0.5
 
                                             hbox:
                                                 xfill True
-                                                text "[phone_outfit_name]" size 20 color "#ffffff"
-                                                text "$[phone_outfit_cost]" size 18 color "#ffffff" xalign 1.0
+                                                text "[phone_outfit_name]" size 19 color "#1c1c1e" bold True
+                                                text "$[phone_outfit_cost]" size 17 color "#1c1c1e" xalign 1.0
 
-                                            text "[phone_outfit_description]" size 14 color "#b8a8b5" line_spacing 2
+                                            text "[phone_outfit_description]" size 14 color "#6d6d72" line_spacing 2
                                             text "[phone_outfit_status]" size 13 color phone_outfit_status_color
 
                                             if phone_outfit_state == "available":
                                                 textbutton "Buy for $[phone_outfit_cost]":
                                                     xfill True
+                                                    ysize 46
+                                                    background Solid("#0a84ff")
+                                                    hover_background Solid("#409cff")
+                                                    text_idle_color "#ffffff"
+                                                    text_hover_color "#ffffff"
+                                                    text_xalign 0.5
                                                     action Function(purchase_outfit, outfit_id)
                                             elif phone_outfit_state == "insufficient":
                                                 textbutton "Need $[phone_outfit_cost] — You have $[money]":
                                                     xfill True
+                                                    ysize 46
+                                                    background Solid("#d1d1d6")
+                                                    text_idle_color "#8e8e93"
+                                                    text_xalign 0.5
                                                     sensitive False
                                             elif phone_outfit_state == "owned":
-                                                textbutton "Owned — open Wardrobe from the regular UI to equip":
+                                                textbutton "Owned":
                                                     xfill True
+                                                    ysize 46
+                                                    background Solid("#d1f2df")
+                                                    text_idle_color "#26734d"
+                                                    text_xalign 0.5
                                                     sensitive False
                                             else:
                                                 textbutton "Locked":
                                                     xfill True
+                                                    ysize 46
+                                                    background Solid("#e5e5ea")
+                                                    text_idle_color "#8e8e93"
+                                                    text_xalign 0.5
                                                     sensitive False
 
                     elif phone_app == "photos":
 
                         frame:
                             xfill True
-                            background Solid("#242027")
-                            padding (20, 20)
+                            background Solid("#ffffff")
+                            padding (24, 24)
 
                             vbox:
-                                spacing 12
-                                add "gui/phone/icons/photos.png" xysize (105, 105) xalign 0.5
-                                text "PHOTO APP" size 22 color "#ffffff" xalign 0.5
-                                text "The camera roll is scaffolded for story photos and received image attachments. Stable asset IDs are already supported by the message system." size 15 color "#cbbdca" text_align 0.5 xalign 0.5 line_spacing 4
-                                text "Photo thumbnails and full previews will be added as story CG assets come online." size 14 color "#9e919c" text_align 0.5 xalign 0.5 line_spacing 3
+                                spacing 14
+                                add "gui/phone/icons/photos.png" xysize (118, 118) xalign 0.5
+                                text "Your Photos" size 24 color "#1c1c1e" bold True xalign 0.5
+                                text "Story photos and received image attachments will collect here as they are unlocked." size 15 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
+                                frame:
+                                    xfill True
+                                    background Solid("#f2f2f7")
+                                    padding (16, 14)
+                                    text "No photos yet." size 14 color "#8e8e93" xalign 0.5
 
                     elif phone_app == "wallet":
 
                         frame:
                             xfill True
-                            background Solid("#242027")
-                            padding (22, 22)
+                            background Solid("#ffffff")
+                            padding (24, 24)
 
                             vbox:
                                 spacing 14
-                                add "gui/phone/icons/wallet.png" xysize (105, 105) xalign 0.5
-                                text "AVAILABLE MONEY" size 15 color "#a99ba8" xalign 0.5
-                                text "$[money]" size 42 color "#ffffff" xalign 0.5
+                                add "gui/phone/icons/wallet.png" xysize (118, 118) xalign 0.5
+                                text "AVAILABLE MONEY" size 14 color "#8e8e93" xalign 0.5
+                                text "$[money]" size 42 color "#1c1c1e" bold True xalign 0.5
 
                                 if last_money_reason:
-                                    text "Last change: [last_money_change]" size 15 color "#cbbdca" xalign 0.5
-                                    text "[last_money_reason]" size 14 color "#9e919c" xalign 0.5
+                                    frame:
+                                        xfill True
+                                        background Solid("#f2f2f7")
+                                        padding (14, 12)
+                                        vbox:
+                                            spacing 4
+                                            text "Last change: [last_money_change]" size 15 color "#3a3a3c" xalign 0.5
+                                            text "[last_money_reason]" size 14 color "#8e8e93" xalign 0.5
                                 else:
-                                    text "No transactions recorded yet." size 14 color "#9e919c" xalign 0.5
+                                    text "No transactions recorded yet." size 14 color "#8e8e93" xalign 0.5
 
                     elif phone_app == "delivery":
 
                         frame:
                             xfill True
-                            background Solid("#242027")
-                            padding (22, 22)
+                            background Solid("#ffffff")
+                            padding (24, 24)
 
                             vbox:
                                 spacing 14
-                                add "gui/phone/icons/delivery.png" xysize (120, 120) xalign 0.5
-                                text "NO ACTIVE DELIVERIES" size 21 color "#ffffff" xalign 0.5
-                                text "Future shop purchases can create story-aware orders here: processing, out for delivery, delivered, or collected." size 15 color "#cbbdca" text_align 0.5 xalign 0.5 line_spacing 4
-                                text "The app is intentionally scaffolded now so later delivery events can plug in without changing the Phone layout." size 14 color "#9e919c" text_align 0.5 xalign 0.5 line_spacing 3
+                                add "gui/phone/icons/delivery.png" xysize (128, 128) xalign 0.5
+                                text "No Active Deliveries" size 23 color "#1c1c1e" bold True xalign 0.5
+                                text "Orders from the Shop will appear here when delivery events are introduced." size 15 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
+                                frame:
+                                    xfill True
+                                    background Solid("#f2f2f7")
+                                    padding (16, 14)
+                                    text "Nothing on the way." size 14 color "#8e8e93" xalign 0.5
 
-            hbox:
+            # Familiar mobile home indicator instead of developer footer text.
+            fixed:
                 xfill True
-                ysize 22
+                ysize 18
 
-                text "PHONE V1 — CUSTOM UI ICON PASS" size 10 color "#5f5661" xalign 0.5
+                frame:
+                    xalign 0.5
+                    yalign 0.5
+                    xsize 118
+                    ysize 5
+                    background Solid("#b7b7bd")
