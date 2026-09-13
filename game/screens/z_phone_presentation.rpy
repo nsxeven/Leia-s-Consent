@@ -37,16 +37,16 @@ screen phone_quick_access():
                 focus_mask True
 
             if phone_total_unread() > 0:
-                frame:
-                    xpos 63
-                    ypos 4
-                    xminimum 30
-                    yminimum 30
-                    padding (7, 4)
-                    background Solid("#e5484d")
+                fixed:
+                    xpos 58
+                    ypos 1
+                    xsize 42
+                    ysize 32
+
+                    add "gui/phone/unread_badge.svg"
 
                     text "[phone_unread_badge_label()]":
-                        size 13
+                        size 12
                         color "#ffffff"
                         bold True
                         xalign 0.5
