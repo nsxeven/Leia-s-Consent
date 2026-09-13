@@ -182,8 +182,8 @@ label prologue_start:
 
     $ set_story_flag("prologue_first_kiss_complete")
 
+    # Deliberate hard cut: the first line reveals that four years have passed.
     scene cg prologue_present_stare
-    with hpunch
 
     gf "[player_name]?"
     gf "You're staring again."
@@ -290,6 +290,7 @@ label prologue_start:
     mc "Coming!"
 
     $ set_story_flag("prologue_complete")
+    $ set_story_flag("prologue_story_locked")
 
     scene black
     with fade
@@ -301,4 +302,4 @@ label prologue_start:
 
     $ exit_cinematic_mode()
 
-    return
+    jump chapter_one_start

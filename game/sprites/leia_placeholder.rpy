@@ -44,6 +44,19 @@ image leia_placeholder_outfit_casual = Composite(
     (255, 485), Text("CASUAL", size=24, color="#ffffff"),
 )
 
+image leia_placeholder_outfit_pool_conservative = Composite(
+    (640, 900),
+    (250, 300), Transform(Solid("#4f8fbccc"), xysize=(140, 300)),
+    (238, 475), Text("CLASSIC\nSWIM", size=22, color="#ffffff", text_align=0.5),
+)
+
+image leia_placeholder_outfit_pool_bolder = Composite(
+    (640, 900),
+    (255, 310), Transform(Solid("#d65f78dd"), xysize=(130, 105)),
+    (265, 460), Transform(Solid("#d65f78dd"), xysize=(110, 125)),
+    (245, 500), Text("BOLDER\nSWIM", size=22, color="#ffffff", text_align=0.5),
+)
+
 image leia_placeholder_outfit_date = Composite(
     (640, 900),
     (245, 295), Transform(Solid("#8d627fcc"), xysize=(150, 315)),
@@ -102,6 +115,10 @@ layeredimage leia:
     group outfit:
         attribute outfit_casual default:
             "leia_placeholder_outfit_casual"
+        attribute outfit_pool_conservative:
+            "leia_placeholder_outfit_pool_conservative"
+        attribute outfit_pool_bolder:
+            "leia_placeholder_outfit_pool_bolder"
         attribute outfit_date:
             "leia_placeholder_outfit_date"
         attribute outfit_after_hours:

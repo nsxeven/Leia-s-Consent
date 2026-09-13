@@ -201,11 +201,11 @@ init python:
 
         renpy.store.modified_save = True
         renpy.notify("Added developer phone message batch {}.".format(batch))
-        renpy.restart_interaction()
-        return True
+        return None
 
 
     def phone_debug_clear_messages():
+        """Clear developer phone state without advancing the underlying interaction."""
         renpy.store.phone_messages = {
             "leia": [],
             "julian": [],
@@ -214,4 +214,4 @@ init python:
         renpy.store.phone_last_open_thread = None
         renpy.store.modified_save = True
         renpy.notify("Developer phone messages cleared.")
-        renpy.restart_interaction()
+        return None

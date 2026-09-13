@@ -39,6 +39,19 @@ init python:
             ("player", "jealousy", 3),
             ("partner", "boundary_looseness", -2),
         ],
+        "ch01_outfit_bolder": [
+            ("partner", "curiosity", 3),
+            ("player", "acceptance", 3),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_outfit_comfort": [
+            ("relationship", "trust", 2),
+            ("relationship", "love", 1),
+        ],
+        "ch01_outfit_conservative": [
+            ("player", "jealousy", 1),
+            ("relationship", "trust", 1),
+        ],
     }
 
     # Behavioral metadata is deliberately separate from stat effects. Later scenes
@@ -47,6 +60,9 @@ init python:
     CHOICE_TAGS = {
         "dev_encourage_curiosity": ("encouraging", "participating", "open"),
         "dev_be_protective": ("protective", "cautious"),
+        "ch01_outfit_bolder": ("encouraging", "open", "supportive"),
+        "ch01_outfit_comfort": ("neutral", "comfort-first", "supportive"),
+        "ch01_outfit_conservative": ("protective", "cautious", "respectful"),
     }
 
     STANCE_TAGS = ("encouraging", "neutral", "protective")
