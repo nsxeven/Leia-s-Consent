@@ -129,7 +129,6 @@ label ch01_scene_15_under_blanket:
             "I looked back at the movie. Leia did too, but some of the warmth in the moment had gone with it."
 
     $ set_story_flag("ch01_scene_15_complete")
-
     jump ch01_scene_16_can_he_tell
 
 
@@ -196,7 +195,6 @@ label ch01_scene_16_can_he_tell:
             gf "Right."
 
     $ set_story_flag("ch01_scene_16_complete")
-
     jump ch01_scene_17_julian_notices
 
 
@@ -265,7 +263,6 @@ label ch01_scene_17_julian_notices:
     with dissolve
 
     $ set_story_flag("ch01_scene_17_complete")
-
     jump ch01_scene_18_private_under_blanket
 
 
@@ -338,7 +335,6 @@ label ch01_scene_18_private_under_blanket:
         "Leia refused to look at me while Julian rebuilt everyone's drinks. The unfinished sentence stayed exactly where she'd left it."
 
     $ set_story_flag("ch01_scene_18_complete")
-
     jump ch01_scene_19_too_hot
 
 
@@ -373,7 +369,6 @@ label ch01_scene_19_too_hot:
     with dissolve
 
     $ set_story_flag("ch01_scene_19_complete")
-
     jump ch01_scene_20_no_hiding_place
 
 
@@ -422,7 +417,6 @@ label ch01_scene_20_no_hiding_place:
             gf "Nothing."
 
     $ set_story_flag("ch01_scene_20_complete")
-
     jump ch01_scene_21_watching_julian
 
 
@@ -475,7 +469,6 @@ label ch01_scene_21_watching_julian:
             "Leia looked at me once as if waiting for a reaction that never came. Then she looked away."
 
     $ set_story_flag("ch01_scene_21_complete")
-
     jump ch01_scene_22_first_micro_test
 
 
@@ -541,7 +534,6 @@ label ch01_scene_22_first_micro_test:
             "She fixed the top herself and turned back to the screen."
 
     $ set_story_flag("ch01_scene_22_complete")
-
     jump ch01_scene_23_relationship_philosophy
 
 
@@ -562,7 +554,6 @@ label ch01_scene_23_relationship_philosophy:
     gf "Nobody asked you."
 
     "Julian grinned and raised both hands in surrender."
-
     gf "Okay then. Where's the line?"
 
     $ ch01_philosophy_couple_text = format_choice("ch01_philosophy_couple", "Some things should stay between the couple.")
@@ -608,7 +599,6 @@ label ch01_scene_23_relationship_philosophy:
             gf "Right."
 
     $ set_story_flag("ch01_scene_23_complete")
-
     jump ch01_scene_24_looking_counts
 
 
@@ -668,7 +658,6 @@ label ch01_scene_24_looking_counts:
     "Julian suddenly became extremely interested in the ice inside his glass."
 
     $ set_story_flag("ch01_scene_24_complete")
-
     jump ch01_scene_25_julian_put_on_spot
 
 
@@ -723,7 +712,6 @@ label ch01_scene_25_julian_put_on_spot:
             gf "Answer."
 
     $ set_story_flag("ch01_scene_25_complete")
-
     jump ch01_scene_26_the_compliment
 
 
@@ -787,7 +775,6 @@ label ch01_scene_26_the_compliment:
                 "The compliment landed more cleanly than my reaction to it did."
 
     $ set_story_flag("ch01_scene_26_complete")
-
     jump ch01_scene_27_late_photo_drop
 
 
@@ -811,46 +798,48 @@ label ch01_scene_27_late_photo_drop:
 
     "A moment later my phone lit up."
 
-    $ phone_add_message(
-        "group",
-        "julian",
-        text="Forgot this one. Photographer of the year strikes again.",
-        message_id="ch01_trip_group_late_pool_photo",
-        attachment_id="ch01_photo_late_favourite",
-        attachment_label="Unsent pool favourite",
-        mark_unread=True,
-        notify=True,
-        notification_title="Trip Group",
-    )
-    $ set_story_value("ch01_late_pool_photo_asset", "ch01_photo_late_favourite")
-    $ set_story_flag("ch01_late_pool_photo_shared")
+    python:
+        phone_add_message(
+            "group",
+            "julian",
+            text="Forgot this one. Photographer of the year strikes again.",
+            message_id="ch01_trip_group_late_pool_photo",
+            attachment_id="ch01_photo_late_favourite",
+            attachment_label="Unsent pool favourite",
+            mark_unread=True,
+            notify=True,
+            notification_title="Trip Group",
+        )
+        set_story_value("ch01_late_pool_photo_asset", "ch01_photo_late_favourite")
+        set_story_flag("ch01_late_pool_photo_shared")
 
     "It was one of the pool photos he had not sent earlier—less posed than the others, and somehow better because of it."
 
-    $ phone_add_message(
-        "group",
-        "leia",
-        text="Okay this one's actually good.",
-        message_id="ch01_trip_group_late_photo_leia_react",
-        mark_unread=True,
-        notify=False,
-    )
-    $ phone_add_message(
-        "group",
-        "julian",
-        text="Actually?",
-        message_id="ch01_trip_group_late_photo_julian_reply",
-        mark_unread=True,
-        notify=False,
-    )
-    $ phone_add_message(
-        "group",
-        "leia",
-        text="Don't ruin it.",
-        message_id="ch01_trip_group_late_photo_leia_reply",
-        mark_unread=True,
-        notify=False,
-    )
+    python:
+        phone_add_message(
+            "group",
+            "leia",
+            text="Okay this one's actually good.",
+            message_id="ch01_trip_group_late_photo_leia_react",
+            mark_unread=True,
+            notify=False,
+        )
+        phone_add_message(
+            "group",
+            "julian",
+            text="Actually?",
+            message_id="ch01_trip_group_late_photo_julian_reply",
+            mark_unread=True,
+            notify=False,
+        )
+        phone_add_message(
+            "group",
+            "leia",
+            text="Don't ruin it.",
+            message_id="ch01_trip_group_late_photo_leia_reply",
+            mark_unread=True,
+            notify=False,
+        )
 
     gf "Okay, this one's actually good."
     mc "Actually?"
@@ -861,7 +850,6 @@ label ch01_scene_27_late_photo_drop:
     "The attachment stayed in the Trip Group and was indexed into the Phone's Photos state for later viewing."
 
     $ set_story_flag("ch01_scene_27_complete")
-
     jump ch01_scene_28_ryan_leia_alone
 
 
@@ -927,7 +915,6 @@ label ch01_scene_28_ryan_leia_alone:
             gf "Nothing. I'm tired."
 
     $ set_story_flag("ch01_scene_28_complete")
-
     jump ch01_scene_29_private_reflection
 
 
@@ -1006,7 +993,6 @@ label ch01_scene_29_private_reflection:
             gf "Come on. I'm tired."
 
     $ set_story_flag("ch01_scene_29_complete")
-
     jump ch01_scene_30_end_day_one
 
 
@@ -1022,23 +1008,24 @@ label ch01_scene_30_end_day_one:
 
     "Before either of us could settle, my phone lit up one last time."
 
-    $ phone_add_message(
-        "group",
-        "julian",
-        text="Breakfast after 11 or I'm calling the police.",
-        message_id="ch01_trip_group_breakfast_warning",
-        mark_unread=True,
-        notify=True,
-        notification_title="Trip Group",
-    )
-    $ phone_add_message(
-        "group",
-        "leia",
-        text="No promises.",
-        message_id="ch01_trip_group_breakfast_leia_reply",
-        mark_unread=True,
-        notify=False,
-    )
+    python:
+        phone_add_message(
+            "group",
+            "julian",
+            text="Breakfast after 11 or I'm calling the police.",
+            message_id="ch01_trip_group_breakfast_warning",
+            mark_unread=True,
+            notify=True,
+            notification_title="Trip Group",
+        )
+        phone_add_message(
+            "group",
+            "leia",
+            text="No promises.",
+            message_id="ch01_trip_group_breakfast_leia_reply",
+            mark_unread=True,
+            notify=False,
+        )
 
     "Leia's phone buzzed a second later. She read the message and laughed quietly."
 
