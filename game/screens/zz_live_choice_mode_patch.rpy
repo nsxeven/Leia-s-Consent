@@ -1,10 +1,13 @@
 # Live choice-mode refresh patch.
 #
-# Ren'Py evaluates menu captions before the choice screen is shown. If the
-# player changes information visibility while that menu is still active, those
-# already-built strings would otherwise stay stale until the menu statement is
-# executed again. Keep a stable choice token in the menu caption and render the
-# visible annotation at screen draw time instead.
+# Ren'Py builds menu captions before the choice screen is shown. To let the
+# player change information visibility from the Phone while a menu is already
+# open, format_choice() stores a stable token and the choice screen resolves it
+# again on every interaction redraw.
+#
+# IMPORTANT: keep this screen geometrically identical to the stock project
+# choice screen. Only the caption is dynamic; layout remains choice_vbox /
+# choice_button / choice_button_text.
 
 init 110 python:
 
@@ -21,12 +24,21 @@ init 110 python:
         )
 
 
-    def _lc_choice_caption_text(caption):
-        """Normalize Ren'Py/translation caption objects into plain text."""
+    def _lc_caption_to_text(caption):
+        """Normalize Ren'Py caption/string wrappers into ordinary text."""
         if caption is None:
             return ""
+
         if isinstance(caption, str):
             return caption
+
+        # Some Ren'Py text/translation wrappers expose the underlying value via
+        # one of these attributes. Prefer that before falling back to str().
+        for attr in ("text", "value", "string"):
+            value = getattr(caption, attr, None)
+            if isinstance(value, str):
+                return value
+
         try:
             return str(caption)
         except Exception:
@@ -34,7 +46,7 @@ init 110 python:
 
 
     def _lc_decode_choice_token(caption):
-        caption_text = _lc_choice_caption_text(caption)
+        caption_text = _lc_caption_to_text(caption)
         if not isinstance(caption_text, str):
             return None
         if not caption_text.startswith(LC_CHOICE_TOKEN_PREFIX):
@@ -51,11 +63,11 @@ init 110 python:
 
 
     def lc_render_choice_caption(caption, mode=None):
-        """Render a tokenized menu caption using the current visibility mode."""
+        """Render a tokenized menu caption using the CURRENT visibility mode."""
         decoded = _lc_decode_choice_token(caption)
         if decoded is None:
-            # Compatibility for menus that do not use the central choice engine.
-            return _lc_choice_caption_text(caption)
+            # Menus outside the central choice engine continue to work normally.
+            return _lc_caption_to_text(caption)
 
         choice_id, base_text = decoded
         mode = mode or current_choice_mode()
@@ -86,25 +98,30 @@ init 110 python:
 
 
     def format_choice(choice_id, base_text):
-        """Store stable menu metadata; the choice screen handles live rendering."""
-        # Validate early so story typos still fail where the choice is created.
+        """Store stable menu metadata; visible formatting happens at draw time."""
+        # Validate early so a typo in a story choice ID still fails immediately.
         get_choice_effects(choice_id)
         return _lc_choice_token(choice_id, base_text)
 
 
     def choice_preview_text():
-        """Player-settings preview rendered directly rather than exposing a token."""
+        """Settings preview uses the same renderer without leaking the token."""
         base_text = "Encourage {}'s curiosity".format(renpy.store.girlfriend_name)
         return lc_render_choice_caption(
             _lc_choice_token("dev_encourage_curiosity", base_text)
         )
 
 
-# Preserve the stock project's choice layout exactly. Only the displayed caption
-# is recalculated on redraw so Settings can update an already-visible menu.
+# This intentionally mirrors the project's original screen choice(items).
+# set_choice_display_mode() calls renpy.restart_interaction(), which causes the
+# current menu to redraw and lc_render_choice_caption() to read the new mode.
 screen choice(items):
     style_prefix "choice"
 
     vbox:
+        style "choice_vbox"
+
         for i in items:
-            textbutton lc_render_choice_caption(i.caption) action i.action
+            $ lc_visible_caption = lc_render_choice_caption(i.caption)
+            textbutton lc_visible_caption action i.action:
+                style "choice_button"
