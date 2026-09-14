@@ -124,9 +124,6 @@ screen choice(items):
     style_prefix "choice"
 
     vbox:
-        style "choice_vbox"
-
         for i in items:
             $ lc_visible_caption = lc_render_choice_caption(i.caption)
-            textbutton lc_visible_caption action i.action:
-                style "choice_button"
+            textbutton lc_visible_caption action i.action
