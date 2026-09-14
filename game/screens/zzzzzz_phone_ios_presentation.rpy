@@ -93,8 +93,10 @@ screen lc_ios_status_bar():
                     background Solid("#1c1c1e")
 
 
-screen lc_ios_back_button(label, action):
+screen lc_ios_back_button(label, action, xpos_value=0, ypos_value=0):
     textbutton label:
+        xpos xpos_value
+        ypos ypos_value
         xminimum 112
         ysize 43
         padding (14, 6)
@@ -109,8 +111,10 @@ screen lc_ios_back_button(label, action):
         action action
 
 
-screen lc_ios_done_button(action):
+screen lc_ios_done_button(action, xalign_value=1.0, ypos_value=0):
     textbutton "Done":
+        xalign xalign_value
+        ypos ypos_value
         xminimum 84
         ysize 43
         padding (14, 6)
@@ -149,7 +153,6 @@ screen phone_screen():
             xfill True
             yfill True
 
-            # Phone display / wallpaper.
             frame:
                 xfill True
                 yfill True
@@ -187,18 +190,15 @@ screen phone_screen():
 
                         use lc_ios_status_bar
 
-                        # Navigation / app title area.
                         fixed:
                             xfill True
                             ysize 98
 
                             if phone_app != "home":
-                                use lc_ios_back_button(("‹ Messages" if phone_app == "thread" else "‹ Back"), [SetScreenVariable("phone_app", "messages") if phone_app == "thread" else SetScreenVariable("phone_app", "home"), SetScreenVariable("phone_thread", None) if phone_app != "thread" else NullAction()]):
-                                    xpos 0
-                                    ypos 2
+                                use lc_ios_back_button(("‹ Messages" if phone_app == "thread" else "‹ Back"), [SetScreenVariable("phone_app", "messages") if phone_app == "thread" else SetScreenVariable("phone_app", "home"), SetScreenVariable("phone_thread", None) if phone_app != "thread" else NullAction()], xpos_value=0, ypos_value=2)
 
                             vbox:
-                                xpos (0 if phone_app == "home" else 0)
+                                xpos 0
                                 ypos 50
                                 spacing 0
 
@@ -218,9 +218,7 @@ screen phone_screen():
                                 elif phone_app == "delivery":
                                     text "Delivery" size 31 color "#1c1c1e" bold True
 
-                            use lc_ios_done_button(Hide("phone_screen")):
-                                xalign 1.0
-                                ypos 2
+                            use lc_ios_done_button(Hide("phone_screen"), xalign_value=1.0, ypos_value=2)
 
                         if phone_app == "home":
                             $ phone_photo_count = len(phone_photo_items())
@@ -245,11 +243,9 @@ screen phone_screen():
                                         use lc_ios_app_tile("messages", "Messages", ("{} unread".format(unread_total) if unread_total else "Conversations"), SetScreenVariable("phone_app", "messages"), icon_path="gui/phone/icons/messages.png", badge_text=unread_badge)
                                         use lc_ios_app_tile("photos", "Photos", ("{} saved".format(phone_photo_count) if phone_photo_count else "Camera roll"), SetScreenVariable("phone_app", "photos"), icon_path="gui/phone/icons/photos.png")
                                         use lc_ios_app_tile("shop", "Shop", "{} items".format(len(shop_outfit_ids())), SetScreenVariable("phone_app", "shop"), icon_path="gui/phone/icons/shop.png")
-
                                         use lc_ios_app_tile("wallet", "Wallet", "${}".format(money), SetScreenVariable("phone_app", "wallet"), icon_path="gui/phone/icons/wallet.png")
                                         use lc_ios_app_tile("delivery", "Delivery", "Orders", SetScreenVariable("phone_app", "delivery"), icon_path="gui/phone/icons/delivery.png")
                                         use lc_ios_app_tile("status", "Status", "Relationship", Show("lc_phone_status"), placeholder_text="ST", badge_text=status_badge)
-
                                         use lc_ios_app_tile("settings", "Settings", transparency_mode_label(), Show("lc_phone_settings"), placeholder_text="SET")
                                         null width 172 height 166
                                         null width 172 height 166
@@ -259,7 +255,6 @@ screen phone_screen():
                                             xfill True
                                             background Frame("gui/phone/rounded_white.png", 24, 24)
                                             padding (14, 12)
-
                                             vbox:
                                                 spacing 7
                                                 text "DEVELOPER TOOLS" size 12 color "#c53e71" bold True
@@ -292,16 +287,13 @@ screen phone_screen():
                                 yfill True
                                 mousewheel True
                                 draggable True
-
                                 vbox:
                                     spacing 9
                                     xfill True
-
                                     for thread_id in PHONE_THREAD_ORDER:
                                         $ thread_name = phone_thread_label(thread_id)
                                         $ thread_preview = phone_thread_preview(thread_id)
                                         $ unread_count = phone_thread_unread_count(thread_id)
-
                                         button:
                                             xfill True
                                             ysize 94
@@ -309,19 +301,15 @@ screen phone_screen():
                                             background Frame("gui/phone/rounded_white.png", 25, 25)
                                             hover_background Frame("gui/phone/rounded_blue.png", 25, 25)
                                             action [Function(phone_mark_thread_read, thread_id), SetScreenVariable("phone_thread", thread_id), SetScreenVariable("phone_app", "thread")]
-
                                             hbox:
                                                 spacing 13
                                                 xfill True
                                                 yalign 0.5
-
                                                 add "gui/phone/icons/messages.png" xysize (54, 54) yalign 0.5
-
                                                 vbox:
                                                     spacing 4
                                                     xfill True
                                                     yalign 0.5
-
                                                     hbox:
                                                         xfill True
                                                         text "[thread_name]" size 18 color "#1c1c1e" bold (unread_count > 0)
@@ -333,30 +321,25 @@ screen phone_screen():
                                                                 padding (7, 2)
                                                                 background Frame("gui/phone/unread_badge.svg", 12, 12)
                                                                 text "[unread_count]" size 11 color "#ffffff" bold True xalign 0.5 yalign 0.5
-
                                                     text "[thread_preview]" size 13 color "#6d6d72" xmaximum 435
 
                         elif phone_app == "thread":
                             $ thread_messages = phone_messages_for_thread(phone_thread)
-
                             viewport:
                                 xfill True
                                 yfill True
                                 mousewheel True
                                 draggable True
                                 yinitial 1.0
-
                                 vbox:
                                     spacing 10
                                     xfill True
-
                                     if not thread_messages:
                                         frame:
                                             xfill True
                                             background Frame("gui/phone/rounded_white.png", 24, 24)
                                             padding (18, 18)
                                             text "No messages yet." size 15 color "#8e8e93" xalign 0.5
-
                                     for message in thread_messages:
                                         $ message_sender = phone_sender_label(message.get("sender", "system"))
                                         $ from_player = message.get("sender") == "player"
@@ -364,20 +347,16 @@ screen phone_screen():
                                         $ attachment_id = message.get("attachment_id")
                                         $ attachment_label = message.get("attachment_label", "Photo attachment")
                                         $ bubble_text = "#ffffff" if from_player else "#1c1c1e"
-
                                         vbox:
                                             xfill True
                                             spacing 3
-
                                             if not from_player:
                                                 text "[message_sender]" size 11 color "#8e8e93" xalign 0.02
-
                                             frame:
                                                 xmaximum 460
                                                 xalign (1.0 if from_player else 0.0)
                                                 background (Frame("gui/phone/bubble_outgoing.png", 30, 30) if from_player else Frame("gui/phone/bubble_incoming.png", 30, 30))
                                                 padding ((17, 12, 20, 15) if from_player else (20, 12, 17, 15))
-
                                                 vbox:
                                                     spacing 8
                                                     if message_text:
@@ -406,20 +385,17 @@ screen phone_screen():
                                 background Frame("gui/phone/rounded_blue.png", 24, 24)
                                 padding (14, 12)
                                 text "Purchases add outfits to [girlfriend_name]'s Wardrobe. Her willingness to wear them is tracked separately." size 13 color "#2c2c2e" line_spacing 3
-
                             if last_shop_message:
                                 frame:
                                     xfill True
                                     background Frame("gui/phone/rounded_yellow.png", 24, 24)
                                     padding (14, 11)
                                     text "[last_shop_message]" size 13 color "#4a3a16"
-
                             viewport:
                                 xfill True
                                 yfill True
                                 mousewheel True
                                 draggable True
-
                                 vbox:
                                     spacing 11
                                     xfill True
@@ -431,7 +407,6 @@ screen phone_screen():
                                         $ phone_outfit_state = shop_item_state(outfit_id)
                                         $ phone_outfit_status = shop_item_status_label(outfit_id)
                                         $ phone_outfit_status_color = shop_item_status_color(outfit_id)
-
                                         frame:
                                             xfill True
                                             background Frame("gui/phone/rounded_white.png", 24, 24)
@@ -449,7 +424,6 @@ screen phone_screen():
                                                         text "[phone_outfit_description]" size 13 color "#6d6d72" xmaximum 410
                                                     text "$[phone_outfit_cost]" size 16 color "#1c1c1e" bold True xalign 1.0
                                                 text "[phone_outfit_status]" size 12 color phone_outfit_status_color
-
                                                 if phone_outfit_state == "available":
                                                     textbutton "Buy for $[phone_outfit_cost]":
                                                         xfill True
@@ -554,7 +528,6 @@ screen phone_screen():
                                     text "No Active Deliveries" size 22 color "#1c1c1e" bold True xalign 0.5
                                     text "Orders will appear here when story delivery events are introduced." size 14 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
 
-                    # Home indicator.
                     frame:
                         xalign 0.5
                         yalign 0.995
@@ -563,7 +536,6 @@ screen phone_screen():
                         background Frame("gui/phone/rounded_shell.png", 10, 10)
 
 
-# Status keeps the same stat helpers but adopts the same handset/app language.
 screen lc_phone_status_row(row):
     vbox:
         spacing 5
@@ -632,12 +604,8 @@ screen lc_phone_status():
                 fixed:
                     xfill True
                     ysize 100
-                    use lc_ios_back_button("‹ Phone", Hide("lc_phone_status")):
-                        xpos 0
-                        ypos 2
-                    use lc_ios_done_button(Hide("lc_phone_status")):
-                        xalign 1.0
-                        ypos 2
+                    use lc_ios_back_button("‹ Phone", Hide("lc_phone_status"), xpos_value=0, ypos_value=2)
+                    use lc_ios_done_button(Hide("lc_phone_status"), xalign_value=1.0, ypos_value=2)
                     vbox:
                         ypos 51
                         spacing 0
@@ -768,12 +736,8 @@ screen lc_phone_settings():
                 fixed:
                     xfill True
                     ysize 100
-                    use lc_ios_back_button("‹ Phone", Hide("lc_phone_settings")):
-                        xpos 0
-                        ypos 2
-                    use lc_ios_done_button(Hide("lc_phone_settings")):
-                        xalign 1.0
-                        ypos 2
+                    use lc_ios_back_button("‹ Phone", Hide("lc_phone_settings"), xpos_value=0, ypos_value=2)
+                    use lc_ios_done_button(Hide("lc_phone_settings"), xalign_value=1.0, ypos_value=2)
                     vbox:
                         ypos 51
                         spacing 0
