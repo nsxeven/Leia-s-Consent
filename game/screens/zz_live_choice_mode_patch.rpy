@@ -21,13 +21,26 @@ init 110 python:
         )
 
 
+    def _lc_choice_caption_text(caption):
+        """Normalize Ren'Py/translation caption objects into plain text."""
+        if caption is None:
+            return ""
+        if isinstance(caption, str):
+            return caption
+        try:
+            return str(caption)
+        except Exception:
+            return caption
+
+
     def _lc_decode_choice_token(caption):
-        if not isinstance(caption, str):
+        caption_text = _lc_choice_caption_text(caption)
+        if not isinstance(caption_text, str):
             return None
-        if not caption.startswith(LC_CHOICE_TOKEN_PREFIX):
+        if not caption_text.startswith(LC_CHOICE_TOKEN_PREFIX):
             return None
 
-        payload = caption[len(LC_CHOICE_TOKEN_PREFIX):]
+        payload = caption_text[len(LC_CHOICE_TOKEN_PREFIX):]
         if LC_CHOICE_TOKEN_SEPARATOR not in payload:
             return None
 
@@ -38,11 +51,11 @@ init 110 python:
 
 
     def lc_render_choice_caption(caption, mode=None):
-        """Render a tokenized menu caption using the *current* visibility mode."""
+        """Render a tokenized menu caption using the current visibility mode."""
         decoded = _lc_decode_choice_token(caption)
         if decoded is None:
             # Compatibility for menus that do not use the central choice engine.
-            return caption
+            return _lc_choice_caption_text(caption)
 
         choice_id, base_text = decoded
         mode = mode or current_choice_mode()
@@ -87,17 +100,11 @@ init 110 python:
         )
 
 
-# Override the stock choice screen so captions are resolved on every redraw.
-# set_choice_display_mode() already calls renpy.restart_interaction(), so an
-# active menu changes immediately when the Phone Settings mode changes.
+# Preserve the stock project's choice layout exactly. Only the displayed caption
+# is recalculated on redraw so Settings can update an already-visible menu.
 screen choice(items):
     style_prefix "choice"
 
     vbox:
         for i in items:
-            $ lc_visible_caption = lc_render_choice_caption(i.caption)
-            textbutton lc_visible_caption action i.action:
-                # Ren'Py 8.5.3 rejects text_align together with text_xalign on
-                # a textbutton. Center wrapped/multiline choice text using the
-                # style's text_align plus this widget's x alignment instead.
-                xalign 0.5
+            textbutton lc_render_choice_caption(i.caption) action i.action
