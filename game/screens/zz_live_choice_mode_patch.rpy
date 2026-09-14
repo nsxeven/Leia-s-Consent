@@ -97,5 +97,7 @@ screen choice(items):
         for i in items:
             $ lc_visible_caption = lc_render_choice_caption(i.caption)
             textbutton lc_visible_caption action i.action:
-                text_xalign 0.5
-                text_align 0.5
+                # Ren'Py 8.5.3 rejects text_align together with text_xalign on
+                # a textbutton. Center wrapped/multiline choice text using the
+                # style's text_align plus this widget's x alignment instead.
+                xalign 0.5
