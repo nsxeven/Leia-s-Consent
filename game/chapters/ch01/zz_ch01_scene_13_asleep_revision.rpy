@@ -164,9 +164,4 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     $ set_story_flag("ch01_scene_13_complete")
     $ set_story_flag("ch01_scenes_07_13_complete")
 
-    scene black
-    with fade
-
-    centered "{size=46}CHAPTER ONE{/size}\n{size=30}Scenes 7–13 complete{/size}\n\n{size=22}Current development build ends here{/size}"
-
-    return
+    jump ch01_scene_14_movie_setup
