@@ -3,6 +3,18 @@
 # Final icon art can replace the placeholder rounded tiles later without changing
 # any Status/Settings logic.
 
+init 95 python:
+
+    def lc_phone_hovered_app():
+        phone = renpy.get_screen("phone_screen")
+        if phone is None:
+            return None
+        scope = getattr(phone, "scope", None)
+        if isinstance(scope, dict):
+            return scope.get("hovered_app")
+        return None
+
+
 screen lc_phone_extra_apps():
     zorder 325
 
@@ -21,7 +33,7 @@ screen lc_phone_extra_apps():
                     xsize 180
                     ysize 190
 
-                    if hovered_app == "status":
+                    if lc_phone_hovered_app() == "status":
                         add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
                         frame:
                             xysize (118, 118)
@@ -56,7 +68,7 @@ screen lc_phone_extra_apps():
                     xsize 180
                     ysize 190
 
-                    if hovered_app == "settings":
+                    if lc_phone_hovered_app() == "settings":
                         add "gui/phone/icon_glow.svg" xysize (132, 132) xalign 0.5 ypos -1
                         frame:
                             xysize (118, 118)
