@@ -96,6 +96,8 @@ screen choice_feedback_overlay():
     if choice_feedback_payload:
         $ _choice_toast = choice_feedback_payload
         $ _choice_toast_serial = _choice_toast.get("serial", 0)
+        $ _choice_toast_title = _choice_toast.get("title", "CHOICE")
+        $ _choice_toast_body = _choice_toast.get("body", "")
 
         frame at gameplay_toast_appear:
             xalign 0.985
@@ -106,8 +108,8 @@ screen choice_feedback_overlay():
 
             vbox:
                 spacing 5
-                text "[_choice_toast['title']]" size 13 color "#8e8e93" bold True
-                text "[_choice_toast['body']]" size 17 color "#1c1c1e" line_spacing 3
+                text "[_choice_toast_title]" size 13 color "#8e8e93" bold True
+                text "[_choice_toast_body]" size 17 color "#1c1c1e" line_spacing 3
 
         timer 3.20 action Function(clear_choice_feedback, _choice_toast_serial)
 
@@ -118,6 +120,8 @@ screen phone_notification_overlay():
     if phone_notification_payload:
         $ _phone_toast = phone_notification_payload
         $ _phone_toast_serial = _phone_toast.get("serial", 0)
+        $ _phone_toast_title = _phone_toast.get("title", "Phone")
+        $ _phone_toast_body = _phone_toast.get("body", "New message")
 
         frame at gameplay_toast_appear:
             xalign 0.015
@@ -133,7 +137,7 @@ screen phone_notification_overlay():
                 vbox:
                     spacing 3
                     yalign 0.5
-                    text "[_phone_toast['title']]" size 14 color "#1c1c1e" bold True
-                    text "[_phone_toast['body']]" size 15 color "#6d6d72" line_spacing 2
+                    text "[_phone_toast_title]" size 14 color "#1c1c1e" bold True
+                    text "[_phone_toast_body]" size 15 color "#6d6d72" line_spacing 2
 
         timer 3.60 action Function(clear_phone_notification, _phone_toast_serial)
