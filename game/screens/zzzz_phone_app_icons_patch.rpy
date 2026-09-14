@@ -2,6 +2,10 @@
 # Replaces the temporary Status/Settings dock with two standalone app tiles.
 # Final icon art can replace the placeholder rounded tiles later without changing
 # any Status/Settings logic.
+#
+# Final art swap points:
+# - Status placeholder tile -> gui/phone/icons/status.png
+# - Settings placeholder tile -> gui/phone/icons/settings.png
 
 init 95 python:
 
