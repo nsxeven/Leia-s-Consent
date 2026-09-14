@@ -52,6 +52,32 @@ init python:
             ("player", "jealousy", 1),
             ("relationship", "trust", 1),
         ],
+        "ch01_photo_support": [
+            ("partner", "curiosity", 1),
+            ("partner", "exhibitionism", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_photo_more": [
+            ("partner", "curiosity", 2),
+            ("partner", "exhibitionism", 3),
+            ("player", "acceptance", 2),
+            ("relationship", "momentum", 1),
+        ],
+        "ch01_photo_exit": [
+            ("relationship", "trust", 2),
+        ],
+        "ch01_towel_laugh": [
+            ("relationship", "love", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_towel_boundary": [
+            ("relationship", "trust", 1),
+            ("player", "jealousy", 1),
+        ],
+        "ch01_towel_forget": [
+            ("relationship", "trust", 1),
+            ("player", "jealousy", 2),
+        ],
     }
 
     # Behavioral metadata is deliberately separate from stat effects. Later scenes
@@ -63,6 +89,12 @@ init python:
         "ch01_outfit_bolder": ("encouraging", "open", "supportive"),
         "ch01_outfit_comfort": ("neutral", "comfort-first", "supportive"),
         "ch01_outfit_conservative": ("protective", "cautious", "respectful"),
+        "ch01_photo_support": ("encouraging", "supportive"),
+        "ch01_photo_more": ("encouraging", "participating", "open"),
+        "ch01_photo_exit": ("protective", "comfort-first", "supportive"),
+        "ch01_towel_laugh": ("encouraging", "lighthearted"),
+        "ch01_towel_boundary": ("protective", "respectful"),
+        "ch01_towel_forget": ("protective", "honest", "cautious"),
     }
 
     STANCE_TAGS = ("encouraging", "neutral", "protective")

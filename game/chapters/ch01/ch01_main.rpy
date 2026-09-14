@@ -207,12 +207,8 @@ label ch01_scene_03_outfit_choice:
 
     "From downstairs, [friend_name] called that the pool—and the cold drinks—were waiting."
 
-    hide leia
-    scene black
-    with fade
-
-    centered "{size=46}CHAPTER ONE{/size}\n{size=30}Scenes 1–3 complete{/size}\n\n{size=22}Next: First Afternoon by the Pool{/size}"
-
     $ set_story_flag("ch01_scenes_01_03_complete")
 
-    return
+    hide leia
+
+    jump ch01_scene_04_pool_arrival
