@@ -32,8 +32,8 @@ init 110 python:
         if isinstance(caption, str):
             return caption
 
-        # Some Ren'Py text/translation wrappers expose the underlying value via
-        # one of these attributes. Prefer that before falling back to str().
+        # Ren'Py may wrap translatable/menu text. Try common underlying fields
+        # before falling back to its textual representation.
         for attr in ("text", "value", "string"):
             value = getattr(caption, attr, None)
             if isinstance(value, str):
@@ -42,24 +42,30 @@ init 110 python:
         try:
             return str(caption)
         except Exception:
-            return caption
+            return ""
 
 
     def _lc_decode_choice_token(caption):
         caption_text = _lc_caption_to_text(caption)
-        if not isinstance(caption_text, str):
-            return None
-        if not caption_text.startswith(LC_CHOICE_TOKEN_PREFIX):
+        if not caption_text:
             return None
 
-        payload = caption_text[len(LC_CHOICE_TOKEN_PREFIX):]
+        # Be deliberately tolerant of Ren'Py translation wrappers adding text
+        # around the original caption. The token itself is unique to our choice
+        # engine, so finding it anywhere is safe.
+        token_start = caption_text.find(LC_CHOICE_TOKEN_PREFIX)
+        if token_start < 0:
+            return None
+
+        payload = caption_text[token_start + len(LC_CHOICE_TOKEN_PREFIX):]
         if LC_CHOICE_TOKEN_SEPARATOR not in payload:
             return None
 
         choice_id, base_text = payload.split(LC_CHOICE_TOKEN_SEPARATOR, 1)
         if not choice_id:
             return None
-        return choice_id, base_text
+
+        return choice_id.strip(), base_text
 
 
     def lc_render_choice_caption(caption, mode=None):
@@ -99,7 +105,6 @@ init 110 python:
 
     def format_choice(choice_id, base_text):
         """Store stable menu metadata; visible formatting happens at draw time."""
-        # Validate early so a typo in a story choice ID still fails immediately.
         get_choice_effects(choice_id)
         return _lc_choice_token(choice_id, base_text)
 
