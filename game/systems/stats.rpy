@@ -71,17 +71,24 @@ init python:
 
 
     def ntr_score():
-        """Return the current secrecy/betrayal/NTR tendency (prototype formula)."""
+        """Return the current secrecy/betrayal/NTR tendency (prototype formula).
+
+        NTR pressure is intentionally not the same as openness. Repeatedly
+        dismissing Leia can raise Boredom and lower Love/Trust even while Ryan's
+        Acceptance is high; those relationship deficits now contribute directly
+        to this score alongside Temptation, Secrecy, and loosened boundaries.
+        """
         relationship = renpy.store.relationship_stats
         partner = renpy.store.partner_stats
 
         score = (
-            relationship["boredom"] * 0.20
-            + partner["temptation"] * 0.25
-            + partner["secrecy"] * 0.20
-            + partner["boundary_looseness"] * 0.15
-            + relationship["momentum"] * 0.10
+            relationship["boredom"] * 0.25
+            + partner["temptation"] * 0.20
+            + partner["secrecy"] * 0.15
+            + partner["boundary_looseness"] * 0.10
+            + relationship["momentum"] * 0.05
             + (100 - relationship["trust"]) * 0.10
+            + (100 - relationship["love"]) * 0.15
         )
 
         return clamp_stat(score)
