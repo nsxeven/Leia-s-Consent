@@ -19,14 +19,14 @@ screen lc_phone_hardware_overlay():
             yalign 0.5
 
 
-# Replace the temporary ST/SET tiles while preserving the same reusable app
-# component for the existing Messages/Photos/Shop/Wallet/Delivery artwork.
+# Use the user's final PNG app art for Status and Settings. Existing apps keep
+# their existing PNGs through icon_path supplied by the Phone home grid.
 screen lc_ios_app_tile(app_id, label, subtitle, action, icon_path=None, placeholder_text=None, badge_text=None):
     $ effective_icon = icon_path
     if effective_icon is None and app_id == "status":
-        $ effective_icon = "gui/phone/icons/status.svg"
+        $ effective_icon = "gui/phone/icons/status.png"
     elif effective_icon is None and app_id == "settings":
-        $ effective_icon = "gui/phone/icons/settings.svg"
+        $ effective_icon = "gui/phone/icons/settings.png"
 
     fixed:
         xsize 172
