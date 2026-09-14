@@ -24,6 +24,8 @@ init python:
         "pool_bolder": "outfit_pool_bolder",
         # The Chapter 1 restaurant outfit reuses the current date-dress placeholder layer.
         "resort_dinner_dress": "outfit_date",
+        # Villa loungewear currently reuses the casual layer until its final art is generated.
+        "resort_loungewear": "outfit_casual",
         "date_night_dress": "outfit_date",
         "after_hours_dress": "outfit_after_hours",
     }
