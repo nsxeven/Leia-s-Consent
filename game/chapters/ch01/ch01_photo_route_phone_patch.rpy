@@ -103,20 +103,22 @@ init 50 python:
 
 # Placeholder assets for the extra confident-route photo. Final ComfyUI art can
 # replace these IDs without changing story/Phone state.
-image cg ch01_photo_more_second_a = Text(
-    "CH01 POOL PHOTO — CONFIDENT ROUTE\nSECOND SOLO SHOT — CONSERVATIVE SWIMWEAR\n\nPlaceholder",
-    size=42,
-    color="#ffffff",
-    text_align=0.5,
-    xalign=0.5,
-    yalign=0.5,
+image cg ch01_photo_more_second_a = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#36596d"),
+    (90, 70), Text(
+        "CG PLACEHOLDER\nCH01-POOL-PHOTO — CONFIDENT ROUTE\nSECOND SOLO SHOT / CONSERVATIVE SWIMWEAR",
+        size=52,
+        color="#ffffff",
+    ),
 )
 
-image cg ch01_photo_more_second_b = Text(
-    "CH01 POOL PHOTO — CONFIDENT ROUTE\nSECOND SOLO SHOT — BOLDER SWIMWEAR\n\nPlaceholder",
-    size=42,
-    color="#ffffff",
-    text_align=0.5,
-    xalign=0.5,
-    yalign=0.5,
+image cg ch01_photo_more_second_b = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#4f496f"),
+    (90, 70), Text(
+        "CG PLACEHOLDER\nCH01-POOL-PHOTO — CONFIDENT ROUTE\nSECOND SOLO SHOT / BOLDER SWIMWEAR",
+        size=52,
+        color="#ffffff",
+    ),
 )
