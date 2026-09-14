@@ -73,8 +73,8 @@ screen lc_ios_app_tile(app_id, label, subtitle, action, icon_path=None, placehol
                 text subtitle size 11 color "#6d6d72" xalign 0.5 text_align 0.5 xmaximum 155
 
 
-# Slightly more realistic status bar / camera island. The black island now
-# visually matches the black inner bezel added around the screen.
+# More realistic status bar / camera island. The black island visually matches
+# the black inner bezel added around the screen.
 screen lc_ios_status_bar():
     fixed:
         xfill True
@@ -82,18 +82,10 @@ screen lc_ios_status_bar():
 
         text "[lc_phone_clock_text()]" size 14 color "#1c1c1e" bold True xpos 16 yalign 0.5
 
-        frame:
+        add "gui/phone/dynamic_island.svg":
+            xysize (132, 31)
             xalign 0.5
             yalign 0.5
-            xsize 132
-            ysize 31
-            background Frame("gui/phone/rounded_shell.png", 18, 18)
-            padding (2, 2)
-
-            frame:
-                xfill True
-                yfill True
-                background Solid("#0a0a0c")
 
         hbox:
             xalign 0.965
