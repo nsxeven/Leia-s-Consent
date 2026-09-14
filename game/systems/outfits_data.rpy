@@ -86,6 +86,31 @@ init python:
             ],
         },
 
+        "resort_dinner_dress": {
+            "name": "Resort Dinner Dress",
+            "category": "date",
+            "description": "The fitted evening dress Leia packed specifically for the island dinner.",
+            "cost": 0,
+            "shop_visible": False,
+            "story_grant": True,
+            "shop_requirements": [],
+            "boldness": 45,
+            "exposure": 35,
+            "public_risk": 25,
+            "comfort": 70,
+            "playfulness": 45,
+            "elegance": 80,
+            "contexts": ("date", "restaurant", "resort", "evening"),
+            "asset_id": "leia_outfit_resort_dinner_dress",
+            "wear_paths": [
+                {
+                    "id": "story_dinner",
+                    "label": "Story dinner outfit",
+                    "requirements": [],
+                },
+            ],
+        },
+
         "date_night_dress": {
             "name": "Date Night Dress",
             "category": "date",

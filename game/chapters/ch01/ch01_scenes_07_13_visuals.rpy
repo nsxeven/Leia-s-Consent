@@ -1,0 +1,109 @@
+# Chapter One Scenes 7–13 visual placeholders.
+# Final generated art should replace these stable image names.
+
+image bg ch01_villa_entry_evening = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#393343"),
+    (0, 760), Transform(Solid("#8a715c"), xysize=(1920, 320)),
+    (1180, 110), Transform(Solid("#b8a58f"), xysize=(560, 650)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-10 — VILLA ENTRY / EVENING", size=46, color="#ffffff"),
+)
+
+image bg ch01_car_night = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#171b28"),
+    (0, 0), Transform(Solid("#2a3347"), xysize=(1920, 420)),
+    (0, 820), Transform(Solid("#11151d"), xysize=(1920, 260)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-11 — CAR INTERIOR / NIGHT", size=46, color="#ffffff"),
+)
+
+image bg ch01_restaurant_evening = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#3a2730"),
+    (0, 610), Transform(Solid("#6c4d3f"), xysize=(1920, 470)),
+    (260, 180), Transform(Solid("#c99663"), xysize=(1400, 80)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-12 — ISLAND RESTAURANT / DINNER", size=46, color="#ffffff"),
+)
+
+image bg ch01_restaurant_bar = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#2d2432"),
+    (0, 650), Transform(Solid("#5c3d45"), xysize=(1920, 430)),
+    (1180, 160), Transform(Solid("#87596d"), xysize=(620, 430)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-13 — RESTAURANT BAR / LATE EVENING", size=46, color="#ffffff"),
+)
+
+image bg ch01_island_walk_night = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#111c2a"),
+    (0, 720), Transform(Solid("#5f5d61"), xysize=(1920, 360)),
+    (200, 110), Transform(Solid("#dab66f"), xysize=(30, 610)),
+    (1540, 110), Transform(Solid("#dab66f"), xysize=(30, 610)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-14 — ISLAND WALK / NIGHT", size=46, color="#ffffff"),
+)
+
+image bg ch01_shop_night = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#51535c"),
+    (0, 660), Transform(Solid("#b4aa98"), xysize=(1920, 420)),
+    (220, 170), Transform(Solid("#d8d4c7"), xysize=(1480, 420)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-15 — CONVENIENCE SHOP / NIGHT", size=46, color="#ffffff"),
+)
+
+image bg ch01_villa_night = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#152234"),
+    (0, 760), Transform(Solid("#786d65"), xysize=(1920, 320)),
+    (980, 180), Transform(Solid("#d7b784"), xysize=(720, 580)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-16 — VILLA EXTERIOR / NIGHT", size=46, color="#ffffff"),
+)
+
+image bg ch01_villa_living_night = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#282532"),
+    (0, 710), Transform(Solid("#66584f"), xysize=(1920, 370)),
+    (1200, 120), Transform(Solid("#4d7283"), xysize=(560, 500)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-17 — VILLA LIVING ROOM / NIGHT", size=46, color="#ffffff"),
+)
+
+image cg ch01_drive_to_dinner = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#243146"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DRIVE-01 — BASELINE CAR SEATING\nRYAN DRIVING / LEIA FRONT PASSENGER / JULIAN REAR", size=52, color="#ffffff"),
+)
+
+image cg ch01_dinner_spill = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#744b57"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-01 — DRINK SPILL\nDRESS WET / STICKY BRA COMPROMISED", size=52, color="#ffffff"),
+)
+
+image cg ch01_dinner_return_braless = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#704455"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-02 — RETURN FROM RESTROOM\nSAME DRESS / STICKY BRA REMOVED\nPOST-SPILL VISUAL CONTINUITY STATE", size=52, color="#ffffff"),
+)
+
+image cg ch01_trip_catch = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#36445b"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-WALK-01 — LEIA TRIPS / JULIAN CATCHES HER\nACCIDENTAL CONTACT / BOTH EMBARRASSED", size=52, color="#ffffff"),
+)
+
+image cg ch01_drive_back_seating = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#1d293b"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DRIVE-02 — RETURN CAR SEATING\nRYAN DRIVING / JULIAN FRONT / LEIA LYING IN REAR", size=52, color="#ffffff"),
+)
+
+image cg ch01_julian_carry = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#31384a"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-CARRY-01 — JULIAN PRINCESS-CARRIES LEIA\nRYAN AHEAD WITH KEYS", size=52, color="#ffffff"),
+)
+
+image cg ch01_carry_dress_shift = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#403747"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-CARRY-02 — DRESS NECKLINE SHIFTS\nJULIAN'S HANDS OCCUPIED / RYAN'S VIEW OBSCURED\nAMBIGUOUS VIEWING ANGLE", size=52, color="#ffffff"),
+)

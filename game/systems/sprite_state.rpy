@@ -22,6 +22,8 @@ init python:
         # Distinct placeholder attributes keep Chapter 1 outfit branches visually testable.
         "pool_conservative": "outfit_pool_conservative",
         "pool_bolder": "outfit_pool_bolder",
+        # The Chapter 1 restaurant outfit reuses the current date-dress placeholder layer.
+        "resort_dinner_dress": "outfit_date",
         "date_night_dress": "outfit_date",
         "after_hours_dress": "outfit_after_hours",
     }

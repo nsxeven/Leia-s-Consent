@@ -387,9 +387,4 @@ label ch01_scene_06_friendship_and_towel:
     mc "Yeah?"
     gf "...Did he see anything?"
 
-    scene black
-    with fade
-
-    centered "{size=46}CHAPTER ONE{/size}\n{size=30}Scenes 4–6 complete{/size}\n\n{size=22}Next: Getting Ready for Dinner{/size}"
-
-    return
+    jump ch01_scene_07_did_he_see

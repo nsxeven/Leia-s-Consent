@@ -78,6 +78,91 @@ init python:
             ("relationship", "trust", 1),
             ("player", "jealousy", 2),
         ],
+        "ch01_towel_reassure": [
+            ("relationship", "trust", 1),
+        ],
+        "ch01_towel_honest": [
+            ("relationship", "trust", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_towel_tease": [
+            ("relationship", "love", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_bra_reassure": [
+            ("relationship", "trust", 2),
+        ],
+        "ch01_bra_playful": [
+            ("partner", "exhibitionism", 2),
+            ("player", "acceptance", 2),
+            ("relationship", "momentum", 1),
+        ],
+        "ch01_bra_cover": [
+            ("relationship", "trust", 1),
+            ("player", "jealousy", 1),
+            ("partner", "boundary_looseness", -1),
+        ],
+        "ch01_stranger_proud": [
+            ("partner", "exhibitionism", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_stranger_territorial": [
+            ("player", "jealousy", 2),
+            ("partner", "boundary_looseness", -1),
+        ],
+        "ch01_stranger_encourage": [
+            ("partner", "exhibitionism", 2),
+            ("player", "acceptance", 2),
+            ("relationship", "momentum", 1),
+        ],
+        "ch01_catch_ignore": [
+            ("player", "acceptance", 1),
+        ],
+        "ch01_catch_check": [
+            ("relationship", "trust", 1),
+        ],
+        "ch01_catch_joke": [
+            ("relationship", "love", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_catch_boundary": [
+            ("player", "jealousy", 1),
+        ],
+        "ch01_friend_reassure": [
+            ("relationship", "trust", 2),
+            ("relationship", "love", 1),
+        ],
+        "ch01_friend_tease": [
+            ("relationship", "love", 1),
+        ],
+        "ch01_friend_boundary": [
+            ("relationship", "trust", 1),
+            ("player", "jealousy", -1),
+        ],
+        "ch01_julian_reassure": [
+            ("player", "acceptance", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_julian_honest": [
+            ("player", "jealousy", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_julian_joke": [
+            ("player", "acceptance", 1),
+        ],
+        "ch01_carry_brush": [
+            ("player", "acceptance", 2),
+        ],
+        "ch01_carry_lookaway": [
+            ("player", "jealousy", 2),
+        ],
+        "ch01_carry_fix": [
+            ("relationship", "trust", 1),
+        ],
+        "ch01_carry_joke": [
+            ("player", "acceptance", 2),
+            ("relationship", "momentum", 1),
+        ],
     }
 
     # Behavioral metadata is deliberately separate from stat effects. Later scenes
@@ -95,6 +180,29 @@ init python:
         "ch01_towel_laugh": ("encouraging", "lighthearted"),
         "ch01_towel_boundary": ("protective", "respectful"),
         "ch01_towel_forget": ("protective", "honest", "cautious"),
+        "ch01_towel_reassure": ("neutral", "supportive", "reassuring"),
+        "ch01_towel_honest": ("neutral", "honest", "supportive"),
+        "ch01_towel_tease": ("encouraging", "lighthearted", "open"),
+        "ch01_bra_reassure": ("neutral", "supportive", "comfort-first"),
+        "ch01_bra_playful": ("encouraging", "participating", "open", "playful"),
+        "ch01_bra_cover": ("protective", "cautious", "respectful"),
+        "ch01_stranger_proud": ("encouraging", "supportive", "open"),
+        "ch01_stranger_territorial": ("protective", "possessive", "cautious"),
+        "ch01_stranger_encourage": ("encouraging", "participating", "open", "playful"),
+        "ch01_catch_ignore": ("neutral", "trusting"),
+        "ch01_catch_check": ("neutral", "supportive", "protective"),
+        "ch01_catch_joke": ("encouraging", "lighthearted", "open"),
+        "ch01_catch_boundary": ("protective", "cautious", "respectful"),
+        "ch01_friend_reassure": ("neutral", "honest", "supportive"),
+        "ch01_friend_tease": ("encouraging", "lighthearted", "playful"),
+        "ch01_friend_boundary": ("neutral", "honest", "boundary-setting"),
+        "ch01_julian_reassure": ("encouraging", "trusting", "open"),
+        "ch01_julian_honest": ("protective", "honest", "respectful"),
+        "ch01_julian_joke": ("encouraging", "lighthearted", "trusting"),
+        "ch01_carry_brush": ("encouraging", "trusting", "open"),
+        "ch01_carry_lookaway": ("protective", "possessive", "cautious"),
+        "ch01_carry_fix": ("neutral", "protective", "supportive"),
+        "ch01_carry_joke": ("encouraging", "lighthearted", "open", "playful"),
     }
 
     STANCE_TAGS = ("encouraging", "neutral", "protective")
