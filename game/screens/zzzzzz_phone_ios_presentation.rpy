@@ -146,7 +146,7 @@ screen phone_screen():
         yalign 0.5
         xsize 690
         ysize 1070
-        background Frame("gui/phone/rounded_shell.png", 34, 34)
+        background None
         padding (15, 15)
 
         fixed:
@@ -165,21 +165,6 @@ screen phone_screen():
 
                     if phone_app == "home":
                         add Solid("#f0eaf2")
-                        add "gui/phone/rounded_pink.png":
-                            xysize (430, 250)
-                            xpos -90
-                            ypos 100
-                            alpha 0.30
-                        add "gui/phone/rounded_blue.png":
-                            xysize (420, 260)
-                            xpos 305
-                            ypos 585
-                            alpha 0.42
-                        add "gui/phone/rounded_yellow.png":
-                            xysize (330, 190)
-                            xpos 250
-                            ypos 255
-                            alpha 0.25
                     else:
                         add Solid("#f2f2f7")
 
@@ -586,7 +571,7 @@ screen lc_phone_status():
         yalign 0.5
         xsize 690
         ysize 1070
-        background Frame("gui/phone/rounded_shell.png", 34, 34)
+        background None
         padding (15, 15)
 
         frame:
@@ -718,7 +703,7 @@ screen lc_phone_settings():
         yalign 0.5
         xsize 690
         ysize 1070
-        background Frame("gui/phone/rounded_shell.png", 34, 34)
+        background None
         padding (15, 15)
 
         frame:
