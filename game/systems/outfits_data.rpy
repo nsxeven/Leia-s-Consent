@@ -111,6 +111,31 @@ init python:
             ],
         },
 
+        "resort_loungewear": {
+            "name": "Villa Loungewear",
+            "category": "casual",
+            "description": "Leia's oversized sleep tee and short lounge shorts for winding down at the villa.",
+            "cost": 0,
+            "shop_visible": False,
+            "story_grant": True,
+            "shop_requirements": [],
+            "boldness": 25,
+            "exposure": 20,
+            "public_risk": 5,
+            "comfort": 95,
+            "playfulness": 35,
+            "elegance": 10,
+            "contexts": ("home", "lounge", "sleep", "night"),
+            "asset_id": "leia_outfit_resort_loungewear",
+            "wear_paths": [
+                {
+                    "id": "story_home",
+                    "label": "Villa wind-down",
+                    "requirements": [],
+                },
+            ],
+        },
+
         "date_night_dress": {
             "name": "Date Night Dress",
             "category": "date",
