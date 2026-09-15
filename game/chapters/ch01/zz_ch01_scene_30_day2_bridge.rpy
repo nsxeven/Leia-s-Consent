@@ -1,7 +1,22 @@
 # Runtime override for Scene 30.
 # Extends the existing Day One ending directly into the new Day Two build.
+# Uses the same callback-redirect pattern as the existing Scene 13 revision so
+# the original label remains intact and Ren'Py does not see a duplicate label.
 
-label ch01_scene_30_end_day_one:
+init 999 python:
+    _ch01_scene30_previous_label_callback = config.label_callback
+
+    def _ch01_scene30_label_callback(name, abnormal):
+        if _ch01_scene30_previous_label_callback is not None:
+            _ch01_scene30_previous_label_callback(name, abnormal)
+
+        if name == "ch01_scene_30_end_day_one":
+            renpy.jump("ch01_scene_30_end_day_one_day2_bridge")
+
+    config.label_callback = _ch01_scene30_label_callback
+
+
+label ch01_scene_30_end_day_one_day2_bridge:
 
     scene bg ch01_villa_bedroom_night
     show leia at ch01_leia_left
