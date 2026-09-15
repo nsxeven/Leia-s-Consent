@@ -2,6 +2,14 @@
 # Generated prologue art is kept separate from the later layered wardrobe sprite
 # system. Missing present-day art remains explicit placeholders.
 
+# --- Standard VN transitions ----------------------------------------------
+# Use short crossfades for expression/pose replacement so generated sprites do
+# not snap between different silhouettes. Longer transitions are reserved for
+# major posture changes and entrances/exits.
+define sprite_change = Dissolve(0.18)
+define sprite_pose_change = Dissolve(0.28)
+define sprite_enter_exit = Dissolve(0.30)
+
 # --- Full-screen generated visuals -----------------------------------------
 
 transform prologue_fullscreen:
@@ -72,24 +80,12 @@ image leia_prologue standing_surprised02 = "images/sprites/prologue/standing_sur
 image leia_prologue standing_warming01 = "images/sprites/prologue/standing_warming01.png"
 
 # --- Standard VN sprite envelope ------------------------------------------
-# Future-proof rule for generated character sprites:
-#   * never render taller than 900 px on the 1080p game canvas
-#   * never render wider than 760 px
-#   * preserve aspect ratio
-#   * anchor the sprite to the bottom of the screen
-#   * reserve the upper ~100 px as breathing room so hair/head stays on-screen
-#
-# Because `fit "contain"` only scales down to this envelope, differently-sized
-# source PNGs can be dropped in later without hand-tuning zoom for every pose.
-# The dialogue box can overlap the lower body, which is normal VN composition.
 transform prologue_leia_generated:
     xalign 0.5
     yalign 1.0
     xysize (760, 900)
     fit "contain"
 
-# Optional positions using the same size envelope. These are ready for future
-# two-character scenes without changing the sprite scale standard.
 transform prologue_leia_generated_left:
     xalign 0.25
     yalign 1.0
@@ -101,6 +97,44 @@ transform prologue_leia_generated_right:
     yalign 1.0
     xysize (760, 900)
     fit "contain"
+
+# Entrance transforms. Use these only when a character actually enters the
+# composition, not for ordinary expression changes.
+transform prologue_sprite_enter_center:
+    xalign 0.5
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    alpha 0.0
+    yoffset 18
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 yoffset 0
+
+transform prologue_sprite_enter_left:
+    xalign 0.25
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    alpha 0.0
+    xoffset -45
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 xoffset 0
+
+transform prologue_sprite_enter_right:
+    xalign 0.75
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    alpha 0.0
+    xoffset 45
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 xoffset 0
 
 # --- Temporary Julian sprite ----------------------------------------------
 
