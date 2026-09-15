@@ -3,8 +3,6 @@
 # system. Missing present-day art remains explicit placeholders.
 
 # --- Full-screen generated visuals -----------------------------------------
-# `cover` scales/crops to the game's 1920x1080 canvas. This removes transparent
-# or unused margins from generated art instead of letterboxing it.
 
 transform prologue_fullscreen:
     xysize (1920, 1080)
@@ -54,11 +52,7 @@ image cg prologue_departure = Composite(
 )
 
 # --- Generated Leia prologue sprites --------------------------------------
-# IMPORTANT: these use the separate `leia_prologue` image tag. The game's
-# existing `leia` tag belongs to the layered wardrobe sprite and its attribute
-# adjustment system. Sharing that tag caused Ren'Py to feed these filenames into
-# the layeredimage, producing the old P01/CASUAL placeholder and the
-# "unknown attributes" message seen in-game.
+# Keep this tag separate from the layered wardrobe `leia` tag.
 
 image leia_prologue seated_amused01 = "images/sprites/prologue/seated_amused01.png"
 image leia_prologue seated_defeated01 = "images/sprites/prologue/seated_defeated01.png"
@@ -77,12 +71,36 @@ image leia_prologue standing_surprised01 = "images/sprites/prologue/standing_sur
 image leia_prologue standing_surprised02 = "images/sprites/prologue/standing_surprised02.png"
 image leia_prologue standing_warming01 = "images/sprites/prologue/standing_warming01.png"
 
-# Generated sprite PNGs are full-canvas transparent cutouts, so show them at
-# native composition scale centered on the screen rather than applying the old
-# placeholder character positioning transform.
+# --- Standard VN sprite envelope ------------------------------------------
+# Future-proof rule for generated character sprites:
+#   * never render taller than 900 px on the 1080p game canvas
+#   * never render wider than 760 px
+#   * preserve aspect ratio
+#   * anchor the sprite to the bottom of the screen
+#   * reserve the upper ~100 px as breathing room so hair/head stays on-screen
+#
+# Because `fit "contain"` only scales down to this envelope, differently-sized
+# source PNGs can be dropped in later without hand-tuning zoom for every pose.
+# The dialogue box can overlap the lower body, which is normal VN composition.
 transform prologue_leia_generated:
     xalign 0.5
     yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+
+# Optional positions using the same size envelope. These are ready for future
+# two-character scenes without changing the sprite scale standard.
+transform prologue_leia_generated_left:
+    xalign 0.25
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+
+transform prologue_leia_generated_right:
+    xalign 0.75
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
 
 # --- Temporary Julian sprite ----------------------------------------------
 
