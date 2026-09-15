@@ -50,19 +50,22 @@ label prologue_start:
     "Mostly because somebody dragged two chairs over and suddenly everyone was talking over everyone else."
 
     scene bg prologue_party
-    show leia_prologue standing_neutral01 at prologue_leia_generated
-    with dissolve
+    show leia_prologue standing_neutral01 at prologue_sprite_enter_center
+    with sprite_enter_exit
 
     gf "Technically, you're both wrong."
     show leia_prologue standing_interrupted01 at prologue_leia_generated
+    with sprite_change
     "She said it quietly enough that the conversation almost rolled straight over her."
     gf "...Never mind."
     mc "No, no. You can't say that and then retreat."
     show leia_prologue standing_shy01 at prologue_leia_generated
+    with sprite_change
     gf "I can absolutely retreat."
     mc "Too late. Explain."
 
     show leia_prologue standing_excited01 at prologue_leia_generated
+    with sprite_pose_change
     "She did."
     "Not for ten seconds, either."
     "There were examples. There was context. At one point she used her drink to demonstrate something nobody had asked to see demonstrated."
@@ -70,9 +73,11 @@ label prologue_start:
 
     mc "Oh."
     show leia_prologue standing_surprised01 at prologue_leia_generated
+    with sprite_change
     gf "What?"
     mc "Nothing. Keep going."
     show leia_prologue standing_warming01 at prologue_leia_generated
+    with sprite_change
     "She narrowed her eyes at me and continued anyway."
 
     "What was I actually thinking?"
@@ -82,6 +87,7 @@ label prologue_start:
             $ set_story_value("prologue_ryan_first_impression", "dork")
             mc "You're a complete dork, aren't you?"
             show leia_prologue standing_surprised02 at prologue_leia_generated
+            with sprite_change
             gf "You made me explain it!"
             mc "And I'm glad I did."
 
@@ -89,9 +95,11 @@ label prologue_start:
             $ set_story_value("prologue_ryan_first_impression", "comfortable")
             mc "You're not what I expected."
             show leia_prologue standing_surprised02 at prologue_leia_generated
+            with sprite_change
             gf "That sounded dangerously close to an insult."
             mc "It wasn't."
             show leia_prologue standing_warming01 at prologue_leia_generated
+            with sprite_change
             gf "Good recovery."
 
         "I am definitely in trouble.":
@@ -101,6 +109,7 @@ label prologue_start:
             "The problem was that now I actually liked talking to her."
 
     show leia_prologue standing_listening01 at prologue_leia_generated
+    with sprite_change
 
     "The longer the night went on, the easier it became to notice something else about her."
     "[girlfriend_name] wasn't shy exactly. She could talk to anyone."
@@ -109,6 +118,7 @@ label prologue_start:
 
     mc "Wait, [girlfriend_name] was saying something."
     show leia_prologue standing_warming01 at prologue_leia_generated
+    with sprite_change
     "A few minutes later—"
     mc "What do you think?"
     "Then again."
@@ -116,8 +126,10 @@ label prologue_start:
     "I didn't think much of it."
     "Apparently, she did."
 
+    # Standing to seated is a substantial silhouette change, so use the slower
+    # pose transition rather than the expression crossfade.
     show leia_prologue seated_neutral01 at prologue_leia_generated
-    with dissolve
+    with sprite_pose_change
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
     "Most of the dares were harmless."
@@ -127,16 +139,20 @@ label prologue_start:
     gf "Truth."
     friend "Again?"
     show leia_prologue seated_amused01 at prologue_leia_generated
+    with sprite_change
     gf "Yes. Again."
     friend "Coward."
     show leia_prologue seated_protesting01 at prologue_leia_generated
+    with sprite_change
     gf "Alive coward."
 
     "The next question came from somewhere across the circle."
     "Who in this room do you like the most?"
     show leia_prologue seated_flustered01 at prologue_leia_generated
+    with sprite_change
     "[girlfriend_name] looked around once."
     show leia_prologue seated_flustered02 at prologue_leia_generated
+    with sprite_change
     "Then she pointed at me."
 
     mc "Me?"
@@ -145,22 +161,27 @@ label prologue_start:
     "That did not seem important at the time."
 
     show leia_prologue seated_amused01 at prologue_leia_generated
+    with sprite_change
     friend "Okay. Next round, you are not choosing Truth again."
     gf "Watch me."
     friend "Chicken."
     show leia_prologue seated_protesting01 at prologue_leia_generated
+    with sprite_change
     gf "I'm not a chicken."
     friend "Then pick Dare."
 
     "Three people immediately joined in."
     show leia_prologue seated_defeated01 at prologue_leia_generated
+    with sprite_change
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
 
     show leia_prologue seated_defeated02 at prologue_leia_generated
+    with sprite_change
     gf "Fine. Dare."
     friend "Kiss [player_name]."
 
     show leia_prologue seated_flustered02 at prologue_leia_generated
+    with sprite_change
     "The room changed temperature."
     "Or maybe that was just me."
     "She looked at [friend_name]. Then at me."
@@ -182,14 +203,15 @@ label prologue_start:
     "The room cheered like we'd accomplished something."
 
     scene bg prologue_party
-    show leia_prologue seated_laughing01 at prologue_leia_generated
-    with dissolve
+    show leia_prologue seated_laughing01 at prologue_sprite_enter_center
+    with sprite_enter_exit
 
     mc "...Does that mean I win Truth or Dare?"
     gf "No."
     mc "Worth asking."
 
     hide leia_prologue
+    with sprite_enter_exit
     scene black
     with fade
     "And somehow... that was the beginning."
