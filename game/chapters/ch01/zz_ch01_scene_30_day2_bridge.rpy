@@ -38,16 +38,10 @@ label ch01_scene_30_end_day_one_day2_bridge:
             notify=True,
             notification_title="Trip Group",
         )
-        phone_add_message(
-            "group",
-            "leia",
-            text="No promises.",
-            message_id="ch01_trip_group_breakfast_leia_reply",
-            mark_unread=True,
-            notify=False,
-        )
+        set_story_flag("ch01_breakfast_reply_pending")
+        clear_story_flag("ch01_breakfast_phone_session_active")
 
-    "Leia's phone buzzed a second later. She read the message and laughed quietly."
+    "Leia checked the same message on her phone and laughed quietly."
 
     gf "He's dramatic."
     mc "He's correct."
