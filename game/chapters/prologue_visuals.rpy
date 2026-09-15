@@ -1,10 +1,24 @@
 # Prologue visuals.
-# Available generated art is wired directly here. Missing CGs/backgrounds remain
-# explicit placeholders so the current build stays playable while art production continues.
+# Generated prologue art is kept separate from the later layered wardrobe sprite
+# system. Missing present-day art remains explicit placeholders.
 
-# --- Generated backgrounds -------------------------------------------------
+# --- Full-screen generated visuals -----------------------------------------
+# `cover` scales/crops to the game's 1920x1080 canvas. This removes transparent
+# or unused margins from generated art instead of letterboxing it.
 
-image bg prologue_party = "images/backgrounds/prologue/party01.webp"
+transform prologue_fullscreen:
+    xysize (1920, 1080)
+    fit "cover"
+
+image bg prologue_party:
+    "images/backgrounds/prologue/party01.webp"
+    xysize (1920, 1080)
+    fit "cover"
+
+image cg prologue_party_arrival:
+    "images/cg/prologue/party_leiafriends01.webp"
+    xysize (1920, 1080)
+    fit "cover"
 
 # Present-day bedroom background has not been generated yet.
 image bg prologue_packing = Composite(
@@ -13,36 +27,7 @@ image bg prologue_packing = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nRYAN + LEIA'S BEDROOM — PRESENT DAY", size=46, color="#ffffff"),
 )
 
-# --- Generated CGs ---------------------------------------------------------
-
-# Current party CG: Leia with her friends before Ryan properly joins the group.
-image cg prologue_party_arrival = "images/cg/prologue/party_leiafriends01.webp"
-
 # --- Missing full-screen story CG placeholders -----------------------------
-
-image cg prologue_leia_nerdy = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#3a2c48"),
-    (90, 70), Text("CG P02\nLEIA'S NERDY EXPLANATION", size=52, color="#ffffff"),
-)
-
-image cg prologue_group_warmup = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#40304d"),
-    (90, 70), Text("CG P03\nGROUP WARMS UP — RYAN MAKES SPACE FOR LEIA", size=52, color="#ffffff"),
-)
-
-image cg prologue_truth_reveal = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#493249"),
-    (90, 70), Text("CG P04\nTRUTH — LEIA POINTS AT RYAN", size=52, color="#ffffff"),
-)
-
-image cg prologue_before_kiss = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#513342"),
-    (90, 70), Text("CG P05\nDARE — THE MOMENT BEFORE THE KISS", size=52, color="#ffffff"),
-)
 
 image cg prologue_first_kiss = Composite(
     (1920, 1080),
@@ -69,26 +54,35 @@ image cg prologue_departure = Composite(
 )
 
 # --- Generated Leia prologue sprites --------------------------------------
-# These are complete transparent sprites, separate from the later layered
-# wardrobe sprite system. The `leia` tag means any new Leia sprite replaces
-# the previous one automatically and `hide leia` continues to work.
+# IMPORTANT: these use the separate `leia_prologue` image tag. The game's
+# existing `leia` tag belongs to the layered wardrobe sprite and its attribute
+# adjustment system. Sharing that tag caused Ren'Py to feed these filenames into
+# the layeredimage, producing the old P01/CASUAL placeholder and the
+# "unknown attributes" message seen in-game.
 
-image leia prologue seated_amused01 = "images/sprites/prologue/seated_amused01.png"
-image leia prologue seated_defeated01 = "images/sprites/prologue/seated_defeated01.png"
-image leia prologue seated_defeated02 = "images/sprites/prologue/seated_defeated02.png"
-image leia prologue seated_flustered01 = "images/sprites/prologue/seated_flustered01.png"
-image leia prologue seated_flustered02 = "images/sprites/prologue/seated_flustered02.png"
-image leia prologue seated_laughing01 = "images/sprites/prologue/seated_laughing01.png"
-image leia prologue seated_neutral01 = "images/sprites/prologue/seated_neutral01.png"
-image leia prologue seated_protesting01 = "images/sprites/prologue/seated_protesting01.png"
-image leia prologue standing_excited01 = "images/sprites/prologue/standing_excited01.png"
-image leia prologue standing_interrupted01 = "images/sprites/prologue/standing_interrupted01.png"
-image leia prologue standing_listening01 = "images/sprites/prologue/standing_listening01.png"
-image leia prologue standing_neutral01 = "images/sprites/prologue/standing_neutral01.png"
-image leia prologue standing_shy01 = "images/sprites/prologue/standing_shy01.png"
-image leia prologue standing_surprised01 = "images/sprites/prologue/standing_surprised01.png"
-image leia prologue standing_surprised02 = "images/sprites/prologue/standing_surprised02.png"
-image leia prologue standing_warming01 = "images/sprites/prologue/standing_warming01.png"
+image leia_prologue seated_amused01 = "images/sprites/prologue/seated_amused01.png"
+image leia_prologue seated_defeated01 = "images/sprites/prologue/seated_defeated01.png"
+image leia_prologue seated_defeated02 = "images/sprites/prologue/seated_defeated02.png"
+image leia_prologue seated_flustered01 = "images/sprites/prologue/seated_flustered01.png"
+image leia_prologue seated_flustered02 = "images/sprites/prologue/seated_flustered02.png"
+image leia_prologue seated_laughing01 = "images/sprites/prologue/seated_laughing01.png"
+image leia_prologue seated_neutral01 = "images/sprites/prologue/seated_neutral01.png"
+image leia_prologue seated_protesting01 = "images/sprites/prologue/seated_protesting01.png"
+image leia_prologue standing_excited01 = "images/sprites/prologue/standing_excited01.png"
+image leia_prologue standing_interrupted01 = "images/sprites/prologue/standing_interrupted01.png"
+image leia_prologue standing_listening01 = "images/sprites/prologue/standing_listening01.png"
+image leia_prologue standing_neutral01 = "images/sprites/prologue/standing_neutral01.png"
+image leia_prologue standing_shy01 = "images/sprites/prologue/standing_shy01.png"
+image leia_prologue standing_surprised01 = "images/sprites/prologue/standing_surprised01.png"
+image leia_prologue standing_surprised02 = "images/sprites/prologue/standing_surprised02.png"
+image leia_prologue standing_warming01 = "images/sprites/prologue/standing_warming01.png"
+
+# Generated sprite PNGs are full-canvas transparent cutouts, so show them at
+# native composition scale centered on the screen rather than applying the old
+# placeholder character positioning transform.
+transform prologue_leia_generated:
+    xalign 0.5
+    yalign 1.0
 
 # --- Temporary Julian sprite ----------------------------------------------
 
@@ -107,10 +101,6 @@ image julian = "julian_placeholder"
 
 transform prologue_leia_left:
     xalign 0.18
-    yalign 1.0
-
-transform prologue_leia_center:
-    xalign 0.50
     yalign 1.0
 
 transform prologue_julian_right:
