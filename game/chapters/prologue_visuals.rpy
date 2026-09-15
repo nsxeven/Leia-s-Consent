@@ -1,28 +1,24 @@
-# Prologue visual placeholders.
-# Replace these displayables with final ComfyUI-generated assets using the same image names.
-# Narrative beats use full-screen CGs; choices deliberately switch back to backgrounds + sprites.
+# Prologue visuals.
+# Available generated art is wired directly here. Missing CGs/backgrounds remain
+# explicit placeholders so the current build stays playable while art production continues.
 
-# --- Backgrounds used during interactive / decision moments -----------------
+# --- Generated backgrounds -------------------------------------------------
 
-image bg prologue_party = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#2a2034"),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nCOLLEGE PARTY — FOUR YEARS AGO", size=46, color="#ffffff"),
-)
+image bg prologue_party = "images/backgrounds/prologue/party01.webp"
 
+# Present-day bedroom background has not been generated yet.
 image bg prologue_packing = Composite(
     (1920, 1080),
     (0, 0), Solid("#2b2528"),
     (90, 70), Text("BACKGROUND PLACEHOLDER\nRYAN + LEIA'S BEDROOM — PRESENT DAY", size=46, color="#ffffff"),
 )
 
-# --- Full-screen story CG placeholders --------------------------------------
+# --- Generated CGs ---------------------------------------------------------
 
-image cg prologue_party_arrival = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#342641"),
-    (90, 70), Text("CG P01\nPARTY ARRIVAL — RYAN NOTICES LEIA", size=52, color="#ffffff"),
-)
+# Current party CG: Leia with her friends before Ryan properly joins the group.
+image cg prologue_party_arrival = "images/cg/prologue/party_leiafriends01.webp"
+
+# --- Missing full-screen story CG placeholders -----------------------------
 
 image cg prologue_leia_nerdy = Composite(
     (1920, 1080),
@@ -72,7 +68,29 @@ image cg prologue_departure = Composite(
     (90, 70), Text("CG P09\nLEAVING FOR THE AIRPORT — THREE-PERSON TRIP BEGINS", size=52, color="#ffffff"),
 )
 
-# --- Temporary Julian sprite for decisions ---------------------------------
+# --- Generated Leia prologue sprites --------------------------------------
+# These are complete transparent sprites, separate from the later layered
+# wardrobe sprite system. The `leia` tag means any new Leia sprite replaces
+# the previous one automatically and `hide leia` continues to work.
+
+image leia prologue seated_amused01 = "images/sprites/prologue/seated_amused01.png"
+image leia prologue seated_defeated01 = "images/sprites/prologue/seated_defeated01.png"
+image leia prologue seated_defeated02 = "images/sprites/prologue/seated_defeated02.png"
+image leia prologue seated_flustered01 = "images/sprites/prologue/seated_flustered01.png"
+image leia prologue seated_flustered02 = "images/sprites/prologue/seated_flustered02.png"
+image leia prologue seated_laughing01 = "images/sprites/prologue/seated_laughing01.png"
+image leia prologue seated_neutral01 = "images/sprites/prologue/seated_neutral01.png"
+image leia prologue seated_protesting01 = "images/sprites/prologue/seated_protesting01.png"
+image leia prologue standing_excited01 = "images/sprites/prologue/standing_excited01.png"
+image leia prologue standing_interrupted01 = "images/sprites/prologue/standing_interrupted01.png"
+image leia prologue standing_listening01 = "images/sprites/prologue/standing_listening01.png"
+image leia prologue standing_neutral01 = "images/sprites/prologue/standing_neutral01.png"
+image leia prologue standing_shy01 = "images/sprites/prologue/standing_shy01.png"
+image leia prologue standing_surprised01 = "images/sprites/prologue/standing_surprised01.png"
+image leia prologue standing_surprised02 = "images/sprites/prologue/standing_surprised02.png"
+image leia prologue standing_warming01 = "images/sprites/prologue/standing_warming01.png"
+
+# --- Temporary Julian sprite ----------------------------------------------
 
 image julian_placeholder = Composite(
     (520, 900),
@@ -89,6 +107,10 @@ image julian = "julian_placeholder"
 
 transform prologue_leia_left:
     xalign 0.18
+    yalign 1.0
+
+transform prologue_leia_center:
+    xalign 0.50
     yalign 1.0
 
 transform prologue_julian_right:
