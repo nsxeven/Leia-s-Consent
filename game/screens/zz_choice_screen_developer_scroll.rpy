@@ -20,6 +20,8 @@ screen choice(items):
             vbox:
                 xalign 0.5
                 xfill True
+                ypos 0
+                yanchor 0.0
                 spacing 8
 
                 for i in items:
