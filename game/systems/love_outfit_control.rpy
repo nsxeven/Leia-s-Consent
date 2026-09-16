@@ -3,9 +3,10 @@
 # Design rule:
 # Once the story has resolved into a Love lane, outfit-prompt scenes can offer
 # Ryan a dedicated "let me choose" option. At those explicit story moments Leia
-# will accept any owned outfit that fits the scene context, even if its normal
-# Wardrobe comfort path would not yet pass. Story-specific choices can also be
-# supplied by the scene and are granted when selected.
+# will accept ANY outfit the player already owns, even if its normal Wardrobe
+# comfort path would not yet pass or it is unconventional for the scene.
+# Story-specific choices can also be supplied by the scene and are granted when
+# selected.
 #
 # This is deliberately NOT a global Wardrobe bypass. The perk only applies when
 # the script explicitly opens the Love-route outfit picker.
@@ -63,13 +64,14 @@ init 10 python:
         return end_route in LOVE_OUTFIT_END_STATES
 
 
-    def love_outfit_candidates(contexts=(), story_ids=()):
-        """Build a stable list of outfit IDs for a Love-route story picker.
+    def love_outfit_candidates(story_ids=()):
+        """Build the Love-route picker in a stable order.
 
-        Story IDs are always offered first. Owned wardrobe outfits are then
-        appended when at least one of their contexts matches the scene.
+        Scene-specific story outfits are offered first. Every already-owned
+        Wardrobe outfit is then appended. Love intentionally does not apply a
+        scene-context filter: the perk is that Leia trusts Ryan enough to wear
+        whatever owned outfit he asks for at an explicit outfit-choice moment.
         """
-        contexts = set(contexts or ())
         result = []
 
         for outfit_id in story_ids:
@@ -77,10 +79,7 @@ init 10 python:
                 result.append(outfit_id)
 
         for outfit_id in valid_owned_outfit_ids():
-            if outfit_id in result:
-                continue
-            outfit_contexts = set(get_outfit(outfit_id).get("contexts", ()))
-            if not contexts or contexts.intersection(outfit_contexts):
+            if outfit_id not in result:
                 result.append(outfit_id)
 
         return result
@@ -91,7 +90,8 @@ init 10 python:
 
         This intentionally bypasses ordinary wear-path stat gates, but only when
         Love outfit control is active. Non-owned shop outfits remain unavailable.
-        Story-grantable outfits are obtained automatically when chosen.
+        Scene-specific story-grantable outfits are obtained automatically when
+        chosen.
         """
         if not love_outfit_control_active(route_lane=route_lane):
             return False
@@ -149,7 +149,7 @@ screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
 
             text "LOVE ROUTE — OUTFIT CHOICE" size 34
             text "[title_text]" size 28
-            text "At outfit-prompt scenes, Leia will wear the outfit you request. Owned context-appropriate wardrobe outfits also appear here." size 22
+            text "At outfit-prompt scenes, Leia will wear any outfit you already own. Scene-specific story outfits also appear here." size 22
 
             viewport:
                 xfill True
@@ -177,4 +177,4 @@ screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
                                 spacing 5
                                 text "[display_name]" size 29
                                 text "[display_description]" size 21
-                                text "Context: [display_context]" size 18
+                                text "Usual context: [display_context]" size 18
