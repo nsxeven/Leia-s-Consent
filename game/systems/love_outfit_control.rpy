@@ -5,7 +5,7 @@
 # Ryan a dedicated "let me choose" option. Love gives Ryan meaningful outfit
 # control, but Leia's current sexual confidence still matters. At ordinary
 # outdoor outfit prompts she will accept outdoor clothes he owns. Swimwear stays
-# visible in the picker but is locked until Exhibitionism is high enough.
+# visible in the picker but is locked until Exhibitionism reaches 50.
 #
 # This is deliberately NOT a global Wardrobe bypass. The perk only applies when
 # the script explicitly opens the Love-route outfit picker.
@@ -13,7 +13,7 @@
 init 10 python:
 
     LOVE_OUTFIT_END_STATES = ("love", "love_repaired")
-    LOVE_SWIMWEAR_EXHIBITIONISM_MIN = 22
+    LOVE_SWIMWEAR_EXHIBITIONISM_MIN = 50
 
     # Day Two needs a distinct narrative outfit even though final art is still
     # pending. Until final layers are generated it reuses the current bold
