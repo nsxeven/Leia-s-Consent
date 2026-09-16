@@ -23,7 +23,6 @@ label ch01_day2_scene_20_dinner_outfit_love_control:
             "Let me choose your outfit.":
                 python:
                     d2_love_outfit_options = love_outfit_candidates(
-                        contexts=("date", "restaurant", "evening"),
                         story_ids=("resort_dinner_dress", "d2_loose_low_cut"),
                     )
                     d2_love_outfit_pick = renpy.call_screen(
