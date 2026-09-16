@@ -2,11 +2,10 @@
 #
 # Design rule:
 # Once the story has resolved into a Love lane, outfit-prompt scenes can offer
-# Ryan a dedicated "let me choose" option. At those explicit story moments Leia
-# will accept ANY outfit the player already owns, even if its normal Wardrobe
-# comfort path would not yet pass or it is unconventional for the scene.
-# Story-specific choices can also be supplied by the scene and are granted when
-# selected.
+# Ryan a dedicated "let me choose" option. Love gives Ryan meaningful outfit
+# control, but Leia's current sexual confidence still matters. At ordinary
+# outdoor outfit prompts she will accept outdoor clothes he owns. Swimwear stays
+# visible in the picker but is locked until Exhibitionism is high enough.
 #
 # This is deliberately NOT a global Wardrobe bypass. The perk only applies when
 # the script explicitly opens the Love-route outfit picker.
@@ -14,6 +13,7 @@
 init 10 python:
 
     LOVE_OUTFIT_END_STATES = ("love", "love_repaired")
+    LOVE_SWIMWEAR_EXHIBITIONISM_MIN = 22
 
     # Day Two needs a distinct narrative outfit even though final art is still
     # pending. Until final layers are generated it reuses the current bold
@@ -51,12 +51,7 @@ init 10 python:
 
 
     def love_outfit_control_active(route_lane=None):
-        """Return True when the current story state has earned Love outfit control.
-
-        `route_lane` lets an in-progress day expose the perk before that day's
-        final end-state has been stored. Once Day Two is complete, `love` and
-        `love_repaired` keep the perk active for future days.
-        """
+        """Return True when the current story state has earned Love outfit control."""
         if route_lane == "love":
             return True
 
@@ -64,22 +59,74 @@ init 10 python:
         return end_route in LOVE_OUTFIT_END_STATES
 
 
+    def love_outfit_is_outdoor(outfit_id):
+        """Whether an outfit belongs in an ordinary public/outdoor story picker."""
+        outfit = get_outfit(outfit_id)
+        contexts = set(outfit.get("contexts", ()))
+        outdoor_contexts = {
+            "casual", "day", "date", "restaurant", "resort",
+            "evening", "nightlife", "party",
+        }
+        return bool(contexts.intersection(outdoor_contexts))
+
+
+    def love_outfit_is_swimwear(outfit_id):
+        return get_outfit(outfit_id).get("category") == "swimwear"
+
+
+    def love_outfit_swimwear_unlocked():
+        return renpy.store.partner_stats.get("exhibitionism", 0) >= LOVE_SWIMWEAR_EXHIBITIONISM_MIN
+
+
+    def love_outfit_available(outfit_id):
+        """Availability inside the Love story picker, separate from visibility."""
+        if love_outfit_is_swimwear(outfit_id):
+            return love_outfit_swimwear_unlocked()
+        return love_outfit_is_outdoor(outfit_id)
+
+
+    def love_outfit_lock_text(outfit_id):
+        """Mode-sensitive explanation for a visible but unavailable outfit."""
+        if not love_outfit_is_swimwear(outfit_id):
+            return "Not suitable for this outing."
+
+        mode = getattr(persistent, "choice_display_mode", "normal") or "normal"
+        current = renpy.store.partner_stats.get("exhibitionism", 0)
+
+        if mode == "normal":
+            return "Leia isn't comfortable wearing this here yet."
+        elif mode == "insight":
+            return "Requires higher Exhibitionism."
+        elif mode == "full":
+            return "Requires Exhibitionism {}. Current: {}.".format(
+                LOVE_SWIMWEAR_EXHIBITIONISM_MIN, current
+            )
+        else:
+            return "LOCKED — Exhibitionism {}/{} | category: swimwear | id: {}".format(
+                current, LOVE_SWIMWEAR_EXHIBITIONISM_MIN, outfit_id
+            )
+
+
     def love_outfit_candidates(story_ids=()):
         """Build the Love-route picker in a stable order.
 
-        Scene-specific story outfits are offered first. Every already-owned
-        Wardrobe outfit is then appended. Love intentionally does not apply a
-        scene-context filter: the perk is that Leia trusts Ryan enough to wear
-        whatever owned outfit he asks for at an explicit outfit-choice moment.
+        Scene-specific outdoor story outfits are first. Owned outdoor outfits
+        follow. Owned swimwear is deliberately included even while locked so the
+        player can see that higher Exhibitionism expands Love-route outfit control.
+        Home/lounge/sleep-only clothing is omitted from outdoor prompts.
         """
         result = []
 
         for outfit_id in story_ids:
-            if outfit_id in OUTFIT_DEFINITIONS and outfit_id not in result:
+            if outfit_id not in OUTFIT_DEFINITIONS or outfit_id in result:
+                continue
+            if love_outfit_is_outdoor(outfit_id) or love_outfit_is_swimwear(outfit_id):
                 result.append(outfit_id)
 
         for outfit_id in valid_owned_outfit_ids():
-            if outfit_id not in result:
+            if outfit_id in result:
+                continue
+            if love_outfit_is_outdoor(outfit_id) or love_outfit_is_swimwear(outfit_id):
                 result.append(outfit_id)
 
         return result
@@ -88,12 +135,15 @@ init 10 python:
     def love_route_wear_request(outfit_id, route_lane=None):
         """Equip an outfit because Ryan explicitly requested it on the Love route.
 
-        This intentionally bypasses ordinary wear-path stat gates, but only when
-        Love outfit control is active. Non-owned shop outfits remain unavailable.
-        Scene-specific story-grantable outfits are obtained automatically when
-        chosen.
+        Outdoor clothes bypass ordinary wear-path gates at explicit Love outfit
+        prompts. Swimwear additionally requires the Love exhibitionism threshold.
+        Non-owned shop outfits remain unavailable. Scene-specific story-grantable
+        outfits are obtained automatically when chosen.
         """
         if not love_outfit_control_active(route_lane=route_lane):
+            return False
+
+        if not love_outfit_available(outfit_id):
             return False
 
         outfit = get_outfit(outfit_id)
@@ -149,7 +199,7 @@ screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
 
             text "LOVE ROUTE — OUTFIT CHOICE" size 34
             text "[title_text]" size 28
-            text "At outfit-prompt scenes, Leia will wear any outfit you already own. Scene-specific story outfits also appear here." size 22
+            text "Choose from Leia's outdoor wardrobe. More daring categories open as her confidence grows." size 22
 
             viewport:
                 xfill True
@@ -167,14 +217,23 @@ screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
                         $ display_name = outfit.get("name", outfit_id)
                         $ display_description = outfit.get("description", "")
                         $ display_context = outfit_context_text(outfit_id)
+                        $ outfit_available = love_outfit_available(outfit_id)
+                        $ lock_text = love_outfit_lock_text(outfit_id) if not outfit_available else ""
 
                         button:
                             xfill True
                             padding (22, 18)
+                            sensitive outfit_available
                             action Return(outfit_id)
+
+                            if not outfit_available:
+                                at transform:
+                                    alpha 0.38
 
                             vbox:
                                 spacing 5
                                 text "[display_name]" size 29
                                 text "[display_description]" size 21
                                 text "Usual context: [display_context]" size 18
+                                if not outfit_available:
+                                    text "[lock_text]" size 19
