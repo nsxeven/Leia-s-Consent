@@ -21,22 +21,23 @@ label ch01_day2_scene_20_dinner_outfit_love_control:
 
         menu:
             "Let me choose your outfit.":
-                $ d2_love_outfit_options = love_outfit_candidates(
-                    contexts=("date", "restaurant", "evening"),
-                    story_ids=("resort_dinner_dress", "d2_loose_low_cut"),
-                )
-                $ d2_love_outfit_pick = renpy.call_screen(
-                    "leia_love_outfit_picker",
-                    options=d2_love_outfit_options,
-                    title_text="Pick Leia's Day Two dinner outfit",
-                )
-                $ love_route_wear_request(d2_love_outfit_pick, route_lane="love")
-                $ set_story_value("ch01_d2_dinner_outfit_id", d2_love_outfit_pick)
-                $ set_story_value(
-                    "ch01_d2_dinner_outfit",
-                    "loose_low_cut" if love_outfit_is_daring(d2_love_outfit_pick) else "secure_date",
-                )
-                $ set_story_flag("ch01_d2_love_outfit_control_used")
+                python:
+                    d2_love_outfit_options = love_outfit_candidates(
+                        contexts=("date", "restaurant", "evening"),
+                        story_ids=("resort_dinner_dress", "d2_loose_low_cut"),
+                    )
+                    d2_love_outfit_pick = renpy.call_screen(
+                        "leia_love_outfit_picker",
+                        options=d2_love_outfit_options,
+                        title_text="Pick Leia's Day Two dinner outfit",
+                    )
+                    love_route_wear_request(d2_love_outfit_pick, route_lane="love")
+                    set_story_value("ch01_d2_dinner_outfit_id", d2_love_outfit_pick)
+                    set_story_value(
+                        "ch01_d2_dinner_outfit",
+                        "loose_low_cut" if love_outfit_is_daring(d2_love_outfit_pick) else "secure_date",
+                    )
+                    set_story_flag("ch01_d2_love_outfit_control_used")
 
                 mc "Wear the [outfit_name(d2_love_outfit_pick)]."
                 gf "Okay."
