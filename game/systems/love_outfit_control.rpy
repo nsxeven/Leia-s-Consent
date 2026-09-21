@@ -44,10 +44,6 @@ init 10 python:
             ],
         }
 
-    # Keep the layered sprite system testable before the final outfit layer is
-    # generated. Final art can replace this mapping without changing story IDs.
-    LEIA_OUTFIT_ATTRIBUTES["d2_loose_low_cut"] = "outfit_after_hours"
-    LEIA_CONTROLLED_ATTRIBUTES.add("outfit_after_hours")
 
 
     def love_outfit_control_active(route_lane=None):
@@ -168,7 +164,6 @@ init 10 python:
             int(get_story_value("love_outfit_request_count", 0) or 0) + 1,
         )
 
-        refresh_leia_sprite_if_visible()
         return True
 
 
