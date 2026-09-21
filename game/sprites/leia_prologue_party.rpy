@@ -2,16 +2,15 @@
 # Layer order for this outfit, bottom -> top:
 # Base -> Chest -> Hands -> Expression -> Hair
 #
-# Expression source files keep their reusable asset names:
-# Neutral_01 = open
-# Neutral_02 = half blink
-# Neutral_03 = closed
+# Shared Leia expressions live one level above outfit-specific assets:
+# images/sprites/leia/expressions/
 #
-# The assembled sprite uses a bottom-anchored whole-body idle.
-# Individual body-layer secondary motion is added only after this parent motion passes QA.
+# Neutral_01/02/03 form the automatic blink loop.
+# All other expressions are static and therefore pause blinking until neutral
+# is shown again.
 
 image leia_expression_neutral_blink:
-    "images/sprites/leia/prologue_party/Neutral_01.png"
+    "images/sprites/leia/expressions/Neutral_01.png"
 
     block:
         choice:
@@ -25,13 +24,13 @@ image leia_expression_neutral_blink:
         choice:
             pause 4.2
 
-        "images/sprites/leia/prologue_party/Neutral_02.png"
+        "images/sprites/leia/expressions/Neutral_02.png"
         pause 0.075
-        "images/sprites/leia/prologue_party/Neutral_03.png"
+        "images/sprites/leia/expressions/Neutral_03.png"
         pause 0.105
-        "images/sprites/leia/prologue_party/Neutral_02.png"
+        "images/sprites/leia/expressions/Neutral_02.png"
         pause 0.075
-        "images/sprites/leia/prologue_party/Neutral_01.png"
+        "images/sprites/leia/expressions/Neutral_01.png"
 
         repeat
 
@@ -50,10 +49,9 @@ transform leia_body_idle:
         repeat
 
 
-# Chest-only breathing test. Deliberately changes xzoom only.
-# No anchor, position, or offset compensation is applied.
+# Chest breathing. Expansion is synchronized with the body's upward/inhalation
+# phase. Compensation keeps the manually registered chest layer aligned.
 transform leia_chest_breathe:
-    # Start expanded so this phase matches the body's upward/inhalation state.
     xzoom 1.04
     xoffset -18
 
@@ -71,8 +69,8 @@ transform leia_chest_breathe:
         repeat
 
 
-# Hands secondary motion. Tiny delayed vertical follow-through only;
-# the registered 941x1672 layer position remains otherwise unchanged.
+# Hands secondary motion. Keep the approved registered canvas position and
+# vertical follow-through values unchanged.
 transform leia_hands_idle:
     yoffset -4
     pause 0.08
@@ -85,8 +83,7 @@ transform leia_hands_idle:
         repeat
 
 
-# Hair secondary motion. The hair stays on its registered canvas and only
-# lags the body's breathing by 2 px vertically; no horizontal movement.
+# Hair secondary motion. Keep the approved 5 px vertical motion unchanged.
 transform leia_hair_idle:
     yoffset 0
 
@@ -107,13 +104,49 @@ layeredimage leia_prologue_party_layers:
     group expression:
         attribute neutral default:
             "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
 
     always "images/sprites/leia/prologue_party/Hair.png" at leia_hair_idle
 
 
-# Public Leia displayable. The outer Fixed has invariant 941x1672 layout
-# bounds so animated child layers cannot change the size seen by xalign 0.5.
-image leia_prologue_party = Fixed(
-    "leia_prologue_party_layers",
+# Public Leia displayables. Each expression keeps invariant 941x1672 bounds,
+# so expression swaps cannot disturb screen placement. Only neutral references
+# the blinking ATL image; every named expression is static.
+image leia_prologue_party neutral = Fixed(
+    "leia_prologue_party_layers neutral",
+    xysize=(941, 1672),
+)
+
+image leia_prologue_party smile = Fixed(
+    "leia_prologue_party_layers smile",
+    xysize=(941, 1672),
+)
+
+image leia_prologue_party shy = Fixed(
+    "leia_prologue_party_layers shy",
+    xysize=(941, 1672),
+)
+
+image leia_prologue_party pout = Fixed(
+    "leia_prologue_party_layers pout",
+    xysize=(941, 1672),
+)
+
+image leia_prologue_party flustered = Fixed(
+    "leia_prologue_party_layers flustered",
+    xysize=(941, 1672),
+)
+
+image leia_prologue_party skeptical = Fixed(
+    "leia_prologue_party_layers skeptical",
     xysize=(941, 1672),
 )
