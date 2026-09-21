@@ -50,27 +50,10 @@ transform leia_body_idle:
         repeat
 
 
-# Secondary chest breathing: horizontal expansion only.
-# Scale around the Chest.png layer's own horizontal centre. Unlike xoffset
-# compensation, this keeps the layer's placement centred without introducing
-# a changing offset into the layered sprite's assembled bounds.
-transform leia_chest_expand:
-    xanchor 0.5
-    xpos 0.5
-    xzoom 1.0
-
-    block:
-        linear 0.65 xzoom 1.050
-        pause 0.10
-        linear 0.65 xzoom 1.0
-        pause 0.10
-        repeat
-
-
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_expand
+    always "images/sprites/leia/prologue_party/Chest.png"
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
