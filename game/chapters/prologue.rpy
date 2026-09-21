@@ -55,11 +55,11 @@ label prologue_start:
 
     gf "Technically, you're both wrong."
     "She said it quietly enough that the conversation almost rolled straight over her."
-    show leia_prologue_party shy at leia_body_idle
+    show leia_prologue_party shy
     with sprite_change
     gf "...Never mind."
     mc "No, no. You can't say that and then retreat."
-    show leia_prologue_party smile at leia_body_idle
+    show leia_prologue_party smile
     with sprite_change
     gf "I can absolutely retreat."
     mc "Too late. Explain."
@@ -69,11 +69,11 @@ label prologue_start:
     "And somewhere in the middle of it, the version of her I had invented from across the room disappeared."
 
     mc "Oh."
-    show leia_prologue_party neutral at leia_body_idle
+    show leia_prologue_party neutral
     with sprite_change
     gf "What?"
     mc "Nothing. Keep going."
-    show leia_prologue_party skeptical at leia_body_idle
+    show leia_prologue_party skeptical
     with sprite_change
     "She narrowed her eyes at me and continued anyway."
 
@@ -83,7 +83,7 @@ label prologue_start:
         "She's a complete dork.":
             $ set_story_value("prologue_ryan_first_impression", "dork")
             mc "You're a complete dork, aren't you?"
-            show leia_prologue_party pout at leia_body_idle
+            show leia_prologue_party pout
             with sprite_change
             gf "You made me explain it!"
             mc "And I'm glad I did."
@@ -91,11 +91,11 @@ label prologue_start:
         "She's way easier to talk to than I expected.":
             $ set_story_value("prologue_ryan_first_impression", "comfortable")
             mc "You're not what I expected."
-            show leia_prologue_party skeptical at leia_body_idle
+            show leia_prologue_party skeptical
             with sprite_change
             gf "That sounded dangerously close to an insult."
             mc "It wasn't."
-            show leia_prologue_party smile at leia_body_idle
+            show leia_prologue_party smile
             with sprite_change
             gf "Good recovery."
 
@@ -118,7 +118,7 @@ label prologue_start:
     "I didn't think much of it."
     "Apparently, she did."
 
-    show leia_prologue_party neutral at leia_body_idle
+    show leia_prologue_party neutral
     with sprite_change
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
@@ -126,15 +126,15 @@ label prologue_start:
     "Somebody had to send an embarrassing text. Someone else drank something that should never have been mixed."
     "[girlfriend_name], meanwhile, had discovered an extremely advanced strategy."
 
-    show leia_prologue_party neutral at leia_body_idle
+    show leia_prologue_party neutral
     with sprite_change
     gf "Truth."
     friend "Again?"
-    show leia_prologue_party skeptical at leia_body_idle
+    show leia_prologue_party skeptical
     with sprite_change
     gf "Yes. Again."
     friend "Coward."
-    show leia_prologue_party smile at leia_body_idle
+    show leia_prologue_party smile
     with sprite_change
     gf "Alive coward."
 
@@ -144,35 +144,35 @@ label prologue_start:
     "Then she pointed at me."
 
     mc "Me?"
-    show leia_prologue_party shy at leia_body_idle
+    show leia_prologue_party shy
     with sprite_change
     gf "You asked."
     "Nobody had asked me."
     "That did not seem important at the time."
     friend "Okay. Next round, you are not choosing Truth again."
-    show leia_prologue_party skeptical at leia_body_idle
+    show leia_prologue_party skeptical
     with sprite_change
     gf "Watch me."
     friend "Chicken."
-    show leia_prologue_party pout at leia_body_idle
+    show leia_prologue_party pout
     with sprite_change
     gf "I'm not a chicken."
     friend "Then pick Dare."
 
     "Three people immediately joined in."
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
-    show leia_prologue_party skeptical at leia_body_idle
+    show leia_prologue_party skeptical
     with sprite_change
     gf "Fine. Dare."
     friend "Kiss [player_name]."
-    show leia_prologue_party flustered at leia_body_idle
+    show leia_prologue_party flustered
     with sprite_change
     "The room changed temperature."
     "Or maybe that was just me."
     "She looked at [friend_name]. Then at me."
 
     mc "You don't actually have to."
-    show leia_prologue_party shy at leia_body_idle
+    show leia_prologue_party shy
     with sprite_change
     gf "I know."
     "And then she moved closer anyway."
