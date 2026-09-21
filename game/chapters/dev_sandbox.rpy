@@ -52,8 +52,6 @@ label dev_systems_menu:
         call screen status_screen
         jump dev_systems_menu
 
-    elif dev_systems_action == "sprite":
-        jump dev_sprite_test
 
     elif dev_systems_action == "economy":
         jump dev_economy_wardrobe_test
@@ -110,45 +108,6 @@ label dev_gallery_lab:
     else:
         jump dev_systems_menu
 
-
-label dev_sprite_test:
-
-    scene bg dev
-    show leia
-
-    gf "This is placeholder art. We're testing whether my pose, expression, and wardrobe state can work as one sprite system."
-    "Pose and expression belong to the sprite controller. Outfit is deliberately inherited from the existing Wardrobe system."
-
-    jump dev_sprite_lab
-
-
-label dev_sprite_lab:
-
-    $ sprite_action = renpy.call_screen("dev_sprite_lab_screen")
-
-    if sprite_action == "controls":
-        call screen sprite_lab_controls
-        jump dev_sprite_lab
-
-    elif sprite_action == "wardrobe":
-        call screen wardrobe_screen
-        jump dev_sprite_lab
-
-    elif sprite_action == "developer":
-        call screen dev_panel
-        jump dev_sprite_lab
-
-    elif sprite_action == "outfit_help":
-        "Unlock or purchase an outfit, then equip it through Wardrobe. When the Wardrobe closes, the placeholder clothing layer on [girlfriend_name] should already be different."
-        "If After Hours Dress is refused, either satisfy one of its wear paths or use the Developer Panel to raise the required stats."
-        jump dev_sprite_lab
-
-    elif sprite_action == "verify":
-        jump dev_verify_state
-
-    else:
-        hide leia
-        jump dev_systems_menu
 
 
 label dev_choice_intro:
@@ -251,8 +210,6 @@ label dev_verify_state:
         call screen status_screen
         jump dev_verify_state
 
-    elif verify_action == "sprite":
-        jump dev_sprite_test
 
     elif verify_action == "developer":
         call screen dev_panel
@@ -272,7 +229,7 @@ label dev_verify_state:
 
     elif verify_action == "save_help":
         "While this verification menu is active, open Save from the quick menu. Save to a slot, quit the game completely, reopen it, choose Load, and load that slot."
-        "After loading, confirm your names, money, owned outfits, equipped outfit, sprite pose/expression, stats, and choice history all survived."
+        "After loading, confirm your names, money, owned outfits, equipped outfit, stats, and choice history all survived."
         "Transparency and Gallery unlocks are player-wide preferences/progression, so confirm they also survive restarting the game and moving between save slots."
         jump dev_verify_state
 
