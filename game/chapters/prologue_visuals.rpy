@@ -59,46 +59,7 @@ image cg prologue_departure = Composite(
     (90, 70), Text("CG P09\nLEAVING FOR THE AIRPORT — THREE-PERSON TRIP BEGINS", size=52, color="#ffffff"),
 )
 
-# --- Generated Leia prologue sprites --------------------------------------
-# Keep this tag separate from the layered wardrobe `leia` tag.
-
-image leia_prologue seated_amused01 = "images/sprites/prologue/seated_amused01.png"
-image leia_prologue seated_defeated01 = "images/sprites/prologue/seated_defeated01.png"
-image leia_prologue seated_defeated02 = "images/sprites/prologue/seated_defeated02.png"
-image leia_prologue seated_flustered01 = "images/sprites/prologue/seated_flustered01.png"
-image leia_prologue seated_flustered02 = "images/sprites/prologue/seated_flustered02.png"
-image leia_prologue seated_laughing01 = "images/sprites/prologue/seated_laughing01.png"
-image leia_prologue seated_neutral01 = "images/sprites/prologue/seated_neutral01.png"
-image leia_prologue seated_protesting01 = "images/sprites/prologue/seated_protesting01.png"
-image leia_prologue standing_excited01 = "images/sprites/prologue/standing_excited01.png"
-image leia_prologue standing_interrupted01 = "images/sprites/prologue/standing_interrupted01.png"
-image leia_prologue standing_listening01 = "images/sprites/prologue/standing_listening01.png"
-image leia_prologue standing_neutral01 = "images/sprites/prologue/standing_neutral01.png"
-image leia_prologue standing_shy01 = "images/sprites/prologue/standing_shy01.png"
-image leia_prologue standing_surprised01 = "images/sprites/prologue/standing_surprised01.png"
-image leia_prologue standing_surprised02 = "images/sprites/prologue/standing_surprised02.png"
-image leia_prologue standing_warming01 = "images/sprites/prologue/standing_warming01.png"
-
-# --- Standard VN sprite envelope ------------------------------------------
-transform prologue_leia_generated:
-    xalign 0.5
-    yalign 1.0
-    xysize (760, 900)
-    fit "contain"
-
-transform prologue_leia_generated_left:
-    xalign 0.25
-    yalign 1.0
-    xysize (760, 900)
-    fit "contain"
-
-transform prologue_leia_generated_right:
-    xalign 0.75
-    yalign 1.0
-    xysize (760, 900)
-    fit "contain"
-
-# Entrance transforms. Use these only when a character actually enters the
+# --- Standard VN sprite envelope ------------------------------------------\n# Entrance transforms. Use these only when a character actually enters the
 # composition, not for ordinary expression changes.
 transform prologue_sprite_enter_center:
     xalign 0.5
