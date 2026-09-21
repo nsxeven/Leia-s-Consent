@@ -71,6 +71,19 @@ transform leia_chest_breathe:
         repeat
 
 
+# Hair secondary motion. The hair stays on its registered canvas and only
+# lags the body's breathing by 2 px vertically; no horizontal movement.
+transform leia_hair_idle:
+    yoffset 0
+
+    block:
+        linear 0.65 yoffset 2
+        pause 0.10
+        linear 0.65 yoffset 0
+        pause 0.10
+        repeat
+
+
 layeredimage leia_prologue_party_layers:
 
     always "images/sprites/leia/prologue_party/Base.png"
@@ -81,7 +94,7 @@ layeredimage leia_prologue_party_layers:
         attribute neutral default:
             "leia_expression_neutral_blink"
 
-    always "images/sprites/leia/prologue_party/Hair.png"
+    always "images/sprites/leia/prologue_party/Hair.png" at leia_hair_idle
 
 
 # Public Leia displayable. The outer Fixed has invariant 941x1672 layout
