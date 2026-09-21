@@ -17,9 +17,6 @@ default last_wear_route = "default_comfort"
 default last_shop_message = ""
 default last_wardrobe_message = ""
 
-# Leia sprite state. Outfit remains controlled by equipped_outfit above.
-default leia_pose = "p01"
-default leia_expression = "neutral"
 
 # Generic story state. Flags are booleans; values hold resolved outcomes or other story data.
 default story_flags = {}
