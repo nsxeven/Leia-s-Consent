@@ -50,10 +50,23 @@ transform leia_body_idle:
         repeat
 
 
+# Chest-only breathing test. Deliberately changes xzoom only.
+# No anchor, position, or offset compensation is applied.
+transform leia_chest_breathe:
+    xzoom 1.0
+
+    block:
+        linear 0.65 xzoom 1.02
+        pause 0.10
+        linear 0.65 xzoom 1.0
+        pause 0.10
+        repeat
+
+
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png"
+    always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_breathe
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
