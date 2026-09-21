@@ -42,8 +42,8 @@ transform leia_body_idle:
     yzoom 1.0
 
     block:
-        ease 1.4 yzoom 0.996
-        ease 1.4 yzoom 1.0
+        ease 1.2 yzoom 0.990
+        ease 1.2 yzoom 1.0
         repeat
 
 
