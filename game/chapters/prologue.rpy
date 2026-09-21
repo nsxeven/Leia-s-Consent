@@ -104,7 +104,8 @@ label prologue_start:
     "I didn't think much of it."
     "Apparently, she did."
 
-    hide leia_prologue_party\n    with sprite_enter_exit
+    hide leia_prologue_party
+    with sprite_enter_exit
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
     "Most of the dares were harmless."
