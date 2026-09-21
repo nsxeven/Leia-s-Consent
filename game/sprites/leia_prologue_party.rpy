@@ -67,7 +67,7 @@ transform leia_chest_breath:
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always Transform("images/sprites/leia/prologue_party/Chest.png", leia_chest_breath)
+    always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_breath
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
