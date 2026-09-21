@@ -74,13 +74,13 @@ transform leia_chest_breathe:
 # Hands secondary motion. Tiny delayed vertical follow-through only;
 # the registered 941x1672 layer position remains otherwise unchanged.
 transform leia_hands_idle:
-    yoffset -2
+    yoffset -4
     pause 0.08
 
     block:
-        linear 0.65 yoffset 3
+        linear 0.65 yoffset 1
         pause 0.10
-        linear 0.65 yoffset -2
+        linear 0.65 yoffset -4
         pause 0.10
         repeat
 
