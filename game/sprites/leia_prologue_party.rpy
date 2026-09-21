@@ -50,10 +50,24 @@ transform leia_body_idle:
         repeat
 
 
+# Secondary chest breathing. Transform() preserves the source image's full
+# transparent canvas, so the layeredimage keeps the same geometry and bounds.
+transform leia_chest_breath:
+    yanchor 1.0
+    yzoom 1.0
+
+    block:
+        linear 0.65 yzoom 0.990
+        pause 0.10
+        linear 0.65 yzoom 1.0
+        pause 0.10
+        repeat
+
+
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png"
+    always Transform("images/sprites/leia/prologue_party/Chest.png", leia_chest_breath)
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
