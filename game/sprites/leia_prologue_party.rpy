@@ -50,28 +50,10 @@ transform leia_body_idle:
         repeat
 
 
-# Secondary chest breathing: horizontal expansion around the registered
-# chest centre while preserving the original 941x1672 layer placement.
-# transform_anchor makes the anchor the scaling pivot rather than merely
-# repositioning the displayable after scaling.
-transform leia_chest_expand:
-    transform_anchor True
-    xanchor 450
-    xpos 450
-    xzoom 1.0
-
-    block:
-        linear 0.65 xzoom 1.050
-        pause 0.10
-        linear 0.65 xzoom 1.0
-        pause 0.10
-        repeat
-
-
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_expand
+    always "images/sprites/leia/prologue_party/Chest.png"
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
