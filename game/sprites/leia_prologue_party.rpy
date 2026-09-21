@@ -71,6 +71,20 @@ transform leia_chest_breathe:
         repeat
 
 
+# Hands secondary motion. Tiny delayed vertical follow-through only;
+# the registered 941x1672 layer position remains otherwise unchanged.
+transform leia_hands_idle:
+    yoffset 0
+    pause 0.08
+
+    block:
+        linear 0.65 yoffset 1
+        pause 0.10
+        linear 0.65 yoffset 0
+        pause 0.10
+        repeat
+
+
 # Hair secondary motion. The hair stays on its registered canvas and only
 # lags the body's breathing by 2 px vertically; no horizontal movement.
 transform leia_hair_idle:
@@ -88,7 +102,7 @@ layeredimage leia_prologue_party_layers:
 
     always "images/sprites/leia/prologue_party/Base.png"
     always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_breathe
-    always "images/sprites/leia/prologue_party/Hands.png"
+    always "images/sprites/leia/prologue_party/Hands.png" at leia_hands_idle
 
     group expression:
         attribute neutral default:
