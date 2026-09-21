@@ -63,7 +63,7 @@ transform leia_chest_breathe:
         repeat
 
 
-layeredimage leia_prologue_party:
+layeredimage leia_prologue_party_layers:
 
     always "images/sprites/leia/prologue_party/Base.png"
     always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_breathe
@@ -74,3 +74,11 @@ layeredimage leia_prologue_party:
             "leia_expression_neutral_blink"
 
     always "images/sprites/leia/prologue_party/Hair.png"
+
+
+# Public Leia displayable. The outer Fixed has invariant 941x1672 layout
+# bounds so animated child layers cannot change the size seen by xalign 0.5.
+image leia_prologue_party = Fixed(
+    "leia_prologue_party_layers",
+    xysize=(941, 1672),
+)
