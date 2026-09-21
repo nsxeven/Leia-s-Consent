@@ -50,7 +50,7 @@ label prologue_start:
     "Mostly because somebody dragged two chairs over and suddenly everyone was talking over everyone else."
 
     scene bg prologue_party
-    show leia_prologue_party at prologue_sprite_enter_center
+    show leia_prologue_party at prologue_sprite_enter_center, leia_body_idle
     with sprite_enter_exit
 
     gf "Technically, you're both wrong."

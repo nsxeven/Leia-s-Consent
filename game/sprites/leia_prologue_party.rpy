@@ -7,7 +7,7 @@
 # Neutral_02 = half blink
 # Neutral_03 = closed
 #
-# Only the expression layer animates at this stage. All body layers remain static.
+# The assembled sprite uses a subtle bottom-anchored whole-body idle.\n# Individual body-layer secondary motion is added only after this parent motion passes QA.
 
 image leia_expression_neutral_blink:
     "images/sprites/leia/prologue_party/Neutral_01.png"
@@ -32,6 +32,18 @@ image leia_expression_neutral_blink:
         pause 0.075
         "images/sprites/leia/prologue_party/Neutral_01.png"
 
+        repeat
+
+
+# Primary idle motion for the complete assembled sprite.
+# yanchor 1.0 keeps the feet planted while the body subtly lengthens/shortens.
+transform leia_body_idle:
+    yanchor 1.0
+    yzoom 1.0
+
+    block:
+        ease 1.8 yzoom 0.996
+        ease 1.8 yzoom 1.0
         repeat
 
 
