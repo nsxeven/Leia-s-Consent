@@ -60,13 +60,6 @@ screen dev_verify_menu():
                         xfill True
                         action Return("names")
 
-                    textbutton "Open Sprite System test":
-                        xfill True
-                        action Return("sprite_test")
-
-                    textbutton "Show sprite state":
-                        xfill True
-                        action Return("sprite_state")
 
                     textbutton "Open Developer Panel":
                         xfill True
