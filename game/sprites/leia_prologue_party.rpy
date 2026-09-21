@@ -51,10 +51,9 @@ transform leia_body_idle:
 
 
 # Secondary chest breathing.
-# Pivot the full-canvas chest asset around the upper-torso region so scaling
-# reads as local chest expansion instead of stretching from the canvas edge.
+# Keep the full-canvas chest asset in its original coordinate space.
+# Do not use alignaround/around here: those properties reposition the layer.
 transform leia_chest_breath:
-    alignaround (0.5, 0.30)
     xzoom 1.0
     yzoom 1.0
 
