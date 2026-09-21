@@ -54,8 +54,8 @@ transform leia_body_idle:
 # No anchor, position, or offset compensation is applied.
 transform leia_chest_breathe:
     # Start expanded so this phase matches the body's upward/inhalation state.
-    xzoom 1.05
-    xoffset -22.5
+    xzoom 1.04
+    xoffset -18
 
     block:
         parallel:
@@ -64,9 +64,9 @@ transform leia_chest_breathe:
             linear 0.65 xoffset 0
         pause 0.10
         parallel:
-            linear 0.65 xzoom 1.05
+            linear 0.65 xzoom 1.04
         parallel:
-            linear 0.65 xoffset -22.5
+            linear 0.65 xoffset -18
         pause 0.10
         repeat
 
@@ -74,13 +74,13 @@ transform leia_chest_breathe:
 # Hands secondary motion. Tiny delayed vertical follow-through only;
 # the registered 941x1672 layer position remains otherwise unchanged.
 transform leia_hands_idle:
-    yoffset 0
+    yoffset -2
     pause 0.08
 
     block:
         linear 0.65 yoffset 3
         pause 0.10
-        linear 0.65 yoffset 0
+        linear 0.65 yoffset -2
         pause 0.10
         repeat
 
@@ -91,7 +91,7 @@ transform leia_hair_idle:
     yoffset 0
 
     block:
-        linear 0.65 yoffset 5
+        linear 0.65 yoffset 7
         pause 0.10
         linear 0.65 yoffset 0
         pause 0.10
