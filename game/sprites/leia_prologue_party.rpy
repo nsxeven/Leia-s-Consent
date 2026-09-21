@@ -50,16 +50,18 @@ transform leia_body_idle:
         repeat
 
 
-# Secondary chest breathing. The chest expands vertically by 5% on the inhale
-# and returns to its original size on the exhale.
+# Secondary chest breathing.
+# Pivot the full-canvas chest asset around the upper-torso region so scaling
+# reads as local chest expansion instead of stretching from the canvas edge.
 transform leia_chest_breath:
-    yanchor 1.0
+    alignaround (0.5, 0.30)
+    xzoom 1.0
     yzoom 1.0
 
     block:
-        linear 0.65 yzoom 1.050
+        linear 0.65 xzoom 1.050 yzoom 1.025
         pause 0.10
-        linear 0.65 yzoom 1.0
+        linear 0.65 xzoom 1.0 yzoom 1.0
         pause 0.10
         repeat
 
