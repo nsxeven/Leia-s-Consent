@@ -91,7 +91,7 @@ transform leia_hair_idle:
     yoffset 0
 
     block:
-        linear 0.65 yoffset 7
+        linear 0.65 yoffset 5
         pause 0.10
         linear 0.65 yoffset 0
         pause 0.10
