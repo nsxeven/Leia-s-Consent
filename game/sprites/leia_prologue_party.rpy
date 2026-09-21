@@ -50,25 +50,10 @@ transform leia_body_idle:
         repeat
 
 
-# Secondary chest breathing.
-# Keep the full-canvas chest asset in its original coordinate space.
-# Do not use alignaround/around here: those properties reposition the layer.
-transform leia_chest_breath:
-    xzoom 1.0
-    yzoom 1.0
-
-    block:
-        linear 0.65 xzoom 1.050 yzoom 1.025
-        pause 0.10
-        linear 0.65 xzoom 1.0 yzoom 1.0
-        pause 0.10
-        repeat
-
-
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_breath
+    always "images/sprites/leia/prologue_party/Chest.png"
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
