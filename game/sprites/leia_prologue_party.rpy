@@ -53,15 +53,19 @@ transform leia_body_idle:
 # Chest-only breathing test. Deliberately changes xzoom only.
 # No anchor, position, or offset compensation is applied.
 transform leia_chest_breathe:
-    transform_anchor True
-    xanchor 450
-    xpos 450
     xzoom 1.0
+    xoffset 0
 
     block:
-        linear 0.65 xzoom 1.02
+        parallel:
+            linear 0.65 xzoom 1.02
+        parallel:
+            linear 0.65 xoffset -9
         pause 0.10
-        linear 0.65 xzoom 1.0
+        parallel:
+            linear 0.65 xzoom 1.0
+        parallel:
+            linear 0.65 xoffset 0
         pause 0.10
         repeat
 
