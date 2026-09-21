@@ -14,22 +14,22 @@ image leia_expression_neutral_blink:
 
     block:
         choice:
-            pause 2.8
+            pause 1.8
+        choice:
+            pause 2.4
+        choice:
+            pause 3.0
         choice:
             pause 3.6
         choice:
-            pause 4.4
-        choice:
-            pause 5.2
-        choice:
-            pause 6.0
+            pause 4.2
 
         "images/sprites/leia/prologue_party/Neutral_02.png"
-        pause 0.045
+        pause 0.075
         "images/sprites/leia/prologue_party/Neutral_03.png"
-        pause 0.065
+        pause 0.105
         "images/sprites/leia/prologue_party/Neutral_02.png"
-        pause 0.045
+        pause 0.075
         "images/sprites/leia/prologue_party/Neutral_01.png"
 
         repeat
