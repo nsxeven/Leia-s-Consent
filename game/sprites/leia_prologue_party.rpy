@@ -50,10 +50,27 @@ transform leia_body_idle:
         repeat
 
 
+# Secondary chest breathing: horizontal expansion only.
+# Chest.png shares the full sprite canvas, so pin the transform to the canvas
+# horizontal center before changing xzoom. The parent body idle still moves
+# this layer together with the rest of Leia.
+transform leia_chest_expand:
+    xpos 0.5
+    xanchor 0.5
+    xzoom 1.0
+
+    block:
+        linear 0.65 xzoom 1.050
+        pause 0.10
+        linear 0.65 xzoom 1.0
+        pause 0.10
+        repeat
+
+
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png"
+    always "images/sprites/leia/prologue_party/Chest.png" at leia_chest_expand
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
