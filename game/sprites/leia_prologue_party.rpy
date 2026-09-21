@@ -37,13 +37,13 @@ image leia_expression_neutral_blink:
 
 
 # Primary idle motion for the complete assembled sprite.
-# 3% bottom-anchored breathing with a brief pause at each end of the breath.
+# 1.5% bottom-anchored breathing with a brief pause at each end of the breath.
 transform leia_body_idle:
     yanchor 1.0
     yzoom 1.0
 
     block:
-        linear 0.65 yzoom 0.970
+        linear 0.65 yzoom 0.985
         pause 0.10
         linear 0.65 yzoom 1.0
         pause 0.10
