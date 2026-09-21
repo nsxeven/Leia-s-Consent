@@ -50,10 +50,30 @@ transform leia_body_idle:
         repeat
 
 
+# Secondary breathing for the chest layer only.
+# Uses the same rhythm as the parent idle so both motions stay synchronized.
+transform leia_chest_breath:
+    yanchor 1.0
+    yzoom 1.0
+
+    block:
+        linear 0.65 yzoom 0.990
+        pause 0.10
+        linear 0.65 yzoom 1.0
+        pause 0.10
+        repeat
+
+
+image leia_prologue_party_chest:
+    contains:
+        "images/sprites/leia/prologue_party/Chest.png"
+        leia_chest_breath
+
+
 layeredimage leia_prologue_party:
 
     always "images/sprites/leia/prologue_party/Base.png"
-    always "images/sprites/leia/prologue_party/Chest.png"
+    always "leia_prologue_party_chest"
     always "images/sprites/leia/prologue_party/Hands.png"
 
     group expression:
