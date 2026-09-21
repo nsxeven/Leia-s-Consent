@@ -41,7 +41,7 @@ image leia_expression_neutral_blink:
 # yanchor 1.0 keeps the feet planted while the body lengthens/shortens.
 init python:
     def leia_body_idle_motion(trans, st, at):
-        cycle = 1.5
+        cycle = 1.0
         half_cycle = cycle / 2.0
         phase = st % cycle
 
@@ -50,7 +50,7 @@ init python:
         else:
             progress = (cycle - phase) / half_cycle
 
-        trans.yzoom = 1.0 - (0.05 * progress)
+        trans.yzoom = 1.0 - (0.10 * progress)
         return 0
 
 
