@@ -5,12 +5,10 @@
 label dev_vertical_slice:
 
     scene bg dev
-    show leia
 
     "PHASE 9 — INTEGRATED SYSTEMS SLICE"
-    "This short non-canon sequence connects dialogue, choice effects, money, shopping, wardrobe acceptance, sprite state, branching dialogue, Gallery unlocks, and save/load."
+    "This short non-canon sequence connects dialogue, choice effects, money, shopping, wardrobe acceptance, branching dialogue, Gallery unlocks, and save/load."
 
-    $ set_leia_sprite("p01", "neutral")
 
     gf "You said you wanted to pick something out for tonight?"
     mc "Only if you're actually comfortable with it."
@@ -21,13 +19,11 @@ label dev_vertical_slice:
     menu:
         "[slice_choice_open]":
             $ apply_choice("dev_encourage_curiosity")
-            $ set_leia_expression("smile")
             gf "Okay. Looking doesn't mean I have to wear anything, right?"
             mc "Right. You decide."
 
         "[slice_choice_careful]":
             $ apply_choice("dev_be_protective")
-            $ set_leia_expression("neutral")
             gf "Maybe something simple, then. I like that you're not trying to rush me."
 
     $ renpy.notify("Choice applied and recorded in central choice history.")
@@ -46,22 +42,16 @@ label dev_vertical_slice:
     call screen wardrobe_screen
 
     if equipped_outfit == "after_hours_dress":
-        $ set_leia_pose("p02")
-        $ set_leia_expression("teasing")
         gf "It's definitely bolder than what I'd normally pick... but I said yes."
         mc "And that's the part that matters."
     elif equipped_outfit == "date_night_dress":
-        $ set_leia_pose("p02")
-        $ set_leia_expression("smile")
         gf "This one feels like me. Just a little more dressed up."
         mc "You look good in it."
     else:
-        $ set_leia_pose("p03")
-        $ set_leia_expression("embarrassed")
         gf "I think I'll stay in this for now."
         mc "That's completely fine."
 
-    $ renpy.notify("Outfit state is now driving Leia's visible sprite and branch dialogue.")
+    $ renpy.notify("Outfit state is now driving branch dialogue.")
 
     $ unlock_gallery("ch01_cg01")
     $ renpy.notify("Gallery unlocked: Chapter 1 — CG 01 placeholder.")
@@ -99,10 +89,9 @@ label dev_vertical_slice_checkpoint:
         jump dev_vertical_slice_checkpoint
     elif checkpoint_action == "save_help":
         "Open Save from the quick menu and save this exact checkpoint. Quit the game completely, reopen it, and load that save."
-        "After loading, this checkpoint should resume with the same money, outfit, Leia pose/expression, stats, and choice history. The Gallery unlock and transparency preference should also still exist because they are persistent."
+        "After loading, this checkpoint should resume with the same money, outfit, stats, and choice history. The Gallery unlock and transparency preference should also still exist because they are persistent."
         jump dev_vertical_slice_checkpoint
     elif checkpoint_action == "restart":
         jump dev_vertical_slice
     else:
-        hide leia
         jump dev_systems_menu
