@@ -8,7 +8,6 @@ screen dev_systems_menu_screen():
         textbutton "Gallery shell test" action Return("gallery") xfill True
         textbutton "Player Settings / Transparency test" action Return("settings") xfill True
         textbutton "Player Status screen test" action Return("status") xfill True
-        textbutton "Sprite System test" action Return("sprite") xfill True
         textbutton "Economy + Wardrobe test" action Return("economy") xfill True
         textbutton "Choice Engine test" action Return("choice") xfill True
         textbutton "Reset Phone tutorial (persistent)" action Function(debug_reset_phone_tutorial) xfill True
