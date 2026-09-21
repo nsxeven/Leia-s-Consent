@@ -50,14 +50,14 @@ transform leia_body_idle:
         repeat
 
 
-# Secondary chest breathing. Transform() preserves the source image's full
-# transparent canvas, so the layeredimage keeps the same geometry and bounds.
+# Secondary chest breathing. The chest expands vertically by 1% on the inhale
+# and returns to its original size on the exhale.
 transform leia_chest_breath:
     yanchor 1.0
     yzoom 1.0
 
     block:
-        linear 0.65 yzoom 0.990
+        linear 0.65 yzoom 1.010
         pause 0.10
         linear 0.65 yzoom 1.0
         pause 0.10
