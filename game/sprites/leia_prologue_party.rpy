@@ -2,14 +2,14 @@
 # Layer order for this outfit, bottom -> top:
 # Base -> Chest -> Hands -> Expression -> Hair
 #
-# Neutral blink sequence:
+# Expression source files keep their reusable asset names:
 # Neutral_01 = open
 # Neutral_02 = half blink
 # Neutral_03 = closed
 #
 # Only the expression layer animates at this stage. All body layers remain static.
 
-transform leia_prologue_party_neutral_blink:
+image leia_expression_neutral_blink:
     "images/sprites/leia/prologue_party/Neutral_01.png"
 
     block:
@@ -43,6 +43,6 @@ layeredimage leia_prologue_party:
 
     group expression:
         attribute neutral default:
-            "leia_prologue_party_neutral_blink"
+            "leia_expression_neutral_blink"
 
     always "images/sprites/leia/prologue_party/Hair.png"
