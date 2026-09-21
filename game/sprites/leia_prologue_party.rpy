@@ -37,26 +37,17 @@ image leia_expression_neutral_blink:
 
 
 # Primary idle motion for the complete assembled sprite.
-# A triangle-wave function avoids ATL holding an endpoint frame between legs.
-# yanchor 1.0 keeps the feet planted while the body lengthens/shortens.
-init python:
-    def leia_body_idle_motion(trans, st, at):
-        cycle = 1.5
-        half_cycle = cycle / 2.0
-        phase = st % cycle
-
-        if phase < half_cycle:
-            progress = phase / half_cycle
-        else:
-            progress = (cycle - phase) / half_cycle
-
-        trans.yzoom = 1.0 - (0.05 * progress)
-        return 0
-
-
+# 3% bottom-anchored breathing with a brief pause at each end of the breath.
 transform leia_body_idle:
     yanchor 1.0
-    function leia_body_idle_motion
+    yzoom 1.0
+
+    block:
+        linear 0.65 yzoom 0.970
+        pause 0.10
+        linear 0.65 yzoom 1.0
+        pause 0.10
+        repeat
 
 
 layeredimage leia_prologue_party:
