@@ -51,23 +51,18 @@ transform leia_body_idle:
 
 
 # Secondary chest breathing: horizontal expansion only.
-# Chest.png is a 941 px-wide full-canvas layer. Keep its original coordinate
-# space and compensate half of the added width while scaling, so the visible
-# chest expands equally left/right without repositioning the layer.
+# Scale around the Chest.png layer's own horizontal centre. Unlike xoffset
+# compensation, this keeps the layer's placement centred without introducing
+# a changing offset into the layered sprite's assembled bounds.
 transform leia_chest_expand:
+    xanchor 0.5
+    xpos 0.5
     xzoom 1.0
-    xoffset 0
 
     block:
-        parallel:
-            linear 0.65 xzoom 1.050
-        parallel:
-            linear 0.65 xoffset -24
+        linear 0.65 xzoom 1.050
         pause 0.10
-        parallel:
-            linear 0.65 xzoom 1.0
-        parallel:
-            linear 0.65 xoffset 0
+        linear 0.65 xzoom 1.0
         pause 0.10
         repeat
 
