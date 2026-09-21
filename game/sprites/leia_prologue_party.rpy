@@ -50,14 +50,14 @@ transform leia_body_idle:
         repeat
 
 
-# Secondary chest breathing. The chest expands vertically by 1% on the inhale
+# Secondary chest breathing. The chest expands vertically by 5% on the inhale
 # and returns to its original size on the exhale.
 transform leia_chest_breath:
     yanchor 1.0
     yzoom 1.0
 
     block:
-        linear 0.65 yzoom 1.010
+        linear 0.65 yzoom 1.050
         pause 0.10
         linear 0.65 yzoom 1.0
         pause 0.10
