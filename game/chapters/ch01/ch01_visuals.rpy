@@ -53,6 +53,14 @@ image bg ch01_master_bedroom_curtains = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-06 — LIGHT CURTAINS DRAWN", size=46, color="#3d3936"),
 )
 
+image cg ch01_pre_pool_towel_curtains = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#d9d0c7"),
+    (0, 0), Transform(Solid("#9bd4e5"), xysize=(1920, 1080)),
+    (90, 70), Text("CG PLACEHOLDER\\nCH01-PRE-POOL-TOWEL — LEIA DRAWS SHEER CURTAIN\\nTOWEL / MASTER BEDROOM / DAY", size=52, color="#ffffff"),
+)
+
+
 image bg ch01_julian_bedroom = Composite(
     (1920, 1080),
     (0, 0), Solid("#d6cec5"),
