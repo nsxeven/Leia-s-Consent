@@ -110,7 +110,6 @@ label ch01_scene_02_villa:
     mc "That's [friend_name]."
 
     "Below us, sunlight moved across the water in the private pool."
-    "At the time, the glass and useless curtains felt like nothing more than part of the architecture."
 
     $ set_story_flag("ch01_villa_geography_established")
     $ set_story_flag("ch01_scene_02_complete")
@@ -189,6 +188,46 @@ label ch01_scene_03_outfit_choice:
 
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     $ grant_story_outfit(selected_pool_outfit, equip=True)
+
+    "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
+
+    $ enter_cinematic_mode()
+    hide leia
+    scene cg ch01_pre_pool_towel_curtains
+    with dissolve
+
+    "A moment later, the bathroom door opened again."
+    "[girlfriend_name] stepped back into the bedroom with a towel wrapped around herself and crossed to the glass wall."
+
+    gf "Wait. I'm definitely closing these first."
+
+    "She caught one of the light curtains and pulled it across the window."
+
+    gf "...Seriously?"
+    mc "What?"
+    gf "These barely cover anything."
+
+    "The thin fabric softened the view more than it actually blocked it."
+    "I looked at the curtain, then at the towel wrapped around her."
+
+    "{i}That barely covers anything either.{/i}"
+
+    gf "What?"
+    mc "Nothing."
+    gf "You have that face."
+    mc "I was just thinking you look good."
+    gf "I'm wearing a towel."
+    mc "Exactly."
+    gf "Pervert."
+
+    "She was smiling when she turned back toward the bathroom."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_master_bedroom_curtains
+    with dissolve
+
+    "A few minutes later, she emerged again—this time actually dressed for the pool."
+
     $ set_story_flag("ch01_first_outfit_choice_complete")
     $ set_story_flag("ch01_scene_03_complete")
 
