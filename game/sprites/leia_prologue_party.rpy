@@ -104,16 +104,32 @@ layeredimage leia_prologue_party_layers:
     always "images/sprites/leia/Hair.png" at leia_hair_idle
 
 
+
+# Character silhouette treatment.
+# Flatten() first composites Base + Chest + Expression + Hair into one displayable.
+# The dark blurred copy is then placed behind the untouched composite, so internal
+# layer boundaries never receive their own outline.
+init python:
+    def lc_sprite_silhouette(displayable):
+        composite = Flatten(displayable)
+        halo = Transform(
+            composite,
+            matrixcolor=BrightnessMatrix(-1.0),
+            blur=5.0,
+            alpha=0.42,
+        )
+        return Fixed(halo, composite, fit_first=True)
+
 # Public displayables retain the established fixed envelope. Neutral alone uses
 # the blink ATL; named expressions remain static until neutral is shown again.
-image leia_prologue_party neutral = Fixed("leia_prologue_party_layers neutral", xysize=(941, 1672))
-image leia_prologue_party smile = Fixed("leia_prologue_party_layers smile", xysize=(941, 1672))
-image leia_prologue_party shy = Fixed("leia_prologue_party_layers shy", xysize=(941, 1672))
-image leia_prologue_party pout = Fixed("leia_prologue_party_layers pout", xysize=(941, 1672))
-image leia_prologue_party flustered = Fixed("leia_prologue_party_layers flustered", xysize=(941, 1672))
-image leia_prologue_party skeptical = Fixed("leia_prologue_party_layers skeptical", xysize=(941, 1672))
-image leia_prologue_party angry = Fixed("leia_prologue_party_layers angry", xysize=(941, 1672))
-image leia_prologue_party ahegao = Fixed("leia_prologue_party_layers ahegao", xysize=(941, 1672))
+image leia_prologue_party neutral = Fixed(lc_sprite_silhouette("leia_prologue_party_layers neutral"), xysize=(941, 1672))
+image leia_prologue_party smile = Fixed(lc_sprite_silhouette("leia_prologue_party_layers smile"), xysize=(941, 1672))
+image leia_prologue_party shy = Fixed(lc_sprite_silhouette("leia_prologue_party_layers shy"), xysize=(941, 1672))
+image leia_prologue_party pout = Fixed(lc_sprite_silhouette("leia_prologue_party_layers pout"), xysize=(941, 1672))
+image leia_prologue_party flustered = Fixed(lc_sprite_silhouette("leia_prologue_party_layers flustered"), xysize=(941, 1672))
+image leia_prologue_party skeptical = Fixed(lc_sprite_silhouette("leia_prologue_party_layers skeptical"), xysize=(941, 1672))
+image leia_prologue_party angry = Fixed(lc_sprite_silhouette("leia_prologue_party_layers angry"), xysize=(941, 1672))
+image leia_prologue_party ahegao = Fixed(lc_sprite_silhouette("leia_prologue_party_layers ahegao"), xysize=(941, 1672))
 
 
 # Leia — Casual outfit used for the present-day Prologue and early Chapter One.
@@ -143,11 +159,11 @@ layeredimage leia_casual_layers:
 
     always "images/sprites/leia/Hair.png" at leia_hair_idle
 
-image leia_casual neutral = Fixed("leia_casual_layers neutral", xysize=(941, 1672))
-image leia_casual smile = Fixed("leia_casual_layers smile", xysize=(941, 1672))
-image leia_casual shy = Fixed("leia_casual_layers shy", xysize=(941, 1672))
-image leia_casual pout = Fixed("leia_casual_layers pout", xysize=(941, 1672))
-image leia_casual flustered = Fixed("leia_casual_layers flustered", xysize=(941, 1672))
-image leia_casual skeptical = Fixed("leia_casual_layers skeptical", xysize=(941, 1672))
-image leia_casual angry = Fixed("leia_casual_layers angry", xysize=(941, 1672))
-image leia_casual ahegao = Fixed("leia_casual_layers ahegao", xysize=(941, 1672))
+image leia_casual neutral = Fixed(lc_sprite_silhouette("leia_casual_layers neutral"), xysize=(941, 1672))
+image leia_casual smile = Fixed(lc_sprite_silhouette("leia_casual_layers smile"), xysize=(941, 1672))
+image leia_casual shy = Fixed(lc_sprite_silhouette("leia_casual_layers shy"), xysize=(941, 1672))
+image leia_casual pout = Fixed(lc_sprite_silhouette("leia_casual_layers pout"), xysize=(941, 1672))
+image leia_casual flustered = Fixed(lc_sprite_silhouette("leia_casual_layers flustered"), xysize=(941, 1672))
+image leia_casual skeptical = Fixed(lc_sprite_silhouette("leia_casual_layers skeptical"), xysize=(941, 1672))
+image leia_casual angry = Fixed(lc_sprite_silhouette("leia_casual_layers angry"), xysize=(941, 1672))
+image leia_casual ahegao = Fixed(lc_sprite_silhouette("leia_casual_layers ahegao"), xysize=(941, 1672))
