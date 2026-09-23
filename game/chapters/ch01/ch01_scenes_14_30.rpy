@@ -9,8 +9,6 @@
 label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "neutral")
     with dissolve
 
     "Leia rubbed both hands over her face and stared down at the dinner dress as if she had only just remembered she was still wearing it."
@@ -29,8 +27,6 @@ label ch01_scene_14_movie_setup:
     $ set_story_value("ch01_movie_night_started", True)
 
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "smile")
     with dissolve
 
     "Leia returned in an oversized sleep tee and short lounge shorts, hair pulled back loosely. Julian had changed too. I finally poured myself the drink I'd skipped all evening."
@@ -46,7 +42,6 @@ label ch01_scene_14_movie_setup:
     gf "Press play."
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_movie_cuddle_blanket
     with dissolve
 
@@ -55,8 +50,6 @@ label ch01_scene_14_movie_setup:
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "smile")
     with dissolve
 
     $ set_story_flag("ch01_scene_14_complete")
@@ -347,7 +340,6 @@ label ch01_scene_19_too_hot:
     $ set_story_value("ch01_movie_blanket_state", "off")
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_movie_no_blanket
     with dissolve
 
@@ -356,8 +348,6 @@ label ch01_scene_19_too_hot:
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with dissolve
 
     $ set_story_flag("ch01_scene_19_complete")
@@ -473,7 +463,6 @@ label ch01_scene_22_first_micro_test:
     "Then she looked at me."
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_lounge_micro_test
     with dissolve
 
@@ -481,8 +470,6 @@ label ch01_scene_22_first_micro_test:
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
     $ ch01_micro_warn_text = format_choice("ch01_micro_warn", "Your top.")
@@ -845,8 +832,6 @@ label ch01_scene_27_late_photo_drop:
 label ch01_scene_28_ryan_leia_alone:
 
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with dissolve
 
     "The villa became noticeably quieter once Julian's door closed upstairs."
@@ -988,8 +973,6 @@ label ch01_scene_29_private_reflection:
 label ch01_scene_30_end_day_one:
 
     scene bg ch01_villa_bedroom_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with fade
 
     "We switched off the downstairs lights and finally headed upstairs."
