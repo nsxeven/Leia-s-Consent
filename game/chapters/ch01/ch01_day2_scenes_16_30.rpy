@@ -20,7 +20,6 @@ label ch01_day2_scene_16_forced_split:
 
         "The separation was Maya's idea, not mine. That distinction mattered."
 
-        hide leia
         with dissolve
 
         maya "Does she hate me?"
@@ -117,8 +116,6 @@ label ch01_day2_scene_17_pool_return:
         $ set_story_value("ch01_d2_pool_incident", "leia_julian_top_off")
 
     elif d2_split == "ryan_julian_leia_maya":
-        show leia at ch01_d2_leia_left
-        $ set_leia_sprite("p03", "embarrassed")
         with dissolve
 
         "Julian and I came back outside carrying ice and drinks."
@@ -132,8 +129,6 @@ label ch01_day2_scene_17_pool_return:
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
-        show leia at ch01_d2_leia_left
-        $ set_leia_sprite("p03", "embarrassed")
 
         maya "I told her to double-knot it!"
         gf "Do not start."
@@ -146,8 +141,6 @@ label ch01_day2_scene_17_pool_return:
         $ set_story_value("ch01_d2_pool_incident", "leia_maya_top_off")
 
     else:
-        show leia at ch01_d2_leia_left
-        $ set_leia_sprite("p01", "smile")
         with dissolve
 
         "Leia and I heard Maya laughing before we reached the pool."
@@ -219,8 +212,6 @@ label ch01_day2_scene_18_pool_aftermath:
 label ch01_day2_scene_19_change_for_evening:
 
     scene bg ch01_master_bedroom
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p01", "smile")
     with dissolve
 
     "Later, Maya followed Leia upstairs again while everyone changed for dinner."
@@ -275,8 +266,6 @@ label ch01_day2_scene_20_dinner_outfit:
 label ch01_day2_scene_21_pre_sunset:
 
     scene bg ch01_d2_sunset
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "smile")
     with fade
 
     "We left early enough to walk along the water before dinner."
@@ -294,8 +283,6 @@ label ch01_day2_scene_21_pre_sunset:
 
 label ch01_day2_scene_22_sunset_couple:
 
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with dissolve
 
     gf "Those two are getting pretty friendly."
@@ -333,8 +320,6 @@ label ch01_day2_scene_22_sunset_couple:
                 with fade
                 centered "[girlfriend_name] will remember this..."
                 scene bg ch01_d2_sunset
-                show leia at ch01_leia_left
-                $ set_leia_sprite("p01", "neutral")
                 with fade
     else:
         menu:
@@ -362,8 +347,6 @@ label ch01_day2_scene_22_sunset_couple:
 label ch01_day2_scene_23_dinner_reach:
 
     scene bg ch01_d2_dinner
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p02", "smile")
     with fade
 
     "The table was rectangular. Leia and Maya sat side by side. Julian sat beside me on the opposite side."
@@ -392,8 +375,6 @@ label ch01_day2_scene_23_dinner_reach:
 
         $ exit_cinematic_mode()
         scene bg ch01_d2_dinner
-        show leia at ch01_d2_leia_left
-        $ set_leia_sprite("p02", "teasing")
 
         if get_story_value("ch01_d2_ntr_soft_gate", False) and d2_lane == "ntr_risk":
             "Leia sat back upright."
@@ -438,8 +419,6 @@ label ch01_day2_scene_24_dinner_aftermath:
 label ch01_day2_scene_25_maya_stays:
 
     scene bg ch01_d2_game_night
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p01", "smile")
     with fade
 
     "There was no discussion about whether Maya was staying for drinks. She simply came back with us."
@@ -557,8 +536,6 @@ label ch01_day2_scene_28_julian_strips:
 
     $ exit_cinematic_mode()
     scene bg ch01_d2_game_night
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p03", "embarrassed")
 
     maya "...Oh."
     friend "Don't."
@@ -627,8 +604,6 @@ label ch01_day2_scene_29_game_winds_down:
 label ch01_day2_scene_30_bedroom:
 
     scene bg ch01_villa_bedroom_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with fade
 
     "The bedroom door closed behind us. For the first time since breakfast, there was nobody else in the conversation."
