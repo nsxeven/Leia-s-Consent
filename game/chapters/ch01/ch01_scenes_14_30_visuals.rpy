@@ -40,3 +40,30 @@ image ch01_photo_late_favourite = Composite(
     (0, 0), Solid("#6a7787"),
     (60, 70), Text("PHONE PHOTO PLACEHOLDER\nCH01-PHOTO-LATE-01\nUNSENT POOL FAVOURITE", size=42, color="#ffffff"),
 )
+
+
+# Day One closing dream. These are temporary composition placeholders; keep the
+# stable IDs when replacing them with final CG variants.
+image cg ch01_dream_towel_replay = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#393747"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-01 — MEMORY REPLAY\nLEIA UPSTAIRS IN TOWEL / RYAN + JULIAN BELOW", size=50, color="#ffffff"),
+)
+
+image cg ch01_dream_towel_shift = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#493947"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-02 — TOWEL SHIFTS\nRYAN TRIES TO WARN HER / NO VOICE", size=50, color="#ffffff"),
+)
+
+image cg ch01_dream_towel_curtain = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#353a47"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-03 — SHEER CURTAIN DRAWN\nLEIA THINKS SHE HAS PRIVACY", size=50, color="#ffffff"),
+)
+
+image cg ch01_dream_towel_drop = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#30323d"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-04 — SILHOUETTE BEHIND SHEER\nTOWEL DROPS / CUT BEFORE EXPLICIT DETAIL", size=50, color="#ffffff"),
+)
