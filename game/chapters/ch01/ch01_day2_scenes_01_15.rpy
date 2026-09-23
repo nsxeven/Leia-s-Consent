@@ -247,8 +247,6 @@ label ch01_day2_start:
 label ch01_day2_scene_01_morning_after:
 
     scene bg ch01_villa_bedroom_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "smile")
     with fade
 
     "Morning arrived slowly through the useless decorative curtains."
@@ -305,8 +303,6 @@ label ch01_day2_scene_01_morning_after:
 label ch01_day2_scene_02_breakfast:
 
     scene bg ch01_d2_breakfast
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p01", "smile")
     with dissolve
 
     friend "Look who survived the night."
@@ -346,7 +342,6 @@ label ch01_day2_scene_03_maya_message:
 
 label ch01_day2_scene_04_jealousy_callback:
 
-    show leia at ch01_leia_left
     with dissolve
 
     gf "How long have you known her again?"
@@ -376,8 +371,6 @@ label ch01_day2_scene_04_jealousy_callback:
 label ch01_day2_scene_05_meet_maya:
 
     scene bg ch01_d2_cafe
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with fade
 
     "Maya spotted us before I spotted her."
@@ -497,8 +490,6 @@ label ch01_day2_scene_08_maya_julian:
 label ch01_day2_scene_09_photo_walk:
 
     scene bg ch01_d2_island_day
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     "After brunch, Maya turned a walk through the island shops into a photography project."
@@ -532,8 +523,6 @@ label ch01_day2_scene_10_leia_maya_photo:
 
     $ exit_cinematic_mode()
     scene bg ch01_d2_island_day
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p02", "smile")
 
     "Leia saved the photo immediately."
 
@@ -605,8 +594,6 @@ label ch01_day2_scene_12_villa_pool_plan:
 label ch01_day2_scene_13_girls_upstairs:
 
     scene bg ch01_master_bedroom
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p03", "neutral")
     with dissolve
 
     "Upstairs, Leia laid both swimsuits across the bed while Maya changed beside her."
@@ -658,8 +645,6 @@ label ch01_day2_scene_14_tie_foreshadow:
 label ch01_day2_scene_15_pool_group:
 
     scene bg ch01_pool_day
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p02", "smile")
     with fade
 
     "The four of us spent the first half hour together."
