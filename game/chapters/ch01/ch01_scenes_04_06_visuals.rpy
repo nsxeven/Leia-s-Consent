@@ -3,15 +3,7 @@
 
 image bg ch01_pool_day = At("images/backgrounds/villa/villa_pool_day.webp", prologue_bg_blur)
 
-image bg ch01_pool_lounge = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#75b9c8"),
-    (0, 610), Transform(Solid("#278cac"), xysize=(1100, 300)),
-    (1100, 610), Transform(Solid("#c9a876"), xysize=(820, 300)),
-    (1280, 150), Transform(Solid("#e8dfd2"), xysize=(540, 470)),
-    (1390, 210), Transform(Solid("#afd7df"), xysize=(320, 300)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-09 — POOL LOUNGE / UPSTAIRS VIEW", size=46, color="#ffffff"),
-)
+image bg ch01_pool_lounge = At("images/backgrounds/chapter 1/ch01_villa_pool_upstairs.webp", prologue_bg_blur)
 
 image cg ch01_photo_group = Composite(
     (1920, 1080),
