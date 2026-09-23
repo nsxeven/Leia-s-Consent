@@ -25,6 +25,8 @@ transform prologue_bg_blur:
     blur 4.0
 
 image bg prologue_party = At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_blur)
+image bg prologue_truthordare = At("images/backgrounds/prologue/PRO_truthordare.webp", prologue_bg_blur)
+image bg prologue_packing = At("images/backgrounds/prologue/PRO_bedroom.webp", prologue_bg_blur)
 
 image cg prologue_party_arrival = At("images/cg/prologue/PRO_CG_PartyArrival_01.webp", prologue_fullscreen)
 
