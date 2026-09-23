@@ -150,3 +150,80 @@ image leia_prologue_party skeptical = Fixed(
     "leia_prologue_party_layers skeptical",
     xysize=(941, 1672),
 )
+
+
+# Leia — Outfit 02 layered sprite.
+# Reuses the approved shared expression, hand, and hair layers. Body motion
+# follows the same timing as the Prologue Party outfit, while the chest layer
+# has its own transform so registration can be tuned independently.
+
+transform leia_outfit02_chest_breathe:
+    xzoom 1.04
+    xoffset -18
+
+    block:
+        parallel:
+            linear 0.65 xzoom 1.0
+        parallel:
+            linear 0.65 xoffset 0
+        pause 0.10
+        parallel:
+            linear 0.65 xzoom 1.04
+        parallel:
+            linear 0.65 xoffset -18
+        pause 0.10
+        repeat
+
+
+layeredimage leia_outfit02_layers:
+
+    always "images/sprites/leia/prologue_party/Base_02.png"
+    always "images/sprites/leia/prologue_party/Chest_02.png" at leia_outfit02_chest_breathe
+    always "images/sprites/leia/prologue_party/Hands.png" at leia_hands_idle
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+
+    always "images/sprites/leia/prologue_party/Hair.png" at leia_hair_idle
+
+
+image leia_outfit02 neutral = Fixed(
+    "leia_outfit02_layers neutral",
+    xysize=(941, 1672),
+)
+
+image leia_outfit02 smile = Fixed(
+    "leia_outfit02_layers smile",
+    xysize=(941, 1672),
+)
+
+image leia_outfit02 shy = Fixed(
+    "leia_outfit02_layers shy",
+    xysize=(941, 1672),
+)
+
+image leia_outfit02 pout = Fixed(
+    "leia_outfit02_layers pout",
+    xysize=(941, 1672),
+)
+
+image leia_outfit02 flustered = Fixed(
+    "leia_outfit02_layers flustered",
+    xysize=(941, 1672),
+)
+
+image leia_outfit02 skeptical = Fixed(
+    "leia_outfit02_layers skeptical",
+    xysize=(941, 1672),
+)
