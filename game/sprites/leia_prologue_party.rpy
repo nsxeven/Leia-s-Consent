@@ -112,11 +112,21 @@ layeredimage leia_prologue_party_layers:
 init python:
     def lc_sprite_silhouette(displayable):
         composite = Flatten(displayable)
-        halo = Transform(
+        # Keep the halo crisp rather than GPU-blurring a continuously changing
+        # animated texture. The previous blur pass could shimmer/flicker by a
+        # pixel as the breathing transforms were re-rendered between frames.
+        # Four sub-pixel-offset dark copies produce a stable soft edge instead.
+        dark = Transform(
             composite,
             matrixcolor=BrightnessMatrix(-1.0),
-            blur=5.0,
-            alpha=0.42,
+            alpha=0.24,
+        )
+        halo = Fixed(
+            Transform(dark, xoffset=-2, yoffset=0),
+            Transform(dark, xoffset=2, yoffset=0),
+            Transform(dark, xoffset=0, yoffset=-2),
+            Transform(dark, xoffset=0, yoffset=2),
+            fit_first=True,
         )
         return Fixed(halo, composite, fit_first=True)
 
