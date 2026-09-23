@@ -21,8 +21,6 @@ label ch01_scene_01_arrival:
     mc "You've said that about the airport, the boat, and a coconut."
     gf "The coconut was very photogenic."
 
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     "A member of staff greeted [friend_name] by name before any of us reached the end of the jetty."
@@ -46,7 +44,6 @@ label ch01_scene_01_arrival:
 
     $ set_story_flag("ch01_scene_01_complete")
 
-    hide leia
 
     jump ch01_scene_02_villa
 
@@ -89,8 +86,6 @@ label ch01_scene_02_villa:
     "One wall was almost entirely glass, looking down over the pool and past it to the ocean."
     "Light curtains softened the view without quite hiding it. Decorative, more than private."
 
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     gf "Look at that view."
@@ -116,8 +111,6 @@ label ch01_scene_02_villa:
 label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
-    $ set_leia_sprite("p03", "neutral")
-    show leia at ch01_leia_left
     with dissolve
 
     "Unpacking took less than five minutes. Deciding what to wear took considerably longer."
@@ -188,7 +181,6 @@ label ch01_scene_03_outfit_choice:
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_pre_pool_towel_curtains
     with dissolve
 
@@ -226,16 +218,12 @@ label ch01_scene_03_outfit_choice:
     $ set_story_flag("ch01_scene_03_complete")
 
     if selected_pool_outfit == "pool_bolder":
-        $ set_leia_sprite("p02", "smile")
-        show leia at ch01_leia_left
         with dissolve
         "A few minutes later, [girlfriend_name] stepped out in the new swimsuit."
         gf "Well?"
         mc "Still think I answered too fast?"
         gf "Maybe not."
     else:
-        $ set_leia_sprite("p02", "smile")
-        show leia at ch01_leia_left
         with dissolve
         "A few minutes later, [girlfriend_name] stepped out in the swimsuit she already trusted."
         gf "Comfort first."
@@ -246,6 +234,5 @@ label ch01_scene_03_outfit_choice:
 
     $ set_story_flag("ch01_scenes_01_03_complete")
 
-    hide leia
 
     jump ch01_scene_04_pool_arrival
