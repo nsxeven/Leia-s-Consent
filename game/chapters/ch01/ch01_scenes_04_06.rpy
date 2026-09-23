@@ -16,8 +16,6 @@ label ch01_scene_04_pool_arrival:
 
     gf "No comments until I'm all the way outside."
 
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     mc "That sounds like you're expecting comments."
@@ -68,7 +66,6 @@ label ch01_scene_04_pool_arrival:
 
     $ set_story_flag("ch01_scene_04_complete")
 
-    hide leia
 
     jump ch01_scene_05_photography
 
@@ -117,8 +114,6 @@ label ch01_scene_05_photography:
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
-    $ set_leia_sprite("p03", "embarrassed")
-    show leia at ch01_leia_left
     with dissolve
 
     "She was improving, but every time she noticed the camera she became stiff again."
@@ -217,8 +212,6 @@ label ch01_scene_05_photography:
                 "She slid back into the water beside me, visibly relieved that nobody tried to change her mind."
 
     scene bg ch01_pool_day
-    $ set_leia_sprite("p02", "smile")
-    show leia at ch01_leia_left
     with dissolve
 
     "[girlfriend_name] took her phone back and scrolled through the results."
@@ -241,7 +234,6 @@ label ch01_scene_05_photography:
 
     $ set_story_flag("ch01_scene_05_complete")
 
-    hide leia
 
     jump ch01_scene_06_friendship_and_towel
 
