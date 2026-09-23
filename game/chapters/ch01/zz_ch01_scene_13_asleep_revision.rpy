@@ -140,8 +140,6 @@ label ch01_scene_13_back_at_villa_asleep_revision:
         mc "Not spiritually."
 
     scene bg ch01_villa_living_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "neutral")
     with dissolve
 
     "Julian lowered her onto the sofa. Leia sat there blinking for a second while her brain caught up with the room."
