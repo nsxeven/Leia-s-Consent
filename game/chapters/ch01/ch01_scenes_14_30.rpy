@@ -10,7 +10,6 @@ label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "neutral")
     with dissolve
 
@@ -31,7 +30,6 @@ label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p01", "smile")
     with dissolve
 
@@ -49,7 +47,6 @@ label ch01_scene_14_movie_setup:
 
     $ enter_cinematic_mode()
     hide leia
-    hide julian
     scene cg ch01_movie_cuddle_blanket
     with dissolve
 
@@ -59,7 +56,6 @@ label ch01_scene_14_movie_setup:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p01", "smile")
     with dissolve
 
@@ -259,7 +255,6 @@ label ch01_scene_17_julian_notices:
     gf "And ice. A lot of ice."
     friend "Yes, your majesty."
 
-    hide julian
     with dissolve
 
     $ set_story_flag("ch01_scene_17_complete")
@@ -320,7 +315,6 @@ label ch01_scene_18_private_under_blanket:
             mc "I didn't mean—"
             gf "It's fine."
 
-    show julian at ch01_julian_right
     with dissolve
 
     "Julian returned balancing a bowl of ice, two soft drinks and three glasses."
@@ -354,7 +348,6 @@ label ch01_scene_19_too_hot:
 
     $ enter_cinematic_mode()
     hide leia
-    hide julian
     scene cg ch01_movie_no_blanket
     with dissolve
 
@@ -364,7 +357,6 @@ label ch01_scene_19_too_hot:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p01", "neutral")
     with dissolve
 
@@ -482,7 +474,6 @@ label ch01_scene_22_first_micro_test:
 
     $ enter_cinematic_mode()
     hide leia
-    hide julian
     scene cg ch01_lounge_micro_test
     with dissolve
 
@@ -491,7 +482,6 @@ label ch01_scene_22_first_micro_test:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
@@ -793,7 +783,6 @@ label ch01_scene_27_late_photo_drop:
     mc "Goodnight, grandpa."
     gf "Night."
 
-    hide julian
     with dissolve
 
     "A moment later my phone lit up."
