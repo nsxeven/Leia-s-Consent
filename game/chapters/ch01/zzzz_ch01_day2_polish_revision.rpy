@@ -75,7 +75,6 @@ label ch01_day2_scene_13_girls_upstairs_v2:
 
     scene bg ch01_master_bedroom
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_right
     $ set_leia_sprite("p03", "neutral")
     with dissolve
 
