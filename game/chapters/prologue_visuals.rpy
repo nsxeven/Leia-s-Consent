@@ -16,22 +16,45 @@ transform prologue_fullscreen:
     xysize (1920, 1080)
     fit "cover"
 
-image bg prologue_party:
-    "images/backgrounds/prologue/party01.webp"
+# Background presentation: always cover the 16:9 viewport, even when the source
+# image is not exactly 1920x1080. A subtle center-sharp / edge-soft treatment is
+# created by layering a blurred cover image beneath a slightly inset sharp copy.
+transform prologue_bg_cover:
     xysize (1920, 1080)
     fit "cover"
+
+transform prologue_bg_edge_blur:
+    xysize (1920, 1080)
+    fit "cover"
+    blur 7.0
+
+transform prologue_bg_center_sharp:
+    xalign 0.5
+    yalign 0.5
+    xysize (1860, 1046)
+    fit "cover"
+
+image bg prologue_party:
+    contains:
+        "images/backgrounds/prologue/PRO_party.webp"
+        at prologue_bg_edge_blur
+    contains:
+        "images/backgrounds/prologue/PRO_party.webp"
+        at prologue_bg_center_sharp
 
 image cg prologue_party_arrival:
     "images/cg/prologue/party_leiafriends01.webp"
     xysize (1920, 1080)
     fit "cover"
 
-# Present-day bedroom background has not been generated yet.
-image bg prologue_packing = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#2b2528"),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nRYAN + LEIA'S BEDROOM — PRESENT DAY", size=46, color="#ffffff"),
-)
+image bg prologue_packing:
+    contains:
+        "images/backgrounds/prologue/PRO_bedroom.webp"
+        at prologue_bg_edge_blur
+    contains:
+        "images/backgrounds/prologue/PRO_bedroom.webp"
+        at prologue_bg_center_sharp
+
 
 # --- Missing full-screen story CG placeholders -----------------------------
 
