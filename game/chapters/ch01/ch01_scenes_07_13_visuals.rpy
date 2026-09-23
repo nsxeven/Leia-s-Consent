@@ -32,13 +32,7 @@ image bg ch01_island_walk_night = Composite(
 
 image bg ch01_shop_night = At("images/backgrounds/chapter 1/ch01_conveniencestore.webp", prologue_bg_blur)
 
-image bg ch01_villa_night = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#152234"),
-    (0, 760), Transform(Solid("#786d65"), xysize=(1920, 320)),
-    (980, 180), Transform(Solid("#d7b784"), xysize=(720, 580)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-16 — VILLA EXTERIOR / NIGHT", size=46, color="#ffffff"),
-)
+image bg ch01_villa_night = At("images/backgrounds/villa/villa_frontdoor_night.webp", prologue_bg_blur)
 
 image bg ch01_villa_living_night = Composite(
     (1920, 1080),
