@@ -266,19 +266,31 @@ label ch01_scene_03_outfit_choice:
     $ set_story_flag("ch01_scene_03_complete")
 
     if selected_pool_outfit == "pool_bolder":
-        with dissolve
+        show leia_white_ruffle shy at prologue_sprite_enter_center, leia_body_idle
+        with sprite_enter_exit
         "A few minutes later, [girlfriend_name] stepped out in the new swimsuit."
         gf "Well?"
         mc "Still think I answered too fast?"
+        show leia_white_ruffle smile
+        with sprite_change
         gf "Maybe not."
     else:
-        with dissolve
+        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+        with sprite_enter_exit
         "A few minutes later, [girlfriend_name] stepped out in the swimsuit she already trusted."
+        show leia_blue_bikini smile
+        with sprite_change
         gf "Comfort first."
         mc "You still look incredible."
         gf "Correct answer."
 
     "From downstairs, [friend_name] called that the pool—and the cold drinks—were waiting."
+
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_white_ruffle
+    else:
+        hide leia_blue_bikini
+    with sprite_enter_exit
 
     $ set_story_flag("ch01_scenes_01_03_complete")
 
