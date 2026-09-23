@@ -35,8 +35,10 @@ transform leia_body_idle:
     yzoom 1.0
 
     block:
+        # Inhale: the assembled sprite rises slightly from the bottom anchor.
         linear 0.65 yzoom 0.985
         pause 0.10
+        # Exhale: return to the neutral body state.
         linear 0.65 yzoom 1.0
         pause 0.10
         repeat
@@ -45,19 +47,21 @@ transform leia_body_idle:
 # Chest breathing retained as an independent layer animation so it can be tuned
 # without changing the base artwork or whole-body breathing.
 transform leia_chest_breathe:
-    xzoom 1.04
-    xoffset -18
+    xzoom 1.0
+    xoffset 0
 
     block:
-        parallel:
-            linear 0.65 xzoom 1.0
-        parallel:
-            linear 0.65 xoffset 0
-        pause 0.10
+        # Inhale: expand during the same 0.65 s phase as the body's rise.
         parallel:
             linear 0.65 xzoom 1.04
         parallel:
             linear 0.65 xoffset -18
+        pause 0.10
+        # Exhale: contract while the body returns to neutral.
+        parallel:
+            linear 0.65 xzoom 1.0
+        parallel:
+            linear 0.65 xoffset 0
         pause 0.10
         repeat
 
