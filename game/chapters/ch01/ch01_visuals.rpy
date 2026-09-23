@@ -1,11 +1,17 @@
 # Chapter One visual placeholders.
 # Keep these stable image names when replacing placeholders with final assets.
 
+image bg ch01_car_day = At("images/backgrounds/car/car_day.webp", prologue_bg_blur)
+
 image cg ch01_villa_arrival = At("images/cg/ch01/CH1D1_CG_VillaArrival_01.webp", prologue_fullscreen)
 
 image bg ch01_villa_exterior = At("images/backgrounds/chapter 1/ch01_villa_arrival.webp", prologue_bg_blur)
 
 image bg ch01_villa_living = At("images/backgrounds/villa/villa_living_day.webp", prologue_bg_blur)
+
+image bg ch01_villa_corridor = At("images/backgrounds/chapter 1/ch01_villa_corridor.webp", prologue_bg_blur)
+
+image bg ch01_villa_master_enter = At("images/backgrounds/chapter 1/ch01_villa_master_enter.webp", prologue_bg_blur)
 
 image bg ch01_villa_pool = At("images/backgrounds/villa/villa_pool_day.webp", prologue_bg_blur)
 
