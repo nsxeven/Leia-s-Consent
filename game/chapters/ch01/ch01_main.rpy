@@ -13,12 +13,18 @@ label ch01_scene_01_arrival:
 
     scene bg ch01_resort_arrival
     with fade
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "By the time the boat eased against the jetty, [girlfriend_name] had taken thirty-seven photos."
     "Thirty-eight, if the blurry one of [friend_name] asleep in the transfer car counted."
 
+    show leia_casual smile
+    with sprite_change
     gf "This place doesn't look real."
     mc "You've said that about the airport, the boat, and a coconut."
+    show leia_casual pout
+    with sprite_change
     gf "The coconut was very photogenic."
 
     with dissolve
@@ -28,12 +34,16 @@ label ch01_scene_01_arrival:
 
     mc "Should I be worried that everyone here knows you?"
     friend "They know the booking."
+    show leia_casual skeptical
+    with sprite_change
     gf "The booking has a face?"
     friend "Apparently a very trustworthy one."
 
     "He said it like the private transfer, waiting staff, and seamless arrival were ordinary."
     "That was [friend_name]'s version of showing off: arranging something ridiculous, then acting as though it had happened by accident."
 
+    show leia_casual smile
+    with sprite_change
     gf "Wait—don't move. Both of you."
     mc "Another photo?"
     gf "First proper holiday photo. Try to look happy."
@@ -52,17 +62,25 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_exterior
     with dissolve
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "The cart followed a narrow path through palms and stopped in front of a two-storey villa facing the ocean."
 
+    show leia_casual skeptical
+    with sprite_change
     gf "[friend_name]."
     friend "Yes?"
+    show leia_casual smile
+    with sprite_change
     gf "This is not a villa. This is a small country."
     friend "The listing said 'intimate.'"
     mc "Compared to what? An airport?"
 
     scene bg ch01_villa_living
     with dissolve
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
     "Glass, pale wood, soft furniture—everything looked expensive without trying to announce it."
@@ -72,8 +90,12 @@ label ch01_scene_02_villa:
     friend "There are two rooms upstairs. You two take the master."
     mc "You booked the place. You take it."
     friend "And listen to you argue through the wall because your room is smaller? No."
+    show leia_casual skeptical
+    with sprite_change
     gf "We don't argue."
     mc "We conduct loud relationship reviews."
+    show leia_casual pout
+    with sprite_change
     gf "He gets poor performance ratings."
 
     "[friend_name] waved us toward the stairs before I could object again."
@@ -81,6 +103,8 @@ label ch01_scene_02_villa:
 
     scene bg ch01_master_bedroom
     with dissolve
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "The master bedroom took up most of the second floor."
     "One wall was almost entirely glass, looking down over the pool and past it to the ocean."
@@ -88,8 +112,12 @@ label ch01_scene_02_villa:
 
     with dissolve
 
+    show leia_casual smile
+    with sprite_change
     gf "Look at that view."
     mc "I'm looking."
+    show leia_casual skeptical
+    with sprite_change
     gf "At the ocean."
     mc "Still looking."
 
@@ -112,9 +140,13 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "Unpacking took less than five minutes. Deciding what to wear took considerably longer."
 
+    show leia_casual smile
+    with sprite_change
     gf "Okay. Opinion."
     mc "Dangerous opening."
     gf "I brought two swimsuits."
@@ -123,6 +155,8 @@ label ch01_scene_03_outfit_choice:
     "She held up the first: flattering, familiar, and comfortable."
     "The second was still normal resort swimwear, just a little bolder than anything she usually wore around our friends."
 
+    show leia_casual shy
+    with sprite_change
     gf "Is this one too much with [friend_name] here?"
 
     $ ch01_outfit_bolder_text = format_choice("ch01_outfit_bolder", "Not at all. You'd look amazing in it.")
@@ -176,6 +210,9 @@ label ch01_scene_03_outfit_choice:
     $ grant_story_outfit(selected_pool_outfit, equip=True)
 
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
+
+    hide leia_casual
+    with sprite_enter_exit
 
     $ enter_cinematic_mode()
     scene cg ch01_pre_pool_towel_curtains
