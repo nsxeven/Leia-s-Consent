@@ -16,29 +16,15 @@ transform prologue_fullscreen:
     xysize (1920, 1080)
     fit "cover"
 
-# Background presentation: always cover the 16:9 viewport, even when the source
-# image is not exactly 1920x1080. A subtle center-sharp / edge-soft treatment is
-# created by layering a blurred cover image beneath a slightly inset sharp copy.
-transform prologue_bg_cover:
+# Background presentation: a uniform soft blur across the entire background.
+# The dialogue UI now supplies its own bezel treatment, so the old simulated
+# center-sharp / edge-blur composition is intentionally removed.
+transform prologue_bg_blur:
     xysize (1920, 1080)
     fit "cover"
+    blur 4.0
 
-transform prologue_bg_edge_blur:
-    xysize (1920, 1080)
-    fit "cover"
-    blur 7.0
-
-transform prologue_bg_center_sharp:
-    xalign 0.5
-    yalign 0.5
-    xysize (1860, 1046)
-    fit "cover"
-
-image bg prologue_party = Composite(
-    (1920, 1080),
-    (0, 0), At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_edge_blur),
-    (30, 17), At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_center_sharp),
-)
+image bg prologue_party = At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_blur)
 
 image cg prologue_party_arrival = At("images/cg/prologue/PRO_CG_PartyArrival_01.webp", prologue_fullscreen)
 
@@ -56,7 +42,19 @@ image cg prologue_packing_banter = At("images/cg/prologue/PRO_CG_PackingBanter_0
 
 image cg prologue_departure = At("images/cg/prologue/PRO_CG_Departure_01.webp", prologue_fullscreen)
 
-# --- Standard VN sprite envelope ------------------------------------------\n# Entrance transforms. Use these only when a character actually enters the
+# --- Standard VN sprite envelope ------------------------------------------
+# A displayable-relative shadow/glow follows each sprite's own alpha silhouette.
+# Because it is applied to the sprite itself, it automatically follows left,
+# center, right, and future multi-character staging rather than using a fixed
+# screen-space location.
+transform lc_sprite_dark_glow:
+    matrixcolor TintMatrix("#ffffff")
+    additive 0.0
+    shadow (0, 0)
+    shadowcolor "#000000b8"
+    blur 3.0
+
+# Entrance transforms. Use these only when a character actually enters the
 # composition, not for ordinary expression changes.
 transform prologue_sprite_enter_center:
     xalign 0.5
