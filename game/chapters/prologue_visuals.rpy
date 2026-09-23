@@ -43,16 +43,8 @@ image cg prologue_packing_banter = At("images/cg/prologue/PRO_CG_PackingBanter_0
 image cg prologue_departure = At("images/cg/prologue/PRO_CG_Departure_01.webp", prologue_fullscreen)
 
 # --- Standard VN sprite envelope ------------------------------------------
-# A displayable-relative shadow/glow follows each sprite's own alpha silhouette.
-# Because it is applied to the sprite itself, it automatically follows left,
-# center, right, and future multi-character staging rather than using a fixed
-# screen-space location.
-transform lc_sprite_dark_glow:
-    matrixcolor TintMatrix("#ffffff")
-    additive 0.0
-    shadow (0, 0)
-    shadowcolor "#000000b8"
-    blur 3.0
+# Sprite edge treatment will be implemented with a Ren'Py 8.5.3-compatible
+# displayable composition after visual testing. No fixed screen-space glow is used.
 
 # Entrance transforms. Use these only when a character actually enters the
 # composition, not for ordinary expression changes.
