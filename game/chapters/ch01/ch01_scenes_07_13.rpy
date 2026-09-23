@@ -77,7 +77,6 @@ label ch01_scene_07_did_he_see:
 
     hide leia
     scene bg ch01_villa_entry_evening
-    show julian at ch01_julian_right
     with dissolve
 
     "Julian was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
@@ -122,7 +121,6 @@ label ch01_scene_07_did_he_see:
     $ set_story_flag("ch01_scene_07_complete")
 
     hide leia
-    hide julian
 
     jump ch01_scene_08_drive_to_dinner
 
@@ -156,7 +154,6 @@ label ch01_scene_08_drive_to_dinner:
 
     scene bg ch01_car_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "smile")
     with dissolve
 
@@ -172,7 +169,6 @@ label ch01_scene_08_drive_to_dinner:
     $ set_story_flag("ch01_scene_08_complete")
 
     hide leia
-    hide julian
 
     jump ch01_scene_09_dinner
 
@@ -181,7 +177,6 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "smile")
     with fade
 
@@ -207,7 +202,6 @@ label ch01_scene_09_dinner:
 
     $ enter_cinematic_mode()
     hide leia
-    hide julian
     scene cg ch01_dinner_spill
     with dissolve
 
@@ -223,7 +217,6 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
@@ -292,7 +285,6 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "smile")
     with dissolve
 
@@ -356,7 +348,6 @@ label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "smile")
     with dissolve
 
@@ -403,7 +394,6 @@ label ch01_scene_11_walk_and_catch:
 
     scene bg ch01_island_walk_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "smile")
     with fade
 
@@ -431,7 +421,6 @@ label ch01_scene_11_walk_and_catch:
 
     $ enter_cinematic_mode()
     hide leia
-    hide julian
     scene cg ch01_trip_catch
     with dissolve
 
@@ -453,7 +442,6 @@ label ch01_scene_11_walk_and_catch:
     $ exit_cinematic_mode()
     scene bg ch01_island_walk_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
@@ -505,7 +493,6 @@ label ch01_scene_11b_female_friend:
 
     scene bg ch01_island_walk_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "neutral")
 
     gf "Who was that?"
@@ -573,7 +560,6 @@ label ch01_scene_12_shop_and_drive_back:
 
     scene bg ch01_shop_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p02", "smile")
     with dissolve
 
@@ -609,7 +595,6 @@ label ch01_scene_12_shop_and_drive_back:
 
     $ exit_cinematic_mode()
     scene bg ch01_car_night
-    show julian at ch01_julian_right
     with dissolve
 
     "The car became quiet enough that Julian lowered his voice."
@@ -657,7 +642,6 @@ label ch01_scene_12_shop_and_drive_back:
 
     $ set_story_flag("ch01_scene_12_complete")
 
-    hide julian
 
     jump ch01_scene_13_back_at_villa
 
@@ -666,7 +650,6 @@ label ch01_scene_13_back_at_villa:
 
     scene bg ch01_villa_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "neutral")
     with fade
 
@@ -687,7 +670,6 @@ label ch01_scene_13_back_at_villa:
 
     $ enter_cinematic_mode()
     hide leia
-    hide julian
     scene cg ch01_julian_carry
     with dissolve
 
@@ -715,7 +697,6 @@ label ch01_scene_13_back_at_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "neutral")
     with dissolve
 
@@ -762,7 +743,6 @@ label ch01_scene_13_back_at_villa:
     "I unlocked the villa and held the door while Julian carried her inside."
 
     scene bg ch01_villa_living_night
-    show julian at ch01_julian_right
     with dissolve
 
     "Once Leia was safely on the sofa, Julian stepped away and exhaled as if he had just completed a much more dangerous journey than the walk from the car."
