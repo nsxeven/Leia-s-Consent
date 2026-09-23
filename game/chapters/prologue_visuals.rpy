@@ -34,13 +34,11 @@ transform prologue_bg_center_sharp:
     xysize (1860, 1046)
     fit "cover"
 
-image bg prologue_party:
-    contains:
-        "images/backgrounds/prologue/PRO_party.webp"
-        at prologue_bg_edge_blur
-    contains:
-        "images/backgrounds/prologue/PRO_party.webp"
-        at prologue_bg_center_sharp
+image bg prologue_party = Composite(
+    (1920, 1080),
+    (0, 0), At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_edge_blur),
+    (30, 17), At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_center_sharp),
+)
 
 image cg prologue_party_arrival:
     "images/cg/prologue/PRO_CG_PartyArrival_01.webp"
