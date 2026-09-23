@@ -20,8 +20,6 @@ init 999 python:
 label ch01_day2_scene_30_bedroom_revision:
 
     scene bg ch01_villa_bedroom_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
     with fade
 
     "The bedroom door closed behind us. For the first time since breakfast, there was nobody else in the conversation."
