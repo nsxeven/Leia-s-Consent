@@ -23,7 +23,6 @@ label ch01_scene_01_arrival:
 
     show leia at ch01_leia_left
     $ set_leia_sprite("p02", "smile")
-    show julian at ch01_julian_right
     with dissolve
 
     "A member of staff greeted [friend_name] by name before any of us reached the end of the jetty."
@@ -48,7 +47,6 @@ label ch01_scene_01_arrival:
     $ set_story_flag("ch01_scene_01_complete")
 
     hide leia
-    hide julian
 
     jump ch01_scene_02_villa
 
@@ -72,7 +70,6 @@ label ch01_scene_02_villa:
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
     "Glass, pale wood, soft furniture—everything looked expensive without trying to announce it."
 
-    show julian at ch01_julian_right
     with dissolve
 
     friend "There are two rooms upstairs. You two take the master."
@@ -84,7 +81,6 @@ label ch01_scene_02_villa:
 
     "[friend_name] waved us toward the stairs before I could object again."
 
-    hide julian
 
     scene bg ch01_master_bedroom
     with dissolve
