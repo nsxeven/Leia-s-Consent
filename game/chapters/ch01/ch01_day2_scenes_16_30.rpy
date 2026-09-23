@@ -21,7 +21,6 @@ label ch01_day2_scene_16_forced_split:
         "The separation was Maya's idea, not mine. That distinction mattered."
 
         hide leia
-        hide julian
         with dissolve
 
         maya "Does she hate me?"
@@ -77,7 +76,6 @@ label ch01_day2_scene_17_pool_return:
     $ d2_split = get_story_value("ch01_d2_split")
 
     if d2_split == "ryan_maya_leia_julian":
-        show julian at ch01_d2_julian_right
         with dissolve
 
         "Maya and I heard the splash before the pool came back into view."
@@ -92,7 +90,6 @@ label ch01_day2_scene_17_pool_return:
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
-        show julian at ch01_d2_julian_right
         with dissolve
 
         mc "...What happened?"
@@ -121,7 +118,6 @@ label ch01_day2_scene_17_pool_return:
 
     elif d2_split == "ryan_julian_leia_maya":
         show leia at ch01_d2_leia_left
-        show julian at ch01_d2_julian_right
         $ set_leia_sprite("p03", "embarrassed")
         with dissolve
 
@@ -137,7 +133,6 @@ label ch01_day2_scene_17_pool_return:
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
         show leia at ch01_d2_leia_left
-        show julian at ch01_d2_julian_right
         $ set_leia_sprite("p03", "embarrassed")
 
         maya "I told her to double-knot it!"
@@ -152,7 +147,6 @@ label ch01_day2_scene_17_pool_return:
 
     else:
         show leia at ch01_d2_leia_left
-        show julian at ch01_d2_julian_right
         $ set_leia_sprite("p01", "smile")
         with dissolve
 
@@ -369,7 +363,6 @@ label ch01_day2_scene_23_dinner_reach:
 
     scene bg ch01_d2_dinner
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
     with fade
 
@@ -400,7 +393,6 @@ label ch01_day2_scene_23_dinner_reach:
         $ exit_cinematic_mode()
         scene bg ch01_d2_dinner
         show leia at ch01_d2_leia_left
-        show julian at ch01_d2_julian_right
         $ set_leia_sprite("p02", "teasing")
 
         if get_story_value("ch01_d2_ntr_soft_gate", False) and d2_lane == "ntr_risk":
@@ -447,7 +439,6 @@ label ch01_day2_scene_25_maya_stays:
 
     scene bg ch01_d2_game_night
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p01", "smile")
     with fade
 
@@ -567,7 +558,6 @@ label ch01_day2_scene_28_julian_strips:
     $ exit_cinematic_mode()
     scene bg ch01_d2_game_night
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p03", "embarrassed")
 
     maya "...Oh."
