@@ -11,10 +11,9 @@ label chapter_one_start:
 
 label ch01_scene_01_arrival:
 
-    scene bg ch01_resort_arrival
+    $ enter_cinematic_mode()
+    scene cg ch01_villa_arrival
     with fade
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
-    with sprite_enter_exit
 
     "By the time the boat eased against the jetty, [girlfriend_name] had taken thirty-seven photos."
     "Thirty-eight, if the blurry one of [friend_name] asleep in the transfer car counted."
@@ -53,6 +52,7 @@ label ch01_scene_01_arrival:
     "For once, she lowered the phone without checking the result ten times."
 
     $ set_story_flag("ch01_scene_01_complete")
+    $ exit_cinematic_mode()
 
 
     jump ch01_scene_02_villa
@@ -101,10 +101,9 @@ label ch01_scene_02_villa:
     "[friend_name] waved us toward the stairs before I could object again."
 
 
-    scene bg ch01_master_bedroom
+    $ enter_cinematic_mode()
+    scene cg ch01_bedroom_window
     with dissolve
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
-    with sprite_enter_exit
 
     "The master bedroom took up most of the second floor."
     "One wall was almost entirely glass, looking down over the pool and past it to the ocean."
@@ -130,6 +129,7 @@ label ch01_scene_02_villa:
 
     "Below us, sunlight moved across the water in the private pool."
 
+    $ exit_cinematic_mode()
     $ set_story_flag("ch01_villa_geography_established")
     $ set_story_flag("ch01_scene_02_complete")
 
@@ -155,8 +155,11 @@ label ch01_scene_03_outfit_choice:
     "She held up the first: flattering, familiar, and comfortable."
     "The second was still normal resort swimwear, just a little bolder than anything she usually wore around our friends."
 
-    show leia_casual shy
-    with sprite_change
+    hide leia_casual
+    with sprite_enter_exit
+    $ enter_cinematic_mode()
+    scene cg ch01_swimsuit_choice
+    with dissolve
     gf "Is this one too much with [friend_name] here?"
 
     $ ch01_outfit_bolder_text = format_choice("ch01_outfit_bolder", "Not at all. You'd look amazing in it.")
@@ -208,6 +211,7 @@ label ch01_scene_03_outfit_choice:
 
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     $ grant_story_outfit(selected_pool_outfit, equip=True)
+    $ exit_cinematic_mode()
 
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
 
