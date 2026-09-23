@@ -3,13 +3,7 @@
 
 image bg ch01_villa_entry_evening = At("images/backgrounds/villa/villa_frontdoor_evening.webp", prologue_bg_blur)
 
-image bg ch01_car_night = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#171b28"),
-    (0, 0), Transform(Solid("#2a3347"), xysize=(1920, 420)),
-    (0, 820), Transform(Solid("#11151d"), xysize=(1920, 260)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-11 — CAR INTERIOR / NIGHT", size=46, color="#ffffff"),
-)
+image bg ch01_car_night = At("images/backgrounds/car/car_night.webp", prologue_bg_blur)
 
 image bg ch01_restaurant_evening = Composite(
     (1920, 1080),
