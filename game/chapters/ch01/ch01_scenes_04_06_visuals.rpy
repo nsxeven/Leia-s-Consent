@@ -1,14 +1,7 @@
 # Chapter One Scenes 4–6 visual placeholders.
 # Final generated art should replace these stable image names.
 
-image bg ch01_pool_day = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#83cedd"),
-    (0, 520), Transform(Solid("#2196bd"), xysize=(1240, 390)),
-    (1240, 520), Transform(Solid("#d9c394"), xysize=(680, 390)),
-    (0, 910), Transform(Solid("#ead9ac"), xysize=(1920, 170)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-08 — VILLA POOL / DAY", size=46, color="#ffffff"),
-)
+image bg ch01_pool_day = At("images/backgrounds/villa/villa_pool_day.webp", prologue_bg_blur)
 
 image bg ch01_pool_lounge = Composite(
     (1920, 1080),
