@@ -1,13 +1,7 @@
 # Chapter One visual placeholders.
 # Keep these stable image names when replacing placeholders with final assets.
 
-image bg ch01_resort_arrival = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#4b9ca8"),
-    (0, 650), Transform(Solid("#d9c89b"), xysize=(1920, 430)),
-    (0, 0), Transform(Solid("#79cce2"), xysize=(1920, 390)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-01 — RESORT ISLAND ARRIVAL", size=46, color="#ffffff"),
-)
+image cg ch01_villa_arrival = At("images/cg/ch01/CH1D1_CG_VillaArrival_01.webp", prologue_fullscreen)
 
 image bg ch01_villa_exterior = At("images/backgrounds/chapter 1/ch01_villa_arrival.webp", prologue_bg_blur)
 
@@ -19,12 +13,9 @@ image bg ch01_master_bedroom = At("images/backgrounds/villa/villa_master_day.web
 
 image bg ch01_master_bedroom_curtains = At("images/backgrounds/villa/villa_master_curtains_day.webp", prologue_bg_blur)
 
-image cg ch01_pre_pool_towel_curtains = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#d9d0c7"),
-    (0, 0), Transform(Solid("#9bd4e5"), xysize=(1920, 1080)),
-    (90, 70), Text("CG PLACEHOLDER\\nCH01-PRE-POOL-TOWEL — LEIA DRAWS SHEER CURTAIN\\nTOWEL / MASTER BEDROOM / DAY", size=52, color="#ffffff"),
-)
+image cg ch01_bedroom_window = At("images/cg/ch01/CH1D1_CG_BedroomWindow_01.webp", prologue_fullscreen)
+
+image cg ch01_swimsuit_choice = At("images/cg/ch01/CH1D1_CG_SwimsuitChoice_01.webp", prologue_fullscreen)
 
 
 image bg ch01_julian_bedroom = Composite(
