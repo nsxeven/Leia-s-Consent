@@ -68,9 +68,11 @@ label ch01_scene_04_pool_arrival:
 
     if selected_pool_outfit == "pool_bolder":
         hide leia_blue_bikini
+        scene cg ch01_pool_hand_pull_blue
     else:
         hide leia_white_ruffle
-    with sprite_enter_exit
+        scene cg ch01_pool_hand_pull_white
+    with dissolve
 
     "She caught my wrist, stepped backward—and pulled me into the pool with her."
 
