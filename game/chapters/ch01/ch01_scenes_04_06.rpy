@@ -24,6 +24,8 @@ label ch01_scene_04_pool_arrival:
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
 
     if selected_pool_outfit == "pool_bolder":
+        show leia_white_ruffle shy at prologue_sprite_enter_center, leia_body_idle
+        with sprite_enter_exit
         "The new swimsuit was not outrageous. It was simply cut higher at the hips and showed more of her than [friend_name] had ever seen."
         "[girlfriend_name] stopped just beyond the doorway, pretending not to wait for my reaction."
         gf "Well?"
@@ -31,10 +33,16 @@ label ch01_scene_04_pool_arrival:
         gf "I want to hear you say it."
         mc "You look incredible."
         "Some of the tension left her shoulders."
+        show leia_white_ruffle smile
+        with sprite_change
         gf "Better."
     else:
+        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+        with sprite_enter_exit
         "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
+        show leia_blue_bikini smile
+        with sprite_change
         gf "I know. This one has already passed quality control."
 
     with dissolve
@@ -55,6 +63,12 @@ label ch01_scene_04_pool_arrival:
     gf "You are taking suspiciously long."
     mc "Thorough application prevents sun damage."
     gf "Very responsible."
+
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_white_ruffle
+    else:
+        hide leia_blue_bikini
+    with sprite_enter_exit
 
     "She caught my wrist, stepped backward—and pulled me into the pool with her."
 
@@ -115,6 +129,12 @@ label ch01_scene_05_photography:
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
     with dissolve
+
+    if selected_pool_outfit == "pool_bolder":
+        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+    else:
+        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "She was improving, but every time she noticed the camera she became stiff again."
 
@@ -214,6 +234,12 @@ label ch01_scene_05_photography:
     scene bg ch01_pool_day
     with dissolve
 
+    if selected_pool_outfit == "pool_bolder":
+        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+    else:
+        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
+
     "[girlfriend_name] took her phone back and scrolled through the results."
 
     if get_story_value("ch01_photo_outcome") == "confident":
@@ -231,6 +257,12 @@ label ch01_scene_05_photography:
     "She saved her favourite without posting it anywhere."
 
     gf "I'm showering before dinner. Try not to drown while I'm gone."
+
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_white_ruffle
+    else:
+        hide leia_blue_bikini
+    with sprite_enter_exit
 
     $ set_story_flag("ch01_scene_05_complete")
 
