@@ -110,3 +110,40 @@ image leia_prologue_party flustered = Fixed("leia_prologue_party_layers flustere
 image leia_prologue_party skeptical = Fixed("leia_prologue_party_layers skeptical", xysize=(941, 1672))
 image leia_prologue_party angry = Fixed("leia_prologue_party_layers angry", xysize=(941, 1672))
 image leia_prologue_party ahegao = Fixed("leia_prologue_party_layers ahegao", xysize=(941, 1672))
+
+
+# Leia — Casual outfit used for the present-day Prologue and early Chapter One.
+# Uses the same production rig: Base -> Chest -> Expression -> Hair.
+layeredimage leia_casual_layers:
+
+    always "images/sprites/leia/prologue_party/Base_Casual.png"
+    always "images/sprites/leia/prologue_party/Chest_Casual.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_casual neutral = Fixed("leia_casual_layers neutral", xysize=(941, 1672))
+image leia_casual smile = Fixed("leia_casual_layers smile", xysize=(941, 1672))
+image leia_casual shy = Fixed("leia_casual_layers shy", xysize=(941, 1672))
+image leia_casual pout = Fixed("leia_casual_layers pout", xysize=(941, 1672))
+image leia_casual flustered = Fixed("leia_casual_layers flustered", xysize=(941, 1672))
+image leia_casual skeptical = Fixed("leia_casual_layers skeptical", xysize=(941, 1672))
+image leia_casual angry = Fixed("leia_casual_layers angry", xysize=(941, 1672))
+image leia_casual ahegao = Fixed("leia_casual_layers ahegao", xysize=(941, 1672))
