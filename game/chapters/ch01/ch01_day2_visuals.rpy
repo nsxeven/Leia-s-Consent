@@ -73,15 +73,8 @@ image cg ch01_d2_julian_underwear_reveal = Composite(
     (90, 70), Text("CG PLACEHOLDER\nNEVER HAVE I EVER — JULIAN DOWN TO UNDERWEAR\nREACTIONS CARRY THE REVEAL", size=50, color="#ffffff"),
 )
 
-# Maya is still awaiting final sprite production. Keep a transparent placeholder
-# so Day Two remains fully playable in the meantime.
-image maya = Composite(
-    (560, 900),
-    (0, 0), Solid("#00000000"),
-    (170, 120), Transform(Solid("#8e6f7f"), xysize=(220, 220)),
-    (115, 330), Transform(Solid("#675565"), xysize=(330, 500)),
-    (150, 520), Text("MAYA\nSPRITE\nPLACEHOLDER", size=30, color="#ffffff", text_align=0.5),
-)
+# Maya has no temporary sprite fallback. Until final Maya sprite assets exist,
+# dialogue remains sprite-free rather than displaying placeholder character art.
 
 transform ch01_d2_leia_left:
     xalign 0.16
