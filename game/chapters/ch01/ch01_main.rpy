@@ -11,9 +11,10 @@ label chapter_one_start:
 
 label ch01_scene_01_arrival:
 
-    $ enter_cinematic_mode()
-    scene cg ch01_villa_arrival
+    scene bg ch01_car_day
     with fade
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "By the time the boat eased against the jetty, [girlfriend_name] had taken thirty-seven photos."
     "Thirty-eight, if the blurry one of [friend_name] asleep in the transfer car counted."
@@ -52,7 +53,6 @@ label ch01_scene_01_arrival:
     "For once, she lowered the phone without checking the result ten times."
 
     $ set_story_flag("ch01_scene_01_complete")
-    $ exit_cinematic_mode()
 
 
     jump ch01_scene_02_villa
@@ -83,9 +83,15 @@ label ch01_scene_02_villa:
     with sprite_enter_exit
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
+    show leia_casual smile
+    with sprite_change
+    gf "Look at that view."
     "Glass, pale wood, soft furniture—everything looked expensive without trying to announce it."
 
+    scene bg ch01_villa_corridor
     with dissolve
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     friend "There are two rooms upstairs. You two take the master."
     mc "You booked the place. You take it."
@@ -101,9 +107,10 @@ label ch01_scene_02_villa:
     "[friend_name] waved us toward the stairs before I could object again."
 
 
-    $ enter_cinematic_mode()
-    scene cg ch01_bedroom_window
+    scene bg ch01_villa_master_enter
     with dissolve
+    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "The master bedroom took up most of the second floor."
     "One wall was almost entirely glass, looking down over the pool and past it to the ocean."
@@ -111,9 +118,6 @@ label ch01_scene_02_villa:
 
     with dissolve
 
-    show leia_casual smile
-    with sprite_change
-    gf "Look at that view."
     mc "I'm looking."
     show leia_casual skeptical
     with sprite_change
@@ -129,7 +133,6 @@ label ch01_scene_02_villa:
 
     "Below us, sunlight moved across the water in the private pool."
 
-    $ exit_cinematic_mode()
     $ set_story_flag("ch01_villa_geography_established")
     $ set_story_flag("ch01_scene_02_complete")
 
