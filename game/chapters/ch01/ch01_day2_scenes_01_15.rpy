@@ -258,15 +258,12 @@ label ch01_day2_scene_01_morning_after:
     mc "You were the one checking if he was looking."
 
     if partner_stats["exhibitionism"] < 18:
-        $ set_leia_expression("embarrassed")
         gf "I was checking that he wasn't."
     elif partner_stats["exhibitionism"] < 26:
-        $ set_leia_expression("embarrassed")
         gf "That is not the same thing."
         mc "Sure."
         gf "It isn't."
     else:
-        $ set_leia_expression("teasing")
         gf "You have no evidence."
         mc "I have eyes."
         gf "Circumstantial."
@@ -433,7 +430,6 @@ label ch01_day2_scene_06_jealousy_test:
 
 label ch01_day2_scene_07_leia_maya_click:
 
-    $ set_leia_expression("smile")
 
     "The awkwardness lasted considerably less time than I'd expected."
     "Maya asked Leia one question about the resort. Leia answered with a story. Five minutes later they were comparing photos and ignoring me completely."
