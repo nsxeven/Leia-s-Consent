@@ -161,7 +161,7 @@ label ch01_scene_03_outfit_choice:
     hide leia_casual
     with sprite_enter_exit
     $ enter_cinematic_mode()
-    scene cg ch01_swimsuit_choice
+    scene cg ch01_swimsuit_choice_white
     with dissolve
     gf "Is this one too much with [friend_name] here?"
 
@@ -214,6 +214,13 @@ label ch01_scene_03_outfit_choice:
 
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     $ grant_story_outfit(selected_pool_outfit, equip=True)
+
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_swimsuit_choice_blue
+    else:
+        scene cg ch01_swimsuit_choice_white
+    with dissolve
+
     $ exit_cinematic_mode()
 
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
