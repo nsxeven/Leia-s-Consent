@@ -316,10 +316,11 @@ label ch01_scene_06_friendship_and_towel:
     friend "Six twenty-three."
     gf "Why are both of you still sitting there?"
 
-    scene cg ch01_towel_shift
-    with dissolve
-
     "She stepped farther out and leaned over the railing, exposing most of one thigh as the towel rode higher over her hip."
+
+    scene cg ch01_towel_shift
+    with Dissolve(3.0)
+
     "When she lifted an arm to gesture toward the room, the top loosened just enough to reveal the side and lower curve of her breast."
     "Not everything. More than she intended."
 
