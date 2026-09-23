@@ -161,7 +161,7 @@ style namebox:
     xpos 70
     xanchor 0.0
     xsize 330
-    ypos -58
+    ypos -70
     ysize 76
     padding (30, 10, 30, 10)
 
