@@ -82,7 +82,6 @@ label ch01_scene_15_under_blanket:
             $ set_story_value("ch01_movie_first_response", "stopped")
             mc "Okay, okay. I'll behave."
             "I loosened my arm around her and left my hand where it could not be mistaken for anything except a cuddle."
-            $ set_leia_expression("smile")
             gf "Thank you."
             mc "For the record, this movie owes me."
             gf "Watch it."
@@ -91,7 +90,6 @@ label ch01_scene_15_under_blanket:
             $ apply_choice("ch01_movie_subtle")
             $ set_story_value("ch01_movie_first_response", "subtle")
             mc "Then don't make it obvious."
-            $ set_leia_expression("embarrassed")
             gf "[player_name]."
             mc "What?"
             gf "That is not what I said."
@@ -101,7 +99,6 @@ label ch01_scene_15_under_blanket:
             $ apply_choice("ch01_movie_tease_presence")
             $ set_story_value("ch01_movie_first_response", "teased_presence")
             mc "You seemed fine until you remembered he was there."
-            $ set_leia_expression("embarrassed")
             gf "Because I forgot for a second."
             mc "Exactly."
             gf "You're annoying."
@@ -111,7 +108,6 @@ label ch01_scene_15_under_blanket:
             $ apply_choice("ch01_movie_dismiss_concern")
             $ set_story_value("ch01_movie_first_response", "dismissed")
             mc "You're overthinking it. He won't care."
-            $ set_leia_expression("annoyed")
             gf "That's not really the point."
             mc "I know."
             gf "Do you?"
@@ -154,7 +150,6 @@ label ch01_scene_16_can_he_tell:
             mc "Only if you keep making that face."
             gf "What face?"
             mc "That one."
-            $ set_leia_expression("embarrassed")
             gf "Shut up."
 
         "[ch01_can_tell_push_text]":
@@ -217,7 +212,6 @@ label ch01_scene_17_julian_notices:
             $ apply_choice("ch01_fidget_tease")
             $ set_story_value("ch01_fidget_response", "teased")
             mc "Yeah, Leia. Why are you moving around so much?"
-            $ set_leia_expression("annoyed")
             gf "I hate you."
             mc "No you don't."
             "Something connected sharply with my shin beneath the blanket."
@@ -419,7 +413,6 @@ label ch01_scene_21_watching_julian:
             $ set_story_value("ch01_watching_response", "claimed_attention")
             mc "Eyes on me."
             "Leia looked at me, startled, then understood exactly what I meant."
-            $ set_leia_expression("embarrassed")
             gf "Possessive."
             mc "Complaining?"
             "Her foot nudged my side."
@@ -603,7 +596,6 @@ label ch01_scene_24_looking_counts:
             mc "You asked."
             gf "So if someone was checking me out?"
             mc "Might enjoy that too."
-            $ set_leia_expression("embarrassed")
             gf "...Of course you would."
 
         "[ch01_looking_harmless_text]":
@@ -931,7 +923,6 @@ label ch01_scene_29_private_reflection:
             $ set_story_value("ch01_private_attention_response", "claimed")
             mc "That's okay. I still like knowing you're mine."
             "Leia looked up at me."
-            $ set_leia_expression("smile")
             gf "Possessive again."
             mc "You complained less this time."
             gf "Maybe I changed my mind."
