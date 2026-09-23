@@ -327,9 +327,9 @@ label ch01_scene_06_friendship_and_towel:
     scene cg ch01_towel_silhouette
     with dissolve
 
-    "[girlfriend_name] disappeared inside and grabbed at the light curtain."
+    "[girlfriend_name] disappeared inside and grabbed at the sheer curtain."
     "For a fleeting moment, the fabric softened her into a wet-haired silhouette still wrestling the towel closed."
-    "Then the heavier privacy layer swept across the glass and hid her completely."
+    "Then she retreated farther into the room, away from the glass."
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
