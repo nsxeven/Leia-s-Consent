@@ -55,23 +55,11 @@ image cg ch01_photo_more_b = Composite(
     (90, 70), Text("CG PLACEHOLDER\nCH01-PHOTO-R1-B — POOL-EDGE CONFIDENT POSE\nBOLDER SWIMWEAR", size=52, color="#ffffff"),
 )
 
-image cg ch01_towel_call_down = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#75656e"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-TOWEL-01 — OPEN BALCONY DOOR\nWET HAIR / SMALL TOWEL / LOWER VIEWING ANGLE", size=52, color="#ffffff"),
-)
+image cg ch01_towel_call_down = At("images/cg/ch01/CH1D1_CG_TowelCallDown_01.webp", prologue_fullscreen)
 
-image cg ch01_towel_shift = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#845b6b"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-TOWEL-02 — TOWEL SHIFTS WHILE GESTURING\nSUGGESTIVE SIDE CURVE / NO EXPLICIT NUDITY", size=52, color="#ffffff"),
-)
+image cg ch01_towel_shift = At("images/cg/ch01/CH1D1_CG_TowelShift_01.webp", prologue_fullscreen)
 
-image cg ch01_towel_realization = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#704f61"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-TOWEL-03 — REALISATION / EMBARRASSMENT\nTOWEL CLUTCHED CLOSED", size=52, color="#ffffff"),
-)
+image cg ch01_towel_realization = At("images/cg/ch01/CH1D1_CG_TowelRealization_01.webp", prologue_fullscreen)
 
 image cg ch01_towel_silhouette = Composite(
     (1920, 1080),
