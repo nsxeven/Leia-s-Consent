@@ -134,7 +134,6 @@ label ch01_scene_03_outfit_choice:
             $ apply_choice("ch01_outfit_bolder")
             $ set_story_value("ch01_pool_outfit", "pool_bolder")
             $ set_story_value("ch01_outfit_stance", "encouraging")
-            $ set_leia_expression("embarrassed")
 
             mc "Not at all. You'd look amazing in it."
             gf "You answered that suspiciously fast."
@@ -147,7 +146,6 @@ label ch01_scene_03_outfit_choice:
             $ apply_choice("ch01_outfit_comfort")
             $ set_story_value("ch01_outfit_stance", "neutral")
             $ neutral_outfit = resolve_story_outcome("ch01_pool_outfit", ["pool_conservative", "pool_bolder"], weights=[65, 35])
-            $ set_leia_expression("smile")
 
             mc "Wear whichever one makes you comfortable."
             gf "That is supportive and completely unhelpful."
@@ -166,7 +164,6 @@ label ch01_scene_03_outfit_choice:
             $ apply_choice("ch01_outfit_conservative")
             $ set_story_value("ch01_pool_outfit", "pool_conservative")
             $ set_story_value("ch01_outfit_stance", "protective")
-            $ set_leia_expression("smile")
 
             mc "I kinda like the other one on you more."
             gf "The safe one?"
