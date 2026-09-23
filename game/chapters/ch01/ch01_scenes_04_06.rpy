@@ -6,7 +6,6 @@ label ch01_scene_04_pool_arrival:
     scene bg ch01_pool_day
     with fade
 
-    show julian at ch01_julian_right
     with dissolve
 
     "[friend_name] had already claimed the shaded end of the pool by the time I came downstairs."
@@ -17,7 +16,6 @@ label ch01_scene_04_pool_arrival:
 
     gf "No comments until I'm all the way outside."
 
-    hide julian
     show leia at ch01_leia_left
     $ set_leia_sprite("p02", "smile")
     with dissolve
@@ -41,7 +39,6 @@ label ch01_scene_04_pool_arrival:
         mc "You look good."
         gf "I know. This one has already passed quality control."
 
-    show julian at ch01_julian_right
     with dissolve
 
     friend "Are you two finished, or should I give you another minute?"
@@ -72,7 +69,6 @@ label ch01_scene_04_pool_arrival:
     $ set_story_flag("ch01_scene_04_complete")
 
     hide leia
-    hide julian
 
     jump ch01_scene_05_photography
 
@@ -123,7 +119,6 @@ label ch01_scene_05_photography:
     scene bg ch01_pool_day
     $ set_leia_sprite("p03", "embarrassed")
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     with dissolve
 
     "She was improving, but every time she noticed the camera she became stiff again."
@@ -224,7 +219,6 @@ label ch01_scene_05_photography:
     scene bg ch01_pool_day
     $ set_leia_sprite("p02", "smile")
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     with dissolve
 
     "[girlfriend_name] took her phone back and scrolled through the results."
@@ -248,7 +242,6 @@ label ch01_scene_05_photography:
     $ set_story_flag("ch01_scene_05_complete")
 
     hide leia
-    hide julian
 
     jump ch01_scene_06_friendship_and_towel
 
@@ -256,7 +249,6 @@ label ch01_scene_05_photography:
 label ch01_scene_06_friendship_and_towel:
 
     scene bg ch01_pool_lounge
-    show julian at ch01_julian_right
     with dissolve
 
     "With [girlfriend_name] upstairs, the villa became unexpectedly quiet."
@@ -286,7 +278,6 @@ label ch01_scene_06_friendship_and_towel:
     "We both looked up."
 
     $ enter_cinematic_mode()
-    hide julian
     scene cg ch01_towel_call_down
     with dissolve
 
@@ -333,7 +324,6 @@ label ch01_scene_06_friendship_and_towel:
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
-    show julian at ch01_julian_right
     with dissolve
 
     $ ch01_pre_towel_stance = chapter_stance("ch01")
@@ -376,7 +366,6 @@ label ch01_scene_06_friendship_and_towel:
     $ set_story_flag("ch01_scene_06_complete")
     $ set_story_flag("ch01_scenes_04_06_complete")
 
-    hide julian
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
