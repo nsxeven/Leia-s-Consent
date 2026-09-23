@@ -185,7 +185,7 @@ image leia_casual ahegao = Fixed(lc_sprite_silhouette("leia_casual_layers ahegao
 # 941x1672 envelope as the other production outfits.
 layeredimage leia_towel_layers:
 
-    always "images/sprites/leia/Base_Nude.png"
+    always "images/sprites/leia/CH1/Base_Towel.png"
     always "images/sprites/leia/CH1/Chest_Towel.png" at leia_chest_breathe
 
     group expression:
