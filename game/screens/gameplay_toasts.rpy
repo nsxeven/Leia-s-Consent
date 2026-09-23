@@ -78,6 +78,8 @@ init python:
         return None
 
 
+# Generic gameplay popup treatment. Keep this as the default for future
+# choice/stat/system toasts so new popups inherit the same soft fade language.
 transform gameplay_toast_appear:
     on show:
         alpha 0.0
