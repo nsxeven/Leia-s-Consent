@@ -181,8 +181,8 @@ image leia_casual ahegao = Fixed(lc_sprite_silhouette("leia_casual_layers ahegao
 
 # Leia — Chapter One pool outfits.
 # Story mapping:
-#   pool_conservative -> BlueBikini
-#   pool_bolder       -> WhiteRuffle
+#   pool_conservative -> WhiteRuffle
+#   pool_bolder       -> BlueBikini
 # Both retain the production Base -> Chest -> Expression -> Hair rig.
 layeredimage leia_blue_bikini_layers:
 
