@@ -9,13 +9,7 @@ image bg ch01_villa_kitchen_night = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-18 — VILLA KITCHEN / NIGHT", size=46, color="#ffffff"),
 )
 
-image bg ch01_villa_bedroom_night = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#1d2230"),
-    (0, 720), Transform(Solid("#5c544f"), xysize=(1920, 360)),
-    (1180, 120), Transform(Solid("#31495c"), xysize=(560, 520)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-19 — MASTER BEDROOM / NIGHT", size=46, color="#ffffff"),
-)
+image bg ch01_villa_bedroom_night = At("images/backgrounds/villa/villa_master_night.webp", prologue_bg_blur)
 
 image cg ch01_movie_cuddle_blanket = Composite(
     (1920, 1080),
