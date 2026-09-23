@@ -1,13 +1,7 @@
 # Chapter One Scenes 7–13 visual placeholders.
 # Final generated art should replace these stable image names.
 
-image bg ch01_villa_entry_evening = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#393343"),
-    (0, 760), Transform(Solid("#8a715c"), xysize=(1920, 320)),
-    (1180, 110), Transform(Solid("#b8a58f"), xysize=(560, 650)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-10 — VILLA ENTRY / EVENING", size=46, color="#ffffff"),
-)
+image bg ch01_villa_entry_evening = At("images/backgrounds/villa/villa_frontdoor_evening.webp", prologue_bg_blur)
 
 image bg ch01_car_night = Composite(
     (1920, 1080),
