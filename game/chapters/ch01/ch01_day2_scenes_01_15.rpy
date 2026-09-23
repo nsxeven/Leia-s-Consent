@@ -306,7 +306,6 @@ label ch01_day2_scene_02_breakfast:
 
     scene bg ch01_d2_breakfast
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p01", "smile")
     with dissolve
 
@@ -347,7 +346,6 @@ label ch01_day2_scene_03_maya_message:
 
 label ch01_day2_scene_04_jealousy_callback:
 
-    hide julian
     show leia at ch01_leia_left
     with dissolve
 
@@ -379,7 +377,6 @@ label ch01_day2_scene_05_meet_maya:
 
     scene bg ch01_d2_cafe
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p01", "neutral")
     with fade
 
@@ -501,7 +498,6 @@ label ch01_day2_scene_09_photo_walk:
 
     scene bg ch01_d2_island_day
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
     with dissolve
 
@@ -537,7 +533,6 @@ label ch01_day2_scene_10_leia_maya_photo:
     $ exit_cinematic_mode()
     scene bg ch01_d2_island_day
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
 
     "Leia saved the photo immediately."
@@ -664,7 +659,6 @@ label ch01_day2_scene_15_pool_group:
 
     scene bg ch01_pool_day
     show leia at ch01_d2_leia_left
-    show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
     with fade
 
