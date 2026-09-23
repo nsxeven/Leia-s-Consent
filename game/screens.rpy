@@ -104,6 +104,14 @@ init python:
         store.lc_dialogue_theme = theme
 
 
+# Dialogue keeps Ren'Py's native CPS/typewriter reveal, so the player's
+# Text Speed preference remains authoritative. This transform only adds a
+# short opacity ramp to the text layer; it does not implement its own timing.
+transform lc_dialogue_text_fade:
+    alpha 0.35
+    linear 0.16 alpha 1.0
+
+
 screen say(who, what):
 
     window:
@@ -128,7 +136,7 @@ screen say(who, what):
                 text who id "who":
                     color ("#111111" if lc_dialogue_theme == "day" else "#FFFFFF")
 
-        text what id "what":
+        text what id "what" at lc_dialogue_text_fade:
             color ("#111111" if lc_dialogue_theme == "day" else "#FFFFFF")
 
 
