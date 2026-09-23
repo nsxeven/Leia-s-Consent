@@ -254,8 +254,8 @@ label prologue_start:
         notification_title="Trip Group",
     )
 
-    "My phone buzzed."
-    "[friend_name]: I'm downstairs."
+    # The Phone notification already presents Julian's message; do not
+    # duplicate its contents through the VN textbox.
 
     $ phone_add_message(
         "group",
@@ -267,8 +267,7 @@ label prologue_start:
         notification_title="Trip Group",
     )
 
-    "It buzzed again."
-    "[friend_name]: If either of you makes us miss this flight I am leaving without you."
+    # Second notification is likewise left to the Phone UI.
 
     $ phone_unlock_with_tutorial()
     $ set_phone_hud_enabled(True)
