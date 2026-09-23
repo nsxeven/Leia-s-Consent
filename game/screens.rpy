@@ -95,19 +95,41 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
+default lc_dialogue_theme = "night"
+
+init python:
+    def set_dialogue_theme(theme):
+        if theme not in ("day", "night"):
+            raise Exception("LC dialogue theme must be 'day' or 'night'.")
+        store.lc_dialogue_theme = theme
+
+
 screen say(who, what):
 
     window:
         id "window"
+
+        if lc_dialogue_theme == "day":
+            background Transform("gui/dialogue/lc_textbox_day.svg", xalign=0.5, yalign=0.5)
+        else:
+            background Transform("gui/dialogue/lc_textbox_night.svg", xalign=0.5, yalign=0.5)
 
         if who is not None:
 
             window:
                 id "namebox"
                 style "namebox"
-                text who id "who"
 
-        text what id "what"
+                if lc_dialogue_theme == "day":
+                    background "gui/dialogue/lc_namebox_day.svg"
+                else:
+                    background "gui/dialogue/lc_namebox_night.svg"
+
+                text who id "who":
+                    color ("#111111" if lc_dialogue_theme == "day" else "#FFFFFF")
+
+        text what id "what":
+            color ("#111111" if lc_dialogue_theme == "day" else "#FFFFFF")
 
 
     ## If there's a side image, display it above the text. Do not display on the
@@ -131,33 +153,29 @@ style namebox_label is say_label
 
 style window:
     xalign 0.5
-    xfill True
-    yalign gui.textbox_yalign
-    ysize gui.textbox_height
-
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    xsize 1600
+    yalign 0.985
+    ysize 250
 
 style namebox:
-    xpos gui.name_xpos
-    xanchor gui.name_xalign
-    xsize gui.namebox_width
-    ypos gui.name_ypos
-    ysize gui.namebox_height
-
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    padding gui.namebox_borders.padding
+    xpos 70
+    xanchor 0.0
+    xsize 330
+    ypos -58
+    ysize 76
+    padding (30, 10, 30, 10)
 
 style say_label:
     properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
+    xalign 0.5
     yalign 0.5
 
 style say_dialogue:
     properties gui.text_properties("dialogue")
 
-    xpos gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
+    xpos 90
+    xsize 1420
+    ypos 72
 
     adjust_spacing False
 
