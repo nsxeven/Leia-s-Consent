@@ -80,8 +80,8 @@ transform leia_hair_idle:
 
 layeredimage leia_prologue_party_layers:
 
-    always "images/sprites/leia/prologue_party/Base_PrologueParty.png"
-    always "images/sprites/leia/prologue_party/Chest_PrologueParty.png" at leia_chest_breathe
+    always "images/sprites/leia/PRO/Base_PrologueParty.png"
+    always "images/sprites/leia/PRO/Chest_PrologueParty.png" at leia_chest_breathe
 
     group expression:
         attribute neutral default:
@@ -146,8 +146,8 @@ image leia_prologue_party ahegao = Fixed(lc_sprite_silhouette("leia_prologue_par
 # Uses the same production rig: Base -> Chest -> Expression -> Hair.
 layeredimage leia_casual_layers:
 
-    always "images/sprites/leia/prologue_party/Base_Casual.png"
-    always "images/sprites/leia/prologue_party/Chest_Casual.png" at leia_chest_breathe
+    always "images/sprites/leia/PRO/Base_Casual.png"
+    always "images/sprites/leia/PRO/Chest_Casual.png" at leia_chest_breathe
 
     group expression:
         attribute neutral default:
@@ -185,7 +185,7 @@ image leia_casual ahegao = Fixed(lc_sprite_silhouette("leia_casual_layers ahegao
 # 941x1672 envelope as the other production outfits.
 layeredimage leia_towel_layers:
 
-    always "images/sprites/leia/CH1/Base_Towel.png"
+    always "images/sprites/leia/Base_Nude.png"
     always "images/sprites/leia/CH1/Chest_Towel.png" at leia_chest_breathe
 
     group expression:
