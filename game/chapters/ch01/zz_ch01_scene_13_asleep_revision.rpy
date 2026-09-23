@@ -19,7 +19,6 @@ init 999 python:
 label ch01_scene_13_back_at_villa_asleep_revision:
 
     scene bg ch01_villa_night
-    show julian at ch01_julian_right
     with fade
 
     "When I parked, Leia didn't move."
@@ -41,7 +40,6 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     mc "Yeah. I'll get the door."
 
     $ enter_cinematic_mode()
-    hide julian
     scene cg ch01_julian_carry
     with dissolve
 
@@ -70,7 +68,6 @@ label ch01_scene_13_back_at_villa_asleep_revision:
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_night
-    show julian at ch01_julian_right
     with dissolve
 
     $ ch01_carry_brush_text = format_choice("ch01_carry_brush", "We're almost inside. Just keep going.")
@@ -144,7 +141,6 @@ label ch01_scene_13_back_at_villa_asleep_revision:
 
     scene bg ch01_villa_living_night
     show leia at ch01_leia_left
-    show julian at ch01_julian_right
     $ set_leia_sprite("p03", "neutral")
     with dissolve
 
