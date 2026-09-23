@@ -278,6 +278,8 @@ label prologue_start:
     mc "Because it's true."
 
     scene bg prologue_packing
+    show leia_casual smile at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     gf "Ready?"
 
@@ -285,21 +287,32 @@ label prologue_start:
         "Been ready.":
             $ set_story_value("prologue_departure_reply", "ready")
             mc "Been ready."
+            show leia_casual skeptical
+            with sprite_change
             gf "You were still packing ten minutes ago."
             mc "Emotionally ready."
+            show leia_casual smile
+            with sprite_change
 
         "I still think we're forgetting something.":
             $ set_story_value("prologue_departure_reply", "forgetting")
             mc "I still think we're forgetting something."
+            show leia_casual neutral
+            with sprite_change
             gf "If we are, we're buying it there."
             mc "That is an expensive philosophy."
+            show leia_casual smile
+            with sprite_change
 
         "Ask me when [friend_name] starts snoring on the plane.":
             $ set_story_value("prologue_departure_reply", "snoring")
             mc "Ask me when [friend_name] starts snoring on the plane."
+            show leia_casual smile
+            with sprite_change
             gf "I'm recording it this time."
 
 
+    hide leia_casual
     $ enter_cinematic_mode()
 
     scene cg prologue_departure
