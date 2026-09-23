@@ -40,37 +40,21 @@ image bg prologue_party = Composite(
     (30, 17), At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_center_sharp),
 )
 
-image cg prologue_party_arrival:
-    "images/cg/prologue/PRO_CG_PartyArrival_01.webp"
-    at prologue_fullscreen
+image cg prologue_party_arrival = At("images/cg/prologue/PRO_CG_PartyArrival_01.webp", prologue_fullscreen)
 
-image cg prologue_party_couch:
-    "images/cg/prologue/PRO_CG_PartyCouch_01.webp"
-    at prologue_fullscreen
+image cg prologue_party_couch = At("images/cg/prologue/PRO_CG_PartyCouch_01.webp", prologue_fullscreen)
 
-image cg prologue_first_kiss_01:
-    "images/cg/prologue/PRO_CG_FirstKiss_01.webp"
-    at prologue_fullscreen
+image cg prologue_first_kiss_01 = At("images/cg/prologue/PRO_CG_FirstKiss_01.webp", prologue_fullscreen)
 
-image cg prologue_first_kiss_02:
-    "images/cg/prologue/PRO_CG_FirstKiss_02.webp"
-    at prologue_fullscreen
+image cg prologue_first_kiss_02 = At("images/cg/prologue/PRO_CG_FirstKiss_02.webp", prologue_fullscreen)
 
-image cg prologue_first_kiss_03:
-    "images/cg/prologue/PRO_CG_FirstKiss_03.webp"
-    at prologue_fullscreen
+image cg prologue_first_kiss_03 = At("images/cg/prologue/PRO_CG_FirstKiss_03.webp", prologue_fullscreen)
 
-image cg prologue_present_stare:
-    "images/cg/prologue/PRO_CG_PackingBanter_01.webp"
-    at prologue_fullscreen
+image cg prologue_present_stare = At("images/cg/prologue/PRO_CG_PackingBanter_01.webp", prologue_fullscreen)
 
-image cg prologue_packing_banter:
-    "images/cg/prologue/PRO_CG_PackingBanter_02.webp"
-    at prologue_fullscreen
+image cg prologue_packing_banter = At("images/cg/prologue/PRO_CG_PackingBanter_02.webp", prologue_fullscreen)
 
-image cg prologue_departure:
-    "images/cg/prologue/PRO_CG_Departure_01.webp"
-    at prologue_fullscreen
+image cg prologue_departure = At("images/cg/prologue/PRO_CG_Departure_01.webp", prologue_fullscreen)
 
 # --- Standard VN sprite envelope ------------------------------------------\n# Entrance transforms. Use these only when a character actually enters the
 # composition, not for ordinary expression changes.
