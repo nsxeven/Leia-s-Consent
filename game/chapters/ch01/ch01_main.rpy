@@ -233,6 +233,11 @@ label ch01_scene_03_outfit_choice:
 
     "She caught one of the light curtains and pulled it across the window."
 
+    scene bg ch01_master_bedroom_curtains
+    with dissolve
+    show leia_towel neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
+
     gf "...Seriously?"
     mc "What?"
     gf "These barely cover anything."
@@ -256,8 +261,6 @@ label ch01_scene_03_outfit_choice:
 
     hide leia_towel
     with sprite_enter_exit
-    scene bg ch01_master_bedroom_curtains
-    with dissolve
 
     $ set_story_flag("ch01_first_outfit_choice_complete")
     $ set_story_flag("ch01_scene_03_complete")
