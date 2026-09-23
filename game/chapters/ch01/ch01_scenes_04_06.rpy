@@ -269,25 +269,19 @@ label ch01_scene_06_friendship_and_towel:
 
     "We both looked up."
 
-    show leia_towel neutral at prologue_sprite_enter_center, leia_body_idle
-    with sprite_enter_exit
+    $ enter_cinematic_mode()
+    scene cg ch01_towel_call_down
+    with dissolve
 
     "[girlfriend_name] stood in the open upstairs doorway with wet hair and a small towel wrapped around her body."
     "One hand held it closed. The other braced against the frame as she leaned out to find us."
     "From where she stood, she probably thought she was covered. From the pool below, the towel looked considerably shorter."
 
-    show leia_towel skeptical
-    with sprite_change
     gf "Dinner is at seven!"
     mc "What time is it?"
     friend "Six twenty-three."
-    show leia_towel pout
-    with sprite_change
     gf "Why are both of you still sitting there?"
 
-    hide leia_towel
-    with sprite_enter_exit
-    $ enter_cinematic_mode()
     scene cg ch01_towel_shift
     with dissolve
 
