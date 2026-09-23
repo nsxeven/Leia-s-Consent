@@ -49,6 +49,11 @@ label prologue_start:
     "The groups merged eventually. Not because of fate. Not because [friend_name] had a plan."
     "Mostly because somebody dragged two chairs over and suddenly everyone was talking over everyone else."
 
+    scene cg prologue_party_couch
+    with dissolve
+
+    "For a while, we all ended up squeezed around the same couch, talking over drinks and whoever happened to be loudest."
+
     scene bg prologue_party
     show leia_prologue_party neutral at prologue_sprite_enter_center, leia_body_idle
     with sprite_enter_exit
@@ -177,13 +182,22 @@ label prologue_start:
     gf "I know."
     "And then she moved closer anyway."
     hide leia_prologue_party
-    scene cg prologue_first_kiss
+    scene cg prologue_first_kiss_01
+    with dissolve
+
+    "She leaned toward me, cheeks burning, like she was still deciding whether this was actually happening."
+
+    scene cg prologue_first_kiss_02
     with dissolve
 
     "It was not smooth."
     "Our noses nearly collided. Somebody laughed before we'd even figured out the angle."
     friend "Oh my God, just kiss already."
     "[girlfriend_name] laughed."
+
+    scene cg prologue_first_kiss_03
+    with dissolve
+
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
     "The room cheered like we'd accomplished something."
