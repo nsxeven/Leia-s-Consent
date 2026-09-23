@@ -43,44 +43,36 @@ image bg prologue_party:
         at prologue_bg_center_sharp
 
 image cg prologue_party_arrival:
-    "images/cg/prologue/party_leiafriends01.webp"
-    xysize (1920, 1080)
-    fit "cover"
+    "images/cg/prologue/PRO_CG_PartyArrival_01.webp"
+    at prologue_fullscreen
 
-image bg prologue_packing:
-    contains:
-        "images/backgrounds/prologue/PRO_bedroom.webp"
-        at prologue_bg_edge_blur
-    contains:
-        "images/backgrounds/prologue/PRO_bedroom.webp"
-        at prologue_bg_center_sharp
+image cg prologue_party_couch:
+    "images/cg/prologue/PRO_CG_PartyCouch_01.webp"
+    at prologue_fullscreen
 
+image cg prologue_first_kiss_01:
+    "images/cg/prologue/PRO_CG_FirstKiss_01.webp"
+    at prologue_fullscreen
 
-# --- Missing full-screen story CG placeholders -----------------------------
+image cg prologue_first_kiss_02:
+    "images/cg/prologue/PRO_CG_FirstKiss_02.webp"
+    at prologue_fullscreen
 
-image cg prologue_first_kiss = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#583847"),
-    (90, 70), Text("CG P06\nFIRST KISS", size=52, color="#ffffff"),
-)
+image cg prologue_first_kiss_03:
+    "images/cg/prologue/PRO_CG_FirstKiss_03.webp"
+    at prologue_fullscreen
 
-image cg prologue_present_stare = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#403639"),
-    (90, 70), Text("CG P07\nPRESENT DAY — RYAN STARING AT LEIA WHILE PACKING", size=52, color="#ffffff"),
-)
+image cg prologue_present_stare:
+    "images/cg/prologue/PRO_CG_PackingBanter_01.webp"
+    at prologue_fullscreen
 
-image cg prologue_packing_banter = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#463a3d"),
-    (90, 70), Text("CG P08\nPACKING BANTER — SUITCASES + OUTFITS", size=52, color="#ffffff"),
-)
+image cg prologue_packing_banter:
+    "images/cg/prologue/PRO_CG_PackingBanter_02.webp"
+    at prologue_fullscreen
 
-image cg prologue_departure = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#322d34"),
-    (90, 70), Text("CG P09\nLEAVING FOR THE AIRPORT — THREE-PERSON TRIP BEGINS", size=52, color="#ffffff"),
-)
+image cg prologue_departure:
+    "images/cg/prologue/PRO_CG_Departure_01.webp"
+    at prologue_fullscreen
 
 # --- Standard VN sprite envelope ------------------------------------------\n# Entrance transforms. Use these only when a character actually enters the
 # composition, not for ordinary expression changes.
