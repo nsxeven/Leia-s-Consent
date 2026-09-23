@@ -65,6 +65,85 @@ label ch01_scene_30_end_day_one_day2_bridge:
         "Yesterday, Julian had simply been my friend."
         "By the end of the day, he'd started becoming Leia's friend too, and none of us had decided yet what that would mean."
 
+    # Ryan falls asleep with the day's towel incident still somewhere in the back of his mind.
+    # This is a dream, not a route lock: it combines the real accident with the
+    # earlier discovery that the bedroom's only curtains are sheer.
+    scene black
+    with fade
+
+    "At some point, I fell asleep."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_dream_towel_replay
+    with dissolve
+
+    "I was back by the pool."
+    "[girlfriend_name] stood upstairs again, wet hair over one shoulder and the same small towel wrapped around her."
+
+    gf "Dinner is at seven!"
+    friend "Six twenty-three."
+    gf "Why are both of you still sitting there?"
+
+    scene cg ch01_dream_towel_shift
+    with dissolve
+
+    "She stepped farther out. The towel shifted exactly the way I remembered."
+
+    mc "[girlfriend_name]—"
+
+    "Nothing came out."
+
+    "I tried again. My mouth moved, but there was no sound."
+    "She kept talking, completely unaware."
+
+    "The towel rode a little higher as she turned back toward the bedroom."
+
+    scene cg ch01_dream_towel_curtain
+    with dissolve
+
+    "Then she reached for the curtain and pulled it across the glass."
+
+    "For a second, relief washed through me."
+
+    "Then I remembered."
+
+    "{i}These barely cover anything.{/i}"
+
+    "The sheer fabric softened her outline. It did not hide it."
+
+    scene cg ch01_dream_towel_drop
+    with dissolve
+
+    "Behind the curtain, [girlfriend_name] relaxed."
+    "She thought she was alone now."
+
+    "Her hands moved to the towel."
+
+    "{i}[girlfriend_name].{/i}"
+
+    "Still no voice."
+
+    "The towel slipped from her hands."
+
+    scene black
+    with dissolve
+
+    $ exit_cinematic_mode()
+
+    "My eyes opened."
+
+    scene bg ch01_villa_bedroom_night
+    show leia at ch01_leia_left
+    $ set_leia_sprite("p01", "neutral")
+    with dissolve
+
+    "[girlfriend_name] was asleep beside me, breathing softly, exactly where she'd been."
+
+    "I stared at the ceiling for a moment."
+
+    "{i}What the hell was that?{/i}"
+
+    $ set_story_flag("ch01_day1_towel_dream_seen")
     $ set_story_flag("ch01_scene_30_complete")
     $ set_story_flag("ch01_day_01_complete")
     $ set_story_flag("ch01_scenes_14_30_complete")
