@@ -179,6 +179,80 @@ image leia_casual angry = Fixed(lc_sprite_silhouette("leia_casual_layers angry")
 image leia_casual ahegao = Fixed(lc_sprite_silhouette("leia_casual_layers ahegao"), xysize=(941, 1672))
 
 
+# Leia — Chapter One pool outfits.
+# Story mapping:
+#   pool_conservative -> BlueBikini
+#   pool_bolder       -> WhiteRuffle
+# Both retain the production Base -> Chest -> Expression -> Hair rig.
+layeredimage leia_blue_bikini_layers:
+
+    always "images/sprites/leia/CH1/Base_BlueBikini.png"
+    always "images/sprites/leia/CH1/Chest_BlueBikini.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_blue_bikini neutral = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers neutral"), xysize=(941, 1672))
+image leia_blue_bikini smile = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers smile"), xysize=(941, 1672))
+image leia_blue_bikini shy = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers shy"), xysize=(941, 1672))
+image leia_blue_bikini pout = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers pout"), xysize=(941, 1672))
+image leia_blue_bikini flustered = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers flustered"), xysize=(941, 1672))
+image leia_blue_bikini skeptical = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers skeptical"), xysize=(941, 1672))
+image leia_blue_bikini angry = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers angry"), xysize=(941, 1672))
+image leia_blue_bikini ahegao = Fixed(lc_sprite_silhouette("leia_blue_bikini_layers ahegao"), xysize=(941, 1672))
+
+layeredimage leia_white_ruffle_layers:
+
+    always "images/sprites/leia/CH1/Base_WhiteRuffle.png"
+    always "images/sprites/leia/CH1/Chest_WhiteRuffle.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_white_ruffle neutral = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers neutral"), xysize=(941, 1672))
+image leia_white_ruffle smile = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers smile"), xysize=(941, 1672))
+image leia_white_ruffle shy = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers shy"), xysize=(941, 1672))
+image leia_white_ruffle pout = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers pout"), xysize=(941, 1672))
+image leia_white_ruffle flustered = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers flustered"), xysize=(941, 1672))
+image leia_white_ruffle skeptical = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers skeptical"), xysize=(941, 1672))
+image leia_white_ruffle angry = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers angry"), xysize=(941, 1672))
+image leia_white_ruffle ahegao = Fixed(lc_sprite_silhouette("leia_white_ruffle_layers ahegao"), xysize=(941, 1672))
+
+
 # Leia — Chapter One towel outfit.
 # The towel/holding-hand artwork is a single animated chest layer over the nude
 # base, so it uses the same breathing, expression, hair, silhouette, and fixed
