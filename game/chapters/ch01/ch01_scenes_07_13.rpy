@@ -70,7 +70,6 @@ label ch01_scene_07_did_he_see:
     gf "That was a very obvious something."
     mc "You look amazing."
 
-    $ set_leia_expression("smile")
     gf "Better answer."
 
     scene bg ch01_villa_entry_evening
@@ -101,7 +100,6 @@ label ch01_scene_07_did_he_see:
     gf "...Okay."
     friend "You really don't have to worry about it."
 
-    $ set_leia_expression("smile")
     gf "Thanks."
     friend "Of course."
 
@@ -231,7 +229,6 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_bra_playful")
             $ set_story_value("ch01_bra_response", "playful_open")
             mc "If you're comfortable with it... that's kind of hot."
-            $ set_leia_expression("embarrassed")
             gf "[player_name]."
             mc "What? You asked."
             gf "I said my bra was falling off. I did not ask you to make it worse."
@@ -298,7 +295,6 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_stranger_proud")
             $ set_story_value("ch01_stranger_response", "proud")
             mc "Yeah. She looks incredible."
-            $ set_leia_expression("embarrassed")
             gf "Okay, you don't have to join in."
             mc "I agree with the man."
             gf "You're impossible."
@@ -315,7 +311,6 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_stranger_encourage")
             $ set_story_value("ch01_stranger_response", "encouraged_risk")
             mc "See? Told you you had nothing to worry about."
-            $ set_leia_expression("embarrassed")
             gf "That is not what I was worried about."
             mc "Still looked good."
             gf "You're enjoying this."
@@ -507,7 +502,6 @@ label ch01_scene_11b_female_friend:
             $ apply_choice("ch01_friend_tease")
             $ set_story_value("ch01_female_friend_response", "teased_jealousy")
             mc "Wait. Are you jealous?"
-            $ set_leia_expression("embarrassed")
             gf "No."
             mc "That was fast."
             gf "I'm not jealous. I'm curious."
