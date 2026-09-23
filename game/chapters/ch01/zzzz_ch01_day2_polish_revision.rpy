@@ -74,8 +74,6 @@ label ch01_day2_scene_08_maya_julian_v2:
 label ch01_day2_scene_13_girls_upstairs_v2:
 
     scene bg ch01_master_bedroom
-    show leia at ch01_d2_leia_left
-    $ set_leia_sprite("p03", "neutral")
     with dissolve
 
     "Upstairs, Leia laid both bikinis across the bed while Maya changed beside her."
