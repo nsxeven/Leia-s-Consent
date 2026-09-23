@@ -97,20 +97,8 @@ transform prologue_sprite_enter_right:
     parallel:
         easeout 0.30 xoffset 0
 
-# --- Temporary Julian sprite ----------------------------------------------
-
-image julian_placeholder = Composite(
-    (520, 900),
-    (175, 70), Transform(Solid("#d3a98e"), xysize=(165, 165)),
-    (150, 225), Transform(Solid("#586273"), xysize=(215, 430)),
-    (115, 285), Transform(Solid("#586273"), xysize=(55, 325)),
-    (350, 285), Transform(Solid("#586273"), xysize=(55, 325)),
-    (170, 645), Transform(Solid("#3e4550"), xysize=(70, 220)),
-    (275, 645), Transform(Solid("#3e4550"), xysize=(70, 220)),
-    (145, 25), Text("JULIAN\nPLACEHOLDER", size=28, color="#ffffff", text_align=0.5),
-)
-
-image julian = "julian_placeholder"
+# Julian intentionally has no temporary sprite fallback. Final Julian sprite
+# assets will be introduced only after they are approved.
 
 transform prologue_leia_left:
     xalign 0.18
