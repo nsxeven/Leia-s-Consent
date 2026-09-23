@@ -123,8 +123,9 @@ label prologue_start:
     "I didn't think much of it."
     "Apparently, she did."
 
-    show leia_prologue_party neutral
-    with sprite_change
+    scene bg prologue_truthordare
+    show leia_prologue_party neutral at prologue_sprite_enter_center, leia_body_idle
+    with dissolve
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
     "Most of the dares were harmless."
@@ -202,7 +203,7 @@ label prologue_start:
     "Brief. Warm. Just awkward enough to be real."
     "The room cheered like we'd accomplished something."
 
-    scene bg prologue_party
+    scene bg prologue_truthordare
     show leia_prologue_party smile at prologue_sprite_enter_center, leia_body_idle
     with sprite_enter_exit
 
