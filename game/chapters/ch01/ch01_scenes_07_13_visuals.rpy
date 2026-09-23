@@ -34,13 +34,7 @@ image bg ch01_shop_night = At("images/backgrounds/chapter 1/ch01_conveniencestor
 
 image bg ch01_villa_night = At("images/backgrounds/villa/villa_frontdoor_night.webp", prologue_bg_blur)
 
-image bg ch01_villa_living_night = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#282532"),
-    (0, 710), Transform(Solid("#66584f"), xysize=(1920, 370)),
-    (1200, 120), Transform(Solid("#4d7283"), xysize=(560, 500)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-17 — VILLA LIVING ROOM / NIGHT", size=46, color="#ffffff"),
-)
+image bg ch01_villa_living_night = At("images/backgrounds/villa/villa_living_night.webp", prologue_bg_blur)
 
 image cg ch01_drive_to_dinner = Composite(
     (1920, 1080),
