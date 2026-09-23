@@ -379,7 +379,6 @@ label ch01_day2_scene_05_meet_maya:
 
     scene bg ch01_d2_cafe
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p01", "neutral")
     with fade
@@ -502,7 +501,6 @@ label ch01_day2_scene_09_photo_walk:
 
     scene bg ch01_d2_island_day
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
     with dissolve
@@ -539,7 +537,6 @@ label ch01_day2_scene_10_leia_maya_photo:
     $ exit_cinematic_mode()
     scene bg ch01_d2_island_day
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
 
@@ -614,7 +611,6 @@ label ch01_day2_scene_13_girls_upstairs:
 
     scene bg ch01_master_bedroom
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_right
     $ set_leia_sprite("p03", "neutral")
     with dissolve
 
@@ -668,7 +664,6 @@ label ch01_day2_scene_15_pool_group:
 
     scene bg ch01_pool_day
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
     with fade
