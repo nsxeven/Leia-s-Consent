@@ -19,8 +19,7 @@ init 999 python:
 label ch01_scene_30_end_day_one_day2_bridge:
 
     scene bg ch01_villa_bedroom_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p01", "neutral")
+    show leia p01 neutral at ch01_leia_left
     with fade
 
     "We switched off the downstairs lights and finally headed upstairs."
