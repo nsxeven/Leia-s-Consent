@@ -14,23 +14,23 @@ transform phone_notification_slide:
     parallel:
         easeout 0.30 yoffset 28
     parallel:
-        linear 0.22 alpha 1.0
+        linear 0.45 alpha 1.0
     pause 3.2
     parallel:
         easein 0.25 yoffset -170
     parallel:
-        linear 0.20 alpha 0.0
+        linear 0.40 alpha 0.0
 
 transform lc_popup_soft_fade:
     alpha 0.0
-    linear 0.20 alpha 1.0
+    linear 0.45 alpha 1.0
 
 transform lc_popup_soft_fade_hide:
     on show:
         alpha 0.0
-        linear 0.20 alpha 1.0
+        linear 0.45 alpha 1.0
     on hide:
-        linear 0.20 alpha 0.0
+        linear 0.40 alpha 0.0
 
 
 # Override the original quick-access overlay. The Phone is absent before its
