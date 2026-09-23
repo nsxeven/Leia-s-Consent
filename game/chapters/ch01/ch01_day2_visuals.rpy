@@ -73,8 +73,6 @@ image cg ch01_d2_julian_underwear_reveal = Composite(
     (90, 70), Text("CG PLACEHOLDER\nNEVER HAVE I EVER — JULIAN DOWN TO UNDERWEAR\nREACTIONS CARRY THE REVEAL", size=50, color="#ffffff"),
 )
 
-# Maya has no temporary sprite fallback. Until final Maya sprite assets exist,
-# dialogue remains sprite-free rather than displaying placeholder character art.
 
 transform ch01_d2_leia_left:
     xalign 0.16
