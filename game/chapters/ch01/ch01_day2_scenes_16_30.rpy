@@ -22,7 +22,6 @@ label ch01_day2_scene_16_forced_split:
 
         hide leia
         hide julian
-        show maya at ch01_d2_maya_center
         with dissolve
 
         maya "Does she hate me?"
@@ -78,7 +77,6 @@ label ch01_day2_scene_17_pool_return:
     $ d2_split = get_story_value("ch01_d2_split")
 
     if d2_split == "ryan_maya_leia_julian":
-        show maya at ch01_d2_maya_center
         show julian at ch01_d2_julian_right
         with dissolve
 
@@ -94,7 +92,6 @@ label ch01_day2_scene_17_pool_return:
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
-        show maya at ch01_d2_maya_center
         show julian at ch01_d2_julian_right
         with dissolve
 
@@ -124,7 +121,6 @@ label ch01_day2_scene_17_pool_return:
 
     elif d2_split == "ryan_julian_leia_maya":
         show leia at ch01_d2_leia_left
-        show maya at ch01_d2_maya_center
         show julian at ch01_d2_julian_right
         $ set_leia_sprite("p03", "embarrassed")
         with dissolve
@@ -141,7 +137,6 @@ label ch01_day2_scene_17_pool_return:
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
         show leia at ch01_d2_leia_left
-        show maya at ch01_d2_maya_center
         show julian at ch01_d2_julian_right
         $ set_leia_sprite("p03", "embarrassed")
 
@@ -157,7 +152,6 @@ label ch01_day2_scene_17_pool_return:
 
     else:
         show leia at ch01_d2_leia_left
-        show maya at ch01_d2_maya_center
         show julian at ch01_d2_julian_right
         $ set_leia_sprite("p01", "smile")
         with dissolve
@@ -232,7 +226,6 @@ label ch01_day2_scene_19_change_for_evening:
 
     scene bg ch01_master_bedroom
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_right
     $ set_leia_sprite("p01", "smile")
     with dissolve
 
@@ -289,7 +282,6 @@ label ch01_day2_scene_21_pre_sunset:
 
     scene bg ch01_d2_sunset
     show leia at ch01_leia_left
-    show maya at ch01_d2_maya_right
     $ set_leia_sprite("p01", "smile")
     with fade
 
@@ -308,7 +300,6 @@ label ch01_day2_scene_21_pre_sunset:
 
 label ch01_day2_scene_22_sunset_couple:
 
-    hide maya
     show leia at ch01_leia_left
     $ set_leia_sprite("p01", "neutral")
     with dissolve
@@ -378,7 +369,6 @@ label ch01_day2_scene_23_dinner_reach:
 
     scene bg ch01_d2_dinner
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p02", "smile")
     with fade
@@ -410,7 +400,6 @@ label ch01_day2_scene_23_dinner_reach:
         $ exit_cinematic_mode()
         scene bg ch01_d2_dinner
         show leia at ch01_d2_leia_left
-        show maya at ch01_d2_maya_center
         show julian at ch01_d2_julian_right
         $ set_leia_sprite("p02", "teasing")
 
@@ -458,7 +447,6 @@ label ch01_day2_scene_25_maya_stays:
 
     scene bg ch01_d2_game_night
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p01", "smile")
     with fade
@@ -579,7 +567,6 @@ label ch01_day2_scene_28_julian_strips:
     $ exit_cinematic_mode()
     scene bg ch01_d2_game_night
     show leia at ch01_d2_leia_left
-    show maya at ch01_d2_maya_center
     show julian at ch01_d2_julian_right
     $ set_leia_sprite("p03", "embarrassed")
 
