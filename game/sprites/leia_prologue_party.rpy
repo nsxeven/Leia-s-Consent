@@ -177,3 +177,42 @@ image leia_casual flustered = Fixed(lc_sprite_silhouette("leia_casual_layers flu
 image leia_casual skeptical = Fixed(lc_sprite_silhouette("leia_casual_layers skeptical"), xysize=(941, 1672))
 image leia_casual angry = Fixed(lc_sprite_silhouette("leia_casual_layers angry"), xysize=(941, 1672))
 image leia_casual ahegao = Fixed(lc_sprite_silhouette("leia_casual_layers ahegao"), xysize=(941, 1672))
+
+
+# Leia — Chapter One towel outfit.
+# The towel/holding-hand artwork is a single animated chest layer over the nude
+# base, so it uses the same breathing, expression, hair, silhouette, and fixed
+# 941x1672 envelope as the other production outfits.
+layeredimage leia_towel_layers:
+
+    always "images/sprites/leia/CH1/Base_Towel.png"
+    always "images/sprites/leia/CH1/Chest_Towel.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_towel neutral = Fixed(lc_sprite_silhouette("leia_towel_layers neutral"), xysize=(941, 1672))
+image leia_towel smile = Fixed(lc_sprite_silhouette("leia_towel_layers smile"), xysize=(941, 1672))
+image leia_towel shy = Fixed(lc_sprite_silhouette("leia_towel_layers shy"), xysize=(941, 1672))
+image leia_towel pout = Fixed(lc_sprite_silhouette("leia_towel_layers pout"), xysize=(941, 1672))
+image leia_towel flustered = Fixed(lc_sprite_silhouette("leia_towel_layers flustered"), xysize=(941, 1672))
+image leia_towel skeptical = Fixed(lc_sprite_silhouette("leia_towel_layers skeptical"), xysize=(941, 1672))
+image leia_towel angry = Fixed(lc_sprite_silhouette("leia_towel_layers angry"), xysize=(941, 1672))
+image leia_towel ahegao = Fixed(lc_sprite_silhouette("leia_towel_layers ahegao"), xysize=(941, 1672))

@@ -214,9 +214,10 @@ label ch01_scene_03_outfit_choice:
     hide leia_casual
     with sprite_enter_exit
 
-    $ enter_cinematic_mode()
-    scene cg ch01_pre_pool_towel_curtains
+    scene bg ch01_master_bedroom
     with dissolve
+    show leia_towel neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "A moment later, the bathroom door opened again."
     "[girlfriend_name] stepped back into the bedroom with a towel wrapped around herself and crossed to the glass wall."
@@ -240,11 +241,14 @@ label ch01_scene_03_outfit_choice:
     mc "I was just thinking you look good."
     gf "I'm wearing a towel."
     mc "Exactly."
+    show leia_towel smile
+    with sprite_change
     gf "Pervert."
 
     "She was smiling when she turned back toward the bathroom."
 
-    $ exit_cinematic_mode()
+    hide leia_towel
+    with sprite_enter_exit
     scene bg ch01_master_bedroom_curtains
     with dissolve
 
