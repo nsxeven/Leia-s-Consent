@@ -61,8 +61,6 @@ label ch01_scene_07_did_he_see:
     $ grant_story_outfit("resort_dinner_dress", equip=True)
     $ set_story_value("ch01_dinner_bra_state", "sticky_bra_on")
     $ set_story_value("ch01_dinner_dress_state", "normal")
-    $ set_leia_sprite("p03", "embarrassed")
-    show leia at ch01_leia_left
     with dissolve
 
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
@@ -75,14 +73,11 @@ label ch01_scene_07_did_he_see:
     $ set_leia_expression("smile")
     gf "Better answer."
 
-    hide leia
     scene bg ch01_villa_entry_evening
     with dissolve
 
     "Julian was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
 
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
     friend "Ready?"
@@ -120,7 +115,6 @@ label ch01_scene_07_did_he_see:
 
     $ set_story_flag("ch01_scene_07_complete")
 
-    hide leia
 
     jump ch01_scene_08_drive_to_dinner
 
@@ -153,8 +147,6 @@ label ch01_scene_08_drive_to_dinner:
     $ exit_cinematic_mode()
 
     scene bg ch01_car_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     gf "Okay, actual question. If we had to listen to one artist for the rest of this trip—"
@@ -168,7 +160,6 @@ label ch01_scene_08_drive_to_dinner:
     $ set_story_flag("ch01_driver_baseline_established")
     $ set_story_flag("ch01_scene_08_complete")
 
-    hide leia
 
     jump ch01_scene_09_dinner
 
@@ -176,8 +167,6 @@ label ch01_scene_08_drive_to_dinner:
 label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with fade
 
     "Dinner started exactly the way I expected: Leia taking photos of the food, Julian pretending to object, and me being ordered to move my glass out of every shot."
@@ -201,7 +190,6 @@ label ch01_scene_09_dinner:
     "Then Leia reached for her drink while still looking at Julian."
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_dinner_spill
     with dissolve
 
@@ -216,8 +204,6 @@ label ch01_scene_09_dinner:
 
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
     "A few minutes later, Leia leaned close to me while Julian was distracted by the menu."
@@ -261,7 +247,6 @@ label ch01_scene_09_dinner:
     gf "I'm going to the bathroom. If Julian asks, I spilled a drink. That's all he needs to know."
     mc "Understood."
 
-    hide leia
     "Leia disappeared toward the restroom with her handbag tucked under one arm."
 
     $ set_story_value("ch01_dinner_bra_state", "removed_hidden_in_bag")
@@ -284,8 +269,6 @@ label ch01_scene_09_dinner:
 
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     "She caught me looking."
@@ -347,8 +330,6 @@ label ch01_scene_09_dinner:
 label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     "We should have left after dessert. Instead, Julian noticed the bar."
@@ -393,8 +374,6 @@ label ch01_scene_10_after_dinner_drinks:
 label ch01_scene_11_walk_and_catch:
 
     scene bg ch01_island_walk_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with fade
 
     "The shop was only a short walk away. Leia still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
@@ -420,7 +399,6 @@ label ch01_scene_11_walk_and_catch:
     "She tried to walk backward while doing it."
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_trip_catch
     with dissolve
 
@@ -441,8 +419,6 @@ label ch01_scene_11_walk_and_catch:
 
     $ exit_cinematic_mode()
     scene bg ch01_island_walk_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "embarrassed")
     with dissolve
 
     "I had seen enough from the corner of my eye to understand why both of them suddenly looked awkward."
@@ -492,8 +468,6 @@ label ch01_scene_11_walk_and_catch:
 label ch01_scene_11b_female_friend:
 
     scene bg ch01_island_walk_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "neutral")
 
     gf "Who was that?"
     mc "A friend from back home. She saw the posts and realised we're both here."
@@ -559,8 +533,6 @@ label ch01_scene_11b_female_friend:
 label ch01_scene_12_shop_and_drive_back:
 
     scene bg ch01_shop_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     "The shop reset the mood almost immediately."
@@ -649,8 +621,6 @@ label ch01_scene_12_shop_and_drive_back:
 label ch01_scene_13_back_at_villa:
 
     scene bg ch01_villa_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "neutral")
     with fade
 
     "Leia woke when I parked, but only technically."
@@ -669,7 +639,6 @@ label ch01_scene_13_back_at_villa:
     mc "Please. Before she destroys what remains of my dignity."
 
     $ enter_cinematic_mode()
-    hide leia
     scene cg ch01_julian_carry
     with dissolve
 
@@ -696,8 +665,6 @@ label ch01_scene_13_back_at_villa:
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_night
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p03", "neutral")
     with dissolve
 
     $ ch01_carry_brush_text = format_choice("ch01_carry_brush", "We're almost inside. Just keep going.")
