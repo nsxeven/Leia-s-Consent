@@ -5,6 +5,9 @@ image bg ch01_pool_day = At("images/backgrounds/villa/villa_pool_day.webp", prol
 
 image bg ch01_pool_lounge = At("images/backgrounds/chapter 1/ch01_villa_pool_upstairs.webp", prologue_bg_blur)
 
+image cg ch01_sunscreen_white = At("images/cg/ch01/CH1D1_CG_Sunscreen_White_01.webp", prologue_fullscreen)
+image cg ch01_sunscreen_blue = At("images/cg/ch01/CH1D1_CG_Sunscreen_Blue_01.webp", prologue_fullscreen)
+
 image cg ch01_pool_hand_pull_white = At("images/cg/ch01/CH1D1_CG_PoolHandPull_White_01.webp", prologue_fullscreen)
 image cg ch01_pool_hand_pull_blue = At("images/cg/ch01/CH1D1_CG_PoolHandPull_Blue_01.webp", prologue_fullscreen)
 
