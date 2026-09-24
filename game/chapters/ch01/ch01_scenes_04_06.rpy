@@ -53,6 +53,14 @@ label ch01_scene_04_pool_arrival:
     gf "Jealous?"
     friend "Of the pool waiting while you flirt? Extremely."
 
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_blue_bikini
+        scene cg ch01_sunscreen_blue
+    else:
+        hide leia_white_ruffle
+        scene cg ch01_sunscreen_white
+    with dissolve
+
     "[girlfriend_name] dropped a bottle of sunscreen into my hand and turned her back to me."
 
     gf "Back."
