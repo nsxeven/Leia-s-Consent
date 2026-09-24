@@ -234,10 +234,17 @@ label ch01_scene_03_outfit_choice:
     "A moment later, the bathroom door opened again."
     "[girlfriend_name] stepped back into the bedroom with a towel wrapped around herself and crossed to the glass wall."
 
+    hide leia_towel
+    with sprite_enter_exit
+    $ enter_cinematic_mode()
+    scene cg ch01_bedroom_window
+    with dissolve
+
     gf "Wait. I'm definitely closing these first."
 
     "She caught one of the light curtains and pulled it across the window."
 
+    $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
     with dissolve
     show leia_towel neutral at prologue_sprite_enter_center, leia_body_idle
