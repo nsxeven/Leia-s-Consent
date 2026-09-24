@@ -77,17 +77,15 @@ label ch01_scene_02_villa:
     friend "The listing said 'intimate.'"
     mc "Compared to what? An airport?"
 
-    scene bg ch01_villa_living
+    $ enter_cinematic_mode()
+    scene cg ch01_villa_arrival
     with dissolve
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
-    with sprite_enter_exit
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
-    show leia_casual smile
-    with sprite_change
     gf "Look at that view."
     "Glass, pale wood, soft furniture—everything looked expensive without trying to announce it."
 
+    $ exit_cinematic_mode()
     scene bg ch01_villa_corridor
     with dissolve
     show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
