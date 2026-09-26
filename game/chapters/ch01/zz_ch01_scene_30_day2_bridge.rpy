@@ -109,19 +109,34 @@ label ch01_scene_30_end_day_one_day2_bridge:
 
     "The sheer fabric softened her outline. It did not hide it."
 
-    scene cg ch01_dream_towel_drop
+    scene cg ch01_dream_stranger_behind
     with dissolve
 
-    "Behind the curtain, [girlfriend_name] relaxed."
-    "She thought she was alone now."
+    "Behind the sheer curtain, [girlfriend_name] turned away from the window."
+    "Someone was standing behind her."
+    "The man from dinner."
 
-    "Her hands moved to the towel."
+    "There was no door opening. No footsteps. One moment she was alone; the next he was simply there."
 
     "{i}[girlfriend_name].{/i}"
 
     "Still no voice."
 
-    "The towel slipped from her hands."
+    scene cg ch01_dream_stranger_look
+    with dissolve
+
+    "Her eyes dropped immediately, following the same path they had at dinner."
+    "This time, she didn't correct herself."
+
+    "I tried to call her name again."
+    "Nothing."
+
+    scene cg ch01_dream_stranger_reach
+    with dissolve
+
+    "She stepped closer."
+    "Slowly, almost experimentally, she reached toward him."
+    "Her hand disappeared between their silhouettes—"
 
     scene black
     with dissolve

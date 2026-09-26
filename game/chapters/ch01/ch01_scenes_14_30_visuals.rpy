@@ -56,8 +56,20 @@ image cg ch01_dream_towel_curtain = Composite(
     (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-03 — SHEER CURTAIN DRAWN\nLEIA THINKS SHE HAS PRIVACY", size=50, color="#ffffff"),
 )
 
-image cg ch01_dream_towel_drop = Composite(
+image cg ch01_dream_stranger_behind = Composite(
     (1920, 1080),
     (0, 0), Solid("#30323d"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-04 — SILHOUETTE BEHIND SHEER\nTOWEL DROPS / CUT BEFORE EXPLICIT DETAIL", size=50, color="#ffffff"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-04 — IMPOSSIBLE APPEARANCE\nDINNER STRANGER BEHIND LEIA / BOTH SEEN THROUGH SHEER", size=50, color="#ffffff"),
+)
+
+image cg ch01_dream_stranger_look = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#34313d"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-05 — DINNER MEMORY DISTORTED\nLEIA'S GAZE DROPS / SHE DOES NOT LOOK AWAY", size=50, color="#ffffff"),
+)
+
+image cg ch01_dream_stranger_reach = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#2e3039"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-06 — DREAM ESCALATION\nLEIA REACHES TOWARD HIM / CUT TO BLACK", size=50, color="#ffffff"),
 )
