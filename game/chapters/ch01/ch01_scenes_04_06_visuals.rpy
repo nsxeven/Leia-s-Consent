@@ -17,17 +17,9 @@ image cg ch01_photo_group = Composite(
     (90, 70), Text("CG PLACEHOLDER\nCH01-PHOTO-00 — TRIO HOLIDAY PHOTO", size=52, color="#ffffff"),
 )
 
-image cg ch01_photo_awkward_a = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#3f7794"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-PHOTO-01-A — AWKWARD SOLO POSE\nCLASSIC SWIMWEAR", size=52, color="#ffffff"),
-)
+image cg ch01_photo_awkward_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_01.webp", prologue_fullscreen)
 
-image cg ch01_photo_awkward_b = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#9a526a"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-PHOTO-01-B — AWKWARD SOLO POSE\nBOLDER SWIMWEAR", size=52, color="#ffffff"),
-)
+image cg ch01_photo_awkward_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_01.webp", prologue_fullscreen)
 
 image cg ch01_photo_support_a = Composite(
     (1920, 1080),
