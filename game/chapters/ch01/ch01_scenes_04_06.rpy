@@ -125,7 +125,9 @@ label ch01_scene_05_photography:
         scene cg ch01_photo_awkward_a
     with dissolve
 
-    # Every saved Capture photograph gets the same quick shutter-flash reveal.
+    "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
+
+    # The shutter fires only after the setup CG has had a full dialogue beat.
     scene white
     with Dissolve(0.06)
     pause 0.04
@@ -135,8 +137,6 @@ label ch01_scene_05_photography:
         scene cg ch01_photo_capture_01_a
     with Dissolve(0.08)
     $ set_story_value("ch01_pool_capture_count", 1)
-
-    "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
     friend "Relax your shoulders."
     gf "They are relaxed."
