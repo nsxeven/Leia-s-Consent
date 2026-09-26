@@ -185,24 +185,63 @@ label ch01_scene_09_dinner:
     "She laughed hard enough to lean forward over the table, and Julian laughed because she was laughing."
     "There was nothing strange about it. If anything, I was glad they were finally getting comfortable around each other."
 
-    "Then Leia reached for her drink while still looking at Julian."
+    "Leia lifted her phone and looked between the three of us."
+
+    gf "We still don't have a proper dinner photo."
+    friend "You have approximately four hundred photos from today."
+    gf "Of food and the pool. I want one of us."
+    mc "There are three of us. That's what selfies are for."
+    gf "No. I want one where nobody's arm looks six feet long."
+
+    "She stood and glanced around for someone to ask."
+    "At exactly the wrong moment, a tall, broad-shouldered guest in fitted white shorts stepped past our table with a drink in one hand."
+    "Leia turned straight into him."
 
     $ enter_cinematic_mode()
     scene cg ch01_dinner_spill
     with dissolve
 
-    "Her fingers caught the glass badly. Cold liquid tipped across the front of her dress before any of us could stop it."
+    "The collision sent most of his drink across the front of Leia's dress and the rest down his shorts."
 
-    gf "Oh, shit."
-    friend "Napkins."
-    mc "Here."
+    gf "Oh my God—I'm so sorry."
+    stranger "No, that was me. Are you okay?"
 
-    "The three of us attacked the spill with enough napkins to alarm the waiter."
-    "Most of the drink came off the fabric. The problem was what had gotten underneath it."
+    "He grabbed a stack of napkins from the nearest table and offered them to her before looking down at the damage to himself."
+    "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more than he probably intended—hard to miss."
+    "Leia followed his glance downward."
+    "For a beat, she forgot to look away."
+
+    "Then her eyes came back up."
+    "A second later they dipped again, quick enough that she might have hoped nobody noticed."
+
+    mc "[girlfriend_name]."
+    gf "What?"
+    mc "Your dress."
+
+    "She looked down at herself and whatever she'd been thinking vanished immediately."
+    "The front of her dress was soaked through."
+
+    gf "Shit."
+    stranger "Seriously, I'm sorry. Can I get you another drink? Or—"
+    gf "No, no. It's okay. I walked into you."
+    stranger "Then we're both terrible at walking."
+
+    "That finally made her laugh. He apologized once more, accepted that nobody was injured, and continued toward his own table with considerably less dignity than he'd arrived with."
+
+    $ set_story_flag("ch01_dinner_stranger_collision")
+    $ set_story_flag("ch01_leia_stranger_second_glance")
 
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
+
+    "Julian pushed the remaining napkins across the table without commenting on where Leia had been looking."
+    friend "Successful photo mission?"
+    gf "Not one word."
+    mc "We didn't even get the photo."
+    gf "I hate both of you."
+
+    "Most of the drink came off the fabric. The problem was what had gotten underneath it."
 
     "A few minutes later, Leia leaned close to me while Julian was distracted by the menu."
 
@@ -284,7 +323,13 @@ label ch01_scene_09_dinner:
 
     gf "Oh. Thank you."
 
-    "He gave her a polite nod and kept walking. Nothing dramatic. Just enough attention to make Leia glance down at herself and then at me."
+    "He gave her a polite nod and kept walking. Nothing dramatic. Leia watched him go for half a second, then glanced down at herself and back at me."
+
+    gf "Why is everyone looking at me today?"
+    mc "Today?"
+    gf "What does that mean?"
+    mc "You just normally don't notice."
+    "She looked at me as if deciding whether that was a compliment or a problem."
 
     $ ch01_stranger_proud_text = format_choice("ch01_stranger_proud", "Yeah. She looks incredible.")
     $ ch01_stranger_territorial_text = format_choice("ch01_stranger_territorial", "Thanks. We've got it from here.")
