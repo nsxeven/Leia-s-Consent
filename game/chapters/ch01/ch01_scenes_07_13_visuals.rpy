@@ -45,7 +45,7 @@ image cg ch01_drive_to_dinner = Composite(
 image cg ch01_dinner_spill = Composite(
     (1920, 1080),
     (0, 0), Solid("#744b57"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-01 — DRINK SPILL\nDRESS WET / STICKY BRA COMPROMISED", size=52, color="#ffffff"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-01 — STRANGER COLLISION\nBOTH OUTFITS WET / LEIA DRESS + STICKY BRA COMPROMISED", size=52, color="#ffffff"),
 )
 
 image cg ch01_dinner_return_braless = Composite(
