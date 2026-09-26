@@ -62,6 +62,6 @@ image cg ch01_towel_realization = At("images/cg/ch01/CH1D1_CG_TowelRealization_0
 image cg ch01_towel_silhouette = Composite(
     (1920, 1080),
     (0, 0), Solid("#615764"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-TOWEL-04 — FLEETING CURTAIN SILHOUETTE\nHEAVY PRIVACY LAYER CLOSES", size=52, color="#ffffff"),
+    (90, 70), Text("CG PLACEHOLDER\nCH01-TOWEL-04 — FLEETING CURTAIN SILHOUETTE\nSINGLE SHEER CURTAIN / LEIA RETREATS FROM GLASS", size=52, color="#ffffff"),
 )
 
