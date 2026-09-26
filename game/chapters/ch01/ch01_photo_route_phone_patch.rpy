@@ -12,113 +12,40 @@
 
 init 50 python:
 
-    def ch01_pool_bonus_photo_asset():
-        """Return the extra solo-photo asset earned only on the confident route."""
-        if get_story_value("ch01_photo_outcome") != "confident":
-            return None
-
-        pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
-        suffix = "b" if pool_outfit == "pool_bolder" else "a"
-        return "ch01_photo_more_second_{}".format(suffix)
+    def ch01_pool_capture_assets():
+        """Return the actual saved Capture photos earned during Scene 5."""
+        outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
+        suffix = "b" if outfit == "pool_bolder" else "a"
+        count = int(get_story_value("ch01_pool_capture_count", 1) or 1)
+        count = max(1, min(3, count))
+        return ["ch01_photo_capture_{:02d}_{}".format(i, suffix) for i in range(1, count + 1)]
 
 
     def ch01_share_pool_photos_to_trip_group():
-        """Share exactly the pool photos that exist on the selected Scene 5 route."""
+        """Julian sends every earned Capture; attachments persist in Photos."""
         if has_story_flag("ch01_pool_photos_shared_to_group"):
             return None
 
-        selected_photo = get_story_value(
-            "ch01_selected_photo_asset",
-            "ch01_photo_group",
-        )
-        bonus_photo = ch01_pool_bonus_photo_asset()
-
-        # The shared group photo always exists.
-        # On branches with solo photos, keep this first message quiet and put
-        # the single notification on the final earned solo attachment.
-        if selected_photo != "ch01_photo_group":
+        assets = ch01_pool_capture_assets()
+        for index, asset_id in enumerate(assets):
+            final = index == len(assets) - 1
             phone_add_message(
                 "group",
                 "julian",
-                text="",
-                message_id="ch01_trip_group_pool_photo_group",
-                attachment_id="ch01_photo_group",
-                attachment_label="Pool photo — the three of us",
+                text=("Am I the best photographer or what?" if final else ""),
+                message_id="ch01_trip_group_pool_capture_{:02d}".format(index + 1),
+                attachment_id=asset_id,
+                attachment_label="Leia pool photo {:02d}".format(index + 1),
                 mark_unread=True,
-                notify=False,
-            )
-
-            phone_add_message(
-                "group",
-                "julian",
-                text=("" if bonus_photo else "Am I the best photographer or what?"),
-                message_id="ch01_trip_group_pool_photo_favourite",
-                attachment_id=selected_photo,
-                attachment_label="Leia's favourite pool photo",
-                mark_unread=True,
-                notify=(bonus_photo is None),
+                notify=final,
                 notification_title="Trip Group",
+                save_attachment=True,
             )
 
-            # Only the confident route earned this additional shot because Leia
-            # explicitly asked for another photo after the first directed pose.
-            if bonus_photo:
-                phone_add_message(
-                    "group",
-                    "julian",
-                    text="Am I the best photographer or what?",
-                    message_id="ch01_trip_group_pool_photo_bonus",
-                    attachment_id=bonus_photo,
-                    attachment_label="Leia's second pool favourite",
-                    mark_unread=True,
-                    notify=True,
-                    notification_title="Trip Group",
-                )
-                set_story_value("ch01_pool_phone_solo_photo_count", 2)
-            else:
-                set_story_value("ch01_pool_phone_solo_photo_count", 1)
-
-        else:
-            # If Leia stopped the solo shoot, only the group image exists.
-            phone_add_message(
-                "group",
-                "julian",
-                text="Am I the best photographer or what?",
-                message_id="ch01_trip_group_pool_photo_group",
-                attachment_id="ch01_photo_group",
-                attachment_label="Pool photo — the three of us",
-                mark_unread=True,
-                notify=True,
-                notification_title="Trip Group",
-            )
-            set_story_value("ch01_pool_phone_solo_photo_count", 0)
-
-        set_story_value(
-            "ch01_pool_phone_attachment_count",
-            1 + get_story_value("ch01_pool_phone_solo_photo_count", 0),
-        )
+        set_story_value("ch01_pool_phone_solo_photo_count", len(assets))
+        set_story_value("ch01_pool_phone_attachment_count", len(assets))
         set_story_flag("ch01_pool_photos_shared_to_group")
         return None
 
 
-# Placeholder assets for the extra confident-route photo. Final ComfyUI art can
-# replace these IDs without changing story/Phone state.
-image cg ch01_photo_more_second_a = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#36596d"),
-    (90, 70), Text(
-        "CG PLACEHOLDER\nCH01-POOL-PHOTO — CONFIDENT ROUTE\nSECOND SOLO SHOT / CONSERVATIVE SWIMWEAR",
-        size=52,
-        color="#ffffff",
-    ),
-)
-
-image cg ch01_photo_more_second_b = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#4f496f"),
-    (90, 70), Text(
-        "CG PLACEHOLDER\nCH01-POOL-PHOTO — CONFIDENT ROUTE\nSECOND SOLO SHOT / BOLDER SWIMWEAR",
-        size=52,
-        color="#ffffff",
-    ),
-)
+# Capture assets are defined in ch01_scenes_04_06_visuals.rpy.
