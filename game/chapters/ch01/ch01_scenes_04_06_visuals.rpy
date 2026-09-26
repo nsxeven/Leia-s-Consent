@@ -18,9 +18,14 @@ image cg ch01_photo_group = Composite(
 )
 
 image cg ch01_photo_awkward_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_01.webp", prologue_fullscreen)
+image cg ch01_photo_capture_01_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_01_Capture.webp", prologue_fullscreen)
+image cg ch01_photo_capture_02_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_02_Capture.webp", prologue_fullscreen)
+image cg ch01_photo_capture_03_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_03_Capture.webp", prologue_fullscreen)
 
 image cg ch01_photo_awkward_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_01.webp", prologue_fullscreen)
-image cg ch01_photo_awkward_b_capture = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_01_Capture.webp", prologue_fullscreen)
+image cg ch01_photo_capture_01_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_01_Capture.webp", prologue_fullscreen)
+image cg ch01_photo_capture_02_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_02_Capture.webp", prologue_fullscreen)
+image cg ch01_photo_capture_03_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_03_Capture.webp", prologue_fullscreen)
 
 image cg ch01_photo_support_a = Composite(
     (1920, 1080),
