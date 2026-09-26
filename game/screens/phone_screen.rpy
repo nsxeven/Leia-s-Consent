@@ -370,23 +370,13 @@ screen phone_screen():
                                                     text "[message_text]" size 16 color bubble_text line_spacing 3
 
                                                 if attachment_id:
-                                                    frame:
-                                                        xfill True
-                                                        ysize 190
-                                                        background Frame("gui/phone/rounded_white.png", 24, 24)
-                                                        padding (14, 12)
-
-                                                        vbox:
-                                                            xalign 0.5
-                                                            yalign 0.5
-                                                            spacing 7
-                                                            if renpy.has_image(attachment_id):
-                                                                add attachment_id xysize (340, 132) xalign 0.5
-                                                            else:
-                                                                add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
-                                                            text "[attachment_label]" size 13 color "#3a3a3c" xalign 0.5
-                                                            if current_choice_mode() == "developer":
-                                                                text "Asset: [attachment_id]" size 10 color "#8e8e93" xalign 0.5
+                                                    if renpy.has_image(attachment_id):
+                                                        add attachment_id xalign 0.5 fit "contain" xmaximum 374
+                                                    else:
+                                                        add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
+                                                    text "[attachment_label]" size 13 color bubble_text xalign 0.5
+                                                    if current_choice_mode() == "developer":
+                                                        text "Asset: [attachment_id]" size 10 color "#8e8e93" xalign 0.5
 
                     elif phone_app == "shop":
 
