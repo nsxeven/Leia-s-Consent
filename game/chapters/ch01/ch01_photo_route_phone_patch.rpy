@@ -39,7 +39,15 @@ init 50 python:
                 mark_unread=True,
                 notify=final,
                 notification_title="Trip Group",
-                save_attachment=True,
+            )
+            # Index explicitly because the active phone_add_message compatibility
+            # wrapper does not expose the newer save_attachment keyword.
+            phone_add_photo(
+                asset_id,
+                asset_id,
+                "Leia pool photo {:02d}".format(index + 1),
+                source_thread="group",
+                source_message_id="ch01_trip_group_pool_capture_{:02d}".format(index + 1),
             )
 
         set_story_value("ch01_pool_phone_solo_photo_count", len(assets))
