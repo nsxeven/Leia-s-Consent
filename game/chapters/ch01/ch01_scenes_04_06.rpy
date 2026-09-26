@@ -245,9 +245,9 @@ label ch01_scene_05_photography:
             with Dissolve(0.08)
             $ set_story_value("ch01_pool_capture_count", 3)
 
-            # Capture photographs use an empty say interaction as their hold:
-            # click, Space, or Enter advances normally. Never use hard=True.
-            centered ""
+            # Hold the photograph without invoking say/centered dialogue UI.
+            # Normal dismiss input (click, Space, Enter) advances.
+            $ renpy.pause()
             $ exit_cinematic_mode()
 
         "[ch01_photo_exit_text]":
