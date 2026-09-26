@@ -178,14 +178,9 @@ label ch01_scene_05_photography:
             gf "Okay. One more."
 
             $ enter_cinematic_mode()
-            if selected_pool_outfit == "pool_bolder":
-                scene cg ch01_photo_support_b
-            else:
-                scene cg ch01_photo_support_a
-            with dissolve
 
             "This time she stopped posing long enough to enjoy herself."
-            "Wet hair rested over one shoulder as she turned toward the water, then looked back when I made her laugh."
+            "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
 
             scene white
