@@ -212,11 +212,17 @@ label ch01_scene_05_photography:
             gf "Both of you are getting very confident."
 
             $ enter_cinematic_mode()
+
+            # Capture 02 is the actual second photograph. Flash directly into it
+            # rather than showing the obsolete pool-edge placeholder first.
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
             if selected_pool_outfit == "pool_bolder":
-                scene cg ch01_photo_more_b
+                scene cg ch01_photo_capture_02_b
             else:
-                scene cg ch01_photo_more_a
-            with dissolve
+                scene cg ch01_photo_capture_02_a
+            with Dissolve(0.08)
 
             "She sat at the pool's edge with her legs in the water, body angled away before glancing back over her shoulder."
             "It was more suggestive than anything [girlfriend_name] would normally pose for—and for a second she seemed surprised by herself."
@@ -233,25 +239,15 @@ label ch01_scene_05_photography:
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
-                scene cg ch01_photo_capture_02_b
-            else:
-                scene cg ch01_photo_capture_02_a
-            with Dissolve(0.08)
-
-            "She checked the result, then looked back at [friend_name]."
-            gf "One more."
-            friend "Now you're enjoying this."
-            gf "Just take it."
-
-            scene white
-            with Dissolve(0.06)
-            pause 0.04
-            if selected_pool_outfit == "pool_bolder":
                 scene cg ch01_photo_capture_03_b
             else:
                 scene cg ch01_photo_capture_03_a
             with Dissolve(0.08)
             $ set_story_value("ch01_pool_capture_count", 3)
+
+            # Deliberately wait on the final captured photograph. The player
+            # advances when ready instead of the script immediately replacing it.
+            $ renpy.pause(hard=True)
             $ exit_cinematic_mode()
 
         "[ch01_photo_exit_text]":
