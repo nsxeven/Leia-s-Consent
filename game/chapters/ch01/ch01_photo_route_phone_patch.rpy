@@ -42,13 +42,8 @@ init 50 python:
             )
             # Index explicitly because the active phone_add_message compatibility
             # wrapper does not expose the newer save_attachment keyword.
-            phone_add_photo(
-                asset_id,
-                asset_id,
-                "Leia pool photo {:02d}".format(index + 1),
-                source_thread="group",
-                source_message_id="ch01_trip_group_pool_capture_{:02d}".format(index + 1),
-            )
+            # phone_add_message() already indexes image attachments in Photos.
+            # Do not add the same asset a second time under a second photo ID.
 
         set_story_value("ch01_pool_phone_solo_photo_count", len(assets))
         set_story_value("ch01_pool_phone_attachment_count", len(assets))
