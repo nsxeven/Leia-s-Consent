@@ -121,16 +121,20 @@ label ch01_scene_05_photography:
 
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_photo_awkward_b
-        with dissolve
-        pause 0.35
-        scene white
-        with Dissolve(0.06)
-        pause 0.04
-        scene cg ch01_photo_awkward_b_capture
-        with Dissolve(0.08)
     else:
         scene cg ch01_photo_awkward_a
-        with dissolve
+    with dissolve
+
+    # Every saved Capture photograph gets the same quick shutter-flash reveal.
+    scene white
+    with Dissolve(0.06)
+    pause 0.04
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_photo_capture_01_b
+    else:
+        scene cg ch01_photo_capture_01_a
+    with Dissolve(0.08)
+    $ set_story_value("ch01_pool_capture_count", 1)
 
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
@@ -183,6 +187,16 @@ label ch01_scene_05_photography:
             "This time she stopped posing long enough to enjoy herself."
             "Wet hair rested over one shoulder as she turned toward the water, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
+
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
+            if selected_pool_outfit == "pool_bolder":
+                scene cg ch01_photo_capture_02_b
+            else:
+                scene cg ch01_photo_capture_02_a
+            with Dissolve(0.08)
+            $ set_story_value("ch01_pool_capture_count", 2)
             $ exit_cinematic_mode()
 
         "[ch01_photo_more_text]":
@@ -214,6 +228,30 @@ label ch01_scene_05_photography:
             gf "Correct answer."
 
             "She brushed her wet hair back, adjusted the pose herself, and held it until the camera clicked."
+
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
+            if selected_pool_outfit == "pool_bolder":
+                scene cg ch01_photo_capture_02_b
+            else:
+                scene cg ch01_photo_capture_02_a
+            with Dissolve(0.08)
+
+            "She checked the result, then looked back at [friend_name]."
+            gf "One more."
+            friend "Now you're enjoying this."
+            gf "Just take it."
+
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
+            if selected_pool_outfit == "pool_bolder":
+                scene cg ch01_photo_capture_03_b
+            else:
+                scene cg ch01_photo_capture_03_a
+            with Dissolve(0.08)
+            $ set_story_value("ch01_pool_capture_count", 3)
             $ exit_cinematic_mode()
 
         "[ch01_photo_exit_text]":
@@ -242,6 +280,16 @@ label ch01_scene_05_photography:
                 with dissolve
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
+
+                scene white
+                with Dissolve(0.06)
+                pause 0.04
+                if selected_pool_outfit == "pool_bolder":
+                    scene cg ch01_photo_capture_02_b
+                else:
+                    scene cg ch01_photo_capture_02_a
+                with Dissolve(0.08)
+                $ set_story_value("ch01_pool_capture_count", 2)
                 $ exit_cinematic_mode()
             else:
                 $ set_story_value("ch01_photo_outcome", "stopped")
