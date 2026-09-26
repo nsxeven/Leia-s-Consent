@@ -407,11 +407,11 @@ label ch01_scene_06_friendship_and_towel:
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
 
-    scene cg ch01_towel_silhouette
+    # No dedicated CG here: remain on the established upstairs pool-view background.
+    scene bg ch01_pool_lounge
     with dissolve
 
     "[girlfriend_name] disappeared inside and grabbed at the sheer curtain."
-    "For a fleeting moment, the fabric softened her into a wet-haired silhouette still wrestling the towel closed."
     "Then she retreated farther into the room, away from the glass."
 
     $ exit_cinematic_mode()
