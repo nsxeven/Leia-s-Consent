@@ -121,9 +121,16 @@ label ch01_scene_05_photography:
 
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_photo_awkward_b
+        with dissolve
+        pause 0.35
+        scene white
+        with Dissolve(0.06)
+        pause 0.04
+        scene cg ch01_photo_awkward_b_capture
+        with Dissolve(0.08)
     else:
         scene cg ch01_photo_awkward_a
-    with dissolve
+        with dissolve
 
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
