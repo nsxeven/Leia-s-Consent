@@ -10,3 +10,11 @@ image ch01_photo_more_a = ImageReference("cg ch01_photo_more_a")
 image ch01_photo_more_b = ImageReference("cg ch01_photo_more_b")
 image ch01_photo_more_second_a = ImageReference("cg ch01_photo_more_second_a")
 image ch01_photo_more_second_b = ImageReference("cg ch01_photo_more_second_b")
+
+# Actual pool Capture photographs used by Messages and persistent Photos.
+image ch01_photo_capture_01_a = ImageReference("cg ch01_photo_capture_01_a")
+image ch01_photo_capture_02_a = ImageReference("cg ch01_photo_capture_02_a")
+image ch01_photo_capture_03_a = ImageReference("cg ch01_photo_capture_03_a")
+image ch01_photo_capture_01_b = ImageReference("cg ch01_photo_capture_01_b")
+image ch01_photo_capture_02_b = ImageReference("cg ch01_photo_capture_02_b")
+image ch01_photo_capture_03_b = ImageReference("cg ch01_photo_capture_03_b")
