@@ -224,8 +224,8 @@ label ch01_scene_05_photography:
                 scene cg ch01_photo_capture_02_a
             with Dissolve(0.08)
 
-            "She sat at the pool's edge with her legs in the water, body angled away before glancing back over her shoulder."
-            "It was more suggestive than anything [girlfriend_name] would normally pose for—and for a second she seemed surprised by herself."
+            "She turned beside the pool, angling her body away from the camera before looking back over her shoulder."
+            "The pose came more naturally this time. Less instruction, less stiffness."
             "Then she checked my face and smiled."
 
             gf "Wait. Take another one."
@@ -233,7 +233,7 @@ label ch01_scene_05_photography:
             mc "She doesn't need my approval."
             gf "Correct answer."
 
-            "She brushed her wet hair back, adjusted the pose herself, and held it until the camera clicked."
+            "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
 
             scene white
             with Dissolve(0.06)
@@ -245,9 +245,9 @@ label ch01_scene_05_photography:
             with Dissolve(0.08)
             $ set_story_value("ch01_pool_capture_count", 3)
 
-            # Deliberately wait on the final captured photograph. The player
-            # advances when ready instead of the script immediately replacing it.
-            $ renpy.pause(hard=True)
+            # Capture photographs use an empty say interaction as their hold:
+            # click, Space, or Enter advances normally. Never use hard=True.
+            centered ""
             $ exit_cinematic_mode()
 
         "[ch01_photo_exit_text]":
