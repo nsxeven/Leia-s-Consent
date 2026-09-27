@@ -173,6 +173,14 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     with fade
+
+    $ enter_cinematic_mode()
+    scene cg ch01_dinner_arrival
+    with dissolve
+
+    $ exit_cinematic_mode()
+    scene bg ch01_restaurant_evening
+    with dissolve
     show leia_purple_dress smile at prologue_sprite_enter_center, leia_body_idle
     with sprite_enter_exit
 
