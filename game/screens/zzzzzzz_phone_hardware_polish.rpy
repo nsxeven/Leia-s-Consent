@@ -1,3 +1,7 @@
+# PHONE HARDWARE OVERLAY ONLY.
+# Draws the handset shell above active Phone/Status/Settings screens. It hides
+# while lc_phone_photo_viewer is open so full-screen photos are unobstructed.
+
 # Final presentation layer for the current Phone prototype.
 # Loaded after the iOS-inspired Phone screen so it can polish shared components
 # without duplicating the story/message/shop logic.
