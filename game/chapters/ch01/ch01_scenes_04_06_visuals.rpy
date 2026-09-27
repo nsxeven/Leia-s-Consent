@@ -8,6 +8,9 @@ image bg ch01_pool_lounge = At("images/backgrounds/chapter 1/ch01_villa_pool_ups
 image cg ch01_sunscreen_white = At("images/cg/ch01/CH1D1_CG_Sunscreen_White_01.webp", prologue_fullscreen)
 image cg ch01_sunscreen_blue = At("images/cg/ch01/CH1D1_CG_Sunscreen_Blue_01.webp", prologue_fullscreen)
 
+image cg ch01_sunscreen_apply_white = At("images/cg/ch01/CH1D1_CG_SunscreenApply_White_01.webp", prologue_fullscreen)
+image cg ch01_sunscreen_apply_blue = At("images/cg/ch01/CH1D1_CG_SunscreenApply_Blue_01.webp", prologue_fullscreen)
+
 image cg ch01_pool_hand_pull_white = At("images/cg/ch01/CH1D1_CG_PoolHandPull_White_01.webp", prologue_fullscreen)
 image cg ch01_pool_hand_pull_blue = At("images/cg/ch01/CH1D1_CG_PoolHandPull_Blue_01.webp", prologue_fullscreen)
 
@@ -33,5 +36,7 @@ image cg ch01_towel_call_down = At("images/cg/ch01/CH1D1_CG_TowelCallDown_01.web
 image cg ch01_towel_shift = At("images/cg/ch01/CH1D1_CG_TowelShift_01.webp", prologue_fullscreen)
 
 image cg ch01_towel_realization = At("images/cg/ch01/CH1D1_CG_TowelRealization_01.webp", prologue_fullscreen)
+
+image cg ch01_towel_did_he_see = At("images/cg/ch01/CH1D1_CG_TowelDidHeSee_01.webp", prologue_fullscreen)
 
 
