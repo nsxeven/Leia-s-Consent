@@ -159,7 +159,7 @@ label ch01_scene_03_outfit_choice:
     hide leia_casual
     with sprite_enter_exit
     $ enter_cinematic_mode()
-    scene cg ch01_swimsuit_choice_white
+    scene cg ch01_swimsuit_choice
     with dissolve
     gf "Is this one too much with [friend_name] here?"
 
