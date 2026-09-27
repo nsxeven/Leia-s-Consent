@@ -611,8 +611,9 @@ label ch01_day2_scene_30_bedroom:
     $ d2_lane = ch01_d2_route_lane()
     $ d2_soft_gate = get_story_value("ch01_d2_ntr_soft_gate", False)
     $ d2_wink = get_story_value("ch01_d2_dinner_wink", False)
+    $ d2_pool_suspicion = get_story_flag("ch01_d2_pool_suspicion")
 
-    if d2_lane == "ntr_risk" and d2_soft_gate and d2_wink:
+    if d2_soft_gate and d2_wink:
         "Leia came closer first. I didn't respond immediately."
 
         gf "Ryan?"
@@ -664,7 +665,7 @@ label ch01_day2_scene_30_bedroom:
                 else:
                     centered "Something changed tonight."
 
-    elif d2_lane == "ntr_risk" and not d2_soft_gate:
+    elif d2_pool_suspicion and not d2_soft_gate:
         "Leia came closer, but I was still thinking about the pool."
 
         gf "You're doing it again."
