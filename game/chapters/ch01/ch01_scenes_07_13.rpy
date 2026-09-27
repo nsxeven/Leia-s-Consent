@@ -63,6 +63,9 @@ label ch01_scene_07_did_he_see:
     $ set_story_value("ch01_dinner_dress_state", "normal")
     with dissolve
 
+    show leia_purple_dress neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
+
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
 
     gf "What?"
@@ -70,10 +73,14 @@ label ch01_scene_07_did_he_see:
     gf "That was a very obvious something."
     mc "You look amazing."
 
+    show leia_purple_dress smile
+    with sprite_change
     gf "Better answer."
 
     scene bg ch01_villa_entry_evening
     with dissolve
+    show leia_purple_dress neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "Julian was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
 
@@ -166,6 +173,8 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     with fade
+    show leia_purple_dress smile at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
 
     "Dinner started exactly the way I expected: Leia taking photos of the food, Julian pretending to object, and me being ordered to move my glass out of every shot."
 
