@@ -1,14 +1,9 @@
-# Chapter 1 pool-photo route continuity patch.
+# Chapter 1 pool-photo Capture inventory + Phone delivery.
 #
-# Scene 5 has materially different photo inventories:
-# - confident / "try one sitting by the edge" route: Leia takes a posed shot,
-#   then explicitly asks Julian to take another one. Two solo photos therefore
-#   exist for later Phone delivery.
-# - relaxed/supportive and protective-but-continues routes: one keeper solo photo.
-# - stopped route: only the group photo survives.
-#
-# Keep the Trip Group beat rollback/load safe with stable message IDs and one
-# notification total, regardless of how many attachments the route earned.
+# Scene 5 stores ch01_pool_capture_count (1–3). This module is the single
+# implementation that maps that count + selected swimsuit to actual Capture
+# assets and sends the earned photos to Trip Group. The trigger/timing lives in
+# ch01_phone_moments.rpy.
 
 init 50 python:
 
@@ -40,10 +35,7 @@ init 50 python:
                 notify=final,
                 notification_title="Trip Group",
             )
-            # Index explicitly because the active phone_add_message compatibility
-            # wrapper does not expose the newer save_attachment keyword.
-            # phone_add_message() already indexes image attachments in Photos.
-            # Do not add the same asset a second time under a second photo ID.
+            # phone_add_message() automatically indexes image attachments in Photos.
 
         set_story_value("ch01_pool_phone_solo_photo_count", len(assets))
         set_story_value("ch01_pool_phone_attachment_count", len(assets))
