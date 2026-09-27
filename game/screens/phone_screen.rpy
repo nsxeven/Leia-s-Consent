@@ -371,19 +371,10 @@ screen phone_screen():
 
                                                 if attachment_id:
                                                     if renpy.has_image(attachment_id):
-                                                        frame:
-                                                            xsize 374
-                                                            ysize 210
+                                                        add attachment_id:
                                                             xalign 0.5
-                                                            padding (0, 0)
-                                                            background Frame("gui/phone/rounded_white.png", 24, 24)
-                                                            clipping True
-
-                                                            add attachment_id:
-                                                                xalign 0.5
-                                                                yalign 0.5
-                                                                xysize (374, 210)
-                                                                fit "cover"
+                                                            xysize (400, 225)
+                                                            fit "cover"
                                                     else:
                                                         add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
                                                     text "[attachment_label]" size 13 color bubble_text xalign 0.5
@@ -519,37 +510,23 @@ screen phone_screen():
                                         $ photo_asset = photo.get("asset_id")
                                         $ photo_label = photo.get("label", "Photo")
 
-                                        frame:
+                                        vbox:
+                                            spacing 6
                                             xfill True
-                                            background Frame("gui/phone/rounded_white.png", 24, 24)
-                                            padding (14, 14)
 
-                                            vbox:
-                                                spacing 8
-                                                xfill True
+                                            if photo_asset and renpy.has_image(photo_asset):
+                                                add photo_asset:
+                                                    xalign 0.5
+                                                    xysize (520, 293)
+                                                    fit "cover"
+                                            else:
+                                                frame:
+                                                    xfill True
+                                                    ysize 190
+                                                    background Frame("gui/phone/rounded_light.png", 22, 22)
+                                                    add "gui/phone/icons/photos.png" xysize (100, 100) xalign 0.5 yalign 0.5
 
-                                                if photo_asset and renpy.has_image(photo_asset):
-                                                    frame:
-                                                        xsize 480
-                                                        ysize 270
-                                                        xalign 0.5
-                                                        padding (0, 0)
-                                                        background Frame("gui/phone/rounded_white.png", 24, 24)
-                                                        clipping True
-
-                                                        add photo_asset:
-                                                            xalign 0.5
-                                                            yalign 0.5
-                                                            xysize (480, 270)
-                                                            fit "cover"
-                                                else:
-                                                    frame:
-                                                        xfill True
-                                                        ysize 190
-                                                        background Frame("gui/phone/rounded_light.png", 22, 22)
-                                                        add "gui/phone/icons/photos.png" xysize (100, 100) xalign 0.5 yalign 0.5
-
-                                                text "[photo_label]" size 16 color "#1c1c1e" bold True xalign 0.5
+                                            text "[photo_label]" size 16 color "#1c1c1e" bold True xalign 0.5
                                                 if current_choice_mode() == "developer":
                                                     text "Asset: [photo_asset]" size 10 color "#8e8e93" xalign 0.5
 
