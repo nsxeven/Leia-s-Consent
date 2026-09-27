@@ -286,7 +286,6 @@ label prologue_start:
 
     scene bg prologue_packing
     show leia_casual smile at prologue_sprite_enter_left, leia_body_idle
-    show ryan_prologue_party at prologue_ryan_enter_right, leia_body_idle
     with sprite_enter_exit
 
     gf "Ready?"
@@ -321,7 +320,6 @@ label prologue_start:
 
 
     hide leia_casual
-    hide ryan_prologue_party
     $ enter_cinematic_mode()
 
     scene cg prologue_departure
