@@ -371,7 +371,16 @@ screen phone_screen():
 
                                                 if attachment_id:
                                                     if renpy.has_image(attachment_id):
-                                                        add attachment_id xalign 0.5 fit "contain" xmaximum 374
+                                                        fixed:
+                                                            xsize 374
+                                                            xalign 0.5
+                                                            fit_first True
+
+                                                            add attachment_id:
+                                                                xalign 0.5
+                                                                yalign 0.5
+                                                                xsize 374
+                                                                fit "contain"
                                                     else:
                                                         add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
                                                     text "[attachment_label]" size 13 color bubble_text xalign 0.5
