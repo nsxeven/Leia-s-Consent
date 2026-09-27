@@ -63,6 +63,8 @@ label prologue_start:
     show leia_prologue_party shy
     with sprite_change
     gf "...Never mind."
+    show ryan_prologue_party at prologue_ryan_enter_right, leia_body_idle
+    with sprite_enter_exit
     mc "No, no. You can't say that and then retreat."
     show leia_prologue_party smile
     with sprite_change
