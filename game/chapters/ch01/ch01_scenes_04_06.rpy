@@ -99,7 +99,11 @@ label ch01_scene_04_pool_arrival:
 label ch01_scene_05_photography:
 
     $ enter_cinematic_mode()
-    scene cg ch01_photo_group
+    $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_photo_group_blue
+    else:
+        scene cg ch01_photo_group_white
     with dissolve
 
     "Eventually, [girlfriend_name] decided the afternoon required photographic evidence."
@@ -284,7 +288,7 @@ label ch01_scene_05_photography:
                 $ exit_cinematic_mode()
             else:
                 $ set_story_value("ch01_photo_outcome", "stopped")
-                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group")
+                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group_" + ("blue" if selected_pool_outfit == "pool_bolder" else "white"))
                 gf "Okay. Save me."
                 friend "Your passport photo has been safely deleted."
                 "She slid back into the water beside me, visibly relieved that nobody tried to change her mind."
