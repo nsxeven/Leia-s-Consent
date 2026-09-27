@@ -36,11 +36,7 @@ image bg ch01_villa_night = At("images/backgrounds/villa/villa_frontdoor_night.w
 
 image bg ch01_villa_living_night = At("images/backgrounds/villa/villa_living_night.webp", prologue_bg_blur)
 
-image cg ch01_drive_to_dinner = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#243146"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DRIVE-01 — BASELINE CAR SEATING\nRYAN DRIVING / LEIA FRONT PASSENGER / JULIAN REAR", size=52, color="#ffffff"),
-)
+image cg ch01_drive_to_dinner = At("images/cg/ch01/CH1D1_CG_DriveToDinner_01.webp", prologue_fullscreen)
 
 image cg ch01_dinner_spill = Composite(
     (1920, 1080),
