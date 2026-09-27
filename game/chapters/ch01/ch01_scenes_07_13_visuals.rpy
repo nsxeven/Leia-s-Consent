@@ -38,6 +38,7 @@ image bg ch01_villa_living_night = At("images/backgrounds/villa/villa_living_nig
 
 image cg ch01_drive_to_dinner = At("images/cg/ch01/CH1D1_CG_DriveToDinner_01.webp", prologue_fullscreen)
 image cg ch01_dinner_arrival = At("images/cg/ch01/CH1D1_CG_DinnerArrival_01.webp", prologue_fullscreen)
+image cg ch01_dinner_photo_ask = At("images/cg/ch01/CH1D1_CG_DinnerPhotoAsk_01.webp", prologue_fullscreen)
 
 image cg ch01_dinner_spill = Composite(
     (1920, 1080),
