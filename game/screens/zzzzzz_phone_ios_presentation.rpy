@@ -1,3 +1,8 @@
+# ACTIVE PHONE PRESENTATION.
+# This late-loading screen intentionally overrides the legacy phone_screen.rpy
+# handset layout. Make Phone Messages/Photos/Home presentation changes here.
+# zzzzzzz_phone_hardware_polish.rpy owns only the external handset hardware overlay.
+
 # Cohesive mobile-style Phone presentation.
 # Presentation only: story/Phone state and app logic remain in the existing systems.
 # Final Status / Settings icon art can later replace the placeholder icon tiles.

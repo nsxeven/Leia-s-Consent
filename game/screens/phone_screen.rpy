@@ -1,3 +1,8 @@
+# LEGACY BASE PHONE SCREEN.
+# The active handset presentation is the later phone_screen() definition in
+# zzzzzz_phone_ios_presentation.rpy. Keep this base only as fallback/reference;
+# do not make presentation fixes here without also checking the active override.
+
 # Diegetic in-game phone hub.
 # Bright, playful presentation with rounded mobile UI surfaces.
 
