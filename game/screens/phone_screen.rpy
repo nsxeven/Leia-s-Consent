@@ -527,8 +527,8 @@ screen phone_screen():
                                                     add "gui/phone/icons/photos.png" xysize (100, 100) xalign 0.5 yalign 0.5
 
                                             text "[photo_label]" size 16 color "#1c1c1e" bold True xalign 0.5
-                                                if current_choice_mode() == "developer":
-                                                    text "Asset: [photo_asset]" size 10 color "#8e8e93" xalign 0.5
+                                            if current_choice_mode() == "developer":
+                                                text "Asset: [photo_asset]" size 10 color "#8e8e93" xalign 0.5
 
                         else:
                             frame:
