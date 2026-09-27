@@ -290,3 +290,43 @@ image leia_towel flustered = Fixed(lc_sprite_silhouette("leia_towel_layers flust
 image leia_towel skeptical = Fixed(lc_sprite_silhouette("leia_towel_layers skeptical"), xysize=(941, 1672))
 image leia_towel angry = Fixed(lc_sprite_silhouette("leia_towel_layers angry"), xysize=(941, 1672))
 image leia_towel ahegao = Fixed(lc_sprite_silhouette("leia_towel_layers ahegao"), xysize=(941, 1672))
+
+
+# Leia — Chapter One Day One dinner dress.
+# Story mapping:
+#   resort_dinner_dress -> PurpleDress
+# This is the clean pre-spill state with the sticky bra still on.
+# Later spill / bra-removed states should use their own approved outfit layers.
+layeredimage leia_purple_dress_layers:
+
+    always "images/sprites/leia/CH1/Base_PurpleDress.png"
+    always "images/sprites/leia/CH1/Chest_PurpleDress.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_purple_dress neutral = Fixed(lc_sprite_silhouette("leia_purple_dress_layers neutral"), xysize=(941, 1672))
+image leia_purple_dress smile = Fixed(lc_sprite_silhouette("leia_purple_dress_layers smile"), xysize=(941, 1672))
+image leia_purple_dress shy = Fixed(lc_sprite_silhouette("leia_purple_dress_layers shy"), xysize=(941, 1672))
+image leia_purple_dress pout = Fixed(lc_sprite_silhouette("leia_purple_dress_layers pout"), xysize=(941, 1672))
+image leia_purple_dress flustered = Fixed(lc_sprite_silhouette("leia_purple_dress_layers flustered"), xysize=(941, 1672))
+image leia_purple_dress skeptical = Fixed(lc_sprite_silhouette("leia_purple_dress_layers skeptical"), xysize=(941, 1672))
+image leia_purple_dress angry = Fixed(lc_sprite_silhouette("leia_purple_dress_layers angry"), xysize=(941, 1672))
+image leia_purple_dress ahegao = Fixed(lc_sprite_silhouette("leia_purple_dress_layers ahegao"), xysize=(941, 1672))
