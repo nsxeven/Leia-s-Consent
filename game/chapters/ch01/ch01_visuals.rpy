@@ -21,6 +21,7 @@ image bg ch01_master_bedroom_curtains = At("images/backgrounds/villa/villa_maste
 
 image cg ch01_bedroom_window = At("images/cg/ch01/CH1D1_CG_BedroomWindow_01.webp", prologue_fullscreen)
 
+image cg ch01_swimsuit_choice = At("images/cg/ch01/CH1D1_CG_SwimsuitChoice_01.webp", prologue_fullscreen)
 image cg ch01_swimsuit_choice_white = At("images/cg/ch01/CH1D1_CG_SwimsuitChoice_White_01.webp", prologue_fullscreen)
 image cg ch01_swimsuit_choice_blue = At("images/cg/ch01/CH1D1_CG_SwimsuitChoice_Blue_01.webp", prologue_fullscreen)
 
