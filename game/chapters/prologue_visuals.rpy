@@ -96,3 +96,28 @@ transform prologue_leia_left:
 transform prologue_julian_right:
     xalign 0.82
     yalign 1.0
+
+
+# --- Two-character Prologue composition ----------------------------------
+# Leia owns the left slot. Ryan/Julian own the right slot.
+# Ryan's source artwork faces the opposite direction, so the right-slot
+# transform mirrors him horizontally to face Leia.
+transform prologue_ryan_enter_right:
+    xalign 0.82
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
+    alpha 0.0
+    xoffset 45
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 xoffset 0
+
+transform prologue_ryan_right:
+    xalign 0.82
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
