@@ -129,6 +129,44 @@ screen lc_ios_done_button(action, xalign_value=1.0, ypos_value=0):
         action action
 
 
+screen lc_phone_photo_viewer(photo_asset):
+    modal True
+    zorder 380
+
+    key "K_ESCAPE" action Hide("lc_phone_photo_viewer")
+    key "mouseup_3" action Hide("lc_phone_photo_viewer")
+
+    add Solid("#000000e8")
+
+    if photo_asset and renpy.has_image(photo_asset):
+        add photo_asset:
+            xalign 0.5
+            yalign 0.5
+            fit "contain"
+            xysize (1920, 1080)
+
+    button:
+        xfill True
+        yfill True
+        background None
+        action Hide("lc_phone_photo_viewer")
+
+    textbutton "Done":
+        xalign 0.965
+        yalign 0.035
+        xminimum 100
+        ysize 48
+        background Frame("gui/phone/rounded_button_blue.png", 22, 22)
+        hover_background Frame("gui/phone/rounded_button_blue_hover.png", 22, 22)
+        text_idle_color "#ffffff"
+        text_hover_color "#ffffff"
+        text_size 16
+        text_bold True
+        text_xalign 0.5
+        text_yalign 0.5
+        action Hide("lc_phone_photo_viewer")
+
+
 screen phone_screen():
     modal True
     zorder 310
@@ -350,13 +388,24 @@ screen phone_screen():
                                                     xalign (1.0 if from_player else 0.0)
                                                     spacing 4
                                                     if renpy.has_image(attachment_id):
-                                                        add attachment_id:
+                                                        button:
                                                             xalign (1.0 if from_player else 0.0)
                                                             xysize (430, 242)
-                                                            fit "cover"
+                                                            padding (0, 0)
+                                                            background None
+                                                            hover_background None
+                                                            action Show("lc_phone_photo_viewer", photo_asset=attachment_id)
+                                                            fixed:
+                                                                xfill True
+                                                                yfill True
+                                                                clipping True
+                                                                add attachment_id:
+                                                                    xysize (430, 242)
+                                                                    fit "cover"
+                                                                add "gui/phone/photo_round_mask.svg":
+                                                                    xysize (430, 242)
                                                     else:
                                                         add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
-                                                    text "[attachment_label]" size 12 color "#6d6d72" xalign 0.5
                                                     if current_choice_mode() == "developer":
                                                         text "Asset: [attachment_id]" size 9 color "#8e8e93" xalign 0.5
 
@@ -453,17 +502,28 @@ screen phone_screen():
                                                 spacing 4
                                                 xfill True
                                                 if photo_asset and renpy.has_image(photo_asset):
-                                                    add photo_asset:
+                                                    button:
                                                         xalign 0.5
                                                         xysize (540, 304)
-                                                        fit "cover"
+                                                        padding (0, 0)
+                                                        background None
+                                                        hover_background None
+                                                        action Show("lc_phone_photo_viewer", photo_asset=photo_asset)
+                                                        fixed:
+                                                            xfill True
+                                                            yfill True
+                                                            clipping True
+                                                            add photo_asset:
+                                                                xysize (540, 304)
+                                                                fit "cover"
+                                                            add "gui/phone/photo_round_mask.svg":
+                                                                xysize (540, 304)
                                                 else:
                                                     frame:
                                                         xfill True
                                                         ysize 190
                                                         background Frame("gui/phone/rounded_light.png", 22, 22)
                                                         add "gui/phone/icons/photos.png" xysize (96, 96) xalign 0.5 yalign 0.5
-                                                text "[photo_label]" size 15 color "#1c1c1e" bold True xalign 0.5
                                                 if current_choice_mode() == "developer":
                                                     text "Asset: [photo_asset]" size 9 color "#8e8e93" xalign 0.5
                             else:
