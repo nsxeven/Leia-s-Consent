@@ -11,11 +11,8 @@ image cg ch01_sunscreen_blue = At("images/cg/ch01/CH1D1_CG_Sunscreen_Blue_01.web
 image cg ch01_pool_hand_pull_white = At("images/cg/ch01/CH1D1_CG_PoolHandPull_White_01.webp", prologue_fullscreen)
 image cg ch01_pool_hand_pull_blue = At("images/cg/ch01/CH1D1_CG_PoolHandPull_Blue_01.webp", prologue_fullscreen)
 
-image cg ch01_photo_group = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#287f9e"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-PHOTO-00 — TRIO HOLIDAY PHOTO", size=52, color="#ffffff"),
-)
+image cg ch01_photo_group_white = At("images/cg/ch01/CH1D1_CG_PoolSelfie_Trio_White.webp", prologue_fullscreen)
+image cg ch01_photo_group_blue = At("images/cg/ch01/CH1D1_CG_PoolSelfie_Trio_Blue.webp", prologue_fullscreen)
 
 image cg ch01_photo_awkward_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_01.webp", prologue_fullscreen)
 image cg ch01_photo_capture_01_a = At("images/cg/ch01/CH1D1_CG_PoolPhoto_White_01_Capture.webp", prologue_fullscreen)
