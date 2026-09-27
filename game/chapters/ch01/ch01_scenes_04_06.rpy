@@ -67,6 +67,12 @@ label ch01_scene_04_pool_arrival:
     mc "Please?"
     gf "We've been together four years. 'Please' has expired."
 
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_sunscreen_apply_blue
+    else:
+        scene cg ch01_sunscreen_apply_white
+    with dissolve
+
     "I worked the sunscreen across her shoulders and down the centre of her back."
     "When my hands slowed near her waist, she looked back at me."
 
@@ -268,11 +274,6 @@ label ch01_scene_05_photography:
                 gf "Exactly."
 
                 $ enter_cinematic_mode()
-                if selected_pool_outfit == "pool_bolder":
-                    scene cg ch01_photo_support_b
-                else:
-                    scene cg ch01_photo_support_a
-                with dissolve
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
 
@@ -461,6 +462,12 @@ label ch01_scene_06_friendship_and_towel:
 
     gf "[player_name]?"
     mc "Yeah?"
+
+    $ enter_cinematic_mode()
+    scene cg ch01_towel_did_he_see
+    with dissolve
+
     gf "...Did he see anything?"
 
+    $ exit_cinematic_mode()
     jump ch01_scene_07_did_he_see
