@@ -129,6 +129,13 @@ screen lc_ios_done_button(action, xalign_value=1.0, ypos_value=0):
         action action
 
 
+init 96 python:
+    def lc_phone_rounded_photo(asset_id, width, height):
+        photo = Transform(asset_id, xysize=(width, height), fit="cover")
+        mask = Transform("gui/phone/photo_round_mask.svg", xysize=(width, height))
+        return AlphaMask(photo, mask)
+
+
 screen lc_phone_photo_viewer(photo_asset):
     modal True
     zorder 380
@@ -513,11 +520,7 @@ screen phone_screen():
                                                             xfill True
                                                             yfill True
                                                             clipping True
-                                                            add photo_asset:
-                                                                xysize (540, 304)
-                                                                fit "cover"
-                                                            add "gui/phone/photo_round_mask.svg":
-                                                                xysize (540, 304)
+                                                            add lc_phone_rounded_photo(photo_asset, 540, 304)
                                                 else:
                                                     frame:
                                                         xfill True
