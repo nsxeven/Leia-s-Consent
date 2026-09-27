@@ -371,16 +371,10 @@ screen phone_screen():
 
                                                 if attachment_id:
                                                     if renpy.has_image(attachment_id):
-                                                        fixed:
-                                                            xsize 374
+                                                        add attachment_id:
                                                             xalign 0.5
-                                                            fit_first True
-
-                                                            add attachment_id:
-                                                                xalign 0.5
-                                                                yalign 0.5
-                                                                xsize 374
-                                                                fit "contain"
+                                                            xsize 374
+                                                            fit "contain"
                                                     else:
                                                         add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
                                                     text "[attachment_label]" size 13 color bubble_text xalign 0.5
@@ -526,7 +520,10 @@ screen phone_screen():
                                                 xfill True
 
                                                 if photo_asset and renpy.has_image(photo_asset):
-                                                    add photo_asset xysize (480, 330) xalign 0.5
+                                                    add photo_asset:
+                                                        xalign 0.5
+                                                        xsize 480
+                                                        fit "contain"
                                                 else:
                                                     frame:
                                                         xfill True
