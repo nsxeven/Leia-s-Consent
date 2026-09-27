@@ -180,7 +180,7 @@ label ch01_scene_05_photography:
             $ apply_choice("ch01_photo_support")
             $ set_story_value("ch01_photo_stance", "supportive")
             $ set_story_value("ch01_photo_outcome", "relaxed")
-            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_support_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
+            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
 
             mc "That one looks really good."
             gf "Actually good, or boyfriend good?"
@@ -208,7 +208,7 @@ label ch01_scene_05_photography:
             $ apply_choice("ch01_photo_more")
             $ set_story_value("ch01_photo_stance", "encouraging")
             $ set_story_value("ch01_photo_outcome", "confident")
-            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_more_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
+            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_03_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
 
             mc "Try one sitting by the edge."
             gf "Since when are you the photographer?"
@@ -268,7 +268,7 @@ label ch01_scene_05_photography:
 
             if ch01_photo_continues:
                 $ set_story_value("ch01_photo_outcome", "chose_to_continue")
-                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_support_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
+                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
                 gf "No. I want one good one."
                 mc "Then we keep going because you want to."
                 gf "Exactly."
