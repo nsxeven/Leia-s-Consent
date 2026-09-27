@@ -55,7 +55,7 @@ label prologue_start:
     "For a while, we all ended up squeezed around the same couch, talking over drinks and whoever happened to be loudest."
 
     scene bg prologue_party
-    show leia_prologue_party neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_prologue_party neutral at prologue_sprite_enter_left, leia_body_idle
     with sprite_enter_exit
 
     gf "Technically, you're both wrong."
@@ -124,7 +124,7 @@ label prologue_start:
     "Apparently, she did."
 
     scene bg prologue_truthordare
-    show leia_prologue_party neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_prologue_party neutral at prologue_sprite_enter_left, leia_body_idle
     with dissolve
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
@@ -149,12 +149,16 @@ label prologue_start:
     "[girlfriend_name] looked around once."
     "Then she pointed at me."
 
+    show ryan_prologue_party at prologue_ryan_enter_right, leia_body_idle
+    with sprite_enter_exit
     mc "Me?"
     show leia_prologue_party shy
     with sprite_change
     gf "You asked."
     "Nobody had asked me."
     "That did not seem important at the time."
+    hide ryan_prologue_party
+    with sprite_enter_exit
     friend "Okay. Next round, you are not choosing Truth again."
     show leia_prologue_party skeptical
     with sprite_change
@@ -183,6 +187,7 @@ label prologue_start:
     gf "I know."
     "And then she moved closer anyway."
     hide leia_prologue_party
+    hide ryan_prologue_party
     scene cg prologue_first_kiss_01
     with dissolve
 
@@ -204,13 +209,15 @@ label prologue_start:
     "The room cheered like we'd accomplished something."
 
     scene bg prologue_truthordare
-    show leia_prologue_party smile at prologue_sprite_enter_center, leia_body_idle
+    show leia_prologue_party smile at prologue_sprite_enter_left, leia_body_idle
+    show ryan_prologue_party at prologue_ryan_enter_right, leia_body_idle
     with sprite_enter_exit
 
     mc "...Does that mean I win Truth or Dare?"
     gf "No."
     mc "Worth asking."
     hide leia_prologue_party
+    hide ryan_prologue_party
     scene black
     with fade
     "And somehow... that was the beginning."
@@ -278,7 +285,8 @@ label prologue_start:
     mc "Because it's true."
 
     scene bg prologue_packing
-    show leia_casual smile at prologue_sprite_enter_center, leia_body_idle
+    show leia_casual smile at prologue_sprite_enter_left, leia_body_idle
+    show ryan_prologue_party at prologue_ryan_enter_right, leia_body_idle
     with sprite_enter_exit
 
     gf "Ready?"
@@ -313,6 +321,7 @@ label prologue_start:
 
 
     hide leia_casual
+    hide ryan_prologue_party
     $ enter_cinematic_mode()
 
     scene cg prologue_departure
