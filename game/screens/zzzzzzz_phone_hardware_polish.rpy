@@ -12,7 +12,7 @@ screen lc_phone_hardware_overlay():
     # and black glass bezel without blocking the Phone's buttons/content.
     zorder 399
 
-    if renpy.get_screen("phone_screen") or renpy.get_screen("lc_phone_status") or renpy.get_screen("lc_phone_settings"):
+    if (renpy.get_screen("phone_screen") or renpy.get_screen("lc_phone_status") or renpy.get_screen("lc_phone_settings")) and not renpy.get_screen("lc_phone_photo_viewer"):
         add "gui/phone/phone_hardware_overlay.svg":
             xysize (690, 1070)
             xalign 0.5
