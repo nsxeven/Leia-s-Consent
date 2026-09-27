@@ -143,7 +143,7 @@ screen lc_phone_photo_viewer(photo_asset):
     key "K_ESCAPE" action Hide("lc_phone_photo_viewer")
     key "mouseup_3" action Hide("lc_phone_photo_viewer")
 
-    add Solid("#000000e8")
+    add Solid("#000000")
 
     if photo_asset and renpy.has_image(photo_asset):
         add photo_asset:
@@ -402,15 +402,7 @@ screen phone_screen():
                                                             background None
                                                             hover_background None
                                                             action Show("lc_phone_photo_viewer", photo_asset=attachment_id)
-                                                            fixed:
-                                                                xfill True
-                                                                yfill True
-                                                                clipping True
-                                                                add attachment_id:
-                                                                    xysize (430, 242)
-                                                                    fit "cover"
-                                                                add "gui/phone/photo_round_mask.svg":
-                                                                    xysize (430, 242)
+                                                            add lc_phone_rounded_photo(attachment_id, 430, 242)
                                                     else:
                                                         add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
                                                     if current_choice_mode() == "developer":
