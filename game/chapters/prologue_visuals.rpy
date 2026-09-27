@@ -121,3 +121,46 @@ transform prologue_ryan_right:
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
+
+
+# --- Canonical dialogue-side contract -------------------------------------
+# Leia always owns the RIGHT slot. Other active characters own the LEFT slot.
+# Party Ryan's source artwork is already oriented correctly for the left slot,
+# so unlike the old right-slot placement it is not horizontally mirrored.
+transform prologue_leia_enter_right:
+    xalign 0.82
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
+    alpha 0.0
+    xoffset 45
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 xoffset 0
+
+transform prologue_leia_right:
+    xalign 0.82
+    yalign 1.0
+    xzoom -1.0
+
+transform prologue_other_enter_left:
+    xalign 0.18
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+    alpha 0.0
+    xoffset -45
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 xoffset 0
+
+transform prologue_other_left:
+    xalign 0.18
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
