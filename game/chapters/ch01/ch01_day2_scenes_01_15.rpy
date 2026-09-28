@@ -11,6 +11,17 @@ init 1 python:
     # Register Day Two choices with the existing central Choice Engine after it
     # has created CHOICE_EFFECTS / CHOICE_TAGS.
     CHOICE_EFFECTS.update({
+        "ch01_dream_ground": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_dream_curiosity": [
+            ("partner", "curiosity", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_dream_withdraw": [
+            ("relationship", "boredom", 1),
+        ],
         "ch01_d2_morning_reassure": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
@@ -132,6 +143,9 @@ init 1 python:
     })
 
     CHOICE_TAGS.update({
+        "ch01_dream_ground": ("supportive", "attentive", "love-route"),
+        "ch01_dream_curiosity": ("open", "curious", "exhibitionism-seed"),
+        "ch01_dream_withdraw": ("nonchalant", "withdrawal", "ntr-seed"),
         "ch01_d2_morning_reassure": ("supportive", "attentive", "love-route"),
         "ch01_d2_morning_tease": ("encouraging", "open", "playful", "attentive"),
         "ch01_d2_morning_dismiss": ("neutral", "nonchalant", "dismissive"),
@@ -251,6 +265,13 @@ label ch01_day2_scene_01_morning_after:
 
     "Morning arrived slowly through the useless decorative curtains."
     "Leia was already awake, buried beneath half the duvet and staring at me with the expression of somebody remembering something inconvenient."
+
+    if get_story_value("ch01_dream_response") == "grounded":
+        "The dream still existed somewhere at the back of my mind, but daylight had put it back where it belonged."
+    elif get_story_value("ch01_dream_response") == "curious":
+        "The dream had lost its sharp edges by morning. The uncomfortable question it left behind had not."
+    elif get_story_value("ch01_dream_response") == "withdrew":
+        "I had managed not to think about the dream again. Mostly. Keeping it there felt easier than examining it."
 
     gf "You were a menace last night."
     mc "Good morning to you too."
