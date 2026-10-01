@@ -420,6 +420,27 @@ init python:
             ("relationship", "boredom", 2),
             ("partner", "temptation", 1),
         ],
+        "ch01_d2_mall_go_to_leia": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_d2_mall_leave_to_maya": [
+            ("relationship", "love", -1),
+            ("relationship", "boredom", 1),
+            ("partner", "temptation", 1),
+        ],
+        "ch01_d2_mall_reveal_affection": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_d2_mall_reveal_open": [
+            ("partner", "curiosity", 1),
+            ("partner", "exhibitionism", 1),
+            ("player", "acceptance", 1),
+        ],
+        "ch01_d2_mall_reveal_tease": [
+            ("relationship", "love", 1),
+        ],
     }
 
     # Behavioral metadata is deliberately separate from stat effects. Later scenes
@@ -513,6 +534,11 @@ init python:
         "ch01_private_open": ("encouraging", "open", "honest", "attentive"),
         "ch01_private_jealous": ("protective", "possessive", "honest"),
         "ch01_private_indifferent": ("neutral", "nonchalant", "dismissive"),
+        "ch01_d2_mall_go_to_leia": ("supportive", "attentive", "love-route"),
+        "ch01_d2_mall_leave_to_maya": ("neutral", "nonchalant", "dismissive", "withdrawal", "ntr-seed"),
+        "ch01_d2_mall_reveal_affection": ("supportive", "attentive", "love-route"),
+        "ch01_d2_mall_reveal_open": ("encouraging", "participating", "open", "exhibitionism-seed"),
+        "ch01_d2_mall_reveal_tease": ("encouraging", "playful", "attentive"),
     }
 
     STANCE_TAGS = ("encouraging", "neutral", "protective")

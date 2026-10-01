@@ -4,6 +4,7 @@
 init python:
 
     OUTFIT_SHOP_ORDER = (
+        "boutique_cutout_mini",
         "date_night_dress",
         "after_hours_dress",
     )
@@ -132,6 +133,53 @@ init python:
                     "id": "story_home",
                     "label": "Villa wind-down",
                     "requirements": [],
+                },
+            ],
+        },
+
+        "boutique_cutout_mini": {
+            "name": "Black Cutout Mini",
+            "category": "bold",
+            "description": "The daring black halter mini Maya pushed Leia to try at the island boutique. Its separated front panels and extreme cutouts make it far outside Leia's usual comfort zone.",
+            "cost": 280,
+            "shop_visible": True,
+            "story_grant": True,
+            "shop_requirements": [],
+            "boldness": 90,
+            "exposure": 85,
+            "public_risk": 80,
+            "comfort": 15,
+            "playfulness": 75,
+            "elegance": 55,
+            "contexts": ("nightlife", "party", "resort", "evening"),
+            "asset_id": "leia_outfit_boutique_cutout_mini",
+            "wear_paths": [
+                {
+                    "id": "confident_exhibitionist",
+                    "label": "Confidence / exhibitionism",
+                    "requirements": [
+                        ("partner", "curiosity", 30),
+                        ("partner", "exhibitionism", 22),
+                    ],
+                },
+                {
+                    "id": "romantic_trust",
+                    "label": "Trust / consensual encouragement",
+                    "requirements": [
+                        ("relationship", "love", 58),
+                        ("relationship", "trust", 58),
+                        ("player", "acceptance", 18),
+                        ("partner", "curiosity", 24),
+                    ],
+                },
+                {
+                    "id": "autonomous_experimentation",
+                    "label": "Independent experimentation",
+                    "requirements": [
+                        ("relationship", "boredom", 18),
+                        ("partner", "curiosity", 24),
+                        ("partner", "boundary_looseness", 14),
+                    ],
                 },
             ],
         },

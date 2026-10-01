@@ -74,6 +74,46 @@ image cg ch01_d2_julian_underwear_reveal = Composite(
 )
 
 
+
+image bg ch01_d2_boutique = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#d9c9cf"),
+    (0, 700), Transform(Solid("#8b6d73"), xysize=(1920, 380)),
+    (180, 160), Transform(Solid("#eee4e7"), xysize=(520, 500)),
+    (860, 130), Transform(Solid("#c9a8b3"), xysize=(760, 530)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — FASHION BOUTIQUE / CHANGING ROOMS", size=46, color="#352f33"),
+)
+
+image cg ch01_d2_boutique_changing_room = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#765e69"),
+    (90, 70), Text("CG PLACEHOLDER\nDAY TWO BOUTIQUE — MAYA + LEIA CHANGING ROOM\nMAYA RED CUTOUT MINI / LEIA BLACK CUTOUT MINI", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_boutique_reveal_ryan = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#684d5a"),
+    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE REVEAL — RYAN PRESENT\nCLOSE FRAMING / MAYA SECURING LEIA'S TOP", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_boutique_reveal_julian = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#5c5964"),
+    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE REVEAL — JULIAN PRESENT\nWIDER FRAMING / PUBLIC BOUTIQUE CONTEXT", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_boutique_slip_ryan = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#744958"),
+    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE WARDROBE SLIP — RYAN PRESENT\nCLOSE / LEIA IMMEDIATELY CATCHES ONE FRONT PANEL", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_boutique_slip_julian = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#504b58"),
+    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE WARDROBE SLIP — JULIAN PRESENT\nWIDE / JULIAN'S GAZE LINGERS BEFORE HE CATCHES HIMSELF", size=48, color="#ffffff"),
+)
+
 transform ch01_d2_leia_left:
     xalign 0.16
     yalign 1.0

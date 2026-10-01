@@ -587,6 +587,288 @@ label ch01_day2_scene_11_missing_pair:
             "She took the photo with Julian. It was ordinary. My indifference was not."
 
     $ set_story_flag("ch01_d2_scene_11_complete")
+    jump ch01_day2_scene_11b_boutique
+
+
+label ch01_day2_scene_11b_boutique:
+
+    scene bg ch01_d2_boutique
+    with dissolve
+
+    friend "Before we go back, I need a shirt."
+    maya "You own twelve versions of the same shirt."
+    friend "Exactly. I need the thirteenth."
+
+    "The mall stop was supposed to take five minutes."
+    "Julian disappeared toward a menswear rack. Maya made it approximately three storefronts before stopping dead outside a boutique."
+
+    maya "Oh."
+    gf "Why did you say that like that?"
+    maya "Come with me."
+    gf "No."
+    maya "You haven't even seen what I'm looking at."
+    gf "I know you well enough now."
+
+    "Leia still followed her inside."
+
+    "Maya chose a red asymmetric cutout mini almost immediately. Leia was slower."
+    "She stopped in front of a rack and stared at one outfit long enough for Maya to notice."
+
+    maya "That one."
+    gf "What?"
+    maya "You've been staring at it."
+    gf "I have not."
+    maya "You absolutely have."
+
+    "Leia had been looking at something daring but still recognisably within reach."
+    "Maya looked beside it, found a much smaller black halter mini built from deep cutouts and two precarious front panels, and smiled."
+
+    maya "Oh, no. You're trying this."
+    gf "That's not even the one I was looking at."
+    maya "I know."
+    gf "Maya."
+    maya "Changing room."
+
+    "Leia stared at the black dress, then at Maya."
+    gf "I'm not wearing that outside."
+    maya "I didn't say outside. Try it."
+    gf "Why?"
+    maya "Because you've been staring at this rack for thirty seconds."
+
+    "Leia hesitated, then took the hanger from her."
+    $ set_story_flag("ch01_d2_maya_pushed_boutique_tryon")
+    $ set_story_value("ch01_d2_boutique_trial_outfit", "boutique_cutout_mini")
+
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_boutique_changing_room
+    with dissolve
+
+    "Maya's red dress fit as if she'd picked it for herself a hundred times before."
+    "Leia's was another matter."
+    "She stood in front of the mirror holding the two triangular front panels securely against herself while Maya worked out the straps behind her."
+
+    gf "This isn't a dress."
+    maya "You're wearing it. Therefore: dress."
+    gf "If I move my hand, I'm getting banned from this mall."
+    maya "Only because I haven't secured it properly yet."
+    gf "That is not making me feel better."
+
+    "Maya moved behind her, took over the tension in the straps and carefully pulled the top into place."
+
+    gf "How is yours more revealing and somehow more secure?"
+    maya "Skill."
+    gf "That's not how clothes work."
+    maya "Sounds like a you problem."
+
+    "Maya's teasing softened when she looked at Leia in the mirror."
+
+    maya "Seriously. You look good."
+    gf "I look terrified."
+    maya "Both can be true."
+
+    "Leia looked at herself again. This time she didn't immediately cover more of the dress."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
+
+    gf "[player_name]?"
+    mc "Yeah?"
+    gf "Can you come here for a second?"
+
+    $ d2_mall_lane = ch01_d2_route_lane()
+    $ set_story_value("ch01_d2_mall_entry_lane", d2_mall_lane)
+    $ d2_mall_ryan_present = True
+
+    if d2_mall_lane == "ntr_risk":
+        $ d2_mall_go_text = format_choice("ch01_d2_mall_go_to_leia", "Go see what she wants.")
+        $ d2_mall_leave_text = format_choice("ch01_d2_mall_leave_to_maya", "Let Maya handle it.")
+
+        menu:
+            "[d2_mall_go_text]":
+                $ apply_choice("ch01_d2_mall_go_to_leia")
+                $ set_story_value("ch01_d2_mall_ryan_response", "reconnected")
+                "Whatever distance had been building between us, she had asked for me."
+                "I went over."
+
+            "[d2_mall_leave_text]":
+                $ apply_choice("ch01_d2_mall_leave_to_maya")
+                $ set_story_value("ch01_d2_mall_ryan_response", "ignored")
+                $ d2_mall_ryan_present = False
+                mc "Maya's already in there. Let her handle it."
+                "There was a short pause from behind the curtain."
+                gf "...Okay."
+    else:
+        $ set_story_value("ch01_d2_mall_ryan_response", "came_over")
+        "I headed toward the changing rooms."
+
+    if d2_mall_ryan_present:
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_boutique_reveal_ryan
+        with dissolve
+
+        "Maya opened the curtain while standing behind Leia, both hands still responsible for keeping the black top properly tensioned."
+        "Leia looked considerably less certain than Maya did."
+
+        gf "Well?"
+
+        $ d2_mall_affection_text = format_choice("ch01_d2_mall_reveal_affection", "You look incredible.")
+        $ d2_mall_open_text = format_choice("ch01_d2_mall_reveal_open", "Didn't know you had that in you.")
+        $ d2_mall_tease_text = format_choice("ch01_d2_mall_reveal_tease", "Maya really did this to you?")
+
+        menu:
+            "[d2_mall_affection_text]":
+                $ apply_choice("ch01_d2_mall_reveal_affection")
+                mc "You look incredible."
+                "Leia's shoulders relaxed a little."
+                gf "You're biased."
+                mc "Very."
+
+            "[d2_mall_open_text]":
+                $ apply_choice("ch01_d2_mall_reveal_open")
+                mc "Didn't know you had that in you."
+                gf "I don't. Maya put it there."
+                maya "You're welcome."
+
+            "[d2_mall_tease_text]":
+                $ apply_choice("ch01_d2_mall_reveal_tease")
+                mc "Maya really did this to you?"
+                gf "Against my better judgement."
+                maya "Her judgement is improving."
+
+        $ exit_cinematic_mode()
+        scene bg ch01_d2_boutique
+        with dissolve
+
+    else:
+        maya "Julian!"
+        gf "Maya—"
+        maya "What? We need an opinion."
+
+        "Julian appeared from the next section holding two nearly identical shirts."
+
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_boutique_reveal_julian
+        with dissolve
+
+        friend "Oh."
+        maya "That's all you've got?"
+        friend "I wasn't prepared for a test."
+        gf "Don't encourage her."
+        friend "You look good."
+        gf "...Thanks."
+
+        $ exit_cinematic_mode()
+        scene bg ch01_d2_boutique
+        with dissolve
+
+    "Maya was still holding Leia's top securely when something over Leia's shoulder caught her attention."
+    maya "Wait—oh my God. That one."
+    gf "What?"
+    maya "That."
+
+    "A metallic mesh mini hung on a nearby display in deep crimson: a plunging draped front, delicate chain straps and a slit cut almost to the hip."
+
+    gf "You're already wearing red."
+    maya "Not for me. For you."
+    gf "Absolutely not."
+    maya "Leia, look at it—"
+
+    "Maya turned and reached toward the display without properly releasing the tension she was holding."
+    "One side of Leia's black top immediately slipped."
+
+    gf "Maya!"
+
+    if d2_mall_ryan_present:
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_boutique_slip_ryan
+        with dissolve
+
+        "Leia caught the loose panel almost immediately and clamped it back into place."
+        "Maya froze, horrified."
+        maya "Sorry. Sorry."
+        gf "You had one job."
+        maya "I got distracted."
+        gf "Clearly."
+
+        $ exit_cinematic_mode()
+        scene bg ch01_d2_boutique
+        with dissolve
+        $ set_story_value("ch01_d2_boutique_slip_witness", "ryan")
+
+    else:
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_boutique_slip_julian
+        with dissolve
+
+        "Leia caught the loose panel and pulled it back into place."
+        "But Julian had already seen the slip."
+        "His gaze stayed there a beat too long."
+        "Then another."
+        "Leia looked up and caught him staring."
+        "Their eyes met."
+        "That was what finally made Julian look away."
+
+        "Maya, focused entirely on fixing the top, missed the exchange."
+
+        maya "Sorry. Sorry."
+        gf "You had one job."
+        maya "I got distracted."
+        gf "Clearly."
+
+        $ exit_cinematic_mode()
+        scene bg ch01_d2_boutique
+        with dissolve
+        $ set_story_flag("ch01_d2_leia_noticed_julian_stare")
+        $ set_story_value("ch01_d2_boutique_slip_witness", "julian")
+
+    "Maya glanced back toward the crimson mesh dress."
+    maya "Still think you'd look amazing in it."
+    gf "I'm changing."
+    maya "So that's a maybe."
+    gf "That's a no."
+
+    "A few minutes later they emerged in their normal clothes. Maya had bought the red dress without hesitation."
+    "Leia still had the black mini over one arm."
+
+    if d2_mall_ryan_present:
+        "The boutique's catalogue was available through the Shop on my phone. Buying something would add it to Leia's wardrobe; whether she actually agreed to wear it later was a separate question."
+        $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
+        call screen shop_screen
+        if owns_outfit("boutique_cutout_mini"):
+            $ set_story_value("ch01_d2_mall_outfit_source", "ryan")
+            $ set_story_flag("ch01_d2_boutique_outfit_owned")
+            gf "You actually bought it?"
+            mc "You looked good in it."
+            gf "That doesn't mean I'm wearing it outside."
+            maya "Yet."
+            "Leia gave Maya a look and said nothing."
+        else:
+            $ set_story_value("ch01_d2_mall_outfit_source", "none")
+            "I left the black dress at the boutique. Leia looked back at it once, but didn't argue."
+    else:
+        "Leia looked down at the black dress for several seconds before carrying it to the counter herself."
+        $ grant_story_outfit("boutique_cutout_mini", equip=False)
+        $ set_story_value("ch01_d2_mall_outfit_source", "leia")
+        $ set_story_flag("ch01_d2_boutique_outfit_owned")
+
+        mc "You bought it?"
+        gf "Yeah."
+        mc "Thought you said it was too much."
+        gf "I said I wasn't wearing it outside."
+        maya "Yet."
+        "Leia gave Maya a look and said nothing."
+
+    "Julian eventually returned with a shopping bag."
+
+    maya "That's basically the shirt you were already wearing."
+    friend "This one's different."
+    maya "How?"
+    friend "It's new."
+
+    "We stepped back outside into the early-afternoon heat with considerably more shopping than Julian's five-minute shirt stop had promised."
+
+    $ set_story_flag("ch01_d2_scene_11b_boutique_complete")
     jump ch01_day2_scene_12_villa_pool_plan
 
 
