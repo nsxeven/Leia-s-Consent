@@ -1099,6 +1099,35 @@ label ch01_scene_30_end_day_one:
 
     "{i}What the hell was that?{/i}"
 
+    $ dream_ground_text = format_choice("ch01_dream_ground", "It was a dream. Leia hadn't done anything.")
+    $ dream_curiosity_text = format_choice("ch01_dream_curiosity", "Why did that bother me... and why couldn't I stop thinking about it?")
+    $ dream_withdraw_text = format_choice("ch01_dream_withdraw", "Don't think about it. Don't make it a thing.")
+
+    menu:
+        "[dream_ground_text]":
+            $ apply_choice("ch01_dream_ground")
+            $ set_story_value("ch01_dream_response", "grounded")
+            "I turned my head toward her."
+            "She was asleep exactly where she'd been before my brain decided to invent the rest."
+            "{i}It was a dream. Leia hadn't done anything.{/i}"
+            "I let the image go instead of making it hers to answer for."
+
+        "[dream_curiosity_text]":
+            $ apply_choice("ch01_dream_curiosity")
+            $ set_story_value("ch01_dream_response", "curious")
+            "I shut my eyes again, but the last image stayed there."
+            "{i}Why did that bother me... and why couldn't I stop thinking about it?{/i}"
+            "Jealousy explained some of it. Not all of it."
+            "I wasn't ready to put a name to the rest."
+
+        "[dream_withdraw_text]":
+            $ apply_choice("ch01_dream_withdraw")
+            $ set_story_value("ch01_dream_response", "withdrew")
+            "I looked away from her and pulled the sheet higher."
+            "{i}Don't think about it. Don't make it a thing.{/i}"
+            "There was nothing to confront her about, so I kept the feeling to myself."
+            "It was easier than trying to understand why it had stayed with me."
+
     $ set_story_flag("ch01_day1_towel_dream_seen")
     $ set_story_flag("ch01_scene_30_complete")
     $ set_story_flag("ch01_day_01_complete")
