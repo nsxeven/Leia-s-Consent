@@ -119,13 +119,13 @@ init python:
         dark = Transform(
             composite,
             matrixcolor=BrightnessMatrix(-1.0),
-            alpha=0.24,
+            alpha=0.40,
         )
         halo = Fixed(
-            Transform(dark, xoffset=-2, yoffset=0),
-            Transform(dark, xoffset=2, yoffset=0),
-            Transform(dark, xoffset=0, yoffset=-2),
-            Transform(dark, xoffset=0, yoffset=2),
+            Transform(dark, xoffset=-4, yoffset=0),
+            Transform(dark, xoffset=4, yoffset=0),
+            Transform(dark, xoffset=0, yoffset=-4),
+            Transform(dark, xoffset=0, yoffset=4),
             fit_first=True,
         )
         return Fixed(halo, composite, fit_first=True)
