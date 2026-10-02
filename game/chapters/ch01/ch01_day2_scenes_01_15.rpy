@@ -273,6 +273,86 @@ label ch01_day2_scene_01_morning_after:
     elif get_story_value("ch01_dream_response") == "withdrew":
         "I had managed not to think about the dream again. Mostly. Keeping it there felt easier than examining it."
 
+    # Day One continuity: Julian already sent every earned solo pool Capture to
+    # Trip Group last night. Review that same inventory here instead of creating
+    # a second photo-count/route state for the morning.
+    $ d2_morning_pool_photos = ch01_pool_capture_assets()
+    $ d2_morning_withdrew = get_story_value("ch01_dream_response") == "withdrew"
+
+    "Leia reached for her phone and opened the photos Julian had sent the night before."
+    gf "Okay. I still think he was way too pleased with himself, but..."
+    gf "This one's actually not bad."
+
+    $ renpy.scene()
+    $ renpy.show("cg " + d2_morning_pool_photos[0])
+    with dissolve
+
+    gf "What do you think?"
+
+    if d2_morning_withdrew:
+        "I looked at the photo. For a second, yesterday and the dream tried to occupy the same space in my head."
+        mc "Yeah. It's nice."
+        gf "...That's it?"
+        mc "What?"
+        gf "Nothing."
+        "Her eyes returned to the phone before mine did."
+    elif get_story_value("ch01_dream_response") == "curious":
+        "She looked more comfortable in the photo than she had while Julian was taking it."
+        mc "You look good."
+        gf "Just good?"
+        mc "Confident."
+        gf "I was trying very hard to look confident."
+        mc "It worked."
+    else:
+        mc "I like it."
+        gf "That sounded suspiciously easy."
+        mc "You're asking me whether I like a photo of my girlfriend."
+        gf "Fair."
+
+    if len(d2_morning_pool_photos) >= 2:
+        "Leia swiped to the next photo."
+        $ renpy.scene()
+        $ renpy.show("cg " + d2_morning_pool_photos[1])
+        with dissolve
+
+        if d2_morning_withdrew:
+            "She studied it quietly this time, no longer asking me to judge it."
+        elif get_story_value("ch01_dream_response") == "curious":
+            gf "I actually like this one more."
+            mc "You look more relaxed."
+            gf "Maybe I was getting used to it."
+            "The admission seemed to surprise her slightly less than it surprised me."
+        else:
+            gf "Wait. This one might be better."
+            mc "You're going to make me rank them, aren't you?"
+            gf "Obviously."
+
+    if len(d2_morning_pool_photos) >= 3:
+        "Her thumb moved again."
+        $ renpy.scene()
+        $ renpy.show("cg " + d2_morning_pool_photos[2])
+        with dissolve
+
+        if d2_morning_withdrew:
+            "Another good photo. Another moment where she seemed more interested in sharing it with me than I was capable of being."
+            "Leia lingered on it for a second, then locked the phone without asking."
+        elif get_story_value("ch01_dream_response") == "curious":
+            gf "Okay. I definitely wasn't this comfortable at the start."
+            mc "No."
+            gf "Is that a bad thing?"
+            "There was no accusation in the question. She genuinely wanted to know."
+            mc "I don't know yet."
+            gf "Honest."
+        else:
+            gf "There. That's my favourite."
+            mc "I thought the last one was your favourite."
+            gf "I've changed my mind."
+            mc "In the last four seconds?"
+            gf "Growth."
+
+    scene bg ch01_villa_bedroom_night
+    with dissolve
+
     gf "You were a menace last night."
     mc "Good morning to you too."
     gf "I'm serious."
