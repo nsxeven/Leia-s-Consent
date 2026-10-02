@@ -35,6 +35,16 @@ init 1 python:
             ("relationship", "love", -1),
             ("relationship", "boredom", 1),
         ],
+        "ch01_d2_maya_reassure": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_d2_maya_tease_jealousy": [
+            ("relationship", "love", 1),
+        ],
+        "ch01_d2_maya_open_honest": [
+            ("relationship", "trust", 1),
+        ],
         "ch01_d2_maya_include": [
             ("relationship", "love", 1),
             ("relationship", "trust", 2),
@@ -149,6 +159,9 @@ init 1 python:
         "ch01_d2_morning_reassure": ("supportive", "attentive", "love-route"),
         "ch01_d2_morning_tease": ("encouraging", "open", "playful", "attentive"),
         "ch01_d2_morning_dismiss": ("neutral", "nonchalant", "dismissive"),
+        "ch01_d2_maya_reassure": ("supportive", "attentive", "reassuring"),
+        "ch01_d2_maya_tease_jealousy": ("playful", "attentive"),
+        "ch01_d2_maya_open_honest": ("open", "honest", "trusting"),
         "ch01_d2_maya_include": ("supportive", "attentive", "reassuring"),
         "ch01_d2_maya_catchup": ("neutral", "trusting"),
         "ch01_d2_maya_dismiss_leia": ("neutral", "nonchalant", "dismissive", "distracted"),
@@ -394,6 +407,39 @@ label ch01_day2_scene_01_morning_after:
             gf "Right."
             "The subject died more quickly than it needed to."
 
+    "For a moment neither of us said anything."
+
+    if get_story_value("ch01_dream_response") == "withdrew":
+        "Leia shifted closer anyway, her shoulder settling against mine."
+        "I felt the invitation in it. I just didn't quite know what to do with it."
+        gf "You okay?"
+        mc "Yeah. Just didn't sleep that well."
+        "She watched me for another second, then let me have the answer."
+    elif get_story_value("ch01_dream_response") == "curious":
+        "Leia shifted closer, warm and familiar against my side."
+        "The contrast with the dream should have made the whole thing easier to dismiss. Somehow, it only made my reaction to it stranger."
+    else:
+        "Leia shifted closer and stole the last corner of duvet I still technically owned."
+        mc "Seriously?"
+        gf "You weren't using it."
+        mc "It was on me."
+        gf "Exactly. Storage."
+
+    "A few minutes later, Leia finally pushed herself out of bed and stretched."
+    gf "I'm showering before Julian starts accusing us of hibernating."
+    mc "He'd have to be awake first."
+    gf "Unfortunately, he always is when there's food involved."
+
+    "She disappeared toward the bathroom, leaving me with a quiet room and far too much time inside my own head."
+
+    if get_story_value("ch01_dream_response") == "withdrew":
+        "I picked up my phone mostly so I would have something else to look at."
+    elif get_story_value("ch01_dream_response") == "curious":
+        "I caught myself thinking about the photos again, and about how quickly Leia had gone from awkward to comfortable in front of the camera."
+        "The thought wasn't jealousy. That was what made it harder to file away."
+    else:
+        "By the time I checked my phone, the dream had already started to feel like something that belonged to the night before."
+
     $ set_story_flag("ch01_d2_scene_01_complete")
     jump ch01_day2_scene_02_breakfast
 
@@ -416,6 +462,38 @@ label ch01_day2_scene_02_breakfast:
 
     "Breakfast settled into the easy rhythm we'd found by the end of yesterday."
 
+    friend "So what's the plan today?"
+    gf "Something that doesn't involve me wearing dinner."
+    friend "One accident."
+    gf "One very wet accident."
+    mc "You did recover."
+    gf "Eventually."
+
+    "Julian pointed at the spread between us."
+    friend "Eat first. Decide later. That's a plan."
+    gf "That's not a plan."
+    friend "It's worked for me so far."
+
+    if get_story_value("ch01_dream_response") == "withdrew":
+        "My attention drifted somewhere between the table and the remains of the dream."
+        gf "Ryan?"
+        mc "Hm?"
+        gf "Coffee."
+        "She was holding the pot slightly toward me."
+        gf "I asked if you wanted some."
+        mc "Oh. Yeah. Thanks."
+        "She poured it without commenting, but I caught the brief look she gave me before turning back to Julian."
+    elif get_story_value("ch01_dream_response") == "curious":
+        gf "Coffee?"
+        mc "Please."
+        "She poured mine before her own without thinking about it."
+        "Small, ordinary, automatic. Four years reduced to a gesture neither of us noticed anymore."
+    else:
+        gf "Coffee?"
+        mc "Only if you're admitting you stole the duvet."
+        gf "I admit nothing."
+        "She poured it anyway."
+
     $ set_story_flag("ch01_d2_scene_02_complete")
     jump ch01_day2_scene_03_maya_message
 
@@ -434,6 +512,53 @@ label ch01_day2_scene_03_maya_message:
     gf "Nothing."
     friend "That was the loudest 'nothing' I've ever heard."
 
+    gf "So this is the Maya I've heard about."
+    mc "You've heard about her."
+    gf "Mm."
+    mc "What does that mean?"
+    gf "Nothing."
+
+    "Julian lowered his coffee."
+    friend "We're doing 'nothing' again?"
+
+    gf "Shut up."
+    "She looked back at me, trying and failing to make the next question sound casual."
+    gf "Is she pretty?"
+
+    $ d2_maya_reassure_text = format_choice("ch01_d2_maya_reassure", "You're the one I'm here with.")
+    $ d2_maya_tease_jealousy_text = format_choice("ch01_d2_maya_tease_jealousy", "Are you jealous?")
+    $ d2_maya_honest_text = format_choice("ch01_d2_maya_open_honest", "Yeah. She's attractive. She's also just my friend.")
+
+    menu:
+        "[d2_maya_reassure_text]":
+            $ apply_choice("ch01_d2_maya_reassure")
+            mc "You're the one I'm here with."
+            gf "That wasn't technically the question."
+            mc "It was the question underneath the question."
+            "The corner of her mouth gave her away."
+            gf "Acceptable answer."
+
+        "[d2_maya_tease_jealousy_text]":
+            $ apply_choice("ch01_d2_maya_tease_jealousy")
+            mc "Are you jealous?"
+            gf "No."
+            mc "That was fast."
+            gf "Because the answer is no."
+            friend "Very convincing."
+            gf "Nobody asked you."
+
+        "[d2_maya_honest_text]":
+            $ apply_choice("ch01_d2_maya_open_honest")
+            mc "Yeah. She's attractive. She's also just my friend."
+            "Leia considered that for a second."
+            gf "Okay."
+            mc "Okay?"
+            gf "I asked. You answered."
+            "There was something almost deliberate about how easily she accepted it."
+
+    if get_story_value("ch01_dream_response") == "withdrew":
+        "Her answer should have reassured me. Instead, I found myself wondering whether I had been offering her the same honesty since I woke up."
+
     $ set_story_flag("ch01_d2_maya_meetup_confirmed")
     jump ch01_day2_scene_04_jealousy_callback
 
@@ -442,25 +567,22 @@ label ch01_day2_scene_04_jealousy_callback:
 
     with dissolve
 
-    gf "How long have you known her again?"
-    mc "A while."
-    gf "That's not a number."
-    mc "We did this yesterday."
-    gf "I'm confirming the information."
-    mc "Still gathering data?"
-    gf "Exactly."
+    "The subject should have ended there, but Leia's curiosity survived breakfast."
 
     if get_story_value("ch01_female_friend_response") == "teased_jealousy":
-        mc "Still not jealous?"
-        gf "Still not."
+        gf "And for the record, I'm still not jealous."
+        mc "I didn't say anything."
+        gf "Your face did."
     elif get_story_value("ch01_female_friend_response") == "asserted_boundary":
-        gf "I'm not saying you shouldn't meet her. I want to meet her too."
-        mc "Good. Then you can interrogate her directly."
-        gf "Efficient."
-    else:
-        gf "I'm not worried."
-        mc "I didn't say you were."
+        gf "I'm glad she's meeting all of us, by the way."
+        mc "Me too."
         gf "Good."
+    else:
+        gf "I am curious to finally meet her."
+        mc "That's allowed."
+        gf "How generous."
+
+    "Whatever tiny tension had been there stayed small enough to joke about."
 
     $ set_story_flag("ch01_d2_scene_04_complete")
     jump ch01_day2_scene_05_meet_maya
