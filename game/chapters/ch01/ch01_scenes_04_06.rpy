@@ -116,6 +116,16 @@ label ch01_scene_05_photography:
     "Her first group selfie caught me blinking and [friend_name] looking as if he had been summoned against his will."
 
     gf "How are both of you bad at having faces?"
+
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_day
+    with dissolve
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+    else:
+        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+    with sprite_enter_exit
+
     friend "Give me the phone."
 
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
@@ -129,6 +139,7 @@ label ch01_scene_05_photography:
     gf "Can you take one of just me?"
     friend "Sure."
 
+    $ enter_cinematic_mode()
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_photo_awkward_b
     else:
