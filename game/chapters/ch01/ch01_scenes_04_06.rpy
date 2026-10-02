@@ -321,21 +321,20 @@ label ch01_scene_05_photography:
         show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
     with sprite_enter_exit
 
-    "[girlfriend_name] took her phone back and scrolled through the results."
+    "[friend_name] lowered the phone after the last shot."
 
     if get_story_value("ch01_photo_outcome") == "confident":
-        gf "Okay... that one is actually kind of hot."
-        mc "Kind of?"
-        gf "Don't make me take it back."
+        gf "Did you get it?"
+        friend "I got it."
+        gf "Good. You can show me later."
     elif get_story_value("ch01_photo_outcome") in ("relaxed", "chose_to_continue"):
-        gf "I like this one. I look like I'm not trying."
-        friend "That's because you finally weren't."
+        gf "Those better not all be terrible."
+        friend "You'll find out later."
     else:
-        gf "The group one is cute."
-        mc "Even with my face?"
-        gf "Your face gives it character."
+        gf "At least tell me the group one was decent."
+        friend "You'll survive."
 
-    "She saved her favourite without posting it anywhere."
+    "The photos stayed on [friend_name]'s phone for now."
 
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
