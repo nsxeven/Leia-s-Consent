@@ -213,13 +213,9 @@ label ch01_scene_03_outfit_choice:
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     $ grant_story_outfit(selected_pool_outfit, equip=True)
 
-    if selected_pool_outfit == "pool_bolder":
-        scene cg ch01_swimsuit_choice_blue
-    else:
-        scene cg ch01_swimsuit_choice_white
-    with dissolve
-
     $ exit_cinematic_mode()
+    scene bg ch01_master_bedroom
+    with dissolve
 
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
 
@@ -278,23 +274,31 @@ label ch01_scene_03_outfit_choice:
     $ set_story_flag("ch01_scene_03_complete")
 
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini shy at prologue_sprite_enter_center, leia_body_idle
-        with sprite_enter_exit
         "A few minutes later, [girlfriend_name] stepped out in the new swimsuit."
+        $ enter_cinematic_mode()
+        scene cg ch01_swimsuit_choice_blue
+        with dissolve
         gf "Well?"
         mc "Still think I answered too fast?"
-        show leia_blue_bikini smile
-        with sprite_change
         gf "Maybe not."
-    else:
-        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+        $ exit_cinematic_mode()
+        scene bg ch01_master_bedroom_curtains
+        with dissolve
+        show leia_blue_bikini smile at prologue_sprite_enter_center, leia_body_idle
         with sprite_enter_exit
+    else:
         "A few minutes later, [girlfriend_name] stepped out in the swimsuit she already trusted."
-        show leia_white_ruffle smile
-        with sprite_change
+        $ enter_cinematic_mode()
+        scene cg ch01_swimsuit_choice_white
+        with dissolve
         gf "Comfort first."
         mc "You still look incredible."
         gf "Correct answer."
+        $ exit_cinematic_mode()
+        scene bg ch01_master_bedroom_curtains
+        with dissolve
+        show leia_white_ruffle smile at prologue_sprite_enter_center, leia_body_idle
+        with sprite_enter_exit
 
     "From downstairs, [friend_name] called that the pool—and the cold drinks—were waiting."
 
