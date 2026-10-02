@@ -35,6 +35,19 @@ init 1 python:
             ("relationship", "love", -1),
             ("relationship", "boredom", 1),
         ],
+        "ch01_d2_postshop_sleep": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+            ("relationship", "boredom", -1),
+        ],
+        "ch01_d2_postshop_head": [
+            ("relationship", "trust", 1),
+            ("relationship", "boredom", -1),
+        ],
+        "ch01_d2_postshop_shut_down": [
+            ("relationship", "love", -1),
+            ("relationship", "boredom", 1),
+        ],
         "ch01_d2_maya_reassure": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
@@ -159,6 +172,9 @@ init 1 python:
         "ch01_d2_morning_reassure": ("supportive", "attentive", "love-route"),
         "ch01_d2_morning_tease": ("encouraging", "open", "playful", "attentive"),
         "ch01_d2_morning_dismiss": ("neutral", "nonchalant", "dismissive"),
+        "ch01_d2_postshop_sleep": ("supportive", "attentive", "honest", "repair"),
+        "ch01_d2_postshop_head": ("attentive", "honest", "repair"),
+        "ch01_d2_postshop_shut_down": ("neutral", "nonchalant", "dismissive"),
         "ch01_d2_maya_reassure": ("supportive", "attentive", "reassuring"),
         "ch01_d2_maya_tease_jealousy": ("playful", "attentive"),
         "ch01_d2_maya_open_honest": ("open", "honest", "trusting"),
@@ -594,6 +610,7 @@ label ch01_day2_scene_05_meet_maya:
     with fade
 
     "Maya spotted us before I spotted her."
+    "A small day bag hung from one shoulder, looking more prepared for an island afternoon than the rest of us were."
 
     maya "Ryan!"
 
@@ -1183,23 +1200,174 @@ label ch01_day2_scene_11b_boutique:
 
     "We stepped back outside into the early-afternoon heat with considerably more shopping than Julian's five-minute shirt stop had promised."
 
+    maya "Drink before we go?"
+    gf "Please."
+
+    "We found a table nearby and dropped the shopping bags around our feet."
+
+    maya "That went significantly better than expected."
+    gf "For who?"
+    maya "Me."
+    gf "Trying something on and wearing it are completely different things."
+    maya "That's what fitting rooms are for."
+
+    friend "For what it's worth, I thought it looked good."
+    gf "Thanks."
+    maya "See?"
+    gf "You don't get credit for his opinion."
+
+    "Maya and Julian started arguing over whether his new shirt was actually different from the one he'd arrived in."
+    "Leia leaned slightly closer to me."
+
+    if get_story_value("ch01_d2_boutique_slip_witness") == "ryan":
+        gf "You saw that, right?"
+        mc "The dress?"
+        gf "No. When it slipped."
+        mc "Yeah."
+        gf "I wanted to disappear."
+        if get_story_value("ch01_d2_mall_ryan_response") == "reconnected" or get_story_value("ch01_d2_mall_entry_lane") != "ntr_risk":
+            mc "You caught it."
+            gf "Barely."
+            "Her embarrassment had already softened enough for her to roll her eyes at herself."
+        else:
+            mc "It was an accident."
+            gf "I know."
+    else:
+        mc "So what happened in there after I stayed out?"
+        gf "Nothing dramatic."
+        "She turned her cup slowly between her hands."
+        gf "The top slipped a little."
+        mc "Oh."
+        gf "Julian was there."
+        "I looked at her."
+        gf "He looked away."
+        "The way she said it wasn't defensive. It was simply the version of events she'd been left to process without me."
+
+    gf "You've been quiet today."
+
+    $ d2_postshop_sleep_text = format_choice("ch01_d2_postshop_sleep", "I didn't sleep well.")
+    $ d2_postshop_head_text = format_choice("ch01_d2_postshop_head", "I've just got a lot in my head.")
+    $ d2_postshop_shut_text = format_choice("ch01_d2_postshop_shut_down", "I'm fine.")
+
+    menu:
+        "[d2_postshop_sleep_text]":
+            $ apply_choice("ch01_d2_postshop_sleep")
+            mc "I didn't sleep well."
+            gf "I noticed."
+            mc "Sorry."
+            gf "You don't have to apologise for being tired."
+            "It wasn't the whole truth, but at least I had stopped pretending there was nothing to explain."
+
+        "[d2_postshop_head_text]":
+            $ apply_choice("ch01_d2_postshop_head")
+            mc "I've just got a lot in my head."
+            gf "Anything you want to talk about?"
+            mc "Not yet."
+            gf "Okay."
+            "She didn't push. The important part was that I'd finally admitted there was something there."
+
+        "[d2_postshop_shut_text]":
+            $ apply_choice("ch01_d2_postshop_shut_down")
+            mc "I'm fine."
+            "Leia watched me for a second."
+            gf "Okay."
+            "This time the word meant she was done asking."
+
+    "Julian stood and picked up his shopping bag."
+    friend "I'm getting another drink before we go."
+    mc "I'll come with you."
+
+    "We left Leia and Maya at the table for a minute."
+
+    maya "Everything okay?"
+    gf "With the dress?"
+    maya "With Ryan."
+
+    if has_choice_tag("repair") or get_story_value("ch01_d2_mall_ryan_response") in ("reconnected", "came_over"):
+        gf "Yeah. I think he's just in his head today."
+        maya "People are allowed weird days."
+        gf "Very insightful."
+        maya "I'm extremely emotionally intelligent."
+        gf "Obviously."
+    else:
+        gf "I don't know."
+        "Leia looked toward the counter, where Ryan and Julian were waiting."
+        gf "He's been somewhere else all morning."
+        maya "Did something happen?"
+        gf "Not that I know of. He says he's fine."
+        maya "Then give him a little time."
+        gf "Yeah."
+        "For once, Leia let the problem sit instead of immediately trying to solve it."
+
+    "By the time we returned, Maya had deliberately moved the conversation back to clothes."
+    maya "I'm still saying the black one."
+    gf "I'm still saying fitting room only."
+    maya "For now."
+    gf "You're exhausting."
+
     $ set_story_flag("ch01_d2_scene_11b_boutique_complete")
     jump ch01_day2_scene_12_villa_pool_plan
 
 
 label ch01_day2_scene_12_villa_pool_plan:
 
-    "By early afternoon the heat had won."
+    "We headed back toward Julian's place with Maya and Leia a few steps ahead of us."
 
-    maya "You have a private pool and dragged me around shops?"
-    friend "Technically Ryan and Leia dragged you."
-    gf "Back to the villa."
-    maya "Finally, leadership."
+    if has_choice_tag("repair"):
+        "Leia drifted back toward me before long and slipped her hand into mine."
+    elif ch01_d2_route_lane() == "exhibitionism":
+        gf "Ryan, tell her she's insane."
+        maya "He doesn't get a vote."
+        gf "He gets an advisory position."
+        mc "I accept the appointment."
+        "Leia turned forward again, still laughing with Maya but keeping me inside the conversation."
+    elif ch01_d2_route_lane() == "ntr_risk":
+        "Leia looked back once."
+        "I was half a step behind, somewhere else again."
+        "She turned back to Maya."
+        "She didn't look back a second time."
 
     scene bg ch01_villa_living
     with fade
 
-    "Back at the villa, Maya followed Leia upstairs to change while Julian and I dealt with drinks outside."
+    "Maya stopped just inside."
+
+    maya "Wait."
+    maya "This is where you're staying?"
+    friend "Yeah."
+
+    "She looked around the living room, then back at Julian."
+
+    maya "The sunglasses make sense now."
+    friend "Thank you."
+    maya "That wasn't a compliment."
+
+    gf "Come on. I'll show you around."
+    "Yesterday Leia had been the newcomer. Today she was the one leading Maya through the villa like she'd already learned its shape."
+
+    "They made it as far as the view outside before Maya stopped again."
+
+    maya "Is that a private pool?"
+    friend "Yes."
+    maya "You didn't think that was relevant information?"
+    friend "Relevant to what?"
+    maya "Everything."
+
+    gf "We went in yesterday."
+    maya "And nobody told me to bring a swimsuit?"
+
+    "Maya paused, then looked down at the day bag she'd been carrying since the café."
+
+    maya "Actually—wait. I did bring one."
+    gf "You just carry a swimsuit around?"
+    maya "We're on an island."
+    gf "...Fair."
+
+    maya "Come change with me."
+    gf "You know where nothing is."
+    maya "You do."
+
+    "Leia led her upstairs while Julian and I dealt with drinks outside."
 
     $ set_story_flag("ch01_d2_scene_12_complete")
     jump ch01_day2_scene_13_girls_upstairs
@@ -1210,7 +1378,7 @@ label ch01_day2_scene_13_girls_upstairs:
     scene bg ch01_master_bedroom
     with dissolve
 
-    "Upstairs, Leia laid both swimsuits across the bed while Maya changed beside her."
+    "Upstairs, Leia laid both of her swimsuits across the bed while Maya pulled her own from the day bag and changed beside her."
 
     maya "You brought options."
     gf "One is safe. One requires confidence."
@@ -1221,9 +1389,10 @@ label ch01_day2_scene_13_girls_upstairs:
     if partner_stats["exhibitionism"] >= 22 or partner_stats["curiosity"] >= 27:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
         gf "The new one."
-        maya "Then wear the new one."
-        gf "Very nuanced advice."
-        maya "I charge by the hour."
+        maya "Oh."
+        gf "What?"
+        maya "Nothing. I'm updating my understanding of you."
+        gf "Shut up."
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
         gf "I think the comfortable one today."
@@ -1240,11 +1409,11 @@ label ch01_day2_scene_14_tie_foreshadow:
 
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
         "Leia tied the top while still talking to Maya, fingers moving faster than her attention."
-        maya "Double-knot that."
-        gf "It's fine."
+        maya "That tie secure?"
+        "Leia glanced down and gave it a small tug."
+        gf "Should be fine."
         maya "Famous last words."
-        gf "It survived yesterday."
-        maya "Yesterday you weren't distracted by my excellent conversation."
+        gf "It's fine."
         $ set_story_flag("ch01_d2_bikini_tie_loose")
     else:
         "Leia changed into the swimsuit she already trusted while Maya borrowed the mirror and most of the counter space."
