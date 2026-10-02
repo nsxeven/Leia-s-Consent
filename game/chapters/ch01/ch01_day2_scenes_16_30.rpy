@@ -340,11 +340,44 @@ label ch01_day2_scene_18_pool_aftermath:
 
     elif get_story_value("ch01_d2_pool_incident") == "leia_maya_bee_top_off":
         "Maya eventually retrieved Leia's top and passed it back under the water."
-        "Once Leia had recovered, she looked toward the strangers and then toward me."
-        gf "That went further than planned."
+        "Leia retied it beneath the surface before climbing out, still visibly red from what had happened."
+        "Her eyes flicked toward the strangers. They were still there."
+        "Then she came straight to me."
+
+        gf "Okay."
+        mc "Okay?"
+        gf "That went way further than I meant it to."
         mc "The bee?"
+        "Leia gave me a look."
         gf "Everything."
-        "Her embarrassment was real. So was the fact that she chose to process the attention with me."
+
+        "She lowered her voice."
+        gf "The strings thing was on purpose."
+        gf "Maya was being Maya, and I said yes."
+        gf "I knew they were looking."
+        "She glanced toward the strangers again, then back at me."
+        gf "But that?"
+        gf "That was not on purpose."
+
+        mc "I know."
+        "Some of the tension left her shoulders."
+
+        gf "You saw them looking before you left."
+        mc "Yeah."
+        gf "And you were okay with... us playing with it?"
+        mc "With what we were doing together? Yeah."
+
+        "Leia's embarrassment didn't disappear, but the small smile that followed belonged to me."
+        gf "Okay."
+        gf "Because I think I liked that part."
+        "She immediately covered her face for half a second."
+        gf "Not the losing-my-top part."
+        mc "Important distinction."
+        gf "Very important."
+
+        "Maya called something unhelpful from the pool. Leia ignored her and stayed beside me."
+        "The attention had gone further than Leia intended, but she brought the experience back into our relationship instead of leaving Ryan outside it."
+        $ set_story_flag("ch01_d2_exhibition_pool_shared_with_ryan")
     else:
         "Once Leia had retied her top, she stayed close enough that our shoulders kept touching."
         "The strangers had seen more than either of us intended. There was no ambiguity about how it happened."
