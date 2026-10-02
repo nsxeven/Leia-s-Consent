@@ -213,6 +213,13 @@ label ch01_scene_05_photography:
                 scene cg ch01_photo_capture_02_a
             with Dissolve(0.08)
             $ set_story_value("ch01_pool_capture_count", 2)
+
+            # Hold the successful second capture on screen for a dialogue beat.
+            # Without this, the branch exits cinematic mode immediately and the
+            # photo is visible for only the transition frame.
+            "The second shot was different. She looked relaxed this time—caught mid-smile instead of trying to pose."
+            gf "Okay. I actually like that one."
+
             $ exit_cinematic_mode()
 
         "[ch01_photo_more_text]":
