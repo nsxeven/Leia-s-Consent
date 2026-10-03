@@ -40,11 +40,14 @@ image cg ch01_drive_to_dinner = At("images/cg/ch01/CH1D1_CG_DriveToDinner_01.web
 image cg ch01_dinner_arrival = At("images/cg/ch01/CH1D1_CG_DinnerArrival_01.webp", prologue_fullscreen)
 image cg ch01_dinner_photo_ask = At("images/cg/ch01/CH1D1_CG_DinnerPhotoAsk_01.webp", prologue_fullscreen)
 
-image cg ch01_dinner_spill = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#744b57"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-01 — STRANGER COLLISION\nBOTH OUTFITS WET / LEIA DRESS + STICKY BRA COMPROMISED", size=52, color="#ffffff"),
-)
+# Dinner collision is a two-beat production CG sequence:
+# 01 = impact / liquid still airborne
+# 02 = immediate aftermath / both outfits visibly wet
+image cg ch01_dinner_spill_01 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_01.webp", prologue_fullscreen)
+image cg ch01_dinner_spill_02 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_02.webp", prologue_fullscreen)
+
+# Backward-compatible alias for older development saves/references.
+image cg ch01_dinner_spill = "cg ch01_dinner_spill_01"
 
 image cg ch01_dinner_return_braless = Composite(
     (1920, 1080),
