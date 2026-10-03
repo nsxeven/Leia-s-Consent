@@ -74,6 +74,81 @@ image cg ch01_d2_julian_underwear_reveal = Composite(
 )
 
 
+# Stable Day Two finale CG IDs. Final art can replace these one-for-one.
+
+image cg ch01_d2_love_pool_oral_01 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#835d6e"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 1\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_love_pool_oral_02 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#6f5266"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 2\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_love_bedroom_01 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#4a394d"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 3\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_love_bedroom_02 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#3f3344"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 4\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_exhib_bed_open_01 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#51384d"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 5\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_exhib_bed_open_02 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#4b3448"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 6\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_exhib_bed_open_03 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#453041"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 7\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_exhib_bed_open_04 = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#3e2c3b"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 8\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_ntr_dream_strangers = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#492f3c"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 9\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_ntr_dream_julian_pool = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#3d3040"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 10\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_ntr_dream_nhie = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#372b37"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 11\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+image cg ch01_d2_ntr_dream_wrong_room = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#2f2832"),
+    (90, 70), Text("CG PLACEHOLDER\\nDAY TWO FINALE — 12\\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
+
 
 image bg ch01_d2_boutique = Composite(
     (1920, 1080),
