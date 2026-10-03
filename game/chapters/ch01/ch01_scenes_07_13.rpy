@@ -225,10 +225,15 @@ label ch01_scene_09_dinner:
     "Leia turned straight into him."
 
     $ enter_cinematic_mode()
-    scene cg ch01_dinner_spill
+    scene cg ch01_dinner_spill_01
     with dissolve
 
-    "The collision sent most of his drink across the front of Leia's dress and the rest down his shorts."
+    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them."
+
+    scene cg ch01_dinner_spill_02
+    with dissolve
+
+    "Most of it landed across the front of Leia's dress. The rest soaked straight through the stranger's white shorts."
 
     gf "Oh my God—I'm so sorry."
     stranger "No, that was me. Are you okay?"
