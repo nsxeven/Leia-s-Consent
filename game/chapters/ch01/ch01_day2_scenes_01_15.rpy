@@ -109,6 +109,10 @@ init 1 python:
             ("partner", "curiosity", 1),
             ("player", "acceptance", 1),
         ],
+        "ch01_d2_sunset_partial": [
+            ("relationship", "trust", 1),
+            ("relationship", "boredom", -1),
+        ],
         "ch01_d2_sunset_ignore_gate": [
             ("relationship", "love", -3),
             ("relationship", "trust", -2),
@@ -155,6 +159,14 @@ init 1 python:
             ("relationship", "boredom", -3),
             ("partner", "secrecy", -1),
         ],
+        "ch01_d2_wink_accuse_hard": [
+            ("relationship", "love", -4),
+            ("relationship", "trust", -5),
+            ("relationship", "boredom", 4),
+            ("player", "jealousy", 3),
+            ("partner", "temptation", 3),
+            ("partner", "secrecy", 2),
+        ],
         "ch01_d2_wink_reject_hard": [
             ("relationship", "love", -5),
             ("relationship", "trust", -4),
@@ -189,6 +201,7 @@ init 1 python:
         "ch01_d2_pool_accuse": ("protective", "nonchalant", "dismissive"),
         "ch01_d2_sunset_connect": ("supportive", "attentive", "love-route"),
         "ch01_d2_sunset_tease": ("encouraging", "open", "playful", "attentive"),
+        "ch01_d2_sunset_partial": ("attentive", "honest", "repair"),
         "ch01_d2_sunset_ignore_gate": ("neutral", "nonchalant", "dismissive", "distracted", "ntr-gate"),
         "ch01_d2_game_reassure": ("supportive", "attentive"),
         "ch01_d2_game_tease": ("encouraging", "open", "playful", "attentive"),
@@ -197,6 +210,7 @@ init 1 python:
         "ch01_d2_bed_pool_exhibition": ("encouraging", "open", "honest", "participating", "repair"),
         "ch01_d2_bed_pool_accuse": ("protective", "dismissive", "unresolved"),
         "ch01_d2_wink_repair": ("supportive", "attentive", "honest", "repair"),
+        "ch01_d2_wink_accuse_hard": ("protective", "jealous", "accusatory", "ntr-confirm"),
         "ch01_d2_wink_reject_hard": ("neutral", "nonchalant", "dismissive", "ntr-confirm"),
     })
 
