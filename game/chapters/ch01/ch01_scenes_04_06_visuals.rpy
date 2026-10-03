@@ -37,10 +37,7 @@ image cg ch01_towel_shift_01 = At("images/cg/ch01/CH1D1_CG_TowelShift_01.webp", 
 image cg ch01_towel_shift_02 = At("images/cg/ch01/CH1D1_CG_TowelShift_02.webp", prologue_fullscreen)
 image cg ch01_towel_shift_03 = At("images/cg/ch01/CH1D1_CG_TowelShift_03.webp", prologue_fullscreen)
 
-# Legacy realization asset retained in the repository; the expanded three-step
-# TowelShift sequence now handles the immediate balcony realization.
-image cg ch01_towel_realization = At("images/cg/ch01/CH1D1_CG_TowelRealization_01.webp", prologue_fullscreen)
-
-image cg ch01_towel_did_he_see = At("images/cg/ch01/CH1D1_CG_TowelDidHeSee_01.webp", prologue_fullscreen)
+# The original realization CG is the upstairs "did he see?" reaction beat.
+image cg ch01_towel_did_he_see = At("images/cg/ch01/CH1D1_CG_TowelRealization_01.webp", prologue_fullscreen)
 
 
