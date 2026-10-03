@@ -395,9 +395,6 @@ label ch01_scene_06_friendship_and_towel:
     mc "Because dinner isn't for another thirty-seven minutes."
     gf "Exactly. You haven't even changed."
 
-    scene cg ch01_towel_shift_01
-    with dissolve
-
     "She stepped farther out, still far more interested in hurrying us along than in how the towel looked from below."
 
     gf "I'm serious. Go shower."
@@ -408,6 +405,10 @@ label ch01_scene_06_friendship_and_towel:
     friend "The side that gets to dinner on time."
 
     "She lifted an arm as if that settled the argument."
+
+    scene cg ch01_towel_shift_01
+    with dissolve
+
     "The movement shifted the towel just enough that the view from below was considerably less secure than she seemed to realize."
 
     mc "[girlfriend_name]."
@@ -422,11 +423,11 @@ label ch01_scene_06_friendship_and_towel:
 
     gf "...Oh."
 
-    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
-    "Beside me, [friend_name] turned deliberately toward the pool."
-
     scene cg ch01_towel_shift_03
     with dissolve
+
+    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
+    "Beside me, [friend_name] turned deliberately toward the pool."
 
     friend "I'm looking at the water."
     gf "You weren't two seconds ago!"
