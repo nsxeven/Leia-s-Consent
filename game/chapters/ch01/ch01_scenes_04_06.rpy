@@ -386,46 +386,58 @@ label ch01_scene_06_friendship_and_towel:
     with dissolve
 
     "[girlfriend_name] stood in the open upstairs doorway with wet hair and a small towel wrapped around her body."
-    "One hand held it closed. The other braced against the frame as she leaned out to find us."
-    "From where she stood, she probably thought she was covered. From the pool below, the towel looked considerably shorter."
+    "One hand held it closed as she leaned out to find us."
 
     gf "Dinner is at seven!"
     mc "What time is it?"
     friend "Six twenty-three."
     gf "Why are both of you still sitting there?"
+    mc "Because dinner isn't for another thirty-seven minutes."
+    gf "Exactly. You haven't even changed."
 
-    "She stepped farther out and leaned over the railing, exposing most of one thigh as the towel rode higher over her hip."
+    scene cg ch01_towel_shift_01
+    with dissolve
 
-    scene cg ch01_towel_shift
-    with Dissolve(3.0)
+    "She stepped farther out, still far more interested in hurrying us along than in how the towel looked from below."
 
-    "When she lifted an arm to gesture toward the room, the top loosened just enough to reveal the side and lower curve of her breast."
-    "Not everything. More than she intended."
+    gf "I'm serious. Go shower."
+    mc "I already showered."
+    gf "Pool water doesn't count."
+    friend "She's got you there."
+    mc "Whose side are you on?"
+    friend "The side that gets to dinner on time."
+
+    "She lifted an arm as if that settled the argument."
+    "The movement shifted the towel just enough that the view from below was considerably less secure than she seemed to realize."
 
     mc "[girlfriend_name]."
     gf "What?"
     mc "Your towel."
 
-    scene cg ch01_towel_realization
+    scene cg ch01_towel_shift_02
     with dissolve
 
-    "She looked down. Then she looked at us—and finally understood the angle."
+    "Her eyes followed mine downward."
+    "The argument disappeared from her face as she finally understood the angle."
 
     gf "...Oh."
 
-    "She clamped the towel against her chest. That fixed one problem while leaving most of her thighs exposed."
+    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
     "Beside me, [friend_name] turned deliberately toward the pool."
+
+    scene cg ch01_towel_shift_03
+    with dissolve
 
     friend "I'm looking at the water."
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
+    mc "Just go inside."
+    gf "I was trying to tell you to get ready!"
+    mc "Message received."
+    gf "Shut up."
 
-    # No dedicated CG here: remain on the established upstairs pool-view background.
-    scene bg ch01_pool_lounge
-    with dissolve
-
-    "[girlfriend_name] disappeared inside and grabbed at the sheer curtain."
-    "Then she retreated farther into the room, away from the glass."
+    "[girlfriend_name] disappeared inside, still clutching the towel against herself, and pulled the sheer curtain across the glass."
+    "A moment later she retreated farther into the room."
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
