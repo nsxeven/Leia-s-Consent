@@ -429,6 +429,9 @@ label ch01_scene_06_friendship_and_towel:
     "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
     "Beside me, [friend_name] turned deliberately toward the pool."
 
+    scene cg ch01_towel_did_he_see
+    with dissolve
+
     friend "I'm looking at the water."
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
