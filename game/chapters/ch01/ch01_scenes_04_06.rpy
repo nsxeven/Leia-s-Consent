@@ -429,7 +429,7 @@ label ch01_scene_06_friendship_and_towel:
     "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
     "Beside me, [friend_name] turned deliberately toward the pool."
 
-    scene cg ch01_towel_did_he_see
+    scene cg ch01_towel_realization
     with dissolve
 
     friend "I'm looking at the water."
@@ -496,11 +496,6 @@ label ch01_scene_06_friendship_and_towel:
     gf "[player_name]?"
     mc "Yeah?"
 
-    $ enter_cinematic_mode()
-    scene cg ch01_towel_did_he_see
-    with dissolve
-
     gf "...Did he see anything?"
 
-    $ exit_cinematic_mode()
     jump ch01_scene_07_did_he_see
