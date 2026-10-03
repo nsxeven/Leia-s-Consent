@@ -1358,12 +1358,13 @@ label ch01_day2_scene_30_bedroom:
     $ d2_soft_gate = get_story_value("ch01_d2_ntr_soft_gate", False)
     $ d2_wink = get_story_value("ch01_d2_dinner_wink", False)
     $ d2_pool_suspicion = get_story_flag("ch01_d2_pool_suspicion")
-    $ d2_love_exhib_blend = (
-        d2_lane == "love"
-        and partner_stats["exhibitionism"] >= 20
-        and player_stats["acceptance"] >= 15
-        and choice_tag_count("open", ch01_d2_choice_ids()) >= 1
-    )
+    python:
+        d2_love_exhib_blend = (
+            d2_lane == "love"
+            and partner_stats["exhibitionism"] >= 20
+            and player_stats["acceptance"] >= 15
+            and choice_tag_count("open", ch01_d2_choice_ids()) >= 1
+        )
 
     scene bg ch01_villa_bedroom_night
     with fade
