@@ -5,62 +5,132 @@ label ch01_day2_scene_16_forced_split:
 
     $ d2_lane = get_story_value("ch01_d2_route_lane_pre_split", "love")
 
+    "Eventually all four of us climbed out together and collapsed around the poolside table."
+    "Julian distributed the remaining drinks while Maya lifted hers."
+
+    maya "To unexpected shopping trips."
+    gf "Absolutely not."
+    friend "To my new shirt."
+    maya "Even worse."
+    mc "To surviving day two."
+    gf "There we go."
+
+    "Four glasses met in the middle."
+
+    "A little farther down the pool deck, a couple of guys had been glancing our way often enough for Maya to notice."
+    maya "Don't look now."
+    "Leia looked immediately."
+    maya "Every time."
+    gf "Then stop saying it like that."
+    "One of the men looked away a fraction too late."
+    gf "Maybe he's looking at you."
+    maya "He has two eyes."
+
     if d2_lane == "ntr_risk":
-        "Maya watched me for a moment, then nodded toward the side path beside the villa."
-        maya "Ryan. Come with me for a second."
-        mc "Why?"
-        maya "Because I want to ask you something without three people listening."
+        "Leia looked toward me first."
+        "I was distracted, only half following whatever Julian had just said."
+        "She waited for my attention for a beat. It never came."
+        "Then she turned back toward the strangers."
+        "Leia raised both arms over her head in a slow stretch, extending through her shoulders and back before letting them fall again."
+        "The same man kept looking."
+        "Maya noticed. I didn't."
+        $ set_story_value("ch01_d2_pool_attention", "leia_stretched_without_ryan")
 
-        "I hesitated. Leia was sitting at the pool edge beside Julian."
-        "On another day I might have simply stayed. Maya had already started walking."
+    else:
+        "Leia looked from the strangers to me, then crossed the few steps between us."
+        "Without saying anything, she leaned in and kissed me."
+        "I kissed her back and let one hand settle firmly on her ass."
+        "Leia made a small surprised sound against my mouth."
+        "When we separated, Maya was staring at us. Julian had suddenly become very interested in his drink. The strangers had seen everything."
 
-        gf "Go. We're not going anywhere."
-        friend "I promise not to let her fight any furniture while you're gone."
-        gf "That happened once."
+        if d2_lane == "exhibitionism":
+            "Leia's face warmed, but she glanced toward the strangers once more before looking back at me."
+            maya "Okay. We are all still here."
+            gf "Nobody asked you to watch."
+            maya "Kind of difficult not to."
+            $ set_story_value("ch01_d2_pool_attention", "couple_display_open")
+        else:
+            "Leia's face went pink the moment she remembered we had an audience."
+            mc "What was that for?"
+            gf "Do I need a reason?"
+            "She stayed close anyway."
+            $ set_story_value("ch01_d2_pool_attention", "couple_display_love")
 
-        "The separation was Maya's idea, not mine. That distinction mattered."
+    "Julian reached for the cooler again, found it empty and stared into it as if more drinks might appear."
+    friend "We're out."
+    maya "Already?"
+    friend "Apparently none of you understand moderation."
 
-        with dissolve
+    if d2_lane == "ntr_risk":
+        maya "Ryan, come with me. Four drinks."
+        mc "You need help carrying four drinks?"
+        maya "Yes."
 
-        maya "Does she hate me?"
-        mc "What? No."
-        maya "She was watching me like I was an exam question this morning."
-        mc "She didn't know who you were yesterday."
-        maya "Ah."
-        mc "And she was maybe a little jealous."
-        maya "That's almost cute."
-        mc "Do not tell her I said that."
-        maya "Obviously I'm telling her."
+        "Leia stayed beside Julian while Maya led me back toward the villa."
+        "Once the pool was out of earshot, I looked at her."
+        mc "This isn't about drinks, is it?"
+        maya "No."
+        maya "What's going on with you today?"
+        mc "What do you mean?"
+        maya "Leia keeps checking whether you're still in the room even when you're standing right beside her."
+        "That landed harder than I wanted it to."
+
+        "Back at the pool, Julian glanced toward the path we'd disappeared down."
+        friend "That wasn't about drinks."
+        gf "Nope."
+        friend "She does this."
+        gf "Kidnaps people's boyfriends?"
+        friend "Interrogates people."
+        "Leia laughed despite herself."
+        gf "Does he always get this quiet when he's stuck in his own head?"
+        friend "Sometimes."
+        "Julian didn't dress the answer up or use it against me. He simply knew me longer than Leia did."
 
         $ set_story_value("ch01_d2_split", "ryan_maya_leia_julian")
 
     elif d2_lane == "exhibitionism":
-        "Julian stood and lifted the empty cooler."
-        friend "We're out of ice again."
-        mc "There's another bag inside."
-        friend "Help me carry the drinks too."
+        friend "I'll get them."
+        mc "I'll help."
+        "Julian and I headed toward the villa while Leia and Maya stayed beside the pool."
 
-        maya "Go. We'll survive thirty metres without you."
-        gf "Probably."
-
-        "Julian and I headed inside while Leia and Maya stayed beside the pool."
+        "Maya waited until we were far enough away, then looked at Leia."
+        maya "Okay. Are you two experimenting?"
+        gf "What makes you say that?"
+        maya "You just kissed him in front of everybody and let him grab your ass while those guys were staring."
+        "Leia's face warmed again."
+        gf "Maybe... a little."
+        maya "Seriously?"
+        gf "We're figuring it out."
+        maya "So how far does experimenting go?"
+        gf "Maya."
+        maya "I'm asking."
+        "Leia laughed, embarrassed, and glanced toward the strangers."
+        maya "Want to give them something else to look at?"
+        "Leia looked toward the villa where Ryan had gone, then back at Maya."
+        gf "...Okay."
+        "She hooked her fingers under the side strings of her bikini bottoms and pulled them a little higher over her hips."
+        "The stranger noticed immediately."
+        gf "Oh my God. He's actually looking."
+        maya "Obviously."
+        maya "Ready?"
+        gf "For wha—"
+        "Maya gave her a quick playful spank."
+        gf "Maya!"
+        "Maya burst out laughing. Leia was bright red, but laughing too."
+        "The strangers had seen it."
         $ set_story_value("ch01_d2_split", "ryan_julian_leia_maya")
+        $ set_story_flag("ch01_d2_exhibition_pool_tease")
 
     else:
-        "Leia caught my hand as Maya and Julian started arguing about music."
-
-        gf "Walk with me?"
-        mc "Where?"
-        gf "Nowhere. That's how walks work."
-
-        "We left Julian and Maya by the pool and followed the short path toward the beach."
-
-        gf "I like her."
+        maya "We'll get them."
+        friend "Works for me."
+        "Maya caught Julian by the arm and steered him toward the villa, leaving Leia and me beside the pool."
+        "Leia watched them disappear, then leaned against me."
+        gf "I really like her."
         mc "Yesterday you were conducting a background check."
         gf "Due diligence."
         mc "Of course."
-
-        "Behind us, Maya's laugh carried all the way down the path."
+        "She kissed my shoulder, still visibly embarrassed whenever she remembered the audience farther down the deck."
         $ set_story_value("ch01_d2_split", "ryan_leia_julian_maya")
 
     $ set_story_flag("ch01_d2_scene_16_complete")
@@ -75,86 +145,153 @@ label ch01_day2_scene_17_pool_return:
     $ d2_split = get_story_value("ch01_d2_split")
 
     if d2_split == "ryan_maya_leia_julian":
-        with dissolve
+        "Back at the pool, Julian's attention snapped toward something buzzing near the loungers."
+        friend "No."
+        gf "What?"
+        "He was already backing away."
+        friend "Bee."
+        gf "Where?"
+        "The bee drifted toward him."
+        friend "NOPE."
+        "Julian jumped straight into the pool."
+        gf "You left me?!"
+        "Then the bee changed direction."
+        gf "Oh, come on!"
+        "Leia jumped in after him."
 
-        "Maya and I heard the splash before the pool came back into view."
+        "For several seconds neither of them cared about anything except finding the bee."
+        gf "Where is it?!"
+        friend "I don't know."
+        gf "What do you mean you don't know?!"
+        friend "I mean I value my life."
+        gf "It's a bee!"
+        friend "Then why did YOU jump in?"
+
+        "Julian looked back at her."
+        "His expression changed."
+        "He immediately looked away."
+
+        gf "...What?"
+        friend "Uh."
+        gf "What?"
+        friend "Leia."
+        gf "What?!"
+        friend "Your... top."
+
+        "Leia froze."
+        "She looked down."
+
+        gf "OH MY GOD!"
+
+        "She dropped lower into the water and crossed both arms tightly over her chest, face burning."
+        gf "Don't look!"
+        friend "I'm not!"
+        gf "Where is it?!"
+
+        "Julian found the bikini top floating several feet away."
+        friend "Over there."
+        gf "GET IT!"
+        friend "Why me?!"
+        gf "JULIAN!"
+
+        "As Julian started toward it, Leia glanced toward the strangers on the pool deck."
+        "They were staring."
+        gf "Oh my God."
+        friend "What now?"
+        gf "They saw."
+        friend "Don't look at them."
+        gf "I already looked!"
+
+        "Maya and I rounded the corner carrying the drinks."
         "Then I stopped."
 
         $ enter_cinematic_mode()
         scene cg ch01_d2_pool_top_accident
         with dissolve
 
-        "Julian was in the pool. Leia was in the pool beside him."
-        "Several feet away, Leia's bikini top floated lazily across the water."
+        "Leia was chest-deep in the pool, flushed bright red, both arms locked across herself."
+        "Julian was in the water with her, swimming toward the bikini top floating several feet away."
+        "The same strangers from earlier were still watching."
+        "I had arrived at the exact moment that explained the least."
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
         with dissolve
 
-        mc "...What happened?"
+        "Leia saw me. Her eyes widened."
+        gf "Ryan—"
+        maya "...What the hell happened?"
+        gf "There was a bee and Julian jumped in and then it came at me so I jumped in and I didn't know my top came off—"
+        friend "Bee."
+        "Maya looked at Julian."
+        maya "Of course."
 
-        "Leia immediately folded her arms across herself under the water."
-
-        gf "Before you say anything, nothing happened."
-        friend "A bee happened."
-        maya "A bee?"
-        friend "It flew directly at my face."
-        gf "He screamed."
-        friend "I did not scream."
-        gf "You absolutely screamed and jumped into the pool."
-        friend "Strategic retreat."
-        gf "Then it came toward me and I jumped in after him. My top wasn't tied properly."
-
-        "Maya stared at Julian for half a second before folding over laughing."
-
-        maya "You jumped into a pool because of a bee?"
-        friend "We are not making this the headline."
-
-        "The explanation fit. The floating bikini top still made a very different first impression."
+        "Leia looked directly at me after the explanation, still mortified and waiting for my reaction."
+        "Julian reached the top without turning back toward her."
+        friend "Got it."
+        "He pushed it across the water. Leia caught it awkwardly with one hand while keeping herself covered with the other."
 
         $ set_story_flag("ch01_d2_pool_suspicion")
-        $ set_story_value("ch01_d2_pool_incident", "leia_julian_top_off")
+        $ set_story_value("ch01_d2_pool_incident", "leia_julian_bee_top_off")
 
     elif d2_split == "ryan_julian_leia_maya":
-        with dissolve
+        "Maya was still laughing about the strangers when a bee drifted toward the loungers."
+        maya "Wait."
+        gf "You're not doing that again."
+        maya "No. Bee."
+        gf "What?"
 
-        "Julian and I came back outside carrying ice and drinks."
-        "Both women were in the pool. Maya was laughing so hard she could barely stay upright."
+        "The bee moved closer. Both women backed toward the pool."
+        gf "Nope."
+        "Leia jumped. Maya went in with her."
 
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_pool_top_accident
-        with dissolve
+        "Leia surfaced, pushing wet hair from her face."
+        maya "Leia."
+        gf "What?"
+        "Maya pointed toward the bikini top floating away from them."
+        "Leia looked down and immediately folded her arms across herself."
+        gf "...Oh my God."
+        "The strangers they had been teasing moments earlier were still watching."
 
-        "Leia was holding both arms across herself while her bikini top floated toward the far edge."
-
-        $ exit_cinematic_mode()
-        scene bg ch01_pool_day
-
-        maya "I told her to double-knot it!"
-        gf "Do not start."
-        mc "What happened?"
-        maya "She tried to splash me, I grabbed her wrist, she spun around and the thing just left."
-        gf "Please retrieve my dignity instead of narrating it."
-
-        "There was nothing suspicious about the situation. Just a prediction Maya was going to enjoy being right about for far too long."
-
-        $ set_story_value("ch01_d2_pool_incident", "leia_maya_top_off")
+        "Julian and I returned with the drinks to find Maya trying to reach the floating top while Leia hid lower in the water."
+        maya "Bee."
+        gf "Don't."
+        maya "I'm explaining!"
+        "There was no mystery about what had happened. Maya had seen the whole thing."
+        $ set_story_value("ch01_d2_pool_incident", "leia_maya_bee_top_off")
 
     else:
-        with dissolve
+        "Leia and I were still beside the pool when a bee wandered too close to the loungers."
+        gf "Ryan."
+        mc "Don't move."
+        gf "That is never reassuring."
 
-        "Leia and I heard Maya laughing before we reached the pool."
+        "It drifted closer."
+        "Leia grabbed my arm, then dodged behind me when it changed direction."
+        mc "Leia, wait—"
+        gf "NOPE."
 
-        maya "Tell her! Tell her why you're wet!"
-        friend "A bee flew at me."
-        gf "No."
-        friend "Yes."
-        maya "He made a noise I've never heard from an adult man and jumped straight into the pool."
-        gf "You are never living this down."
-        friend "I hate this group."
+        "She jumped into the pool."
+        "I reached for her a fraction too late, then went in after her."
 
-        "Leia leaned against me, laughing."
-        $ set_story_value("ch01_d2_pool_incident", "julian_bee_reveal")
+        "Leia surfaced and looked around for the bee."
+        "Her bikini top surfaced several feet away."
+        "The strangers saw it at the same time I did."
+
+        mc "Babe."
+        gf "What?"
+        "I pointed."
+        "Leia looked down, gasped and immediately covered herself."
+        gf "Oh my God."
+        "I moved between her and the strangers while reaching for the floating top."
+        "By the time Maya and Julian returned with the drinks, I was handing it back to her."
+        maya "What happened?"
+        gf "Bee."
+        friend "Where?"
+        "Julian stopped dead and scanned the pool deck."
+        maya "Relax. It's gone."
+        friend "You don't know that."
+        $ set_story_value("ch01_d2_pool_incident", "leia_ryan_bee_top_off")
 
     $ set_story_flag("ch01_d2_scene_17_complete")
     jump ch01_day2_scene_18_pool_aftermath
@@ -162,9 +299,9 @@ label ch01_day2_scene_17_pool_return:
 
 label ch01_day2_scene_18_pool_aftermath:
 
-    if get_story_value("ch01_d2_pool_incident") == "leia_julian_top_off":
-        "Maya eventually rescued Leia's top with the pool skimmer and handed it back without commentary. Somehow that was worse."
-        "When Leia climbed out, she came straight to me."
+    if get_story_value("ch01_d2_pool_incident") == "leia_julian_bee_top_off":
+        "Once Leia had retied her top and climbed out, she came straight to me."
+        "The embarrassment still hadn't left her face."
 
         gf "You're being quiet."
 
@@ -179,8 +316,8 @@ label ch01_day2_scene_18_pool_aftermath:
                 mc "I believe you. It just looked insane for a second."
                 "Leia's shoulders relaxed."
                 gf "It felt insane too."
-                mc "Especially the screaming."
-                friend "I can hear you."
+                mc "Especially Julian abandoning you."
+                friend "The bee had positional advantage."
 
             "[d2_pool_honest_text]":
                 $ apply_choice("ch01_d2_pool_honest_jealous")
@@ -201,8 +338,51 @@ label ch01_day2_scene_18_pool_aftermath:
                 gf "And I'm telling you what happened."
                 "She stepped away before the conversation could turn into something larger in front of everyone."
 
+    elif get_story_value("ch01_d2_pool_incident") == "leia_maya_bee_top_off":
+        "Maya eventually retrieved Leia's top and passed it back under the water."
+        "Leia retied it beneath the surface before climbing out, still visibly red from what had happened."
+        "Her eyes flicked toward the strangers. They were still there."
+        "Then she came straight to me."
+
+        gf "Okay."
+        mc "Okay?"
+        gf "That went way further than I meant it to."
+        mc "The bee?"
+        "Leia gave me a look."
+        gf "Everything."
+
+        "She lowered her voice."
+        gf "The strings thing was on purpose."
+        gf "Maya was being Maya, and I said yes."
+        gf "I knew they were looking."
+        "She glanced toward the strangers again, then back at me."
+        gf "But that?"
+        gf "That was not on purpose."
+
+        mc "I know."
+        "Some of the tension left her shoulders."
+
+        gf "You saw them looking before you left."
+        mc "Yeah."
+        gf "And you were okay with... us playing with it?"
+        mc "With what we were doing together? Yeah."
+
+        "Leia's embarrassment didn't disappear, but the small smile that followed belonged to me."
+        gf "Okay."
+        gf "Because I think I liked that part."
+        "She immediately covered her face for half a second."
+        gf "Not the losing-my-top part."
+        mc "Important distinction."
+        gf "Very important."
+
+        "Maya called something unhelpful from the pool. Leia ignored her and stayed beside me."
+        "The attention had gone further than Leia intended, but she brought the experience back into our relationship instead of leaving Ryan outside it."
+        $ set_story_flag("ch01_d2_exhibition_pool_shared_with_ryan")
     else:
-        "The afternoon recovered into jokes, drinks, and increasingly elaborate descriptions of Julian's battle with one completely ordinary bee."
+        "Once Leia had retied her top, she stayed close enough that our shoulders kept touching."
+        "The strangers had seen more than either of us intended. There was no ambiguity about how it happened."
+        "Maya spent the next five minutes trying to convince Julian that the bee had already left."
+        friend "That's exactly what the bee wants me to think."
 
     $ set_story_value("ch01_d2_route_lane_post_pool", ch01_d2_route_lane())
     $ set_story_flag("ch01_d2_scene_18_complete")
