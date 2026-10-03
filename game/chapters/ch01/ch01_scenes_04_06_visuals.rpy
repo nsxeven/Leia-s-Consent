@@ -33,8 +33,12 @@ image cg ch01_photo_capture_03_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_03
 
 image cg ch01_towel_call_down = At("images/cg/ch01/CH1D1_CG_TowelCallDown_01.webp", prologue_fullscreen)
 
-image cg ch01_towel_shift = At("images/cg/ch01/CH1D1_CG_TowelShift_01.webp", prologue_fullscreen)
+image cg ch01_towel_shift_01 = At("images/cg/ch01/CH1D1_CG_TowelShift_01.webp", prologue_fullscreen)
+image cg ch01_towel_shift_02 = At("images/cg/ch01/CH1D1_CG_TowelShift_02.webp", prologue_fullscreen)
+image cg ch01_towel_shift_03 = At("images/cg/ch01/CH1D1_CG_TowelShift_03.webp", prologue_fullscreen)
 
+# Legacy realization asset retained in the repository; the expanded three-step
+# TowelShift sequence now handles the immediate balcony realization.
 image cg ch01_towel_realization = At("images/cg/ch01/CH1D1_CG_TowelRealization_01.webp", prologue_fullscreen)
 
 image cg ch01_towel_did_he_see = At("images/cg/ch01/CH1D1_CG_TowelDidHeSee_01.webp", prologue_fullscreen)
