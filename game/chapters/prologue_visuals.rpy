@@ -129,35 +129,37 @@ transform prologue_ryan_right:
 # Party Ryan's source artwork is already oriented correctly for the left slot,
 # so unlike the old right-slot placement it is not horizontally mirrored.
 transform prologue_leia_enter_right:
-    xalign 0.82
-    yalign 1.0
-    xysize (760, 900)
-    fit "contain"
+    # Canonical Leia dialogue position: RIGHT, facing inward/left.
+    # Explicit xpos/xanchor avoids xalign being affected by the 941px sprite canvas.
+    xpos 0.78
+    xanchor 0.5
     xzoom -1.0
     alpha 0.0
-    xoffset 45
+    yoffset 24
     parallel:
-        linear 0.30 alpha 1.0
+        easeout 0.24 alpha 1.0
     parallel:
-        easeout 0.30 xoffset 0
+        easeout 0.24 yoffset 0
+
 
 transform prologue_leia_right:
-    xalign 0.82
-    yalign 1.0
+    xpos 0.78
+    xanchor 0.5
     xzoom -1.0
 
+
 transform prologue_other_enter_left:
-    xalign 0.18
-    yalign 1.0
-    xysize (760, 900)
-    fit "contain"
+    # Canonical non-Leia dialogue position: LEFT, facing inward/right.
+    xpos 0.22
+    xanchor 0.5
     xzoom 1.0
     alpha 0.0
-    xoffset -45
+    yoffset 24
     parallel:
-        linear 0.30 alpha 1.0
+        easeout 0.24 alpha 1.0
     parallel:
-        easeout 0.30 xoffset 0
+        easeout 0.24 yoffset 0
+
 
 transform prologue_other_left:
     xalign 0.18
