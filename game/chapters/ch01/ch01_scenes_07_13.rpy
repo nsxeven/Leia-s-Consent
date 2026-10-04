@@ -343,7 +343,11 @@ label ch01_scene_09_dinner:
     mc "Understood."
 
     "Leia disappeared toward the restroom with her handbag tucked under one arm."
+    hide leia_purple_dress_wet
+    with sprite_enter_exit
 
+    # Canonical staging: Ryan remains LEFT. Leia is hidden while physically absent.
+    # Julian may occupy RIGHT once a Julian sprite asset exists; do not substitute Ryan/Leia for him.
     $ set_story_value("ch01_dinner_bra_state", "removed_hidden_in_bag")
     $ set_story_value("ch01_dinner_dress_state", "post_spill_braless")
     $ set_story_flag("ch01_sticky_bra_removed")
