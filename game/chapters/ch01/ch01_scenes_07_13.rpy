@@ -226,15 +226,24 @@ label ch01_scene_09_dinner:
 
     "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them."
 
-    scene cg ch01_dinner_spill_02
+    # The impact beat is over. Return to the restaurant for the immediate
+    # apology using the post-spill wet sprite state.
+    $ exit_cinematic_mode()
+    scene bg ch01_restaurant_evening
     with dissolve
-
-    "Most of it landed across the front of Leia's dress. The rest soaked straight through the stranger's white shorts."
+    show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress flustered at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     gf "Oh my God—I'm so sorry."
     stranger "No, that was me. Are you okay?"
 
     "He grabbed a stack of napkins from the nearest table and offered them to her before looking down at the damage to himself."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_dinner_spill_02
+    with dissolve
+
     "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more than he probably intended—hard to miss."
     "Leia followed his glance downward."
     "For a beat, she forgot to look away."
@@ -249,9 +258,7 @@ label ch01_scene_09_dinner:
 
     "A second later they dipped again, quick enough that she might have hoped nobody noticed."
 
-    # The four-part CG sequence is complete. Resume normal dialogue staging.
-    # Leia stays on the current purple-dress sprite until the approved wet
-    # purple-dress sprite is pushed.
+    # The look sequence is complete. Resume the same wet post-spill staging.
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
