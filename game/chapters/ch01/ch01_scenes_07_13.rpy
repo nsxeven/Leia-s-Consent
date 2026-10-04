@@ -151,7 +151,7 @@ label ch01_scene_08_drive_to_dinner:
 
     $ exit_cinematic_mode()
 
-    scene bg ch01_car_night
+    scene bg ch01_car_day
     with dissolve
 
     gf "Okay, actual question. If we had to listen to one artist for the rest of this trip—"
