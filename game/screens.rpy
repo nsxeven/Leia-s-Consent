@@ -117,10 +117,8 @@ screen say(who, what):
     window:
         id "window"
 
-        if lc_dialogue_theme == "day":
-            background Transform("gui/dialogue/lc_textbox_day.svg", xalign=0.5, yalign=0.5)
-        else:
-            background Transform("gui/dialogue/lc_textbox_night.svg", xalign=0.5, yalign=0.5)
+        # LC uses one permanent white dialogue treatment across all times of day.
+        background Transform("gui/dialogue/lc_textbox_day.svg", xalign=0.5, yalign=0.5)
 
         if who is not None:
 
@@ -128,16 +126,13 @@ screen say(who, what):
                 id "namebox"
                 style "namebox"
 
-                if lc_dialogue_theme == "day":
-                    background "gui/dialogue/lc_namebox_day.svg"
-                else:
-                    background "gui/dialogue/lc_namebox_night.svg"
+                background "gui/dialogue/lc_namebox_day.svg"
 
                 text who id "who":
-                    color ("#111111" if lc_dialogue_theme == "day" else "#FFFFFF")
+                    color "#111111"
 
         text what id "what" at lc_dialogue_text_fade:
-            color ("#111111" if lc_dialogue_theme == "day" else "#FFFFFF")
+            color "#111111"
 
 
     ## If there's a side image, display it above the text. Do not display on the
