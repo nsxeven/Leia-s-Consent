@@ -164,7 +164,7 @@ style window:
 
 style namebox:
     # Flush the speaker name to the upper-left, outside the stitched border.
-    xpos 70
+    xpos 20
     xanchor 0.0
     xsize 420
     ypos -46
