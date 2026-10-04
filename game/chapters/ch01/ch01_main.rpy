@@ -11,6 +11,9 @@ label chapter_one_start:
 
 label ch01_scene_01_arrival:
 
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
     scene bg ch01_car_day
     with fade
     show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
@@ -59,6 +62,9 @@ label ch01_scene_01_arrival:
 
 
 label ch01_scene_02_villa:
+
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     scene bg ch01_villa_exterior
     with dissolve
@@ -138,6 +144,9 @@ label ch01_scene_02_villa:
 
 
 label ch01_scene_03_outfit_choice:
+
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     scene bg ch01_master_bedroom
     with dissolve
