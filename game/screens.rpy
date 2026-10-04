@@ -158,9 +158,9 @@ style namebox_label is say_label
 style window:
     xalign 0.5
     xsize 1600
-    # Half-height dialogue panel, anchored hard to the bottom edge.
+    # Compact dialogue panel, but tall enough for four wrapped lines.
     yalign 1.0
-    ysize 110
+    ysize 145
 
 style namebox:
     # Flush the speaker name to the upper-left, outside the stitched border.
@@ -182,9 +182,9 @@ style say_dialogue:
 
     xpos 120
     xsize 1390
-    # Text occupies the compact panel while staying above the bottom controls.
+    # Allow up to four wrapped lines without clipping above the quick menu.
     ypos 12
-    ymaximum 72
+    ymaximum 108
 
     adjust_spacing False
 
