@@ -54,6 +54,7 @@ image cg prologue_departure = At("images/cg/prologue/PRO_CG_Departure_01.webp", 
 transform prologue_sprite_enter_center:
     xalign 0.5
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     alpha 0.0
@@ -61,11 +62,12 @@ transform prologue_sprite_enter_center:
     parallel:
         linear 0.30 alpha 1.0
     parallel:
-        easeout 0.30 yoffset 0
+        easeout 0.30 yoffset 180
 
 transform prologue_sprite_enter_left:
     xalign 0.25
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     alpha 0.0
@@ -78,6 +80,7 @@ transform prologue_sprite_enter_left:
 transform prologue_sprite_enter_right:
     xalign 0.75
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     alpha 0.0
@@ -93,10 +96,12 @@ transform prologue_sprite_enter_right:
 transform prologue_leia_left:
     xalign 0.18
     yalign 1.0
+    yoffset 180
 
 transform prologue_julian_right:
     xalign 0.82
     yalign 1.0
+    yoffset 180
 
 
 # --- Two-character Prologue composition ----------------------------------
@@ -106,6 +111,7 @@ transform prologue_julian_right:
 transform prologue_ryan_enter_right:
     xalign 0.82
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
@@ -119,6 +125,7 @@ transform prologue_ryan_enter_right:
 transform prologue_ryan_right:
     xalign 0.82
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
@@ -132,6 +139,7 @@ transform prologue_leia_enter_right:
     xpos 0.78
     xanchor 0.5
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
@@ -140,12 +148,13 @@ transform prologue_leia_enter_right:
     parallel:
         linear 0.30 alpha 1.0
     parallel:
-        easeout 0.30 yoffset 0
+        easeout 0.30 yoffset 180
 
 transform prologue_leia_right:
     xpos 0.78
     xanchor 0.5
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
@@ -154,6 +163,7 @@ transform prologue_other_enter_left:
     xpos 0.22
     xanchor 0.5
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
@@ -162,12 +172,13 @@ transform prologue_other_enter_left:
     parallel:
         linear 0.30 alpha 1.0
     parallel:
-        easeout 0.30 yoffset 0
+        easeout 0.30 yoffset 180
 
 transform prologue_other_left:
     xpos 0.22
     xanchor 0.5
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
@@ -176,6 +187,7 @@ transform prologue_other_left:
 transform prologue_other_left:
     xalign 0.18
     yalign 1.0
+    yoffset 180
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
