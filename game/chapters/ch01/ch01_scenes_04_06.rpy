@@ -336,6 +336,33 @@ label ch01_scene_05_photography:
 
     "The photos stayed on [friend_name]'s phone for now."
 
+    # Pacing Revision v2 — an ordinary friendship beat before the towel incident.
+    # Leia and Julian should become friends through more than accidents and exposure.
+    gf "Can I ask you something?"
+    mc "Dangerous opening."
+    gf "Has [friend_name] always been like this?"
+    friend "I'm standing right here."
+    mc "Define 'this.'"
+    gf "The villa. The photos. Acting like all of this is completely normal."
+    mc "Oh. Yes."
+    friend "That sounded judgmental."
+    mc "He once booked a private room for six people because the normal table was 'too loud.'"
+    friend "It was too loud."
+    gf "Of course you did."
+    friend "You enjoyed the villa."
+    gf "I can enjoy it and still make fun of you."
+
+    "She looked at me, amused."
+
+    gf "I can see why you two are friends."
+    friend "Careful. That's almost nice."
+    gf "Don't get used to it."
+    mc "Give it a day. She gets meaner when she's comfortable."
+    gf "Excuse me?"
+    friend "Good. You'll fit in."
+
+    "It was the first time their teasing sounded less like my girlfriend talking to my friend and more like the beginning of a friendship of their own."
+
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
     if selected_pool_outfit == "pool_bolder":
