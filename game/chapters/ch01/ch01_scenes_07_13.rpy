@@ -453,6 +453,9 @@ label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "We should have left after dessert. Instead, Julian noticed the bar."
 
