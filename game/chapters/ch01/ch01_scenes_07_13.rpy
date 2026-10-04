@@ -615,6 +615,40 @@ label ch01_scene_12_shop_and_drive_back:
     friend "That's branding."
     mc "That's a warning."
 
+    "Leia dropped two bags of chips into the basket."
+
+    friend "Those are terrible."
+    gf "You booked a private villa and somehow still have the taste buds of a child."
+    friend "Ask [player_name] what he ate after lectures."
+    mc "Don't."
+    gf "What did he eat?"
+    friend "Instant noodles. Dry."
+    gf "No."
+    mc "Once."
+    friend "For an entire semester."
+    gf "[player_name]!"
+    mc "We were students."
+    gf "Water was free."
+
+    "She was laughing hard enough that another shopper glanced over."
+
+    mc "Fine. Ask him about the sunglasses phase."
+    friend "There was no phase."
+    mc "He wore them indoors."
+    gf "Oh, I need photos."
+    friend "You need a better boyfriend."
+    gf "No, this one comes with useful historical records."
+
+    "She bumped her shoulder lightly against mine and kept walking."
+
+    friend "I regret introducing you two."
+    gf "Four years too late."
+    mc "Historically successful terrible dare, remember?"
+    friend "I take it back."
+
+    "By the time we reached the drinks fridge, Leia and Julian were arguing over snacks like they'd known each other longer than a day."
+    "For once, nothing awkward had caused it."
+
     "By the time we paid, Leia was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
 
     gf "I want to lie down."
