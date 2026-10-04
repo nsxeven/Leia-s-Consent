@@ -361,6 +361,8 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
+    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "She caught me looking."
 
