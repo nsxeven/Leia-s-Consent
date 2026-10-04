@@ -35,11 +35,15 @@ image cg ch01_drive_to_dinner = At("images/cg/ch01/CH1D1_CG_DriveToDinner_01.web
 image cg ch01_dinner_arrival = At("images/cg/ch01/CH1D1_CG_DinnerArrival_01.webp", prologue_fullscreen)
 image cg ch01_dinner_photo_ask = At("images/cg/ch01/CH1D1_CG_DinnerPhotoAsk_01.webp", prologue_fullscreen)
 
-# Dinner collision is a two-beat production CG sequence:
-# 01 = impact / liquid still airborne
-# 02 = immediate aftermath / both outfits visibly wet
+# Dinner collision production CG sequence:
+# 01 = impact / liquid airborne
+# 02 = immediate wet-clothes aftermath
+# 03 = Leia follows his glance and looks up
+# 04 = Leia's second downward glance
 image cg ch01_dinner_spill_01 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_01.webp", prologue_fullscreen)
 image cg ch01_dinner_spill_02 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_02.webp", prologue_fullscreen)
+image cg ch01_dinner_spill_03 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_03.webp", prologue_fullscreen)
+image cg ch01_dinner_spill_04 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_04.webp", prologue_fullscreen)
 
 # Backward-compatible alias for older development saves/references.
 image cg ch01_dinner_spill = "cg ch01_dinner_spill_01"
