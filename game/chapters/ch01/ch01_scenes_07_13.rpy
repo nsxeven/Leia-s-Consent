@@ -232,8 +232,8 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
-    show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
+    show stranger_casual_wet at ch01_stranger_collision_close, leia_body_idle
+    show leia_purple_dress_wet flustered at ch01_leia_collision_close, leia_body_idle
     with sprite_enter_exit
 
     gf "Oh my God—I'm so sorry."
@@ -263,10 +263,13 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
-    show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
+    show stranger_casual_wet at ch01_stranger_collision_close, leia_body_idle
+    show leia_purple_dress_wet flustered at ch01_leia_collision_close, leia_body_idle
     with sprite_enter_exit
 
+    # Ryan breaks the moment; both ease back to their normal dialogue slots.
+    show stranger_casual_wet at ch01_stranger_collision_reset, leia_body_idle
+    show leia_purple_dress_wet flustered at ch01_leia_collision_reset, leia_body_idle
     mc "[girlfriend_name]."
     gf "What?"
     mc "Your dress."
@@ -280,6 +283,10 @@ label ch01_scene_09_dinner:
     stranger "Then we're both terrible at walking."
 
     "That finally made her laugh. He apologized once more, accepted that nobody was injured, and continued toward his own table with considerably less dignity than he'd arrived with."
+
+    # Give the narration a beat, then let him physically leave toward screen-left.
+    show stranger_casual_wet at ch01_stranger_exit_left, leia_body_idle
+    pause 1.9
 
     $ set_story_flag("ch01_dinner_stranger_collision")
     $ set_story_flag("ch01_leia_stranger_second_glance")
