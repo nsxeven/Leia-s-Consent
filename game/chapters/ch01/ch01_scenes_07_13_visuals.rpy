@@ -16,14 +16,7 @@ image bg ch01_restaurant_bar = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-13 — RESTAURANT BAR / LATE EVENING", size=46, color="#ffffff"),
 )
 
-image bg ch01_island_walk_night = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#111c2a"),
-    (0, 720), Transform(Solid("#5f5d61"), xysize=(1920, 360)),
-    (200, 110), Transform(Solid("#dab66f"), xysize=(30, 610)),
-    (1540, 110), Transform(Solid("#dab66f"), xysize=(30, 610)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-14 — ISLAND WALK / NIGHT", size=46, color="#ffffff"),
-)
+image bg ch01_island_walk_night = At("images/backgrounds/chapter 1/ch01_roadside.webp", prologue_bg_blur)
 
 image bg ch01_shop_night = At("images/backgrounds/chapter 1/ch01_conveniencestore.webp", prologue_bg_blur)
 
