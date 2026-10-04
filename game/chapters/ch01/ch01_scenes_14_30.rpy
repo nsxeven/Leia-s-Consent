@@ -198,13 +198,13 @@ label ch01_scene_15_under_blanket:
 
 label ch01_scene_16_can_he_tell:
 
-    "The movie carried on. So did the silence between the three of us."
+    # Pacing Revision v2 — combine the old "can he tell?" and "Julian notices"
+    # loops into one escalation instead of asking the player the same question twice.
+    "The movie carried on for a few minutes before Leia leaned closer, keeping her voice beneath the soundtrack."
 
     if get_story_value("ch01_movie_first_response") == "stopped":
-        "A few minutes later Leia leaned closer again, keeping her voice low."
         gf "Do you think he noticed what you were doing before?"
     else:
-        "A few minutes later Leia leaned closer, voice barely above the movie."
         gf "Do you think he can tell?"
 
     mc "Can tell what?"
@@ -236,93 +236,52 @@ label ch01_scene_16_can_he_tell:
             $ set_story_value("ch01_can_tell_response", "asked_if_bothered")
             mc "Would it bother you if he could?"
             "Leia looked at me instead of answering immediately."
-
             if partner_stats["exhibitionism"] < 18:
                 gf "Yes. Obviously."
-                mc "Okay."
             elif partner_stats["exhibitionism"] < 26:
                 gf "...I don't know."
-                mc "That's allowed."
             else:
                 gf "That's not an answer to my question."
                 mc "Neither was that."
-                "Her mouth twitched despite herself."
 
         "[ch01_can_tell_dismiss_text]":
             $ apply_choice("ch01_can_tell_dismiss")
             $ set_story_value("ch01_can_tell_response", "dismissed")
             mc "Does it really matter?"
-            "Leia studied my face for a moment."
             gf "To me, maybe."
             mc "Fair."
-            gf "Right."
 
-    $ set_story_flag("ch01_scene_16_complete")
-    jump ch01_scene_17_julian_notices
+    "Before either of us could keep circling the question, Julian paused the movie."
 
-
-label ch01_scene_17_julian_notices:
-
-    "Another ten minutes passed before Julian finally paused the movie."
-
-    friend "Okay. Serious question."
+    friend "Okay. Do you need the bathroom or something?"
     gf "What?"
-    friend "Do you need the bathroom or something?"
-    gf "No?"
-    friend "You've been moving around for like five minutes."
+    friend "You've been moving around for five minutes."
 
     "Leia went completely still beside me."
+    "Her eyes met mine for one mortified second."
 
-    $ ch01_fidget_cover_text = format_choice("ch01_fidget_cover", "She's just trying to get comfortable.")
-    $ ch01_fidget_tease_text = format_choice("ch01_fidget_tease", "Yeah, Leia. Why are you moving around so much?")
-    $ ch01_fidget_push_text = format_choice("ch01_fidget_push", "She's fine. Keep watching.")
-    $ ch01_fidget_dismiss_text = format_choice("ch01_fidget_dismiss", "She's fine. Whatever.")
+    if get_story_value("ch01_can_tell_response") == "reassured":
+        mc "She's just trying to get comfortable."
+        gf "Exactly. Play the movie."
+    elif get_story_value("ch01_can_tell_response") in ("teased", "asked_if_bothered"):
+        mc "See? Subtle."
+        gf "I hate you."
+        friend "Am I missing something?"
+        gf "No."
+    else:
+        mc "She's fine."
+        "Leia looked at me, then back at the screen."
+        gf "Movie."
 
-    menu:
-        "[ch01_fidget_cover_text]":
-            $ apply_choice("ch01_fidget_cover")
-            $ set_story_value("ch01_fidget_response", "covered")
-            mc "She's just trying to get comfortable."
-            gf "Exactly."
-            friend "You have an entire sofa."
-            gf "And yet comfort remains elusive. Play the movie."
+    "Julian stared between us, decided not to investigate, and stood to refill the drinks instead."
 
-        "[ch01_fidget_tease_text]":
-            $ apply_choice("ch01_fidget_tease")
-            $ set_story_value("ch01_fidget_response", "teased")
-            mc "Yeah, Leia. Why are you moving around so much?"
-            gf "I hate you."
-            mc "No you don't."
-            "Something connected sharply with my shin beneath the blanket."
-            friend "Am I missing something?"
-            gf "No. Play the movie."
+    friend "Ice? Coke?"
+    gf "Both."
+    mc "Coke."
+    friend "Anything else, your majesties?"
+    gf "Less commentary."
 
-        "[ch01_fidget_push_text]":
-            $ apply_choice("ch01_fidget_push")
-            $ set_story_value("ch01_fidget_response", "risk_pushed")
-            mc "She's fine. Keep watching."
-            "Leia gave me a look that could only have been interpreted correctly by one person in the room."
-            friend "Okay...?"
-            gf "Movie."
-
-        "[ch01_fidget_dismiss_text]":
-            $ apply_choice("ch01_fidget_dismiss")
-            $ set_story_value("ch01_fidget_response", "dismissed")
-            mc "She's fine. Whatever."
-            "Leia's eyes moved from Julian to me."
-            gf "I'm right here."
-            mc "I know."
-            friend "...I'm just going to unpause this."
-
-    "Julian reached for his glass, found only melting ice, and stood."
-
-    friend "I'm getting ice and soft drinks before you two finish everything without me."
-    mc "Grab another Coke."
-    gf "And ice. A lot of ice."
-    friend "Yes, your majesty."
-
-    with dissolve
-
+    $ set_story_flag("ch01_scene_16_complete")
     $ set_story_flag("ch01_scene_17_complete")
     jump ch01_scene_18_private_under_blanket
 
@@ -588,8 +547,10 @@ label ch01_scene_22_first_micro_test:
 
 label ch01_scene_23_relationship_philosophy:
 
-    "The movie finally reached the point where none of us were pretending it was good."
-    "On screen, one character discovered their partner flirting with somebody at a party and reacted like the world had ended."
+    # Pacing Revision v2 — relationship philosophy and "does looking count?"
+    # now live in the same conversation.
+    "By then none of us were pretending the movie was good."
+    "On screen, one character discovered their partner flirting at a party and reacted like the world had ended."
 
     friend "Imagine breaking up over that."
     gf "Depends what you call flirting."
@@ -597,13 +558,13 @@ label ch01_scene_23_relationship_philosophy:
     gf "That's not flirting."
     mc "You interrogated me over one phone call earlier."
     gf "I did not interrogate you."
-    mc "You asked if we'd ever dated."
-    gf "Perfectly normal question."
     friend "I witnessed an interrogation."
     gf "Nobody asked you."
 
-    "Julian grinned and raised both hands in surrender."
+    "Leia looked back at me."
+
     gf "Okay then. Where's the line?"
+    gf "Like... someone looking at someone attractive doesn't count, right?"
 
     $ ch01_philosophy_couple_text = format_choice("ch01_philosophy_couple", "Some things should stay between the couple.")
     $ ch01_philosophy_trust_text = format_choice("ch01_philosophy_trust", "Trust matters more than arbitrary rules.")
@@ -614,97 +575,46 @@ label ch01_scene_23_relationship_philosophy:
         "[ch01_philosophy_couple_text]":
             $ apply_choice("ch01_philosophy_couple")
             $ set_story_value("ch01_relationship_philosophy", "couple_boundary")
+            $ set_story_value("ch01_looking_philosophy", "encouragement_boundary")
             mc "Some things should stay between the couple."
-            gf "Like?"
-            mc "Depends on the couple. But yeah, there should still be things that are ours."
-            "Leia nodded slowly."
-            gf "I get that."
+            gf "Looking?"
+            mc "Looking is looking. Encouraging it is different."
+            gf "Okay. That makes sense."
 
         "[ch01_philosophy_trust_text]":
             $ apply_choice("ch01_philosophy_trust")
             $ set_story_value("ch01_relationship_philosophy", "trust_based")
+            $ set_story_value("ch01_looking_philosophy", "harmless")
             mc "Trust matters more than arbitrary rules."
-            gf "So as long as nobody's hiding anything?"
-            mc "That's a pretty big part of it."
-            friend "Disturbingly mature answer."
+            gf "So someone looking doesn't matter as long as nobody's hiding anything?"
+            mc "Pretty much."
+            gf "I like that answer."
+            friend "Disturbingly mature."
 
         "[ch01_philosophy_jealousy_fun_text]":
             $ apply_choice("ch01_philosophy_jealousy_fun")
             $ set_story_value("ch01_relationship_philosophy", "playful_jealousy")
+            $ set_story_value("ch01_looking_philosophy", "enjoy_attention")
             mc "I think a little jealousy can actually be fun."
             gf "Fun?"
-            mc "A little."
-            gf "You're weird."
-            friend "I've been saying this for years."
-            "Leia laughed, but she was still thinking about it."
+            mc "Someone noticing you doesn't mean I'm losing you."
+            gf "And if I noticed them noticing?"
+            mc "Still depends what you do with it."
+            "Leia laughed softly, but she was clearly thinking about the answer."
 
         "[ch01_philosophy_dont_care_text]":
             $ apply_choice("ch01_philosophy_dont_care")
             $ set_story_value("ch01_relationship_philosophy", "nonchalant")
+            $ set_story_value("ch01_looking_philosophy", "indifferent")
             mc "People can do what they want. I don't really care."
             gf "You wouldn't care at all?"
-            mc "Not enough to make rules about it."
-            "Leia stared at the television instead of me."
+            mc "Not enough to make rules about somebody looking."
+            "Leia's attention stayed on me for a moment longer than necessary."
             gf "Right."
 
+    "Across from us, Julian had become extremely interested in the ice inside his glass."
+
     $ set_story_flag("ch01_scene_23_complete")
-    jump ch01_scene_24_looking_counts
-
-
-label ch01_scene_24_looking_counts:
-
-    gf "Okay, but looking doesn't count, right?"
-    mc "Looking at what?"
-    gf "Someone attractive."
-    friend "I feel like I've accidentally joined couples therapy."
-    gf "You're the one who started this."
-
-    gf "You seriously wouldn't care if some girl was checking you out?"
-
-    $ ch01_looking_enjoy_text = format_choice("ch01_looking_enjoy", "I'd probably enjoy it.")
-    $ ch01_looking_harmless_text = format_choice("ch01_looking_harmless", "It doesn't matter as long as nothing happens.")
-    $ ch01_looking_boundary_text = format_choice("ch01_looking_boundary", "I'd care if you were encouraging it.")
-    $ ch01_looking_dont_care_text = format_choice("ch01_looking_dont_care", "I genuinely wouldn't care.")
-
-    menu:
-        "[ch01_looking_enjoy_text]":
-            $ apply_choice("ch01_looking_enjoy")
-            $ set_story_value("ch01_looking_philosophy", "enjoy_attention")
-            mc "I'd probably enjoy it."
-            gf "Of course you would."
-            mc "You asked."
-            gf "So if someone was checking me out?"
-            mc "Might enjoy that too."
-            gf "...Of course you would."
-
-        "[ch01_looking_harmless_text]":
-            $ apply_choice("ch01_looking_harmless")
-            $ set_story_value("ch01_looking_philosophy", "harmless")
-            mc "It doesn't matter as long as nothing happens."
-            gf "So looking is just looking."
-            mc "Pretty much."
-            gf "Even if it's me?"
-            mc "Even if it's you."
-
-        "[ch01_looking_boundary_text]":
-            $ apply_choice("ch01_looking_boundary")
-            $ set_story_value("ch01_looking_philosophy", "encouragement_boundary")
-            mc "I'd care if you were encouraging it."
-            gf "That's different from someone just looking though."
-            mc "Exactly."
-            "Leia nodded."
-
-        "[ch01_looking_dont_care_text]":
-            $ apply_choice("ch01_looking_dont_care")
-            $ set_story_value("ch01_looking_philosophy", "indifferent")
-            mc "I genuinely wouldn't care."
-            gf "At all?"
-            mc "Why would I?"
-            "Leia's smile faded by a fraction."
-            gf "No reason."
-
-    "Julian suddenly became extremely interested in the ice inside his glass."
-
     $ set_story_flag("ch01_scene_24_complete")
     jump ch01_scene_25_julian_put_on_spot
 
