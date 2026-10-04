@@ -125,6 +125,62 @@ label prologue_start:
     "I didn't think much of it."
     "Apparently, she did."
 
+    # Pacing Revision v2 — give Ryan and Leia one quiet pocket of time together
+    # before Truth or Dare turns their chemistry into a public event.
+    scene bg prologue_party_kitchen
+    with dissolve
+    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
+    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
+    "A while later I escaped to the kitchen in search of another drink."
+    "She was already there, studying the bottles on the counter like one of them had personally offended her."
+
+    mc "Hiding?"
+    gf "Recharging."
+    mc "Different word for hiding."
+    show leia_prologue_party skeptical
+    with sprite_change
+    gf "I came to get a drink."
+    mc "You've been holding the same one for twenty minutes."
+    show leia_prologue_party shy
+    with sprite_change
+    gf "...You noticed that?"
+    mc "I notice things."
+
+    "Without the rest of the room talking over us, the silence between sentences felt easy instead of awkward."
+
+    gf "I nearly didn't come tonight."
+    mc "Seriously?"
+    gf "Big groups are exhausting. Everyone's waiting for their turn to talk."
+    mc "You were doing fine."
+    gf "I spent the first hour pretending to check my phone."
+    mc "Very convincing. I thought you were terrifying."
+    show leia_prologue_party skeptical
+    with sprite_change
+    gf "Terrifying?"
+    mc "Absolutely."
+    gf "I was standing there holding a red cup."
+    mc "Menacingly."
+    show leia_prologue_party smile
+    with sprite_change
+    gf "You're an idiot."
+
+    "She said it while smiling."
+    "Someone shouted our names from the other room."
+
+    gf "Apparently we've been missed."
+    mc "We could stay hidden."
+    gf "Recharging."
+    mc "Right. Sorry."
+    show leia_prologue_party smile
+    with sprite_change
+    gf "Come on."
+
+    hide leia_prologue_party
+    hide ryan_prologue_party
+    with sprite_enter_exit
+
     scene bg prologue_truthordare
     show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
     with dissolve
