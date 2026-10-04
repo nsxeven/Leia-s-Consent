@@ -163,9 +163,9 @@ style window:
     ysize 110
 
 style namebox:
-    # Flush the speaker name to the upper-right, outside the stitched border.
-    xpos 1510
-    xanchor 1.0
+    # Flush the speaker name to the upper-left, outside the stitched border.
+    xpos 70
+    xanchor 0.0
     xsize 420
     ypos -46
     ysize 42
@@ -173,15 +173,15 @@ style namebox:
 
 style say_label:
     properties gui.text_properties("name", accent=True)
-    xalign 1.0
+    xalign 0.0
     yalign 1.0
-    textalign 1.0
+    textalign 0.0
 
 style say_dialogue:
     properties gui.text_properties("dialogue")
 
-    xpos 90
-    xsize 1420
+    xpos 120
+    xsize 1390
     # Text occupies the compact panel while staying above the bottom controls.
     ypos 12
     ymaximum 72
