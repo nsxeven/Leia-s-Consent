@@ -9,6 +9,15 @@ image bg ch01_villa_kitchen_night = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-18 — VILLA KITCHEN / NIGHT", size=46, color="#ffffff"),
 )
 
+image bg ch01_pool_evening = At("images/backgrounds/villa/villa_pool_evening.webp", prologue_bg_blur)
+image bg ch01_pool_night = At("images/backgrounds/villa/villa_pool_night.webp", prologue_bg_blur)
+
+image cg ch01_night_pool_attention = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#202a3a"),
+    (90, 70), Text("CG PLACEHOLDER\nCH1D1_CG_NightPool_01 — FIRST NON-ACCIDENTAL GAZE\nLEIA AT POOL EDGE / JULIAN GLANCES / RYAN NOTICES\nALL THREE COMPOSITIONALLY RELEVANT", size=48, color="#ffffff"),
+)
+
 image bg ch01_villa_bedroom_night = At("images/backgrounds/villa/villa_master_night.webp", prologue_bg_blur)
 
 image cg ch01_movie_cuddle_blanket = Composite(
