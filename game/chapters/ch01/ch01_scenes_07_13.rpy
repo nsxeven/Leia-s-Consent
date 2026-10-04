@@ -211,14 +211,14 @@ label ch01_scene_09_dinner:
     gf "No. I want one where nobody's arm looks six feet long."
 
     "She stood and glanced around for someone to ask."
-    "At exactly the wrong moment, a tall, broad-shouldered guest in fitted white shorts stepped past our table with a drink in one hand."
 
-    # DinnerPhotoAsk_01 is the immediate pre-collision beat: Leia has already
-    # turned into the stranger's path, one instant before impact.
+    # DinnerPhotoAsk_01 begins as the stranger enters Leia's path, before the
+    # actual collision. Keep the approach narration on this CG.
     $ enter_cinematic_mode()
     scene cg ch01_dinner_photo_ask
     with dissolve
 
+    "At exactly the wrong moment, a tall, broad-shouldered guest in fitted white shorts stepped past our table with a drink in one hand."
     "Leia turned straight into him."
 
     scene cg ch01_dinner_spill_01
