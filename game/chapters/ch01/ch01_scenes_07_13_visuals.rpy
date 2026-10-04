@@ -1,6 +1,7 @@
 # Chapter One Scenes 7–13 visual placeholders.
 # Final generated art should replace these stable image names.
 
+image bg ch01_villa_entry_day = At("images/backgrounds/villa/villa_frontdoor_day.webp", prologue_bg_blur)
 image bg ch01_villa_entry_evening = At("images/backgrounds/villa/villa_frontdoor_evening.webp", prologue_bg_blur)
 
 image bg ch01_car_night = At("images/backgrounds/car/car_night.webp", prologue_bg_blur)
