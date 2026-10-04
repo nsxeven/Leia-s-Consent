@@ -181,6 +181,7 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress smile at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -342,7 +343,11 @@ label ch01_scene_09_dinner:
     mc "Understood."
 
     "Leia disappeared toward the restroom with her handbag tucked under one arm."
+    hide leia_purple_dress_wet
+    with sprite_enter_exit
 
+    # Canonical staging: Ryan remains LEFT. Leia is hidden while physically absent.
+    # Julian may occupy RIGHT once a Julian sprite asset exists; do not substitute Ryan/Leia for him.
     $ set_story_value("ch01_dinner_bra_state", "removed_hidden_in_bag")
     $ set_story_value("ch01_dinner_dress_state", "post_spill_braless")
     $ set_story_flag("ch01_sticky_bra_removed")
@@ -375,6 +380,10 @@ label ch01_scene_09_dinner:
 
     "Julian looked between us, clearly aware that he had missed part of a conversation, and wisely chose not to ask."
 
+    $ enter_cinematic_mode()
+    scene cg ch01_dinner_stranger_compliment
+    with dissolve
+
     "A little later, a man passing our table slowed just enough to smile at Leia."
 
     stranger "Sorry—just wanted to say your dress looks amazing on you."
@@ -382,14 +391,6 @@ label ch01_scene_09_dinner:
     "Leia blinked, caught off guard."
 
     gf "Oh. Thank you."
-
-    "He gave her a polite nod and kept walking. Nothing dramatic. Leia watched him go for half a second, then glanced down at herself and back at me."
-
-    gf "Why is everyone looking at me today?"
-    mc "Today?"
-    gf "What does that mean?"
-    mc "You just normally don't notice."
-    "She looked at me as if deciding whether that was a compliment or a problem."
 
     $ ch01_stranger_proud_text = format_choice("ch01_stranger_proud", "Yeah. She looks incredible.")
     $ ch01_stranger_territorial_text = format_choice("ch01_stranger_territorial", "Thanks. We've got it from here.")
@@ -408,7 +409,6 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_stranger_territorial")
             $ set_story_value("ch01_stranger_response", "territorial")
             mc "Thanks. We've got it from here."
-            "The stranger was already moving on, but Leia noticed my tone."
             gf "He was just being nice."
             mc "I know."
 
@@ -421,6 +421,21 @@ label ch01_scene_09_dinner:
             gf "You're enjoying this."
             mc "Maybe a little."
             "Her cheeks coloured, but she did not reach for her jacket."
+
+    "He gave her a polite nod and kept walking. Nothing dramatic. Leia watched him go for half a second, then glanced down at herself and back at me."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_restaurant_evening
+    with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
+
+    gf "Why is everyone looking at me today?"
+    mc "Today?"
+    gf "What does that mean?"
+    mc "You just normally don't notice."
+    "She looked at me as if deciding whether that was a compliment or a problem."
 
     $ set_story_flag("ch01_scene_09_complete")
 

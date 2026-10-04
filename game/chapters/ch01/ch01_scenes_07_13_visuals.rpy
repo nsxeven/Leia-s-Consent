@@ -16,14 +16,7 @@ image bg ch01_restaurant_bar = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-13 — RESTAURANT BAR / LATE EVENING", size=46, color="#ffffff"),
 )
 
-image bg ch01_island_walk_night = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#111c2a"),
-    (0, 720), Transform(Solid("#5f5d61"), xysize=(1920, 360)),
-    (200, 110), Transform(Solid("#dab66f"), xysize=(30, 610)),
-    (1540, 110), Transform(Solid("#dab66f"), xysize=(30, 610)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-14 — ISLAND WALK / NIGHT", size=46, color="#ffffff"),
-)
+image bg ch01_island_walk_night = At("images/backgrounds/chapter 1/ch01_roadside.webp", prologue_bg_blur)
 
 image bg ch01_shop_night = At("images/backgrounds/chapter 1/ch01_conveniencestore.webp", prologue_bg_blur)
 
@@ -52,6 +45,14 @@ image cg ch01_dinner_return_braless = Composite(
     (1920, 1080),
     (0, 0), Solid("#704455"),
     (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-02 — RETURN FROM RESTROOM\nSAME DRESS / STICKY BRA REMOVED\nPOST-SPILL VISUAL CONTINUITY STATE", size=52, color="#ffffff"),
+)
+
+# Placeholder for the later restaurant compliment beat.
+# Replace this stable ID with final art; script timing should not change.
+image cg ch01_dinner_stranger_compliment = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#3b2a2f"),
+    (90, 70), Text("CG PLACEHOLDER\nCH1D1 — RESTAURANT STRANGER COMPLIMENT\nLEIA POST-SPILL / NO-BRA DRESS STATE\nSTRANGER COMPLIMENTS HER AT THE TABLE", size=52, color="#ffffff"),
 )
 
 image cg ch01_trip_catch = Composite(
