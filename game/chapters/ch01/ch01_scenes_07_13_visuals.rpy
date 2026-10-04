@@ -6,13 +6,7 @@ image bg ch01_villa_entry_evening = At("images/backgrounds/villa/villa_frontdoor
 
 image bg ch01_car_night = At("images/backgrounds/car/car_night.webp", prologue_bg_blur)
 
-image bg ch01_restaurant_evening = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#3a2730"),
-    (0, 610), Transform(Solid("#6c4d3f"), xysize=(1920, 470)),
-    (260, 180), Transform(Solid("#c99663"), xysize=(1400, 80)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-12 — ISLAND RESTAURANT / DINNER", size=46, color="#ffffff"),
-)
+image bg ch01_restaurant_evening = At("images/backgrounds/chapter 1/ch01_restaurant.webp", prologue_bg_blur)
 
 image bg ch01_restaurant_bar = Composite(
     (1920, 1080),
