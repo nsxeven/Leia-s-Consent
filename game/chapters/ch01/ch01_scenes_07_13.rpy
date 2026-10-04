@@ -453,6 +453,9 @@ label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "We should have left after dessert. Instead, Julian noticed the bar."
 
@@ -497,6 +500,9 @@ label ch01_scene_11_walk_and_catch:
 
     scene bg ch01_island_walk_night
     with fade
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "The shop was only a short walk away. Leia still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
@@ -542,6 +548,9 @@ label ch01_scene_11_walk_and_catch:
     $ exit_cinematic_mode()
     scene bg ch01_island_walk_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra flustered at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "I had seen enough from the corner of my eye to understand why both of them suddenly looked awkward."
 
@@ -590,6 +599,9 @@ label ch01_scene_11_walk_and_catch:
 label ch01_scene_11b_female_friend:
 
     scene bg ch01_island_walk_night
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra skeptical at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     gf "Who was that?"
     mc "A friend from back home. She saw the posts and realised we're both here."
@@ -655,6 +667,9 @@ label ch01_scene_12_shop_and_drive_back:
 
     scene bg ch01_shop_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra smile at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "The shop reset the mood almost immediately."
     "Leia filled the basket with snacks according to a system neither Julian nor I understood, while Julian contributed increasingly questionable bottles from the drinks aisle."
