@@ -192,19 +192,24 @@ image cg ch01_d2_boutique_slip_julian = Composite(
 transform ch01_d2_leia_left:
     xalign 0.16
     yalign 1.0
+    yoffset 180
 
 transform ch01_d2_maya_center:
     xalign 0.50
     yalign 1.0
+    yoffset 180
 
 transform ch01_d2_julian_right:
     xalign 0.84
     yalign 1.0
+    yoffset 180
 
 transform ch01_d2_maya_right:
     xalign 0.80
     yalign 1.0
+    yoffset 180
 
 transform ch01_d2_julian_left:
     xalign 0.20
     yalign 1.0
+    yoffset 180
