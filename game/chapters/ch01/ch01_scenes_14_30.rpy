@@ -6,6 +6,85 @@
 # - Dismissive/nonchalant choices make Leia feel less wanted, raising Boredom and lowering Love/Trust.
 #   That pressure can later feed Temptation/Secrecy and the NTR route without treating openness itself as betrayal.
 
+label ch01_scene_13b_night_pool:
+
+    # Pacing Revision v2 — a non-accidental attention beat between the carry
+    # sequence and movie night. Nothing goes wrong here; that is the point.
+    scene bg ch01_pool_night
+    with dissolve
+
+    "Nobody was ready for bed yet."
+    "We carried the shop bags outside instead, where the pool lights turned the water blue against the dark and the ocean had become more sound than view."
+
+    gf "Okay. This was worth the ridiculous villa."
+    friend "Finally. Gratitude."
+    gf "I said the villa was worth it. I said nothing about you."
+    mc "She's getting comfortable."
+    friend "I noticed."
+
+    "We opened the snacks on the low table and let the first day of the trip finally slow down."
+
+    friend "Tell her about your first driving lesson."
+    mc "No."
+    gf "Tell me immediately."
+    mc "Why is every story suddenly about me?"
+    friend "Because I have material."
+    gf "I like material."
+
+    "One story became three. Leia retaliated with things I'd done at home that Julian had never heard, and within minutes both of them were comparing notes at my expense."
+
+    mc "This friendship was a mistake."
+    gf "You introduced us."
+    friend "Technically I introduced you."
+    gf "Four years ago. You don't get lifetime credit."
+    friend "I absolutely do."
+
+    "Leia laughed and moved to sit along the edge of the pool, bare feet just above the water."
+    "For a while she simply listened, leaning back on her hands while Julian finished another story."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_night_pool_attention
+    with dissolve
+
+    "Julian's eyes drifted toward her for a moment."
+    "There was no towel slipping. No collision. Nothing to catch and nothing to explain."
+    "He noticed her, realised I had noticed him noticing, and looked back toward the water."
+
+    $ set_story_flag("ch01_night_pool_julian_glance")
+
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_night
+    with dissolve
+
+    "Leia glanced at me a second later."
+
+    if get_story_value("ch01_day1_nonchalant_count", chapter_nonchalant_count("ch01")) >= 2:
+        "For a moment it looked as if she was waiting for me to meet her eyes."
+        "My attention had already drifted elsewhere."
+        "When I looked back, she was listening to Julian again."
+        $ set_story_value("ch01_night_pool_attention", "ryan_missed_check")
+    elif partner_stats["exhibitionism"] >= 14 or player_stats["acceptance"] >= 14:
+        "Her eyes flicked briefly from Julian back to me."
+        "She didn't say anything, but the tiny question in her expression was difficult to miss."
+        "I held her gaze long enough for the corner of her mouth to lift."
+        $ set_story_value("ch01_night_pool_attention", "shared_with_ryan")
+    else:
+        "She smiled at me and shifted closer when she came back from the pool edge."
+        "A minute later her shoulder was resting against mine again."
+        $ set_story_value("ch01_night_pool_attention", "returned_to_ryan")
+
+    "Nothing happened."
+    "That was what made the moment stay with me."
+
+    gf "Movie?"
+    friend "Only if I choose."
+    gf "Then no."
+    mc "Strong start."
+
+    $ set_story_flag("ch01_scene_13b_complete")
+    jump ch01_scene_14_movie_setup
+
+
 label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_night
