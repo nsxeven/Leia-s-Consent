@@ -37,8 +37,10 @@ image bg ch01_julian_bedroom = Composite(
 transform ch01_leia_left:
     xalign 0.18
     yalign 1.0
+    yoffset 180
 
 transform ch01_julian_right:
     xalign 0.82
     yalign 1.0
+    yoffset 180
 
