@@ -950,6 +950,14 @@ label ch01_scene_29_private_reflection:
     jump ch01_scene_30_end_day_one
 
 
+# Compatibility labels retained for development saves created before Pacing Revision v2.
+label ch01_scene_17_julian_notices:
+    jump ch01_scene_18_private_under_blanket
+
+label ch01_scene_24_looking_counts:
+    jump ch01_scene_25_julian_put_on_spot
+
+
 label ch01_scene_30_end_day_one:
 
     scene bg ch01_villa_bedroom_night
