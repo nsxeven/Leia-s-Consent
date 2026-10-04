@@ -126,7 +126,8 @@ screen say(who, what):
                 id "namebox"
                 style "namebox"
 
-                background Transform("gui/dialogue/lc_namebox_night.svg", alpha=0.78)
+                # Name is text-only; keep it clear of the stitched textbox border.
+                background None
 
                 text who id "who":
                     color "#ffffff"
@@ -162,17 +163,19 @@ style window:
     ysize 110
 
 style namebox:
-    xpos 70
-    xanchor 0.0
-    xsize 330
-    ypos -38
-    ysize 56
-    padding (30, 10, 30, 10)
+    # Flush the speaker name to the upper-right, outside the stitched border.
+    xpos 1510
+    xanchor 1.0
+    xsize 420
+    ypos -46
+    ysize 42
+    padding (0, 0, 0, 0)
 
 style say_label:
     properties gui.text_properties("name", accent=True)
-    xalign 0.5
-    yalign 0.5
+    xalign 1.0
+    yalign 1.0
+    textalign 1.0
 
 style say_dialogue:
     properties gui.text_properties("dialogue")
