@@ -232,7 +232,7 @@ label ch01_scene_09_dinner:
     scene bg ch01_restaurant_evening
     with dissolve
     show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress flustered at prologue_leia_enter_right, leia_body_idle
+    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     gf "Oh my God—I'm so sorry."
@@ -263,7 +263,7 @@ label ch01_scene_09_dinner:
     scene bg ch01_restaurant_evening
     with dissolve
     show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress flustered at prologue_leia_enter_right, leia_body_idle
+    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     mc "[girlfriend_name]."
