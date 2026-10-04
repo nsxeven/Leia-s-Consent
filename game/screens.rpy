@@ -118,7 +118,7 @@ screen say(who, what):
         id "window"
 
         # Compact dark dialogue treatment: low-profile and readable over bright CGs/BGs.
-        background Transform("gui/dialogue/lc_textbox_night.svg", xalign=0.5, yalign=0.5, alpha=0.72)
+        background Solid("#000000B8")
 
         if who is not None:
 
@@ -126,7 +126,7 @@ screen say(who, what):
                 id "namebox"
                 style "namebox"
 
-                # Name is text-only; keep it clear of the stitched textbox border.
+                # Name is text-only; no decorative border.
                 background None
 
                 text who id "who":
