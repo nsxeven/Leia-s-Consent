@@ -73,3 +73,20 @@ image cg ch01_carry_dress_shift = Composite(
     (0, 0), Solid("#403747"),
     (90, 70), Text("CG PLACEHOLDER\nCH01-CARRY-02 — DRESS NECKLINE SHIFTS\nJULIAN'S HANDS OCCUPIED / RYAN'S VIEW OBSCURED\nAMBIGUOUS VIEWING ANGLE", size=52, color="#ffffff"),
 )
+
+
+# Dinner stranger — fixed-coordinate production layers.
+# Dry is retained for any pre-spill staging; wet is the post-CG state.
+layeredimage stranger_casual_dry_layers:
+    always "images/sprites/bbc stranger/Base_Casual_Dry.png"
+    always "images/sprites/bbc stranger/Chest_Casual.png" at leia_chest_breathe
+    always "images/sprites/bbc stranger/Penis_Casual_Dry.png" at leia_chest_breathe
+
+image stranger_casual_dry = Fixed(lc_sprite_silhouette("stranger_casual_dry_layers"), xysize=(941, 1672))
+
+layeredimage stranger_casual_wet_layers:
+    always "images/sprites/bbc stranger/Base_Casual_Wet.png"
+    always "images/sprites/bbc stranger/Chest_Casual.png" at leia_chest_breathe
+    always "images/sprites/bbc stranger/Penis_Casual_Wet.png" at leia_chest_breathe
+
+image stranger_casual_wet = Fixed(lc_sprite_silhouette("stranger_casual_wet_layers"), xysize=(941, 1672))
