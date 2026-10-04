@@ -231,15 +231,6 @@ label ch01_scene_09_dinner:
 
     "Most of it landed across the front of Leia's dress. The rest soaked straight through the stranger's white shorts."
 
-    # Return to interactive staging after the spill CG sequence. Leia remains on
-    # the current purple-dress sprite until the approved wet dress layer lands.
-    $ exit_cinematic_mode()
-    scene bg ch01_restaurant_evening
-    with dissolve
-    show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress flustered at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
-
     gf "Oh my God—I'm so sorry."
     stranger "No, that was me. Are you okay?"
 
@@ -248,8 +239,25 @@ label ch01_scene_09_dinner:
     "Leia followed his glance downward."
     "For a beat, she forgot to look away."
 
+    scene cg ch01_dinner_spill_03
+    with dissolve
+
     "Then her eyes came back up."
+
+    scene cg ch01_dinner_spill_04
+    with dissolve
+
     "A second later they dipped again, quick enough that she might have hoped nobody noticed."
+
+    # The four-part CG sequence is complete. Resume normal dialogue staging.
+    # Leia stays on the current purple-dress sprite until the approved wet
+    # purple-dress sprite is pushed.
+    $ exit_cinematic_mode()
+    scene bg ch01_restaurant_evening
+    with dissolve
+    show stranger_casual_wet at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress flustered at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     mc "[girlfriend_name]."
     gf "What?"
