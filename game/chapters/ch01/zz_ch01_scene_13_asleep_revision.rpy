@@ -158,4 +158,4 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     $ set_story_flag("ch01_scene_13_complete")
     $ set_story_flag("ch01_scenes_07_13_complete")
 
-    jump ch01_scene_14_movie_setup
+    jump ch01_scene_13b_night_pool
