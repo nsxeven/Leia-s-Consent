@@ -118,7 +118,7 @@ screen say(who, what):
         id "window"
 
         # LC uses one permanent white dialogue treatment across all times of day.
-        background Transform("gui/dialogue/lc_textbox_day.svg", xalign=0.5, yalign=0.5)
+        background Transform("gui/dialogue/lc_textbox_day.svg", xalign=0.5, yalign=0.5, alpha=0.22)
 
         if who is not None:
 
@@ -126,7 +126,7 @@ screen say(who, what):
                 id "namebox"
                 style "namebox"
 
-                background "gui/dialogue/lc_namebox_day.svg"
+                background Transform("gui/dialogue/lc_namebox_day.svg", alpha=0.28)
 
                 text who id "who":
                     color "#111111"
@@ -157,15 +157,17 @@ style namebox_label is say_label
 style window:
     xalign 0.5
     xsize 1600
-    yalign 0.985
-    ysize 250
+    # Lower the visual panel substantially while reserving enough height for
+    # dialogue to sit above the bottom quick-menu controls.
+    yalign 1.0
+    ysize 205
 
 style namebox:
     xpos 70
     xanchor 0.0
     xsize 330
-    ypos -70
-    ysize 76
+    ypos -54
+    ysize 70
     padding (30, 10, 30, 10)
 
 style say_label:
@@ -178,7 +180,9 @@ style say_dialogue:
 
     xpos 90
     xsize 1420
-    ypos 72
+    # Keep the baseline clear of the quick menu at yalign 1.0.
+    ypos 42
+    ymaximum 105
 
     adjust_spacing False
 
