@@ -54,6 +54,14 @@ image cg ch01_dinner_return_braless = Composite(
     (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-02 — RETURN FROM RESTROOM\nSAME DRESS / STICKY BRA REMOVED\nPOST-SPILL VISUAL CONTINUITY STATE", size=52, color="#ffffff"),
 )
 
+# Placeholder for the later restaurant compliment beat.
+# Replace this stable ID with final art; script timing should not change.
+image cg ch01_dinner_stranger_compliment = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#3b2a2f"),
+    (90, 70), Text("CG PLACEHOLDER\nCH1D1 — RESTAURANT STRANGER COMPLIMENT\nLEIA POST-SPILL / NO-BRA DRESS STATE\nSTRANGER COMPLIMENTS HER AT THE TABLE", size=52, color="#ffffff"),
+)
+
 image cg ch01_trip_catch = Composite(
     (1920, 1080),
     (0, 0), Solid("#36445b"),
