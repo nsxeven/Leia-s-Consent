@@ -89,3 +89,52 @@ layeredimage stranger_casual_wet_layers:
     always "images/sprites/bbc stranger/Penis_Casual_Wet.png"
 
 image stranger_casual_wet = Fixed(lc_sprite_silhouette("stranger_casual_wet_layers"), xysize=(941, 1672))
+
+
+# Dinner collision staging.
+# The pair remain unusually close after the impact, then ease back to the
+# canonical dialogue slots when Ryan calls Leia's name.
+transform ch01_stranger_collision_close:
+    xpos 0.38
+    xanchor 0.5
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+
+transform ch01_leia_collision_close:
+    xpos 0.62
+    xanchor 0.5
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
+
+transform ch01_stranger_collision_reset:
+    xpos 0.38
+    xanchor 0.5
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+    ease 0.65 xpos 0.22
+
+transform ch01_leia_collision_reset:
+    xpos 0.62
+    xanchor 0.5
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
+    ease 0.65 xpos 0.78
+
+transform ch01_stranger_exit_left:
+    xpos 0.22
+    xanchor 0.5
+    yalign 1.0
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+    pause 1.0
+    ease 0.85 xpos -0.28
+    linear 0.15 alpha 0.0
