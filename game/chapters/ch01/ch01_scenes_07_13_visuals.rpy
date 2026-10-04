@@ -95,7 +95,7 @@ image stranger_casual_wet = Fixed(lc_sprite_silhouette("stranger_casual_wet_laye
 # The pair remain unusually close after the impact, then ease back to the
 # canonical dialogue slots when Ryan calls Leia's name.
 transform ch01_stranger_collision_close:
-    xpos 0.38
+    xpos 0.45
     xanchor 0.5
     yalign 1.0
     xysize (760, 900)
@@ -103,7 +103,7 @@ transform ch01_stranger_collision_close:
     xzoom 1.0
 
 transform ch01_leia_collision_close:
-    xpos 0.62
+    xpos 0.55
     xanchor 0.5
     yalign 1.0
     xysize (760, 900)
@@ -111,7 +111,7 @@ transform ch01_leia_collision_close:
     xzoom -1.0
 
 transform ch01_stranger_collision_reset:
-    xpos 0.38
+    xpos 0.45
     xanchor 0.5
     yalign 1.0
     xysize (760, 900)
@@ -120,7 +120,7 @@ transform ch01_stranger_collision_reset:
     ease 0.65 xpos 0.22
 
 transform ch01_leia_collision_reset:
-    xpos 0.62
+    xpos 0.55
     xanchor 0.5
     yalign 1.0
     xysize (760, 900)
