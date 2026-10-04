@@ -26,7 +26,7 @@ label ch01_scene_04_pool_arrival:
     # The outfit reveal was already shown at the end of Scene 3. Do not replay
     # the sprite entrance transform here; keep Leia at her normal pool framing.
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini shy at prologue_sprite_enter_center, leia_body_idle
+        show leia_blue_bikini shy at prologue_leia_enter_right, leia_body_idle
         with dissolve
         "The new swimsuit was not outrageous. It was simply cut higher at the hips and showed more of her than [friend_name] had ever seen."
         "[girlfriend_name] stopped just beyond the doorway, pretending not to wait for my reaction."
@@ -39,7 +39,7 @@ label ch01_scene_04_pool_arrival:
         with sprite_change
         gf "Better."
     else:
-        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
         with dissolve
         "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
@@ -121,9 +121,9 @@ label ch01_scene_05_photography:
     scene bg ch01_pool_day
     with dissolve
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
     else:
-        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     friend "Give me the phone."
@@ -175,9 +175,9 @@ label ch01_scene_05_photography:
     with dissolve
 
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
     else:
-        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "She was improving, but every time she noticed the camera she became stiff again."
@@ -316,9 +316,9 @@ label ch01_scene_05_photography:
     with dissolve
 
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
     else:
-        show leia_white_ruffle neutral at prologue_sprite_enter_center, leia_body_idle
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "[friend_name] lowered the phone after the last shot."
