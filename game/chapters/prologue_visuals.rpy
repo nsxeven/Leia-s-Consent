@@ -25,6 +25,7 @@ transform prologue_bg_blur:
     blur 4.0
 
 image bg prologue_party = At("images/backgrounds/prologue/PRO_party.webp", prologue_bg_blur)
+image bg prologue_party_kitchen = At("images/backgrounds/prologue/PRO_kitchen.webp", prologue_bg_blur)
 image bg prologue_truthordare = At("images/backgrounds/prologue/PRO_truthordare.webp", prologue_bg_blur)
 image bg prologue_packing = At("images/backgrounds/prologue/PRO_bedroom.webp", prologue_bg_blur)
 
