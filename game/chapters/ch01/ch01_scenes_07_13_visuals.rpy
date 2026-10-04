@@ -8,13 +8,7 @@ image bg ch01_car_night = At("images/backgrounds/car/car_night.webp", prologue_b
 
 image bg ch01_restaurant_evening = At("images/backgrounds/chapter 1/ch01_restaurant.webp", prologue_bg_blur)
 
-image bg ch01_restaurant_bar = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#2d2432"),
-    (0, 650), Transform(Solid("#5c3d45"), xysize=(1920, 430)),
-    (1180, 160), Transform(Solid("#87596d"), xysize=(620, 430)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nBG-CH1-13 — RESTAURANT BAR / LATE EVENING", size=46, color="#ffffff"),
-)
+image bg ch01_restaurant_bar = At("images/backgrounds/chapter 1/ch01_bar.webp", prologue_bg_blur)
 
 image bg ch01_island_walk_night = At("images/backgrounds/chapter 1/ch01_roadside.webp", prologue_bg_blur)
 
