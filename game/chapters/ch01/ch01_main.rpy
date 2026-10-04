@@ -13,7 +13,7 @@ label ch01_scene_01_arrival:
 
     scene bg ch01_car_day
     with fade
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "By the time the boat eased against the jetty, [girlfriend_name] had taken thirty-seven photos."
@@ -62,7 +62,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_exterior
     with dissolve
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "The cart followed a narrow path through palms and stopped in front of a two-storey villa facing the ocean."
@@ -88,7 +88,7 @@ label ch01_scene_02_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_corridor
     with dissolve
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     friend "There are two rooms upstairs. You two take the master."
@@ -107,7 +107,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_master_enter
     with dissolve
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "The master bedroom took up most of the second floor."
@@ -141,7 +141,7 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
-    show leia_casual neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "Unpacking took less than five minutes. Deciding what to wear took considerably longer."
@@ -224,7 +224,7 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
-    show leia_towel neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "A moment later, the bathroom door opened again."
@@ -243,7 +243,7 @@ label ch01_scene_03_outfit_choice:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
     with dissolve
-    show leia_towel neutral at prologue_sprite_enter_center, leia_body_idle
+    show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     gf "...Seriously?"
@@ -284,7 +284,7 @@ label ch01_scene_03_outfit_choice:
         $ exit_cinematic_mode()
         scene bg ch01_master_bedroom_curtains
         with dissolve
-        show leia_blue_bikini smile at prologue_sprite_enter_center, leia_body_idle
+        show leia_blue_bikini smile at prologue_leia_enter_right, leia_body_idle
         with sprite_enter_exit
     else:
         "A few minutes later, [girlfriend_name] stepped out in the swimsuit she already trusted."
@@ -297,7 +297,7 @@ label ch01_scene_03_outfit_choice:
         $ exit_cinematic_mode()
         scene bg ch01_master_bedroom_curtains
         with dissolve
-        show leia_white_ruffle smile at prologue_sprite_enter_center, leia_body_idle
+        show leia_white_ruffle smile at prologue_leia_enter_right, leia_body_idle
         with sprite_enter_exit
 
     "From downstairs, [friend_name] called that the pool—and the cold drinks—were waiting."
