@@ -289,6 +289,9 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     with dissolve
+    show ryan_casual neutral at prologue_other_enter_left, ryan_body_idle
+    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "Julian pushed the remaining napkins across the table without commenting on where Leia had been looking."
     friend "Successful photo mission?"
