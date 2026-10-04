@@ -77,7 +77,7 @@ label ch01_scene_07_did_he_see:
     with sprite_change
     gf "Better answer."
 
-    scene bg ch01_villa_entry_evening
+    scene bg ch01_villa_entry_day
     with dissolve
     show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
