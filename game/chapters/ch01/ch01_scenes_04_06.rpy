@@ -3,6 +3,9 @@
 
 label ch01_scene_04_pool_arrival:
 
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
     scene bg ch01_pool_day
     with fade
 
@@ -103,6 +106,9 @@ label ch01_scene_04_pool_arrival:
 
 
 label ch01_scene_05_photography:
+
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     $ enter_cinematic_mode()
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
