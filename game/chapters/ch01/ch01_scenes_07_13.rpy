@@ -238,9 +238,6 @@ label ch01_scene_09_dinner:
 
     gf "Oh my God—I'm so sorry."
     stranger "No, that was me. Are you okay?"
-
-    "He grabbed a stack of napkins from the nearest table and offered them to her before looking down at the damage to himself."
-
     $ enter_cinematic_mode()
     scene cg ch01_dinner_spill_02
     with dissolve
