@@ -310,6 +310,8 @@ label ch01_scene_09_dinner:
 
     "A few minutes later, Leia leaned close to me while Julian was distracted by the menu."
 
+    show leia_purple_dress_wet flustered
+    with sprite_change
     gf "Babe."
     mc "Mm?"
     gf "My sticky bra is literally giving up."
@@ -333,6 +335,8 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_bra_playful")
             $ set_story_value("ch01_bra_response", "playful_open")
             mc "If you're comfortable with it... that's kind of hot."
+            show leia_purple_dress_wet shy
+            with sprite_change
             gf "[player_name]."
             mc "What? You asked."
             gf "I said my bra was falling off. I did not ask you to make it worse."
@@ -343,6 +347,8 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_bra_cover")
             $ set_story_value("ch01_bra_response", "cautious")
             mc "Take it off if you need to, but maybe keep your jacket nearby."
+            show leia_purple_dress_wet neutral
+            with sprite_change
             gf "Fair. Let me fix this before it falls out on its own."
 
     gf "I'm going to the bathroom. If Julian asks, I spilled a drink. That's all he needs to know."
