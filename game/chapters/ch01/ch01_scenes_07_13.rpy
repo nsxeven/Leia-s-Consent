@@ -300,6 +300,8 @@ label ch01_scene_09_dinner:
 
     "Julian pushed the remaining napkins across the table without commenting on where Leia had been looking."
     friend "Successful photo mission?"
+    show leia_purple_dress_wet angry
+    with sprite_change
     gf "Not one word."
     mc "We didn't even get the photo."
     gf "I hate both of you."
@@ -378,6 +380,8 @@ label ch01_scene_09_dinner:
 
     "She caught me looking."
 
+    show leia_purple_dress_no_bra skeptical
+    with sprite_change
     gf "Don't."
     mc "I didn't say anything."
     gf "Your face did."
@@ -394,6 +398,8 @@ label ch01_scene_09_dinner:
 
     "Leia blinked, caught off guard."
 
+    show leia_purple_dress_no_bra shy
+    with sprite_change
     gf "Oh. Thank you."
 
     $ ch01_stranger_proud_text = format_choice("ch01_stranger_proud", "Yeah. She looks incredible.")
@@ -435,6 +441,8 @@ label ch01_scene_09_dinner:
     show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
+    show leia_purple_dress_no_bra flustered
+    with sprite_change
     gf "Why is everyone looking at me today?"
     mc "Today?"
     gf "What does that mean?"
@@ -458,6 +466,8 @@ label ch01_scene_10_after_dinner_drinks:
 
     friend "One drink."
     mc "For you two. I'm driving."
+    show leia_purple_dress_no_bra smile
+    with sprite_change
     gf "Responsible [player_name] is very attractive."
     friend "Responsible [player_name] is ruining my attempt to make this a group activity."
     mc "Someone has to get both of you home."
@@ -503,6 +513,8 @@ label ch01_scene_11_walk_and_catch:
 
     "The shop was only a short walk away. Leia still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
+    show leia_purple_dress_no_bra pout
+    with sprite_change
     gf "I'm not drunk."
     mc "Nobody said you were."
     friend "That statement usually means somebody is drunk."
@@ -532,6 +544,8 @@ label ch01_scene_11_walk_and_catch:
     "In the scramble, one of his hands landed against the side of her breast for a split second."
     "Both of them realised at almost exactly the same time."
 
+    show leia_purple_dress_no_bra flustered
+    with sprite_change
     gf "Julian!"
     friend "I was catching you!"
 
@@ -600,6 +614,8 @@ label ch01_scene_11b_female_friend:
     show leia_purple_dress_no_bra skeptical at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
+    show leia_purple_dress_no_bra skeptical
+    with sprite_change
     gf "Who was that?"
     mc "A friend from back home. She saw the posts and realised we're both here."
     gf "She?"
@@ -671,6 +687,8 @@ label ch01_scene_12_shop_and_drive_back:
     "The shop reset the mood almost immediately."
     "Leia filled the basket with snacks according to a system neither Julian nor I understood, while Julian contributed increasingly questionable bottles from the drinks aisle."
 
+    show leia_purple_dress_no_bra skeptical
+    with sprite_change
     gf "Put that back."
     friend "Why?"
     gf "Because the label has a skull on it."
@@ -697,6 +715,8 @@ label ch01_scene_12_shop_and_drive_back:
     mc "Fine. Ask him about the sunglasses phase."
     friend "There was no phase."
     mc "He wore them indoors."
+    show leia_purple_dress_no_bra smile
+    with sprite_change
     gf "Oh, I need photos."
     friend "You need a better boyfriend."
     gf "No, this one comes with useful historical records."
