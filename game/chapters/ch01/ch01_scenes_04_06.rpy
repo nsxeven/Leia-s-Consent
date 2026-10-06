@@ -136,6 +136,11 @@ label ch01_scene_05_photography:
 
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
 
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini shy
+    else:
+        show leia_white_ruffle shy
+    with sprite_change
     gf "Wait. Why do I actually look good?"
     mc "You say that like it's unusual."
     gf "When you take the photo, it is."
@@ -344,6 +349,11 @@ label ch01_scene_05_photography:
 
     # Pacing Revision v2 — an ordinary friendship beat before the towel incident.
     # Leia and Julian should become friends through more than accidents and exposure.
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini smile
+    else:
+        show leia_white_ruffle smile
+    with sprite_change
     gf "Can I ask you something?"
     mc "Dangerous opening."
     gf "Has [friend_name] always been like this?"
@@ -364,6 +374,11 @@ label ch01_scene_05_photography:
     friend "Careful. That's almost nice."
     gf "Don't get used to it."
     mc "Give it a day. She gets meaner when she's comfortable."
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini pout
+    else:
+        show leia_white_ruffle pout
+    with sprite_change
     gf "Excuse me?"
     friend "Good. You'll fit in."
 
