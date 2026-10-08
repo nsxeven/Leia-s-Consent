@@ -183,18 +183,21 @@ label ch01_day2_scene_17_pool_return:
 
         gf "OH MY GOD!"
 
-        "She dropped lower into the water and crossed both arms tightly over her chest, face burning."
+        "Leia folded her arms across herself, then instinctively rushed behind Julian and clung to his back, using him to shield herself from the people on the deck."
+        "Julian went rigid with surprise, keeping his hands clear and his eyes turned away."
         gf "Don't look!"
         friend "I'm not!"
         gf "Where is it?!"
+        friend "Stay behind me. I'll find it."
 
-        "Julian found the bikini top floating several feet away."
+        "Julian spotted the bikini top floating several feet away."
         friend "Over there."
         gf "GET IT!"
         friend "Why me?!"
         gf "JULIAN!"
 
-        "As Julian started toward it, Leia glanced toward the strangers on the pool deck."
+        "Leia stayed tucked behind Julian as he edged toward the floating top, still holding on to his shoulders."
+        "Over his shoulder, she caught sight of the strangers on the deck."
         "They were staring."
         gf "Oh my God."
         friend "What now?"
@@ -209,16 +212,16 @@ label ch01_day2_scene_17_pool_return:
         scene cg ch01_d2_pool_top_accident
         with dissolve
 
-        "Leia was chest-deep in the pool, flushed bright red, both arms locked across herself."
-        "Julian was in the water with her, swimming toward the bikini top floating several feet away."
-        "The same strangers from earlier were still watching."
+        "Leia was clinging to Julian's back in the pool, hiding behind his shoulders while he kept his hands away from her."
+        "Her bikini top floated several feet away. The strangers from earlier were still watching."
         "I had arrived at the exact moment that explained the least."
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
         with dissolve
 
-        "Leia saw me. Her eyes widened."
+        "Leia saw me over Julian's shoulder. Her eyes widened."
+        "She let go of him at once, sinking lower into the water and covering herself with her arms."
         gf "Ryan—"
         maya "...What the hell happened?"
         gf "There was a bee and Julian jumped in and then it came at me so I jumped in and I didn't know my top came off—"
@@ -249,11 +252,15 @@ label ch01_day2_scene_17_pool_return:
         maya "Leia."
         gf "What?"
         "Maya pointed toward the bikini top floating away from them."
-        "Leia looked down and immediately folded her arms across herself."
+        "Leia looked down and folded her arms across herself."
         gf "...Oh my God."
+        "She darted behind Maya and clung to her back, using her friend as a shield from the strangers on the deck."
+        "Maya steadied herself, startled, then turned her attention toward the floating top."
+        maya "I've got you. Stay behind me."
         "The strangers they had been teasing moments earlier were still watching."
 
-        "Julian and I returned with the drinks to find Maya trying to reach the floating top while Leia hid lower in the water."
+        "Julian and I returned with the drinks to find Leia still hiding against Maya's back while Maya tried to reach the floating top."
+        "Leia saw us, let go of Maya, and sank lower into the water with her arms across herself."
         maya "Bee."
         gf "Don't."
         maya "I'm explaining!"
@@ -281,9 +288,12 @@ label ch01_day2_scene_17_pool_return:
         mc "Babe."
         gf "What?"
         "I pointed."
-        "Leia looked down, gasped and immediately covered herself."
+        "Leia looked down, gasped and covered herself."
         gf "Oh my God."
-        "I moved between her and the strangers while reaching for the floating top."
+        "Before I could say anything, she darted behind me and clung to my back, using me to block the strangers' view."
+        mc "I've got you. Stay behind me."
+        "I kept myself between her and the deck as I moved toward the floating top."
+        "She let go just long enough for me to retrieve it."
         "By the time Maya and Julian returned with the drinks, I was handing it back to her."
         maya "What happened?"
         gf "Bee."
