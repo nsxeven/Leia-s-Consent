@@ -183,18 +183,21 @@ label ch01_day2_scene_17_pool_return:
 
         gf "OH MY GOD!"
 
-        "She dropped lower into the water and crossed both arms tightly over her chest, face burning."
+        "Leia folded her arms across herself, then instinctively rushed behind Julian and clung to his back, using him to shield herself from the people on the deck."
+        "Julian went rigid with surprise, keeping his hands clear and his eyes turned away."
         gf "Don't look!"
         friend "I'm not!"
         gf "Where is it?!"
+        friend "Stay behind me. I'll find it."
 
-        "Julian found the bikini top floating several feet away."
+        "Julian spotted the bikini top floating several feet away."
         friend "Over there."
         gf "GET IT!"
         friend "Why me?!"
         gf "JULIAN!"
 
-        "As Julian started toward it, Leia glanced toward the strangers on the pool deck."
+        "Leia stayed tucked behind Julian as he edged toward the floating top, still holding on to his shoulders."
+        "Over his shoulder, she caught sight of the strangers on the deck."
         "They were staring."
         gf "Oh my God."
         friend "What now?"
@@ -209,16 +212,16 @@ label ch01_day2_scene_17_pool_return:
         scene cg ch01_d2_pool_top_accident
         with dissolve
 
-        "Leia was chest-deep in the pool, flushed bright red, both arms locked across herself."
-        "Julian was in the water with her, swimming toward the bikini top floating several feet away."
-        "The same strangers from earlier were still watching."
+        "Leia was clinging to Julian's back in the pool, hiding behind his shoulders while he kept his hands away from her."
+        "Her bikini top floated several feet away. The strangers from earlier were still watching."
         "I had arrived at the exact moment that explained the least."
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
         with dissolve
 
-        "Leia saw me. Her eyes widened."
+        "Leia saw me over Julian's shoulder. Her eyes widened."
+        "She let go of him at once, sinking lower into the water and covering herself with her arms."
         gf "Ryan—"
         maya "...What the hell happened?"
         gf "There was a bee and Julian jumped in and then it came at me so I jumped in and I didn't know my top came off—"
