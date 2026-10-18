@@ -24,8 +24,8 @@ screen chapter_select():
                         action [SetScreenVariable("cs_day", day_id), SetScreenVariable("cs_route", "love")]
                         selected (cs_day == day_id)
 
-            $ cs_routes = CH01_SELECT_DAY2_ROUTES if cs_day == "day2" else CH01_SELECT_END_ROUTES
-            text (_("Day Two lane preset") if cs_day == "day2" else _("Stored Day Two ending")) size 30
+            $ cs_routes = CH01_SELECT_DAY2_ROUTES if cs_day == "day2" else (CH01_SELECT_DAY5_ROUTES if cs_day == "day5" else CH01_SELECT_END_ROUTES)
+            text (_("Day Two lane preset") if cs_day == "day2" else (_("Stored Day Four ending") if cs_day == "day5" else _("Stored Day Two ending"))) size 30
             vbox:
                 spacing 8
                 for route_id, route_label in cs_routes:

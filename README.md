@@ -48,6 +48,10 @@ game/
       ch01_day4_scenes_01_08.rpy    Day Four 'Recalibration' scenes 1-8 (entry ch01_day4_start)
       ch01_day4_scenes_09_16.rpy    Day Four scenes 9-16, end routes, temporary end card
       ch01_day4_choice_registration.rpy  Day Four choice ids/effects/tags and helpers
+      ch01_day5_scenes_01_08.rpy    Day Five 'The Water' scenes 1-8 (entry ch01_day5_start)
+      ch01_day5_scenes_09_16.rpy    Day Five scenes 9-16, end routes, temporary end card
+      ch01_day5_choice_registration.rpy  Day Five choice ids/effects/tags and helpers
+      ch01_day5_visuals.rpy         Day Five placeholder bg/cg images
       *_visuals.rpy                 stable image names (placeholders or real art)
       zz*/zzzz* ...                 late override patches (see below)
     dev_sandbox.rpy, systems_vertical_slice.rpy, story_state_test.rpy   developer test labels
@@ -70,9 +74,10 @@ docs/
 | Chapter 1, Day 2 | Implemented end to end: Maya, boutique/Shop, villa pool, sunset, dinner, Never Have I Ever, bedroom. Resolves to one of **five end states** stored in `ch01_d2_end_route`: `love`, `exhibitionism`, `love_repaired`, `mixed_unresolved`, `ntr_confirmed` |
 | Chapter 1, Day 3 | A first-pass script in `ch01_day3_scenes.rpy` (entry label `ch01_day3_start`), linked from the end of Day 2 and headless-tested for the Love, Exhibitionism and NTR lanes |
 | Chapter 1, Day 4 | First-pass script in `ch01_day4_scenes_*.rpy` (entry `ch01_day4_start`), linked from the end of Day 3 and headless-tested for all five end routes (`love`, `exhibitionism`, `love_repaired`, `ntr_unresolved`, `ntr_confirmed`, stored in `ch01_d4_end_route`). All Day 4 CGs and backgrounds are placeholders (`ch01_day4_visuals.rpy`) |
-| Day 5+ | Not built. Day 4 ends on a temporary "Current development build ends here" card until `ch01_day5_start` exists |
+| Chapter 1, Day 5 | First-pass script "The Water" in `ch01_day5_scenes_*.rpy` (entry `ch01_day5_start`), linked from the end of Day 4 (which jumps to it when the label exists) and headless-tested for all five Day 4 end routes. Ends in five routes stored in `ch01_d5_end_route` (`love`, `exhibitionism`, `love_repaired`, `ntr_unresolved`, `ntr_confirmed`). All Day 5 CGs and backgrounds are placeholders (`ch01_day5_visuals.rpy`) |
+| Day 6+ | Not built. Day 5 ends on a temporary "Current development build ends here" card until `ch01_day6_start` exists |
 
-All Day Two story CGs and all Day Four CGs/backgrounds are still placeholders pending final art (including the 12 Day Two finale CGs). See [docs/BUILD_HANDOFF.md](docs/BUILD_HANDOFF.md) for the exact current state.
+All Day Two story CGs and all Day Four and Day Five CGs/backgrounds are still placeholders pending final art (including the 12 Day Two finale CGs). See [docs/BUILD_HANDOFF.md](docs/BUILD_HANDOFF.md) for the exact current state.
 
 ## Contributing
 
@@ -80,5 +85,5 @@ All Day Two story CGs and all Day Four CGs/backgrounds are still placeholders pe
 - **Late-override files.** Ren'Py loads files in alphabetical order and a later `label` with the same name replaces an earlier one. The `zz_`, `zzzz_`, `zzzzz_` ... prefixed files are deliberate late patches. Before editing a label or screen, search for another definition of it and edit the **effective** (last-loaded) owner. Do not do broad `zz` cleanup unless it was explicitly requested.
 - **Stable image names.** Story code refers to stable names (for example `cg ch01_d2_love_bedroom_01`). Placeholders are `Composite` images; when real art arrives, point the same name at the file instead of renaming it in the script.
 - **Art ownership.** Do not add or replace CG art as part of a code change; art is delivered separately.
-- **Day Three script.** `ch01_day3_scenes.rpy` is owned by the Scriptwriter. Do not edit it without coordination. The Day 2 -> Day 3 -> Day 4 link is in place. Day Four (`ch01_day4_*`) is also Scriptwriter-owned; coordinate before editing it.
+- **Day Three script.** `ch01_day3_scenes.rpy` is owned by the Scriptwriter. Do not edit it without coordination. The Day 2 -> Day 3 -> Day 4 link is in place. Day Four (`ch01_day4_*`) and Day Five (`ch01_day5_*`) are also Scriptwriter-owned; coordinate before editing them.
 - Run `lint` and play the affected route from a fresh save before opening a PR.
