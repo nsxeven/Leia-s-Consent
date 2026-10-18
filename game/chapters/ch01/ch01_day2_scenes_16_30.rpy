@@ -1787,6 +1787,8 @@ label ch01_day2_scene_30_finish:
     scene black
     with fade
 
-    centered "{size=46}CHAPTER ONE — DAY TWO COMPLETE{/size}\n\n{size=25}Current development build ends here{/size}"
+    centered "{size=46}CHAPTER ONE — DAY TWO COMPLETE{/size}"
 
-    return
+    # Day Two -> Day Three: same pattern as Day One -> Day Two (card, then jump).
+    # ch01_d2_end_route and the rest of the stored Day Two state carry over untouched.
+    jump ch01_day3_start

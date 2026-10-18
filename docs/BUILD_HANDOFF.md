@@ -4,7 +4,7 @@ This file records what is true in the repository **now**. When code and any olde
 
 - **Baseline:** `main` @ `5b076bd` (18 Oct 2026). This document was written on a branch cut from that commit.
 - **Superseded references:** `a309487` (old head of `feature/ch01-scenes-14-30`) and `c4e54dd` (audit baseline quoted by older design notes) are **stale**. Both are ancestors of `main` and predate the Day Three work. Do not use them as a baseline.
-- **Tested with:** Ren'Py 8.5.3 (`lint` plus headless playthroughs of the Prologue through Day Two).
+- **Tested with:** Ren'Py 8.5.3 (`lint` plus headless playthroughs from the Prologue through Day Two, Day Three and the Day Four stub).
 
 ## Build state
 
@@ -13,8 +13,8 @@ This file records what is true in the repository **now**. When code and any olde
 | Prologue | Implemented |
 | Chapter 1 Day One | Implemented |
 | Chapter 1 Day Two | Implemented end to end; five end states reachable |
-| Chapter 1 Day Three | First-pass script exists, **unlinked**, not runtime-tested |
-| Day Four | No canon yet |
+| Chapter 1 Day Three | First-pass script, **linked** from Day Two; headless-tested for every lane |
+| Day Four | **Placeholder stub only** (`ch01_day4_stub.rpy`); no canon yet |
 | Gallery | Architecture exists; story-to-gallery mapping is not decided |
 | `zz...` cleanup | Paused except where a late override directly conflicts with runtime |
 
@@ -32,12 +32,17 @@ This file records what is true in the repository **now**. When code and any olde
 
 Day Three is written to start from the stored `ch01_d2_end_route`.
 
-## Day Three: written but not linked
+## Day Two -> Day Three -> Day Four stub
 
-- File: `game/chapters/ch01/ch01_day3_scenes.rpy`, entry label **`ch01_day3_start`** (added by PR #13, originally `1156feb`).
-- It is first-pass dialogue with CG `TODO` comments and has **not been runtime-tested**.
-- It is orphaned in both directions: Day Two ends with a plain `return` (`ch01_day2_scene_30_finish`) with no jump into Day Three, and Day Three ends with `set_story_flag('ch01_d3_complete')` then `return`, with no jump to Day Four.
-- The Day 2 -> Day 3 link must wait until Day Two QA is clean and the Scriptwriter signs off. The file is owned by the Scriptwriter.
+Flow: `ch01_day2_scene_30_finish` (card "CHAPTER ONE — DAY TWO COMPLETE") -> `jump ch01_day3_start` -> Day Three -> `ch01_day3_bedroom` (card "CHAPTER ONE — DAY THREE COMPLETE") -> `jump ch01_day4_start` -> placeholder end card -> `return` (ends the game / back to the main menu). This mirrors the Day One -> Day Two pattern (completion card, `jump`, new day sets its `_started` flag and shows its own title card). There is no day counter or save-point logic in the project; progress is tracked only by story flags (`ch01_day_0N_started` / `ch01_day_0N_complete`; Day Three now sets both, plus the older `ch01_d3_complete`).
+
+- Day Three keys off the stored `ch01_d2_end_route` and Day Two state, which the link does not touch. The Black Cutout Mini is owned by this point in a normal playthrough (Ryan or Leia bought it in the boutique).
+- Day Three file: `game/chapters/ch01/ch01_day3_scenes.rpy` (owned by the Scriptwriter). The link only added the title/completion cards, the `ch01_day_03_*` flags and the final `jump`; story text is unchanged.
+- Anything that calls Day Two (`call ch01_day2_start` etc.) now runs on through Day Three into the Day Four stub before returning. QA harnesses that want a Day Two-only run should stop at `ch01_day3_start` (the harness uses a `config.label_overrides` entry for this).
+
+### Replacing the Day Four stub
+
+`game/chapters/ch01/ch01_day4_stub.rpy` only shows "End of the current build. Day Four continues in the next update." and returns. It is a placeholder, not story content. To replace it with the Scriptwriter's approved Day Four script: add the real entry label (keep the name `ch01_day4_start`, or change the final `jump` in `ch01_day3_bedroom`), start it with a title card and a `ch01_day_04_started` flag as Day Two/Three do, and delete the stub file.
 
 ## Assets
 
@@ -56,7 +61,7 @@ Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, 
 2. Replace the 12 finale placeholder CGs and the other Day Two placeholders.
 3. Run the unchecked QA & Release checklist (Notion page 08).
 4. Decide Gallery mapping for finalized CGs.
-5. Link Day Three after Day Two QA.
+5. ~~Link Day Three after Day Two QA.~~ Done: Day Two -> Day Three -> Day Four stub (see above). Remaining: replace the stub with the approved Day Four script.
 6. ~~Phone Shop could sell the Black Cutout Mini at any time.~~ Fixed: the outfit carries `shop_story_flag: ch01_d2_boutique_shop_open`, set by the boutique scene just before it opens the Shop for Ryan. Until then the Shop (phone app and full screen) neither lists nor sells it; once owned it is listed as owned.
 7. ~~Four Day Two choice ids registered but never used (`ch01_d2_game_reassure`, `ch01_d2_game_tease`, `ch01_d2_game_ignore`, `ch01_d2_sunset_tease`).~~ Removed: Notion canon (05, 07, 07C) has no player menu in the sunset payoff or the Never Have I Ever scenes (25-28) for them to carry; the only sunset menu is connect / partial / ignore_gate. Nothing read them.
 8. ~~`mixed_unresolved` did not set `ch01_d2_bedroom_variant`.~~ Fixed: it now sets `pool_suspicion_unresolved` (no bedroom payoff scene plays on that path). Nothing reads the value; Day Three keys off `ch01_d2_end_route`.

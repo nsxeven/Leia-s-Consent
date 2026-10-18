@@ -1,8 +1,14 @@
 # Leia's Consent — Chapter 1 Day 3
 # First playable dialogue pass. CG insertion points are comments, not missing image references.
-# Entry: ch01_day3_start. Day 2's stored ending is authoritative.
+# Entry: ch01_day3_start (reached from ch01_day2_scene_30_finish). Day 2's stored ending is authoritative.
+# Exit: jumps to ch01_day4_start.
 
 label ch01_day3_start:
+    $ set_story_flag("ch01_day_03_started")
+    scene black
+    with fade
+    centered "{size=50}CHAPTER ONE — DAY THREE{/size}"
+
     $ d3_end = get_story_value("ch01_d2_end_route", "love")
     $ d3_lane = "ntr" if d3_end in ("ntr_confirmed", "mixed_unresolved") else ("exhibitionism" if d3_end == "exhibitionism" else "love")
     $ set_story_value("ch01_d3_lane", d3_lane)
@@ -513,4 +519,13 @@ label ch01_day3_bedroom:
         "I lay back down. It was only a dream, not proof of anything."
         $ set_story_value("ch01_d3_end_variant", "ntr_restroom_nightmare")
     $ set_story_flag("ch01_d3_complete")
-    return
+    $ set_story_flag("ch01_day_03_complete")
+
+    scene black
+    with fade
+
+    centered "{size=46}CHAPTER ONE — DAY THREE COMPLETE{/size}"
+
+    # Day Three -> Day Four. ch01_day4_start is currently a placeholder stub
+    # (ch01_day4_stub.rpy) until the approved Day Four script replaces it.
+    jump ch01_day4_start

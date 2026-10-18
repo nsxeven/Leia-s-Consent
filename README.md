@@ -44,7 +44,8 @@ game/
       ch01_scenes_14_30.rpy         Day One night pool, movie night, dream
       ch01_day2_scenes_01_15.rpy    Day Two morning to pool (incl. boutique)
       ch01_day2_scenes_16_30.rpy    Day Two pool accident to the five end states
-      ch01_day3_scenes.rpy          Day Three first pass (NOT linked yet)
+      ch01_day3_scenes.rpy          Day Three first pass (linked from Day Two)
+      ch01_day4_stub.rpy            Day Four PLACEHOLDER end card (to be replaced)
       *_visuals.rpy                 stable image names (placeholders or real art)
       zz*/zzzz* ...                 late override patches (see below)
     dev_sandbox.rpy, systems_vertical_slice.rpy, story_state_test.rpy   developer test labels
@@ -65,8 +66,8 @@ docs/
 | Prologue | Implemented |
 | Chapter 1, Day 1 | Implemented (resort baseline, swimsuit/towel, pool photography, dinner stranger and spill, accidental Julian catch, movie night, closing dream) |
 | Chapter 1, Day 2 | Implemented end to end: Maya, boutique/Shop, villa pool, sunset, dinner, Never Have I Ever, bedroom. Resolves to one of **five end states** stored in `ch01_d2_end_route`: `love`, `exhibitionism`, `love_repaired`, `mixed_unresolved`, `ntr_confirmed` |
-| Chapter 1, Day 3 | A first-pass script exists in `ch01_day3_scenes.rpy` (entry label `ch01_day3_start`) but it is **not linked**: Day 2 ends with a plain `return` and Day 3 is not runtime-tested |
-| Day 4+ | Not started |
+| Chapter 1, Day 3 | A first-pass script in `ch01_day3_scenes.rpy` (entry label `ch01_day3_start`), linked from the end of Day 2 and headless-tested for the Love, Exhibitionism and NTR lanes |
+| Day 4+ | Not started. `ch01_day4_stub.rpy` is a placeholder end-of-build card that Day 3 jumps to |
 
 All Day Two story CGs are still placeholders pending final art (including the 12 finale CGs). See [docs/BUILD_HANDOFF.md](docs/BUILD_HANDOFF.md) for the exact current state.
 
@@ -76,5 +77,5 @@ All Day Two story CGs are still placeholders pending final art (including the 12
 - **Late-override files.** Ren'Py loads files in alphabetical order and a later `label` with the same name replaces an earlier one. The `zz_`, `zzzz_`, `zzzzz_` ... prefixed files are deliberate late patches. Before editing a label or screen, search for another definition of it and edit the **effective** (last-loaded) owner. Do not do broad `zz` cleanup unless it was explicitly requested.
 - **Stable image names.** Story code refers to stable names (for example `cg ch01_d2_love_bedroom_01`). Placeholders are `Composite` images; when real art arrives, point the same name at the file instead of renaming it in the script.
 - **Art ownership.** Do not add or replace CG art as part of a code change; art is delivered separately.
-- **Day Three script.** `ch01_day3_scenes.rpy` is owned by the Scriptwriter. Do not edit it or add the Day 2 -> Day 3 link without coordination.
+- **Day Three script.** `ch01_day3_scenes.rpy` is owned by the Scriptwriter. Do not edit it without coordination. The Day 2 -> Day 3 -> Day 4 stub link is in place.
 - Run `lint` and play the affected route from a fresh save before opening a PR.
