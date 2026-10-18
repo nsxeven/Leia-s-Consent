@@ -36,3 +36,10 @@ screen chapter_select():
             textbutton _("Begin"):
                 action [SetField(persistent, "ch01_chapter_select_pending", (cs_day, cs_route)), Start("ch01_chapter_select_entry")]
                 text_size 36
+
+            if gallery_qa_tools_enabled():
+                text _("QA (developer only)") size 30
+                hbox:
+                    spacing 16
+                    textbutton _("Unlock all Gallery entries") action Function(debug_unlock_all_gallery)
+                    textbutton _("Reset Gallery unlocks and seen CGs") action Function(debug_reset_gallery)

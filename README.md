@@ -57,7 +57,8 @@ game/
     dev_sandbox.rpy, systems_vertical_slice.rpy, story_state_test.rpy   developer test labels
   systems/              choice_engine, stats, story_state, economy, outfits_data,
                         wardrobe_logic, love_outfit_control, dialogue_staging,
-                        phone_state, gallery, status/transparency display ...
+                        phone_state, gallery (+ gallery_data: the entry table),
+                        status/transparency display ...
   screens/              UI and phone screens (several late zz* presentation overlays)
   sprites/              layered character sprites (Leia, Ryan, dinner stranger)
   images/               backgrounds/, cg/, sprites/ (production art)
@@ -75,6 +76,7 @@ docs/
 | Chapter 1, Day 3 | A first-pass script in `ch01_day3_scenes.rpy` (entry label `ch01_day3_start`), linked from the end of Day 2 and headless-tested for the Love, Exhibitionism and NTR lanes |
 | Chapter 1, Day 4 | First-pass script in `ch01_day4_scenes_*.rpy` (entry `ch01_day4_start`), linked from the end of Day 3 and headless-tested for all five end routes (`love`, `exhibitionism`, `love_repaired`, `ntr_unresolved`, `ntr_confirmed`, stored in `ch01_d4_end_route`). All Day 4 CGs and backgrounds are placeholders (`ch01_day4_visuals.rpy`) |
 | Chapter 1, Day 5 | First-pass script "The Water" in `ch01_day5_scenes_*.rpy` (entry `ch01_day5_start`), linked from the end of Day 4 (which jumps to it when the label exists) and headless-tested for all five Day 4 end routes. Ends in five routes stored in `ch01_d5_end_route` (`love`, `exhibitionism`, `love_repaired`, `ntr_unresolved`, `ntr_confirmed`). All Day 5 CGs and backgrounds are placeholders (`ch01_day5_visuals.rpy`) |
+| Gallery | 47 entries (Prologue 4, Day 1 17, Day 2 9, Day 3 1, Day 4 5, Day 5 11), one per scene sequence with variant pages; unlocks follow the CGs the player has actually seen; open it from **Gallery** in the main menu or game menu. Placeholder CGs show with an "ART PENDING" badge; mature scenes are masked in the grid. Replay is not built yet |
 | Day 6+ | Not built. Day 5 ends on a temporary "Current development build ends here" card until `ch01_day6_start` exists |
 
 All Day Two story CGs and all Day Four and Day Five CGs/backgrounds are still placeholders pending final art (including the 12 Day Two finale CGs). See [docs/BUILD_HANDOFF.md](docs/BUILD_HANDOFF.md) for the exact current state.
@@ -86,4 +88,5 @@ All Day Two story CGs and all Day Four and Day Five CGs/backgrounds are still pl
 - **Stable image names.** Story code refers to stable names (for example `cg ch01_d2_love_bedroom_01`). Placeholders are `Composite` images; when real art arrives, point the same name at the file instead of renaming it in the script.
 - **Art ownership.** Do not add or replace CG art as part of a code change; art is delivered separately.
 - **Day Three script.** `ch01_day3_scenes.rpy` is owned by the Scriptwriter. Do not edit it without coordination. The Day 2 -> Day 3 -> Day 4 link is in place. Day Four (`ch01_day4_*`) and Day Five (`ch01_day5_*`) are also Scriptwriter-owned; coordinate before editing them.
+- **Gallery entries.** Add a scene's CGs to the gallery with one `gallery_row(...)` in `game/systems/gallery_data.rpy` (plus a tab row for a new day). Unlocks follow the CGs the player has seen, so no unlock lines go in story files. See the Gallery section of the handoff doc.
 - Run `lint` and play the affected route from a fresh save before opening a PR.

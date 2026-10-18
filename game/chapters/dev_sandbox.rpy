@@ -75,7 +75,7 @@ label dev_gallery_test:
     scene bg dev
 
     "The Gallery shell uses persistent unlocks. These belong to the player profile rather than one save slot."
-    "Final CG art and replay labels do not exist yet, so this test uses placeholder cards and previews."
+    "Gallery entries unlock when their CGs are shown (seen images). Replay labels do not exist yet, and some CGs are still placeholders."
 
     jump dev_gallery_lab
 
@@ -89,7 +89,7 @@ label dev_gallery_lab:
         jump dev_gallery_lab
 
     elif gallery_action == "unlock_one":
-        $ debug_unlock_gallery_entry("ch01_cg01")
+        $ debug_unlock_gallery_entry("d1_arrival")
         jump dev_gallery_lab
 
     elif gallery_action == "unlock_all":
