@@ -445,6 +445,12 @@ label ch01_scene_06_friendship_and_towel:
 
     "She stepped farther out, still far more interested in hurrying us along than in how the towel looked from below."
 
+    # Shift_01 (hands down, towel already less secure) shows earlier.
+    scene cg ch01_towel_shift_01
+    with dissolve
+
+    "From below, the towel was already sitting lower than she seemed to realize."
+
     gf "I'm serious. Go shower."
     mc "I already showered."
     gf "Pool water doesn't count."
@@ -454,17 +460,15 @@ label ch01_scene_06_friendship_and_towel:
 
     "She lifted an arm as if that settled the argument."
 
-    scene cg ch01_towel_shift_01
+    # Shift_02 is the raised-hand frame.
+    scene cg ch01_towel_shift_02
     with dissolve
 
-    "The movement shifted the towel just enough that the view from below was considerably less secure than she seemed to realize."
+    "The movement shifted the towel further."
 
     mc "[girlfriend_name]."
     gf "What?"
     mc "Your towel."
-
-    scene cg ch01_towel_shift_02
-    with dissolve
 
     "Her eyes followed mine downward."
     "The argument disappeared from her face as she finally understood the angle."
@@ -498,11 +502,9 @@ label ch01_scene_06_friendship_and_towel:
     $ ch01_pre_towel_stance = chapter_stance("ch01")
 
     if ch01_pre_towel_stance == "encouraging":
-        "It happened so quickly that it was more funny than threatening. One moment she was rushing us; the next she looked as if she wanted the curtains to swallow her."
+        "[friend_name] cleared his throat, still facing the water."
     elif ch01_pre_towel_stance == "protective":
-        "I knew it was an accident. I knew [friend_name] had done nothing wrong. That did not stop the discomfort arriving before the reasonable part of me could catch up."
-    else:
-        "It was awkward. Nothing more than that—or at least, that was what I told myself when I registered that [friend_name] had looked up too."
+        "[friend_name] kept his eyes on the pool longer than necessary."
 
     $ ch01_towel_laugh_text = format_choice("ch01_towel_laugh", "Well. She found out what the curtains are for.")
     $ ch01_towel_boundary_text = format_choice("ch01_towel_boundary", "Eyes on the pool, mate.")
@@ -511,39 +513,19 @@ label ch01_scene_06_friendship_and_towel:
     menu:
         "[ch01_towel_laugh_text]":
             $ apply_choice("ch01_towel_laugh")
-            $ set_story_value("ch01_towel_response", "laughed")
             mc "Well. She found out what the curtains are for."
-            friend "I am never looking at that window again."
+            friend "I'm going to go... not be here."
 
         "[ch01_towel_boundary_text]":
             $ apply_choice("ch01_towel_boundary")
-            $ set_story_value("ch01_towel_response", "playful_boundary")
             mc "Eyes on the pool, mate."
-            friend "Already there."
-            mc "Just checking."
-            friend "Fair."
+            friend "Already done."
 
         "[ch01_towel_forget_text]":
             $ apply_choice("ch01_towel_forget")
-            $ set_story_value("ch01_towel_response", "uncomfortable")
             mc "Let's pretend that didn't happen."
-            friend "Was already planning to."
+            friend "Agreed."
 
-    "Whatever my reaction, [friend_name] did not argue, tease her, or try to turn the accident into something it was not."
-
-    $ set_story_flag("ch01_towel_incident_complete")
     $ set_story_flag("ch01_scene_06_complete")
-    $ set_story_flag("ch01_scenes_04_06_complete")
-
-
-    scene bg ch01_master_bedroom_curtains
-    with dissolve
-
-    "I headed upstairs to change. The bedroom door was open, but [girlfriend_name] had retreated into the bathroom."
-
-    gf "[player_name]?"
-    mc "Yeah?"
-
-    gf "...Did he see anything?"
 
     jump ch01_scene_07_did_he_see
