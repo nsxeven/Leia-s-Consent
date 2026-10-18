@@ -219,6 +219,15 @@ init 1 python:
         return choice_ids_with_prefix("ch01_d2_")
 
 
+    def has_choice_tag(tag, choice_ids=None):
+        """True when recorded choices include a behavioral tag.
+
+        Scenes 11b and 12 call this immediately after the boutique. The name
+        has to exist or Ren'Py raises NameError before the pool plan.
+        """
+        return choice_tag_count(tag, choice_ids) > 0
+
+
     def ch01_d2_route_lane():
         """Resolve the active Day Two lane from accumulated behavior and stats.
 
