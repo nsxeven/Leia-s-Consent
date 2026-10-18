@@ -699,8 +699,8 @@ label ch01_day2_scene_21_pre_sunset:
         menu:
             "Let me choose your outfit.":
                 python:
-                    # Black Cutout Mini is reserved for Day Three and must not
-                    # appear in this Love dinner picker, even if it is owned.
+                    # The Black Cutout Mini is reserved for Day Three, so it is
+                    # never offered in the Day Two dinner picker even when owned.
                     d2_love_outfit_options = [
                         outfit_id
                         for outfit_id in love_outfit_candidates(

@@ -1,27 +1,74 @@
-# Build handoff
+# Build Handoff — current state
 
-This note is the current boundary for the Chapter One development build. It does not change story text or art.
+This file records what is true in the repository **now**. When code and any older note disagree, the code wins; fix the note.
 
-## What is linked
+- **Baseline:** `main` @ `5b076bd` (18 Oct 2026). This document was written on a branch cut from that commit.
+- **Superseded references:** `a309487` (old head of `feature/ch01-scenes-14-30`) and `c4e54dd` (audit baseline quoted by older design notes) are **stale**. Both are ancestors of `main` and predate the Day Three work. Do not use them as a baseline.
+- **Tested with:** Ren'Py 8.5.3 (`lint` plus headless playthroughs of the Prologue through Day Two).
 
-A new game starts at `prologue_name_setup`, then `chapter_one_start`.
+## Build state
 
-Day One ends in `ch01_scene_30_end_day_one` and jumps to `ch01_day2_start`.
+| Area | State |
+|---|---|
+| Prologue | Implemented |
+| Chapter 1 Day One | Implemented |
+| Chapter 1 Day Two | Implemented end to end; five end states reachable |
+| Chapter 1 Day Three | First-pass script exists, **unlinked**, not runtime-tested |
+| Day Four | No canon yet |
+| Gallery | Architecture exists; story-to-gallery mapping is not decided |
+| `zz...` cleanup | Paused except where a late override directly conflicts with runtime |
 
-Day Two ends in `ch01_day2_scene_30_finish`. That label sets `ch01_day_02_complete`, shows the Day Two complete card, and returns. It does not continue the story.
+## Day Two end states
 
-## Day 3 is not linked
+`ch01_d2_end_route` stores one of: `love`, `exhibitionism`, `love_repaired`, `mixed_unresolved`, `ntr_confirmed`.
 
-`game/chapters/ch01/ch01_day3_scenes.rpy` is in the tree and defines `ch01_day3_start`. No playable label jumps to it. Do not wire Day Three in from the Day Two finish card unless that link is an explicit next task.
+| End state | How it is reached |
+|---|---|
+| `love` | Love lane bedroom (curtains drawn), or a Love lane with enough shared openness that gets the open-curtain bedroom variant but stays `love` |
+| `exhibitionism` | Exhibitionism lane bedroom (curtains open, consensual roleplay), or the NTR-lane pool-suspicion bed choice "It bothered me... and I haven't stopped thinking about it" |
+| `love_repaired` | NTR soft gate ("I'm fine." at sunset) plus the dinner wink, then honesty at the final hard gate |
+| `mixed_unresolved` | NTR lane with pool suspicion but no soft gate, and the accusatory bed choice |
+| `ntr_confirmed` | NTR soft gate plus dinner wink, then accusation or a second "I'm fine." at the hard gate |
 
-## No CG art changed
+Day Three is written to start from the stored `ch01_d2_end_route`.
 
-The Day Two QA pass did not add, replace, or edit CG image files. `game/images/` is untouched. Scene scripts still point at the existing CG names.
+## Day Three: written but not linked
 
-## Day Two rules to keep
+- File: `game/chapters/ch01/ch01_day3_scenes.rpy`, entry label **`ch01_day3_start`** (added by PR #13, originally `1156feb`).
+- It is first-pass dialogue with CG `TODO` comments and has **not been runtime-tested**.
+- It is orphaned in both directions: Day Two ends with a plain `return` (`ch01_day2_scene_30_finish`) with no jump into Day Three, and Day Three ends with `set_story_flag('ch01_d3_complete')` then `return`, with no jump to Day Four.
+- The Day 2 -> Day 3 link must wait until Day Two QA is clean and the Scriptwriter signs off. The file is owned by the Scriptwriter.
 
-- After the boutique, scenes 11b and 12 call `has_choice_tag("repair")`. That function must stay defined. It is true when `choice_tag_count` for the tag is greater than zero. Removing it raises `NameError` before the villa pool plan.
-- The Love dinner picker in `ch01_day2_scene_21_pre_sunset` must not offer `boutique_cutout_mini`. The Black Cutout Mini is reserved for Day 3.
-- Dinner collision: `stranger_casual_dry` walks in from screen-left (`ch01_stranger_walk_in_left`) before the spill CGs. `stranger_casual_wet` is the sprite after those CGs. The later corridor compliment is `passerby`, a separate `Character` from `stranger`.
-- `bbc_stranger_casual` is an alias of `stranger_casual_dry`. Do not point it back at `Base_Casual.png` or `Penis_Casual.png`; those files are not in the project.
-- Black Cutout Mini source: if Ryan buys it during the boutique shop, `ch01_d2_mall_outfit_source` is `ryan`. Otherwise Leia buys it herself and the source is `leia`.
+## Assets
+
+- **DinnerSpill:** `CH1D1_CG_DinnerSpill_01` to `_04` all exist and are wired in `ch01_scenes_07_13_visuals.rpy` as `cg ch01_dinner_spill_01..04`: 01 impact / liquid airborne, 02 wet aftermath, 03 Leia follows his glance, 04 her second glance. The older id `ch01_dinner_spill` remains as an alias of `_01` for old saves.
+- **TowelDidHeSee:** `CH1D1_CG_TowelDidHeSee_01` exists and is registered as `cg ch01_towel_did_he_see`; it is shown at the start of `ch01_scene_07_did_he_see`. The Towel realization CG is not repeated there.
+- **Dinner stranger rig:** `Base/Penis_Casual_Dry`, `Base/Penis_Casual_Wet` and a shared `Chest_Casual` share one 941x1672 canvas and are registered as `stranger_casual_dry` and `stranger_casual_wet`. Staging is dry approach from the left, then the collision CG sequence, then wet stranger dialogue, then exit left. The later corridor compliment man is a different person with his own `passerby` speaker and must not reuse these images.
+- **Day Two CGs are all placeholders.** Day Two story CGs resolve to `Composite` placeholder images in `ch01_day2_visuals.rpy`, including the **12 finale CGs**: `ch01_d2_love_pool_oral_01/02`, `ch01_d2_love_bedroom_01/02`, `ch01_d2_exhib_bed_open_01..04`, `ch01_d2_ntr_dream_strangers`, `..._julian_pool`, `..._nhie`, `..._wrong_room`. The other Day Two placeholders are the Leia+Maya photo, pool-top accident, dinner reach, Julian underwear reveal, the five boutique CGs and the general Day Two backgrounds.
+
+## Black Cutout Mini
+
+Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, that stands (`ch01_d2_mall_outfit_source == "ryan"`). In every other case, including Ryan declining, being unable to pay, or being absent, Leia buys it herself (`"leia"`). Either way Leia owns it before Day Three. It is reserved for Day Three and is never offered or worn at the Day Two dinner.
+
+## Known open items
+
+1. Test Day Two Scenes 19-30 from a fresh save on each route (headless traces of all five end states pass; see below).
+2. Replace the 12 finale placeholder CGs and the other Day Two placeholders.
+3. Run the unchecked QA & Release checklist (Notion page 08).
+4. Decide Gallery mapping for finalized CGs.
+5. Link Day Three after Day Two QA.
+6. The Phone Shop app can sell the Black Cutout Mini at any time (it has no boutique gate), so Ryan could buy it before the boutique scene; the boutique scene then records source `ryan`. Consider gating it behind the boutique visit.
+7. Four Day Two choice ids are registered but never used: `ch01_d2_game_reassure`, `ch01_d2_game_tease`, `ch01_d2_game_ignore`, `ch01_d2_sunset_tease`.
+8. `mixed_unresolved` does not set `ch01_d2_bedroom_variant`.
+
+## QA notes
+
+- `lint` (Ren'Py 8.5.3) leaves only pre-existing, non-blocking items: `scene white` in Day One scenes 04-06, unused legacy aliases in `zz_ch01_phone_photo_aliases.rpy`, init priorities above 999 in a few late patch files, and a `hide julian` without a prior show in `zzzz_ch01_scene27_staged_phone.rpy`.
+- Always test with a fresh save when label or choice logic changed.
+
+## Before starting a coding session
+
+- Fetch `main`, branch from it, and confirm the head.
+- Find the **effective** runtime owner of what you change (late `zz...` overrides replace earlier labels and screens).
+- Do not resume broad `zz...` cleanup unless explicitly requested.
+- Do not edit `ch01_day3_scenes.rpy` or add or replace CG art outside the owners' workflows.
