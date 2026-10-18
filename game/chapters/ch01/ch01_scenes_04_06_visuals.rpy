@@ -27,10 +27,6 @@ image cg ch01_photo_capture_01_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_01
 image cg ch01_photo_capture_02_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_02_Capture.webp", prologue_fullscreen)
 image cg ch01_photo_capture_03_b = At("images/cg/ch01/CH1D1_CG_PoolPhoto_Blue_03_Capture.webp", prologue_fullscreen)
 
-
-
-
-
 image cg ch01_towel_call_down = At("images/cg/ch01/CH1D1_CG_TowelCallDown_01.webp", prologue_fullscreen)
 
 image cg ch01_towel_shift_01 = At("images/cg/ch01/CH1D1_CG_TowelShift_01.webp", prologue_fullscreen)
@@ -40,4 +36,5 @@ image cg ch01_towel_shift_03 = At("images/cg/ch01/CH1D1_CG_TowelShift_03.webp", 
 # Realization is the balcony reaction beat used on Julian's "I'm looking at the water." line.
 image cg ch01_towel_realization = At("images/cg/ch01/CH1D1_CG_TowelRealization_01.webp", prologue_fullscreen)
 
-
+# Upstairs follow-up conversation after Ryan comes up.
+image cg ch01_towel_did_he_see = At("images/cg/ch01/CH1D1_CG_TowelDidHeSee_01.webp", prologue_fullscreen)
