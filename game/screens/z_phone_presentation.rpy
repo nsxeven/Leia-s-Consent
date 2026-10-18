@@ -7,12 +7,30 @@ default phone_notification_queue = []
 default persistent.phone_tutorial_seen = False
 
 
+# Shared popup motion: movement is always accompanied by a soft opacity ramp.
 transform phone_notification_slide:
     alpha 0.0
     yoffset -170
-    easeout 0.30 alpha 1.0 yoffset 28
+    parallel:
+        easeout 0.30 yoffset 28
+    parallel:
+        linear 0.45 alpha 1.0
     pause 3.2
-    easein 0.25 alpha 0.0 yoffset -170
+    parallel:
+        easein 0.25 yoffset -170
+    parallel:
+        linear 0.40 alpha 0.0
+
+transform lc_popup_soft_fade:
+    alpha 0.0
+    linear 0.45 alpha 1.0
+
+transform lc_popup_soft_fade_hide:
+    on show:
+        alpha 0.0
+        linear 0.45 alpha 1.0
+    on hide:
+        linear 0.40 alpha 0.0
 
 
 # Override the original quick-access overlay. The Phone is absent before its
@@ -128,9 +146,9 @@ screen phone_first_use_tutorial():
     modal True
     zorder 650
 
-    add Solid("#00000066")
+    add Solid("#00000066") at lc_popup_soft_fade
 
-    frame:
+    frame at lc_popup_soft_fade_hide:
         xalign 0.5
         yalign 0.5
         xsize 700

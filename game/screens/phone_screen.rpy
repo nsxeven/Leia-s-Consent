@@ -1,3 +1,8 @@
+# LEGACY BASE PHONE SCREEN.
+# The active handset presentation is the later phone_screen() definition in
+# zzzzzz_phone_ios_presentation.rpy. Keep this base only as fallback/reference;
+# do not make presentation fixes here without also checking the active override.
+
 # Diegetic in-game phone hub.
 # Bright, playful presentation with rounded mobile UI surfaces.
 
@@ -118,6 +123,8 @@ screen phone_screen():
 
                     if phone_app == "home":
 
+                        $ phone_photo_count = len(phone_photo_items())
+
                         text "Ryan's apps" size 14 color "#8e8e93" xalign 0.5
 
                         grid 3 2:
@@ -160,7 +167,10 @@ screen phone_screen():
                                     add "gui/phone/icons/photos.png" xysize (108, 108) xalign 0.5 ypos 11
 
                                 text "Photos" size 18 color "#1c1c1e" xalign 0.5 ypos 132
-                                text "Camera roll" size 12 color "#8e8e93" xalign 0.5 ypos 160
+                                if phone_photo_count > 0:
+                                    text "[phone_photo_count] saved" size 12 color "#8e8e93" xalign 0.5 ypos 160
+                                else:
+                                    text "Camera roll" size 12 color "#8e8e93" xalign 0.5 ypos 160
 
                                 button:
                                     xfill True
@@ -352,33 +362,30 @@ screen phone_screen():
                                         if not from_player:
                                             text "[message_sender]" size 12 color "#8e8e93" xalign 0.0
 
-                                        frame:
-                                            xmaximum 455
-                                            xalign (1.0 if from_player else 0.0)
-                                            background (Frame("gui/phone/bubble_outgoing.png", 30, 30) if from_player else Frame("gui/phone/bubble_incoming.png", 30, 30))
-                                            padding ((17, 12, 20, 15) if from_player else (20, 12, 17, 15))
+                                        if message_text:
+                                            frame:
+                                                xmaximum 455
+                                                xalign (1.0 if from_player else 0.0)
+                                                background (Frame("gui/phone/bubble_outgoing.png", 30, 30) if from_player else Frame("gui/phone/bubble_incoming.png", 30, 30))
+                                                padding ((17, 12, 20, 15) if from_player else (20, 12, 17, 15))
+                                                text "[message_text]" size 16 color bubble_text line_spacing 3
 
+                                        if attachment_id:
                                             vbox:
-                                                spacing 8
+                                                xmaximum 455
+                                                xalign (1.0 if from_player else 0.0)
+                                                spacing 4
 
-                                                if message_text:
-                                                    text "[message_text]" size 16 color bubble_text line_spacing 3
-
-                                                if attachment_id:
-                                                    frame:
-                                                        xfill True
-                                                        ysize 176
-                                                        background Frame("gui/phone/rounded_white.png", 24, 24)
-                                                        padding (14, 12)
-
-                                                        vbox:
-                                                            xalign 0.5
-                                                            yalign 0.5
-                                                            spacing 7
-                                                            add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
-                                                            text "[attachment_label]" size 13 color "#3a3a3c" xalign 0.5
-                                                            if current_choice_mode() == "developer":
-                                                                text "Asset: [attachment_id]" size 10 color "#8e8e93" xalign 0.5
+                                                if renpy.has_image(attachment_id):
+                                                    add attachment_id:
+                                                        xalign (1.0 if from_player else 0.0)
+                                                        xysize (430, 242)
+                                                        fit "cover"
+                                                else:
+                                                    add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
+                                                text "[attachment_label]" size 13 color "#6d6d72" xalign 0.5
+                                                if current_choice_mode() == "developer":
+                                                    text "Asset: [attachment_id]" size 10 color "#8e8e93" xalign 0.5
 
                     elif phone_app == "shop":
 
@@ -486,21 +493,65 @@ screen phone_screen():
 
                     elif phone_app == "photos":
 
-                        frame:
-                            xfill True
-                            background Frame("gui/phone/rounded_white.png", 26, 26)
-                            padding (24, 24)
+                        $ photo_items = phone_photo_items()
 
-                            vbox:
-                                spacing 14
-                                add "gui/phone/icons/photos.png" xysize (118, 118) xalign 0.5
-                                text "Your Photos" size 24 color "#1c1c1e" bold True xalign 0.5
-                                text "Story photos and received image attachments will collect here as they are unlocked." size 15 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
-                                frame:
+                        if photo_items:
+                            viewport:
+                                xfill True
+                                yfill True
+                                mousewheel True
+                                draggable True
+
+                                vbox:
+                                    spacing 12
                                     xfill True
-                                    background Frame("gui/phone/rounded_light.png", 22, 22)
-                                    padding (16, 14)
-                                    text "No photos yet." size 14 color "#8e8e93" xalign 0.5
+
+                                    frame:
+                                        xfill True
+                                        background Frame("gui/phone/rounded_blue.png", 24, 24)
+                                        padding (15, 13)
+                                        text "Received story photos and message attachments are saved here automatically." size 14 color "#2c2c2e" line_spacing 3
+
+                                    for photo in photo_items:
+                                        $ photo_asset = photo.get("asset_id")
+                                        $ photo_label = photo.get("label", "Photo")
+
+                                        vbox:
+                                            spacing 4
+                                            xfill True
+
+                                            if photo_asset and renpy.has_image(photo_asset):
+                                                add photo_asset:
+                                                    xalign 0.5
+                                                    xysize (540, 304)
+                                                    fit "cover"
+                                            else:
+                                                frame:
+                                                    xfill True
+                                                    ysize 190
+                                                    background Frame("gui/phone/rounded_light.png", 22, 22)
+                                                    add "gui/phone/icons/photos.png" xysize (100, 100) xalign 0.5 yalign 0.5
+
+                                            text "[photo_label]" size 15 color "#1c1c1e" bold True xalign 0.5
+                                            if current_choice_mode() == "developer":
+                                                text "Asset: [photo_asset]" size 10 color "#8e8e93" xalign 0.5
+
+                        else:
+                            frame:
+                                xfill True
+                                background Frame("gui/phone/rounded_white.png", 26, 26)
+                                padding (24, 24)
+
+                                vbox:
+                                    spacing 14
+                                    add "gui/phone/icons/photos.png" xysize (118, 118) xalign 0.5
+                                    text "Your Photos" size 24 color "#1c1c1e" bold True xalign 0.5
+                                    text "Story photos and received image attachments will collect here as they are unlocked." size 15 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
+                                    frame:
+                                        xfill True
+                                        background Frame("gui/phone/rounded_light.png", 22, 22)
+                                        padding (16, 14)
+                                        text "No photos yet." size 14 color "#8e8e93" xalign 0.5
 
                     elif phone_app == "wallet":
 

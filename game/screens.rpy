@@ -95,19 +95,45 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
+default lc_dialogue_theme = "night"
+
+init python:
+    def set_dialogue_theme(theme):
+        if theme not in ("day", "night"):
+            raise Exception("LC dialogue theme must be 'day' or 'night'.")
+        store.lc_dialogue_theme = theme
+
+
+# Dialogue keeps Ren'Py's native CPS/typewriter reveal, so the player's
+# Text Speed preference remains authoritative. This transform only adds a
+# short opacity ramp to the text layer; it does not implement its own timing.
+transform lc_dialogue_text_fade:
+    alpha 0.35
+    linear 0.16 alpha 1.0
+
+
 screen say(who, what):
 
     window:
         id "window"
+
+        # Compact dark dialogue treatment: low-profile and readable over bright CGs/BGs.
+        background Solid("#000000B8")
 
         if who is not None:
 
             window:
                 id "namebox"
                 style "namebox"
-                text who id "who"
 
-        text what id "what"
+                # Name is text-only; no decorative border.
+                background None
+
+                text who id "who":
+                    color "#ffffff"
+
+        text what id "what" at lc_dialogue_text_fade:
+            color "#ffffff"
 
 
     ## If there's a side image, display it above the text. Do not display on the
@@ -131,33 +157,34 @@ style namebox_label is say_label
 
 style window:
     xalign 0.5
-    xfill True
-    yalign gui.textbox_yalign
-    ysize gui.textbox_height
-
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    xsize 1600
+    # Compact dialogue panel, but tall enough for four wrapped lines.
+    yalign 1.0
+    ysize 145
 
 style namebox:
-    xpos gui.name_xpos
-    xanchor gui.name_xalign
-    xsize gui.namebox_width
-    ypos gui.name_ypos
-    ysize gui.namebox_height
-
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
-    padding gui.namebox_borders.padding
+    # Flush the speaker name to the upper-left, outside the stitched border.
+    xpos 20
+    xanchor 0.0
+    xsize 420
+    ypos -46
+    ysize 42
+    padding (0, 0, 0, 0)
 
 style say_label:
     properties gui.text_properties("name", accent=True)
-    xalign gui.name_xalign
-    yalign 0.5
+    xalign 0.0
+    yalign 1.0
+    textalign 0.0
 
 style say_dialogue:
     properties gui.text_properties("dialogue")
 
-    xpos gui.dialogue_xpos
-    xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
+    xpos 120
+    xsize 1390
+    # Allow up to four wrapped lines without clipping above the quick menu.
+    ypos 12
+    ymaximum 108
 
     adjust_spacing False
 

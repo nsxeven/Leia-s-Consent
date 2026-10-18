@@ -3,10 +3,12 @@
 
 label ch01_scene_04_pool_arrival:
 
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
     scene bg ch01_pool_day
     with fade
 
-    show julian at ch01_julian_right
     with dissolve
 
     "[friend_name] had already claimed the shaded end of the pool by the time I came downstairs."
@@ -17,9 +19,6 @@ label ch01_scene_04_pool_arrival:
 
     gf "No comments until I'm all the way outside."
 
-    hide julian
-    show leia at ch01_leia_left
-    $ set_leia_sprite("p02", "smile")
     with dissolve
 
     mc "That sounds like you're expecting comments."
@@ -27,7 +26,11 @@ label ch01_scene_04_pool_arrival:
 
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
 
+    # The outfit reveal was already shown at the end of Scene 3. Do not replay
+    # the sprite entrance transform here; keep Leia at her normal pool framing.
     if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini shy at prologue_leia_enter_right, leia_body_idle
+        with dissolve
         "The new swimsuit was not outrageous. It was simply cut higher at the hips and showed more of her than [friend_name] had ever seen."
         "[girlfriend_name] stopped just beyond the doorway, pretending not to wait for my reaction."
         gf "Well?"
@@ -35,18 +38,31 @@ label ch01_scene_04_pool_arrival:
         gf "I want to hear you say it."
         mc "You look incredible."
         "Some of the tension left her shoulders."
+        show leia_blue_bikini smile
+        with sprite_change
         gf "Better."
     else:
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
+        with dissolve
         "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
+        show leia_white_ruffle smile
+        with sprite_change
         gf "I know. This one has already passed quality control."
 
-    show julian at ch01_julian_right
     with dissolve
 
     friend "Are you two finished, or should I give you another minute?"
     gf "Jealous?"
     friend "Of the pool waiting while you flirt? Extremely."
+
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_blue_bikini
+        scene cg ch01_sunscreen_blue
+    else:
+        hide leia_white_ruffle
+        scene cg ch01_sunscreen_white
+    with dissolve
 
     "[girlfriend_name] dropped a bottle of sunscreen into my hand and turned her back to me."
 
@@ -54,12 +70,26 @@ label ch01_scene_04_pool_arrival:
     mc "Please?"
     gf "We've been together four years. 'Please' has expired."
 
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_sunscreen_apply_blue
+    else:
+        scene cg ch01_sunscreen_apply_white
+    with dissolve
+
     "I worked the sunscreen across her shoulders and down the centre of her back."
     "When my hands slowed near her waist, she looked back at me."
 
     gf "You are taking suspiciously long."
     mc "Thorough application prevents sun damage."
     gf "Very responsible."
+
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_blue_bikini
+        scene cg ch01_pool_hand_pull_blue
+    else:
+        hide leia_white_ruffle
+        scene cg ch01_pool_hand_pull_white
+    with dissolve
 
     "She caught my wrist, stepped backward—and pulled me into the pool with her."
 
@@ -71,26 +101,46 @@ label ch01_scene_04_pool_arrival:
 
     $ set_story_flag("ch01_scene_04_complete")
 
-    hide leia
-    hide julian
 
     jump ch01_scene_05_photography
 
 
 label ch01_scene_05_photography:
 
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
     $ enter_cinematic_mode()
-    scene cg ch01_photo_group
+    $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_photo_group_blue
+    else:
+        scene cg ch01_photo_group_white
     with dissolve
 
     "Eventually, [girlfriend_name] decided the afternoon required photographic evidence."
     "Her first group selfie caught me blinking and [friend_name] looking as if he had been summoned against his will."
 
     gf "How are both of you bad at having faces?"
+
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_day
+    with dissolve
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
+    else:
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
+
     friend "Give me the phone."
 
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
 
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini shy
+    else:
+        show leia_white_ruffle shy
+    with sprite_change
     gf "Wait. Why do I actually look good?"
     mc "You say that like it's unusual."
     gf "When you take the photo, it is."
@@ -100,6 +150,7 @@ label ch01_scene_05_photography:
     gf "Can you take one of just me?"
     friend "Sure."
 
+    $ enter_cinematic_mode()
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_photo_awkward_b
     else:
@@ -107,6 +158,17 @@ label ch01_scene_05_photography:
     with dissolve
 
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
+
+    # The shutter fires only after the setup CG has had a full dialogue beat.
+    scene white
+    with Dissolve(0.06)
+    pause 0.04
+    if selected_pool_outfit == "pool_bolder":
+        scene cg ch01_photo_capture_01_b
+    else:
+        scene cg ch01_photo_capture_01_a
+    with Dissolve(0.08)
+    $ set_story_value("ch01_pool_capture_count", 1)
 
     friend "Relax your shoulders."
     gf "They are relaxed."
@@ -121,10 +183,13 @@ label ch01_scene_05_photography:
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
-    $ set_leia_sprite("p03", "embarrassed")
-    show leia at ch01_leia_left
-    show julian at ch01_julian_right
     with dissolve
+
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
+    else:
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "She was improving, but every time she noticed the camera she became stiff again."
 
@@ -137,7 +202,7 @@ label ch01_scene_05_photography:
             $ apply_choice("ch01_photo_support")
             $ set_story_value("ch01_photo_stance", "supportive")
             $ set_story_value("ch01_photo_outcome", "relaxed")
-            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_support_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
+            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
 
             mc "That one looks really good."
             gf "Actually good, or boyfriend good?"
@@ -145,22 +210,34 @@ label ch01_scene_05_photography:
             gf "Okay. One more."
 
             $ enter_cinematic_mode()
-            if selected_pool_outfit == "pool_bolder":
-                scene cg ch01_photo_support_b
-            else:
-                scene cg ch01_photo_support_a
-            with dissolve
 
             "This time she stopped posing long enough to enjoy herself."
-            "Wet hair rested over one shoulder as she turned toward the water, then looked back when I made her laugh."
+            "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
+
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
+            if selected_pool_outfit == "pool_bolder":
+                scene cg ch01_photo_capture_02_b
+            else:
+                scene cg ch01_photo_capture_02_a
+            with Dissolve(0.08)
+            $ set_story_value("ch01_pool_capture_count", 2)
+
+            # Hold the successful second capture on screen for a dialogue beat.
+            # Without this, the branch exits cinematic mode immediately and the
+            # photo is visible for only the transition frame.
+            "The second shot was different. She looked relaxed this time—caught mid-smile instead of trying to pose."
+            gf "Okay. I actually like that one."
+
             $ exit_cinematic_mode()
 
         "[ch01_photo_more_text]":
             $ apply_choice("ch01_photo_more")
             $ set_story_value("ch01_photo_stance", "encouraging")
             $ set_story_value("ch01_photo_outcome", "confident")
-            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_more_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
+            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_03_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
 
             mc "Try one sitting by the edge."
             gf "Since when are you the photographer?"
@@ -169,14 +246,20 @@ label ch01_scene_05_photography:
             gf "Both of you are getting very confident."
 
             $ enter_cinematic_mode()
-            if selected_pool_outfit == "pool_bolder":
-                scene cg ch01_photo_more_b
-            else:
-                scene cg ch01_photo_more_a
-            with dissolve
 
-            "She sat at the pool's edge with her legs in the water, body angled away before glancing back over her shoulder."
-            "It was more suggestive than anything [girlfriend_name] would normally pose for—and for a second she seemed surprised by herself."
+            # Capture 02 is the actual second photograph. Flash directly into it
+            # rather than showing the obsolete pool-edge placeholder first.
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
+            if selected_pool_outfit == "pool_bolder":
+                scene cg ch01_photo_capture_02_b
+            else:
+                scene cg ch01_photo_capture_02_a
+            with Dissolve(0.08)
+
+            "She turned beside the pool, angling her body away from the camera before looking back over her shoulder."
+            "The pose came more naturally this time. Less instruction, less stiffness."
             "Then she checked my face and smiled."
 
             gf "Wait. Take another one."
@@ -184,7 +267,21 @@ label ch01_scene_05_photography:
             mc "She doesn't need my approval."
             gf "Correct answer."
 
-            "She brushed her wet hair back, adjusted the pose herself, and held it until the camera clicked."
+            "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
+
+            scene white
+            with Dissolve(0.06)
+            pause 0.04
+            if selected_pool_outfit == "pool_bolder":
+                scene cg ch01_photo_capture_03_b
+            else:
+                scene cg ch01_photo_capture_03_a
+            with Dissolve(0.08)
+            $ set_story_value("ch01_pool_capture_count", 3)
+
+            # Hold the photograph without invoking say/centered dialogue UI.
+            # Normal dismiss input (click, Space, Enter) advances.
+            $ renpy.pause()
             $ exit_cinematic_mode()
 
         "[ch01_photo_exit_text]":
@@ -200,55 +297,103 @@ label ch01_scene_05_photography:
 
             if ch01_photo_continues:
                 $ set_story_value("ch01_photo_outcome", "chose_to_continue")
-                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_support_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
+                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
                 gf "No. I want one good one."
                 mc "Then we keep going because you want to."
                 gf "Exactly."
 
                 $ enter_cinematic_mode()
-                if selected_pool_outfit == "pool_bolder":
-                    scene cg ch01_photo_support_b
-                else:
-                    scene cg ch01_photo_support_a
-                with dissolve
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
+
+                scene white
+                with Dissolve(0.06)
+                pause 0.04
+                if selected_pool_outfit == "pool_bolder":
+                    scene cg ch01_photo_capture_02_b
+                else:
+                    scene cg ch01_photo_capture_02_a
+                with Dissolve(0.08)
+                $ set_story_value("ch01_pool_capture_count", 2)
                 $ exit_cinematic_mode()
             else:
                 $ set_story_value("ch01_photo_outcome", "stopped")
-                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group")
+                $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group_" + ("blue" if selected_pool_outfit == "pool_bolder" else "white"))
                 gf "Okay. Save me."
                 friend "Your passport photo has been safely deleted."
                 "She slid back into the water beside me, visibly relieved that nobody tried to change her mind."
 
     scene bg ch01_pool_day
-    $ set_leia_sprite("p02", "smile")
-    show leia at ch01_leia_left
-    show julian at ch01_julian_right
     with dissolve
 
-    "[girlfriend_name] took her phone back and scrolled through the results."
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
+    else:
+        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
+
+    "[friend_name] lowered the phone after the last shot."
 
     if get_story_value("ch01_photo_outcome") == "confident":
-        gf "Okay... that one is actually kind of hot."
-        mc "Kind of?"
-        gf "Don't make me take it back."
+        gf "Did you get it?"
+        friend "I got it."
+        gf "Good. You can show me later."
     elif get_story_value("ch01_photo_outcome") in ("relaxed", "chose_to_continue"):
-        gf "I like this one. I look like I'm not trying."
-        friend "That's because you finally weren't."
+        gf "Those better not all be terrible."
+        friend "You'll find out later."
     else:
-        gf "The group one is cute."
-        mc "Even with my face?"
-        gf "Your face gives it character."
+        gf "At least tell me the group one was decent."
+        friend "You'll survive."
 
-    "She saved her favourite without posting it anywhere."
+    "The photos stayed on [friend_name]'s phone for now."
+
+    # Pacing Revision v2 — an ordinary friendship beat before the towel incident.
+    # Leia and Julian should become friends through more than accidents and exposure.
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini smile
+    else:
+        show leia_white_ruffle smile
+    with sprite_change
+    gf "Can I ask you something?"
+    mc "Dangerous opening."
+    gf "Has [friend_name] always been like this?"
+    friend "I'm standing right here."
+    mc "Define 'this.'"
+    gf "The villa. The photos. Acting like all of this is completely normal."
+    mc "Oh. Yes."
+    friend "That sounded judgmental."
+    mc "He once booked a private room for six people because the normal table was 'too loud.'"
+    friend "It was too loud."
+    gf "Of course you did."
+    friend "You enjoyed the villa."
+    gf "I can enjoy it and still make fun of you."
+
+    "She looked at me, amused."
+
+    gf "I can see why you two are friends."
+    friend "Careful. That's almost nice."
+    gf "Don't get used to it."
+    mc "Give it a day. She gets meaner when she's comfortable."
+    if selected_pool_outfit == "pool_bolder":
+        show leia_blue_bikini pout
+    else:
+        show leia_white_ruffle pout
+    with sprite_change
+    gf "Excuse me?"
+    friend "Good. You'll fit in."
+
+    "It was the first time their teasing sounded less like my girlfriend talking to my friend and more like the beginning of a friendship of their own."
 
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
+    if selected_pool_outfit == "pool_bolder":
+        hide leia_blue_bikini
+    else:
+        hide leia_white_ruffle
+    with sprite_enter_exit
+
     $ set_story_flag("ch01_scene_05_complete")
 
-    hide leia
-    hide julian
 
     jump ch01_scene_06_friendship_and_towel
 
@@ -256,7 +401,6 @@ label ch01_scene_05_photography:
 label ch01_scene_06_friendship_and_towel:
 
     scene bg ch01_pool_lounge
-    show julian at ch01_julian_right
     with dissolve
 
     "With [girlfriend_name] upstairs, the villa became unexpectedly quiet."
@@ -286,54 +430,69 @@ label ch01_scene_06_friendship_and_towel:
     "We both looked up."
 
     $ enter_cinematic_mode()
-    hide julian
     scene cg ch01_towel_call_down
     with dissolve
 
     "[girlfriend_name] stood in the open upstairs doorway with wet hair and a small towel wrapped around her body."
-    "One hand held it closed. The other braced against the frame as she leaned out to find us."
-    "From where she stood, she probably thought she was covered. From the pool below, the towel looked considerably shorter."
+    "One hand held it closed as she leaned out to find us."
 
     gf "Dinner is at seven!"
     mc "What time is it?"
     friend "Six twenty-three."
     gf "Why are both of you still sitting there?"
+    mc "Because dinner isn't for another thirty-seven minutes."
+    gf "Exactly. You haven't even changed."
 
-    scene cg ch01_towel_shift
+    "She stepped farther out, still far more interested in hurrying us along than in how the towel looked from below."
+
+    gf "I'm serious. Go shower."
+    mc "I already showered."
+    gf "Pool water doesn't count."
+    friend "She's got you there."
+    mc "Whose side are you on?"
+    friend "The side that gets to dinner on time."
+
+    "She lifted an arm as if that settled the argument."
+
+    scene cg ch01_towel_shift_01
     with dissolve
 
-    "She stepped farther out and leaned over the railing, exposing most of one thigh as the towel rode higher over her hip."
-    "When she lifted an arm to gesture toward the room, the top loosened just enough to reveal the side and lower curve of her breast."
-    "Not everything. More than she intended."
+    "The movement shifted the towel just enough that the view from below was considerably less secure than she seemed to realize."
 
     mc "[girlfriend_name]."
     gf "What?"
     mc "Your towel."
 
-    scene cg ch01_towel_realization
+    scene cg ch01_towel_shift_02
     with dissolve
 
-    "She looked down. Then she looked at us—and finally understood the angle."
+    "Her eyes followed mine downward."
+    "The argument disappeared from her face as she finally understood the angle."
 
     gf "...Oh."
 
-    "She clamped the towel against her chest. That fixed one problem while leaving most of her thighs exposed."
+    scene cg ch01_towel_shift_03
+    with dissolve
+
+    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
     "Beside me, [friend_name] turned deliberately toward the pool."
+
+    scene cg ch01_towel_realization
+    with dissolve
 
     friend "I'm looking at the water."
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
+    mc "Just go inside."
+    gf "I was trying to tell you to get ready!"
+    mc "Message received."
+    gf "Shut up."
 
-    scene cg ch01_towel_silhouette
-    with dissolve
-
-    "[girlfriend_name] disappeared inside and grabbed at the light curtain."
-    "For a fleeting moment, the fabric softened her into a wet-haired silhouette still wrestling the towel closed."
-    "Then the heavier privacy layer swept across the glass and hid her completely."
+    "[girlfriend_name] disappeared inside, still clutching the towel against herself, and pulled the sheer curtain across the glass."
+    "A moment later she retreated farther into the room."
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
-    show julian at ch01_julian_right
     with dissolve
 
     $ ch01_pre_towel_stance = chapter_stance("ch01")
@@ -376,7 +535,6 @@ label ch01_scene_06_friendship_and_towel:
     $ set_story_flag("ch01_scene_06_complete")
     $ set_story_flag("ch01_scenes_04_06_complete")
 
-    hide julian
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
@@ -385,11 +543,7 @@ label ch01_scene_06_friendship_and_towel:
 
     gf "[player_name]?"
     mc "Yeah?"
+
     gf "...Did he see anything?"
 
-    scene black
-    with fade
-
-    centered "{size=46}CHAPTER ONE{/size}\n{size=30}Scenes 4–6 complete{/size}\n\n{size=22}Next: Getting Ready for Dinner{/size}"
-
-    return
+    jump ch01_scene_07_did_he_see

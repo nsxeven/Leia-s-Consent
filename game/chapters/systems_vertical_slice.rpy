@@ -64,7 +64,6 @@ label dev_vertical_slice:
 label dev_vertical_slice_checkpoint:
 
     scene bg dev
-    show leia
 
     $ dev_notify_checkpoint_state()
     $ checkpoint_action = renpy.call_screen("dev_vertical_slice_checkpoint_screen")

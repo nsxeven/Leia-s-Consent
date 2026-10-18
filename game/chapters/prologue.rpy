@@ -49,30 +49,40 @@ label prologue_start:
     "The groups merged eventually. Not because of fate. Not because [friend_name] had a plan."
     "Mostly because somebody dragged two chairs over and suddenly everyone was talking over everyone else."
 
-    scene cg prologue_leia_nerdy
+    scene cg prologue_party_couch
     with dissolve
+
+    "For a while, we all ended up squeezed around the same couch, talking over drinks and whoever happened to be loudest."
+
+    scene bg prologue_party
+    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     gf "Technically, you're both wrong."
     "She said it quietly enough that the conversation almost rolled straight over her."
+    show leia_prologue_party shy
+    with sprite_change
     gf "...Never mind."
+    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
     mc "No, no. You can't say that and then retreat."
+    show leia_prologue_party smile
+    with sprite_change
     gf "I can absolutely retreat."
     mc "Too late. Explain."
-
     "She did."
     "Not for ten seconds, either."
     "There were examples. There was context. At one point she used her drink to demonstrate something nobody had asked to see demonstrated."
     "And somewhere in the middle of it, the version of her I had invented from across the room disappeared."
 
     mc "Oh."
+    show leia_prologue_party neutral
+    with sprite_change
     gf "What?"
     mc "Nothing. Keep going."
+    show leia_prologue_party skeptical
+    with sprite_change
     "She narrowed her eyes at me and continued anyway."
-
-    scene bg prologue_party
-    $ set_leia_sprite("p03", "smile")
-    show leia at prologue_leia_left
-    with dissolve
 
     "What was I actually thinking?"
 
@@ -80,14 +90,20 @@ label prologue_start:
         "She's a complete dork.":
             $ set_story_value("prologue_ryan_first_impression", "dork")
             mc "You're a complete dork, aren't you?"
+            show leia_prologue_party pout
+            with sprite_change
             gf "You made me explain it!"
             mc "And I'm glad I did."
 
         "She's way easier to talk to than I expected.":
             $ set_story_value("prologue_ryan_first_impression", "comfortable")
             mc "You're not what I expected."
+            show leia_prologue_party skeptical
+            with sprite_change
             gf "That sounded dangerously close to an insult."
             mc "It wasn't."
+            show leia_prologue_party smile
+            with sprite_change
             gf "Good recovery."
 
         "I am definitely in trouble.":
@@ -95,11 +111,6 @@ label prologue_start:
             "Right."
             "So the problem wasn't that she was intimidating anymore."
             "The problem was that now I actually liked talking to her."
-
-    hide leia
-
-    scene cg prologue_group_warmup
-    with dissolve
 
     "The longer the night went on, the easier it became to notice something else about her."
     "[girlfriend_name] wasn't shy exactly. She could talk to anyone."
@@ -114,7 +125,64 @@ label prologue_start:
     "I didn't think much of it."
     "Apparently, she did."
 
-    scene cg prologue_truth_reveal
+    # Pacing Revision v2 — give Ryan and Leia one quiet pocket of time together
+    # before Truth or Dare turns their chemistry into a public event.
+    scene bg prologue_party_kitchen
+    with dissolve
+    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
+    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
+    "A while later I escaped to the kitchen in search of another drink."
+    "She was already there, studying the bottles on the counter like one of them had personally offended her."
+
+    mc "Hiding?"
+    gf "Recharging."
+    mc "Different word for hiding."
+    show leia_prologue_party skeptical
+    with sprite_change
+    gf "I came to get a drink."
+    mc "You've been holding the same one for twenty minutes."
+    show leia_prologue_party shy
+    with sprite_change
+    gf "...You noticed that?"
+    mc "I notice things."
+
+    "Without the rest of the room talking over us, the silence between sentences felt easy instead of awkward."
+
+    gf "I nearly didn't come tonight."
+    mc "Seriously?"
+    gf "Big groups are exhausting. Everyone's waiting for their turn to talk."
+    mc "You were doing fine."
+    gf "I spent the first hour pretending to check my phone."
+    mc "Very convincing. I thought you were terrifying."
+    show leia_prologue_party skeptical
+    with sprite_change
+    gf "Terrifying?"
+    mc "Absolutely."
+    gf "I was standing there holding a red cup."
+    mc "Menacingly."
+    show leia_prologue_party smile
+    with sprite_change
+    gf "You're an idiot."
+
+    "She said it while smiling."
+    "Someone shouted our names from the other room."
+
+    gf "Apparently we've been missed."
+    mc "We could stay hidden."
+    gf "Recharging."
+    mc "Right. Sorry."
+    show leia_prologue_party smile
+    with sprite_change
+    gf "Come on."
+
+    hide leia_prologue_party
+    hide ryan_prologue_party
+    with sprite_enter_exit
+
+    scene bg prologue_truthordare
+    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
     with dissolve
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
@@ -122,10 +190,16 @@ label prologue_start:
     "Somebody had to send an embarrassing text. Someone else drank something that should never have been mixed."
     "[girlfriend_name], meanwhile, had discovered an extremely advanced strategy."
 
+    show leia_prologue_party neutral
+    with sprite_change
     gf "Truth."
     friend "Again?"
+    show leia_prologue_party skeptical
+    with sprite_change
     gf "Yes. Again."
     friend "Coward."
+    show leia_prologue_party smile
+    with sprite_change
     gf "Alive coward."
 
     "The next question came from somewhere across the circle."
@@ -133,56 +207,81 @@ label prologue_start:
     "[girlfriend_name] looked around once."
     "Then she pointed at me."
 
+    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
     mc "Me?"
+    show leia_prologue_party shy
+    with sprite_change
     gf "You asked."
     "Nobody had asked me."
     "That did not seem important at the time."
-
-    scene cg prologue_before_kiss
-    with dissolve
-
+    hide ryan_prologue_party
+    with sprite_enter_exit
     friend "Okay. Next round, you are not choosing Truth again."
+    show leia_prologue_party skeptical
+    with sprite_change
     gf "Watch me."
     friend "Chicken."
+    show leia_prologue_party pout
+    with sprite_change
     gf "I'm not a chicken."
     friend "Then pick Dare."
 
     "Three people immediately joined in."
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
-
+    show leia_prologue_party skeptical
+    with sprite_change
     gf "Fine. Dare."
     friend "Kiss [player_name]."
-
+    show leia_prologue_party flustered
+    with sprite_change
     "The room changed temperature."
     "Or maybe that was just me."
     "She looked at [friend_name]. Then at me."
 
     mc "You don't actually have to."
+    show leia_prologue_party shy
+    with sprite_change
     gf "I know."
     "And then she moved closer anyway."
+    hide leia_prologue_party
+    hide ryan_prologue_party
+    scene cg prologue_first_kiss_01
+    with dissolve
 
-    scene cg prologue_first_kiss
+    "She leaned toward me, cheeks burning, like she was still deciding whether this was actually happening."
+
+    scene cg prologue_first_kiss_02
     with dissolve
 
     "It was not smooth."
     "Our noses nearly collided. Somebody laughed before we'd even figured out the angle."
     friend "Oh my God, just kiss already."
     "[girlfriend_name] laughed."
+
+    scene cg prologue_first_kiss_03
+    with dissolve
+
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
     "The room cheered like we'd accomplished something."
 
+    scene bg prologue_truthordare
+    show leia_prologue_party smile at prologue_leia_enter_right, leia_body_idle
+    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
+
     mc "...Does that mean I win Truth or Dare?"
     gf "No."
     mc "Worth asking."
-
+    hide leia_prologue_party
+    hide ryan_prologue_party
     scene black
     with fade
     "And somehow... that was the beginning."
 
     $ set_story_flag("prologue_first_kiss_complete")
 
-    # Deliberate hard cut: the first line reveals that four years have passed.
     scene cg prologue_present_stare
 
     gf "[player_name]?"
@@ -210,9 +309,6 @@ label prologue_start:
     "[friend_name] was coming too."
     "My best friend since before [girlfriend_name] and I were even a thing. The same idiot who had, technically, started the whole thing."
 
-    # The Phone is introduced by the story here, not exposed as unexplained HUD
-    # during the flashback/opening. Each message updates unread state and queues
-    # a native top-of-screen notification.
     $ phone_add_message(
         "group",
         "julian",
@@ -223,8 +319,8 @@ label prologue_start:
         notification_title="Trip Group",
     )
 
-    "My phone buzzed."
-    "[friend_name]: I'm downstairs."
+    # The Phone notification already presents Julian's message; do not
+    # duplicate its contents through the VN textbox.
 
     $ phone_add_message(
         "group",
@@ -236,10 +332,8 @@ label prologue_start:
         notification_title="Trip Group",
     )
 
-    "It buzzed again."
-    "[friend_name]: If either of you makes us miss this flight I am leaving without you."
+    # Second notification is likewise left to the Phone UI.
 
-    # Unlock normal Phone access only after the player has seen what caused it.
     $ phone_unlock_with_tutorial()
     $ set_phone_hud_enabled(True)
 
@@ -249,9 +343,8 @@ label prologue_start:
     mc "Because it's true."
 
     scene bg prologue_packing
-    $ set_leia_sprite("p02", "smile")
-    show leia at prologue_leia_left
-    with dissolve
+    show leia_casual smile at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     gf "Ready?"
 
@@ -259,24 +352,32 @@ label prologue_start:
         "Been ready.":
             $ set_story_value("prologue_departure_reply", "ready")
             mc "Been ready."
+            show leia_casual skeptical
+            with sprite_change
             gf "You were still packing ten minutes ago."
             mc "Emotionally ready."
+            show leia_casual smile
+            with sprite_change
 
         "I still think we're forgetting something.":
             $ set_story_value("prologue_departure_reply", "forgetting")
             mc "I still think we're forgetting something."
+            show leia_casual neutral
+            with sprite_change
             gf "If we are, we're buying it there."
             mc "That is an expensive philosophy."
+            show leia_casual smile
+            with sprite_change
 
         "Ask me when [friend_name] starts snoring on the plane.":
             $ set_story_value("prologue_departure_reply", "snoring")
             mc "Ask me when [friend_name] starts snoring on the plane."
+            show leia_casual smile
+            with sprite_change
             gf "I'm recording it this time."
 
-    hide leia
 
-    # Full-screen CG: hide persistent Phone HUD while preserving notifications
-    # as a separate story-controlled layer.
+    hide leia_casual
     $ enter_cinematic_mode()
 
     scene cg prologue_departure

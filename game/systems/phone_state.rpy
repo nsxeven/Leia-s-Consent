@@ -10,8 +10,11 @@ default phone_messages = {
     "julian": [],
     "group": [],
 }
-
 default phone_last_open_thread = None
+
+# Photos are lightweight metadata entries. Story attachments are auto-indexed
+# here so the Photos app can become a persistent camera roll rather than a stub.
+default phone_photos = []
 
 
 init python:
@@ -67,6 +70,29 @@ init python:
         return False
 
 
+    def phone_has_photo(photo_id):
+        return any(photo.get("id") == photo_id for photo in renpy.store.phone_photos)
+
+
+    def phone_add_photo(photo_id, asset_id, label, source_thread=None, source_message_id=None):
+        """Add a persistent Phone Photos entry once."""
+        if not photo_id or not asset_id or phone_has_photo(photo_id):
+            return False
+
+        renpy.store.phone_photos.append({
+            "id": photo_id,
+            "asset_id": asset_id,
+            "label": label or "Photo",
+            "source_thread": source_thread,
+            "source_message_id": source_message_id,
+        })
+        return True
+
+
+    def phone_photo_items():
+        return list(renpy.store.phone_photos)
+
+
     def phone_add_message(
         thread_id,
         sender_id,
@@ -75,11 +101,16 @@ init python:
         attachment_id=None,
         attachment_label=None,
         mark_unread=True,
+        notify=False,
+        notification_title=None,
+        save_attachment=True,
     ):
-        """Add one story message, optionally with a future image attachment.
+        """Add one story message, optionally with an image attachment.
 
         Supplying a stable message_id makes the operation idempotent. This is
         important when story labels can be revisited after rollback/load.
+        `notify=True` uses the lightweight diegetic notification toast. Image
+        attachments are also indexed into Phone Photos by default.
         """
         thread = _phone_ensure_thread(thread_id)
 
@@ -90,15 +121,34 @@ init python:
             return False
 
         incoming = sender_id != "player"
+        resolved_attachment_label = attachment_label or "Photo attachment"
+
         thread.append({
             "id": message_id,
             "sender": sender_id,
             "text": text,
             "attachment_id": attachment_id,
-            "attachment_label": attachment_label or "Photo attachment",
+            "attachment_label": resolved_attachment_label,
             "incoming": incoming,
             "read": not (incoming and mark_unread),
         })
+
+        if attachment_id and save_attachment:
+            phone_add_photo(
+                "message:{}".format(message_id),
+                attachment_id,
+                resolved_attachment_label,
+                source_thread=thread_id,
+                source_message_id=message_id,
+            )
+
+        if notify and incoming:
+            notification_body = text.strip() if text and text.strip() else resolved_attachment_label
+            phone_show_notification(
+                notification_title or phone_thread_label(thread_id),
+                notification_body,
+            )
+
         return True
 
 
@@ -168,7 +218,8 @@ init python:
         """Add a fresh batch of developer-only messages every time this is pressed.
 
         Story messages remain idempotent when they use stable IDs. Repeated batches
-        are only for stress-testing unread counts, scrolling, and image attachments.
+        are only for stress-testing unread counts, scrolling, notifications, and
+        image attachments / Photos indexing.
         """
         batch = _phone_next_debug_batch()
         batch_tag = "{:03d}".format(batch)
@@ -197,10 +248,11 @@ init python:
             attachment_id="dev_placeholder_photo_{}".format(batch_tag),
             attachment_label="Placeholder Leia photo — batch {}".format(batch),
             mark_unread=True,
+            notify=True,
+            notification_title=phone_thread_label("leia"),
         )
 
         renpy.store.modified_save = True
-        renpy.notify("Added developer phone message batch {}.".format(batch))
         return None
 
 
@@ -212,6 +264,7 @@ init python:
             "group": [],
         }
         renpy.store.phone_last_open_thread = None
+        renpy.store.phone_photos = []
         renpy.store.modified_save = True
-        renpy.notify("Developer phone messages cleared.")
+        renpy.notify("Developer phone messages and Photos cleared.")
         return None
