@@ -230,13 +230,20 @@ label ch01_scene_09_dinner:
 
     "She stood and glanced around for someone to ask."
 
+    # Dry stranger approaches from screen-left (pre-spill sprite state).
+    show stranger_casual_dry at ch01_stranger_approach_left, leia_body_idle
+    pause 1.1
+
+    "At exactly the wrong moment, a tall, broad-shouldered guest in fitted white shorts stepped past our table with a drink in one hand."
+
     # DinnerPhotoAsk_01 begins as the stranger enters Leia's path, before the
-    # actual collision. Keep the approach narration on this CG.
+    # actual collision. Keep this beat on the CG; the dry sprite is retired here
+    # and the wet sprite takes over after the impact CG.
+    hide stranger_casual_dry
     $ enter_cinematic_mode()
     scene cg ch01_dinner_photo_ask
     with dissolve
 
-    "At exactly the wrong moment, a tall, broad-shouldered guest in fitted white shorts stepped past our table with a drink in one hand."
     "Leia turned straight into him."
 
     scene cg ch01_dinner_spill_01
@@ -393,7 +400,7 @@ label ch01_scene_09_dinner:
 
     "On her way back from the restroom, another man slowed as he passed her in the corridor."
 
-    stranger "Excuse me—just had to say that dress looks incredible on you."
+    passerby "Excuse me—just had to say that dress looks incredible on you."
 
     "Leia blinked, caught off guard."
     gf "Oh. Thank you."

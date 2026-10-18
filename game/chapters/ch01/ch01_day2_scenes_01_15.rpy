@@ -1190,8 +1190,17 @@ label ch01_day2_scene_11b_boutique:
             maya "Yet."
             "Leia gave Maya a look and said nothing."
         else:
-            $ set_story_value("ch01_d2_mall_outfit_source", "none")
-            "I left the black dress at the boutique. Leia looked back at it once, but didn't argue."
+            # Ryan chose not to buy it, so Leia buys the Black Cutout Mini herself.
+            # (Ryan buying it still stands; there is no "nobody buys it" outcome.)
+            "I closed the Shop without buying anything."
+            "Leia looked back at the black dress for several seconds, then carried it to the counter herself."
+            $ grant_story_outfit("boutique_cutout_mini", equip=False)
+            $ set_story_value("ch01_d2_mall_outfit_source", "leia")
+            $ set_story_flag("ch01_d2_boutique_outfit_owned")
+            mc "You're buying it?"
+            gf "I'm not wearing it outside."
+            maya "Yet."
+            "Leia gave Maya a look and said nothing."
     else:
         "Leia looked down at the black dress for several seconds before carrying it to the counter herself."
         $ grant_story_outfit("boutique_cutout_mini", equip=False)
@@ -1297,7 +1306,7 @@ label ch01_day2_scene_11b_boutique:
     gf "With the dress?"
     maya "With Ryan."
 
-    if has_choice_tag("repair") or get_story_value("ch01_d2_mall_ryan_response") in ("reconnected", "came_over"):
+    if choice_tag_count("repair", ch01_d2_choice_ids()) >= 1 or get_story_value("ch01_d2_mall_ryan_response") in ("reconnected", "came_over"):
         gf "Yeah. I think he's just in his head today."
         maya "People are allowed weird days."
         gf "Very insightful."
@@ -1327,7 +1336,7 @@ label ch01_day2_scene_12_villa_pool_plan:
 
     "We headed back toward Julian's place with Maya and Leia a few steps ahead of us."
 
-    if has_choice_tag("repair"):
+    if choice_tag_count("repair", ch01_d2_choice_ids()) >= 1:
         "Leia drifted back toward me before long and slipped her hand into mine."
     elif ch01_d2_route_lane() == "exhibitionism":
         gf "Ryan, tell her she's insane."

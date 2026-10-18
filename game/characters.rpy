@@ -7,6 +7,9 @@ define friend = Character("friend_name", dynamic=True)
 
 # Chapter 1 supporting roles.
 define stranger = Character("Stranger")
+# The later corridor/table compliment man is a separate person from the dinner
+# collision stranger. Keep his speaker (and any future sprite) registered apart.
+define passerby = Character("Stranger")
 define maya = Character("Maya")
 # Day One used the temporary phone_friend role before Maya was introduced in person.
 define phone_friend = maya

@@ -69,7 +69,13 @@ image cg ch01_carry_dress_shift = Composite(
 
 
 # Dinner stranger — fixed-coordinate production layers.
-# Dry is retained for any pre-spill staging; wet is the post-CG state.
+# All five PNGs share one 941x1672 canvas, so dry and wet swap in place with no
+# re-registration offset. Dry is the pre-spill state (approach from screen-left);
+# wet is the post-CG state (collision aftermath, apology, exit left).
+#
+# The later corridor/table compliment man is a DIFFERENT person. He has no sprite
+# and must never reuse these two images; his lines use the separate `passerby`
+# Character (see characters.rpy).
 layeredimage stranger_casual_dry_layers:
     always "images/sprites/bbc stranger/Base_Casual_Dry.png"
     always "images/sprites/bbc stranger/Chest_Casual.png"
@@ -88,6 +94,18 @@ image stranger_casual_wet = Fixed(lc_sprite_silhouette("stranger_casual_wet_laye
 # Dinner collision staging.
 # The pair remain unusually close after the impact, then ease back to the
 # canonical dialogue slots when Ryan calls Leia's name.
+# Pre-collision approach: the dry stranger walks in from off-screen LEFT and stops
+# on the same slot the wet sprite uses after the spill CG, so the swap is seamless.
+transform ch01_stranger_approach_left:
+    xpos -0.28
+    xanchor 0.5
+    yalign 1.0
+    yoffset 180
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+    ease 1.0 xpos 0.45
+
 transform ch01_stranger_collision_close:
     xpos 0.45
     xanchor 0.5

@@ -699,9 +699,15 @@ label ch01_day2_scene_21_pre_sunset:
         menu:
             "Let me choose your outfit.":
                 python:
-                    d2_love_outfit_options = love_outfit_candidates(
-                        story_ids=("resort_dinner_dress", "d2_loose_low_cut"),
-                    )
+                    # The Black Cutout Mini is reserved for Day Three, so it is
+                    # never offered in the Day Two dinner picker even when owned.
+                    d2_love_outfit_options = [
+                        outfit_id
+                        for outfit_id in love_outfit_candidates(
+                            story_ids=("resort_dinner_dress", "d2_loose_low_cut"),
+                        )
+                        if outfit_id != "boutique_cutout_mini"
+                    ]
                     d2_love_outfit_pick = renpy.call_screen(
                         "leia_love_outfit_picker",
                         options=d2_love_outfit_options,
