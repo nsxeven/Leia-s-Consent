@@ -59,7 +59,49 @@ transform other_left:
 
 # Backward-compatible aliases (existing scripts use the prologue_ names).
 # Prefer the short names above in new code.
-transform prologue_leia_enter_right = leia_enter_right
-transform prologue_leia_right = leia_right
-transform prologue_other_enter_left = other_enter_left
-transform prologue_other_left = other_left
+# Ren'Py does not support transform alias = other_transform, so these are full copies.
+transform prologue_leia_enter_right:
+    xpos 0.78
+    xanchor 0.5
+    yalign 1.0
+    yoffset 198
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
+    alpha 0.0
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 yoffset 180
+
+transform prologue_leia_right:
+    xpos 0.78
+    xanchor 0.5
+    yalign 1.0
+    yoffset 180
+    xysize (760, 900)
+    fit "contain"
+    xzoom -1.0
+
+transform prologue_other_enter_left:
+    xpos 0.22
+    xanchor 0.5
+    yalign 1.0
+    yoffset 198
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+    alpha 0.0
+    parallel:
+        linear 0.30 alpha 1.0
+    parallel:
+        easeout 0.30 yoffset 180
+
+transform prologue_other_left:
+    xpos 0.22
+    xanchor 0.5
+    yalign 1.0
+    yoffset 180
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
