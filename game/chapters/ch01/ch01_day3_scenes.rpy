@@ -213,6 +213,10 @@ label ch01_day3_lunch_walk:
     jump ch01_day3_villa_evening
 
 label ch01_day3_villa_evening:
+    # Reset the background for all lanes: the lunch walk leaves the cutout-path
+    # placeholder showing, which must not carry over into the villa evening.
+    scene bg ch01_villa_entry_evening
+    with dissolve
     "Back at the villa, we rested before getting ready for the club."
     if d3_lane == "ntr":
         "Maya noticed the silence between us but didn't push."

@@ -145,6 +145,10 @@ init python:
             "shop_visible": True,
             "story_grant": True,
             "shop_requirements": [],
+            # Reserved for the Day Two boutique scene: the shop (phone app or full
+            # screen) only offers it once that scene opens it, so it cannot be
+            # bought out of sequence. Ryan buying it stands; otherwise Leia buys it herself.
+            "shop_story_flag": "ch01_d2_boutique_shop_open",
             "boldness": 90,
             "exposure": 85,
             "public_risk": 80,

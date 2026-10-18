@@ -104,11 +104,6 @@ init 1 python:
             ("relationship", "trust", 1),
             ("relationship", "boredom", -2),
         ],
-        "ch01_d2_sunset_tease": [
-            ("relationship", "love", 1),
-            ("partner", "curiosity", 1),
-            ("player", "acceptance", 1),
-        ],
         "ch01_d2_sunset_partial": [
             ("relationship", "trust", 1),
             ("relationship", "boredom", -1),
@@ -119,20 +114,6 @@ init 1 python:
             ("relationship", "boredom", 4),
             ("partner", "temptation", 2),
             ("partner", "secrecy", 1),
-        ],
-        "ch01_d2_game_reassure": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d2_game_tease": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
-        ],
-        "ch01_d2_game_ignore": [
-            ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
-            ("partner", "temptation", 1),
         ],
         "ch01_d2_bed_pool_love": [
             ("relationship", "love", 3),
@@ -200,12 +181,8 @@ init 1 python:
         "ch01_d2_pool_honest_jealous": ("protective", "honest", "attentive"),
         "ch01_d2_pool_accuse": ("protective", "nonchalant", "dismissive"),
         "ch01_d2_sunset_connect": ("supportive", "attentive", "love-route"),
-        "ch01_d2_sunset_tease": ("encouraging", "open", "playful", "attentive"),
         "ch01_d2_sunset_partial": ("attentive", "honest", "repair"),
         "ch01_d2_sunset_ignore_gate": ("neutral", "nonchalant", "dismissive", "distracted", "ntr-gate"),
-        "ch01_d2_game_reassure": ("supportive", "attentive"),
-        "ch01_d2_game_tease": ("encouraging", "open", "playful", "attentive"),
-        "ch01_d2_game_ignore": ("neutral", "nonchalant", "distracted"),
         "ch01_d2_bed_pool_love": ("supportive", "attentive", "honest", "repair"),
         "ch01_d2_bed_pool_exhibition": ("encouraging", "open", "honest", "participating", "repair"),
         "ch01_d2_bed_pool_accuse": ("protective", "dismissive", "unresolved"),
@@ -1179,6 +1156,7 @@ label ch01_day2_scene_11b_boutique:
 
     if d2_mall_ryan_present:
         "The boutique's catalogue was available through the Shop on my phone. Buying something would add it to Leia's wardrobe; whether she actually agreed to wear it later was a separate question."
+        $ set_story_flag("ch01_d2_boutique_shop_open")
         $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
         call screen shop_screen
         if owns_outfit("boutique_cutout_mini"):
@@ -1203,8 +1181,12 @@ label ch01_day2_scene_11b_boutique:
             "Leia gave Maya a look and said nothing."
     else:
         "Leia looked down at the black dress for several seconds before carrying it to the counter herself."
-        $ grant_story_outfit("boutique_cutout_mini", equip=False)
-        $ set_story_value("ch01_d2_mall_outfit_source", "leia")
+        # If Ryan already owns it, his purchase stands (source "ryan"); otherwise Leia buys it.
+        if owns_outfit("boutique_cutout_mini"):
+            $ set_story_value("ch01_d2_mall_outfit_source", "ryan")
+        else:
+            $ grant_story_outfit("boutique_cutout_mini", equip=False)
+            $ set_story_value("ch01_d2_mall_outfit_source", "leia")
         $ set_story_flag("ch01_d2_boutique_outfit_owned")
 
         mc "You bought it?"

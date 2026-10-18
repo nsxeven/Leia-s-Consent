@@ -14,11 +14,25 @@ init python:
         return get_outfit(outfit_id)["name"]
 
 
+    def shop_story_gate_open(outfit_id):
+        """True unless the outfit is reserved for a story scene that has not opened it yet.
+
+        An outfit with a "shop_story_flag" is only offered after that story flag is set.
+        Once owned it is always listed (as owned).
+        """
+        flag_id = OUTFIT_DEFINITIONS[outfit_id].get("shop_story_flag")
+        if flag_id is None:
+            return True
+        return bool(get_story_flag(flag_id)) or owns_outfit(outfit_id)
+
+
     def shop_outfit_ids():
         """Return shop-visible outfits in a stable display order."""
         return [
             outfit_id for outfit_id in OUTFIT_SHOP_ORDER
-            if outfit_id in OUTFIT_DEFINITIONS and OUTFIT_DEFINITIONS[outfit_id].get("shop_visible", False)
+            if outfit_id in OUTFIT_DEFINITIONS
+            and OUTFIT_DEFINITIONS[outfit_id].get("shop_visible", False)
+            and shop_story_gate_open(outfit_id)
         ]
 
 
@@ -46,6 +60,8 @@ init python:
         """Shop visibility/unlock is separate from wear acceptance."""
         outfit = get_outfit(outfit_id)
         if not outfit.get("shop_visible", False):
+            return False
+        if not shop_story_gate_open(outfit_id):
             return False
         return _requirements_met(outfit.get("shop_requirements", []))
 

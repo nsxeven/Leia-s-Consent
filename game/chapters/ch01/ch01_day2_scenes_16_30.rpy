@@ -1416,6 +1416,9 @@ label ch01_day2_scene_30_bedroom:
                 gf "Then I don't know what else you want me to say."
                 "We went to bed without resolving it."
                 $ set_story_value("ch01_d2_end_route", "mixed_unresolved")
+                # No bedroom payoff scene plays here (generic bedroom approach, then the
+                # unresolved pool-suspicion exchange), so record that as the variant.
+                $ set_story_value("ch01_d2_bedroom_variant", "pool_suspicion_unresolved")
                 jump ch01_day2_scene_30_finish
 
     elif d2_lane == "exhibitionism" or d2_love_exhib_blend:

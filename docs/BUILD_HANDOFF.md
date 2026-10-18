@@ -48,7 +48,7 @@ Day Three is written to start from the stored `ch01_d2_end_route`.
 
 ## Black Cutout Mini
 
-Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, that stands (`ch01_d2_mall_outfit_source == "ryan"`). In every other case, including Ryan declining, being unable to pay, or being absent, Leia buys it herself (`"leia"`). Either way Leia owns it before Day Three. It is reserved for Day Three and is never offered or worn at the Day Two dinner.
+Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, that stands (`ch01_d2_mall_outfit_source == "ryan"`). In every other case, including Ryan declining, being unable to pay, or being absent, Leia buys it herself (`"leia"`). Either way Leia owns it before Day Three. It is reserved for Day Three and is never offered or worn at the Day Two dinner. The Shop only offers it once the boutique scene opens it (`shop_story_flag`).
 
 ## Known open items
 
@@ -57,9 +57,9 @@ Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, 
 3. Run the unchecked QA & Release checklist (Notion page 08).
 4. Decide Gallery mapping for finalized CGs.
 5. Link Day Three after Day Two QA.
-6. The Phone Shop app can sell the Black Cutout Mini at any time (it has no boutique gate), so Ryan could buy it before the boutique scene; the boutique scene then records source `ryan`. Consider gating it behind the boutique visit.
-7. Four Day Two choice ids are registered but never used: `ch01_d2_game_reassure`, `ch01_d2_game_tease`, `ch01_d2_game_ignore`, `ch01_d2_sunset_tease`.
-8. `mixed_unresolved` does not set `ch01_d2_bedroom_variant`.
+6. ~~Phone Shop could sell the Black Cutout Mini at any time.~~ Fixed: the outfit carries `shop_story_flag: ch01_d2_boutique_shop_open`, set by the boutique scene just before it opens the Shop for Ryan. Until then the Shop (phone app and full screen) neither lists nor sells it; once owned it is listed as owned.
+7. ~~Four Day Two choice ids registered but never used (`ch01_d2_game_reassure`, `ch01_d2_game_tease`, `ch01_d2_game_ignore`, `ch01_d2_sunset_tease`).~~ Removed: Notion canon (05, 07, 07C) has no player menu in the sunset payoff or the Never Have I Ever scenes (25-28) for them to carry; the only sunset menu is connect / partial / ignore_gate. Nothing read them.
+8. ~~`mixed_unresolved` did not set `ch01_d2_bedroom_variant`.~~ Fixed: it now sets `pool_suspicion_unresolved` (no bedroom payoff scene plays on that path). Nothing reads the value; Day Three keys off `ch01_d2_end_route`.
 
 ## QA notes
 
