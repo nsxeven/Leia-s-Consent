@@ -738,7 +738,7 @@ label ch01_day5_scene_14_dawn_run:
         python:
             phone_add_message(
                 "leia", "leia",
-                text="Tomorrow, at the pier. You asked me gently once. Ask me again, if you still want to.",
+                text="Tonight, at the pier. You asked me gently once. Ask me again, if you still want to.",
                 message_id="ch01_d5_late_leia_ntr_unresolved",
                 mark_unread=True, notify=False,
             )
@@ -835,7 +835,7 @@ label ch01_day5_scene_15_pier_invitation:
 
     "Behind us, the engine of the Reasonable Doubt coughed, caught and settled into a quiet that sounded almost like an answer."
     "On the horizon, a ribbon of gray was turning slowly to gold."
-    "Tomorrow was the last night of the week, and I had no idea what any of us were going to say."
+    "Tonight was the last night of the week, and I had no idea what any of us were going to say."
 
     $ set_story_flag("ch01_d5_scene_15_complete")
     jump ch01_day5_scene_16_finish
