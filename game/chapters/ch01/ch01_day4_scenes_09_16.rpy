@@ -532,7 +532,7 @@ label ch01_day4_exhib_step:
         with dissolve
         # CG TODO (artist): ch01_d4_exhib_watching. Ryan POV, Ryan never in frame. Sub-variant 'Ryan likes watching'. Covered.
         "I stood behind her at the rail with my chin near her shoulder. We looked at the same lights."
-        "I could feel her decide."
+        "I watched her decide."
         $ exit_cinematic_mode()
         scene bg ch01_d4_terrace_night
         with dissolve
