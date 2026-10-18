@@ -1,6 +1,6 @@
 # Chapter Select (developer / QA / unlockable skip-to-day).
 #
-# Starts a NEW game at Chapter 1 Day 2, Day 3 or the Day 4 stub with a consistent
+# Starts a NEW game at Chapter 1 Day 2, Day 3 or Day 4 with a consistent
 # preset of the state those days read. It never edits story scenes: it seeds the
 # same story values/flags/stats/outfits the real script would have produced and
 # then jumps to the normal day entry label (ch01_day2_start / ch01_day3_start /
@@ -24,7 +24,7 @@ init 10 python:
     CH01_SELECT_DAYS = (
         ("day2", "Day Two", "Starts at the Day Two title card; the Day Two lane still depends on your choices."),
         ("day3", "Day Three", "Starts at Day Three with the chosen Day Two ending stored."),
-        ("day4", "Day Four (stub)", "Placeholder end-of-build card, with Day Three marked complete."),
+        ("day4", "Day Four", "Starts at Day Four with Day Two and Day Three marked complete and their end state stored."),
     )
 
     # Day Two entry presets: seeds only. The real end state is decided by play.
@@ -151,6 +151,13 @@ init 10 python:
                 d3_lane_value = "ntr" if route in ("ntr_confirmed", "mixed_unresolved") else ("exhibitionism" if route == "exhibitionism" else "love")
                 set_story_value("ch01_d3_lane", d3_lane_value)
                 set_story_value("ch01_d3_end_variant", {"love": "love_private", "exhibitionism": "exhibition_window", "ntr": "ntr_restroom_nightmare"}[d3_lane_value])
+                # Day Four also reads these Day Three values (same values Day Three writes).
+                if d3_lane_value == "ntr":
+                    set_story_value("ch01_d3_ntr_repair_effort", "enjoy")  # Day Three's own default when unset
+                    set_story_value("ch01_d3_maya_dessert", "chocolate")
+                    set_story_flag("ch01_d3_cutout_secret")
+                else:
+                    set_story_value("ch01_d3_ntr_repair_effort", "none")
                 entry = "ch01_day4_start"
         set_story_flag("chapter_select_used")
         set_story_value("chapter_select_preset", "{}:{}".format(day, route))
