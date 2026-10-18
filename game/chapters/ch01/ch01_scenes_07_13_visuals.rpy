@@ -35,19 +35,13 @@ image cg ch01_dinner_spill_04 = At("images/cg/ch01/CH1D1_CG_DinnerSpill_04.webp"
 # Backward-compatible alias for older development saves/references.
 image cg ch01_dinner_spill = "cg ch01_dinner_spill_01"
 
-image cg ch01_dinner_return_braless = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#704455"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DINNER-02 — RETURN FROM RESTROOM\nSAME DRESS / STICKY BRA REMOVED\nPOST-SPILL VISUAL CONTINUITY STATE", size=52, color="#ffffff"),
-)
+# Production restroom-return sequence (corridor compliment → closer to table).
+image cg ch01_dinner_restroom_return_01 = At("images/cg/ch01/CH1D1_CG_DinnerRestroomReturn_01.webp", prologue_fullscreen)
+image cg ch01_dinner_restroom_return_02 = At("images/cg/ch01/CH1D1_CG_DinnerRestroomReturn_02.webp", prologue_fullscreen)
 
-# Placeholder for the later restaurant compliment beat.
-# Replace this stable ID with final art; script timing should not change.
-image cg ch01_dinner_stranger_compliment = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#3b2a2f"),
-    (90, 70), Text("CG PLACEHOLDER\nCH1D1 — RESTAURANT STRANGER COMPLIMENT\nLEIA POST-SPILL / NO-BRA DRESS STATE\nSTRANGER COMPLIMENTS HER AT THE TABLE", size=52, color="#ffffff"),
-)
+# Compatibility aliases for older saves / references.
+image cg ch01_dinner_return_braless = "cg ch01_dinner_restroom_return_01"
+image cg ch01_dinner_stranger_compliment = "cg ch01_dinner_restroom_return_01"
 
 image cg ch01_trip_catch = Composite(
     (1920, 1080),
