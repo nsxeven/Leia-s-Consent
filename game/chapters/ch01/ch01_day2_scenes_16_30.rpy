@@ -420,24 +420,7 @@ label ch01_day2_scene_19_change_for_evening:
     gf "Which two?"
     maya "Yes."
 
-    "Leia laughed and hugged her goodbye like they had known each other longer than a day."
-
-    $ set_story_value("ch01_d2_leia_maya_comfort", 4)
-    $ set_story_flag("ch01_d2_maya_left_before_sunset")
-
-    "When Leia came back outside, Julian checked the time and stood."
-
-    friend "I'm going up to get ready."
-    mc "Already?"
-    friend "Unlike you, I respect reservations."
-    gf "That's not what you said this afternoon."
-    friend "That was pool time. Different jurisdiction."
-
-    "He headed upstairs, leaving Leia and me alone beside the water."
-
-    $ set_story_flag("ch01_d2_julian_upstairs_before_sunset")
-    $ set_story_flag("ch01_d2_scene_19_complete")
-    jump ch01_day2_scene_20_dinner_outfit
+    jump ch01_day2_scene_19b_leia_asks_maya
 
 
 label ch01_day2_scene_20_dinner_outfit:
@@ -1325,6 +1308,7 @@ label ch01_day2_scene_29_game_winds_down:
     friend "You're sure?"
     maya "Julian."
     friend "I'm asking."
+    maya "I told Leia I would."
     maya "Yes. Come on."
 
     "Maya scooped her dress off the floor, caught Julian by the wrist and started pulling him toward the corridor."

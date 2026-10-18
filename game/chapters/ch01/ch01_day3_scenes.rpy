@@ -43,7 +43,15 @@ label ch01_day3_kitchen:
     friend "You asked that before you said good morning."
     maya "I have priorities."
     "Julian looked surprisingly functional considering the night before."
-    "Nobody volunteered details about the room Maya had shared with him."
+    "Maya, a little hungover but slightly smug, had the look of someone who knew exactly how much attention she was getting."
+    friend "Don't."
+    mc "I haven't said anything."
+    friend "Your face did."
+    maya "For the record, nobody put me in that room. I picked it."
+    gf "Nobody's disputing the record."
+    maya "Good. I'd hate to have to remind anyone whose idea it was."
+    "Julian stared into his coffee as though it contained legal advice."
+    "Nobody volunteered what had or hadn't happened behind that door, and Maya's grin said she would decide when, and whether, anyone heard."
     maya "Beach club today?"
     gf "Definitely."
     jump ch01_day3_beach
@@ -87,6 +95,8 @@ label ch01_day3_beach:
     jump ch01_day3_lunch_walk
 
 label ch01_day3_lunch_walk:
+    scene bg ch01_d3_cutout_path
+    with dissolve
     "We had lunch under the cabana before heading back."
     "Maya and Julian stayed behind to settle a few things at the beach club."
     mc "Want to walk back with me?"
@@ -108,10 +118,74 @@ label ch01_day3_lunch_walk:
         gf "Go get Maya and Julian. Please."
         mc "I'll be quick."
         "I hurried back toward the beach club."
-        # CG TODO: Leia alone, a stranger offers assistance; consensual secret encounter.
-        # The precise art-led intimate sequence is reserved for later CG adaptation.
-        "A stranger heard Leia calling for help and stopped to assist her."
-        "By the time we returned, he was gone."
+
+        "Meanwhile, back at the stand:"
+
+        scene bg ch01_d3_cutout_path
+        with dissolve
+
+        "The path was quiet. Somewhere past the palms the beach club was only a low murmur of music and voices."
+        "Leia tested the frame again. It did not move."
+        gf "Unbelievable."
+
+        "Footsteps slowed on the gravel behind her."
+
+        stranger_d3 "Hey. You okay in there?"
+        gf "Define okay."
+        stranger_d3 "Stuck?"
+        gf "Completely. My boyfriend just went to get our friends."
+
+        "He crouched, checked the edges of the frame for a latch and found none."
+
+        stranger_d3 "Nothing. I'll have to pull."
+
+        "His hands settled at her waist, warm and careful, and he pulled."
+        "The frame groaned and did not give an inch."
+        "He shifted his grip for better leverage, and his thumb slid against bare skin at her side."
+
+        "A small sound escaped Leia before she could stop it. He froze, hands still at her waist."
+
+        stranger_d3 "You okay?"
+        gf "...Don't stop."
+        stranger_d3 "You sure?"
+        gf "Mm-hm."
+
+        $ set_story_flag("ch01_d3_cutout_consent_established")
+        $ set_story_value("ch01_d3_cutout_stranger_choice", "leia_chose")
+
+        $ enter_cinematic_mode()
+        scene cg ch01_d3_cutout_stranger
+        with dissolve
+
+        # CG TODO (artist): ch01_d3_cutout_stranger. NON-EXPLICIT. Daylight, quiet path,
+        # Leia wedged in the novelty cutout board, seen from the front/side so her
+        # expression carries the frame. Stranger behind her, adult, face mostly out of
+        # frame or turned away. His hands stay at her waist / the edge of the board.
+        # Her expression is flushed, eyes half closed, receptive. NOT distressed.
+        # One of her hands should reach back toward his wrist or rest over his hand
+        # so the consent reads visually. No nudity, no explicit anatomy. Crop or
+        # compose so the key beat is implied (hands, faces, board edge, palm trees).
+        # Final art replaces the placeholder image declared in the visuals file.
+
+        "After that the painted palm trees, the gravel and the far-off music all went soft at the edges."
+
+        $ exit_cinematic_mode()
+        scene bg ch01_d3_cutout_path
+        with dissolve
+
+        "Voices carried along the path, close enough now to pick out Maya's laugh."
+        "He stepped back, and Leia felt the cooler air where his hands had been."
+
+        stranger_d3 "That's your friends, I think."
+        gf "That's them."
+        stranger_d3 "Do you want me to stay, or go?"
+        gf "Go. Please."
+        stranger_d3 "Go it is. Take care of yourself."
+
+        "He was gone before the voices rounded the last bend."
+        "The frame still had not moved an inch. Leia stayed exactly where she was, heart racing, practicing a face that gave nothing away."
+
+        "When we got back to the path with Maya and Julian, the only person there was Leia."
         "Leia looked flushed and wouldn't quite meet my eyes."
         maya "How did you manage this?"
         gf "I wish I knew."
