@@ -4,7 +4,9 @@
 
 label ch01_scene_07_did_he_see:
 
-    scene bg ch01_master_bedroom_curtains
+    $ enter_cinematic_mode()
+    scene cg ch01_towel_did_he_see
+    with dissolve
 
     $ ch01_towel_reassure_text = format_choice("ch01_towel_reassure", "He looked away pretty much immediately.")
     $ ch01_towel_honest_text = format_choice("ch01_towel_honest", "Maybe a little. You asked me to be honest.")
@@ -55,6 +57,10 @@ label ch01_scene_07_did_he_see:
     mc "I am not going downstairs and saying, 'By the way, Leia wants to know exactly how much of her you saw.'"
     gf "[player_name]."
     mc "Right. Not helping."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_master_bedroom_curtains
+    with dissolve
 
     "The bathroom door opened."
 
@@ -371,10 +377,22 @@ label ch01_scene_09_dinner:
     friend "Excellent."
 
     $ enter_cinematic_mode()
-    scene cg ch01_dinner_return_braless
+    scene cg ch01_dinner_restroom_return_01
     with dissolve
 
-    "When Leia came back, the dress looked almost the same. Almost."
+    "On her way back from the restroom, another man slowed as he passed her in the corridor."
+
+    stranger "Excuse me—just had to say that dress looks incredible on you."
+
+    "Leia blinked, caught off guard."
+    gf "Oh. Thank you."
+
+    "She gave a small, slightly flustered smile and kept walking."
+
+    scene cg ch01_dinner_restroom_return_02
+    with dissolve
+
+    "By the time she was closer to the table the compliment still sat on her expression."
     "Without the adhesive bra underneath, the fabric sat more naturally against her chest and moved with her instead of holding a fixed shape."
     "Under the restaurant lighting, small changes in posture made the difference easier to notice than she probably realised."
 
@@ -394,19 +412,10 @@ label ch01_scene_09_dinner:
 
     "Julian looked between us, clearly aware that he had missed part of a conversation, and wisely chose not to ask."
 
-    $ enter_cinematic_mode()
-    scene cg ch01_dinner_stranger_compliment
-    with dissolve
-
-    "A little later, a man passing our table slowed just enough to smile at Leia."
-
-    stranger "Sorry—just wanted to say your dress looks amazing on you."
-
-    "Leia blinked, caught off guard."
-
-    show leia_purple_dress_no_bra shy
-    with sprite_change
-    gf "Oh. Thank you."
+    # The corridor compliment already happened; keep a light table-side beat so the
+    # existing response menu still has a natural moment to fire.
+    "A moment later the same man passed near our table and gave Leia another polite nod."
+    gf "Oh—thank you again."
 
     $ ch01_stranger_proud_text = format_choice("ch01_stranger_proud", "Yeah. She looks incredible.")
     $ ch01_stranger_territorial_text = format_choice("ch01_stranger_territorial", "Thanks. We've got it from here.")
@@ -438,14 +447,7 @@ label ch01_scene_09_dinner:
             mc "Maybe a little."
             "Her cheeks coloured, but she did not reach for her jacket."
 
-    "He gave her a polite nod and kept walking. Nothing dramatic. Leia watched him go for half a second, then glanced down at herself and back at me."
-
-    $ exit_cinematic_mode()
-    scene bg ch01_restaurant_evening
-    with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    "He kept walking. Nothing dramatic. Leia glanced down at herself and back at me."
 
     show leia_purple_dress_no_bra flustered
     with sprite_change
