@@ -184,6 +184,13 @@ init python:
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
 
+    ## Dev-only / non-runtime files stay in the repository but are not shipped.
+    ## Paint master-edit files for the sprites (about 11.6 MB, not loaded by the game).
+    build.classify('**.paint', None)
+    ## Repository documentation (the player-facing docs are not these files).
+    build.classify('README.md', None)
+    build.classify('docs/**', None)
+
     ## To archive files, classify them as 'archive'.
 
     # build.classify('game/**.png', 'archive')

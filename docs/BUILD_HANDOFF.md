@@ -44,6 +44,14 @@ Flow: `ch01_day2_scene_30_finish` (card "CHAPTER ONE — DAY TWO COMPLETE") -> `
 
 `game/chapters/ch01/ch01_day4_stub.rpy` only shows "End of the current build. Day Four continues in the next update." and returns. It is a placeholder, not story content. To replace it with the Scriptwriter's approved Day Four script: add the real entry label (keep the name `ch01_day4_start`, or change the final `jump` in `ch01_day3_bedroom`), start it with a title card and a `ch01_day_04_started` flag as Day Two/Three do, and delete the stub file.
 
+## Chapter Select (skip to Day 2 / Day 3 / Day 4 stub)
+
+- Files: `game/systems/chapter_select.rpy` (rule, presets, `chapter_select_apply`, entry label `ch01_chapter_select_entry`), `game/screens/chapter_select_screen.rpy`, a "Chapter Select" button in `navigation` (`screens.rpy`, main menu only), and two persistent defaults in `defaults.rpy`.
+- It starts a **new game** with a preset of the earlier state, then jumps to the normal entry label (`ch01_day2_start`, `ch01_day3_start` or `ch01_day4_start`). No story scene was changed. Day 3/4 presets store each of the five Day Two end states consistently (end route, lane values, soft gate / wink / confirmed flags, bedroom variant, Black Cutout Mini owned with source `leia`, Day One/Two complete flags, phone unlocked). Day 2 presets only seed a lane (stats, Day One pressure, one history id); the real lane still follows the choices made.
+- **Unlock rule:** `define CHAPTER_SELECT_RULE` at the top of `chapter_select.rpy`. Values: `"always"`, `"developer"` (`config.developer`), `"unlocked"` (`persistent.ch01_chapter_select_unlocked`), `"developer_or_unlocked"` (default), `"never"`. The persistent flag is set the first time `ch01_day_02_complete` is set (a wrapper around `set_story_flag`, so the Day 2 scene file is untouched). Flip the rule to change who sees the button.
+- When you change what a day reads, update the preset table in the same file. The preset marks the save with `chapter_select_used` / `chapter_select_preset`.
+- Names are not asked (defaults Ryan / Leia / Julian); use Start for the full flow.
+
 ## Assets
 
 - **DinnerSpill:** `CH1D1_CG_DinnerSpill_01` to `_04` all exist and are wired in `ch01_scenes_07_13_visuals.rpy` as `cg ch01_dinner_spill_01..04`: 01 impact / liquid airborne, 02 wet aftermath, 03 Leia follows his glance, 04 her second glance. The older id `ch01_dinner_spill` remains as an alias of `_01` for old saves.
