@@ -53,8 +53,8 @@ label dev_vertical_slice:
 
     $ renpy.notify("Outfit state is now driving branch dialogue.")
 
-    $ unlock_gallery("ch01_cg01")
-    $ renpy.notify("Gallery unlocked: Chapter 1 — CG 01 placeholder.")
+    $ unlock_gallery("d1_arrival")
+    $ renpy.notify("Gallery unlocked: Villa arrival (dev slice).")
 
     call screen gallery_screen
 

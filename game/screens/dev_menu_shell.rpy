@@ -39,9 +39,9 @@ screen dev_menu_shell(title, subtitle=None):
 screen dev_gallery_lab_screen():
     use dev_menu_shell("GALLERY TEST", "Persistent Gallery unlocks and placeholder CG previews."):
         textbutton "Open Gallery" action Return("open") xfill True
-        textbutton "Unlock Chapter 1 — CG 01" action Return("unlock_one") xfill True
-        textbutton "Unlock all placeholder CGs" action Return("unlock_all") xfill True
-        textbutton "Reset all Gallery unlocks" action Return("reset") xfill True
+        textbutton "Unlock \"Villa arrival\" (d1_arrival)" action Return("unlock_one") xfill True
+        textbutton "Unlock all Gallery entries" action Return("unlock_all") xfill True
+        textbutton "Reset Gallery unlocks and seen CGs" action Return("reset") xfill True
         textbutton "Show Gallery unlock state" action Function(dev_notify_gallery_state) xfill True
         textbutton "How do I test persistence?" action Return("persistence_help") xfill True
         textbutton "Back to systems menu" action Return("back") xfill True
