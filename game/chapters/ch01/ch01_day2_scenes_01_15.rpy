@@ -1199,8 +1199,17 @@ label ch01_day2_scene_11b_boutique:
             maya "Yet."
             "Leia gave Maya a look and said nothing."
         else:
-            $ set_story_value("ch01_d2_mall_outfit_source", "none")
-            "I left the black dress at the boutique. Leia looked back at it once, but didn't argue."
+            "Leia looked down at the black dress for several seconds before carrying it to the counter herself."
+            $ grant_story_outfit("boutique_cutout_mini", equip=False)
+            $ set_story_value("ch01_d2_mall_outfit_source", "leia")
+            $ set_story_flag("ch01_d2_boutique_outfit_owned")
+
+            mc "You bought it?"
+            gf "Yeah."
+            mc "Thought you said it was too much."
+            gf "I said I wasn't wearing it outside."
+            maya "Yet."
+            "Leia gave Maya a look and said nothing."
     else:
         "Leia looked down at the black dress for several seconds before carrying it to the counter herself."
         $ grant_story_outfit("boutique_cutout_mini", equip=False)
