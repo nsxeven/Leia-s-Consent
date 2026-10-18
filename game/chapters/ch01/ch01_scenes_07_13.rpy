@@ -230,6 +230,11 @@ label ch01_scene_09_dinner:
 
     "She stood and glanced around for someone to ask."
 
+    # Dry sprite walks in from screen-left before the collision. The wet
+    # sprite is shown only after the spill CGs return to the restaurant.
+    show stranger_casual_dry at ch01_stranger_walk_in_left
+    pause 1.2
+
     # DinnerPhotoAsk_01 begins as the stranger enters Leia's path, before the
     # actual collision. Keep the approach narration on this CG.
     $ enter_cinematic_mode()
@@ -393,7 +398,7 @@ label ch01_scene_09_dinner:
 
     "On her way back from the restroom, another man slowed as he passed her in the corridor."
 
-    stranger "Excuse me—just had to say that dress looks incredible on you."
+    passerby "Excuse me—just had to say that dress looks incredible on you."
 
     "Leia blinked, caught off guard."
     gf "Oh. Thank you."

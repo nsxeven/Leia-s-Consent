@@ -7,6 +7,8 @@ define friend = Character("friend_name", dynamic=True)
 
 # Chapter 1 supporting roles.
 define stranger = Character("Stranger")
+# Corridor compliment after the restroom is a different man from the dinner collision.
+define passerby = Character("Passerby")
 define maya = Character("Maya")
 # Day One used the temporary phone_friend role before Maya was introduced in person.
 define phone_friend = maya

@@ -86,6 +86,18 @@ image stranger_casual_wet = Fixed(lc_sprite_silhouette("stranger_casual_wet_laye
 
 
 # Dinner collision staging.
+# Dry approach: he walks in from offscreen left. Wet post-spill sprites use
+# the collision transforms below.
+transform ch01_stranger_walk_in_left:
+    xpos -0.35
+    xanchor 0.5
+    yalign 1.0
+    yoffset 180
+    xysize (760, 900)
+    fit "contain"
+    xzoom 1.0
+    ease 1.15 xpos 0.36
+
 # The pair remain unusually close after the impact, then ease back to the
 # canonical dialogue slots when Ryan calls Leia's name.
 transform ch01_stranger_collision_close:
