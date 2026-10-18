@@ -56,3 +56,7 @@ default last_choice_id = None
 default persistent.choice_display_mode = "normal"
 default persistent.full_transparency_notice_seen = False
 default persistent.gallery_unlocked = []
+
+# Chapter Select (see systems/chapter_select.rpy).
+default persistent.ch01_chapter_select_unlocked = False
+default persistent.ch01_chapter_select_pending = None

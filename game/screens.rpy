@@ -328,6 +328,10 @@ screen navigation():
 
             textbutton _("Start") action Start()
 
+            if chapter_select_unlocked():
+
+                textbutton _("Chapter Select") action ShowMenu("chapter_select")
+
         else:
 
             textbutton _("History") action ShowMenu("history")
