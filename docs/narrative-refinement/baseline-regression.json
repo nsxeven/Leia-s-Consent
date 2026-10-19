@@ -1,0 +1,29 @@
+{
+  "status": "failed",
+  "checks": [
+    "PASS preset day2:love",
+    "PASS preset day2:exhibitionism",
+    "PASS preset day2:ntr_risk",
+    "PASS preset day3:love",
+    "PASS preset day3:exhibitionism",
+    "PASS preset day3:love_repaired",
+    "PASS preset day3:mixed_unresolved",
+    "PASS preset day3:ntr_confirmed",
+    "PASS preset day4:love",
+    "PASS preset day4:exhibitionism",
+    "PASS preset day4:love_repaired",
+    "PASS preset day4:mixed_unresolved",
+    "PASS preset day4:ntr_confirmed",
+    "PASS preset day5:love",
+    "PASS preset day5:exhibitionism",
+    "PASS preset day5:love_repaired",
+    "PASS preset day5:ntr_unresolved",
+    "PASS preset day5:ntr_confirmed",
+    "PASS Day Five stored ending love",
+    "PASS Day Five stored ending exhibitionism",
+    "PASS Day Five stored ending love_repaired",
+    "PASS Day Five stored ending ntr_unresolved",
+    "PASS Day Five stored ending ntr_confirmed"
+  ],
+  "error": "Traceback (most recent call last):\n  File \"game/zzzz_narrative_smoke.rpy\", line 65, in lc_narrative_smoke\n    assert actual == expected, (track, pending, actual)\n           ^^^^^^^^^^^^^^^^^^\nAssertionError: ('ntr_unresolved', 'love_repaired', 'Telling you about the hallway. The ten minutes.')\n"
+}
