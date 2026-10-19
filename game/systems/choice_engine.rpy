@@ -663,11 +663,9 @@ init python:
         if mode == "normal":
             return base_text
 
-        if mode == "insight":
-            return "{}\n[{}]".format(base_text, _choice_effect_text(choice_id, exact=False))
-
-        if mode == "full":
-            return "{}\n[{}]".format(base_text, _choice_effect_text(choice_id, exact=True))
+        if mode in ("insight", "full"):
+            # "full" shows exact numbers; "insight" shows arrows only.
+            return "{}\n[{}]".format(base_text, _choice_effect_text(choice_id, exact=(mode == "full")))
 
         tags = get_choice_tags(choice_id)
         tag_text = " • Tags: {}".format(", ".join(tags)) if tags else ""
