@@ -60,10 +60,10 @@ label ch01_day4_scene_01_wake:
         mc "What's the record?"
         gf "Four minutes. Maya texted."
         if d4_d2_end == "love_repaired":
-            gf "Day four. Still talking?"
-            mc "Still talking."
-            gf "Deal's holding."
-            "It was a small thing, and neither of us treated it as small."
+            gf "Still glad you stayed up with me?"
+            mc "Even before coffee."
+            gf "I'll ask you again after."
+            "She caught my hand under the duvet and held it there."
         else:
             gf "I like this. Mornings."
             mc "Yeah?"
@@ -95,9 +95,9 @@ label ch01_day4_scene_01_wake:
         else:
             "Something had been decided between us that neither of us had said out loud."
         if get_story_value("ch01_dream_response") == "withdrew":
-            "I had spent days refusing to count the dreams. I was running out of ways to call it a coincidence."
+            "I'd been telling myself I wasn't thinking about it. Then I'd fall asleep and end up in that corridor again."
         else:
-            "It was only a dream. It had also happened more than once."
+            "I knew I'd dreamed it. My pulse was taking longer to catch up."
         "I picked up my phone off the nightstand. It was the only thing in the room that already had something to say."
 
     $ d4_card = ch01_d4_track_text()
@@ -399,7 +399,7 @@ label ch01_day4_scene_03_wardrobe_morning:
             "She was in her everyday walking clothes, hair pinned up with the clip, comfortable and a little guarded."
 
         $ set_story_value("ch01_d4_day_outfit_source", "leia")
-        "She hadn't asked what I thought she should wear. That was new."
+        "She hadn't asked what I thought she should wear. I was still waiting for the question."
 
         $ d4_ntr_comp = format_choice("ch01_d4_ntr_compliment", "You look great. Really.")
         $ d4_ntr_guard = format_choice("ch01_d4_ntr_guarded", "Going out like that?")
@@ -447,7 +447,7 @@ label ch01_day4_scene_04_breakfast:
     "The terrace table had been set for four with the kind of care that suggested Julian had been standing over it."
     "Julian arrived first, with his sunglasses restored to office, and a plate of pancakes held out like a diplomatic gift."
     friend "Teodoro made them. I supervised."
-    gf "He didn't make them."
+    gf "So you carried the plate."
     friend "I made the decision to have them."
     "Maya came out last, in Julian's second-best sunglasses, which nobody mentioned."
     maya "Don't start."
@@ -455,7 +455,7 @@ label ch01_day4_scene_04_breakfast:
     maya "Your face is doing the thing."
     friend "That's what I said."
 
-    "Leia pinned her hair back with the clip from the club, the one that had made so many appearances in the story of that night."
+    "Leia pinned her hair back with the clip she'd dropped at the club."
     maya "That clip has seen more action than I have."
     friend "Maya."
     maya "What? It's a hairclip. It has a past."
@@ -486,7 +486,7 @@ label ch01_day4_scene_04_breakfast:
     friend "I run a tight ship."
     maya "He folded the corner of the sheet. Like a hotel."
     friend "Standards."
-    "Neither of them said anything else, and neither of them was lying, and both of them were watching how the table took it."
+    "Maya reached for a pancake. Julian watched her for a moment, then passed her the plate."
 
     $ d4_bk_leave = format_choice("ch01_d4_breakfast_leave_it", "Reach for the pancakes. Not my business.")
     $ d4_bk_tease = format_choice("ch01_d4_breakfast_tease", "Hotel corners. Julian, that's practically a proposal.")
@@ -621,7 +621,7 @@ label ch01_day4_scene_06_photo_hunt:
     friend "I hate this."
     maya "Sunglasses stall. Go."
 
-    "Maya dragged Julian toward the sunglasses stall with the cheerful efficiency of someone who has done this to many men."
+    "Maya pointed out a pair of sunglasses. Julian was objecting before she'd even picked them up."
     "That left the other half of our team with a phone, a prompt, and a stall owner offering Leia a pair of round tortoiseshell sunglasses."
     gf "Ryan. You're photographing me."
     mc "So I am."
@@ -665,7 +665,7 @@ label ch01_day4_scene_06_photo_hunt:
                 )
                 phone_add_message(
                     "leia", "leia",
-                    text="Okay that's actually good. Send it to me. Do not send it to Maya.",
+                    text="Okay that's actually good. I'm keeping it. Do not send it to Maya.",
                     message_id="ch01_d4_leia_photo_candid_reply",
                     mark_unread=True, notify=True, notification_title="Leia",
                 )
@@ -677,7 +677,7 @@ label ch01_day4_scene_06_photo_hunt:
             $ set_story_value("ch01_d4_photo_style", "posed")
             mc "Give the camera that look."
             gf "Which look?"
-            mc "The one you gave the window this morning."
+            mc "The one you give me when you know you're right."
             gf "You absolute menace."
             "She pushed the sunglasses down her nose with one finger, tilted her head, and raised a single eyebrow."
 

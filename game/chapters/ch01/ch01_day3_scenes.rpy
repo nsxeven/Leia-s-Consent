@@ -53,11 +53,11 @@ label ch01_day3_kitchen:
     friend "Don't."
     mc "I haven't said anything."
     friend "Your face did."
-    maya "For the record, nobody put me in that room. I picked it."
-    gf "Nobody's disputing the record."
-    maya "Good. I'd hate to have to remind anyone whose idea it was."
+    maya "If this is about last night, I'm not taking questions before coffee."
+    gf "We haven't asked any."
+    maya "Good. Keep it up."
     "Julian stared into his coffee as though it contained legal advice."
-    "Nobody volunteered what had or hadn't happened behind that door, and Maya's grin said she would decide when, and whether, anyone heard."
+    "Maya helped herself to the coffee. Julian pushed the sugar toward her without being asked."
     maya "Beach club today?"
     gf "Definitely."
     jump ch01_day3_beach
@@ -236,7 +236,7 @@ label ch01_day3_villa_evening:
         mc "You're going to get noticed."
         gf "Good thing you're coming with me."
     else:
-        "Leia came out in the Black Cutout Mini she'd bought yesterday."
+        "Leia came out in the Black Cutout Mini from yesterday's shopping trip."
         gf "What do you think?"
         mc "I think I'm lucky."
         gf "Correct answer."
@@ -346,9 +346,15 @@ label ch01_day3_vip:
 label ch01_day3_balcony:
     "We found a quiet balcony away from the music."
     if d3_lane == "love":
-        gf "My favourite part of tonight is being here with you."
-        mc "Mine too."
-        "We kissed and stayed together until the music inside changed."
+        gf "There you are."
+        mc "I've been next to you all night."
+        gf "I know. I could only hear every third word."
+        mc "Probably my best work."
+        "She laughed and rested her arms on the railing beside mine."
+        gf "I'm glad we came. I'm also glad we can sneak out for five minutes."
+        mc "We can make it ten."
+        gf "Don't tell Maya. She'll organise them."
+        "We kissed, then stayed at the railing until the music inside changed."
     else:
         gf "That was different."
         mc "Different good?"
@@ -526,6 +532,6 @@ label ch01_day3_bedroom:
 
     centered "{size=46}CHAPTER ONE — DAY THREE COMPLETE{/size}"
 
-    # Day Three -> Day Four. ch01_day4_start is currently a placeholder stub
-    # (ch01_day4_stub.rpy) until the approved Day Four script replaces it.
+    # Day Three -> implemented Day Four. Preserve the stored ending above;
+    # Day Four reads it at ch01_day4_start.
     jump ch01_day4_start

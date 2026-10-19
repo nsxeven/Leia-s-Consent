@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "checks": [
+    "PASS preset day2:love",
+    "PASS preset day2:exhibitionism",
+    "PASS preset day2:ntr_risk",
+    "PASS preset day3:love",
+    "PASS preset day3:exhibitionism",
+    "PASS preset day3:love_repaired",
+    "PASS preset day3:mixed_unresolved",
+    "PASS preset day3:ntr_confirmed",
+    "PASS preset day4:love",
+    "PASS preset day4:exhibitionism",
+    "PASS preset day4:love_repaired",
+    "PASS preset day4:mixed_unresolved",
+    "PASS preset day4:ntr_confirmed",
+    "PASS preset day5:love",
+    "PASS preset day5:exhibitionism",
+    "PASS preset day5:love_repaired",
+    "PASS preset day5:ntr_unresolved",
+    "PASS preset day5:ntr_confirmed",
+    "PASS Day Five stored ending love",
+    "PASS Day Five stored ending exhibitionism",
+    "PASS Day Five stored ending love_repaired",
+    "PASS Day Five stored ending ntr_unresolved",
+    "PASS Day Five stored ending ntr_confirmed",
+    "PASS dinner callback ntr_unresolved -> love_repaired",
+    "PASS dinner callback ntr_confirmed -> love_repaired",
+    "PASS dinner callback ntr_repaired -> ntr_unresolved",
+    "PASS dinner callback ntr_repaired -> love_repaired",
+    "PASS dinner callback ntr_unresolved -> ntr_unresolved",
+    "PASS dinner callback ntr_confirmed -> ntr_confirmed",
+    "PASS dinner callback love -> love",
+    "PASS all literal Chapter One apply_choice IDs registered",
+    "PASS gallery_validate"
+  ],
+  "limits": [
+    "No visual playthrough",
+    "No save/load or rollback interaction",
+    "Top-level state execution does not explore every branch"
+  ]
+}

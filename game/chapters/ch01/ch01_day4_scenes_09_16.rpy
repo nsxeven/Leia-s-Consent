@@ -988,7 +988,7 @@ label ch01_day4_scene_15_phone_hook:
                 )
 
     "I put the phone face up on the nightstand this time."
-    "Somewhere beyond the curtains, the sea went on being the sea. Tomorrow we were leaving the villa behind for the first time, all four of us, with no map and no plan."
+    "I could hear the sea beyond the curtains. Tomorrow we would be sleeping out there instead of listening to it from the villa."
 
     $ set_story_flag("ch01_d4_scene_15_complete")
     jump ch01_day4_scene_16_finish
@@ -1016,9 +1016,7 @@ label ch01_day4_scene_16_finish:
     scene black
     with fade
 
-    # Day Five hand-off. Day Five does not exist yet, so the label is checked at runtime.
-    # Once ch01_day5_start exists, replace this block with the literal:
-    #     jump ch01_day5_start
+    # Day Five hand-off. Keep the runtime guard for compatibility with partial builds.
     if renpy.has_label("ch01_day5_start"):
         jump expression "ch01_day5_start"
 
