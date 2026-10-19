@@ -605,7 +605,7 @@ label ch01_day2_scene_05_meet_maya:
 
     maya "Ryan!"
 
-    "She greeted me with the uncomplicated familiarity of somebody I'd known long enough not to perform politeness around."
+    "She waved me over before I'd even reached the table."
     "Leia watched the greeting carefully."
 
     maya "And this has to be Leia. Finally."
@@ -637,7 +637,7 @@ label ch01_day2_scene_05_meet_maya:
     maya "He used to do that at lunch."
     gf "He still does it at dinner."
 
-    "They looked at each other with the immediate recognition of two people who had independently discovered the same flaw."
+    "Leia pointed at Maya, delighted to have a witness."
     mc "I regret this meeting already."
 
     maya "Good. That means it's going well."
@@ -689,7 +689,7 @@ label ch01_day2_scene_06_jealousy_test:
     gf "I mean I really hate it. I will live out of a clean laundry basket for a week."
     mc "Two weeks."
     gf "Nobody asked for corroborating testimony."
-    maya "Perfect. Humanising. Continue."
+    maya "Good. I was starting to think he made you up."
 
     "The conversation stopped being mine and Maya's reunion after that."
 
@@ -749,7 +749,7 @@ label ch01_day2_scene_07_leia_maya_click:
     gf "Too late. I like her."
     maya "Same."
 
-    "It was said jokingly, but Leia's posture had changed. She wasn't Ryan's girlfriend meeting Ryan's friend anymore. She was talking to Maya on her own terms."
+    "Leia turned her chair toward Maya and scrolled back to another photo. They'd stopped waiting for me to fill the gaps."
 
     $ set_story_value("ch01_d2_leia_maya_comfort", 2)
     $ set_story_flag("ch01_d2_scene_07_complete")
@@ -809,7 +809,7 @@ label ch01_day2_scene_09_photo_walk:
     friend "The frames are completely different."
     gf "They're also black."
     friend "I expected more from you, Leia."
-    gf "We've known each other for two days."
+    gf "Two days of sunglasses, Julian. I've seen enough."
     friend "And already the betrayal."
 
     "Maya had started walking beside Leia without anybody arranging it."
