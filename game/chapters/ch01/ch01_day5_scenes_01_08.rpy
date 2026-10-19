@@ -132,7 +132,7 @@ label ch01_day5_scene_01_boarding:
         "Leia was already on the pier, a little apart, with Maya's arm hooked through hers."
         gf "Morning."
         mc "Morning."
-        "It was the kind of 'morning' two people say when both of them have rehearsed the next sentence and neither will say it first."
+        "I'd thought of something to say on the way down. Standing in front of her, I couldn't start it."
         "Maya looked between us and decided, visibly, to be loud."
     else:
         "Maya and Julian took me by either elbow before I'd reached the gangway."
@@ -159,7 +159,7 @@ label ch01_day5_scene_01_packing:
     with dissolve
 
     if d5_track == "love":
-        "Leia unzipped her bag on the cockpit bench, sorting like a woman defusing something sweet."
+        "Leia unzipped her bag on the cockpit bench, took out two outfits, then put one back."
         gf "I packed three outfits for the boat and none of them are right. Help?"
 
         $ d5_pk_ryan = format_choice("ch01_d5_pack_ryan_picks", "Let me choose what you wear on the boat.")
