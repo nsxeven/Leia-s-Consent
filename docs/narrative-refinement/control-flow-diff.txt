@@ -1,0 +1,11 @@
+--- game/chapters/ch01/ch01_day5_scenes_09_16.rpy baseline
++++ game/chapters/ch01/ch01_day5_scenes_09_16.rpy edited
+@@ -150,7 +150,7 @@
+             else:
+         "[d5_as_brave]":
+             $ apply_choice("ch01_d5_ask_brave")
+-            if d5_track == "ntr_repaired":
++            if d5_track == "ntr_repaired" or d5_pending == "love_repaired":
+             elif d5_track in ("ntr_unresolved", "ntr_confirmed") and d5_pending != "love_repaired":
+             elif d5_track == "exhibitionism":
+             else:
