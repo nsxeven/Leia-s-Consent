@@ -1,0 +1,47 @@
+﻿Ren'Py 8.5.3.26051504 lint report, generated at: Mon Oct 19 07:11:55 2026
+
+game/chapters/ch01/ch01_scenes_04_06.rpy:163 'white' is not an image.
+
+game/chapters/ch01/ch01_scenes_04_06.rpy:218 'white' is not an image.
+
+game/chapters/ch01/ch01_scenes_04_06.rpy:252 'white' is not an image.
+
+game/chapters/ch01/ch01_scenes_04_06.rpy:272 'white' is not an image.
+
+game/chapters/ch01/ch01_scenes_04_06.rpy:309 'white' is not an image.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:6 References image 'c g   c h 0 1 _ p h o t o _ g r o u p', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:7 References image 'c g   c h 0 1 _ p h o t o _ s u p p o r t _ a', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:8 References image 'c g   c h 0 1 _ p h o t o _ s u p p o r t _ b', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:9 References image 'c g   c h 0 1 _ p h o t o _ m o r e _ a', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:10 References image 'c g   c h 0 1 _ p h o t o _ m o r e _ b', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:11 References image 'c g   c h 0 1 _ p h o t o _ m o r e _ s e c o n d _ a', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_photo_aliases.rpy:12 References image 'c g   c h 0 1 _ p h o t o _ m o r e _ s e c o n d _ b', which does not exist.
+
+game/chapters/ch01/zz_ch01_phone_sequence_revision.rpy:7 The init priority (1000) is not in the -999 to 999 range.
+
+game/chapters/ch01/zzzz_ch01_day2_polish_revision.rpy:3 The init priority (1003) is not in the -999 to 999 range.
+
+game/chapters/ch01/zzzz_ch01_scene27_staged_phone.rpy:1 The init priority (1001) is not in the -999 to 999 range.
+
+game/chapters/ch01/zzzz_ch01_scene27_staged_phone.rpy:14 The image tag 'julian' is not the prefix of a declared image, nor was it used in a show statement before this hide statement.
+
+game/systems/zz_story_state_flag_getter.rpy:5 The init priority (1000) is not in the -999 to 999 range.
+
+
+Statistics:
+
+The game contains 5,093 dialogue blocks, containing 40,445 words and 219,352
+characters, for an average of 7.9 words and 43 characters per block.
+
+The game contains 88 menus, 255 images, and 85 screens.
+
+
+Lint is not a substitute for thorough testing. Remember to update Ren'Py
+before releasing. New releases fix bugs and improve compatibility.
