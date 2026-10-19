@@ -754,10 +754,10 @@ label ch01_scene_12_shop_and_drive_back:
     mc "Historically successful terrible dare, remember?"
     friend "I take it back."
 
-    "By the time we reached the drinks fridge, Leia and Julian were arguing over snacks like they'd known each other longer than a day."
-    "For once, nothing awkward had caused it."
+    "By the drinks fridge, Leia and Julian were still arguing over snacks. I slipped my own choice into the basket while they were distracted."
+    "Neither of them noticed until we reached the till."
 
-    "By the time we paid, Leia was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
+    "Leia left carrying exactly one packet of chips. Julian and I carried everything else."
 
     gf "I want to lie down."
     mc "We're walking thirty metres to the car."
