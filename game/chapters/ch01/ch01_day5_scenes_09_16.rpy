@@ -92,15 +92,15 @@ label ch01_day5_scene_09_sunset:
     if d5_pending == "love":
         gf "I like this. Us."
         mc "I like this too."
-        gf "The Day Two sunset. You remember."
+        gf "Like that evening by the pool. Remember?"
         mc "I remember everything about that sunset."
         gf "It's different out here. It feels like we're allowed to be a little bit more."
         if d5_track == "exhibitionism":
             gf "I wanted today to be just us, and it was. I'm glad."
     elif d5_pending == "exhibitionism":
         gf "I think part of why I liked it was because you knew."
-        mc "That's what you said on Day Two."
-        gf "I still think it. It's still true. It's more true."
+        mc "You said something like that by the pool."
+        gf "I meant it then, too."
         gf "I like that I'm brave with you here. I don't feel brave with anyone else."
         mc "You're brave with everyone."
         gf "I'm brave with you. With everyone else I'm just loud."
@@ -109,11 +109,11 @@ label ch01_day5_scene_09_sunset:
         if d5_pending == "love_repaired":
             gf "Are we okay?"
             mc "We're okay."
-            gf "I asked that on the Day Two sunset. And you said you didn't know."
-            mc "I didn't. I do now."
+            gf "I hated having to ask you that."
+            mc "I know. I don't want you guessing."
             gf "Say the sentence."
             mc "We're okay."
-            "She leaned into my shoulder. The sun went down behind her head like something being gently put away."
+            "She leaned into my shoulder. We stayed at the rail until the light had gone."
         else:
             gf "Are we okay?"
             mc "I don't know."
@@ -137,7 +137,7 @@ label ch01_day5_sunset_gate_unresolved:
     with dissolve
 
     gf "Are we okay?"
-    "It was the same sentence she'd asked on the Day Two sunset. Her voice had less in it now, and more underneath."
+    "She'd asked me the same thing by the pool. This time she kept her eyes on the water."
 
     if has_story_flag("ch01_d5_eaves_listened"):
         "I was carrying a thing I wasn't supposed to have: half a conversation I'd heard in the shade. It sat between us like a third person."
@@ -222,9 +222,9 @@ label ch01_day5_sunset_gate_confirmed:
             gf "I've been waiting for you to say that for about two days."
             mc "I know."
             gf "I'm not ready to tell you everything. Not tonight."
-            gf "But I want you to ask me again at the pier. Tomorrow. And I want you to ask me the way you just did."
+            gf "Ask me again when we're back on land. Like you just did."
             mc "Okay."
-            gf "That's a door. It's small. It's open."
+            gf "I can try. That's all I've got tonight."
         "[d5_c_acc]":
             $ apply_choice("ch01_d5_ntr_c_accuse_hard")
             $ set_story_value("ch01_d5_ntr_outcome", "ntr_confirmed")
@@ -343,7 +343,7 @@ label ch01_day5_scene_10_dinner:
         "[d5_as_brave]":
             $ apply_choice("ch01_d5_ask_brave")
             mc "What's the bravest thing you did this week?"
-            if d5_track == "ntr_repaired":
+            if d5_track == "ntr_repaired" or d5_pending == "love_repaired":
                 gf "Telling you. Obviously."
             elif d5_track in ("ntr_unresolved", "ntr_confirmed") and d5_pending != "love_repaired":
                 gf "Showing up at the pier. And not running."
@@ -688,7 +688,7 @@ label ch01_day5_scene_14_dawn_run:
     maya "You're a pleasant beige."
     friend "I'll take beige."
 
-    "Just after dawn, around the last headland, my phone woke up. One bar. Two. Then it stuttered and began unloading a night's worth of nothing."
+    "Just after dawn, around the last headland, my phone woke up. One bar. Two. Then it stuttered as the notifications arrived."
 
     python:
         phone_add_message(
@@ -729,7 +729,7 @@ label ch01_day5_scene_14_dawn_run:
         python:
             phone_add_message(
                 "leia", "leia",
-                text="Thank you for the cove. For the order I told it in. For listening to the end.",
+                text="Thank you for listening to the end. I know that wasn't easy.",
                 message_id="ch01_d5_late_leia_ntr_repaired",
                 mark_unread=True, notify=False,
             )
