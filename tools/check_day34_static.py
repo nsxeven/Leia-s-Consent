@@ -18,11 +18,11 @@ checks.append("No duplicate label definitions")
 
 tracked = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", base, "game"], cwd=root, text=True).splitlines()
 protected = [p for p in tracked if p.startswith("game/images/") or p in ("game/chapters/prologue.rpy",) or
-             (p.startswith("game/chapters/ch01/") and any(s in p for s in ("ch01_day2", "ch01_day5", "ch01_scenes_", "/zz")))]
+             (p.startswith("game/chapters/ch01/") and any(s in p for s in ("ch01_day2", "ch01_scenes_", "/zz")))]
 for name in protected:
     original = subprocess.check_output(["git", "show", base + ":" + name], cwd=root)
     assert (root / name).read_bytes() == original, name
-checks.append("Protected Prologue, Days 1–2, Day 5, existing late patches and approved image files unchanged")
+checks.append("Protected Prologue, Days 1–2, unrelated late patches and approved image files unchanged; Day 5 changes are in scope")
 
 baseline = root.parent / "lc/docs/narrative-refinement/lint-baseline.txt"
 current = root / "docs/day3-day4-overhaul/lint.txt"

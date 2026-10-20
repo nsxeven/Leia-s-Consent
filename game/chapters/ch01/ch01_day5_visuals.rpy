@@ -141,7 +141,7 @@ image cg ch01_d5_cove_lunch_bee = Composite(
     (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - COVE LUNCH BEE\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
-# CG TODO (artist): The photo itself, full screen: Julian pale beside Leia, Maya triumphant, all three squinting into the light, the cove behind them. Used also as a phone attachment (alias ch01_d5_photo_three). Ryan POV; Ryan is never visible.
+# CG TODO (artist): The photo itself, full screen: Ryan's group photo at the first anchorage, Maya and Julian together and Leia by the rail, bright water behind them. Used as a group-chat attachment only after signal returns (alias ch01_d5_photo_three). Ryan POV; Ryan is never visible.
 image cg ch01_d5_photo_three = Composite(
     (1920, 1080),
     (0, 0), Solid("#b8a080"),
@@ -162,28 +162,28 @@ image cg ch01_d5_love_cove_secret = Composite(
     (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - LOVE COVE SECRET\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
-# CG TODO (artist): Ryan POV: Leia lying on her front on a warm rock, swimsuit ties undone and her arms folded under her chin, head turned toward the lens, delighted at her own nerve. COVERED / implied; crop so nothing explicit reads. Ryan POV; Ryan is never visible.
+# CG TODO (artist): Ryan POV on the shaded foredeck: Leia lying face down on a cushioned bench, swimsuit ties loosened beneath the towel and her arms folded under her chin, head turned toward the lens, delighted at her own nerve. COVERED / implied; crop so nothing explicit reads. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_cove_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#a8885a"),
     (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE 01\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
-# CG TODO (artist): Ryan POV: Leia sitting on the rock in the sun, top folded beside her, arms loosely crossed, face tipped up, eyes on the lens, laughing at herself. COMFORTABLE and IMPLIED: crop at the collarbone, shoulders and face only. Nothing explicit. Ryan POV; Ryan is never visible.
+# CG TODO (artist): Ryan POV on the shaded foredeck: Leia sitting in the sun, top folded beside her, arms loosely crossed, face tipped up, eyes on the lens, laughing at herself. COMFORTABLE and IMPLIED: crop at the collarbone, shoulders and face only. Nothing explicit. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_cove_02 = Composite(
     (1920, 1080),
     (0, 0), Solid("#a8885a"),
     (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE 02\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
-# CG TODO (artist): Ryan POV over Leia's shoulder (her back and hair in the foreground, covered): far down the cove Maya holds a paperback up like a screen, Julian stares at the horizon. Sub-variant 'Ryan likes watching'. Ryan POV; Ryan is never visible.
+# CG TODO (artist): Ryan POV over Leia's shoulder (her back and hair in the foreground, covered): from the foredeck, Maya and Julian are away exploring the cove; Ilario is at the helm in the distance. Sub-variant 'Ryan likes watching'. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_cove_watching = Composite(
     (1920, 1080),
     (0, 0), Solid("#8a7a5a"),
     (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE WATCHING\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
-# CG TODO (artist): Ryan POV: Leia seated on the rock, knees drawn up, the hairclip open in both hands, serious and a little wet-eyed, looking up at the lens. Visible empty rock beside her where Ryan sits. No third person. Ryan POV; Ryan is never visible.
+# CG TODO (artist): Ryan POV from the forward cabin: Leia seated in the open doorway, knees drawn up, the hairclip open in both hands, serious and a little wet-eyed, looking up at the lens. Visible empty bunk edge where Ryan sits. No third person. Ryan POV; Ryan is never visible.
 image cg ch01_d5_ntr_cove_talk = Composite(
     (1920, 1080),
     (0, 0), Solid("#5a6a60"),

@@ -19,12 +19,12 @@ label ch01_day5_scene_09_sunset:
 
     # AUDIO TODO: wind drops, halyard slap slows, low engine hum at idle, a single gull.
 
-    "The cove turned the color of the inside of a shell. Captain Ilario motored us a few hundred yards out and set the anchor again, deep and slow, as if she was putting the day to bed."
+    "The cove turned the color of the inside of a shell. Captain Ilario motored us a few hundred yards out and set the anchor again, deep and slow, as if he was putting the day to bed."
     skipper "Dinner in an hour. Please be dressed or please be a long way from me."
 
     # Evening wardrobe: Love gets the outfit-control picker (mini available); others, Leia's own choice.
     if d5_track == "love" or d5_pending == "love":
-        "Leia came up from the cabin with her bag, a towel over her shoulder and the look of a woman with a decision to make."
+        "Leia came up from the cabin with her bag, a towel over her shoulder and a decision to make."
         gf "The mini or the dress or the loose one. I want it to be your fault."
 
         $ d5_ev_ryan = format_choice("ch01_d5_evening_ryan_picks", "Let me choose your outfit for dinner.")
@@ -76,15 +76,18 @@ label ch01_day5_scene_09_sunset:
 
     if d5_track == "ntr_unresolved" and d5_pending == "ntr_unresolved":
         jump ch01_day5_sunset_gate_unresolved
-    elif d5_track == "ntr_confirmed" and d5_pending == "ntr_confirmed":
-        jump ch01_day5_sunset_gate_confirmed
 
     # Shared sunset: the Day Two sunset line returns, per track.
     $ enter_cinematic_mode()
-    scene cg ch01_d5_sunset_deck
-    with dissolve
-    # CG TODO (artist): ch01_d5_sunset_deck. Ryan POV, Ryan never in frame.
-    "She leaned on the stern rail with the last of the light across her face, and she looked back at me down the length of the deck."
+    if d5_track == "ntr_confirmed":
+        scene cg ch01_d5_ntr_deck_alone
+        with dissolve
+        "Leia leaned on the stern rail alone, the last of the light across her face, and looked back at me."
+    else:
+        scene cg ch01_d5_sunset_deck
+        with dissolve
+        # CG TODO (artist): ch01_d5_sunset_deck. Ryan POV, Ryan never in frame.
+        "She leaned on the stern rail with the last of the light across her face, and she looked back at me down the length of the deck."
     $ exit_cinematic_mode()
     scene bg ch01_d5_boat_sunset
     with dissolve
@@ -104,16 +107,23 @@ label ch01_day5_scene_09_sunset:
         gf "I like that I'm brave with you here. I don't feel brave with anyone else."
         mc "You're brave with everyone."
         gf "I'm brave with you. With everyone else I'm just loud."
+    elif d5_pending == "nts_discovery":
+        gf "I keep thinking about what we talked about."
+        mc "Me too. I don't know yet what I want it to mean."
+        gf "Then we don't decide tonight."
+        "She rested her hand beside mine on the rail, leaving the distance for me to close or keep."
+    elif d5_track == "ntr_confirmed":
+        "The water below us was dark. I knew about Adrian. I didn't know whether there was anything else to know, and I wasn't ready to ask without knowing what I was asking."
+        gf "You're quiet."
+        mc "I'm trying to work out what I actually know."
+        gf "That's fair."
     else:
         # ntr_repaired track (love_repaired) or a setback from the afternoon disclosure
         if d5_pending == "love_repaired":
             gf "Are we okay?"
-            mc "We're okay."
-            gf "I asked that on the Day Two sunset. And you said you didn't know."
-            mc "I didn't. I do now."
-            gf "Say the sentence."
-            mc "We're okay."
-            "She leaned into my shoulder. The sun went down behind her head like something being gently put away."
+            mc "Not all the way. But I want to keep trying."
+            gf "Good. I don't need a bigger promise tonight."
+            "She rested her hand beside mine. I let the quiet stay quiet."
         else:
             gf "Are we okay?"
             mc "I don't know."
@@ -130,122 +140,43 @@ label ch01_day5_sunset_gate_unresolved:
     $ enter_cinematic_mode()
     scene cg ch01_d5_ntr_deck_alone
     with dissolve
-    # CG TODO (artist): ch01_d5_ntr_deck_alone. Ryan POV, Ryan never in frame. Leia's back to camera at the rail.
-    "She was at the stern rail, back to me, the hairclip in one hand and the horizon in front of her."
+    "The sun was almost gone. Leia stayed at the stern rail while I decided whether I was ready to speak without hiding inside the word fine."
     $ exit_cinematic_mode()
     scene bg ch01_d5_boat_sunset
     with dissolve
-
-    gf "Are we okay?"
-    "It was the same sentence she'd asked on the Day Two sunset. Her voice had less in it now, and more underneath."
-
-    if has_story_flag("ch01_d5_eaves_listened"):
-        "I was carrying a thing I wasn't supposed to have: half a conversation I'd heard in the shade. It sat between us like a third person."
-
-    $ d5_u_ask = format_day5_gate_choice("ch01_d5_ntr_u_ask_gently", "Ask her gently. 'Whenever you're ready, I'm listening.'", severity="soft", gate_label="D5-2")
-    $ d5_u_press = format_day5_gate_choice("ch01_d5_ntr_u_press_hard", "Press her. 'What happened at the club, Leia?'", severity="hard", gate_label="D5-2")
-    $ d5_u_fine = format_day5_gate_choice("ch01_d5_ntr_u_fine_hard", "I'm fine.", severity="hard", gate_label="D5-2")
-
+    if get_story_value("ch01_d4_betrayal_disclosed", False):
+        gf "I know what I told you is still there. I won't ask you to be over it."
+    else:
+        gf "I don't want us to spend another night talking around each other."
+    $ d5_u_repair = format_choice("ch01_d5_ntr_u_ask_gently", "Tell her you want to keep talking and try to repair things.")
+    $ d5_u_space = format_choice("ch01_d5_ntr_u_fine_hard", "Ask for space tonight. You aren't ready to answer.")
+    $ d5_u_press = format_choice("ch01_d5_ntr_u_press_hard", "Press for an answer she has not offered.")
     menu:
-        "[d5_u_ask]":
+        "[d5_u_repair]":
             $ apply_choice("ch01_d5_ntr_u_ask_gently")
-            mc "Whenever you're ready, I'm listening."
-            "She turned around slowly. Her eyes were wet and entirely hers."
-            if has_story_flag("ch01_d5_eaves_listened"):
-                mc "I should tell you something first. I heard you and Maya. On the foredeck. I wasn't asleep."
-                gf "I know."
-                mc "I'm sorry. I'd rather hear it from you than from a sail."
-                gf "That's the right sentence. It's also late. But it's right."
-            else:
-                gf "That's the first time you've asked me that."
-            gf "Okay. Sit."
-            "We sat on the stern bench with the sunset draining behind us. I let her find her own first sentence."
-            call ch01_day5_club_disclosure
-            $ set_story_value("ch01_d5_disclosure_when", "sunset_gate")
-            $ set_story_value("ch01_d5_react_return", "dinner")
-            jump ch01_day5_ntr_react_menu
-
-        "[d5_u_press]":
-            $ apply_choice("ch01_d5_ntr_u_press_hard")
-            $ set_story_value("ch01_d5_ntr_outcome", "ntr_confirmed")
-            $ set_story_value("ch01_d5_end_route_pending", "ntr_confirmed")
-            mc "What happened at the club, Leia?"
-            "The question came out like a hook."
-            gf "There it is."
-            mc "I'm just asking."
-            gf "You're not asking. You're checking."
-            gf "I almost told you. Ten seconds ago. I had the first sentence."
-            gf "I think I'll keep it a little longer."
-            "She went below. The hatch closed softly. That was almost worse than a slam."
-            $ set_story_flag("ch01_d5_ntr_pressed")
-            $ set_story_value("ch01_d5_react_return", "dinner")
-            jump ch01_day5_ntr_react_resolve
-
-        "[d5_u_fine]":
+            mc "I don't know how to make this easy. I do want to keep talking, if you do."
+            gf "I do. I need you to stay in the conversation when it gets uncomfortable."
+            mc "I'll try."
+            $ set_story_value("ch01_d5_ntr_outcome", "love_repaired")
+            $ set_story_value("ch01_d5_end_route_pending", "love_repaired")
+            $ set_story_value("ch01_d5_repair_provenance", "disclosed_betrayal" if get_story_value("ch01_d4_betrayal_disclosed", False) else "unresolved_uncertainty")
+            $ set_story_flag("ch01_d5_ntr_reopened")
+        "[d5_u_space]":
             $ apply_choice("ch01_d5_ntr_u_fine_hard")
-            $ set_story_value("ch01_d5_ntr_outcome", "ntr_confirmed")
-            $ set_story_value("ch01_d5_end_route_pending", "ntr_confirmed")
-            mc "I'm fine."
-            gf "I know."
-            gf "That's the most polite way anyone's ever left me alone."
-            "She smiled. It wasn't a smile that went anywhere."
-            $ set_story_value("ch01_d5_react_return", "dinner")
-            jump ch01_day5_ntr_react_resolve
-
-
-label ch01_day5_sunset_gate_confirmed:
-
-    $ enter_cinematic_mode()
-    scene cg ch01_d5_ntr_deck_alone
-    with dissolve
-    # CG TODO (artist): ch01_d5_ntr_deck_alone. Ryan POV, Ryan never in frame. Leia's back to camera at the rail.
-    "She was at the stern rail alone, back to me, the hairclip clasped in one hand and the horizon in front of her."
-    $ exit_cinematic_mode()
-    scene bg ch01_d5_boat_sunset
-    with dissolve
-
-    "Maya's sentence went round in my head: don't go and say 'fine'."
-    "From the cockpit, a very small, very deliberate cough. Julian, three yards away, studying a cleat with great intensity."
-
-    $ d5_c_go = format_day5_gate_choice("ch01_d5_ntr_c_go_to_her", "Go to her. 'I'm not fine. I'm sorry I kept saying it.'", severity="soft", gate_label="D5-2")
-    $ d5_c_acc = format_day5_gate_choice("ch01_d5_ntr_c_accuse_hard", "Go to her. 'Did you tell Maya something you wouldn't tell me?'", severity="hard", gate_label="D5-2")
-    $ d5_c_fine = format_day5_gate_choice("ch01_d5_ntr_c_fine_hard", "Stay where I am. 'I'm fine.'", severity="hard", gate_label="D5-2")
-
-    menu:
-        "[d5_c_go]":
-            $ apply_choice("ch01_d5_ntr_c_go_to_her")
+            mc "I need a little space tonight. I'm not ready to answer."
+            gf "Okay. Thank you for saying that plainly."
             $ set_story_value("ch01_d5_ntr_outcome", "ntr_unresolved")
             $ set_story_value("ch01_d5_end_route_pending", "ntr_unresolved")
-            $ set_story_flag("ch01_d5_ntr_reopened")
-            mc "I'm not fine. I'm sorry I kept saying it."
-            "She turned slowly. It was the first time all day she'd looked at me for longer than a second."
-            gf "I've been waiting for you to say that for about two days."
-            mc "I know."
-            gf "I'm not ready to tell you everything. Not tonight."
-            gf "But I want you to ask me again at the pier. Tomorrow. And I want you to ask me the way you just did."
-            mc "Okay."
-            gf "That's a door. It's small. It's open."
-        "[d5_c_acc]":
-            $ apply_choice("ch01_d5_ntr_c_accuse_hard")
-            $ set_story_value("ch01_d5_ntr_outcome", "ntr_confirmed")
-            mc "Did you tell Maya something you wouldn't tell me?"
-            "She didn't turn."
-            gf "Yes."
-            mc "What?"
-            gf "That's not the question I wanted. And it's not the one you needed."
-            gf "Go and sit with your granola bar, Ryan."
-            "She said it without cruelty. That was the cruelty."
+        "[d5_u_press]":
+            $ apply_choice("ch01_d5_ntr_u_press_hard")
+            mc "I need you to tell me what you're still holding back."
+            gf "I can't give you an answer just because you pressed. If there's something to tell, I need to choose to tell it."
+            mc "You're right. I don't want another answer dragged out of either of us."
+            $ set_story_value("ch01_d5_ntr_outcome", "ntr_unresolved")
+            $ set_story_value("ch01_d5_end_route_pending", "ntr_unresolved")
             $ set_story_flag("ch01_d5_ntr_pressed")
-        "[d5_c_fine]":
-            $ apply_choice("ch01_d5_ntr_c_fine_hard")
-            $ set_story_value("ch01_d5_ntr_outcome", "ntr_confirmed")
-            mc "I'm fine."
-            "I didn't move. She didn't turn."
-            gf "Okay."
-            "Maya, in the cockpit, exhaled through her nose like a kettle."
-
-    $ set_story_value("ch01_d5_react_return", "dinner")
-    jump ch01_day5_ntr_react_resolve
+    $ set_story_flag("ch01_d5_scene_09_complete")
+    jump ch01_day5_scene_10_dinner
 
 
 label ch01_day5_scene_10_dinner:
@@ -301,6 +232,11 @@ label ch01_day5_scene_10_dinner:
                 mc "That I like seeing you brave more than I thought I would. I thought I'd be nervous. I'm not. I'm proud."
                 gf "That's not pretending. That's just saying it."
                 mc "It's the saying it that's the hard part."
+            elif d5_track == "nts_discovery":
+                mc "That I'm curious, and hurt, and still figuring out how both can be true."
+                gf "They can both be true. We don't have to choose what it means tonight."
+                mc "Good. I don't want to turn a feeling into a promise."
+                gf "Then don't. Just keep telling me what the feeling is."
             else:
                 mc "That I've been fine. For days. I've said it so many times I've forgotten what the question was."
                 gf "..."
@@ -336,6 +272,8 @@ label ch01_day5_scene_10_dinner:
                 gf "The rock. And the knot. And you not saying anything clever."
             elif d5_track == "exhibitionism":
                 gf "The sun. The sun and the fact that I wasn't scared of it."
+            elif d5_pending == "nts_discovery":
+                gf "That we could talk about something difficult and leave it unfinished for now."
             elif d5_pending == "love_repaired":
                 gf "The ten seconds after I told you. When you didn't leave."
             else:
@@ -343,10 +281,12 @@ label ch01_day5_scene_10_dinner:
         "[d5_as_brave]":
             $ apply_choice("ch01_d5_ask_brave")
             mc "What's the bravest thing you did this week?"
-            if d5_track == "ntr_repaired":
-                gf "Telling you. Obviously."
-            elif d5_track in ("ntr_unresolved", "ntr_confirmed") and d5_pending != "love_repaired":
+            if d5_track == "love_repaired" and get_story_value("ch01_d4_betrayal_disclosed", False):
+                gf "Letting the truth sit there without asking you to make me feel better."
+            elif d5_track in ("ntr_unresolved", "ntr_confirmed"):
                 gf "Showing up at the pier. And not running."
+            elif d5_track == "nts_discovery":
+                gf "Saying I was surprised, and not pretending that meant yes."
             elif d5_track == "exhibitionism":
                 gf "I'd say today. But I think the bravest thing is that I told you all of it first."
             else:
@@ -428,10 +368,8 @@ label ch01_day5_scene_11_bunks:
                 mc "I'd like whatever you'd like."
                 gf "I'd like you to want to be in the room. That's a different thing."
             elif d5_pending == "love_repaired":
-                gf "You don't have to do that."
-                mc "I know. I wanted you to have the choice."
-                gf "Then I choose the cabin. With you in it. Come on."
-                $ set_story_value("ch01_d5_bunk", "cabin")
+                gf "Thank you. I think I want the cabin to myself for a little while."
+                mc "Okay. I'll be on the bench if you want company later."
             else:
                 gf "Whatever you'd like. Whatever I'd like. Whatever's easiest."
                 gf "Come find me if you change your mind."
@@ -449,6 +387,8 @@ label ch01_day5_scene_12_route_night:
         jump ch01_day5_scene_12_love_night
     elif d5_pending == "exhibitionism":
         jump ch01_day5_scene_12_exhib_night
+    elif d5_pending == "nts_discovery":
+        jump ch01_day5_scene_12_nts_night
     else:
         jump ch01_day5_scene_12_ntr_night
 
@@ -577,6 +517,45 @@ label ch01_day5_scene_12_exhib_night:
     jump ch01_day5_scene_13_night_after
 
 
+label ch01_day5_scene_12_nts_night:
+
+    scene bg ch01_d5_boat_cabin
+    with fade
+
+    "When the others settled in, Leia sat with me in the forward cabin. The afternoon was still between us, present but not demanding a name."
+    if get_story_value("ch01_d5_nts_experience_occurred", False):
+        gf "I keep replaying the moment. I liked part of it. I was also nervous."
+        mc "I liked it too. I was jealous, and then surprised by how much I wanted to stay."
+        gf "I'm glad you told me both parts."
+        mc "I don't want either of us to pretend we know what comes next."
+        gf "We don't. We can talk before anything happens again."
+        $ set_story_value("ch01_d5_end_variant", "nts_first_step_mixed")
+    else:
+        gf "I'm glad we left it at talking."
+        mc "Me too. I wanted to understand what I was asking before we did anything."
+        gf "Then that's what we did."
+        $ set_story_value("ch01_d5_end_variant", "nts_postponed")
+    "She took my hand, then paused."
+    gf "Would you like me to stay?"
+    $ d5_nts_stay = format_choice("ch01_d5_nts_stay", "Ask her to stay beside you.")
+    $ d5_nts_space = format_choice("ch01_d5_nts_space", "Ask for a little space to think.")
+    menu:
+        "[d5_nts_stay]":
+            $ apply_choice("ch01_d5_nts_stay")
+            mc "Stay. I don't need answers. Just you."
+            gf "Okay."
+            "She stayed beside me, and we let the quiet be enough."
+        "[d5_nts_space]":
+            $ apply_choice("ch01_d5_nts_space")
+            mc "A little space. I want to think without making you guess."
+            gf "Thank you for saying it. I'll be close if you need me."
+            "She left the door open and gave me the quiet I asked for."
+    $ set_story_value("ch01_d5_nts_ryan_reaction", get_story_value("ch01_d5_nts_ryan_reaction", "curious"))
+    $ set_story_value("ch01_d5_nts_leia_reaction", get_story_value("ch01_d5_nts_leia_reaction", "thoughtful"))
+    $ set_story_flag("ch01_d5_scene_12_complete")
+    jump ch01_day5_scene_13_night_after
+
+
 label ch01_day5_scene_12_ntr_night:
 
     $ d5_pending = get_story_value("ch01_d5_end_route_pending", "ntr_unresolved")
@@ -610,8 +589,11 @@ label ch01_day5_scene_12_ntr_night:
             gf "Thank you for not leaving."
             mc "I wasn't going anywhere."
             gf "I know. That's the thing. I know."
-        "She curled against me, and there was nothing dramatic about it. We slept."
-        $ set_story_value("ch01_d5_end_variant", "ntr_repaired_" + (d5_react or "thanks"))
+        if d5_bunk == "apart":
+            "We settled in separate places. Before the cabin door closed, she reached out and squeezed my hand once."
+        else:
+            "She curled against me, and there was nothing dramatic about it. We slept."
+        $ set_story_value("ch01_d5_end_variant", "repair_" + get_story_value("ch01_d5_repair_provenance", "unresolved_uncertainty"))
     elif d5_pending == "ntr_unresolved":
         if d5_bunk == "apart":
             "I lay on the saloon bench, listening to the soft sounds of the boat. Beyond the half-closed door, Maya and Julian were whispering."
@@ -647,7 +629,7 @@ label ch01_day5_scene_13_night_after:
 
     # AUDIO TODO: a sudden wind in the rigging, the boat shifting on her anchor chain.
 
-    "At twenty to three, a flashlight beam swung across the cabin ceiling and a deadpan voice came down the hatch."
+    "At twenty to three, a flashlight beam swung across the cabin ceiling and Ilario's voice came down the hatch."
     skipper "Everyone. Dress. Weather is turning. We go home at first light."
     friend "We go home?"
     skipper "We go home."
@@ -662,11 +644,13 @@ label ch01_day5_scene_13_night_after:
     friend "I wasn't going to."
     maya "You were. I could hear it."
     "They sat an unreasonable distance apart, and then, without anyone moving, a slightly shorter distance."
-    "Captain Ilario weighed the anchor in six minutes flat, her face a map of calm."
+    "Captain Ilario weighed the anchor in six minutes flat, his face a map of calm."
     skipper "Ten more minutes to the headland. After that, we run."
 
     if d5_track.startswith("ntr"):
         "Leia stood at the rail in a blanket, the hairclip back in her hair, the horizon invisible. I stood three feet away. The distance between us was a thing the wind kept moving."
+    elif d5_track == "nts_discovery":
+        "Leia sat beside me under the cockpit awning. Neither of us tried to turn the afternoon into a verdict."
     else:
         "Leia stood at the rail in a blanket, her shoulder against mine, the horizon invisible, her head tipped back at the first stars of a sky about to close."
 
@@ -703,6 +687,15 @@ label ch01_day5_scene_14_dawn_run:
             message_id="ch01_d5_late_julian",
             mark_unread=True, notify=False,
         )
+        if get_story_value("ch01_d5_photo_delivery_pending") == "group":
+            phone_add_message(
+                "group", "maya",
+                text="Photo from the first anchorage. I look like a woman who has never lost a negotiation.",
+                message_id="ch01_d5_group_photo_three",
+                attachment_id="ch01_d5_photo_three",
+                attachment_label="Ryan's group photo at the first anchorage; Maya and Julian together, Leia by the rail",
+                mark_unread=True, notify=False,
+            )
     maya "I've been informed there is a festival tonight."
     friend "Tonight? I thought we had a boat."
     skipper "You have a pier. In twelve minutes."
@@ -734,6 +727,15 @@ label ch01_day5_scene_14_dawn_run:
                 mark_unread=True, notify=False,
             )
         "Leia's thread, a single message, sent from the rail with her face turned toward the sea."
+    elif d5_pending == "nts_discovery":
+        python:
+            phone_add_message(
+                "leia", "leia",
+                text="I don't need us to decide what today means yet. I want to keep talking when we're home.",
+                message_id="ch01_d5_late_leia_nts",
+                mark_unread=True, notify=False,
+            )
+        "Leia's message arrived as the signal returned. She sat beside me while I read it."
     elif d5_pending == "ntr_unresolved":
         python:
             phone_add_message(
@@ -766,7 +768,7 @@ label ch01_day5_scene_15_pier_invitation:
     scene bg ch01_d5_dawn_pier
     with fade
 
-    "Captain Ilario put the bow against the pier so gently it felt like a courtesy. She tipped her cap at the four of us, said 'Good guests' and went to coil a rope."
+    "Captain Ilario put the bow against the pier so gently it felt like a courtesy. He tipped his cap at the four of us, said 'Good guests' and went to coil a rope."
     "Maya, first onto the pier, stopped at a weathered post beside a blue fishing boat and stared."
     "Pinned to the wood with a brass tack, a stiff card the color of cream."
 
@@ -785,6 +787,8 @@ label ch01_day5_scene_15_pier_invitation:
         "'Come as you are, together.'"
     elif d5_pending == "exhibitionism" or d5_track == "exhibitionism":
         "'Masks keep secrets. You choose which ones.'"
+    elif d5_pending == "nts_discovery":
+        "'Bring the person you want beside you.'"
     else:
         "'Some conversations are easier behind a mask.'"
 
@@ -835,7 +839,7 @@ label ch01_day5_scene_15_pier_invitation:
 
     "Behind us, the engine of the Reasonable Doubt coughed, caught and settled into a quiet that sounded almost like an answer."
     "On the horizon, a ribbon of gray was turning slowly to gold."
-    "Tonight was the last night of the week, and I had no idea what any of us were going to say."
+    "The festival was tonight. I had no idea what any of us were going to say once the lanterns were lit."
 
     $ set_story_flag("ch01_d5_scene_15_complete")
     jump ch01_day5_scene_16_finish
@@ -847,11 +851,13 @@ label ch01_day5_scene_16_finish:
     python:
         d5_track = get_story_value("ch01_d5_track", "love")
         d5_pending = get_story_value("ch01_d5_end_route_pending", "love")
-        d5_allowed = ("love", "exhibitionism", "love_repaired", "ntr_unresolved", "ntr_confirmed")
+        d5_allowed = ("love", "exhibitionism", "love_repaired", "nts_discovery", "ntr_unresolved", "ntr_confirmed")
         d5_end = d5_pending if d5_pending in d5_allowed else "love"
         set_story_value("ch01_d5_end_route", d5_end)
         if d5_end == "love_repaired":
-            set_story_value("ch01_d5_end_variant", "ntr_repaired_" + (get_story_value("ch01_d5_ntr_react", "thanks") or "thanks"))
+            set_story_value("ch01_d5_end_variant", "repair_disclosed_betrayal" if get_story_value("ch01_d5_repair_provenance") == "disclosed_betrayal" else "repair_unresolved_uncertainty")
+        elif d5_end == "nts_discovery":
+            set_story_value("ch01_d5_end_variant", get_story_value("ch01_d5_end_variant", "nts_postponed"))
         elif d5_end == "ntr_unresolved":
             set_story_value("ch01_d5_end_variant", "ntr_unresolved_reopened" if has_story_flag("ch01_d5_ntr_reopened") else "ntr_unresolved")
         elif d5_end == "ntr_confirmed":
