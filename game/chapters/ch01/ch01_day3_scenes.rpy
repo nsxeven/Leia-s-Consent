@@ -246,7 +246,8 @@ label ch01_day3_villa_evening:
     jump ch01_day3_club
 
 label ch01_day3_club:
-    # BG TODO: nightclub dance floor.
+    scene bg ch01_d3_club_revision
+    with fade
     "Music filled the nightclub. We found a place near the dance floor."
     "Maya dragged Julian toward the music, laughing at his protests."
     if d3_lane == "ntr":
@@ -305,6 +306,18 @@ label ch01_day3_hairclip:
     jump ch01_day3_vip
 
 label ch01_day3_vip:
+    if d3_lane == "ntr" and d3_end == "ntr_confirmed":
+        if get_story_value("ch01_d3_ntr_repair_effort") == "withdraw":
+            "One of the men came over to the bar for water. Adrian Vale, he said, twenty-nine, helping a friend run sound at a festival."
+            adrian "Tonight I get to complain about someone else's speakers."
+            mc "Must be nice."
+            "He gave a short laugh and took the water back to the sofa. Leia moved her glass to make room."
+        else:
+            "One of the men moved a glass to make room. He introduced himself as Adrian Vale, twenty-nine, in town to help a friend run sound for a festival."
+            adrian "Tonight I get to complain about someone else's speakers."
+            gf "Is that why you're sitting as far from them as possible?"
+            adrian "Professional judgment."
+            "She laughed. He waited for her answer instead of talking over the music."
     if d3_lane == "love":
         "The men invited both of us to sit. We spent a while trading holiday stories."
         gf "Want to get some air?"
@@ -373,6 +386,9 @@ label ch01_day3_dessert:
             friend "Just help me order."
             $ set_story_value("ch01_d3_maya_dessert", "surprise")
     "The bartender took a few minutes to prepare the dessert."
+    $ ch01_d3_record_club_event()
+    # The confirmed encounter occurs off-screen during this interval. Its messages
+    # establish willing involvement and contact when Ryan discovers them on Day Four.
     "We carried it to Maya near the dance floor."
     friend "For you."
     maya "I said I wanted something sweet hours ago!"
@@ -392,14 +408,23 @@ label ch01_day3_dessert:
 label ch01_day3_search:
     "I searched the dance floor, the VIP sofa and the corridor near the restrooms."
     "Maya and Julian hadn't seen her."
-    # Phone UI TODO: use existing in-game Messages framework; preserve exact typo and timing.
+    $ phone_send_player_message("leia", "Where are you?", message_id="ch01_d3_search_where")
+    show screen ch01_club_typing
     "I sent Leia a message: Where are you?"
     "A typing indicator appeared, then vanished."
+    hide screen ch01_club_typing
+    show screen ch01_club_typing
     "After a pause it appeared again."
+    hide screen ch01_club_typing
+    $ phone_add_message("leia", "leia", text="immn the toliet", message_id="ch01_d3_search_typo", mark_unread=True)
     "Leia: immn the toliet"
+    $ phone_add_message("leia", "leia", text="toilet*", message_id="ch01_d3_search_correction", mark_unread=True)
     "Leia: toilet*"
+    $ phone_send_player_message("leia", "Are you okay?", message_id="ch01_d3_search_okay")
     "I typed: Are you okay?"
+    show screen ch01_club_typing
     "The typing indicator appeared again, then disappeared without a reply."
+    hide screen ch01_club_typing
     "I waited by the restroom corridor."
     jump ch01_day3_leia_returns
 
@@ -409,7 +434,11 @@ label ch01_day3_leia_returns:
     mc "I've been looking everywhere."
     gf "Sorry. I was in the bathroom."
     mc "For that long?"
-    gf "There was a queue."
+    if ch01_club_betrayal():
+        gf "I went upstairs first. I used the bathroom on the way back."
+        "The explanation came out in pieces, with a space between them she didn\'t fill."
+    else:
+        gf "There was a queue."
     mc "Did you go upstairs with those guys?"
     "She hesitated."
     gf "We were just hanging out."
@@ -526,6 +555,5 @@ label ch01_day3_bedroom:
 
     centered "{size=46}CHAPTER ONE — DAY THREE COMPLETE{/size}"
 
-    # Day Three -> Day Four. ch01_day4_start is currently a placeholder stub
-    # (ch01_day4_stub.rpy) until the approved Day Four script replaces it.
+    # Stored event truth and Ryan\'s limited knowledge travel separately into Day Four.
     jump ch01_day4_start
