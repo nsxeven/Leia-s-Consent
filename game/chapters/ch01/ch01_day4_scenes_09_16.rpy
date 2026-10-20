@@ -2,10 +2,10 @@
 # Continues ch01_day4_scenes_01_08.rpy. Entry from scene 08: ch01_day4_scene_09_getting_ready.
 # Ends at ch01_day4_scene_16_finish, which jumps to ch01_day5_start when that label exists.
 #
-# Route night (scene 13) splits into three labels. Scene 14 resolves each.
+# Route night (scene 13) includes voluntary disclosure or covert discovery.
+# Final romance / aftermath / nightmare is in Scene 16.
 # All intimacy is NON-EXPLICIT: fade/cut to CG placeholder cards with artist TODOs.
-# Exposure ladder for this chapter: covering (Day 2) -> brief, private (Day 4, this file)
-# -> comfortable, private (Day 5) -> deliberate display with an off-ramp (Day 6).
+# Day Four shared roleplay does not authorize third-party involvement.
 
 label ch01_day4_scene_09_getting_ready:
 
@@ -188,8 +188,9 @@ label ch01_day4_scene_10_dinner:
         "Maya looked between the two of us and decided, wisely, to find the bread very interesting."
     else:
         "Leia's phone sat face down beside her plate."
-        "Twice she picked it up, typed, and put it down again. I watched her thumbs."
-        "I told myself she was texting her sister. I told myself a lot of things."
+        "The first buzz was the restaurant sending a receipt. She showed Maya the total and they argued about the lobster."
+        "Later she read something without smiling. Her reply waited until Julian was telling a story."
+        "I watched her put the phone away. I had missed the beginning of his story."
 
     maya "Toast. One true thing. No explanations."
     friend "I hate this game."
@@ -291,6 +292,10 @@ label ch01_day4_scene_11_dusk_walk:
         mc "My face?"
         gf "It's very easy to read."
         "She pushed the gate open, then looked back with the clip in her hair catching the lantern light."
+    elif ch01_covert_trajectory():
+        "We walked back with a person\'s width between us. At the gate she waited while I found the key."
+        gf "Thanks."
+        "It sounded like something you say to a stranger holding a door."
     else:
         "Neither of us said anything for the first half of the walk."
         "Somewhere near the gate Leia stopped, took out her phone, checked it, and put it away."
@@ -299,6 +304,8 @@ label ch01_day4_scene_11_dusk_walk:
         gf "Yeah. No. Can we talk when we get in?"
         mc "Sure."
         "She nodded once, the way you nod when you've decided something and haven't yet decided how."
+
+    call ch01_day4_hike_photos
 
     $ set_story_flag("ch01_d4_scene_11_complete")
     jump ch01_day4_scene_12_route_split
@@ -314,8 +321,13 @@ label ch01_day4_scene_12_route_split:
             centered "Tonight: private. Your choices lean Love."
         elif d4_lane == "exhibitionism":
             centered "Tonight: one small step up, shared. 'Keep it just us' is always available."
+        elif get_story_value("ch01_d4_betrayal_disclosed", False):
+            centered "Tonight: decide what rebuilding could mean. No automatic forgiveness."
         else:
-            centered "Tonight: a repair gate. Honesty returns you to Love. Distance deepens NTR."
+            if ch01_club_betrayal():
+                centered "Tonight: the confirmed route continues. Choices shape how Ryan responds; they do not erase what happened."
+            else:
+                centered "Tonight: a repair gate. Honesty returns you to Love. Distance deepens NTR."
 
     $ set_story_flag("ch01_d4_scene_12_complete")
 
@@ -421,183 +433,20 @@ label ch01_day4_scene_13_love_night:
 
 
 label ch01_day4_scene_13_exhib_night:
+    jump ch01_day4_roleplay_evening
 
-    scene bg ch01_d4_terrace_night
-    with fade
-
-    $ d4_style = get_story_value("ch01_d4_photo_style", "none")
-
-    "Leia went into the bedroom alone and came out a minute later in the cream wrap she'd packed for slow mornings, tied loosely at the waist."
-    gf "Terrace."
-    "She took my hand and led me through the glass doors, past the potted lemon tree, to the rail."
-    "Below, the beach path ran pale in the dark. A couple were a long way off, small as chess pieces, not looking up."
-    gf "Last night I was the one under the window."
-    gf "Tonight I wanted to be the one who chose the window."
-    mc "I like that."
-    gf "I know. That's partly why."
-
-    $ d4_x_together = format_choice("ch01_d4_exhib_together", "Stay beside her. She sets the pace.")
-    $ d4_x_watching = format_choice("ch01_d4_exhib_like_watching", "Tell her I like watching her get noticed.")
-    $ d4_x_private = format_choice("ch01_d4_exhib_private", "Keep this one just for us. Close the doors.")
-
-    menu:
-        "[d4_x_together]":
-            $ apply_choice("ch01_d4_exhib_together")
-            $ set_story_value("ch01_d4_exhib_variant", "shared_step")
-            mc "Your pace. I'm right here."
-            gf "That's all I wanted."
-            jump ch01_day4_exhib_step
-
-        "[d4_x_watching]":
-            $ apply_choice("ch01_d4_exhib_like_watching")
-            $ set_story_value("ch01_d4_exhib_variant", "ryan_likes_watching")
-            $ set_story_flag("ch01_d4_exhib_ryan_likes_watching")
-            mc "I like watching you get noticed."
-            "It came out lower than I meant it to."
-            gf "Say that again."
-            mc "I like watching you get attention. Not instead of me. With me watching."
-            gf "You really do, don't you."
-            mc "It turns out I do."
-            "She took that in slowly, her hand tightening on the rail, and I understood I'd handed her something: not a favour, a decision."
-            gf "So how far do I take it?"
-
-            $ d4_x_hercall = format_choice("ch01_d4_exhib_her_call", "Your call. However far you want to take it.")
-            $ d4_x_tease = format_choice("ch01_d4_exhib_tease_then_me", "Tease them, then come back to me.")
-
-            menu:
-                "[d4_x_hercall]":
-                    $ apply_choice("ch01_d4_exhib_her_call")
-                    mc "Your call. However far you want to take it."
-                    gf "I'm taking my time."
-                    $ set_story_value("ch01_d4_exhib_framing", "her_call")
-                "[d4_x_tease]":
-                    $ apply_choice("ch01_d4_exhib_tease_then_me")
-                    mc "Tease them. Then come back to me."
-                    gf "That's a very specific instruction."
-                    mc "It's a very specific night."
-                    $ set_story_value("ch01_d4_exhib_framing", "tease_then_me")
-
-            jump ch01_day4_exhib_step
-
-        "[d4_x_private]":
-            $ apply_choice("ch01_d4_exhib_private")
-            $ set_story_value("ch01_d4_exhib_variant", "opt_out_private")
-            $ set_story_value("ch01_d4_end_variant", "exhib_private_optout")
-            mc "Keep this one just for us."
-            "Her shoulders loosened as if she'd been carrying a heavy bag she'd forgotten to put down."
-            gf "Thank you for not making me explain."
-            mc "I don't need an explanation."
-            gf "I know. That's why I want to give you one anyway."
-            gf "I didn't stop wanting it. I just wanted tonight to be only us."
-            mc "Then it's only us."
-            gf "I'll tell you when I want the window back."
-            "She stepped inside, and I pulled the glass doors closed behind us."
-
-            $ enter_cinematic_mode()
-            scene cg ch01_d4_love_night_02
-            with dissolve
-            # CG TODO (artist): ch01_d4_love_night_02. Ryan POV, Ryan never in frame. Reuses the Love fade card.
-            "The curtains came across with a whisper, and the night belonged to the two of us."
-            $ exit_cinematic_mode()
-
-            $ set_story_value("ch01_d4_end_route_pending", "love")
-            $ set_story_flag("ch01_d4_scene_13_complete")
-            jump ch01_day4_scene_14_night_after
-
-
+# Retained entry label for compatibility with saves at the former step.
 label ch01_day4_exhib_step:
-
-    # Leia decides how far to go. Both outcomes are a positive step. The threshold is
-    # her own Exhibitionism stat, and it is shown in Full / Developer modes.
-    python:
-        d4_ex_now = partner_stats["exhibitionism"]
-        d4_ex_framing = get_story_value("ch01_d4_exhib_framing", "own_pace")
-        if d4_ex_now >= D4_EXHIBITION_BRIEF_REVEAL_MIN:
-            d4_ex_call = "brief_reveal"
-        else:
-            d4_ex_call = "cover_tease"
-        set_story_value("ch01_d4_leia_call", d4_ex_call)
-        d4_ex_variant = get_story_value("ch01_d4_exhib_variant", "shared_step")
-
-    if current_choice_mode() == "developer":
-        centered "LEIA'S CALL: Exhibitionism [d4_ex_now] / [D4_EXHIBITION_BRIEF_REVEAL_MIN] -> [d4_ex_call]"
-    elif current_choice_mode() == "full":
-        centered "Leia decides how far she goes. Brief reveal needs Exhibitionism [D4_EXHIBITION_BRIEF_REVEAL_MIN]. Current: [d4_ex_now]."
-    elif current_choice_mode() == "insight":
-        centered "Leia decides how far she goes, based on her own confidence."
-
-    if d4_ex_variant == "ryan_likes_watching":
-        $ enter_cinematic_mode()
-        scene cg ch01_d4_exhib_watching
-        with dissolve
-        # CG TODO (artist): ch01_d4_exhib_watching. Ryan POV, Ryan never in frame. Sub-variant 'Ryan likes watching'. Covered.
-        "I stood behind her at the rail with my chin near her shoulder. We looked at the same lights."
-        "I watched her decide."
-        $ exit_cinematic_mode()
-        scene bg ch01_d4_terrace_night
-        with dissolve
-
-    if d4_ex_call == "cover_tease":
-        $ enter_cinematic_mode()
-        scene cg ch01_d4_exhib_terrace_01
-        with dissolve
-        # CG TODO (artist): ch01_d4_exhib_terrace_01. Ryan POV, Ryan never in frame. COVERED tease frame.
-        "Leia let the wrap slip off one shoulder, slowly. She held it closed at the front with both hands and looked back at me over the bare shoulder."
-        "Down on the path, the couple turned a corner and were gone."
-        gf "That's as far as I'm going tonight."
-        gf "I wanted to see if I could do that much and still be me."
-        "She laughed, delighted at her own nerve, and pulled the wrap back up."
-        $ exit_cinematic_mode()
-        $ set_story_value("ch01_d4_exposure_step", "covered_tease")
-        $ set_story_flag("ch01_d4_exhib_tease_done")
-    else:
-        $ enter_cinematic_mode()
-        scene cg ch01_d4_exhib_terrace_02
-        with dissolve
-        # CG TODO (artist): ch01_d4_exhib_terrace_02. Ryan POV, Ryan never in frame. BRIEF, implied, non-explicit. See visuals file.
-        "Leia stood very straight at the rail. Then she opened the wrap, eyes on me and not on the path, for one slow heartbeat."
-        gf "One."
-        "She closed it again, her whole face lit."
-        gf "Two. I counted."
-        "Her hands were shaking a little. Her smile wasn't."
-        $ exit_cinematic_mode()
-        $ set_story_value("ch01_d4_exposure_step", "brief_reveal")
-        $ set_story_flag("ch01_d4_exhib_brief_done")
-
-    scene bg ch01_d4_terrace_night
-    with dissolve
-
-    if d4_ex_variant == "ryan_likes_watching":
-        gf "You liked that I looked at you the whole time."
-        mc "I liked that you were the one deciding."
-        gf "Good answer."
-        gf "If that stops being fun for me, I'll say so. Loudly."
-        mc "I'd expect nothing less."
-        if d4_ex_framing == "tease_then_me":
-            gf "And I came back to you."
-            mc "You did."
-            gf "That was the best part."
-    else:
-        gf "I'm going to need a minute, a glass of water and a new personality."
-        mc "I'll get the water."
-        gf "Get the personality too."
-
-    "She leaned against me, warm in the thin wrap, and the beach path stayed empty."
-
-    $ enter_cinematic_mode()
-    scene cg ch01_d4_love_night_02
-    with dissolve
-    # CG TODO (artist): ch01_d4_love_night_02. Ryan POV, Ryan never in frame. Fade card. Hand at the lamp only. Doors closed, curtains drawn.
-    "We went inside. She drew the curtains, and we took the rest of the night slowly, and out of anyone's sight."
-    $ exit_cinematic_mode()
-
-    $ set_story_value("ch01_d4_end_variant", "exhib_" + d4_ex_variant)
-    $ set_story_value("ch01_d4_end_route_pending", "exhibitionism")
-    $ set_story_flag("ch01_d4_scene_13_complete")
-    jump ch01_day4_scene_14_night_after
+    jump ch01_day4_roleplay_evening
 
 
 label ch01_day4_scene_13_ntr_night:
+
+    if get_story_value("ch01_d4_betrayal_disclosed", False):
+        jump ch01_day4_disclosed_evening
+
+    if ch01_club_betrayal():
+        jump ch01_day4_confirmed_walk
 
     scene bg ch01_d4_terrace_night
     with fade
@@ -744,6 +593,9 @@ label ch01_day4_ntr_react_menu:
 
 label ch01_day4_ntr_react_resolve:
 
+    if ch01_club_betrayal():
+        jump ch01_day4_confirmed_walk
+
     $ d4_react = get_story_value("ch01_d4_ntr_react", "thanks")
 
     "Leia closed her eyes for a moment, and when she opened them she looked ten pounds lighter."
@@ -789,7 +641,7 @@ label ch01_day4_scene_14_night_after:
     with fade
 
     if d4_lane == "love":
-        "Afterward Leia lay with her head on my shoulder and her phone on the pillow, the screen dark."
+        "Leia sat beside me on the bed, her head on my shoulder and her phone dark on the pillow."
         gf "Maya's going to text in the morning."
         mc "About what?"
         gf "About everything. She has a talent."
@@ -833,8 +685,14 @@ label ch01_day4_scene_14_night_after:
                 mc "Tomorrow?"
                 gf "Don't push your luck."
                 "She said it with her eyes closed and a very small smile."
-        "She fell asleep first, with her hand still tangled in mine."
+        "She kept her hand tangled in mine while we listened to the villa settling around us."
 
+    elif get_story_value("ch01_d4_betrayal_disclosed", False):
+        "We went inside when it became too cold to sit on the terrace. The conversation stayed with us."
+    elif ch01_covert_trajectory():
+        "Leia folded her jacket over the chair and asked what time the others wanted breakfast."
+        mc "I don\'t know yet."
+        "It was the only thing I could honestly say I didn\'t know."
     else:
         if d4_pending == "love_repaired":
             "Leia turned toward me instead of away, which was a small thing and was not small."
@@ -913,6 +771,10 @@ label ch01_day4_scene_15_phone_hook:
                 mark_unread=True, notify=False,
             )
         "Then two more. Maya, and Leia, sent from the other side of the bed."
+    elif get_story_value("ch01_d4_betrayal_disclosed", False):
+        "Leia read the invitation beside me."
+        gf "We can decide about tomorrow in the morning."
+        mc "Okay."
     else:
         if d4_pending == "love_repaired":
             python:
@@ -988,7 +850,7 @@ label ch01_day4_scene_15_phone_hook:
                 )
 
     "I put the phone face up on the nightstand this time."
-    "Somewhere beyond the curtains, the sea went on being the sea. Tomorrow we were leaving the villa behind for the first time, all four of us, with no map and no plan."
+    "Beyond the curtains I could hear the sea. Tomorrow we were supposed to sleep out there."
 
     $ set_story_flag("ch01_d4_scene_15_complete")
     jump ch01_day4_scene_16_finish
@@ -996,16 +858,20 @@ label ch01_day4_scene_15_phone_hook:
 
 label ch01_day4_scene_16_finish:
 
+    call ch01_day4_final_evening
+
     # Resolve the Day Four end state from STORED values only (never from stats).
     python:
         d4_lane = get_story_value("ch01_d4_lane", "love")
         d4_pending = get_story_value("ch01_d4_end_route_pending", "love")
-        d4_allowed = ("love", "exhibitionism", "love_repaired", "ntr_unresolved", "ntr_confirmed")
-        d4_end = d4_pending if d4_pending in d4_allowed else "love"
+        d4_allowed = ("love", "exhibitionism", "love_repaired", "ntr_unresolved", "ntr_confirmed", "nts_discovery")
+        d4_end = ch01_d4_resolved_ending()
         set_story_value("ch01_d4_end_route", d4_end)
         if d4_lane == "love" and ch01_d4_nonchalant_count() >= 2:
             set_story_flag("ch01_d4_love_strained")
-        if d4_end == "love_repaired":
+        if d4_end == "nts_discovery":
+            set_story_value("ch01_d4_end_variant", "nts_discovery_conversation")
+        elif d4_end == "love_repaired":
             set_story_value("ch01_d4_end_variant", "ntr_repaired_" + get_story_value("ch01_d4_ntr_react", "thanks"))
         elif d4_end in ("ntr_unresolved", "ntr_confirmed"):
             set_story_value("ch01_d4_end_variant", d4_end)
@@ -1016,9 +882,13 @@ label ch01_day4_scene_16_finish:
     scene black
     with fade
 
-    # Day Five hand-off. Day Five does not exist yet, so the label is checked at runtime.
-    # Once ch01_day5_start exists, replace this block with the literal:
-    #     jump ch01_day5_start
+    # New event/knowledge states are not supported by the old Day Five story.
+    # End here instead of silently remapping NTS to Love or replaying old disclosure.
+    if ch01_club_betrayal():
+        centered "{size=46}CHAPTER ONE — DAY FOUR COMPLETE{/size}\n\nThis route continues in the planned Day Five revision."
+        return
+
+    # Day Five is intentionally unchanged; see the overhaul handoff for narrative conflicts.
     if renpy.has_label("ch01_day5_start"):
         jump expression "ch01_day5_start"
 
