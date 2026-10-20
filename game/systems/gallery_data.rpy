@@ -61,6 +61,8 @@ init -2 python:
         "ch01_d4_love_night_01", "ch01_d4_love_night_02",
         "ch01_d4_exhib_watching", "ch01_d4_exhib_terrace_01", "ch01_d4_exhib_terrace_02",
         "ch01_d4_ntr_terrace_talk",
+        "ch01_d4_hike_private", "ch01_d4_club_evidence",
+        "ch01_d4_meeting_evidence", "ch01_d4_discovery_nightmare",
         # Day 5 (ch01_d5_photo_private is a phone attachment only and is not mapped)
         "ch01_d5_snorkel_surface", "ch01_d5_cove_lunch_bee", "ch01_d5_photo_three",
         "ch01_d5_love_cove_swim", "ch01_d5_love_cove_secret",
@@ -265,3 +267,9 @@ init -2 python:
     gallery_row("d5_invitation", "ch01_d5", "The invitation",
         "A printed invitation pinned to a post on the dawn pier.",
         ["ch01_d5_invitation"])
+
+init -1 python:
+    gallery_row("d4_hike_private", "ch01_d4", "The lookout", "Maya shares a private moment with permission.", ["ch01_d4_hike_private"])
+    gallery_row("d4_club_evidence", "ch01_d4", "The missing minutes", "Ryan learns what happened upstairs.", ["ch01_d4_club_evidence"], route="Confirmed NTR")
+    gallery_row("d4_meeting_evidence", "ch01_d4", "The ferry steps", "Another meeting, recorded in messages.", ["ch01_d4_meeting_evidence"], route="Confirmed NTR")
+    gallery_row("d4_discovery_nightmare", "ch01_d4", "The changing dates", "A dream distorts known events; it adds no evidence.", ["ch01_d4_discovery_nightmare"], dream=True, route="Confirmed NTR")
