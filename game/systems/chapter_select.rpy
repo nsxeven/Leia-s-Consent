@@ -44,6 +44,10 @@ init 10 python:
         ("ntr_confirmed", "NTR confirmed"),
     )
 
+    CH01_SELECT_DAY4_ROUTES = CH01_SELECT_END_ROUTES + (
+        ("disclosure_ready", "Voluntary disclosure / NTS decision"),
+    )
+
     # Day Five presets: the five stored Day Four end routes (ch01_d4_end_route).
     CH01_SELECT_DAY5_ROUTES = (
         ("love", "Love"),
@@ -176,6 +180,10 @@ init 10 python:
 
     def chapter_select_apply(day, route):
         """Seed a new game for the chosen day and route preset. Returns the entry label."""
+        preset_route = route
+        disclosure_ready = day == "day4" and route == "disclosure_ready"
+        if disclosure_ready:
+            route = "ntr_confirmed"
         if day == "day2":
             p = CH01_SELECT_DAY2_PRESETS[route]
             _chapter_select_reset(p["stats"], p["hist"], p["pressure"])
@@ -227,6 +235,10 @@ init 10 python:
                     set_story_flag("ch01_d3_cutout_secret")
                 else:
                     set_story_value("ch01_d3_ntr_repair_effort", "none")
+                if day == "day4" and d3_lane_value == "ntr":
+                    ch01_d3_record_club_event()
+                    if disclosure_ready:
+                        set_story_value("ch01_d3_ntr_repair_effort", "talk")
                 entry = "ch01_day4_start"
                 if day == "day5":
                     # Day Four finished: seed what ch01_day5_start reads (stored Day Four values and flags).
@@ -246,7 +258,9 @@ init 10 python:
                     store.equipped_outfit = d5p["d4"]["dusk_outfit_id"] if owns_outfit(d5p["d4"]["dusk_outfit_id"]) else "resort_dinner_dress"
                     entry = "ch01_day5_start"
         set_story_flag("chapter_select_used")
-        set_story_value("chapter_select_preset", "{}:{}".format(day, route))
+        if disclosure_ready:
+            set_story_value("chapter_select_disclosure_hint", True)
+        set_story_value("chapter_select_preset", "{}:{}".format(day, preset_route))
         return entry
 
     # Unlock after the first completed Day Two, without editing any story scene.
