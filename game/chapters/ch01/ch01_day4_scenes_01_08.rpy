@@ -95,9 +95,9 @@ label ch01_day4_scene_01_wake:
         else:
             "Something had been decided between us that neither of us had said out loud."
         if get_story_value("ch01_dream_response") == "withdrew":
-            "I had spent days refusing to count the dreams. I was running out of ways to call it a coincidence."
+            "The corridor kept returning in my sleep. It told me what I feared, not what had happened."
         else:
-            "It was only a dream. It had also happened more than once."
+            "It was only a dream. I still had to wait for my pulse to settle."
         "I picked up my phone off the nightstand. It was the only thing in the room that already had something to say."
 
     $ d4_card = ch01_d4_track_text()
@@ -966,6 +966,9 @@ label ch01_day4_scene_08_afternoon_quiet:
 
 label ch01_day4_scene_08_ntr_wall:
 
+    if ch01_club_betrayal():
+        jump ch01_day4_confirmed_wall
+
     $ d4_fine_n = get_story_value("ch01_d4_ntr_fine_count", 0)
 
     "Leia moved over on the wall to make room. Not much. Enough."
@@ -1020,6 +1023,9 @@ label ch01_day4_scene_08_ntr_wall:
 
 
 label ch01_day4_ntr_disclosure:
+
+    if ch01_club_betrayal():
+        return
 
     # Shared Leia disclosure beat (NTR lane). Called from the harbor-wall opening and the
     # night gate. NON-EXPLICIT: told in her own words. The cutout encounter is the only
