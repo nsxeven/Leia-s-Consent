@@ -383,6 +383,18 @@ init 1 python:
             "ch01_d5_invite_keep_quiet": [
                 ("relationship", "boredom", 1),
             ],
+            "ch01_d5_attention_join": [("relationship", "trust", 1), ("partner", "exhibitionism", 1)],
+            "ch01_d5_attention_private": [("relationship", "trust", 1), ("relationship", "love", 1)],
+            "ch01_d5_seasick_tell_leia": [("relationship", "trust", 1)],
+            "ch01_d5_seasick_minimize": [("relationship", "trust", -1)],
+            "ch01_d5_rest_company": [("relationship", "love", 1)],
+            "ch01_d5_rest_quiet": [],
+            "ch01_d5_love_company": [("relationship", "love", 1)],
+            "ch01_d5_love_rest": [],
+            "ch01_d5_nts_talk_only": [("relationship", "trust", 1)],
+            "ch01_d5_nts_first_step": [("relationship", "trust", 1), ("player", "acceptance", 1)],
+            "ch01_d5_nts_stay": [("relationship", "love", 1)],
+            "ch01_d5_nts_space": [],
     })
 
     CHOICE_TAGS.update({
@@ -477,6 +489,18 @@ init 1 python:
             "ch01_d5_invite_maybe": ("neutral", "unresolved"),
             "ch01_d5_invite_read_aloud": ("supportive", "honest", "attentive", "repair"),
             "ch01_d5_invite_keep_quiet": ("neutral", "unresolved", "distracted"),
+            "ch01_d5_attention_join": ("open", "honest", "shared-attention", "boundary-aware"),
+            "ch01_d5_attention_private": ("supportive", "private", "boundary-setting"),
+            "ch01_d5_seasick_tell_leia": ("honest", "trusting", "care"),
+            "ch01_d5_seasick_minimize": ("avoidant", "care"),
+            "ch01_d5_rest_company": ("supportive", "care"),
+            "ch01_d5_rest_quiet": ("boundary-setting", "care"),
+            "ch01_d5_love_company": ("supportive", "love-route", "care"),
+            "ch01_d5_love_rest": ("boundary-setting", "care"),
+            "ch01_d5_nts_talk_only": ("open", "mutual-consent", "no-escalation"),
+            "ch01_d5_nts_first_step": ("open", "mutual-consent", "stoppable"),
+            "ch01_d5_nts_stay": ("supportive", "honest", "mutual-consent"),
+            "ch01_d5_nts_space": ("boundary-setting", "honest", "mutual-consent"),
     })
 
 
@@ -532,8 +556,14 @@ init 2 python:
             head = "TRACK: LOVE (pure couple track)"
             line = "A private cove and a trust trade. No outside-attention beats today."
         elif track == "exhibitionism":
-            head = "TRACK: SHARED EXHIBITION (NTS)"
-            line = "Leia sets how far she goes among the four. 'Just us' is always available."
+            head = "TRACK: SHARED ATTENTION (EXHIBITIONISM)"
+            line = "Ryan and Leia explore attention together; a private choice remains available."
+        elif track == "love_repaired":
+            head = "TRACK: LOVE, REPAIRED"
+            line = "Day 4 repair history stays visible; Day 5 does not repeat a confession."
+        elif track == "nts_discovery":
+            head = "TRACK: NTS DISCOVERY"
+            line = "Any new step needs fresh, mutual agreement."
         elif track == "ntr_repaired":
             head = "TRACK: DISTANCE, REPAIRED (NTR pressure)"
             line = "Leia tells the club story slowly. How Ryan reacts decides what it repairs."

@@ -48,11 +48,12 @@ init 10 python:
         ("disclosure_ready", "Voluntary disclosure / NTS decision"),
     )
 
-    # Day Five presets: the five stored Day Four end routes (ch01_d4_end_route).
+    # Day Five presets: the six stored Day Four end routes (ch01_d4_end_route).
     CH01_SELECT_DAY5_ROUTES = (
         ("love", "Love"),
         ("exhibitionism", "Exhibitionism"),
         ("love_repaired", "Love (repaired)"),
+        ("nts_discovery", "NTS Discovery"),
         ("ntr_unresolved", "NTR unresolved"),
         ("ntr_confirmed", "NTR confirmed"),
     )
@@ -115,7 +116,21 @@ init 10 python:
             d4=dict(end_variant="ntr_repaired_thanks", exposure_step="none", exhib_variant="none", photo_style="candid",
                     dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="in", ntr_react="thanks",
                     ntr_outcome="love_repaired", ntr_fine_count=0, disclosure_when="harbor_wall", leia_call=None,
-                    day_outfit_id="casual_default", day_outfit_source="leia"),
+                    day_outfit_id="casual_default", day_outfit_source="leia", betrayal_disclosed=True,
+                    discovery_source="voluntary_disclosure", ryan_sharing_curiosity=False, leia_future_interest=False,
+                    nts_boundaries_discussed=False, nts_future_agreed=False, nts_discovery=False, monitoring_active=False),
+            flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_photo_candid_taken", "ch01_d4_cutout_disclosed", "ch01_d4_club_story_deferred"],
+        ),
+        "nts_discovery": dict(
+            d2="ntr_confirmed", lane="ntr", d3_variant="ntr_restroom_nightmare",
+            stats=dict(love=49, trust=53, boredom=15, exh=18, cur=32, acc=28, sec=3, bnd=20, tem=10, jea=24),
+            d4=dict(end_variant="nts_discovery_conversation", exposure_step="none", exhib_variant="none", photo_style="candid",
+                    dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="ask_leia", ntr_react="curious",
+                    ntr_outcome="nts_discovery", ntr_fine_count=0, disclosure_when="harbor_wall", leia_call=None,
+                    day_outfit_id="casual_default", day_outfit_source="leia", betrayal_disclosed=True,
+                    discovery_source="voluntary_disclosure", ryan_sharing_curiosity=True, leia_future_interest=True,
+                    nts_boundaries_discussed=True, nts_future_agreed=True, nts_discovery=True, monitoring_active=False,
+                    ryan_knows_club_event=True, second_meeting=False),
             flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_photo_candid_taken", "ch01_d4_cutout_disclosed", "ch01_d4_club_story_deferred"],
         ),
         "ntr_unresolved": dict(
@@ -251,10 +266,29 @@ init 10 python:
                     set_story_value("ch01_d4_end_route_pending", route)
                     for key, value in d5p["d4"].items():
                         set_story_value("ch01_d4_" + key, value)
+                    if route == "nts_discovery":
+                        set_story_value("ch01_d3_club_event", "affair")
+                        set_story_value("ch01_d3_club_contact_id", "adrian_vale")
+                        set_story_value("ch01_d3_club_contact_active", True)
+                        set_story_value("ch01_d3_club_private_photos", True)
+                        set_story_value("ch01_d3_leia_knows_club_event", True)
+                        set_story_value("ch01_d4_leia_knows_discovery", False)
                     set_story_value("ch01_d4_ntr_confirmed", route in ("ntr_unresolved", "ntr_confirmed"))
                     set_story_value("ch01_d4_ntr_repaired", route == "love_repaired")
                     for flag in d5p["flags"]:
                         set_story_flag(flag)
+                    if route in ("love_repaired", "nts_discovery", "ntr_confirmed"):
+                        ch01_d3_record_club_event()
+                    if route in ("love_repaired", "nts_discovery"):
+                        set_story_value("ch01_d3_club_contact_active", False)
+                        set_story_value("ch01_d4_betrayal_disclosed", True)
+                        set_story_value("ch01_d4_discovery_source", "voluntary_disclosure")
+                        set_story_value("ch01_d4_ryan_knows_club_event", True)
+                        set_story_value("ch01_d4_leia_knows_discovery", False)
+                    if route == "ntr_confirmed":
+                        ch01_d4_discover_club()
+                        ch01_d4_enable_monitoring("chapter_select_confirmed_ntr")
+                        ch01_d4_record_second_meeting()
                     store.equipped_outfit = d5p["d4"]["dusk_outfit_id"] if owns_outfit(d5p["d4"]["dusk_outfit_id"]) else "resort_dinner_dress"
                     entry = "ch01_day5_start"
         set_story_flag("chapter_select_used")

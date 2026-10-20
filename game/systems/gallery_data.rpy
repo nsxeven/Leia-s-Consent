@@ -229,21 +229,21 @@ init -2 python:
     gallery_row("d5_snorkel", "ch01_d5", "Snorkel",
         "Leia surfaces from the reef, laughing.",
         ["ch01_d5_snorkel_surface"])
-    gallery_row("d5_cove_lunch", "ch01_d5", "Cove lunch",
-        "Lunch in the cove, and the group photo. The bee page appears only if the bee was filmed.",
+    gallery_row("d5_cove_lunch", "ch01_d5", "Lunch at the first anchorage",
+        "Lunch aboard, and the group photo delivered after signal returns. The bee page appears only if the bee was filmed.",
         [("ch01_d5_cove_lunch_bee", "The bee"), ("ch01_d5_photo_three", "Group photo")])
-    gallery_row("d5_love_cove", "ch01_d5", "The secret cove",
-        "A swim and a quiet photo in a cove of their own.",
+    gallery_row("d5_love_cove", "ch01_d5", "A private moment by the reef",
+        "Ryan and Leia share a swim and a private photograph at the first anchorage.",
         [("ch01_d5_love_cove_swim", "The swim"), ("ch01_d5_love_cove_secret", "On the rock")],
         mature=True, route="Love lane (also the Exhibition 'just us' opt-out)")
-    gallery_row("d5_exhib_cove", "ch01_d5", "Cove, in the sun",
-        "Leia decides how far to go on the rocks. Pages depend on her call and on whether Ryan likes watching.",
+    gallery_row("d5_exhib_cove", "ch01_d5", "The foredeck, in the sun",
+        "Leia decides how far to go on the shaded foredeck. Pages depend on her call and Ryan's participation.",
         [("ch01_d5_exhib_cove_watching", "Watching"), ("ch01_d5_exhib_cove_01", "On the rock, 1"), ("ch01_d5_exhib_cove_02", "On the rock, 2")],
         mature=True, route="Exhibitionism lane")
-    gallery_row("d5_ntr_cove_talk", "ch01_d5", "The talk on the rock",
-        "A serious talk in the cove, with the hairclip in her hands.",
+    gallery_row("d5_ntr_cove_talk", "ch01_d5", "The talk beside the cabin",
+        "A serious repair conversation, with the hairclip in her hands.",
         ["ch01_d5_ntr_cove_talk"],
-        route="NTR lane (repaired)")
+        route="Love Repaired")
     gallery_row("d5_ntr_deck_alone", "ch01_d5", "At the rail",
         "Leia alone at the stern rail, her back to him.",
         ["ch01_d5_ntr_deck_alone"],

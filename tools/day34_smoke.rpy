@@ -139,6 +139,33 @@ init 999 python:
                 check(not get_story_value('ch01_d4_betrayal_disclosed', False), 'missed repair retains covert path ' + pref)
                 check(get_story_value('ch01_d4_monitoring_active'), 'covert continuation ' + pref)
 
+            # Day Five's illness begins only after lunch and the relationship tracks stay distinct.
+            fresh('day5', 'love')
+            walk('ch01_day5_start', stops=('ch01_day5_scene_03_no_bars',))
+            check(not get_story_value('ch01_d5_ryan_seasick', False), 'Ryan is well through the morning departure')
+            for route, expected in (
+                ('love', 'love'), ('exhibitionism', 'exhibitionism'),
+                ('love_repaired', 'love_repaired'), ('nts_discovery', 'nts_discovery'),
+                ('ntr_unresolved', 'ntr_unresolved'), ('ntr_confirmed', 'ntr_confirmed'),
+            ):
+                fresh('day5', route)
+                prefs = ('[d5_u_space]',) if route == 'ntr_unresolved' else ()
+                t = walk('ch01_day5_start', prefs, stops=())
+                check(get_story_value('ch01_d5_ryan_seasick') is True, route + ' seasickness follows lunch')
+                check(get_story_value('ch01_d5_end_route') == expected, route + ' Day Five ending preserved')
+                if route == 'love_repaired':
+                    check(get_story_value('ch01_d5_repair_provenance') == 'disclosed_betrayal', 'Love Repaired retains disclosure provenance')
+                if route == 'nts_discovery':
+                    check(get_story_value('ch01_d5_end_route') == 'nts_discovery' and not get_story_value('ch01_d5_nts_experience_occurred'), 'NTS talk-only stays distinct and optional')
+                if route == 'ntr_confirmed':
+                    check(get_story_value('ch01_d5_captain_event') == 'secret_kiss', 'confirmed NTR stores objective Day Five event')
+                    check(get_story_value('ch01_d5_captain_truth_ryan') == 'unknown' and get_story_value('ch01_d5_captain_truth_player') == 'known', 'player-only cutaway preserves separate knowledge')
+                    check(get_story_value('ch01_d5_monitoring_active') and not get_story_value('ch01_d5_ntr_confronted'), 'NTR monitoring persists without confrontation')
+            fresh('day5', 'nts_discovery')
+            walk('ch01_day5_start', ('[d5_nts_first_step]',), stops=())
+            check(get_story_value('ch01_d5_nts_ryan_willing') and get_story_value('ch01_d5_nts_leia_willing') and get_story_value('ch01_d5_nts_captain_willing'), 'NTS first step requires all three participants')
+            check(get_story_value('ch01_d5_nts_boundaries_discussed') and get_story_value('ch01_d5_nts_experience_occurred'), 'NTS consent and experience are tracked separately')
+
             # Execute the actual boutique branch, both witnesses, with/without Ryan purchase.
             for absent in (False, True):
                 for bought in (False, True):
