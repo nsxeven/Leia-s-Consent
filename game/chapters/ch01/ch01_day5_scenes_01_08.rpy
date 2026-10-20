@@ -1051,16 +1051,25 @@ label ch01_day5_scene_08_ntr_apart:
 
     "Leia came back to the cabin with the water. I was awake enough to hear the deck boards creak as she stepped away and returned."
     if d5_track == "ntr_confirmed":
-        # Objective story truth is stored separately. Strict Ryan POV leaves both Ryan and
-        # the player without confirmation here; no off-screen event is presented as evidence.
+        # Keep objective truth distinct from Ryan's knowledge. The brief player-only cutaway
+        # establishes dramatic irony without letting Ryan witness or infer the event.
         $ set_story_value("ch01_d5_captain_event", "secret_kiss")
-        $ set_story_value("ch01_d5_captain_truth_player", "unknown")
+        $ set_story_value("ch01_d5_captain_truth_player", "known")
         $ set_story_value("ch01_d5_captain_truth_ryan", "unknown")
         $ set_story_value("ch01_d5_captain_truth_leia", "known")
         $ set_story_value("ch01_d5_captain_willing", "yes")
         $ set_story_value("ch01_d5_monitoring_active", True)
         $ set_story_flag("ch01_d5_captain_secret_meeting")
-        "A low exchange carried through the open companionway, too indistinct to make out. When Leia returned, she set down the water and asked if I needed anything else."
+        scene bg ch01_d5_boat_foredeck
+        with dissolve
+        "A few minutes earlier, on the shaded side deck, Leia had stopped beside Ilario after he finished checking the anchor."
+        skipper "You're sure?"
+        gf "Yes. I want to."
+        "She kissed him first, briefly and deliberately. He let her set the pace, then stepped back when she did. Nothing about it was an accident."
+        "Ilario returned to the helm. Leia took the water glass and went inside."
+        scene bg ch01_d5_boat_cabin
+        with dissolve
+        "I hadn't seen any of it. Leia set the water beside me and asked if I needed anything else."
         gf "I'll be on deck if you need me."
         mc "Okay."
         "She waited a second longer than the question required. I couldn't tell why."

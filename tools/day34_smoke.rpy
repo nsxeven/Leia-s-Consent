@@ -159,7 +159,7 @@ init 999 python:
                     check(get_story_value('ch01_d5_end_route') == 'nts_discovery' and not get_story_value('ch01_d5_nts_experience_occurred'), 'NTS talk-only stays distinct and optional')
                 if route == 'ntr_confirmed':
                     check(get_story_value('ch01_d5_captain_event') == 'secret_kiss', 'confirmed NTR stores objective Day Five event')
-                    check(get_story_value('ch01_d5_captain_truth_ryan') == 'unknown' and get_story_value('ch01_d5_captain_truth_player') == 'unknown', 'strict POV preserves separate knowledge')
+                    check(get_story_value('ch01_d5_captain_truth_ryan') == 'unknown' and get_story_value('ch01_d5_captain_truth_player') == 'known', 'player-only cutaway preserves separate knowledge')
                     check(get_story_value('ch01_d5_monitoring_active') and not get_story_value('ch01_d5_ntr_confronted'), 'NTR monitoring persists without confrontation')
             fresh('day5', 'nts_discovery')
             walk('ch01_day5_start', ('[d5_nts_first_step]',), stops=())
