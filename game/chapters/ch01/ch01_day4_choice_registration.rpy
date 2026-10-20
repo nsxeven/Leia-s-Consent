@@ -378,7 +378,7 @@ init 2 python:
             line = "Ryan stays included. 'Keep it just us' is always available tonight."
         else:
             head = "TRACK: DISTANCE (NTR pressure)"
-            line = "Repair is still possible. Gate choices carry a red diamond."
+            line = ("A prior betrayal remains real. Voluntary honesty can open new choices." if ch01_club_betrayal() else "Repair is still possible. Gate choices carry a red diamond.")
 
         if mode == "insight":
             return "{}\n\n{}".format(head, line)
