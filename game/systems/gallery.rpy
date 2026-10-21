@@ -179,10 +179,14 @@ init python:
 
     # ----------------------------------------------------------------- display
     def gallery_customize_names(text):
-        """Substitute customized cast names in static gallery descriptions."""
-        for original, replacement in (("Ryan", store.player_name), ("Leia", store.girlfriend_name), ("Julian", store.friend_name)):
-            text = text.replace(original, replacement)
-        return text
+        """Render canonical name tokens with customized names without cascading substitutions."""
+        import re
+        name_map = {
+            "Ryan": store.player_name,
+            "Leia": store.girlfriend_name,
+            "Julian": store.friend_name,
+        }
+        return re.sub(r"\b(?:Ryan|Leia|Julian)\b", lambda m: name_map[m.group(0)], text)
 
     def gallery_display_title(gallery_id):
         entry = get_gallery_entry(gallery_id)
