@@ -136,6 +136,8 @@ init 10 python:
 
     def chapter_select_unlocked():
         """True when the main-menu Chapter Select entry should be offered."""
+        if LC_DAY1_DEMO_BUILD:
+            return False
         rule = store.CHAPTER_SELECT_RULE
         dev = bool(config.developer)
         unlocked = bool(getattr(persistent, "ch01_chapter_select_unlocked", False))
