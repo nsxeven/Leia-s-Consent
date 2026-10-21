@@ -38,14 +38,14 @@ label ch01_scene_07_did_he_see:
             mc "Maybe a little. You asked me to be honest."
             gf "[player_name]!"
             mc "What? You asked."
-            gf "I was hoping you'd lie better."
+            gf "I was hoping you'd say no."
 
         "[ch01_towel_tease_text]":
             $ apply_choice("ch01_towel_tease")
             $ set_story_value("ch01_towel_followup", "teased")
             mc "Enough to know we should start using the curtains."
             gf "Fuck you."
-            mc "This is why honesty doesn't work in relationships."
+            mc "That wasn't the reassurance I was aiming for."
             gf "You're enjoying this far too much."
 
     gf "I was standing in front of a floor-to-ceiling window. In a towel."
