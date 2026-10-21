@@ -205,7 +205,7 @@ screen gallery_preview_screen(gallery_id):
     $ page_label = page_info["label"]
     $ page_is_placeholder = gallery_is_placeholder(page_image)
     $ pages_have, pages_total = gallery_pages_counts(gallery_id)
-    $ route_text = entry["route"]
+    $ route_text = gallery_customize_names(entry["route"])
     $ page_number = gp_page + 1
 
     add Solid("#000000dd")
