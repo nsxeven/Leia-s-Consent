@@ -174,7 +174,7 @@ screen status_choice_tutorial():
 
             text "YOUR CHOICES CHANGE THE RELATIONSHIP" size 19 color "#007aff" bold True xalign 0.5 text_align 0.5
             text "That choice changed one or more underlying stats." size 25 color "#1c1c1e" bold True xalign 0.5 text_align 0.5
-            text "Open your Phone and tap STATUS to see how Ryan, Leia, and the relationship are developing. SETTINGS lets you choose how much of the hidden system the game reveals." size 18 color "#5f5f64" xalign 0.5 text_align 0.5 line_spacing 5
+            text "Open your Phone and tap STATUS to see how [player_name], [girlfriend_name], and the relationship are developing. SETTINGS lets you choose how much of the hidden system the game reveals." size 18 color "#5f5f64" xalign 0.5 text_align 0.5 line_spacing 5
 
             null height 4
 
@@ -361,7 +361,7 @@ screen lc_phone_status():
                                 vbox:
                                     spacing 8
                                     text "THIS IS YOUR LIVE DASHBOARD" size 14 color "#007aff" bold True
-                                    text "Status tracks the relationship, Leia's developing traits, and Ryan's mindset. What you can see depends on your information setting." size 14 color "#2c2c2e" line_spacing 3
+                                    text "Status tracks the relationship, [girlfriend_name]'s developing traits, and [player_name]'s mindset. What you can see depends on your information setting." size 14 color "#2c2c2e" line_spacing 3
                                     textbutton "Got it":
                                         xfill True
                                         ysize 42
