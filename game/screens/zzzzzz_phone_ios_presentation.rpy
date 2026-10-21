@@ -239,7 +239,7 @@ screen phone_screen():
 
                                 if phone_app == "home":
                                     text "Phone" size 34 color "#1c1c1e" bold True
-                                    text "Ryan's apps" size 13 color "#6d6d72"
+                                    text "[player_name]'s apps" size 13 color "#6d6d72"
                                 elif phone_app == "messages":
                                     text "Messages" size 31 color "#1c1c1e" bold True
                                 elif phone_app == "thread":
@@ -669,7 +669,7 @@ screen lc_phone_status():
                                 vbox:
                                     spacing 7
                                     text "YOUR LIVE DASHBOARD" size 13 color "#007aff" bold True
-                                    text "Status tracks the relationship, Leia's developing traits, and Ryan's mindset. What you can see depends on Settings." size 13 color "#2c2c2e" line_spacing 3
+                                    text "Status tracks the relationship, [girlfriend_name]'s developing traits, and [player_name]'s mindset. What you can see depends on Settings." size 13 color "#2c2c2e" line_spacing 3
                                     textbutton "Got it":
                                         xfill True
                                         ysize 41
