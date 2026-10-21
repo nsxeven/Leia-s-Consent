@@ -1,6 +1,6 @@
-# Prologue + Day One standalone public demo gate.
-# Set to False in a later full-chapter release after Days 2+ are approved.
-define LC_DAY1_DEMO_BUILD = True
+# Release-only demo switch. MAIN is the unrestricted development build.
+# Versioned release branches opt into the Day One demo gate independently.
+define LC_DAY1_DEMO_BUILD = False
 
 default persistent.ch01_day1_demo_completed = False
 default persistent.lc_adult_notice_accepted = False
