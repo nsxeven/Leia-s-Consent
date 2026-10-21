@@ -178,17 +178,23 @@ init python:
         return (len(gallery_available_pages(gallery_id)), len(entry["pages"]))
 
     # ----------------------------------------------------------------- display
+    def gallery_customize_names(text):
+        """Substitute customized cast names in static gallery descriptions."""
+        for original, replacement in (("Ryan", store.player_name), ("Leia", store.girlfriend_name), ("Julian", store.friend_name)):
+            text = text.replace(original, replacement)
+        return text
+
     def gallery_display_title(gallery_id):
         entry = get_gallery_entry(gallery_id)
         if entry is None or not is_gallery_unlocked(gallery_id):
             return "Locked CG"
-        return entry["title"]
+        return gallery_customize_names(entry["title"])
 
     def gallery_display_description(gallery_id):
         entry = get_gallery_entry(gallery_id)
         if entry is None or not is_gallery_unlocked(gallery_id):
             return "Discover this scene in the story to unlock it here."
-        return entry["description"]
+        return gallery_customize_names(entry["description"])
 
     def gallery_has_replay(gallery_id):
         entry = get_gallery_entry(gallery_id)
