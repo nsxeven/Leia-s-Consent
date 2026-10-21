@@ -7,7 +7,7 @@
 # ch01_day4_start / ch01_day5_start).
 #
 # UNLOCK RULE (one line to flip):
-#   CHAPTER_SELECT_RULE = "developer_or_unlocked"   # default
+#   CHAPTER_SELECT_RULE = "always"                # MAIN development default
 #     "always"                -> always shown on the main menu
 #     "developer"             -> only when config.developer is true
 #     "unlocked"              -> only after persistent.ch01_chapter_select_unlocked
@@ -17,7 +17,7 @@
 # persistent.ch01_chapter_select_unlocked is set by a wrapper around set_story_flag
 # when "ch01_day_02_complete" is set, so no story scene had to change.
 
-define CHAPTER_SELECT_RULE = "developer_or_unlocked"
+define CHAPTER_SELECT_RULE = "always"
 
 init 10 python:
 
