@@ -485,7 +485,21 @@ screen lc_phone_settings():
                         use lc_phone_settings_mode("normal")
                         use lc_phone_settings_mode("insight")
                         use lc_phone_settings_mode("full")
-                        use lc_phone_settings_mode("developer")
+                        if config.developer:
+                            use lc_phone_settings_mode("developer")
+
+                        if current_choice_mode() == "full":
+                            frame:
+                                xfill True
+                                background Frame("gui/phone/rounded_light.png", 24, 24)
+                                padding (14, 11)
+                                vbox:
+                                    spacing 6
+                                    text "Route Explorer" size 17 color "#1c1c1e"
+                                    text "Change future route direction; earlier scenes stay as played." size 12 color "#6d6d72"
+                                    textbutton "Switch Route":
+                                        action Show("lc_route_explorer_screen")
+
 
                         if current_choice_mode() == "developer":
                             frame:
