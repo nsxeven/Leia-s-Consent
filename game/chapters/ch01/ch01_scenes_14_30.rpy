@@ -1026,11 +1026,20 @@ label ch01_scene_30_end_day_one:
 
     $ set_story_value("ch01_day1_nonchalant_count", chapter_nonchalant_count("ch01"))
 
-    if chapter_nonchalant_count("ch01") >= 3 and (relationship_stats["boredom"] >= 15 or relationship_stats["love"] <= 48):
+    $ lc_day1_route_focus = lc_route_explorer_for_lane()
+    if lc_day1_route_focus == "ntr_risk" or (
+        lc_day1_route_focus is None
+        and chapter_nonchalant_count("ch01") >= 3
+        and (relationship_stats["boredom"] >= 15 or relationship_stats["love"] <= 48)
+    ):
         $ set_story_value("ch01_day1_route_pressure", "ntr_seeded")
         "[girlfriend_name] put her phone down, but the small distance between us felt more noticeable than it had that morning."
         "[friend_name] had not done anything wrong. If anything changed from here, it would begin with the spaces I kept leaving open."
-    elif nts_score() >= ntr_score() + 5 and partner_stats["curiosity"] >= 24:
+    elif lc_day1_route_focus == "exhibitionism" or (
+        lc_day1_route_focus is None
+        and nts_score() >= ntr_score() + 5
+        and partner_stats["curiosity"] >= 24
+    ):
         $ set_story_value("ch01_day1_route_pressure", "nts_seeded")
         "Somewhere during the day, a private joke between [girlfriend_name] and me had started acquiring a third point of reference."
         "Nothing had happened. The fact that nothing had happened was part of what made the possibility feel new."
@@ -1181,5 +1190,8 @@ label ch01_scene_30_end_day_one:
     with fade
 
     centered "{size=46}CHAPTER ONE — DAY ONE COMPLETE{/size}"
+
+    if LC_DAY1_DEMO_BUILD:
+        jump ch01_day1_demo_complete
 
     jump ch01_day2_start
