@@ -161,7 +161,7 @@ screen phone_first_use_tutorial():
 
             add "gui/phone/icons/phone.png" xysize (92, 92) xalign 0.5
             text "PHONE UNLOCKED" size 31 color "#1c1c1e" bold True xalign 0.5
-            text "Messages, photos, purchases, deliveries, and other updates can appear on Ryan's phone as the story progresses." size 20 color "#3a3a3c" text_align 0.5 xalign 0.5 line_spacing 5
+            text "Messages, photos, purchases, deliveries, and other updates can appear on [player_name]'s phone as the story progresses." size 20 color "#3a3a3c" text_align 0.5 xalign 0.5 line_spacing 5
             text "New activity can appear as a notification at the top of the screen. The badge on the Phone shows how many unread messages are waiting." size 18 color "#8e8e93" text_align 0.5 xalign 0.5 line_spacing 4
 
             null height 4
