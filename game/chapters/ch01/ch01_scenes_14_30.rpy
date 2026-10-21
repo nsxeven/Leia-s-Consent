@@ -128,7 +128,9 @@ label ch01_scene_14_movie_setup:
     "For ten quiet minutes, the movie actually held our attention."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_living_night
+    # Continue the conversation over the seated composition. There is no
+    # production loungewear sprite yet, so do not show a wrong outfit.
+    scene cg ch01_movie_cuddle_blanket
     with dissolve
 
     $ set_story_flag("ch01_scene_14_complete")
@@ -289,6 +291,9 @@ label ch01_scene_16_can_he_tell:
 label ch01_scene_18_private_under_blanket:
 
     "The second [friend_name] disappeared toward the kitchen, [girlfriend_name] turned to me."
+    # The seated group CG includes Julian, so retire it while he is absent.
+    scene bg ch01_villa_living_night
+    with dissolve
 
     $ ch01_movie_respected_request = (
         get_story_value("ch01_movie_first_response") == "stopped"
@@ -372,6 +377,8 @@ label ch01_scene_18_private_under_blanket:
     with dissolve
 
     "[friend_name] returned balancing a bowl of ice, two soft drinks and three glasses."
+    scene cg ch01_movie_cuddle_blanket
+    with dissolve
 
     friend "Why do I feel like I interrupted something?"
     gf "You didn't."
@@ -408,7 +415,8 @@ label ch01_scene_19_too_hot:
     "But whatever had felt private under the blanket no longer had anywhere to hide."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_living_night
+    # After the blanket comes off, hold the matching sofa composition.
+    scene cg ch01_movie_no_blanket
     with dissolve
 
     $ set_story_flag("ch01_scene_19_complete")
@@ -529,9 +537,7 @@ label ch01_scene_22_first_micro_test:
     "She knew. I knew she knew. For the first time that day, nothing accidental had forced the decision for her."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_living_night
-    with dissolve
-
+    # Remain on the moment-of-choice still until Leia responds below.
     $ ch01_micro_warn_text = format_choice("ch01_micro_warn", "Your top.")
     $ ch01_micro_silent_text = format_choice("ch01_micro_silent", "Say nothing. Let her decide.")
     $ ch01_micro_open_text = format_choice("ch01_micro_open", "You know.")
@@ -569,6 +575,10 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] blinked."
             gf "Okay."
             "She fixed the top herself and turned back to the screen."
+
+    # All outcomes settle back into an ordinary, covered sofa posture.
+    scene cg ch01_movie_no_blanket
+    with dissolve
 
     $ set_story_flag("ch01_scene_22_complete")
     jump ch01_scene_23_relationship_philosophy
@@ -950,7 +960,12 @@ label ch01_scene_29_private_reflection:
         gf "Any of what?"
         mc "Being aware he was there."
         "[girlfriend_name] considered the question."
-        gf "I liked that it felt a little dangerous without anything actually happening."
+        if get_story_value("ch01_micro_test_response") == "knowingly_left":
+            gf "I liked that it felt a little dangerous without anything actually happening."
+        elif get_story_value("ch01_micro_test_response") in ("warned", "dismissed"):
+            gf "Mostly I was embarrassed. You being there helped."
+        else:
+            gf "Maybe a little. I liked knowing I could decide what to do."
 
     $ ch01_private_claim_text = format_choice("ch01_private_claim", "That's okay. I still like knowing you're mine.")
     $ ch01_private_open_text = format_choice("ch01_private_open", "I liked seeing you enjoy the attention.")
@@ -1068,9 +1083,6 @@ label ch01_scene_30_end_day_one:
     # Ryan falls asleep with the day's towel incident still somewhere in the back of his mind.
     # This is a dream, not a route lock: it combines the real accident with the
     # earlier discovery that the bedroom's only curtains are sheer.
-    scene black
-    with fade
-
     $ ch01_day1_love_ending = (
         get_story_value("ch01_day1_route_pressure") == "mixed"
         and relationship_stats["love"] >= 54
@@ -1085,6 +1097,8 @@ label ch01_scene_30_end_day_one:
         "I kissed her forehead, and she reached for my hand beneath the covers."
 
     "At some point, I fell asleep."
+    scene black
+    with fade
 
     $ enter_cinematic_mode()
     scene cg ch01_dream_towel_replay
