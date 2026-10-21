@@ -73,8 +73,7 @@ label ch01_scene_13b_night_pool:
         "A minute later her shoulder was resting against mine again."
         $ set_story_value("ch01_night_pool_attention", "returned_to_ryan")
 
-    "Nothing happened."
-    "That was what made the moment stay with me."
+    "I reached for another handful of chips as the conversation moved on."
 
     gf "Movie?"
     friend "Only if I choose."
