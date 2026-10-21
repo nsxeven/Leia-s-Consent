@@ -43,11 +43,9 @@ image cg ch01_dinner_restroom_return_02 = At("images/cg/ch01/CH1D1_CG_DinnerRest
 image cg ch01_dinner_return_braless = "cg ch01_dinner_restroom_return_01"
 image cg ch01_dinner_stranger_compliment = "cg ch01_dinner_restroom_return_01"
 
-image cg ch01_trip_catch = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#36445b"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-WALK-01 — LEIA TRIPS / JULIAN CATCHES HER\nACCIDENTAL CONTACT / BOTH EMBARRASSED", size=52, color="#ffffff"),
-)
+# Actual Day 1 fall sequence. Preserve 01 -> 02 ordering and Ryan POV.
+image cg ch01_trip_catch = At("images/cg/ch01/CH1D1_CG_StreetWalkFall_01.webp", prologue_fullscreen)
+image cg ch01_trip_catch_followup = At("images/cg/ch01/CH1D1_CG_StreetWalkFall_02.webp", prologue_fullscreen)
 
 image cg ch01_drive_back_seating = Composite(
     (1920, 1080),
