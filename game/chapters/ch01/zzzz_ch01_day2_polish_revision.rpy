@@ -1,6 +1,6 @@
 # Day Two presentation/continuity polish based on playtest feedback.
 
-init 1003 python:
+init 998 python:
     config.label_overrides["ch01_day2_scene_03_maya_message"] = "ch01_day2_scene_03_maya_message_v2"
     config.label_overrides["ch01_day2_scene_08_maya_julian"] = "ch01_day2_scene_08_maya_julian_v2"
     config.label_overrides["ch01_day2_scene_13_girls_upstairs"] = "ch01_day2_scene_13_girls_upstairs_v2"

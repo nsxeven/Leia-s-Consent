@@ -160,7 +160,7 @@ label ch01_scene_05_photography:
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
     # The shutter fires only after the setup CG has had a full dialogue beat.
-    scene white
+    scene lc_photo_flash_white
     with Dissolve(0.06)
     pause 0.04
     if selected_pool_outfit == "pool_bolder":
@@ -215,7 +215,7 @@ label ch01_scene_05_photography:
             "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
 
-            scene white
+            scene lc_photo_flash_white
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
@@ -249,7 +249,7 @@ label ch01_scene_05_photography:
 
             # Capture 02 is the actual second photograph. Flash directly into it
             # rather than showing the obsolete pool-edge placeholder first.
-            scene white
+            scene lc_photo_flash_white
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
@@ -269,7 +269,7 @@ label ch01_scene_05_photography:
 
             "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
 
-            scene white
+            scene lc_photo_flash_white
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
@@ -299,14 +299,14 @@ label ch01_scene_05_photography:
                 $ set_story_value("ch01_photo_outcome", "chose_to_continue")
                 $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
                 gf "No. I want one good one."
-                mc "Then we keep going because you want to."
+                mc "All right. One more, then."
                 gf "Exactly."
 
                 $ enter_cinematic_mode()
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
 
-                scene white
+                scene lc_photo_flash_white
                 with Dissolve(0.06)
                 pause 0.04
                 if selected_pool_outfit == "pool_bolder":

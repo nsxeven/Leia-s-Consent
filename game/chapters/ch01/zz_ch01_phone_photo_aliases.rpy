@@ -3,18 +3,18 @@
 # stable asset IDs without that prefix. These aliases let the Phone render the
 # same image instead of falling back to the Photos app icon.
 
-image ch01_photo_group = ImageReference("cg ch01_photo_group")
-image ch01_photo_support_a = ImageReference("cg ch01_photo_support_a")
-image ch01_photo_support_b = ImageReference("cg ch01_photo_support_b")
-image ch01_photo_more_a = ImageReference("cg ch01_photo_more_a")
-image ch01_photo_more_b = ImageReference("cg ch01_photo_more_b")
-image ch01_photo_more_second_a = ImageReference("cg ch01_photo_more_second_a")
-image ch01_photo_more_second_b = ImageReference("cg ch01_photo_more_second_b")
+image ch01_photo_group = "cg ch01_photo_group_white"
+image ch01_photo_support_a = "cg ch01_photo_capture_02_a"
+image ch01_photo_support_b = "cg ch01_photo_capture_02_b"
+image ch01_photo_more_a = "cg ch01_photo_capture_02_a"
+image ch01_photo_more_b = "cg ch01_photo_capture_02_b"
+image ch01_photo_more_second_a = "cg ch01_photo_capture_03_a"
+image ch01_photo_more_second_b = "cg ch01_photo_capture_03_b"
 
 # Actual pool Capture photographs used by Messages and persistent Photos.
-image ch01_photo_capture_01_a = ImageReference("cg ch01_photo_capture_01_a")
-image ch01_photo_capture_02_a = ImageReference("cg ch01_photo_capture_02_a")
-image ch01_photo_capture_03_a = ImageReference("cg ch01_photo_capture_03_a")
-image ch01_photo_capture_01_b = ImageReference("cg ch01_photo_capture_01_b")
-image ch01_photo_capture_02_b = ImageReference("cg ch01_photo_capture_02_b")
-image ch01_photo_capture_03_b = ImageReference("cg ch01_photo_capture_03_b")
+image ch01_photo_capture_01_a = "cg ch01_photo_capture_01_a"
+image ch01_photo_capture_02_a = "cg ch01_photo_capture_02_a"
+image ch01_photo_capture_03_a = "cg ch01_photo_capture_03_a"
+image ch01_photo_capture_01_b = "cg ch01_photo_capture_01_b"
+image ch01_photo_capture_02_b = "cg ch01_photo_capture_02_b"
+image ch01_photo_capture_03_b = "cg ch01_photo_capture_03_b"

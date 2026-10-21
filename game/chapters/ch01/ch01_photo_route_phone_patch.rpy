@@ -30,7 +30,7 @@ init 50 python:
                 text=("Am I the best photographer or what?" if final else ""),
                 message_id="ch01_trip_group_pool_capture_{:02d}".format(index + 1),
                 attachment_id=asset_id,
-                attachment_label="Leia pool photo {:02d}".format(index + 1),
+                attachment_label="{} pool photo {:02d}".format(renpy.store.girlfriend_name, index + 1),
                 mark_unread=True,
                 notify=final,
                 notification_title="Trip Group",

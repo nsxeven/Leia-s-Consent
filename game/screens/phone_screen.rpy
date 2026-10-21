@@ -125,7 +125,7 @@ screen phone_screen():
 
                         $ phone_photo_count = len(phone_photo_items())
 
-                        text "Ryan's apps" size 14 color "#8e8e93" xalign 0.5
+                        text "[player_name]'s apps" size 14 color "#8e8e93" xalign 0.5
 
                         grid 3 2:
                             spacing 12

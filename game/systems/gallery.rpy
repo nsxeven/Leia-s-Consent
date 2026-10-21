@@ -178,17 +178,27 @@ init python:
         return (len(gallery_available_pages(gallery_id)), len(entry["pages"]))
 
     # ----------------------------------------------------------------- display
+    def gallery_customize_names(text):
+        """Render canonical name tokens with customized names without cascading substitutions."""
+        import re
+        name_map = {
+            "Ryan": store.player_name,
+            "Leia": store.girlfriend_name,
+            "Julian": store.friend_name,
+        }
+        return re.sub(r"\b(?:Ryan|Leia|Julian)\b", lambda m: name_map[m.group(0)], text)
+
     def gallery_display_title(gallery_id):
         entry = get_gallery_entry(gallery_id)
         if entry is None or not is_gallery_unlocked(gallery_id):
             return "Locked CG"
-        return entry["title"]
+        return gallery_customize_names(entry["title"])
 
     def gallery_display_description(gallery_id):
         entry = get_gallery_entry(gallery_id)
         if entry is None or not is_gallery_unlocked(gallery_id):
             return "Discover this scene in the story to unlock it here."
-        return entry["description"]
+        return gallery_customize_names(entry["description"])
 
     def gallery_has_replay(gallery_id):
         entry = get_gallery_entry(gallery_id)

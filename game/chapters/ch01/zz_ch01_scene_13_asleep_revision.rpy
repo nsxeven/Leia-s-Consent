@@ -21,10 +21,10 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     scene bg ch01_villa_night
     with fade
 
-    "When I parked, Leia didn't move."
+    "When I parked, [girlfriend_name] didn't move."
     "She was still curled across the back seat, completely asleep."
 
-    mc "Leia."
+    mc "[girlfriend_name]."
     "Nothing."
     mc "Babe. We're home."
 
@@ -34,7 +34,7 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     mc "Helpful."
 
     "I opened the rear door and tried to lift her without waking her properly."
-    "It lasted about three seconds. Sleeping Leia had somehow become twice as difficult to carry as awake Leia."
+    "It lasted about three seconds. Sleeping [girlfriend_name] had somehow become twice as difficult to carry as awake [girlfriend_name]."
 
     friend "Want help?"
     mc "Yeah. I'll get the door."
@@ -43,28 +43,28 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     scene cg ch01_julian_carry
     with dissolve
 
-    "Julian carefully slipped one arm behind her back and the other beneath her knees, lifting her into a proper princess carry."
-    "Leia barely reacted. Her head settled against his shoulder and she kept sleeping."
+    "[friend_name] carefully slipped one arm behind her back and the other beneath her knees, lifting her into a proper princess carry."
+    "[girlfriend_name] barely reacted. Her head settled against his shoulder and she kept sleeping."
 
     mc "Show-off."
     friend "She's dead weight. That's your problem, not mine."
     mc "Just don't drop her."
     friend "Open the door."
 
-    "I walked ahead with the keys while Julian followed more slowly."
+    "I walked ahead with the keys while [friend_name] followed more slowly."
     "Without the sticky bra beneath her dress, the neckline was less secure than it had been when we left the villa."
 
     scene cg ch01_carry_dress_shift
     with dissolve
 
-    "As Leia relaxed against his supporting arm, the dress shifted lower on one side."
-    "From where Julian was carrying her, he could see the problem. With one arm behind her back and the other under her knees, he had no free hand to fix it without risking dropping her."
+    "As [girlfriend_name] relaxed against his supporting arm, the dress shifted lower on one side."
+    "From where [friend_name] was carrying her, he could see the problem. With one arm behind her back and the other under her knees, he had no free hand to fix it without risking dropping her."
 
     friend "Uh... [player_name]?"
     mc "What?"
     friend "Her dress is slipping."
 
-    "I turned. From my angle, Leia's body and Julian's supporting arm hid whatever he could see. All I could tell was that Julian looked deeply uncomfortable about having to announce it."
+    "I turned. From my angle, [girlfriend_name]'s body and [friend_name]'s supporting arm hid whatever he could see. All I could tell was that [friend_name] looked deeply uncomfortable about having to announce it."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_night
@@ -83,7 +83,7 @@ label ch01_scene_13_back_at_villa_asleep_revision:
             $ set_story_value("ch01_leia_wake_reason", "voices_at_door")
             mc "We're almost inside. Just keep going."
             friend "Right. Just letting you know."
-            "Julian adjusted the angle of his supporting arm slightly, keeping Leia closer against him so the neckline would not shift any farther."
+            "[friend_name] adjusted the angle of his supporting arm slightly, keeping [girlfriend_name] closer against him so the neckline would not shift any farther."
 
         "[ch01_carry_lookaway_text]":
             $ apply_choice("ch01_carry_lookaway")
@@ -101,7 +101,7 @@ label ch01_scene_13_back_at_villa_asleep_revision:
             $ set_story_value("ch01_leia_wake_reason", "ryan_fixed_dress")
             mc "Wait. Hold on—I'll fix it."
             "I stepped back and carefully pulled the neckline securely into place."
-            "The movement finally woke her. Leia's eyes opened halfway."
+            "The movement finally woke her. [girlfriend_name]'s eyes opened halfway."
             gf "Mm...?"
             mc "Hey. We're home."
             gf "Why am I moving?"
@@ -125,13 +125,13 @@ label ch01_scene_13_back_at_villa_asleep_revision:
             mc "You're the one who called me back."
             friend "Because I'm trying to be a good person. Open the door."
 
-    "I unlocked the villa and held the door while Julian carried her inside."
+    "I unlocked the villa and held the door while [friend_name] carried her inside."
 
     if get_story_value("ch01_leia_wake_reason") == "voices_at_door":
-        "The voices finally did what the drive home hadn't. Leia stirred against Julian's shoulder as we crossed the doorway."
+        "The voices finally did what the drive home hadn't. [girlfriend_name] stirred against [friend_name]'s shoulder as we crossed the doorway."
         gf "Mm... we're home?"
         mc "Finally."
-        gf "Why is Julian carrying me?"
+        gf "Why is [friend_name] carrying me?"
         friend "Because you wouldn't wake up."
         mc "I tried first. Sleeping you weighs approximately twice as much."
         gf "That's not how bodies work."
@@ -142,7 +142,7 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     scene bg ch01_villa_living_night
     with dissolve
 
-    "Julian lowered her onto the sofa. Leia sat there blinking for a second while her brain caught up with the room."
+    "[friend_name] lowered her onto the sofa. [girlfriend_name] sat there blinking for a second while her brain caught up with the room."
 
     friend "Your girlfriend is a logistical problem."
     mc "You volunteered."
@@ -152,7 +152,7 @@ label ch01_scene_13_back_at_villa_asleep_revision:
     mc "Welcome back."
     gf "Barely."
 
-    "Julian laughed, gathered the bags from the doorway, and headed toward the kitchen."
+    "[friend_name] laughed, gathered the bags from the doorway, and headed toward the kitchen."
     "The night had changed almost nothing—and, in a handful of small ways, more than any of us realised yet."
 
     $ set_story_flag("ch01_scene_13_complete")

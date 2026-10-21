@@ -203,6 +203,10 @@ init 1 python:
         emotional disengagement. Consensual openness instead resolves toward the
         exhibitionism lane.
         """
+        focus = lc_route_explorer_for_lane()
+        if focus is not None:
+            return focus
+
         day1_pressure = get_story_value("ch01_day1_route_pressure", "mixed")
         d2_nonchalant = choice_tag_count("nonchalant", ch01_d2_choice_ids())
         d2_open = choice_tag_count("open", ch01_d2_choice_ids())
@@ -265,6 +269,9 @@ init 1 python:
 
 
 label ch01_day2_start:
+    if LC_DAY1_DEMO_BUILD:
+        jump ch01_day1_demo_complete
+
 
     $ set_story_flag("ch01_day_02_started")
     $ set_story_value("ch01_d2_ntr_soft_gate", False)

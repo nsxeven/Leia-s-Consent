@@ -94,7 +94,7 @@ screen player_settings_screen():
                     spacing 20
                     xfill True
 
-                    text "Choose how much of the game's underlying relationship system you want to see. This changes only the information shown to you — never story outcomes, stat changes, or difficulty." size 19 color "#b9aabb"
+                    text "Visibility modes change what information is shown. Full Transparency also offers an OPTIONAL Route Explorer which can deliberately change stats and upcoming story branches." size 19 color "#b9aabb"
 
                     hbox:
                         spacing 18
@@ -102,6 +102,18 @@ screen player_settings_screen():
 
                         for mode_id in PLAYER_TRANSPARENCY_MODES:
                             use transparency_mode_card(mode_id)
+
+                    if current_mode == "full":
+                        frame:
+                            xfill True
+                            background Solid("#30242e")
+                            padding (20, 16)
+                            vbox:
+                                spacing 9
+                                text "ROUTE EXPLORER" size 23 color "#ffffff"
+                                text "Switch Love / Exhibitionism / NTR direction while playing. This changes future route checks; past scenes are not replayed." size 17 color "#d7c1cf"
+                                textbutton "Open Route Explorer":
+                                    action Show("lc_route_explorer_screen")
 
                     if current_mode == "developer":
                         frame:

@@ -4,7 +4,7 @@
 # the next Trip Group open catches the thread up without additional notifications.
 # Breakfast uses the same mechanism but waits quietly for the Trip Group thread.
 
-init 1000 python:
+init 998 python:
     if "ch01_phone_sequence_overlay" not in config.overlay_screens:
         config.overlay_screens.append("ch01_phone_sequence_overlay")
 

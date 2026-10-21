@@ -290,6 +290,7 @@ label prologue_start:
     gf "Four years and you still haven't learned to be subtle."
     mc "Wasn't trying to be."
     "She tried not to smile and failed."
+    "She reached for my hand, gave it a quick squeeze, and went back to packing as though it were the most ordinary thing in the world."
 
     scene cg prologue_packing_banter
     with dissolve
