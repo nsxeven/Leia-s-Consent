@@ -299,7 +299,7 @@ label ch01_scene_05_photography:
                 $ set_story_value("ch01_photo_outcome", "chose_to_continue")
                 $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
                 gf "No. I want one good one."
-                mc "Then we keep going because you want to."
+                mc "All right. One more, then."
                 gf "Exactly."
 
                 $ enter_cinematic_mode()
