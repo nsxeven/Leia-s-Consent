@@ -296,7 +296,7 @@ label ch01_scene_18_private_under_blanket:
 
     $ ch01_movie_respected_request = (
         get_story_value("ch01_movie_first_response") == "stopped"
-        and get_story_value("ch01_can_tell_response") == "reassured"
+        and get_story_value("ch01_can_tell_response") in ("reassured", "teased")
     )
 
     if ch01_movie_respected_request:
@@ -857,8 +857,8 @@ label ch01_scene_28_ryan_leia_alone:
     "[girlfriend_name] stayed beside me, turning her empty glass slowly between both hands."
 
     $ ch01_movie_pressed = (
-        get_story_value("ch01_movie_first_response") != "stopped"
-        or get_story_value("ch01_can_tell_response") != "reassured"
+        get_story_value("ch01_movie_first_response") in ("subtle", "teased_presence", "dismissed")
+        or get_story_value("ch01_can_tell_response") in ("asked_if_bothered", "dismissed")
         or get_story_value("ch01_noblanket_response") in ("tested", "teased")
     )
     $ ch01_pressed_julian = get_story_value("ch01_julian_attraction_prompt") in ("put_on_spot", "ryan_indifferent")
