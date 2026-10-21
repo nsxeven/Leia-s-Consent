@@ -56,7 +56,7 @@ label ch01_scene_07_did_he_see:
     gf "He did?"
     mc "Yeah. Then he basically tried to pretend it never happened."
 
-    "A beat passed behind the bathroom door."
+    "She stepped back into the bathroom and rested a hand against the half-open door. A beat passed."
 
     gf "Good."
     gf "Wait. Now I have to go downstairs."
@@ -65,7 +65,7 @@ label ch01_scene_07_did_he_see:
     mc "Not after you've reminded us about the reservation fourteen times."
 
     gf "And don't tell him I asked."
-    mc "I am not going downstairs and saying, 'By the way, Leia wants to know exactly how much of her you saw.'"
+    mc "I am not going downstairs and saying, 'By the way, [girlfriend_name] wants to know exactly how much of her you saw.'"
     gf "[player_name]."
     mc "Right. Not helping."
 
@@ -99,7 +99,7 @@ label ch01_scene_07_did_he_see:
     show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
-    "Julian was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
+    "[friend_name] was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
 
     with dissolve
 
@@ -108,9 +108,9 @@ label ch01_scene_07_did_he_see:
     friend "Cool."
 
     "No grin. No comment. No attempt to make the situation funny."
-    "Leia glanced at me. I gave her the smallest look I could manage: see?"
+    "[girlfriend_name] glanced at me. I gave her the smallest look I could manage: see?"
 
-    gf "Julian?"
+    gf "[friend_name]?"
     friend "Yeah?"
     gf "Earlier..."
 
@@ -149,18 +149,18 @@ label ch01_scene_08_drive_to_dinner:
     scene cg ch01_drive_to_dinner
     with dissolve
 
-    "I drove. Leia took the passenger seat beside me without thinking about it, and Julian climbed into the back."
-    "It was our natural arrangement: Leia beside me, Julian behind us, the two of them taking turns insulting my driving from different directions."
+    "I drove. [girlfriend_name] took the passenger seat beside me without thinking about it, and [friend_name] climbed into the back."
+    "It was our natural arrangement: [girlfriend_name] beside me, [friend_name] behind us, the two of them taking turns insulting my driving from different directions."
 
     gf "You know the speed limit applies on holiday too, right?"
     mc "I'm under it."
     friend "Technically true. Emotionally false."
 
-    "Leia reached over and changed the song before the chorus."
+    "[girlfriend_name] reached over and changed the song before the chorus."
 
     mc "I liked that one."
     gf "That's why I changed it."
-    friend "For once, I'm with Leia."
+    friend "For once, I'm with [girlfriend_name]."
     mc "Get out. Both of you."
 
     "She laughed and rested her hand on my thigh for a moment before turning the volume up."
@@ -202,25 +202,25 @@ label ch01_scene_09_dinner:
     show leia_purple_dress smile at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
-    "Dinner started exactly the way I expected: Leia taking photos of the food, Julian pretending to object, and me being ordered to move my glass out of every shot."
+    "Dinner started exactly the way I expected: [girlfriend_name] taking photos of the food, [friend_name] pretending to object, and me being ordered to move my glass out of every shot."
 
     gf "You're ruining the composition."
     mc "It's a glass of water."
     friend "Move it. Respect the artist."
     mc "You two became unbearable very quickly."
 
-    "Somewhere between the starters and the main course, Julian told her a story from university that I had heard at least twenty times."
-    "Leia had not."
+    "Somewhere between the starters and the main course, [friend_name] told her a story from university that I had heard at least twenty times."
+    "[girlfriend_name] had not."
 
     gf "No. There is no way he actually said that to the lecturer."
     friend "Ask him."
     mc "I refuse to validate this story."
     gf "That means it's true."
 
-    "She laughed hard enough to lean forward over the table, and Julian laughed because she was laughing."
+    "She laughed hard enough to lean forward over the table, and [friend_name] laughed because she was laughing."
     "There was nothing strange about it. If anything, I was glad they were finally getting comfortable around each other."
 
-    "Leia lifted her phone and looked between the three of us."
+    "[girlfriend_name] lifted her phone and looked between the three of us."
 
     gf "We still don't have a proper dinner photo."
     friend "You have approximately four hundred photos from today."
@@ -244,7 +244,7 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_photo_ask
     with dissolve
 
-    "Leia turned straight into him."
+    "[girlfriend_name] turned straight into him."
 
     scene cg ch01_dinner_spill_01
     with dissolve
@@ -267,7 +267,7 @@ label ch01_scene_09_dinner:
     with dissolve
 
     "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more than he probably intended—hard to miss."
-    "Leia followed his glance downward."
+    "[girlfriend_name] followed his glance downward."
     "For a beat, she forgot to look away."
 
     scene cg ch01_dinner_spill_03
@@ -322,7 +322,7 @@ label ch01_scene_09_dinner:
     show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
-    "Julian pushed the remaining napkins across the table without commenting on where Leia had been looking."
+    "[friend_name] pushed the remaining napkins across the table without commenting on where [girlfriend_name] had been looking."
     friend "Successful photo mission?"
     show leia_purple_dress_wet angry
     with sprite_change
@@ -332,7 +332,7 @@ label ch01_scene_09_dinner:
 
     "Most of the drink came off the fabric. The problem was what had gotten underneath it."
 
-    "A few minutes later, Leia leaned close to me while Julian was distracted by the menu."
+    "A few minutes later, [girlfriend_name] leaned close to me while [friend_name] was distracted by the menu."
 
     show leia_purple_dress_wet flustered
     with sprite_change
@@ -375,10 +375,10 @@ label ch01_scene_09_dinner:
             with sprite_change
             gf "Fair. Let me fix this before it falls out on its own."
 
-    gf "I'm going to the bathroom. If Julian asks, I spilled a drink. That's all he needs to know."
+    gf "I'm going to the bathroom. If [friend_name] asks, I spilled a drink. That's all he needs to know."
     mc "Understood."
 
-    "Leia disappeared toward the restroom with her handbag tucked under one arm."
+    "[girlfriend_name] disappeared toward the restroom with her handbag tucked under one arm."
     hide leia_purple_dress_wet
     with sprite_enter_exit
 
@@ -402,7 +402,7 @@ label ch01_scene_09_dinner:
 
     passerby "Excuse me—just had to say that dress looks incredible on you."
 
-    "Leia blinked, caught off guard."
+    "[girlfriend_name] blinked, caught off guard."
     gf "Oh. Thank you."
 
     "She gave a small, slightly flustered smile and kept walking."
@@ -428,11 +428,11 @@ label ch01_scene_09_dinner:
     mc "I didn't say anything."
     gf "Your face did."
 
-    "Julian looked between us, clearly aware that he had missed part of a conversation, and wisely chose not to ask."
+    "[friend_name] looked between us, clearly aware that he had missed part of a conversation, and wisely chose not to ask."
 
     # The corridor compliment already happened; keep a light table-side beat so the
     # existing response menu still has a natural moment to fire.
-    "A moment later the same man passed near our table and gave Leia another polite nod."
+    "A moment later the same man passed near our table and gave [girlfriend_name] another polite nod."
     gf "Oh—thank you again."
 
     $ ch01_stranger_proud_text = format_choice("ch01_stranger_proud", "Yeah. She looks incredible.")
@@ -465,7 +465,7 @@ label ch01_scene_09_dinner:
             mc "Maybe a little."
             "Her cheeks coloured, but she did not reach for her jacket."
 
-    "He kept walking. Nothing dramatic. Leia glanced down at herself and back at me."
+    "He kept walking. Nothing dramatic. [girlfriend_name] glanced down at herself and back at me."
 
     show leia_purple_dress_no_bra flustered
     with sprite_change
@@ -488,7 +488,7 @@ label ch01_scene_10_after_dinner_drinks:
     show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
-    "We should have left after dessert. Instead, Julian noticed the bar."
+    "We should have left after dessert. Instead, [friend_name] noticed the bar."
 
     friend "One drink."
     mc "For you two. I'm driving."
@@ -498,14 +498,14 @@ label ch01_scene_10_after_dinner_drinks:
     friend "Responsible [player_name] is ruining my attempt to make this a group activity."
     mc "Someone has to get both of you home."
 
-    "One drink became another for Leia and Julian. I stayed with water and watched the two of them become progressively more entertained by things that were not remotely funny."
+    "One drink became another for [girlfriend_name] and [friend_name]. I stayed with water and watched the two of them become progressively more entertained by things that were not remotely funny."
 
     gf "No, explain it again. Why did you think that haircut looked good?"
     friend "It was 2019. Nobody knew anything."
     mc "I told him. Repeatedly."
     friend "You had no vision."
 
-    "Leia leaned into my shoulder while laughing, then pointed across the table at Julian."
+    "[girlfriend_name] leaned into my shoulder while laughing, then pointed across the table at [friend_name]."
 
     gf "Show me the photo."
     friend "Absolutely not."
@@ -514,7 +514,7 @@ label ch01_scene_10_after_dinner_drinks:
     friend "This friendship is over."
 
     "The alcohol did not transform anything between them. It simply removed some of the formality that had still been there earlier in the day."
-    "Leia interrupted him more easily. Julian teased her without checking my reaction first. They were beginning to act like friends instead of two people connected through me."
+    "[girlfriend_name] interrupted him more easily. [friend_name] teased her without checking my reaction first. They were beginning to act like friends instead of two people connected through me."
 
     $ set_story_value("ch01_leia_buzz_state", "lightly_buzzed")
     $ set_story_value("ch01_leia_julian_comfort", get_story_value("ch01_leia_julian_comfort", 0) + 1)
@@ -537,7 +537,7 @@ label ch01_scene_11_walk_and_catch:
     show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
-    "The shop was only a short walk away. Leia still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
+    "The shop was only a short walk away. [girlfriend_name] still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
     show leia_purple_dress_no_bra pout
     with sprite_change
@@ -551,14 +551,14 @@ label ch01_scene_11_walk_and_catch:
 
     mc "Hang on."
 
-    "I stopped. Leia and Julian kept moving at an easy pace a few steps ahead while I answered."
+    "I stopped. [girlfriend_name] and [friend_name] kept moving at an easy pace a few steps ahead while I answered."
 
     phone_friend "[player_name]? I just saw your posts. You're on the island too?"
     mc "Apparently. Since when are you here?"
     phone_friend "Yesterday. We should meet tomorrow if you're free."
     mc "Yeah, maybe. I'll text you."
 
-    "Ahead of me, Leia turned around to check why I had stopped."
+    "Ahead of me, [girlfriend_name] turned around to check why I had stopped."
     "She tried to walk backward while doing it."
 
     $ enter_cinematic_mode()
@@ -566,16 +566,16 @@ label ch01_scene_11_walk_and_catch:
     with dissolve
 
     "Her heel caught the edge of the path."
-    "Julian reacted before I did, catching her around the waist and upper body before she hit the ground."
+    "[friend_name] reacted before I did, catching her around the waist and upper body before she hit the ground."
     "In the scramble, one of his hands landed against the side of her breast for a split second."
     "Both of them realised at almost exactly the same time."
 
     show leia_purple_dress_no_bra flustered
     with sprite_change
-    gf "Julian!"
+    gf "[friend_name]!"
     friend "I was catching you!"
 
-    "Leia's face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry."
+    "[girlfriend_name]'s face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry."
 
     gf "Watch your hands!"
     friend "I didn't exactly submit a landing plan!"
@@ -600,7 +600,7 @@ label ch01_scene_11_walk_and_catch:
         "[ch01_catch_ignore_text]":
             $ apply_choice("ch01_catch_ignore")
             $ set_story_value("ch01_catch_response", "ignored")
-            "I let it go. Leia was upright, Julian looked mortified, and there was nothing useful to add."
+            "I let it go. [girlfriend_name] was upright, [friend_name] looked mortified, and there was nothing useful to add."
 
         "[ch01_catch_check_text]":
             $ apply_choice("ch01_catch_check")
@@ -612,7 +612,7 @@ label ch01_scene_11_walk_and_catch:
         "[ch01_catch_joke_text]":
             $ apply_choice("ch01_catch_joke")
             $ set_story_value("ch01_catch_response", "joked")
-            mc "Subtle, Julian. Very subtle."
+            mc "Subtle, [friend_name]. Very subtle."
             friend "Fuck off."
             gf "[player_name]!"
             mc "Too soon?"
@@ -646,7 +646,7 @@ label ch01_scene_11b_female_friend:
     mc "A friend from back home. She saw the posts and realised we're both here."
     gf "She?"
 
-    "Julian made a heroic attempt to become interested in a sign across the road."
+    "[friend_name] made a heroic attempt to become interested in a sign across the road."
 
     mc "Yes. She."
     gf "And she wants to meet you?"
@@ -659,7 +659,7 @@ label ch01_scene_11b_female_friend:
     gf "Nobody asked you."
     friend "Exactly why I'm leaving."
 
-    "Leia's tone was playful, but only just. The questions were real."
+    "[girlfriend_name]'s tone was playful, but only just. The questions were real."
 
     $ ch01_friend_reassure_text = format_choice("ch01_friend_reassure", "She's just a friend. You've got nothing to worry about.")
     $ ch01_friend_tease_text = format_choice("ch01_friend_tease", "Wait. Are you jealous?")
@@ -684,7 +684,7 @@ label ch01_scene_11b_female_friend:
             mc "That was fast."
             gf "I'm not jealous. I'm curious."
             friend "Those are famously different things."
-            gf "Julian."
+            gf "[friend_name]."
             friend "Walking away again."
 
         "[ch01_friend_boundary_text]":
@@ -693,7 +693,7 @@ label ch01_scene_11b_female_friend:
             mc "She's my friend. I don't want us policing who the other can see."
             gf "I'm not saying you can't see her."
             mc "I know. I'm just saying I want us to trust each other about this stuff."
-            "Leia held my gaze for a moment, then nodded."
+            "[girlfriend_name] held my gaze for a moment, then nodded."
             gf "Okay. That's fair."
 
     $ set_story_flag("ch01_female_friend_meetup_seeded")
@@ -711,7 +711,7 @@ label ch01_scene_12_shop_and_drive_back:
     with sprite_enter_exit
 
     "The shop reset the mood almost immediately."
-    "Leia filled the basket with snacks according to a system neither Julian nor I understood, while Julian contributed increasingly questionable bottles from the drinks aisle."
+    "[girlfriend_name] filled the basket with snacks according to a system neither [friend_name] nor I understood, while [friend_name] contributed increasingly questionable bottles from the drinks aisle."
 
     show leia_purple_dress_no_bra skeptical
     with sprite_change
@@ -721,7 +721,7 @@ label ch01_scene_12_shop_and_drive_back:
     friend "That's branding."
     mc "That's a warning."
 
-    "Leia dropped two bags of chips into the basket."
+    "[girlfriend_name] dropped two bags of chips into the basket."
 
     friend "Those are terrible."
     gf "You booked a private villa and somehow still have the taste buds of a child."
@@ -754,10 +754,10 @@ label ch01_scene_12_shop_and_drive_back:
     mc "Historically successful terrible dare, remember?"
     friend "I take it back."
 
-    "By the time we reached the drinks fridge, Leia and Julian were arguing over snacks like they'd known each other longer than a day."
+    "By the time we reached the drinks fridge, [girlfriend_name] and [friend_name] were arguing over snacks like they'd finally stopped treating each other as strangers."
     "For once, nothing awkward had caused it."
 
-    "By the time we paid, Leia was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
+    "By the time we paid, [girlfriend_name] was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
 
     gf "I want to lie down."
     mc "We're walking thirty metres to the car."
@@ -769,8 +769,8 @@ label ch01_scene_12_shop_and_drive_back:
     scene cg ch01_drive_back_seating
     with dissolve
 
-    "Leia climbed into the rear seat so she could stretch out. Julian took the front passenger seat beside me."
-    "It was the first time that day our positions had changed: Julian beside me, Leia behind us."
+    "[girlfriend_name] climbed into the rear seat so she could stretch out. [friend_name] took the front passenger seat beside me."
+    "It was the first time that day our positions had changed: [friend_name] beside me, [girlfriend_name] behind us."
 
     gf "Wake me up when we're home."
     mc "We're ten minutes away."
@@ -782,7 +782,7 @@ label ch01_scene_12_shop_and_drive_back:
     scene bg ch01_car_night
     with dissolve
 
-    "The car became quiet enough that Julian lowered his voice."
+    "The car became quiet enough that [friend_name] lowered his voice."
 
     friend "Hey. About earlier."
     mc "The fall?"
@@ -823,7 +823,7 @@ label ch01_scene_12_shop_and_drive_back:
             friend "Fine. Professional catching only."
 
     "For a moment it was just the two of us again—the same easy friendship we'd had long before this trip."
-    "Behind us, Leia shifted in her sleep and pulled her arms closer around herself."
+    "Behind us, [girlfriend_name] shifted in her sleep and pulled her arms closer around herself."
 
     $ set_story_flag("ch01_scene_12_complete")
 
@@ -836,7 +836,7 @@ label ch01_scene_13_back_at_villa:
     scene bg ch01_villa_night
     with fade
 
-    "Leia woke when I parked, but only technically."
+    "[girlfriend_name] woke when I parked, but only technically."
 
     gf "We're home?"
     mc "We're home."
@@ -855,26 +855,26 @@ label ch01_scene_13_back_at_villa:
     scene cg ch01_julian_carry
     with dissolve
 
-    "Julian slipped one arm behind her back and the other beneath her knees, lifting her into a proper princess carry."
+    "[friend_name] slipped one arm behind her back and the other beneath her knees, lifting her into a proper princess carry."
 
     gf "See? Easy."
     mc "I dislike both of you."
     friend "Open the door, hero."
 
-    "I walked ahead with the keys while Julian followed more slowly."
+    "I walked ahead with the keys while [friend_name] followed more slowly."
     "Without the sticky bra beneath her dress, the neckline was less secure than it had been when we left the villa."
 
     scene cg ch01_carry_dress_shift
     with dissolve
 
-    "As Leia relaxed against his arm, the dress shifted lower on one side."
-    "From where Julian was carrying her, he could see the problem. With one arm supporting her back and the other under her knees, he had no free hand to fix it without risking dropping her."
+    "As [girlfriend_name] relaxed against his arm, the dress shifted lower on one side."
+    "From where [friend_name] was carrying her, he could see the problem. With one arm supporting her back and the other under her knees, he had no free hand to fix it without risking dropping her."
 
     friend "Uh... [player_name]?"
     mc "What?"
     friend "Her dress is slipping."
 
-    "I turned. From my angle, Leia's body and Julian's supporting arm hid whatever he could see. All I could tell was that Julian looked deeply uncomfortable about having to announce it."
+    "I turned. From my angle, [girlfriend_name]'s body and [friend_name]'s supporting arm hid whatever he could see. All I could tell was that [friend_name] looked deeply uncomfortable about having to announce it."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_night
@@ -892,7 +892,7 @@ label ch01_scene_13_back_at_villa:
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) + 1)
             mc "We're almost inside. Just keep going."
             friend "Right. Just letting you know."
-            "Julian adjusted the angle of his supporting arm slightly, keeping Leia closer against him so the neckline would not shift any farther."
+            "[friend_name] adjusted the angle of his supporting arm slightly, keeping [girlfriend_name] closer against him so the neckline would not shift any farther."
 
         "[ch01_carry_lookaway_text]":
             $ apply_choice("ch01_carry_lookaway")
@@ -920,24 +920,24 @@ label ch01_scene_13_back_at_villa:
             mc "You're the one who called me back."
             friend "Because I'm trying to be a good person. Open the door."
 
-    "I unlocked the villa and held the door while Julian carried her inside."
+    "I unlocked the villa and held the door while [friend_name] carried her inside."
 
     scene bg ch01_villa_living_night
     with dissolve
 
-    "Once Leia was safely on the sofa, Julian stepped away and exhaled as if he had just completed a much more dangerous journey than the walk from the car."
+    "Once [girlfriend_name] was safely on the sofa, [friend_name] stepped away and exhaled as if he had just completed a much more dangerous journey than the walk from the car."
 
     friend "Your girlfriend is a logistical problem."
     mc "You volunteered."
     friend "A mistake I will reflect on privately."
 
-    "Leia made a quiet sound from the sofa without opening her eyes."
+    "[girlfriend_name] made a quiet sound from the sofa without opening her eyes."
 
     gf "I can hear both of you."
     mc "Apparently not asleep."
     gf "Barely alive."
 
-    "Julian laughed, gathered the bags from the doorway, and headed toward the kitchen."
+    "[friend_name] laughed, gathered the bags from the doorway, and headed toward the kitchen."
     "The night had changed almost nothing—and, in a handful of small ways, more than any of us realised yet."
 
     $ set_story_flag("ch01_scene_13_complete")
