@@ -8,7 +8,7 @@ default persistent.lc_adult_notice_accepted = False
 label lc_adult_notice:
     scene black
     with fade
-    centered "{size=56}MATURE CONTENT — 18+{/size}\\n{size=30}This fictional visual novel is intended only for adults.{/size}"
+    centered "{size=56}MATURE CONTENT — 18+{/size}\n{size=30}This fictional visual novel is intended only for adults.{/size}"
     menu:
         "I am 18 or older. Continue.":
             $ persistent.lc_adult_notice_accepted = True
