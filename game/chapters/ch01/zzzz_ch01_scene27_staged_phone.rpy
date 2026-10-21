@@ -21,7 +21,8 @@ label ch01_scene_27_late_photo_drop_staged:
     $ ch01_late_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     $ ch01_late_photo_asset = (
         ("ch01_photo_group_blue" if ch01_late_pool_outfit == "pool_bolder" else "ch01_photo_group_white")
-        if ch01_late_group_only else "ch01_photo_late_favourite"
+        if ch01_late_group_only
+        else ("ch01_photo_late_favourite_blue" if ch01_late_pool_outfit == "pool_bolder" else "ch01_photo_late_favourite_white")
     )
     python:
         phone_add_message(
