@@ -548,6 +548,8 @@ label ch01_scene_22_first_micro_test:
             $ set_story_value("ch01_micro_test_response", "warned")
             mc "Your top."
             "[girlfriend_name] fixed it immediately."
+            scene cg ch01_movie_no_blanket
+            with dissolve
             gf "Thanks."
             mc "Mm."
 
@@ -556,6 +558,8 @@ label ch01_scene_22_first_micro_test:
             $ set_story_value("ch01_micro_test_response", "silent_choice")
             "I said nothing."
             "[girlfriend_name] held my gaze for a second, then eventually adjusted the neckline herself."
+            scene cg ch01_movie_no_blanket
+            with dissolve
             "The pause before she did it was the part I remembered."
 
         "[ch01_micro_open_text]":
@@ -574,10 +578,14 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] blinked."
             gf "Okay."
             "She fixed the top herself and turned back to the screen."
+            scene cg ch01_movie_no_blanket
+            with dissolve
 
-    # All outcomes settle back into an ordinary, covered sofa posture.
-    scene cg ch01_movie_no_blanket
-    with dissolve
+    # The deliberate-open branch settles back to a normal seated image after
+    # the player's chosen moment. Other branches reset as Leia adjusts.
+    if get_story_value("ch01_micro_test_response") == "knowingly_left":
+        scene cg ch01_movie_no_blanket
+        with dissolve
 
     $ set_story_flag("ch01_scene_22_complete")
     jump ch01_scene_23_relationship_philosophy
