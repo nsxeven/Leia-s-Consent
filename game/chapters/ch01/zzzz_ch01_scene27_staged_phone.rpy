@@ -1,4 +1,4 @@
-init 1001 python:
+init 998 python:
     config.label_overrides["ch01_scene_27_late_photo_drop"] = "ch01_scene_27_late_photo_drop_staged"
 
 label ch01_scene_27_late_photo_drop_staged:
