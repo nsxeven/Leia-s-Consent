@@ -27,11 +27,11 @@ init python:
         "full": {
             "label": "Full Transparency",
             "tagline": "Exact mechanics",
-            "description": "See exact stat changes, requirements, and progression information for deliberate route planning.",
+            "description": "See exact mechanics and optionally switch route direction through the Route Explorer.",
             "choices": "Exact numerical stat changes before choosing.",
             "status": "Exact values, hidden traits, and route tendencies.",
             "wardrobe": "Exact stat thresholds and wear requirements.",
-            "routes": "Exact eligibility information where the game supports it.",
+            "routes": "Exact eligibility plus an optional route switch for upcoming early-chapter branches.",
         },
         "developer": {
             "label": "Developer",
