@@ -1,4 +1,6 @@
 # Chapter One Scenes 4–6 visual registry.
+# Explicit flash image avoids an undeclared `white` image at each shutter.
+image lc_photo_flash_white = Solid("#ffffff")
 # Real assets use stable image IDs; only actively referenced missing art stays as a placeholder.
 
 image bg ch01_pool_day = At("images/backgrounds/villa/villa_pool_day.webp", prologue_bg_blur)
