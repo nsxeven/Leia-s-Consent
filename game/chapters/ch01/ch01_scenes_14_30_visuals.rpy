@@ -43,6 +43,11 @@ image ch01_photo_late_favourite = Composite(
     (0, 0), Solid("#6a7787"),
     (60, 70), Text("PHONE PHOTO PLACEHOLDER\nCH01-PHOTO-LATE-01\nUNSENT POOL FAVOURITE", size=42, color="#ffffff"),
 )
+# Outfit-specific stable IDs for the eventual final photo. Both temporarily
+# share the existing placeholder until the two production files are ready.
+# Keep the legacy ID above for existing saved message attachments.
+image ch01_photo_late_favourite_white = "ch01_photo_late_favourite"
+image ch01_photo_late_favourite_blue = "ch01_photo_late_favourite"
 
 
 # Day One closing dream. These are temporary composition placeholders; keep the
