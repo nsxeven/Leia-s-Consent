@@ -218,8 +218,6 @@ label ch01_scene_09_dinner:
     gf "That means it's true."
 
     "She laughed hard enough to lean forward over the table, and [friend_name] laughed because she was laughing."
-    "There was nothing strange about it. If anything, I was glad they were finally getting comfortable around each other."
-
     "[girlfriend_name] lifted her phone and looked between the three of us."
 
     gf "We still don't have a proper dinner photo."
@@ -513,8 +511,7 @@ label ch01_scene_10_after_dinner_drinks:
     mc "Several."
     friend "This friendship is over."
 
-    "The alcohol did not transform anything between them. It simply removed some of the formality that had still been there earlier in the day."
-    "[girlfriend_name] interrupted him more easily. [friend_name] teased her without checking my reaction first. They were beginning to act like friends instead of two people connected through me."
+    "Whatever awkwardness had lingered over dinner seemed to fade as they traded stories."
 
     $ set_story_value("ch01_leia_buzz_state", "lightly_buzzed")
     $ set_story_value("ch01_leia_julian_comfort", get_story_value("ch01_leia_julian_comfort", 0) + 1)
@@ -760,9 +757,6 @@ label ch01_scene_12_shop_and_drive_back:
     mc "Historically successful terrible dare, remember?"
     friend "I take it back."
 
-    "By the time we reached the drinks fridge, [girlfriend_name] and [friend_name] were arguing over snacks like they'd finally stopped treating each other as strangers."
-    "For once, nothing awkward had caused it."
-
     "By the time we paid, [girlfriend_name] was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
 
     gf "I want to lie down."
@@ -974,8 +968,6 @@ label ch01_scene_13_back_at_villa:
     gf "Barely."
 
     "[friend_name] laughed, gathered the bags from the doorway, and headed toward the kitchen."
-    "The night had changed almost nothing—and, in a handful of small ways, more than any of us realised yet."
-
     $ set_story_flag("ch01_scene_13_complete")
     $ set_story_flag("ch01_scenes_07_13_complete")
 
