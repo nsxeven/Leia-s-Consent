@@ -526,6 +526,6 @@ label ch01_day3_bedroom:
 
     centered "{size=46}CHAPTER ONE — DAY THREE COMPLETE{/size}"
 
-    # Day Three -> Day Four. ch01_day4_start is currently a placeholder stub
-    # (ch01_day4_stub.rpy) until the approved Day Four script replaces it.
+    # Day Three -> Day Four. ch01_day4_start reads (never recomputes) the Day
+    # Three state stored here: lane, end variant, repair effort, cutout secret.
     jump ch01_day4_start
