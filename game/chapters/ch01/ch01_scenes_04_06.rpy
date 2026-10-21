@@ -439,7 +439,7 @@ label ch01_scene_06_friendship_and_towel:
     scene cg ch01_towel_call_down
     with dissolve
 
-    "[girlfriend_name] stood in the open upstairs doorway with wet hair and a small towel wrapped around her body."
+    "[girlfriend_name] stood in the open upstairs glass doorway to our pool-facing balcony, wet hair over one shoulder and a small towel wrapped around her body."
     "One hand held it closed as she leaned out to find us."
 
     gf "Dinner is at seven!"
