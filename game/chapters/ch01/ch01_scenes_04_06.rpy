@@ -388,8 +388,6 @@ label ch01_scene_05_photography:
     gf "Excuse me?"
     friend "Good. You'll fit in."
 
-    "It was the first time their teasing sounded less like my girlfriend talking to my friend and more like the beginning of a friendship of their own."
-
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
     if selected_pool_outfit == "pool_bolder":
