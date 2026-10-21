@@ -570,8 +570,15 @@ label ch01_scene_11_walk_and_catch:
     "In the scramble, one of his hands landed against the side of her breast for a split second."
     "Both of them realised at almost exactly the same time."
 
-    show leia_purple_dress_no_bra flustered
-    with sprite_change
+    scene cg ch01_trip_catch_followup
+    with dissolve
+
+    mc "Maya, I'll call you back. [girlfriend_name] just tripped."
+    phone_friend "Is she okay?"
+    mc "Yeah. [friend_name] caught her. Talk tomorrow."
+    phone_friend "Okay. Text me."
+    "I ended the call and hurried toward them."
+
     gf "[friend_name]!"
     friend "I was catching you!"
 
@@ -593,7 +600,7 @@ label ch01_scene_11_walk_and_catch:
 
     $ ch01_catch_ignore_text = format_choice("ch01_catch_ignore", "Say nothing. It was obviously an accident.")
     $ ch01_catch_check_text = format_choice("ch01_catch_check", "You okay, babe?")
-    $ ch01_catch_joke_text = format_choice("ch01_catch_joke", "Subtle, Julian. Very subtle.")
+    $ ch01_catch_joke_text = format_choice("ch01_catch_joke", "Subtle, {}. Very subtle.".format(friend_name))
     $ ch01_catch_boundary_text = format_choice("ch01_catch_boundary", "Careful, mate.")
 
     menu:
@@ -628,8 +635,6 @@ label ch01_scene_11_walk_and_catch:
     $ set_story_flag("ch01_accidental_catch_complete")
     $ set_story_flag("ch01_scene_11_complete")
 
-    "I finished the call and caught up with them."
-
     jump ch01_scene_11b_female_friend
 
 
@@ -654,6 +659,7 @@ label ch01_scene_11b_female_friend:
     gf "How do you know her?"
     mc "We've been friends a while."
     gf "Have you ever dated?"
+    mc "No. We've always been friends."
 
     friend "I'm going to walk slightly over there."
     gf "Nobody asked you."
