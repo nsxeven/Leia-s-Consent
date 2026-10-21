@@ -1169,7 +1169,7 @@ label ch01_scene_30_end_day_one:
 
     "{i}What the hell was that?{/i}"
 
-    $ dream_ground_text = format_choice("ch01_dream_ground", "It was a dream. Leia hadn't done anything.")
+    $ dream_ground_text = format_choice("ch01_dream_ground", "It was a dream. {} hadn't done anything.".format(girlfriend_name))
     $ dream_curiosity_text = format_choice("ch01_dream_curiosity", "Why did that bother me... and why couldn't I stop thinking about it?")
     $ dream_withdraw_text = format_choice("ch01_dream_withdraw", "Don't think about it. Don't make it a thing.")
 
