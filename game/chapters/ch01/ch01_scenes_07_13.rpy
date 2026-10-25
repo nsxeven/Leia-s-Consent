@@ -224,6 +224,7 @@ label ch01_scene_09_dinner:
     friend "You have approximately four hundred photos from today."
     gf "Of food and the pool. I want one of us."
     mc "There are three of us. That's what selfies are for."
+    hide ryan
     gf "No. I want one where nobody's arm looks six feet long."
 
     "She stood and glanced around for someone to ask."
