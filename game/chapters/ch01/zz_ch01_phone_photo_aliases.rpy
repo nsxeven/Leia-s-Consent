@@ -4,6 +4,9 @@
 # same image instead of falling back to the Photos app icon.
 
 image ch01_photo_group = "cg ch01_photo_group_white"
+# Outfit-aware group shots can also be delivered to the late Trip Group thread.
+image ch01_photo_group_white = "cg ch01_photo_group_white"
+image ch01_photo_group_blue = "cg ch01_photo_group_blue"
 image ch01_photo_support_a = "cg ch01_photo_capture_02_a"
 image ch01_photo_support_b = "cg ch01_photo_capture_02_b"
 image ch01_photo_more_a = "cg ch01_photo_capture_02_a"

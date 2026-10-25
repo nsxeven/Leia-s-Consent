@@ -11,15 +11,12 @@ label chapter_one_start:
 
 label ch01_scene_01_arrival:
 
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
-
     scene bg ch01_car_day
     with fade
     show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
-    "By the time the boat eased against the jetty, [girlfriend_name] had taken thirty-seven photos."
+    "By the time the transfer car turned into the villa's driveway, [girlfriend_name] had taken thirty-seven photos."
     "Thirty-eight, if the blurry one of [friend_name] asleep in the transfer car counted."
 
     show leia_casual smile
@@ -32,7 +29,7 @@ label ch01_scene_01_arrival:
 
     with dissolve
 
-    "A member of staff greeted [friend_name] by name before any of us reached the end of the jetty."
+    "A member of staff greeted [friend_name] by name as the car pulled up outside the villa."
     "Our bags disappeared onto a cart. Cold towels appeared. So did three drinks none of us remembered ordering."
 
     mc "Should I be worried that everyone here knows you?"
@@ -119,6 +116,7 @@ label ch01_scene_02_villa:
     "The master bedroom took up most of the second floor."
     "One wall was almost entirely glass, looking down over the pool and past it to the ocean."
     "Light curtains softened the view without quite hiding it. Decorative, more than private."
+    "A sliding glass doorway opened onto a small balcony overlooking the pool below."
 
     with dissolve
 

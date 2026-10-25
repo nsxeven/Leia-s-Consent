@@ -14,19 +14,29 @@ label ch01_scene_27_late_photo_drop_staged:
 
     "A moment later my phone lit up."
 
+    # Respect the pool-photo stop choice. The deleted solo capture must not
+    # reappear disguised as an "unsent favourite"; the existing group selfie
+    # is the only late photo on that path.
+    $ ch01_late_group_only = get_story_value("ch01_photo_outcome") == "stopped"
+    $ ch01_late_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
+    $ ch01_late_photo_asset = (
+        ("ch01_photo_group_blue" if ch01_late_pool_outfit == "pool_bolder" else "ch01_photo_group_white")
+        if ch01_late_group_only
+        else ("ch01_photo_late_favourite_blue" if ch01_late_pool_outfit == "pool_bolder" else "ch01_photo_late_favourite_white")
+    )
     python:
         phone_add_message(
             "group",
             "julian",
-            text="Forgot this one. Photographer of the year strikes again.",
+            text=("Almost forgot our first group selfie." if ch01_late_group_only else "Forgot this one. Photographer of the year strikes again."),
             message_id="ch01_trip_group_late_pool_photo",
-            attachment_id="ch01_photo_late_favourite",
-            attachment_label="Unsent pool favourite",
+            attachment_id=ch01_late_photo_asset,
+            attachment_label=("First group selfie" if ch01_late_group_only else "Unsent pool favourite"),
             mark_unread=True,
             notify=True,
             notification_title="Trip Group",
         )
-        set_story_value("ch01_late_pool_photo_asset", "ch01_photo_late_favourite")
+        set_story_value("ch01_late_pool_photo_asset", ch01_late_photo_asset)
         set_story_flag("ch01_late_pool_photo_shared")
         set_story_flag("ch01_late_photo_followup_pending")
         clear_story_flag("ch01_late_photo_phone_session_active")

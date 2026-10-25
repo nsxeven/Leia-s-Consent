@@ -11,8 +11,10 @@ init 50 python:
         """Return the actual saved Capture photos earned during Scene 5."""
         outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
         suffix = "b" if outfit == "pool_bolder" else "a"
-        count = int(get_story_value("ch01_pool_capture_count", 1) or 1)
-        count = max(1, min(3, count))
+        count = int(get_story_value("ch01_pool_capture_count", 1))
+        count = max(0, min(3, count))
+        # Zero is intentional: the early-stop branch deletes the only
+        # solo photograph. Do not resurrect it by coercing 0 to 1.
         return ["ch01_photo_capture_{:02d}_{}".format(i, suffix) for i in range(1, count + 1)]
 
 

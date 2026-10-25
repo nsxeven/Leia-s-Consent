@@ -318,6 +318,9 @@ label ch01_scene_05_photography:
                 $ exit_cinematic_mode()
             else:
                 $ set_story_value("ch01_photo_outcome", "stopped")
+                # Capture 01 was deleted at Leia's request, so it cannot be
+                # delivered to Messages / Photos. Group selfies still exist.
+                $ set_story_value("ch01_pool_capture_count", 0)
                 $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group_" + ("blue" if selected_pool_outfit == "pool_bolder" else "white"))
                 gf "Okay. Save me."
                 friend "Your passport photo has been safely deleted."
@@ -345,7 +348,10 @@ label ch01_scene_05_photography:
         gf "At least tell me the group one was decent."
         friend "You'll survive."
 
-    "The photos stayed on [friend_name]'s phone for now."
+    if get_story_value("ch01_photo_outcome") == "stopped":
+        "The solo photos were gone, just as he'd promised. Our first group selfie stayed on [friend_name]'s phone for now."
+    else:
+        "The photos stayed on [friend_name]'s phone for now."
 
     # Pacing Revision v2 — an ordinary friendship beat before the towel incident.
     # Leia and Julian should become friends through more than accidents and exposure.
@@ -381,8 +387,6 @@ label ch01_scene_05_photography:
     with sprite_change
     gf "Excuse me?"
     friend "Good. You'll fit in."
-
-    "It was the first time their teasing sounded less like my girlfriend talking to my friend and more like the beginning of a friendship of their own."
 
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
@@ -433,7 +437,7 @@ label ch01_scene_06_friendship_and_towel:
     scene cg ch01_towel_call_down
     with dissolve
 
-    "[girlfriend_name] stood in the open upstairs doorway with wet hair and a small towel wrapped around her body."
+    "[girlfriend_name] stood in the open upstairs glass doorway to our pool-facing balcony, wet hair over one shoulder and a small towel wrapped around her body."
     "One hand held it closed as she leaned out to find us."
 
     gf "Dinner is at seven!"
