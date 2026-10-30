@@ -88,12 +88,18 @@ init 90 python:
 
 
     def apply_choice(choice_id):
-        """Apply effects, record the choice, show transient feedback and onboarding."""
+        """Apply effects, record the choice, show transient feedback and onboarding.
+
+        This init-90 definition replaces the choice engine's apply_choice.
+        Keep the day-review snapshot here so the recap can list each choice.
+        """
+        review_before = lc_review_stats()
         for group_name, stat_name, amount in get_choice_effects(choice_id):
             change_stat(group_name, stat_name, amount)
 
         renpy.store.last_choice_id = choice_id
         renpy.store.choice_history.append(choice_id)
+        lc_review_note_choice(choice_id, review_before)
         show_choice_feedback(choice_id)
         maybe_show_status_choice_tutorial(choice_id)
         return choice_id

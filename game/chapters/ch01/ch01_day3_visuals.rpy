@@ -13,5 +13,5 @@ image bg ch01_d3_cutout_path = Composite(
 image cg ch01_d3_cutout_stranger = Composite(
     (1920, 1080),
     (0, 0), Solid("#6a4f5e"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY THREE CUTOUT STAND — LEIA + STRANGER (NTR LANE ONLY)\nNON-EXPLICIT / LEIA STUCK IN FRAME / CONSENT READS VISUALLY\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY THREE CUTOUT STAND — {gf} + STRANGER (NTR LANE ONLY)\nNON-EXPLICIT / {gf} STUCK IN FRAME / CONSENT READS VISUALLY\nFINAL ART PENDING", size=48, color="#ffffff"),
 )

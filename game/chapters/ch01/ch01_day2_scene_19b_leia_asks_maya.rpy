@@ -15,7 +15,7 @@ label ch01_day2_scene_19b_leia_asks_maya:
     with dissolve
 
     "The villa entrance was cool and quiet after the heat of the pool deck."
-    "Maya had her bag on one shoulder and her hand on the door when Leia spoke."
+    "Maya had her bag on one shoulder and her hand on the door when [girlfriend_name] spoke."
 
     gf "Wait. Can I ask you something?"
     maya "That is a terrifying way to start a sentence."
@@ -24,7 +24,7 @@ label ch01_day2_scene_19b_leia_asks_maya:
     gf "Maya."
     maya "Fine. Ask."
 
-    gf "Are you into Julian?"
+    gf "Are you into [friend_name]?"
 
     "Maya did not answer right away."
 
@@ -40,7 +40,7 @@ label ch01_day2_scene_19b_leia_asks_maya:
     gf "So that's a yes."
     maya "That's a 'you're annoying.'"
 
-    "Leia just grinned and waited. Maya held out for about three seconds."
+    "[girlfriend_name] just grinned and waited. Maya held out for about three seconds."
 
     maya "Okay. Fine. Yes."
     maya "I'm interested. I have been since he moved six inches away from a bee and pretended it never happened."
@@ -53,7 +53,7 @@ label ch01_day2_scene_19b_leia_asks_maya:
     gf "I did. I really did."
     maya "Now go back out there and act normal. I have to go look human."
 
-    "Leia laughed and hugged her goodbye like they had known each other longer than a day."
+    "[girlfriend_name] laughed and hugged her goodbye like they had known each other longer than a day."
 
     $ set_story_flag("ch01_d2_maya_julian_consent_established")
     $ set_story_flag("ch01_d2_maya_julian_talk_complete")
@@ -73,7 +73,7 @@ label ch01_day2_scene_19c_back_outside:
     scene bg ch01_pool_lounge
     with dissolve
 
-    "When Leia came back outside, Julian checked the time and stood."
+    "When [girlfriend_name] came back outside, [friend_name] checked the time and stood."
 
     friend "I'm going up to get ready."
     mc "Already?"
@@ -81,7 +81,7 @@ label ch01_day2_scene_19c_back_outside:
     gf "That's not what you said this afternoon."
     friend "That was pool time. Different jurisdiction."
 
-    "He headed upstairs, leaving Leia and me alone beside the water."
+    "He headed upstairs, leaving [girlfriend_name] and me alone beside the water."
 
     $ set_story_flag("ch01_d2_julian_upstairs_before_sunset")
     $ set_story_flag("ch01_d2_scene_19_complete")

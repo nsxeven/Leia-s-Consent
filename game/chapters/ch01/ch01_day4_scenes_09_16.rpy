@@ -31,7 +31,7 @@ label ch01_day4_scene_09_getting_ready:
         )
 
     "The afternoon bled out into the amber light that made everything look expensive."
-    "My phone buzzed with Maya's dress code. Leia read it over my shoulder."
+    "My phone buzzed with Maya's dress code. [girlfriend_name] read it over my shoulder."
 
     if d4_lane == "love":
         gf "Look photographed by someone who loves you."
@@ -52,7 +52,7 @@ label ch01_day4_scene_09_getting_ready:
                     d4_dusk_pick = renpy.call_screen(
                         "leia_love_outfit_picker",
                         options=d4_dusk_options,
-                        title_text="Pick Leia's Day Four dinner outfit",
+                        title_text=('Pick ' + girlfriend_name + "'s Day Four dinner outfit"),
                     )
                     love_route_wear_request(d4_dusk_pick, route_lane="love")
                     set_story_value("ch01_d4_dusk_outfit_id", d4_dusk_pick)
@@ -121,7 +121,7 @@ label ch01_day4_scene_09_getting_ready:
                 $ set_story_value("ch01_d4_dusk_outfit_source", "ryan")
 
     else:
-        "Leia took the dress code the way she'd taken everything that day, as a problem she intended to solve on her own."
+        "[girlfriend_name] took the dress code the way she'd taken everything that day, as a problem she intended to solve on her own."
         $ d4_fine_n = get_story_value("ch01_d4_ntr_fine_count", 0)
         if d4_fine_n >= 2:
             $ d4_wore = ch01_d4_wear("boutique_cutout_mini")
@@ -157,7 +157,7 @@ label ch01_day4_scene_10_dinner:
 
     # AUDIO TODO: restaurant murmur, string-light hum, distant surf.
     "The terrace restaurant sat on a roof above the harbor, string lights looped between the rail posts, the sea gone dark and soft below."
-    "Maya and Julian were already at the table. Julian stood when Leia arrived, like he'd been taught to, and then looked embarrassed that he had."
+    "Maya and [friend_name] were already at the table. [friend_name] stood when [girlfriend_name] arrived, like he'd been taught to, and then looked embarrassed that he had."
     maya "Look at you."
     gf "Look at us."
     maya "I'm very good at telling people they look good."
@@ -168,26 +168,26 @@ label ch01_day4_scene_10_dinner:
         friend "I'd like to thank the academy."
         maya "He's going to say that every year."
     else:
-        "Julian winced at the prices and pushed the menu back toward the middle."
+        "[friend_name] winced at the prices and pushed the menu back toward the middle."
         friend "I'm going to appeal."
         maya "Appeal denied. Order the lobster."
         friend "The lobster has claws."
         maya "It's a lobster."
 
-    "Julian ordered for Maya without looking at the menu, a dessert she hadn't mentioned out loud. She noticed and pretended she hadn't."
+    "[friend_name] ordered for Maya without looking at the menu, a dessert she hadn't mentioned out loud. She noticed and pretended she hadn't."
 
     if d4_lane == "love":
         gf "I like this."
         mc "Dinner?"
         gf "Still. Us. I said it at sunset and I meant it. I still mean it."
     elif d4_lane == "exhibitionism":
-        "Leia caught my eye over the candle."
+        "[girlfriend_name] caught my eye over the candle."
         gf "What I said at sunset. It's still true."
         mc "Which part?"
         gf "I think part of why I liked it was because you knew."
         "Maya looked between the two of us and decided, wisely, to find the bread very interesting."
     else:
-        "Leia's phone sat face down beside her plate."
+        "[girlfriend_name]'s phone sat face down beside her plate."
         "Twice she picked it up, typed, and put it down again. I watched her thumbs."
         "I told myself she was texting her sister. I told myself a lot of things."
 
@@ -195,17 +195,17 @@ label ch01_day4_scene_10_dinner:
     friend "I hate this game."
     maya "You've hated every game and you've enjoyed all of them."
 
-    $ d4_t_leia = format_choice("ch01_d4_toast_leia", "To Leia, who made me laugh before the first coffee.")
+    $ d4_t_leia = format_choice("ch01_d4_toast_leia", ('To ' + girlfriend_name + ', who made me laugh before the first coffee.'))
     $ d4_t_group = format_choice("ch01_d4_toast_group", "To the four of us, and the bee that started it.")
     $ d4_t_dare = format_choice("ch01_d4_toast_dare", "To bad ideas that turned out fine.")
 
     menu:
         "[d4_t_leia]":
             $ apply_choice("ch01_d4_toast_leia")
-            mc "To Leia, who made me laugh before the first coffee."
+            mc "To [girlfriend_name], who made me laugh before the first coffee."
             gf "That's not a toast. That's a weapon."
             maya "It's a very good toast."
-            "Leia's hand found mine under the table without her looking."
+            "[girlfriend_name]'s hand found mine under the table without her looking."
             if d4_lane == "ntr":
                 "I felt her squeeze once and then hesitate, as if she'd forgotten whether she was allowed."
 
@@ -225,12 +225,12 @@ label ch01_day4_scene_10_dinner:
             mc "The swim rings."
             friend "I was wedged."
             gf "And you survived."
-            "Maya raised her glass at Leia, a small, private salute that I decided not to ask about."
+            "Maya raised her glass at [girlfriend_name], a small, private salute that I decided not to ask about."
 
     "The food arrived in waves, as it does, and the conversation fell into the easy shape of four people who'd quietly decided to keep each other."
 
     if d4_style == "candid" or d4_style == "posed" or d4_style == "swap":
-        gf "Ryan, send me the photo from the market."
+        gf "[player_name], send me the photo from the market."
         mc "Which one?"
         if d4_style == "candid":
             gf "The one where I'm laughing. I keep looking at it. I look like someone who's having a good time."
@@ -249,7 +249,7 @@ label ch01_day4_scene_10_dinner:
                 mark_unread=True, notify=False,
             )
     else:
-        "Maya asked to see the market photos on the group chat. Leia pulled up the one Maya had taken and said it was fine, and then showed no one else."
+        "Maya asked to see the market photos on the group chat. [girlfriend_name] pulled up the one Maya had taken and said it was fine, and then showed no one else."
 
     $ set_story_flag("ch01_d4_scene_10_complete")
     jump ch01_day4_scene_11_dusk_walk
@@ -265,10 +265,10 @@ label ch01_day4_scene_11_dusk_walk:
     "We walked back in the blue hour with the lanterns coming on one by one."
     maya "We're going to take the cliff path."
     gf "The cliff path is the long way."
-    maya "That's the point. Julian and I are going to look at lights."
+    maya "That's the point. [friend_name] and I are going to look at lights."
     friend "I was told there would be lights."
     maya "There are lights, and we are going to look at them. For one hour. Possibly two. Don't wait up."
-    "Julian looked at me, then at the ground. He didn't look at Leia at all."
+    "[friend_name] looked at me, then at the ground. He didn't look at [girlfriend_name] at all."
     friend "We'll be careful."
     mc "It's a cliff path. Be careful."
     friend "That's what I said."
@@ -276,7 +276,7 @@ label ch01_day4_scene_11_dusk_walk:
     "They turned off into the dark with Maya's laugh trailing behind them."
 
     if d4_lane == "love":
-        "Leia leaned her head against my arm as we walked, whatever she was wearing suddenly the least important thing about her."
+        "[girlfriend_name] leaned her head against my arm as we walked, whatever she was wearing suddenly the least important thing about her."
         gf "That was a good day."
         mc "It was."
         gf "No, I mean it was a good day. I'm trying to remember how we got here."
@@ -284,7 +284,7 @@ label ch01_day4_scene_11_dusk_walk:
         gf "Pancakes and a bee."
         "We laughed. The sound of it stayed on the path behind us a little longer than we did."
     elif d4_lane == "exhibitionism":
-        "Leia slowed as we reached the villa gate."
+        "[girlfriend_name] slowed as we reached the villa gate."
         gf "I've been thinking about something all afternoon."
         mc "Yeah?"
         gf "I'm not going to say it. You'll know when we get upstairs. Your face will tell me."
@@ -293,7 +293,7 @@ label ch01_day4_scene_11_dusk_walk:
         "She pushed the gate open, then looked back with the clip in her hair catching the lantern light."
     else:
         "Neither of us said anything for the first half of the walk."
-        "Somewhere near the gate Leia stopped, took out her phone, checked it, and put it away."
+        "Somewhere near the gate [girlfriend_name] stopped, took out her phone, checked it, and put it away."
         gf "Sorry."
         mc "Everything okay?"
         gf "Yeah. No. Can we talk when we get in?"
@@ -335,7 +335,7 @@ label ch01_day4_scene_13_love_night:
     $ d4_style = get_story_value("ch01_d4_photo_style", "none")
 
     "The villa was quiet, the way it gets when everyone has somewhere better to be."
-    "Leia put her phone on the counter, found a slow song, and turned the volume down until it was barely there."
+    "[girlfriend_name] put her phone on the counter, found a slow song, and turned the volume down until it was barely there."
     gf "Dance with me. Badly."
     mc "I'm excellent at bad."
     gf "I know. It's one of your best qualities."
@@ -427,7 +427,7 @@ label ch01_day4_scene_13_exhib_night:
 
     $ d4_style = get_story_value("ch01_d4_photo_style", "none")
 
-    "Leia went into the bedroom alone and came out a minute later in the cream wrap she'd packed for slow mornings, tied loosely at the waist."
+    "[girlfriend_name] went into the bedroom alone and came out a minute later in the cream wrap she'd packed for slow mornings, tied loosely at the waist."
     gf "Terrace."
     "She took my hand and led me through the glass doors, past the potted lemon tree, to the rail."
     "Below, the beach path ran pale in the dark. A couple were a long way off, small as chess pieces, not looking up."
@@ -520,11 +520,11 @@ label ch01_day4_exhib_step:
         d4_ex_variant = get_story_value("ch01_d4_exhib_variant", "shared_step")
 
     if current_choice_mode() == "developer":
-        centered "LEIA'S CALL: Exhibitionism [d4_ex_now] / [D4_EXHIBITION_BRIEF_REVEAL_MIN] -> [d4_ex_call]"
+        centered "[girlfriend_name!u]'S CALL: Exhibitionism [d4_ex_now] / [D4_EXHIBITION_BRIEF_REVEAL_MIN] -> [d4_ex_call]"
     elif current_choice_mode() == "full":
-        centered "Leia decides how far she goes. Brief reveal needs Exhibitionism [D4_EXHIBITION_BRIEF_REVEAL_MIN]. Current: [d4_ex_now]."
+        centered "[girlfriend_name] decides how far she goes. Brief reveal needs Exhibitionism [D4_EXHIBITION_BRIEF_REVEAL_MIN]. Current: [d4_ex_now]."
     elif current_choice_mode() == "insight":
-        centered "Leia decides how far she goes, based on her own confidence."
+        centered "[girlfriend_name] decides how far she goes, based on her own confidence."
 
     if d4_ex_variant == "ryan_likes_watching":
         $ enter_cinematic_mode()
@@ -542,7 +542,7 @@ label ch01_day4_exhib_step:
         scene cg ch01_d4_exhib_terrace_01
         with dissolve
         # CG TODO (artist): ch01_d4_exhib_terrace_01. Ryan POV, Ryan never in frame. COVERED tease frame.
-        "Leia let the wrap slip off one shoulder, slowly. She held it closed at the front with both hands and looked back at me over the bare shoulder."
+        "[girlfriend_name] let the wrap slip off one shoulder, slowly. She held it closed at the front with both hands and looked back at me over the bare shoulder."
         "Down on the path, the couple turned a corner and were gone."
         gf "That's as far as I'm going tonight."
         gf "I wanted to see if I could do that much and still be me."
@@ -555,7 +555,7 @@ label ch01_day4_exhib_step:
         scene cg ch01_d4_exhib_terrace_02
         with dissolve
         # CG TODO (artist): ch01_d4_exhib_terrace_02. Ryan POV, Ryan never in frame. BRIEF, implied, non-explicit. See visuals file.
-        "Leia stood very straight at the rail. Then she opened the wrap, eyes on me and not on the path, for one slow heartbeat."
+        "[girlfriend_name] stood very straight at the rail. Then she opened the wrap, eyes on me and not on the path, for one slow heartbeat."
         gf "One."
         "She closed it again, her whole face lit."
         gf "Two. I counted."
@@ -606,7 +606,7 @@ label ch01_day4_scene_13_ntr_night:
     $ d4_pressed = has_story_flag("ch01_d4_ntr_pressed_early")
     $ d4_fine_n = get_story_value("ch01_d4_ntr_fine_count", 0)
 
-    "Leia was already out on the terrace when I came up, sitting on the low wall with the hairclip open in her hands."
+    "[girlfriend_name] was already out on the terrace when I came up, sitting on the low wall with the hairclip open in her hands."
     "She turned it over once. She didn't put it on."
 
     $ enter_cinematic_mode()
@@ -640,7 +640,7 @@ label ch01_day4_scene_13_ntr_night:
         "[d4_g_reconnect]":
             $ apply_choice("ch01_d4_ntr_gate_reconnect")
             mc "I'm listening. All of it, whenever you're ready."
-            "Leia looked at me as if I'd handed her something she'd stopped expecting."
+            "[girlfriend_name] looked at me as if I'd handed her something she'd stopped expecting."
             call ch01_day4_ntr_disclosure
             $ set_story_value("ch01_d4_disclosure_when", "night_gate")
             jump ch01_day4_ntr_react_menu
@@ -650,7 +650,7 @@ label ch01_day4_scene_13_ntr_night:
             $ set_story_value("ch01_d4_ntr_confirmed", True)
             $ set_story_value("ch01_d4_ntr_outcome", "ntr_unresolved")
             mc "What did you do yesterday?"
-            "Leia stared at me, suddenly cold."
+            "[girlfriend_name] stared at me, suddenly cold."
             gf "That's what you want to ask me."
             mc "I'm asking."
             gf "Something happened at the stand. Something I would have told you if you'd asked what it was."
@@ -668,7 +668,7 @@ label ch01_day4_scene_13_ntr_night:
             $ set_story_value("ch01_d4_ntr_outcome", "ntr_confirmed")
             $ set_story_value("ch01_d4_ntr_fine_count", d4_fine_n + 1)
             mc "I'm fine."
-            "Leia watched me for a long few seconds."
+            "[girlfriend_name] watched me for a long few seconds."
             "It was the same answer I'd given her all day."
             gf "...Okay."
             "She didn't push. She put the hairclip in her pocket instead of her hair."
@@ -704,10 +704,10 @@ label ch01_day4_ntr_gate_disclosed:
             $ set_story_value("ch01_d4_ntr_outcome", "ntr_confirmed")
             $ set_story_value("ch01_d4_ntr_fine_count", get_story_value("ch01_d4_ntr_fine_count", 0) + 1)
             mc "I'm fine."
-            "Leia flinched as if the words had weight."
+            "[girlfriend_name] flinched as if the words had weight."
             gf "She told you something real, and you said fine."
             "She wasn't angry. That was the worst part."
-            gf "Goodnight, Ryan."
+            gf "Goodnight, [player_name]."
             "She went inside and I stayed with a gate I had closed myself."
             jump ch01_day4_ntr_gate_resolved
 
@@ -746,7 +746,7 @@ label ch01_day4_ntr_react_resolve:
 
     $ d4_react = get_story_value("ch01_d4_ntr_react", "thanks")
 
-    "Leia closed her eyes for a moment, and when she opened them she looked ten pounds lighter."
+    "[girlfriend_name] closed her eyes for a moment, and when she opened them she looked ten pounds lighter."
     gf "Thank you."
     "She stood, put the hairclip back in her hair, and took my hand."
     gf "I don't have it all figured out."
@@ -789,7 +789,7 @@ label ch01_day4_scene_14_night_after:
     with fade
 
     if d4_lane == "love":
-        "Afterward Leia lay with her head on my shoulder and her phone on the pillow, the screen dark."
+        "Afterward [girlfriend_name] lay with her head on my shoulder and her phone on the pillow, the screen dark."
         gf "Maya's going to text in the morning."
         mc "About what?"
         gf "About everything. She has a talent."
@@ -809,7 +809,7 @@ label ch01_day4_scene_14_night_after:
     elif d4_lane == "exhibitionism":
         $ d4_xv = get_story_value("ch01_d4_exhib_variant", "shared_step")
         if d4_xv == "opt_out_private":
-            "Leia lay with her head on my chest."
+            "[girlfriend_name] lay with her head on my chest."
             gf "I didn't stop wanting it, you know."
             mc "I know."
             gf "Just tonight was too good to share."
@@ -817,7 +817,7 @@ label ch01_day4_scene_14_night_after:
             gf "It's about us. Don't make it about you."
             "She was smiling in the dark."
         else:
-            "Leia lay on her side, one hand under her cheek, studying me."
+            "[girlfriend_name] lay on her side, one hand under her cheek, studying me."
             gf "I think I surprised myself."
             mc "Me too."
             if d4_xv == "ryan_likes_watching":
@@ -837,17 +837,17 @@ label ch01_day4_scene_14_night_after:
 
     else:
         if d4_pending == "love_repaired":
-            "Leia turned toward me instead of away, which was a small thing and was not small."
+            "[girlfriend_name] turned toward me instead of away, which was a small thing and was not small."
             gf "Tomorrow I'll tell you the rest. About the club."
             mc "I'll be here."
             gf "I know. That's the new part."
             "I fell asleep with her breath against my collarbone and the first honest quiet I'd had in two days."
         elif d4_pending == "ntr_unresolved":
             "We lay with our backs almost touching."
-            "Leia's phone lit the ceiling for a second. She turned it face down without reading it."
+            "[girlfriend_name]'s phone lit the ceiling for a second. She turned it face down without reading it."
             "I watched the little glow die and wondered who it was, and then hated myself a little for wondering."
         else:
-            "Leia slept on the far edge of the bed. I looked at the ceiling for a long time."
+            "[girlfriend_name] slept on the far edge of the bed. I looked at the ceiling for a long time."
             "Her phone lit once, three dots appearing and vanishing in a small gray window on the screen. She didn't wake."
             "I didn't reach over to look. That was the one thing I did right that day, and it didn't feel like much."
 
@@ -897,7 +897,7 @@ label ch01_day4_scene_15_phone_hook:
                 message_id="ch01_d4_leia_day5_love",
                 mark_unread=True, notify=False,
             )
-        "A second later, a single message from Leia, sent from the other side of the bed."
+        "A second later, a single message from [girlfriend_name], sent from the other side of the bed."
     elif d4_lane == "exhibitionism":
         python:
             phone_add_message(
@@ -908,11 +908,11 @@ label ch01_day4_scene_15_phone_hook:
             )
             phone_add_message(
                 "leia", "leia",
-                text="Ryan. I have an idea. Tell you tomorrow. Say yes now.",
+                text=(player_name + '. I have an idea. Tell you tomorrow. Say yes now.'),
                 message_id="ch01_d4_leia_day5_exhib",
                 mark_unread=True, notify=False,
             )
-        "Then two more. Maya, and Leia, sent from the other side of the bed."
+        "Then two more. Maya, and [girlfriend_name], sent from the other side of the bed."
     else:
         if d4_pending == "love_repaired":
             python:
@@ -922,9 +922,9 @@ label ch01_day4_scene_15_phone_hook:
                     message_id="ch01_d4_leia_day5_ntr_repaired",
                     mark_unread=True, notify=False,
                 )
-            "One more, from Leia, sent in the dark from three feet away."
+            "One more, from [girlfriend_name], sent in the dark from three feet away."
         elif d4_pending == "ntr_unresolved":
-            "Under the group chat, Leia's thread showed the three dots. They appeared. They disappeared."
+            "Under the group chat, [girlfriend_name]'s thread showed the three dots. They appeared. They disappeared."
             python:
                 phone_add_message(
                     "leia", "leia",
@@ -947,10 +947,10 @@ label ch01_day4_scene_15_phone_hook:
                     message_id="ch01_d4_julian_day5_ntr_confirmed",
                     mark_unread=True, notify=False,
                 )
-            "Two more. Maya. And Julian, in a private thread."
+            "Two more. Maya. And [friend_name], in a private thread."
 
     $ d4_h_in = format_choice("ch01_d4_hook_in", "We're in.")
-    $ d4_h_ask = format_choice("ch01_d4_hook_ask_leia", "Let me check with Leia first.")
+    $ d4_h_ask = format_choice("ch01_d4_hook_ask_leia", ('Let me check with ' + girlfriend_name + ' first.'))
     $ d4_h_maybe = format_choice("ch01_d4_hook_maybe", "Depends on tomorrow morning.")
 
     menu:
@@ -967,7 +967,7 @@ label ch01_day4_scene_15_phone_hook:
 
         "[d4_h_ask]":
             $ apply_choice("ch01_d4_hook_ask_leia")
-            $ phone_send_player_message("group", "Let me check with Leia first.", message_id="ch01_d4_player_hook_ask")
+            $ phone_send_player_message("group", ('Let me check with ' + girlfriend_name + ' first.'), message_id="ch01_d4_player_hook_ask")
             $ set_story_value("ch01_d4_hook_reply", "ask_leia")
             python:
                 phone_add_message(

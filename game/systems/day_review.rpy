@@ -27,6 +27,10 @@ init 20 python:
         "ntr_confirmed": ("NTR direction", "There are questions you have not resolved together."),
         "mixed_unresolved": ("Mixed / unresolved", "The day ended with things left unsaid."),
         "ntr_unresolved": ("NTR / unresolved", "The day ended with things left unsaid."),
+        # Day Three's NTR night is still one scene. The club choice only changes
+        # how that night is described in the recap; Day Four keeps reading the lane.
+        "ntr_talked": ("NTR pressure", "You tried to talk it through. The night still ended with questions between you."),
+        "ntr_withdrew": ("NTR pressure", "You stepped away, and the distance was still there at the end of the night."),
     }
     # Internal trait changes are deliberately hidden in Insight; Full exposes them.
     LC_REVIEW_INSIGHT_STATS = {"love", "trust", "boredom", "curiosity", "exhibitionism", "jealousy", "acceptance"}
@@ -88,6 +92,14 @@ init 20 python:
         value = get_story_value(LC_REVIEW_DAYS[day_id]["route_key"], "mixed")
         if day_id == "ch01_d1" and getattr(store, "ch01_day1_love_ending", False):
             return "love"
+        # Day Three's lane is fixed by Day Two. The two NTR choices still change
+        # how the recap describes the night, without relabeling the lane Day Four reads.
+        if day_id == "ch01_d3" and value == "ntr":
+            effort = get_story_value("ch01_d3_ntr_repair_effort", "none")
+            if effort == "talk":
+                return "ntr_talked"
+            if effort == "withdraw":
+                return "ntr_withdrew"
         return value if value in LC_REVIEW_ROUTES else "mixed"
 
     def lc_review_finish(day_id):
@@ -184,7 +196,7 @@ init 20 python:
             return ("Knowing Accomplice", "Enjoying the Attention")
         if route == "nts_seeded":
             return ("Curious Partner", "Testing the Waters")
-        if route in ("ntr", "ntr_seeded", "ntr_confirmed", "ntr_unresolved", "mixed_unresolved"):
+        if route in ("ntr", "ntr_seeded", "ntr_confirmed", "ntr_unresolved", "mixed_unresolved", "ntr_talked", "ntr_withdrew"):
             # These legacy route labels do not establish infidelity or Ryan's knowledge.
             return ("Uneasy Observer", "Growing Distant")
         return ("Curious Partner", "Affectionate Partner")
