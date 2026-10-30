@@ -1016,6 +1016,8 @@ label ch01_day4_scene_16_finish:
     scene black
     with fade
 
+    call lc_day_review("ch01_d4") from lc_review_return_ch01_d4
+
     # Day Five hand-off. Day Five does not exist yet, so the label is checked at runtime.
     # Once ch01_day5_start exists, replace this block with the literal:
     #     jump ch01_day5_start
@@ -1025,3 +1027,4 @@ label ch01_day4_scene_16_finish:
     # TEMPORARY END CARD, only reached while Day Five is missing.
     centered "{size=46}CHAPTER ONE - DAY FOUR COMPLETE{/size}\n\n{size=25}Current development build ends here{/size}"
     return
+

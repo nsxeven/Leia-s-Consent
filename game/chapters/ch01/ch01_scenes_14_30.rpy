@@ -1107,77 +1107,90 @@ label ch01_scene_30_end_day_one:
     scene black
     with fade
 
-    $ enter_cinematic_mode()
-    scene cg ch01_dream_towel_replay
-    with dissolve
+    $ lc_dream_presentation = persistent.lc_day1_dream
+    if lc_dream_presentation == "ask":
+        menu:
+            "The next sequence is a dream containing betrayal-themed imagery."
+            "Show the full dream.":
+                $ lc_dream_presentation = "show"
+            "Read a brief summary instead.":
+                $ lc_dream_presentation = "summary"
 
-    "I was back by the pool."
-    "[girlfriend_name] stood upstairs again, wet hair over one shoulder and the same small towel wrapped around her."
+    if lc_dream_presentation == "summary":
+        "The day's awkward moments tangled into an unsettling dream about jealousy and betrayal."
+        "It was something my sleeping mind invented, not something that had happened."
+    else:
+        $ enter_cinematic_mode()
+        scene cg ch01_dream_towel_replay
+        with dissolve
 
-    gf "Dinner is at seven!"
-    friend "Six twenty-three."
-    gf "Why are both of you still sitting there?"
+        "I was back by the pool."
+        "[girlfriend_name] stood upstairs again, wet hair over one shoulder and the same small towel wrapped around her."
 
-    scene cg ch01_dream_towel_shift
-    with dissolve
+        gf "Dinner is at seven!"
+        friend "Six twenty-three."
+        gf "Why are both of you still sitting there?"
 
-    "She stepped farther out. The towel shifted exactly the way I remembered."
+        scene cg ch01_dream_towel_shift
+        with dissolve
 
-    mc "[girlfriend_name]—"
+        "She stepped farther out. The towel shifted exactly the way I remembered."
 
-    "Nothing came out."
+        mc "[girlfriend_name]—"
 
-    "I tried again. My mouth moved, but there was no sound."
-    "She kept talking, completely unaware."
+        "Nothing came out."
 
-    "The towel rode a little higher as she turned back toward the bedroom."
+        "I tried again. My mouth moved, but there was no sound."
+        "She kept talking, completely unaware."
 
-    scene cg ch01_dream_towel_curtain
-    with dissolve
+        "The towel rode a little higher as she turned back toward the bedroom."
 
-    "Then she reached for the curtain and pulled it across the glass."
+        scene cg ch01_dream_towel_curtain
+        with dissolve
 
-    "For a second, relief washed through me."
+        "Then she reached for the curtain and pulled it across the glass."
 
-    "Then I remembered."
+        "For a second, relief washed through me."
 
-    "{i}These barely cover anything.{/i}"
+        "Then I remembered."
 
-    "The sheer fabric softened her outline. It did not hide it."
+        "{i}These barely cover anything.{/i}"
 
-    scene cg ch01_dream_stranger_behind
-    with dissolve
+        "The sheer fabric softened her outline. It did not hide it."
 
-    "Behind the sheer curtain, [girlfriend_name] turned away from the window."
-    "Someone was standing behind her."
-    "The man from dinner."
+        scene cg ch01_dream_stranger_behind
+        with dissolve
 
-    "There was no door opening. No footsteps. One moment she was alone; the next he was simply there."
+        "Behind the sheer curtain, [girlfriend_name] turned away from the window."
+        "Someone was standing behind her."
+        "The man from dinner."
 
-    "{i}[girlfriend_name].{/i}"
+        "There was no door opening. No footsteps. One moment she was alone; the next he was simply there."
 
-    "Still no voice."
+        "{i}[girlfriend_name].{/i}"
 
-    scene cg ch01_dream_stranger_look
-    with dissolve
+        "Still no voice."
 
-    "Her eyes dropped immediately, following the same path they had at dinner."
-    "This time, she didn't correct herself."
+        scene cg ch01_dream_stranger_look
+        with dissolve
 
-    "I tried to call her name again."
-    "Nothing."
+        "Her eyes dropped immediately, following the same path they had at dinner."
+        "This time, she didn't correct herself."
 
-    scene cg ch01_dream_stranger_reach
-    with dissolve
+        "I tried to call her name again."
+        "Nothing."
 
-    "She stepped closer."
-    "Slowly, almost experimentally, she reached toward him."
-    "Her hand disappeared between their silhouettes—"
+        scene cg ch01_dream_stranger_reach
+        with dissolve
 
-    scene black
-    with dissolve
+        "She stepped closer."
+        "Slowly, almost experimentally, she reached toward him."
+        "Her hand disappeared between their silhouettes—"
 
-    $ exit_cinematic_mode()
+        scene black
+        with dissolve
+
+        $ exit_cinematic_mode()
 
     "My eyes opened."
 
@@ -1227,9 +1240,10 @@ label ch01_scene_30_end_day_one:
     scene black
     with fade
 
-    centered "{size=46}CHAPTER ONE — DAY ONE COMPLETE{/size}"
+    call lc_day_review("ch01_d1") from lc_review_return_ch01_d1
 
     if LC_DAY1_DEMO_BUILD:
         jump ch01_day1_demo_complete
 
     jump ch01_day2_start
+

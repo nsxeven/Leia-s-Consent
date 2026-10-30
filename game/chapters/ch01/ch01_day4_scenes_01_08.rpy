@@ -13,6 +13,7 @@
 # All intimacy is NON-EXPLICIT: fade/cut to CG placeholder cards with artist TODOs.
 
 label ch01_day4_start:
+    $ lc_review_begin("ch01_d4")
 
     $ set_story_flag("ch01_day_04_started")
 
@@ -1044,3 +1045,4 @@ label ch01_day4_ntr_disclosure:
     $ set_story_flag("ch01_d4_cutout_disclosed")
     $ set_story_flag("ch01_d4_club_story_deferred")
     return
+

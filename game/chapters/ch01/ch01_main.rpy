@@ -2,6 +2,7 @@
 # First playable production chunk: Scenes 1–3.
 
 label chapter_one_start:
+    $ lc_review_begin("ch01_d1")
 
     $ set_story_flag("ch01_started")
     $ set_phone_hud_enabled(True)
@@ -319,3 +320,4 @@ label ch01_scene_03_outfit_choice:
 
 
     jump ch01_scene_04_pool_arrival
+
