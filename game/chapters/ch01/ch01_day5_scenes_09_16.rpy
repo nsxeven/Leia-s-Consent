@@ -867,7 +867,7 @@ label ch01_day5_scene_16_finish:
     scene black
     with fade
 
-    centered "{size=46}CHAPTER ONE - DAY FIVE COMPLETE{/size}"
+    call lc_day_review("ch01_d5") from lc_review_return_ch01_d5
 
     # Day Six hand-off. Day Six does not exist yet, so the label is checked at runtime.
     # Once ch01_day6_start exists, replace this block with the literal:
@@ -878,3 +878,4 @@ label ch01_day5_scene_16_finish:
     # TEMPORARY END CARD, only reached while Day Six is missing.
     centered "{size=25}Current development build ends here{/size}"
     return
+

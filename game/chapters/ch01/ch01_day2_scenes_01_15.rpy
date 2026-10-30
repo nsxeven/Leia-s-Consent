@@ -271,6 +271,7 @@ init 1 python:
 label ch01_day2_start:
     if LC_DAY1_DEMO_BUILD:
         jump ch01_day1_demo_complete
+    $ lc_review_begin("ch01_d2")
 
 
     $ set_story_flag("ch01_day_02_started")
@@ -1456,3 +1457,4 @@ label ch01_day2_scene_15_pool_group:
     $ set_story_flag("ch01_d2_scene_15_complete")
 
     jump ch01_day2_scene_16_forced_split
+

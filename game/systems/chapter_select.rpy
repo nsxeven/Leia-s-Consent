@@ -152,6 +152,7 @@ init 10 python:
         return False
 
     def _chapter_select_reset(stats, hist, pressure):
+        lc_review_reset()
         store.story_flags = {}
         store.story_values = {}
         store.relationship_stats.update({"love": stats["love"], "trust": stats["trust"], "boredom": stats["boredom"], "momentum": 0})
@@ -276,3 +277,4 @@ label ch01_chapter_select_entry:
         jump ch01_day5_start
     else:
         jump ch01_day4_start
+

@@ -4,6 +4,7 @@
 # Exit: jumps to ch01_day4_start.
 
 label ch01_day3_start:
+    $ lc_review_begin("ch01_d3")
     $ set_story_flag("ch01_day_03_started")
     scene black
     with fade
@@ -524,8 +525,9 @@ label ch01_day3_bedroom:
     scene black
     with fade
 
-    centered "{size=46}CHAPTER ONE — DAY THREE COMPLETE{/size}"
+    call lc_day_review("ch01_d3") from lc_review_return_ch01_d3
 
     # Day Three -> Day Four. ch01_day4_start reads (never recomputes) the Day
     # Three state stored here: lane, end variant, repair effort, cutout secret.
     jump ch01_day4_start
+

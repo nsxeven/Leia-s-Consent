@@ -39,7 +39,7 @@ init -2 python:
     # Images that are still Composite text placeholders (final art pending).
     GALLERY_PLACEHOLDER_IMAGES = set([
         # Day 1
-        "ch01_trip_catch", "ch01_drive_back_seating", "ch01_carry_dress_shift",
+        "ch01_drive_back_seating", "ch01_carry_dress_shift",
         "ch01_night_pool_attention", "ch01_movie_cuddle_blanket", "ch01_movie_no_blanket",
         "ch01_lounge_micro_test",
         "ch01_dream_towel_replay", "ch01_dream_towel_shift", "ch01_dream_towel_curtain",
@@ -151,7 +151,7 @@ init -2 python:
         "A moment in the lounge when nothing accidental forces the decision.",
         ["ch01_lounge_micro_test"])
     gallery_row("d1_dream", "ch01_d1", "The dream",
-        "Leia's dream at the end of the day. A dream is not evidence.",
+        "Ryan's dream at the end of the day. A dream is not evidence.",
         [("ch01_dream_towel_replay", "Towel replay"), ("ch01_dream_towel_shift", "Towel shift"), ("ch01_dream_towel_curtain", "Curtain"),
          ("ch01_dream_stranger_behind", "Behind her"), ("ch01_dream_stranger_look", "The look"), ("ch01_dream_stranger_reach", "The reach")],
         dream=True)
@@ -265,3 +265,4 @@ init -2 python:
     gallery_row("d5_invitation", "ch01_d5", "The invitation",
         "A printed invitation pinned to a post on the dawn pier.",
         ["ch01_d5_invitation"])
+

@@ -17,6 +17,7 @@
 define skipper = Character("Captain Ilario")
 
 label ch01_day5_start:
+    $ lc_review_begin("ch01_d5")
 
     $ set_story_flag("ch01_day_05_started")
 
@@ -1439,3 +1440,4 @@ label ch01_day5_ntr_react_resolve:
     if get_story_value("ch01_d5_react_return", "sunset") == "dinner":
         jump ch01_day5_scene_10_dinner
     jump ch01_day5_scene_09_sunset
+
