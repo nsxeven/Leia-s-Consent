@@ -90,7 +90,7 @@ init 10 python:
         current = renpy.store.partner_stats.get("exhibitionism", 0)
 
         if mode == "normal":
-            return "Leia isn't comfortable wearing this here yet."
+            return renpy.store.girlfriend_name + " isn't comfortable wearing this here yet."
         elif mode == "insight":
             return "Requires higher Exhibitionism."
         elif mode == "full":
@@ -176,7 +176,7 @@ init 10 python:
         )
 
 
-screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
+screen leia_love_outfit_picker(options, title_text=("What should " + girlfriend_name + " wear?")):
     modal True
     zorder 240
 
@@ -194,7 +194,7 @@ screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
 
             text "LOVE ROUTE — OUTFIT CHOICE" size 34
             text "[title_text]" size 28
-            text "Choose from Leia's outdoor wardrobe. More daring categories open as her confidence grows." size 22
+            text "Choose from [girlfriend_name]'s outdoor wardrobe. More daring categories open as her confidence grows." size 22
 
             viewport:
                 xfill True
@@ -210,7 +210,7 @@ screen leia_love_outfit_picker(options, title_text="What should Leia wear?"):
                     for outfit_id in options:
                         $ outfit = get_outfit(outfit_id)
                         $ display_name = outfit.get("name", outfit_id)
-                        $ display_description = outfit.get("description", "")
+                        $ display_description = gallery_customize_names(outfit.get("description", ""))
                         $ display_context = outfit_context_text(outfit_id)
                         $ outfit_available = love_outfit_available(outfit_id)
                         $ lock_text = love_outfit_lock_text(outfit_id) if not outfit_available else ""

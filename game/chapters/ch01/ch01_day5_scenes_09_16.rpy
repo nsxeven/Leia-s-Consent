@@ -24,7 +24,7 @@ label ch01_day5_scene_09_sunset:
 
     # Evening wardrobe: Love gets the outfit-control picker (mini available); others, Leia's own choice.
     if d5_track == "love" or d5_pending == "love":
-        "Leia came up from the cabin with her bag, a towel over her shoulder and the look of a woman with a decision to make."
+        "[girlfriend_name] came up from the cabin with her bag, a towel over her shoulder and the look of a woman with a decision to make."
         gf "The mini or the dress or the loose one. I want it to be your fault."
 
         $ d5_ev_ryan = format_choice("ch01_d5_evening_ryan_picks", "Let me choose your outfit for dinner.")
@@ -38,7 +38,7 @@ label ch01_day5_scene_09_sunset:
                     d5_ev_pick = renpy.call_screen(
                         "leia_love_outfit_picker",
                         options=d5_ev_options,
-                        title_text="Pick Leia's boat dinner outfit",
+                        title_text=('Pick ' + girlfriend_name + "'s boat dinner outfit"),
                     )
                     love_route_wear_request(d5_ev_pick, route_lane="love")
                     set_story_value("ch01_d5_evening_outfit_id", d5_ev_pick)
@@ -66,10 +66,10 @@ label ch01_day5_scene_09_sunset:
         $ set_story_value("ch01_d5_evening_outfit_id", "resort_dinner_dress")
         $ set_story_value("ch01_d5_evening_outfit_source", "leia")
         if d5_track == "exhibitionism":
-            "Leia disappeared below and came up in the Resort Dinner Dress with sun-bright cheeks, the hairclip secure."
+            "[girlfriend_name] disappeared below and came up in the Resort Dinner Dress with sun-bright cheeks, the hairclip secure."
             gf "The dress. The mini has had its week."
         else:
-            "Leia came up in the Resort Dinner Dress without asking me what she should wear. I noticed. She noticed me noticing."
+            "[girlfriend_name] came up in the Resort Dinner Dress without asking me what she should wear. I noticed. She noticed me noticing."
 
     scene bg ch01_d5_boat_sunset
     with dissolve
@@ -143,7 +143,7 @@ label ch01_day5_sunset_gate_unresolved:
         "I was carrying a thing I wasn't supposed to have: half a conversation I'd heard in the shade. It sat between us like a third person."
 
     $ d5_u_ask = format_day5_gate_choice("ch01_d5_ntr_u_ask_gently", "Ask her gently. 'Whenever you're ready, I'm listening.'", severity="soft", gate_label="D5-2")
-    $ d5_u_press = format_day5_gate_choice("ch01_d5_ntr_u_press_hard", "Press her. 'What happened at the club, Leia?'", severity="hard", gate_label="D5-2")
+    $ d5_u_press = format_day5_gate_choice("ch01_d5_ntr_u_press_hard", ("Press her. 'What happened at the club, " + girlfriend_name + "?'"), severity="hard", gate_label="D5-2")
     $ d5_u_fine = format_day5_gate_choice("ch01_d5_ntr_u_fine_hard", "I'm fine.", severity="hard", gate_label="D5-2")
 
     menu:
@@ -169,7 +169,7 @@ label ch01_day5_sunset_gate_unresolved:
             $ apply_choice("ch01_d5_ntr_u_press_hard")
             $ set_story_value("ch01_d5_ntr_outcome", "ntr_confirmed")
             $ set_story_value("ch01_d5_end_route_pending", "ntr_confirmed")
-            mc "What happened at the club, Leia?"
+            mc "What happened at the club, [girlfriend_name]?"
             "The question came out like a hook."
             gf "There it is."
             mc "I'm just asking."
@@ -205,7 +205,7 @@ label ch01_day5_sunset_gate_confirmed:
     with dissolve
 
     "Maya's sentence went round in my head: don't go and say 'fine'."
-    "From the cockpit, a very small, very deliberate cough. Julian, three yards away, studying a cleat with great intensity."
+    "From the cockpit, a very small, very deliberate cough. [friend_name], three yards away, studying a cleat with great intensity."
 
     $ d5_c_go = format_day5_gate_choice("ch01_d5_ntr_c_go_to_her", "Go to her. 'I'm not fine. I'm sorry I kept saying it.'", severity="soft", gate_label="D5-2")
     $ d5_c_acc = format_day5_gate_choice("ch01_d5_ntr_c_accuse_hard", "Go to her. 'Did you tell Maya something you wouldn't tell me?'", severity="hard", gate_label="D5-2")
@@ -233,7 +233,7 @@ label ch01_day5_sunset_gate_confirmed:
             gf "Yes."
             mc "What?"
             gf "That's not the question I wanted. And it's not the one you needed."
-            gf "Go and sit with your granola bar, Ryan."
+            gf "Go and sit with your granola bar, [player_name]."
             "She said it without cruelty. That was the cruelty."
             $ set_story_flag("ch01_d5_ntr_pressed")
         "[d5_c_fine]":
@@ -269,24 +269,24 @@ label ch01_day5_scene_10_dinner:
     friend "I vote no."
     maya "You're outvoted by the boat."
     "She drew the first card with a showman's flourish."
-    maya "Julian. 'Name something you are afraid of that is not bees.'"
+    maya "[friend_name]. 'Name something you are afraid of that is not bees.'"
     friend "Boats. Knives. This boat. Seafood. Large animals that look like seafood."
     maya "Wow. Okay. Beautiful."
     maya "My card. 'What do you want that you haven't asked for?' ...Pass."
     gf "You can't pass your own card."
     maya "I'm the dealer. I can do whatever I want."
-    "She looked at Julian for roughly one second longer than a joke needed. He looked at his fish."
+    "She looked at [friend_name] for roughly one second longer than a joke needed. He looked at his fish."
 
     "Maya slid the tin to me. I drew one."
-    maya "Ryan. 'What's something you've been pretending to be fine about?'"
+    maya "[player_name]. 'What's something you've been pretending to be fine about?'"
     if d5_track.startswith("ntr"):
-        "Nobody laughed. Julian put down his fork."
+        "Nobody laughed. [friend_name] put down his fork."
     else:
         "A small, kind groan went round the table."
 
     $ d5_tr_honest = format_choice("ch01_d5_truth_honest", "Answer it honestly.")
     $ d5_tr_funny = format_choice("ch01_d5_truth_funny", "Answer it with a joke. Make it count.")
-    $ d5_tr_dodge = format_choice("ch01_d5_truth_dodge", "Pass the tin to Julian. 'I'm the audience.'")
+    $ d5_tr_dodge = format_choice("ch01_d5_truth_dodge", ('Pass the tin to ' + friend_name + ". 'I'm the audience.'"))
 
     menu:
         "[d5_tr_honest]":
@@ -305,7 +305,7 @@ label ch01_day5_scene_10_dinner:
                 mc "That I've been fine. For days. I've said it so many times I've forgotten what the question was."
                 gf "..."
                 mc "I've been scared. I didn't know how to say it without sounding like I was accusing you of something."
-                "Leia put down her fork and looked at me properly. Julian looked at the fish. Maya looked, for the first time all dinner, like she wasn't on duty."
+                "[girlfriend_name] put down her fork and looked at me properly. [friend_name] looked at the fish. Maya looked, for the first time all dinner, like she wasn't on duty."
         "[d5_tr_funny]":
             $ apply_choice("ch01_d5_truth_funny")
             $ set_story_value("ch01_d5_truth_ryan", "funny")
@@ -316,17 +316,17 @@ label ch01_day5_scene_10_dinner:
         "[d5_tr_dodge]":
             $ apply_choice("ch01_d5_truth_dodge")
             $ set_story_value("ch01_d5_truth_ryan", "dodge")
-            mc "I'm the audience. Julian?"
+            mc "I'm the audience. [friend_name]?"
             friend "Don't."
             maya "I'm going to write that on your tab."
-            "I handed the tin across and felt Leia not look at me, which on a very small boat is a loud thing to do."
+            "I handed the tin across and felt [girlfriend_name] not look at me, which on a very small boat is a loud thing to do."
 
-    "The tin went round. A card asked who would survive longest on a desert island, and Julian said Teodoro, and Maya said the skipper, and Leia said the three of us would eat Julian first. Everyone agreed, and Julian asked for a vote."
+    "The tin went round. A card asked who would survive longest on a desert island, and [friend_name] said Teodoro, and Maya said the skipper, and [girlfriend_name] said the three of us would eat [friend_name] first. Everyone agreed, and [friend_name] asked for a vote."
     "A last card landed on me. 'Ask someone at the table something you really want to know.'"
 
-    $ d5_as_sweet = format_choice("ch01_d5_ask_sweet", "Ask Leia: 'What was your favorite part of today?'")
-    $ d5_as_brave = format_choice("ch01_d5_ask_brave", "Ask Leia: 'What's the bravest thing you did this week?'")
-    $ d5_as_silly = format_choice("ch01_d5_ask_silly", "Ask Leia: 'Which of us would you push overboard first?'")
+    $ d5_as_sweet = format_choice("ch01_d5_ask_sweet", ('Ask ' + girlfriend_name + ": 'What was your favorite part of today?'"))
+    $ d5_as_brave = format_choice("ch01_d5_ask_brave", ('Ask ' + girlfriend_name + ": 'What's the bravest thing you did this week?'"))
+    $ d5_as_silly = format_choice("ch01_d5_ask_silly", ('Ask ' + girlfriend_name + ": 'Which of us would you push overboard first?'"))
 
     menu:
         "[d5_as_sweet]":
@@ -355,7 +355,7 @@ label ch01_day5_scene_10_dinner:
         "[d5_as_silly]":
             $ apply_choice("ch01_d5_ask_silly")
             mc "Which of us would you push overboard first?"
-            gf "Julian."
+            gf "[friend_name]."
             friend "I have a hat!"
             gf "That's why. The hat is a flotation hazard."
             maya "I'd push him second. I'd get a very good run-up."
@@ -374,11 +374,11 @@ label ch01_day5_scene_11_bunks:
     with fade
 
     skipper "Sleeping arrangements. Forward cabin: a double bunk. Saloon: two benches. Deck: weather permitting, and I will tell you whether it permits. Please do not move the anchor."
-    maya "Julian gets a bench. I get the other bench. There is exactly one cabin door between us."
+    maya "[friend_name] gets a bench. I get the other bench. There is exactly one cabin door between us."
     friend "A door has never been a stronger statement."
     maya "Shut up."
-    "Maya and Julian went below to the saloon, a conversation of looks and mismatched blankets already underway. Their door, I noticed, was not closed all the way."
-    "Leia and I stood in the companionway with a pillow each and one rope."
+    "Maya and [friend_name] went below to the saloon, a conversation of looks and mismatched blankets already underway. Their door, I noticed, was not closed all the way."
+    "[girlfriend_name] and I stood in the companionway with a pillow each and one rope."
     gf "So. Forward cabin, or the deck, or something else."
 
     $ d5_bk_cabin = format_choice("ch01_d5_bunk_cabin", "Share the forward cabin.")
@@ -467,7 +467,7 @@ label ch01_day5_scene_12_love_night:
     else:
         "The forward cabin was a wedge of warm wood and lantern light, the hull ticking softly around us."
 
-    "Leia pulled the pale rope out of the tote. It had two short lengths now, cut and singed at the ends."
+    "[girlfriend_name] pulled the pale rope out of the tote. It had two short lengths now, cut and singed at the ends."
     gf "This is the plan. I told you. Two bracelets. A knot each. It's tradition."
     mc "Whose?"
     gf "Ours. As of this morning."
@@ -521,7 +521,7 @@ label ch01_day5_scene_12_exhib_night:
     with fade
 
     if d5_bunk == "cabin":
-        "We took the blankets up anyway, because the cabin's hatch looked up at the sky and Leia had already dragged her pillow under it."
+        "We took the blankets up anyway, because the cabin's hatch looked up at the sky and [girlfriend_name] had already dragged her pillow under it."
     "The deck was a quilt of warm cushions and Captain Ilario's neatly coiled lines. The anchor light made a little gold moon on the water."
     gf "Today I did a thing."
     mc "You did a very good thing."
@@ -561,7 +561,7 @@ label ch01_day5_scene_12_exhib_night:
     with dissolve
     # CG TODO (artist): ch01_d5_exhib_night_01. Ryan POV, Ryan never in frame. Leia on the deck cushions under a blanket drawn to her chin, stars overhead, eyes on the lens, delighted and a little daring. Covered. One figure only.
     "She pulled the blanket up to her chin and tilted her head back to look at the stars, then at me, a slow, pleased, completely unrepentant smile."
-    gf "I took my top off in front of Julian, and it was fine. I'm a different person."
+    gf "I took my top off in front of [friend_name], and it was fine. I'm a different person."
     mc "You're the same person. A braver one."
     gf "Is there a difference?"
     mc "It's a very good difference."
@@ -614,8 +614,8 @@ label ch01_day5_scene_12_ntr_night:
         $ set_story_value("ch01_d5_end_variant", "ntr_repaired_" + (d5_react or "thanks"))
     elif d5_pending == "ntr_unresolved":
         if d5_bunk == "apart":
-            "I lay on the saloon bench, listening to the soft sounds of the boat. Beyond the half-closed door, Maya and Julian were whispering."
-            "Forward, the cabin was dark. I could picture Leia awake in it, doing the same arithmetic."
+            "I lay on the saloon bench, listening to the soft sounds of the boat. Beyond the half-closed door, Maya and [friend_name] were whispering."
+            "Forward, the cabin was dark. I could picture [girlfriend_name] awake in it, doing the same arithmetic."
         else:
             "She lay with her back to me, and I lay with mine toward hers, and the inch between us was a very specific, very honest inch."
         "In the middle of the night, I felt the mattress shift and a hand rest, briefly, on my shoulder."
@@ -626,9 +626,9 @@ label ch01_day5_scene_12_ntr_night:
     else:
         if d5_bunk == "apart":
             "I lay on the saloon bench in the dark, a blanket up to my chin and a promise to myself that I'd stop saying a word I'd spent three days misusing."
-            "Beyond the half-closed door, Maya said something low, and Julian answered. Their voices went on for a long time, then stopped."
+            "Beyond the half-closed door, Maya said something low, and [friend_name] answered. Their voices went on for a long time, then stopped."
         else:
-            "Leia lay with her back to me and her breathing too even to be sleep."
+            "[girlfriend_name] lay with her back to me and her breathing too even to be sleep."
             gf "I'm not mad."
             mc "I know."
             gf "I'm tired. It's different. Goodnight."
@@ -657,7 +657,7 @@ label ch01_day5_scene_13_night_after:
     maya "He did. It was about the sea."
     friend "It was a very good speech."
     "On deck, the wind had a cold edge and the sky to the west was a wall of slow, towering cloud. The stars had been rubbed out in one corner like a smudge."
-    "Maya, wrapped in a blanket on the cockpit bench, was holding two mugs of something hot. She handed one to Julian without looking at him."
+    "Maya, wrapped in a blanket on the cockpit bench, was holding two mugs of something hot. She handed one to [friend_name] without looking at him."
     maya "It's tea. Don't make it weird."
     friend "I wasn't going to."
     maya "You were. I could hear it."
@@ -666,9 +666,9 @@ label ch01_day5_scene_13_night_after:
     skipper "Ten more minutes to the headland. After that, we run."
 
     if d5_track.startswith("ntr"):
-        "Leia stood at the rail in a blanket, the hairclip back in her hair, the horizon invisible. I stood three feet away. The distance between us was a thing the wind kept moving."
+        "[girlfriend_name] stood at the rail in a blanket, the hairclip back in her hair, the horizon invisible. I stood three feet away. The distance between us was a thing the wind kept moving."
     else:
-        "Leia stood at the rail in a blanket, her shoulder against mine, the horizon invisible, her head tipped back at the first stars of a sky about to close."
+        "[girlfriend_name] stood at the rail in a blanket, her shoulder against mine, the horizon invisible, her head tipped back at the first stars of a sky about to close."
 
     $ set_story_flag("ch01_d5_scene_13_complete")
     jump ch01_day5_scene_14_dawn_run
@@ -683,7 +683,7 @@ label ch01_day5_scene_14_dawn_run:
     with fade
 
     "We ran home under a slate-gray sky with the wind on our beam, the boat leaning like a very expensive swimmer."
-    "Julian was not sick. This was noted by everyone, and by Julian most of all."
+    "[friend_name] was not sick. This was noted by everyone, and by [friend_name] most of all."
     friend "I'd like it recorded that I'm not green."
     maya "You're a pleasant beige."
     friend "I'll take beige."
@@ -715,7 +715,7 @@ label ch01_day5_scene_14_dawn_run:
                 message_id="ch01_d5_late_leia_love",
                 mark_unread=True, notify=False,
             )
-        "Leia's thread, sent from three feet away, with her thumb already hovering at the corner of the screen."
+        "[girlfriend_name]'s thread, sent from three feet away, with her thumb already hovering at the corner of the screen."
     elif d5_track == "exhibitionism":
         python:
             phone_add_message(
@@ -724,7 +724,7 @@ label ch01_day5_scene_14_dawn_run:
                 message_id="ch01_d5_late_leia_exhib",
                 mark_unread=True, notify=False,
             )
-        "Leia's thread, sent from three feet away, with a very pleased little smile she was working hard to put away."
+        "[girlfriend_name]'s thread, sent from three feet away, with a very pleased little smile she was working hard to put away."
     elif d5_pending == "love_repaired":
         python:
             phone_add_message(
@@ -733,7 +733,7 @@ label ch01_day5_scene_14_dawn_run:
                 message_id="ch01_d5_late_leia_ntr_repaired",
                 mark_unread=True, notify=False,
             )
-        "Leia's thread, a single message, sent from the rail with her face turned toward the sea."
+        "[girlfriend_name]'s thread, a single message, sent from the rail with her face turned toward the sea."
     elif d5_pending == "ntr_unresolved":
         python:
             phone_add_message(
@@ -742,7 +742,7 @@ label ch01_day5_scene_14_dawn_run:
                 message_id="ch01_d5_late_leia_ntr_unresolved",
                 mark_unread=True, notify=False,
             )
-        "A message on Leia's thread, under 'Sorry.', under the draft that had finally landed."
+        "A message on [girlfriend_name]'s thread, under 'Sorry.', under the draft that had finally landed."
     else:
         python:
             phone_add_message(
@@ -751,7 +751,7 @@ label ch01_day5_scene_14_dawn_run:
                 message_id="ch01_d5_late_julian_ntr_confirmed",
                 mark_unread=True, notify=False,
             )
-        "A message from Julian, who was fourteen feet away, pretending to coil a rope."
+        "A message from [friend_name], who was fourteen feet away, pretending to coil a rope."
 
     "The pier came up out of the mist like a half-remembered idea."
     $ set_story_flag("ch01_d5_scene_14_complete")
@@ -793,14 +793,14 @@ label ch01_day5_scene_15_pier_invitation:
     maya "It's the most high-stakes sentence I've ever read."
 
     if d5_track.startswith("ntr") and d5_pending != "love":
-        $ d5_iv_read = format_choice("ch01_d5_invite_read_aloud", "Read the handwritten line aloud, to Leia.")
+        $ d5_iv_read = format_choice("ch01_d5_invite_read_aloud", ('Read the handwritten line aloud, to ' + girlfriend_name + '.'))
         $ d5_iv_quiet = format_choice("ch01_d5_invite_keep_quiet", "Keep it to myself. Let her find it.")
         menu:
             "[d5_iv_read]":
                 $ apply_choice("ch01_d5_invite_read_aloud")
                 $ set_story_value("ch01_d5_invite_reply", "read_aloud")
                 mc "'Some conversations are easier behind a mask.'"
-                "Leia looked at the card and then at me. Her mouth did something complicated."
+                "[girlfriend_name] looked at the card and then at me. Her mouth did something complicated."
                 gf "That's a very good sentence."
                 mc "It's not mine. It was on the post."
                 gf "It's yours now. You said it first."
@@ -808,10 +808,10 @@ label ch01_day5_scene_15_pier_invitation:
                 $ apply_choice("ch01_d5_invite_keep_quiet")
                 $ set_story_value("ch01_d5_invite_reply", "kept_quiet")
                 "I put the card back, flat against the post, and said nothing about the handwritten line."
-                "Leia found it a minute later, on her own. She read it twice and didn't look at me."
+                "[girlfriend_name] found it a minute later, on her own. She read it twice and didn't look at me."
     else:
         $ d5_iv_in = format_choice("ch01_d5_invite_in", "'We're going. All of us.'")
-        $ d5_iv_ask = format_choice("ch01_d5_invite_ask_leia", "Look at Leia. 'What do you want to do?'")
+        $ d5_iv_ask = format_choice("ch01_d5_invite_ask_leia", ('Look at ' + girlfriend_name + ". 'What do you want to do?'"))
         $ d5_iv_maybe = format_choice("ch01_d5_invite_maybe", "'Let's see how we feel after a shower.'")
         menu:
             "[d5_iv_in]":

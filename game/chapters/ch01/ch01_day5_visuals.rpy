@@ -131,112 +131,112 @@ image bg ch01_d5_dawn_pier = Composite(
 image cg ch01_d5_snorkel_surface = Composite(
     (1920, 1080),
     (0, 0), Solid("#2f9aa8"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - SNORKEL SURFACE\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - SNORKEL SURFACE\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Comic. Ryan POV: Julian frozen with a drumstick in one fist and a bee on the lid of the honey jar in front of him; Maya off to the side losing it with laughter. Ryan POV; Ryan is never visible.
 image cg ch01_d5_cove_lunch_bee = Composite(
     (1920, 1080),
     (0, 0), Solid("#c0a060"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - COVE LUNCH BEE\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - COVE LUNCH BEE\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): The photo itself, full screen: Julian pale beside Leia, Maya triumphant, all three squinting into the light, the cove behind them. Used also as a phone attachment (alias ch01_d5_photo_three). Ryan POV; Ryan is never visible.
 image cg ch01_d5_photo_three = Composite(
     (1920, 1080),
     (0, 0), Solid("#b8a080"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - PHOTO THREE\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - PHOTO THREE\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV, treading water in clear green: Leia close, forehead tipped toward the lens, her hands resting on the shoulders of the unseen camera-holder (her hands only, nothing of Ryan drawn). Ryan POV; Ryan is never visible.
 image cg ch01_d5_love_cove_swim = Composite(
     (1920, 1080),
     (0, 0), Solid("#3fa0b0"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - LOVE COVE SWIM\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - LOVE COVE SWIM\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV: Leia on a warm rock, knees up, chin on her arm, sun on her wet hair, looking up with a soft, whole, listening expression. Also the phone attachment 'ch01_d5_photo_love_cove'. Ryan POV; Ryan is never visible.
 image cg ch01_d5_love_cove_secret = Composite(
     (1920, 1080),
     (0, 0), Solid("#c9a878"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - LOVE COVE SECRET\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - LOVE COVE SECRET\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV: Leia lying on her front on a warm rock, swimsuit ties undone and her arms folded under her chin, head turned toward the lens, delighted at her own nerve. COVERED / implied; crop so nothing explicit reads. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_cove_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#a8885a"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE 01\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE 01\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV: Leia sitting on the rock in the sun, top folded beside her, arms loosely crossed, face tipped up, eyes on the lens, laughing at herself. COMFORTABLE and IMPLIED: crop at the collarbone, shoulders and face only. Nothing explicit. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_cove_02 = Composite(
     (1920, 1080),
     (0, 0), Solid("#a8885a"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE 02\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE 02\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV over Leia's shoulder (her back and hair in the foreground, covered): far down the cove Maya holds a paperback up like a screen, Julian stares at the horizon. Sub-variant 'Ryan likes watching'. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_cove_watching = Composite(
     (1920, 1080),
     (0, 0), Solid("#8a7a5a"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE WATCHING\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - EXHIB COVE WATCHING\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV: Leia seated on the rock, knees drawn up, the hairclip open in both hands, serious and a little wet-eyed, looking up at the lens. Visible empty rock beside her where Ryan sits. No third person. Ryan POV; Ryan is never visible.
 image cg ch01_d5_ntr_cove_talk = Composite(
     (1920, 1080),
     (0, 0), Solid("#5a6a60"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - NTR COVE TALK\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - NTR COVE TALK\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV: Leia's back to the camera at the stern rail, the hairclip clasped in one hand, the horizon in front of her. A strip of empty rail beside her. No third person. Ryan POV; Ryan is never visible.
 image cg ch01_d5_ntr_deck_alone = Composite(
     (1920, 1080),
     (0, 0), Solid("#7a5a6a"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - NTR DECK ALONE\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - NTR DECK ALONE\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV down the length of the deck: Leia leaning on the stern rail, the last of the sunset across her face, looking back at the lens. Warm, quiet. Ryan POV; Ryan is never visible.
 image cg ch01_d5_sunset_deck = Composite(
     (1920, 1080),
     (0, 0), Solid("#c98a60"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - SUNSET DECK\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - SUNSET DECK\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV fade card: cabin or deck at night, Leia's hand turning the lantern down to a coin of gold, a pale rope bracelet on her wrist. One figure only. Implied. Ryan POV; Ryan is never visible.
 image cg ch01_d5_love_night_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#4a3a50"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - LOVE NIGHT 01\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - LOVE NIGHT 01\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV: Leia on the deck cushions under a blanket drawn to her chin, stars overhead, eyes on the lens, delighted and a little daring. Covered. One figure only. Ryan POV; Ryan is never visible.
 image cg ch01_d5_exhib_night_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#2a2f48"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - EXHIB NIGHT 01\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - EXHIB NIGHT 01\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV fade card: Leia's hand setting the open hairclip on a shelf beside a lantern, soft gold light. One figure only, no third person. Quiet. Ryan POV; Ryan is never visible.
 image cg ch01_d5_ntr_night_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#3a3048"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - NTR NIGHT 01\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - NTR NIGHT 01\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): The photo Leia sends for Ryan alone: Leia at the cove, laughing, framed by HER call (face only, or cropped at the shoulders). Not explicit. Phone attachment alias ch01_d5_photo_private. Ryan POV; Ryan is never visible.
 image cg ch01_d5_photo_private = Composite(
     (1920, 1080),
     (0, 0), Solid("#a09078"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - PHOTO PRIVATE\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - PHOTO PRIVATE\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Close-up of the printed invitation pinned to a weathered post with a brass tack: THE NIGHT OF THE LANTERNS. A second line in a different, looser hand varies by track (see 07_cg_checklist.md). A prop shot, no people. Ryan POV; Ryan is never visible.
 image cg ch01_d5_invitation = Composite(
     (1920, 1080),
     (0, 0), Solid("#c8b890"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FIVE - INVITATION\nRYAN POV / NO RYAN IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FIVE - INVITATION\n{mc} POV / NO {mc} IN FRAME\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # ---------------------------------------------------------------------------

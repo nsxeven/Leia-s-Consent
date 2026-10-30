@@ -1,6 +1,21 @@
 # Chapter One — Day Two visual placeholders.
 # Stable IDs are intentionally separate from final generated assets.
 
+
+init -1 python:
+    def lc_placeholder_text(text, **kwargs):
+        """Full-screen stand-in card. {gf}/{mc}/{friend} use the current names."""
+        def _card(st, at):
+            shown = text
+            shown = shown.replace("{gf}'S", girlfriend_name.upper() + "'S")
+            shown = shown.replace("{mc}'S", player_name.upper() + "'S")
+            shown = shown.replace("{friend}'S", friend_name.upper() + "'S")
+            shown = shown.replace("{gf}", girlfriend_name.upper())
+            shown = shown.replace("{mc}", player_name.upper())
+            shown = shown.replace("{friend}", friend_name.upper())
+            return Text(shown, **kwargs), None
+        return DynamicDisplayable(_card)
+
 image bg ch01_d2_breakfast = Composite(
     (1920, 1080),
     (0, 0), Solid("#d8c9ad"),
@@ -39,7 +54,7 @@ image bg ch01_d2_dinner = Composite(
     (0, 0), Solid("#342c30"),
     (0, 690), Transform(Solid("#755742"), xysize=(1920, 390)),
     (320, 540), Transform(Solid("#9b724f"), xysize=(1280, 220)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — RECTANGULAR DINNER TABLE\nLEIA + MAYA TOGETHER / RYAN + JULIAN OPPOSITE", size=44, color="#ffffff"),
+    (90, 70), lc_placeholder_text("BACKGROUND PLACEHOLDER\nDAY TWO — RECTANGULAR DINNER TABLE\n{gf} + MAYA TOGETHER / {mc} + {friend} OPPOSITE", size=44, color="#ffffff"),
 )
 
 image bg ch01_d2_game_night = Composite(
@@ -52,7 +67,7 @@ image bg ch01_d2_game_night = Composite(
 image cg ch01_d2_photo_leia_maya = Composite(
     (1920, 1080),
     (0, 0), Solid("#6b8fa0"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY TWO PHOTO — LEIA + MAYA\nNEW FRIENDSHIP / RELAXED PAIRING", size=50, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO PHOTO — {gf} + MAYA\nNEW FRIENDSHIP / RELAXED PAIRING", size=50, color="#ffffff"),
 )
 
 image cg ch01_d2_pool_top_accident = Composite(
@@ -64,13 +79,13 @@ image cg ch01_d2_pool_top_accident = Composite(
 image cg ch01_d2_dinner_reach = Composite(
     (1920, 1080),
     (0, 0), Solid("#5a3942"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY TWO DINNER — DELIBERATE REACH\nLOOSE NECKLINE / RYAN + JULIAN VIEWING ANGLE", size=50, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO DINNER — DELIBERATE REACH\nLOOSE NECKLINE / {mc} + {friend} VIEWING ANGLE", size=50, color="#ffffff"),
 )
 
 image cg ch01_d2_julian_underwear_reveal = Composite(
     (1920, 1080),
     (0, 0), Solid("#393744"),
-    (90, 70), Text("CG PLACEHOLDER\nNEVER HAVE I EVER — JULIAN DOWN TO UNDERWEAR\nREACTIONS CARRY THE REVEAL", size=50, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nNEVER HAVE I EVER — {friend} DOWN TO UNDERWEAR\nREACTIONS CARRY THE REVEAL", size=50, color="#ffffff"),
 )
 
 
@@ -162,31 +177,31 @@ image bg ch01_d2_boutique = Composite(
 image cg ch01_d2_boutique_changing_room = Composite(
     (1920, 1080),
     (0, 0), Solid("#765e69"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY TWO BOUTIQUE — MAYA + LEIA CHANGING ROOM\nMAYA RED CUTOUT MINI / LEIA BLACK CUTOUT MINI", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO BOUTIQUE — MAYA + {gf} CHANGING ROOM\nMAYA RED CUTOUT MINI / {gf} BLACK CUTOUT MINI", size=48, color="#ffffff"),
 )
 
 image cg ch01_d2_boutique_reveal_ryan = Composite(
     (1920, 1080),
     (0, 0), Solid("#684d5a"),
-    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE REVEAL — RYAN PRESENT\nCLOSE FRAMING / MAYA SECURING LEIA'S TOP", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nBOUTIQUE REVEAL — {mc} PRESENT\nCLOSE FRAMING / MAYA SECURING {gf}'S TOP", size=48, color="#ffffff"),
 )
 
 image cg ch01_d2_boutique_reveal_julian = Composite(
     (1920, 1080),
     (0, 0), Solid("#5c5964"),
-    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE REVEAL — JULIAN PRESENT\nWIDER FRAMING / PUBLIC BOUTIQUE CONTEXT", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nBOUTIQUE REVEAL — {friend} PRESENT\nWIDER FRAMING / PUBLIC BOUTIQUE CONTEXT", size=48, color="#ffffff"),
 )
 
 image cg ch01_d2_boutique_slip_ryan = Composite(
     (1920, 1080),
     (0, 0), Solid("#744958"),
-    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE WARDROBE SLIP — RYAN PRESENT\nCLOSE / LEIA IMMEDIATELY CATCHES ONE FRONT PANEL", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nBOUTIQUE WARDROBE SLIP — {mc} PRESENT\nCLOSE / {gf} IMMEDIATELY CATCHES ONE FRONT PANEL", size=48, color="#ffffff"),
 )
 
 image cg ch01_d2_boutique_slip_julian = Composite(
     (1920, 1080),
     (0, 0), Solid("#504b58"),
-    (90, 70), Text("CG PLACEHOLDER\nBOUTIQUE WARDROBE SLIP — JULIAN PRESENT\nWIDE / JULIAN'S GAZE LINGERS BEFORE HE CATCHES HIMSELF", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nBOUTIQUE WARDROBE SLIP — {friend} PRESENT\nWIDE / {friend}'S GAZE LINGERS BEFORE HE CATCHES HIMSELF", size=48, color="#ffffff"),
 )
 
 transform ch01_d2_leia_left:

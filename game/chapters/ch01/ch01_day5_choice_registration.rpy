@@ -533,16 +533,16 @@ init 2 python:
             line = "A private cove and a trust trade. No outside-attention beats today."
         elif track == "exhibitionism":
             head = "TRACK: SHARED EXHIBITION (NTS)"
-            line = "Leia sets how far she goes among the four. 'Just us' is always available."
+            line = (girlfriend_name + " sets how far she goes among the four. 'Just us' is always available.")
         elif track == "ntr_repaired":
             head = "TRACK: DISTANCE, REPAIRED (NTR pressure)"
-            line = "Leia tells the club story slowly. How Ryan reacts decides what it repairs."
+            line = (girlfriend_name + ' tells the club story slowly. How ' + player_name + ' reacts decides what it repairs.')
         elif track == "ntr_unresolved":
             head = "TRACK: DISTANCE, UNRESOLVED (NTR pressure)"
             line = "Repair is still possible. Gate choices carry a red diamond."
         else:
             head = "TRACK: DISTANCE, CONFIRMED (NTR pressure)"
-            line = "A door is open if Ryan walks through it. Gate choices carry a red diamond."
+            line = ('A door is open if ' + player_name + ' walks through it. Gate choices carry a red diamond.')
 
         if mode == "insight":
             return "{}\n\n{}".format(head, line)

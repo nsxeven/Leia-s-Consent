@@ -92,8 +92,30 @@ class DayReviewTests(unittest.TestCase):
         self.assertIn(('acceptance','10 → 60 (+50)'), self.call('lc_review_delta_rows','ch01_d1','full'))
 
     def test_route_label_never_proves_betrayal(self):
-        for route in ('ntr_confirmed','ntr','ntr_seeded','ntr_unresolved'):
+        for route in ('ntr_confirmed','ntr','ntr_seeded','ntr_unresolved','ntr_talked','ntr_withdrew'):
             self.assertEqual(self.call('lc_character_titles',route=route,style='genre'), ('Uneasy Observer','Growing Distant'))
+
+    def test_day3_ntr_choices_change_the_review_without_changing_titles(self):
+        self.values['ch01_d3_lane'] = 'ntr'
+        self.values['ch01_d3_ntr_repair_effort'] = 'talk'
+        self.call('lc_review_begin', 'ch01_d3')
+        talked = self.call('lc_review_finish', 'ch01_d3')
+        self.assertEqual(talked['route'], 'ntr_talked')
+        self.assertIn('talk it through', talked['summary'])
+        self.assertEqual(self.call('lc_character_titles', route='ntr_talked'), ('Uneasy Observer', 'Growing Distant'))
+
+        self.values['ch01_d3_ntr_repair_effort'] = 'withdraw'
+        self.call('lc_review_begin', 'ch01_d3')
+        withdrew = self.call('lc_review_finish', 'ch01_d3')
+        self.assertEqual(withdrew['route'], 'ntr_withdrew')
+        self.assertIn('stepped away', withdrew['summary'])
+
+        self.values['ch01_d3_ntr_repair_effort'] = 'enjoy'
+        self.assertEqual(self.call('lc_review_route', 'ch01_d3'), 'ntr')
+        self.values['ch01_d3_lane'] = 'love'
+        self.assertEqual(self.call('lc_review_route', 'ch01_d3'), 'love')
+        self.values['ch01_d3_lane'] = 'exhibitionism'
+        self.assertEqual(self.call('lc_review_route', 'ch01_d3'), 'exhibitionism')
 
     def test_explicit_facts_gate_genre_titles(self):
         self.call('lc_title_fact','betrayal_known')

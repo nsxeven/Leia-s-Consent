@@ -30,7 +30,7 @@ label ch01_day2_scene_03_maya_message_v2:
         )
 
     "Maya's name appeared in the notification."
-    "Leia saw it before I put the phone down."
+    "[girlfriend_name] saw it before I put the phone down."
 
     gf "Oh."
     mc "What?"
@@ -43,20 +43,20 @@ label ch01_day2_scene_03_maya_message_v2:
 
 label ch01_day2_scene_08_maya_julian_v2:
 
-    "Maya's attention eventually shifted to Julian."
+    "Maya's attention eventually shifted to [friend_name]."
 
     maya "So you're the rich one."
     friend "Apparently that's my entire personality now."
     maya "No, the sunglasses are your personality. The money is supporting cast."
 
-    "Julian laughed and shook his head. Leia leaned toward me."
+    "[friend_name] laughed and shook his head. [girlfriend_name] leaned toward me."
 
     gf "They get along."
     mc "She insults people she likes."
     gf "That explains you."
 
     "A bee wandered close to the table."
-    "Julian stopped mid-sentence and leaned sharply away from it."
+    "[friend_name] stopped mid-sentence and leaned sharply away from it."
 
     maya "...Are you scared of bees?"
     friend "No."
@@ -76,14 +76,14 @@ label ch01_day2_scene_13_girls_upstairs_v2:
     scene bg ch01_master_bedroom
     with dissolve
 
-    "Upstairs, Leia laid both bikinis across the bed while Maya changed beside her."
+    "Upstairs, [girlfriend_name] laid both bikinis across the bed while Maya changed beside her."
     "Both were two-piece tie bikinis. The difference was coverage: one familiar and safer, the other cut noticeably smaller."
 
     maya "You brought options."
     gf "One is comfortable. One requires confidence."
     maya "Which one do you want to wear?"
 
-    "Yesterday Leia had asked me that question. Today she had to answer it herself."
+    "Yesterday [girlfriend_name] had asked me that question. Today she had to answer it herself."
 
     if partner_stats["exhibitionism"] >= 22 or partner_stats["curiosity"] >= 27:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
@@ -106,14 +106,14 @@ label ch01_day2_scene_13_girls_upstairs_v2:
 label ch01_day2_scene_14_tie_foreshadow_v2:
 
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
-        "Leia changed into the bolder tie bikini while still talking to Maya, fastening the top with less attention than the knot deserved."
+        "[girlfriend_name] changed into the bolder tie bikini while still talking to Maya, fastening the top with less attention than the knot deserved."
         maya "Double-knot that."
         gf "It's fine."
         maya "Famous last words."
         gf "It survived yesterday."
         maya "Yesterday you weren't distracted by my excellent conversation."
     else:
-        "Leia changed into the more covered tie bikini while Maya borrowed the mirror and most of the counter space."
+        "[girlfriend_name] changed into the more covered tie bikini while Maya borrowed the mirror and most of the counter space."
         "She tied the top while answering Maya, gave the knot one quick tug, and moved on."
         maya "Double-knot that."
         gf "This is the safe one."
