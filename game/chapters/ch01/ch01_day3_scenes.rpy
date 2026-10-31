@@ -3,7 +3,52 @@
 # Entry: ch01_day3_start (reached from ch01_day2_scene_30_finish). Day 2's stored ending is authoritative.
 # Exit: jumps to ch01_day4_start.
 
+init 1 python:
+    # Day Three's two menus. Ordinary scale (+/-1..2), same as Day Two's
+    # mid-day choices and Day Four's non-gate choices. Not a route lock:
+    # the lane is already set, and Day Four still reads that lane.
+    CHOICE_EFFECTS.update({
+        "ch01_d3_ntr_enjoy": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+            ("relationship", "boredom", -1),
+        ],
+        "ch01_d3_ntr_talk": [
+            ("relationship", "love", 2),
+            ("relationship", "trust", 2),
+            ("relationship", "boredom", -2),
+            ("partner", "secrecy", -1),
+        ],
+        "ch01_d3_ntr_withdraw": [
+            ("relationship", "love", -2),
+            ("relationship", "trust", -1),
+            ("relationship", "boredom", 2),
+            ("partner", "temptation", 1),
+            ("partner", "secrecy", 1),
+        ],
+        "ch01_d3_dessert_chocolate": [
+            ("relationship", "trust", 1),
+        ],
+        "ch01_d3_dessert_recommended": [
+            ("player", "acceptance", 1),
+        ],
+        "ch01_d3_dessert_surprise": [
+            ("relationship", "love", 1),
+        ],
+    })
+
+    CHOICE_TAGS.update({
+        "ch01_d3_ntr_enjoy": ("supportive", "attentive", "repair"),
+        "ch01_d3_ntr_talk": ("supportive", "attentive", "honest", "repair"),
+        "ch01_d3_ntr_withdraw": ("neutral", "nonchalant", "dismissive", "withdrawal"),
+        "ch01_d3_dessert_chocolate": ("supportive", "attentive"),
+        "ch01_d3_dessert_recommended": ("neutral", "trusting"),
+        "ch01_d3_dessert_surprise": ("encouraging", "playful", "lighthearted"),
+    })
+
+
 label ch01_day3_start:
+    $ lc_review_begin("ch01_d3")
     $ set_story_flag("ch01_day_03_started")
     scene black
     with fade
@@ -16,24 +61,24 @@ label ch01_day3_start:
     scene bg ch01_villa_bedroom_night
     with fade
     if d3_lane == "love":
-        "Leia woke beside me, still curled against my shoulder."
+        "[girlfriend_name] woke beside me, still curled against my shoulder."
         gf "Morning. You're not getting up yet, are you?"
         mc "Wasn't planning to."
         "She kissed me and smiled."
     elif d3_lane == "exhibitionism":
-        "Leia stood by the window, looking out toward the beach."
+        "[girlfriend_name] stood by the window, looking out toward the beach."
         gf "There are people walking past."
         mc "And?"
         gf "Nothing. Just noticing."
         "She waved when someone looked up, then came back to kiss me."
     else:
-        "I woke alone. Leia was already downstairs."
+        "I woke alone. [girlfriend_name] was already downstairs."
         "Today I was going to try again, properly."
     jump ch01_day3_kitchen
 
 label ch01_day3_kitchen:
     # CG TODO: kitchen island, route-specific framing.
-    "Leia leaned over the kitchen island to reach the last clean cup."
+    "[girlfriend_name] leaned over the kitchen island to reach the last clean cup."
     if d3_lane == "love":
         mc "Need help?"
         gf "Only if you're making coffee."
@@ -41,14 +86,14 @@ label ch01_day3_kitchen:
         "She caught me watching and gave me an unmistakably pleased smile."
         gf "Coffee first. Distractions later."
     else:
-        "Julian was nearby, sorting the breakfast things."
-        mc "Leia, can we talk today?"
+        "[friend_name] was nearby, sorting the breakfast things."
+        mc "[girlfriend_name], can we talk today?"
         gf "Yeah. We should."
         "Maya appeared before either of us could say more."
     maya "Please tell me there's coffee."
     friend "You asked that before you said good morning."
     maya "I have priorities."
-    "Julian looked surprisingly functional considering the night before."
+    "[friend_name] looked surprisingly functional considering the night before."
     "Maya, a little hungover but slightly smug, had the look of someone who knew exactly how much attention she was getting."
     friend "Don't."
     mc "I haven't said anything."
@@ -56,7 +101,7 @@ label ch01_day3_kitchen:
     maya "For the record, nobody put me in that room. I picked it."
     gf "Nobody's disputing the record."
     maya "Good. I'd hate to have to remind anyone whose idea it was."
-    "Julian stared into his coffee as though it contained legal advice."
+    "[friend_name] stared into his coffee as though it contained legal advice."
     "Nobody volunteered what had or hadn't happened behind that door, and Maya's grin said she would decide when, and whether, anyone heard."
     maya "Beach club today?"
     gf "Definitely."
@@ -65,17 +110,17 @@ label ch01_day3_kitchen:
 label ch01_day3_beach:
     # BG/CG TODO: public beach-facing infinity pool with full glass wall.
     "The beach club's infinity pool ran along a glass wall facing the public beach."
-    "Maya and Leia stopped at the edge to look down at the people beyond it."
+    "Maya and [girlfriend_name] stopped at the edge to look down at the people beyond it."
     if d3_lane == "love":
         gf "That's a view."
         "She came back to stand beside me."
     elif d3_lane == "exhibitionism":
-        "Leia leaned against the glass and glanced back to see whether I was watching."
+        "[girlfriend_name] leaned against the glass and glanced back to see whether I was watching."
         mc "Enjoying the view?"
         gf "Maybe the other way around."
         "She took my hand before we moved on."
     else:
-        "Leia lingered at the glass, absorbed in the attention from below."
+        "[girlfriend_name] lingered at the glass, absorbed in the attention from below."
         "Maya glanced at me, then at her."
     maya "I have a challenge."
     friend "Those words never end well."
@@ -83,14 +128,14 @@ label ch01_day3_beach:
     "I jumped first and missed. A few beachgoers booed good-naturedly."
     maya "Embarrassing."
     "Maya made it through cleanly."
-    "Julian got wedged in the ring until Maya helped him free."
+    "[friend_name] got wedged in the ring until Maya helped him free."
     friend "I was sabotaged."
     maya "By physics?"
-    "Leia jumped last, caught the ring awkwardly and couldn't pull herself free."
+    "[girlfriend_name] jumped last, caught the ring awkwardly and couldn't pull herself free."
     gf "A little help?"
     if d3_lane == "ntr":
-        "Julian reached her first and helped steady the ring."
-        "Leia hugged him in relief just as I arrived."
+        "[friend_name] reached her first and helped steady the ring."
+        "[girlfriend_name] hugged him in relief just as I arrived."
         "I stopped a step short."
     else:
         "I reached her and steadied the ring until she could slip free."
@@ -104,7 +149,7 @@ label ch01_day3_lunch_walk:
     scene bg ch01_d3_cutout_path
     with dissolve
     "We had lunch under the cabana before heading back."
-    "Maya and Julian stayed behind to settle a few things at the beach club."
+    "Maya and [friend_name] stayed behind to settle a few things at the beach club."
     mc "Want to walk back with me?"
     gf "Okay."
     if d3_lane == "ntr":
@@ -112,16 +157,16 @@ label ch01_day3_lunch_walk:
         gf "And I've been upset."
         mc "I don't want us to keep missing each other."
         gf "Neither do I."
-        "For the first time all day, Leia took my hand."
+        "For the first time all day, [girlfriend_name] took my hand."
     "A novelty photo stand stood along the quieter path, with a cutout for posing."
     gf "Wait. We have to try this."
     "She stepped into position and immediately got stuck."
-    gf "Ryan. Don't laugh."
+    gf "[player_name]. Don't laugh."
     mc "I'm not laughing."
     gf "You're absolutely laughing."
     if d3_lane == "ntr":
         "I tried to free her, but the frame wouldn't budge."
-        gf "Go get Maya and Julian. Please."
+        gf "Go get Maya and [friend_name]. Please."
         mc "I'll be quick."
         "I hurried back toward the beach club."
 
@@ -131,7 +176,7 @@ label ch01_day3_lunch_walk:
         with dissolve
 
         "The path was quiet. Somewhere past the palms the beach club was only a low murmur of music and voices."
-        "Leia tested the frame again. It did not move."
+        "[girlfriend_name] tested the frame again. It did not move."
         gf "Unbelievable."
 
         "Footsteps slowed on the gravel behind her."
@@ -149,7 +194,7 @@ label ch01_day3_lunch_walk:
         "The frame groaned and did not give an inch."
         "He shifted his grip for better leverage, and his thumb slid against bare skin at her side."
 
-        "A small sound escaped Leia before she could stop it. He froze, hands still at her waist."
+        "A small sound escaped [girlfriend_name] before she could stop it. He froze, hands still at her waist."
 
         stranger_d3 "You okay?"
         gf "...Don't stop."
@@ -180,7 +225,7 @@ label ch01_day3_lunch_walk:
         with dissolve
 
         "Voices carried along the path, close enough now to pick out Maya's laugh."
-        "He stepped back, and Leia felt the cooler air where his hands had been."
+        "He stepped back, and [girlfriend_name] felt the cooler air where his hands had been."
 
         stranger_d3 "That's your friends, I think."
         gf "That's them."
@@ -189,14 +234,14 @@ label ch01_day3_lunch_walk:
         stranger_d3 "Go it is. Take care of yourself."
 
         "He was gone before the voices rounded the last bend."
-        "The frame still had not moved an inch. Leia stayed exactly where she was, heart racing, practicing a face that gave nothing away."
+        "The frame still had not moved an inch. [girlfriend_name] stayed exactly where she was, heart racing, practicing a face that gave nothing away."
 
-        "When we got back to the path with Maya and Julian, the only person there was Leia."
-        "Leia looked flushed and wouldn't quite meet my eyes."
+        "When we got back to the path with Maya and [friend_name], the only person there was [girlfriend_name]."
+        "[girlfriend_name] looked flushed and wouldn't quite meet my eyes."
         maya "How did you manage this?"
         gf "I wish I knew."
         "Between the four of us, we finally freed her."
-        "Maya and Julian headed back toward the club while Leia and I walked home."
+        "Maya and [friend_name] headed back toward the club while [girlfriend_name] and I walked home."
         mc "Was somebody here while I was gone?"
         gf "Someone tried to help."
         mc "Anything else?"
@@ -206,7 +251,7 @@ label ch01_day3_lunch_walk:
         "We walked side by side. Neither reached for the other's hand."
         $ set_story_flag("ch01_d3_cutout_secret")
     else:
-        "I managed to ease the frame apart until Leia could step free."
+        "I managed to ease the frame apart until [girlfriend_name] could step free."
         if d3_lane == "love":
             gf "My hero again."
             "She kissed me where nobody else could see."
@@ -226,21 +271,21 @@ label ch01_day3_villa_evening:
     "Back at the villa, we rested before getting ready for the club."
     if d3_lane == "ntr":
         "Maya noticed the silence between us but didn't push."
-        "When I next saw Leia, she was already wearing the Black Cutout Mini from yesterday's shopping trip."
+        "When I next saw [girlfriend_name], she was already wearing the Black Cutout Mini from yesterday's shopping trip."
         mc "You look nice."
         gf "Thanks."
         "Neither of us seemed to know what to say next."
     elif d3_lane == "exhibitionism":
-        "Leia appeared in her Black Cutout Mini and gave me a little turn."
+        "[girlfriend_name] appeared in her Black Cutout Mini and gave me a little turn."
         gf "Well?"
         mc "You're going to get noticed."
         gf "Good thing you're coming with me."
     else:
-        "Leia came out in the Black Cutout Mini she'd bought yesterday."
+        "[girlfriend_name] came out in the Black Cutout Mini she'd bought yesterday."
         gf "What do you think?"
         mc "I think I'm lucky."
         gf "Correct answer."
-    "We met Maya and Julian for drinks and group photographs before leaving."
+    "We met Maya and [friend_name] for drinks and group photographs before leaving."
     maya "One proper photo. Nobody blink."
     friend "That's aimed at me, isn't it?"
     jump ch01_day3_club
@@ -248,15 +293,20 @@ label ch01_day3_villa_evening:
 label ch01_day3_club:
     # BG TODO: nightclub dance floor.
     "Music filled the nightclub. We found a place near the dance floor."
-    "Maya dragged Julian toward the music, laughing at his protests."
+    "Maya dragged [friend_name] toward the music, laughing at his protests."
     if d3_lane == "ntr":
         gf "Can we just enjoy tonight?"
+        $ d3_enjoy = format_choice("ch01_d3_ntr_enjoy", "You're right. Let's just enjoy tonight.")
+        $ d3_talk = format_choice("ch01_d3_ntr_talk", "Can we talk somewhere quieter?")
+        $ d3_withdraw = format_choice("ch01_d3_ntr_withdraw", "You can enjoy yourself. I'll get a drink.")
         menu:
-            "You're right. Let's just enjoy tonight.":
+            "[d3_enjoy]":
+                $ apply_choice("ch01_d3_ntr_enjoy")
                 $ set_story_value("ch01_d3_ntr_repair_effort", "enjoy")
                 mc "You're right. Let's just enjoy tonight."
                 "We danced together. For a little while, it felt easy."
-            "Can we talk somewhere quieter?":
+            "[d3_talk]":
+                $ apply_choice("ch01_d3_ntr_talk")
                 $ set_story_value("ch01_d3_ntr_repair_effort", "talk")
                 mc "Can we talk somewhere quieter?"
                 "We stepped away from the music."
@@ -265,34 +315,35 @@ label ch01_day3_club:
                 mc "I don't want to lose you either."
                 gf "Then let's try. Properly."
                 "We held each other for a moment before returning."
-            "You can enjoy yourself. I'll get a drink.":
+            "[d3_withdraw]":
+                $ apply_choice("ch01_d3_ntr_withdraw")
                 $ set_story_value("ch01_d3_ntr_repair_effort", "withdraw")
                 mc "You can enjoy yourself. I'll get a drink."
-                "Leia watched me leave, frustrated."
+                "[girlfriend_name] watched me leave, frustrated."
     else:
-        "Leia and I danced until she noticed the VIP seating nearby."
+        "[girlfriend_name] and I danced until she noticed the VIP seating nearby."
     jump ch01_day3_hairclip
 
 label ch01_day3_hairclip:
     # CG TODO: hairclip drop; shared bent-forward composition for Exhib/NTR.
-    "Leia's hairclip slipped free near a long VIP sofa occupied by several men."
+    "[girlfriend_name]'s hairclip slipped free near a long VIP sofa occupied by several men."
     if d3_lane == "love":
         "I retrieved it and handed it back."
         mc "Here."
         gf "Thank you."
-        "One of the men complimented her dress; Leia smiled politely."
+        "One of the men complimented her dress; [girlfriend_name] smiled politely."
     else:
-        "Leia bent forward with straight legs to retrieve it, and her short dress shifted."
+        "[girlfriend_name] bent forward with straight legs to retrieve it, and her short dress shifted."
         "The men noticed."
         if d3_lane == "exhibitionism":
-            "Leia looked back at me with a mischievous smile."
+            "[girlfriend_name] looked back at me with a mischievous smile."
             "She exchanged a few playful remarks before they invited her to sit."
             gf "That's sweet, but I should probably get back to my boyfriend."
             "She came straight back to me, delighted by our shared joke."
         else:
             $ d3_effort = get_story_value("ch01_d3_ntr_repair_effort", "enjoy")
             if d3_effort == "withdraw":
-                "Leia accepted their invitation and sat between two of the men."
+                "[girlfriend_name] accepted their invitation and sat between two of the men."
                 "From the bar, I could see her laughing, but couldn't hear a word."
             elif d3_effort == "talk":
                 "I approached as she was chatting."
@@ -300,7 +351,7 @@ label ch01_day3_hairclip:
                 mc "Sure."
                 "She returned to me shortly afterward."
             else:
-                "I brought our drinks over. Leia introduced me as her boyfriend."
+                "I brought our drinks over. [girlfriend_name] introduced me as her boyfriend."
                 "We rejoined the music together."
     jump ch01_day3_vip
 
@@ -312,7 +363,7 @@ label ch01_day3_vip:
         jump ch01_day3_balcony
     elif d3_lane == "exhibitionism":
         "The men invited us both onto the sofa."
-        "Leia settled beside me, enjoying their teasing about the hairclip."
+        "[girlfriend_name] settled beside me, enjoying their teasing about the hairclip."
         gf "You're awfully confident tonight."
         mc "Should I be worried?"
         gf "Maybe I should give you something to worry about."
@@ -329,17 +380,17 @@ label ch01_day3_vip:
         if d3_effort != "withdraw":
             "The men invited us to sit together. Conversation was easy at first."
             if d3_effort == "talk":
-                "Leia squeezed my hand, remembering what we'd promised each other."
+                "[girlfriend_name] squeezed my hand, remembering what we'd promised each other."
             else:
                 "I was glad we'd decided to have a good night."
-            "My phone buzzed. Julian wanted help with a surprise for Maya."
+            "My phone buzzed. [friend_name] wanted help with a surprise for Maya."
             friend "Bro, come to the bar for a sec. Need your opinion. Don't bring the girls."
-            mc "Julian needs me. I'll be right back."
+            mc "[friend_name] needs me. I'll be right back."
             gf "Okay. Don't take too long."
         else:
-            "Leia stayed between the men while I watched from the bar."
+            "[girlfriend_name] stayed between the men while I watched from the bar."
             "One suggested inviting me over. She declined, saying I wasn't in the mood."
-            "Julian approached me with his phone."
+            "[friend_name] approached me with his phone."
             friend "Bro, need your opinion on something."
         jump ch01_day3_dessert
 
@@ -354,21 +405,27 @@ label ch01_day3_balcony:
         mc "Different good?"
         gf "Very. I liked that we were doing it together."
         "We talked about our boundaries and what we both wanted."
-    "We rejoined Maya and Julian for the rest of the night."
+    "We rejoined Maya and [friend_name] for the rest of the night."
     jump ch01_day3_group_return
 
 label ch01_day3_dessert:
     friend "Maya's been complaining about her hangover. I wanted to get her something."
     mc "You dragged me here to choose dessert?"
     friend "Don't make it weird."
+    $ d3_choc = format_choice("ch01_d3_dessert_chocolate", "Get her something chocolate.")
+    $ d3_rec = format_choice("ch01_d3_dessert_recommended", "Ask the bartender what they recommend.")
+    $ d3_tease = format_choice("ch01_d3_dessert_surprise", "Just admit you're trying to impress her.")
     menu:
-        "Get her something chocolate.":
+        "[d3_choc]":
+            $ apply_choice("ch01_d3_dessert_chocolate")
             mc "Chocolate. Easy."
             $ set_story_value("ch01_d3_maya_dessert", "chocolate")
-        "Ask the bartender what they recommend.":
+        "[d3_rec]":
+            $ apply_choice("ch01_d3_dessert_recommended")
             mc "Ask the bartender."
             $ set_story_value("ch01_d3_maya_dessert", "recommended")
-        "Just admit you're trying to impress her.":
+        "[d3_tease]":
+            $ apply_choice("ch01_d3_dessert_surprise")
             mc "You like her."
             friend "Just help me order."
             $ set_story_value("ch01_d3_maya_dessert", "surprise")
@@ -378,8 +435,8 @@ label ch01_day3_dessert:
     maya "I said I wanted something sweet hours ago!"
     friend "I remembered."
     "She hugged him."
-    maya "Where's Leia?"
-    "I glanced toward the VIP sofa. Leia wasn't there."
+    maya "Where's [girlfriend_name]?"
+    "I glanced toward the VIP sofa. [girlfriend_name] wasn't there."
     $ d3_effort = get_story_value("ch01_d3_ntr_repair_effort", "enjoy")
     if d3_effort == "withdraw":
         "She'd been sitting with those guys. Now they were gone too."
@@ -391,21 +448,21 @@ label ch01_day3_dessert:
 
 label ch01_day3_search:
     "I searched the dance floor, the VIP sofa and the corridor near the restrooms."
-    "Maya and Julian hadn't seen her."
+    "Maya and [friend_name] hadn't seen her."
     # Phone UI TODO: use existing in-game Messages framework; preserve exact typo and timing.
-    "I sent Leia a message: Where are you?"
+    "I sent [girlfriend_name] a message: Where are you?"
     "A typing indicator appeared, then vanished."
     "After a pause it appeared again."
-    "Leia: immn the toliet"
-    "Leia: toilet*"
+    "[girlfriend_name]: immn the toliet"
+    "[girlfriend_name]: toilet*"
     "I typed: Are you okay?"
     "The typing indicator appeared again, then disappeared without a reply."
     "I waited by the restroom corridor."
     jump ch01_day3_leia_returns
 
 label ch01_day3_leia_returns:
-    "Leia finally appeared, looking flustered and adjusting her dress."
-    gf "Ryan?"
+    "[girlfriend_name] finally appeared, looking flustered and adjusting her dress."
+    gf "[player_name]?"
     mc "I've been looking everywhere."
     gf "Sorry. I was in the bathroom."
     mc "For that long?"
@@ -430,7 +487,7 @@ label ch01_day3_leia_returns:
         mc "Then help me understand."
         gf "I don't know what you want me to say."
         mc "The truth would be a start."
-        "Leia looked away."
+        "[girlfriend_name] looked away."
     else:
         mc "You seemed comfortable with those guys."
         gf "They were being nice to me. You walked away."
@@ -440,7 +497,7 @@ label ch01_day3_leia_returns:
     maya "Everything okay?"
     gf "We're fine."
     maya "Right. Maybe we should head back."
-    "While Julian arranged our ride, Maya spoke quietly to Leia."
+    "While [friend_name] arranged our ride, Maya spoke quietly to [girlfriend_name]."
     maya "Is there something you're not telling him?"
     gf "Can we talk tomorrow?"
     jump ch01_day3_group_return
@@ -448,17 +505,17 @@ label ch01_day3_leia_returns:
 label ch01_day3_group_return:
     "The four of us headed back to the villa."
     if d3_lane == "ntr":
-        "Maya and Julian sat together, quieter than usual."
+        "Maya and [friend_name] sat together, quieter than usual."
         $ d3_effort = get_story_value("ch01_d3_ntr_repair_effort", "enjoy")
         if d3_effort == "enjoy":
-            "Leia leaned toward me. I didn't know whether to lean back."
+            "[girlfriend_name] leaned toward me. I didn't know whether to lean back."
         elif d3_effort == "talk":
             "Our hands rested inches apart. Neither of us reached across."
         else:
-            "Leia watched the lights pass outside the window. I looked at my phone."
+            "[girlfriend_name] watched the lights pass outside the window. I looked at my phone."
     else:
-        "Maya teased Julian about the surprise. Leia rested against me."
-    "At the villa, Maya and Julian wished us goodnight and went upstairs."
+        "Maya teased [friend_name] about the surprise. [girlfriend_name] rested against me."
+    "At the villa, Maya and [friend_name] wished us goodnight and went upstairs."
     jump ch01_day3_bedroom
 
 label ch01_day3_bedroom:
@@ -476,7 +533,7 @@ label ch01_day3_bedroom:
         mc "I'm not complaining."
         $ set_story_value("ch01_d3_end_variant", "love_private")
     elif d3_lane == "exhibitionism":
-        "Leia looked toward the uncovered bedroom window."
+        "[girlfriend_name] looked toward the uncovered bedroom window."
         gf "Remember the sofa?"
         mc "Hard to forget."
         gf "What if we left the curtains open again?"
@@ -484,7 +541,7 @@ label ch01_day3_bedroom:
         gf "With you? Yes."
         "We stayed close by the window, sharing another private moment with the curtains open."
         # CG TODO: exhibition bedroom/window payoff, art-first.
-        "Later Leia closed the curtains and came back to bed."
+        "Later [girlfriend_name] closed the curtains and came back to bed."
         gf "I think we're getting braver."
         mc "Together."
         gf "Together."
@@ -501,31 +558,38 @@ label ch01_day3_bedroom:
         with fade
         # CG TODO: dream-only restroom imagery, never treated as evidence.
         "The nightclub corridor returned in my sleep, distorted and impossibly quiet."
-        "Behind the restroom door I imagined Leia kissing one of the men from the sofa."
-        mc "Leia?"
-        "Dream-Leia turned toward me."
+        "Behind the restroom door I imagined [girlfriend_name] kissing one of the men from the sofa."
+        mc "[girlfriend_name]?"
+        "Dream-[girlfriend_name] turned toward me."
         gf "You weren't supposed to see."
         "The door slammed. My phone showed the same messages again."
-        "Leia: immn the toliet"
-        "Leia: toilet*"
+        "[girlfriend_name]: immn the toliet"
+        "[girlfriend_name]: toilet*"
         "Typing..."
         "The indicator never stopped."
         scene bg ch01_villa_bedroom_night
         with fade
-        "I woke sharply. Leia was asleep beside me."
-        gf "Ryan...? What's wrong?"
+        "I woke sharply. [girlfriend_name] was asleep beside me."
+        gf "[player_name]...? What's wrong?"
         mc "Just a bad dream."
         gf "Come here."
         "I lay back down. It was only a dream, not proof of anything."
-        $ set_story_value("ch01_d3_end_variant", "ntr_restroom_nightmare")
+        $ d3_effort = get_story_value("ch01_d3_ntr_repair_effort", "enjoy")
+        if d3_effort == "talk":
+            $ set_story_value("ch01_d3_end_variant", "ntr_restroom_nightmare_talk")
+        elif d3_effort == "withdraw":
+            $ set_story_value("ch01_d3_end_variant", "ntr_restroom_nightmare_withdraw")
+        else:
+            $ set_story_value("ch01_d3_end_variant", "ntr_restroom_nightmare")
     $ set_story_flag("ch01_d3_complete")
     $ set_story_flag("ch01_day_03_complete")
 
     scene black
     with fade
 
-    centered "{size=46}CHAPTER ONE — DAY THREE COMPLETE{/size}"
+    call lc_day_review("ch01_d3") from lc_review_return_ch01_d3
 
     # Day Three -> Day Four. ch01_day4_start reads (never recomputes) the Day
     # Three state stored here: lane, end variant, repair effort, cutout secret.
     jump ch01_day4_start
+

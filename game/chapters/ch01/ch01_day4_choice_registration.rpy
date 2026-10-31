@@ -372,10 +372,10 @@ init 2 python:
         lane = get_story_value("ch01_d4_lane", "love")
         if lane == "love":
             head = "TRACK: LOVE (pure couple track)"
-            line = "No outside-attention beats today. Intimacy stays between Ryan and Leia."
+            line = ('No outside-attention beats today. Intimacy stays between ' + player_name + ' and ' + girlfriend_name + '.')
         elif lane == "exhibitionism":
             head = "TRACK: SHARED EXHIBITION (NTS)"
-            line = "Ryan stays included. 'Keep it just us' is always available tonight."
+            line = (player_name + " stays included. 'Keep it just us' is always available tonight.")
         else:
             head = "TRACK: DISTANCE (NTR pressure)"
             line = "Repair is still possible. Gate choices carry a red diamond."

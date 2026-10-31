@@ -103,6 +103,8 @@ screen player_settings_screen():
                         for mode_id in PLAYER_TRANSPARENCY_MODES:
                             use transparency_mode_card(mode_id)
 
+                    use lc_review_settings
+
                     if current_mode == "full":
                         frame:
                             xfill True
@@ -193,3 +195,4 @@ screen player_settings_screen():
                                         text "[transparency_wardrobe_preview()]" size 16 color "#eee7ed" line_spacing 3
 
                     null height 20
+

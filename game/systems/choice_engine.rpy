@@ -580,11 +580,13 @@ init python:
 
     def apply_choice(choice_id):
         """Apply the real effects, record the selection, and surface mode-safe feedback."""
+        review_before = lc_review_stats()
         for group_name, stat_name, amount in get_choice_effects(choice_id):
             change_stat(group_name, stat_name, amount)
 
         renpy.store.last_choice_id = choice_id
         renpy.store.choice_history.append(choice_id)
+        lc_review_note_choice(choice_id, review_before)
         show_choice_feedback(choice_id)
         return choice_id
 
@@ -683,3 +685,4 @@ init python:
         """Safe live preview used by the choice-mode screen."""
         base_text = "Encourage {}'s curiosity".format(renpy.store.girlfriend_name)
         return format_choice("dev_encourage_curiosity", base_text)
+

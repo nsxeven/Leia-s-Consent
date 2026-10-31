@@ -87,7 +87,7 @@ image bg ch01_d4_terrace_night = Composite(
 image cg ch01_d4_photo_candid = Composite(
     (1920, 1080),
     (0, 0), Solid("#7a5f55"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - CANDID\nRYAN POV / LEIA MID-LAUGH / MARKET LIGHT / HAIRCLIP\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - CANDID\n{mc} POV / {gf} MID-LAUGH / MARKET LIGHT / HAIRCLIP\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV. Leia posing for the camera at the sunglasses stall, round
@@ -96,7 +96,7 @@ image cg ch01_d4_photo_candid = Composite(
 image cg ch01_d4_photo_pose = Composite(
     (1920, 1080),
     (0, 0), Solid("#6e5a73"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - POSED\nRYAN POV / LEIA + SUNGLASSES / THE EYEBROW\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - POSED\n{mc} POV / {gf} + SUNGLASSES / THE EYEBROW\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV. Leia has just taken HER shot: she lowers Ryan's phone from her
@@ -108,7 +108,7 @@ image cg ch01_d4_photo_pose = Composite(
 image cg ch01_d4_photo_swap = Composite(
     (1920, 1080),
     (0, 0), Solid("#6a6f55"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - LEIA'S TURN\nRYAN POV / LEIA LOWERING THE PHONE, GRINNING / HONEY STALL\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - {gf}'S TURN\n{mc} POV / {gf} LOWERING THE PHONE, GRINNING / HONEY STALL\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Julian's entry for Maya's prompt, shown full-screen as the photo on the
@@ -117,7 +117,7 @@ image cg ch01_d4_photo_swap = Composite(
 image cg ch01_d4_photo_maya_julian = Composite(
     (1920, 1080),
     (0, 0), Solid("#6f5a4a"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - JULIAN SHOOTS MAYA\nTHE PHOTO ITSELF / GREAT POSE / THUMB OVER LENS / COMIC\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR PHOTO HUNT - {friend} SHOOTS MAYA\nTHE PHOTO ITSELF / GREAT POSE / THUMB OVER LENS / COMIC\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV. Slow dance in soft lamplight. Reused by all three Love options
@@ -128,7 +128,7 @@ image cg ch01_d4_photo_maya_julian = Composite(
 image cg ch01_d4_love_night_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#4a3a50"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR LOVE NIGHT - 01\nRYAN POV / SLOW DANCE / LEIA CLOSE, EYES CLOSED / LAMPLIGHT\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR LOVE NIGHT - 01\n{mc} POV / SLOW DANCE / {gf} CLOSE, EYES CLOSED / LAMPLIGHT\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV fade card. Bedroom, curtains drawn, warm lamplight on fabric.
@@ -137,7 +137,7 @@ image cg ch01_d4_love_night_01 = Composite(
 image cg ch01_d4_love_night_02 = Composite(
     (1920, 1080),
     (0, 0), Solid("#392f45"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR LOVE NIGHT - 02\nRYAN POV / CURTAINS DRAWN / LEIA'S HAND REACHING FOR THE LAMP\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR LOVE NIGHT - 02\n{mc} POV / CURTAINS DRAWN / {gf}'S HAND REACHING FOR THE LAMP\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV. Leia on the night terrace, cream wrap held closed with both
@@ -147,7 +147,7 @@ image cg ch01_d4_love_night_02 = Composite(
 image cg ch01_d4_exhib_terrace_01 = Composite(
     (1920, 1080),
     (0, 0), Solid("#2f3350"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR EXHIBITION - 01\nRYAN POV / LEIA ON TERRACE / WRAP HELD CLOSED / LOOKING INTO LENS\nCOVERED / FINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR EXHIBITION - 01\n{mc} POV / {gf} ON TERRACE / WRAP HELD CLOSED / LOOKING INTO LENS\nCOVERED / FINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV, same terrace framing, the wrap open for one beat. BRIEF and
@@ -157,7 +157,7 @@ image cg ch01_d4_exhib_terrace_01 = Composite(
 image cg ch01_d4_exhib_terrace_02 = Composite(
     (1920, 1080),
     (0, 0), Solid("#3a2f4e"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR EXHIBITION - 02\nRYAN POV / WRAP OPEN FOR ONE BEAT / BRIEF AND IMPLIED / EYES ON LENS\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR EXHIBITION - 02\n{mc} POV / WRAP OPEN FOR ONE BEAT / BRIEF AND IMPLIED / EYES ON LENS\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV, 'Ryan likes watching' sub-variant. Over Leia's shoulder (her
@@ -167,7 +167,7 @@ image cg ch01_d4_exhib_terrace_02 = Composite(
 image cg ch01_d4_exhib_watching = Composite(
     (1920, 1080),
     (0, 0), Solid("#35304a"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR EXHIBITION - RYAN LIKES WATCHING (SUB-VARIANT)\nRYAN POV / LEIA AT THE RAIL, GLANCING BACK / COVERED\nFINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR EXHIBITION - {mc} LIKES WATCHING (SUB-VARIANT)\n{mc} POV / {gf} AT THE RAIL, GLANCING BACK / COVERED\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # CG TODO (artist): Ryan POV, NTR lane. Night terrace, Leia seated on the low wall looking up
@@ -177,7 +177,7 @@ image cg ch01_d4_exhib_watching = Composite(
 image cg ch01_d4_ntr_terrace_talk = Composite(
     (1920, 1080),
     (0, 0), Solid("#2a2f45"),
-    (90, 70), Text("CG PLACEHOLDER\nDAY FOUR NTR LANE - THE TALK\nRYAN POV / LEIA ON THE WALL, HAIRCLIP OPEN / EMPTY SPACE BESIDE HER\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY FOUR NTR LANE - THE TALK\n{mc} POV / {gf} ON THE WALL, HAIRCLIP OPEN / EMPTY SPACE BESIDE HER\nNON-EXPLICIT / FINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 # ---------------------------------------------------------------------------
