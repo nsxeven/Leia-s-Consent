@@ -57,12 +57,15 @@ init python:
         return None
 
     def enter_cinematic_mode():
+        """Full-screen CG. Hides the phone and switches the say box to CG mode."""
         renpy.store.phone_hud_enabled = False
+        renpy.store.lc_cinematic_mode = True
         renpy.restart_interaction()
         return None
 
     def exit_cinematic_mode():
         renpy.store.phone_hud_enabled = True
+        renpy.store.lc_cinematic_mode = False
         renpy.restart_interaction()
         return None
 

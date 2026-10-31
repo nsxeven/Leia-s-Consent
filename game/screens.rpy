@@ -95,7 +95,7 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
-default lc_dialogue_theme = "night"
+default lc_dialogue_theme = "day"
 
 init python:
     def set_dialogue_theme(theme):
@@ -591,6 +591,8 @@ screen about():
 
         vbox:
 
+            text "ABOUT" size 48 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
+            text "INSIDE COVER" size 24 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
             label "[config.name!t]"
             text _("Version [config.version!t]\n")
 
@@ -1023,6 +1025,9 @@ screen help():
 
         vbox:
             spacing 23
+
+            text "HELP" size 48 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
+            text "TAPED INSIDE THE COVER" size 24 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
 
             hbox:
 
