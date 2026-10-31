@@ -10,7 +10,8 @@ screen shop_screen():
 
     key "K_ESCAPE" action Return()
 
-    add Solid("#141117")
+    add "gui/scrapbook/bg_game_menu.png"
+    use lc_journal_tabs(1686)
 
     if shop_selected_outfit is None:
         frame:
@@ -18,12 +19,12 @@ screen shop_screen():
             yalign 0.5
             xsize 1200
             padding (40, 35)
-            background Solid("#19151d")
+            background Frame("gui/scrapbook/frame_paper.png", 9, 9)
 
             vbox:
                 spacing 20
-                text "OUTFIT SHOP" size 42 color "#ffffff"
-                text "There are no outfits available in the shop right now." size 22 color "#c8b8c5"
+                text "OUTFIT SHOP" size 42 color "#3b2a30"
+                text "There are no outfits available in the shop right now." size 22 color "#7a6266"
                 textbutton "Close":
                     action Return()
 
@@ -40,12 +41,12 @@ screen shop_screen():
         $ selected_state_color = shop_item_status_color(shop_selected_outfit)
 
         frame:
-            xalign 0.5
-            yalign 0.5
-            xsize 1740
-            ysize 980
-            background Solid("#19151d")
-            padding (42, 34)
+            xpos 70
+            ypos 48
+            xsize 1580
+            ysize 900
+            background None
+            padding (28, 18)
 
             vbox:
                 spacing 18
@@ -57,13 +58,13 @@ screen shop_screen():
 
                     vbox:
                         spacing 3
-                        text "OUTFIT SHOP" size 46 color "#ffffff"
-                        text "Choose something for [girlfriend_name]. Buying an outfit never guarantees she will wear it." size 19 color "#aa9dab"
+                        text "OUTFIT SHOP" size 46 color "#3b2a30"
+                        text "Choose something for [girlfriend_name]. Buying an outfit never guarantees she will wear it." size 19 color "#7a6266"
 
                     vbox:
                         xalign 1.0
                         spacing 7
-                        text "Money: $[money]" size 22 color "#ffffff" xalign 1.0
+                        text "Money: $[money]" size 22 color "#3b2a30" xalign 1.0
                         textbutton "Close":
                             xalign 1.0
                             action Return()
@@ -71,9 +72,9 @@ screen shop_screen():
                 if last_shop_message:
                     frame:
                         xfill True
-                        background Solid("#30242e")
+                        background Frame("gui/scrapbook/frame_kraft.png", 9, 9)
                         padding (20, 13)
-                        text "[last_shop_message]" size 17 color "#e6d9e3"
+                        text "[last_shop_message]" size 17 color "#3b2a30"
 
                 hbox:
                     spacing 20
@@ -83,7 +84,7 @@ screen shop_screen():
                     frame:
                         xsize 505
                         yfill True
-                        background Solid("#1d1920")
+                        background Frame("gui/scrapbook/frame_card.png", 9, 9)
                         padding (18, 18)
 
                         vbox:
@@ -93,8 +94,8 @@ screen shop_screen():
 
                             hbox:
                                 xfill True
-                                text "AVAILABLE OUTFITS" size 23 color "#ffffff"
-                                text "[len(shop_outfit_ids())]" size 17 color "#a99ba8" xalign 1.0
+                                text "AVAILABLE OUTFITS" size 23 color "#3b2a30"
+                                text "[len(shop_outfit_ids())]" size 17 color "#7a6266" xalign 1.0
 
                             use lc_scroll_body:
                                 vbox:
@@ -113,8 +114,8 @@ screen shop_screen():
                                         button:
                                             xfill True
                                             padding (20, 18)
-                                            background (Solid("#3b2a38") if card_selected else Solid("#211c25"))
-                                            hover_background Solid("#30242f")
+                                            background (Frame("gui/scrapbook/frame_card_on.png", 9, 9) if card_selected else Frame("gui/scrapbook/frame_card.png", 9, 9))
+                                            hover_background Frame("gui/scrapbook/frame_paper_hi.png", 9, 9)
                                             action SetScreenVariable("shop_selected_outfit", outfit_id)
 
                                             vbox:
@@ -123,18 +124,18 @@ screen shop_screen():
 
                                                 hbox:
                                                     xfill True
-                                                    text "[card_name]" size 23 color "#ffffff"
-                                                    text "$[card_cost]" size 20 color "#eee7ed" xalign 1.0
+                                                    text "[card_name]" size 23 color "#3b2a30"
+                                                    text "$[card_cost]" size 20 color "#3b2a30" xalign 1.0
 
                                                 hbox:
                                                     xfill True
-                                                    text "[card_category]" size 15 color "#a99ba8"
+                                                    text "[card_category]" size 15 color "#7a6266"
                                                     text "[card_state_label]" size 14 color card_state_color xalign 1.0
 
                     frame:
                         xfill True
                         yfill True
-                        background Solid("#211c25")
+                        background Frame("gui/scrapbook/frame_card.png", 9, 9)
                         padding (28, 24)
 
                         use lc_scroll_body:
@@ -147,33 +148,33 @@ screen shop_screen():
 
                                     vbox:
                                         spacing 5
-                                        text "[selected_name]" size 34 color "#ffffff"
-                                        text "[selected_category]" size 17 color "#f1a8c8"
+                                        text "[selected_name]" size 34 color "#3b2a30"
+                                        text "[selected_category]" size 17 color "#cc0066"
 
                                     vbox:
                                         xalign 1.0
                                         spacing 5
-                                        text "$[selected_cost]" size 29 color "#ffffff" xalign 1.0
+                                        text "$[selected_cost]" size 29 color "#3b2a30" xalign 1.0
                                         text "[selected_state_label]" size 15 color selected_state_color xalign 1.0
 
-                                text "[selected_description]" size 20 color "#ddd2db" line_spacing 4
+                                text "[selected_description]" size 20 color "#3b2a30" line_spacing 4
 
                                 frame:
                                     xfill True
-                                    background Solid("#2a242d")
+                                    background Frame("gui/scrapbook/frame_card.png", 9, 9)
                                     padding (20, 17)
 
                                     vbox:
                                         spacing 7
-                                        text "PURCHASE VS. COMFORT" size 17 color "#f1a8c8"
-                                        text "Buying this only adds it to [girlfriend_name]'s wardrobe. Whether she is willing to wear it is decided separately by her current comfort and progression." size 17 color "#eee7ed" line_spacing 3
+                                        text "PURCHASE VS. COMFORT" size 17 color "#cc0066"
+                                        text "Buying this only adds it to [girlfriend_name]'s wardrobe. Whether she is willing to wear it is decided separately by her current comfort and progression." size 17 color "#3b2a30" line_spacing 3
 
                                 vbox:
                                     spacing 8
-                                    text "SUITED FOR" size 18 color "#ffffff"
-                                    text "[selected_contexts]" size 17 color "#b9aabb"
+                                    text "SUITED FOR" size 18 color "#3b2a30"
+                                    text "[selected_contexts]" size 17 color "#7a6266"
 
-                                text "STYLE PROFILE" size 22 color "#ffffff"
+                                text "STYLE PROFILE" size 22 color "#3b2a30"
 
                                 grid 2 2:
                                     spacing 18
@@ -182,7 +183,7 @@ screen shop_screen():
                                     for style_label, style_value in selected_styles:
                                         frame:
                                             xfill True
-                                            background Solid("#272129")
+                                            background Frame("gui/scrapbook/frame_card.png", 9, 9)
                                             padding (16, 13)
                                             use outfit_style_meter(style_label, style_value)
 
@@ -191,16 +192,16 @@ screen shop_screen():
                                 if selected_state == "owned":
                                     frame:
                                         xfill True
-                                        background Solid("#293329")
+                                        background Frame("gui/scrapbook/chip_up.png", 9, 9)
                                         padding (20, 15)
                                         text "ALREADY OWNED" size 18 color "#b9d7bd" xalign 0.5
 
                                 elif selected_state == "locked":
                                     frame:
                                         xfill True
-                                        background Solid("#2c272d")
+                                        background Frame("gui/scrapbook/frame_card.png", 9, 9)
                                         padding (20, 15)
-                                        text "This outfit is not available to purchase yet." size 17 color "#b8a8b5" xalign 0.5
+                                        text "This outfit is not available to purchase yet." size 17 color "#7a6266" xalign 0.5
 
                                 elif selected_state == "insufficient":
                                     textbutton "Need $[selected_cost] — You have $[money]":

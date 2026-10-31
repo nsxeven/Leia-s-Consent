@@ -9,14 +9,14 @@ screen dev_menu_shell(title, subtitle=None):
 
     key "K_ESCAPE" action Return("back")
 
-    add Solid("#17151a")
+    add "gui/scrapbook/bg_table.png"
 
     frame:
         xalign 0.5
         yalign 0.5
         xsize 1220
         ysize 920
-        background Solid("#1d1a20")
+        background Frame("gui/scrapbook/frame_paper.png", 9, 9)
         padding (36, 30)
 
         vbox:
@@ -24,7 +24,7 @@ screen dev_menu_shell(title, subtitle=None):
             xfill True
             yfill True
 
-            text title size 42 color "#ffffff" xalign 0.5
+            text title size 42 color "#3b2a30" xalign 0.5
 
             if subtitle:
                 text subtitle size 19 color "#aaa0aa" xalign 0.5 text_align 0.5
