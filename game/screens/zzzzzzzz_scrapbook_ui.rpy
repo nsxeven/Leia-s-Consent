@@ -788,10 +788,8 @@ screen preferences():
                 spacing 10
                 xsize 760
 
-                hbox:
-                    spacing 14
-                    text "PREFS" size 48 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
-                    text "HOW I PLAY" size 48 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
+                text "PREFS" size 48 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
+                text "HOW I PLAY" size 21 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
                 text "SETTINGS KEEP ACROSS SAVES" size 21 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
 
                 hbox:
@@ -920,10 +918,13 @@ screen history():
                     spacing 2
                     text "NEWEST AT THE BOTTOM" size 21 color "#7a6266" font "fonts/Silkscreen-Regular.ttf" xalign 1.0
 
+        # Left page only. The gutter sits near the middle of the spread, so a
+        # full-width line would run across the spine.
         viewport:
-            ypos 100
-            ysize 780
-            xfill True
+            xpos 8
+            ypos 108
+            xsize 700
+            ysize 760
             mousewheel True
             draggable True
             pagekeys True
@@ -931,37 +932,46 @@ screen history():
             yinitial 1.0
 
             vbox:
-                spacing 6
+                spacing 10
+                xsize 680
                 if not _history_list:
-                    text "The diary is still blank." size 36 color "#7a6266" font "fonts/Caveat[wght].ttf"
+                    text "The diary is still blank." size 34 color "#7a6266" font "fonts/Caveat[wght].ttf" text_align 0.0
                 for h in _history_list:
                     $ said = (h.who == "I SAID")
                     $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
                     hbox:
-                        spacing 12
-                        xfill True
+                        spacing 10
+                        xsize 640
+                        box_align 0.0
                         if said:
                             frame:
                                 background Frame("gui/scrapbook/frame_pink.png", 9, 9)
                                 padding (8, 2)
-                                xsize 108
-                                ysize 32
+                                xsize 120
+                                yminimum 32
                                 text "I SAID" size 18 color "#fff3f7" font "fonts/Silkscreen-Regular.ttf" xalign 0.5 yalign 0.5
                         elif h.who:
                             text h.who:
-                                xsize 140
+                                xsize 120
+                                min_width 120
+                                yalign 0.0
                                 font "fonts/Silkscreen-Bold.ttf"
                                 size 21
                                 color lc_speaker_color(h.who)
+                                textalign 0.0
+                                xalign 0.0
                         else:
-                            null width 140
+                            null width 120
                         text what:
+                            style "lc_history_what"
                             substitute False
                             xalign 0.0
-                            text_align 0.0
-                            xsize 1280
+                            textalign 0.0
+                            xsize 500
+                            min_width 500
+                            layout "tex"
                             font ("fonts/PatrickHand-Regular.ttf" if (h.who and not said) else "fonts/Caveat[wght].ttf")
-                            size 34
+                            size 32
                             color ("#781446" if said else ("#6e6068" if not h.who else "#34242c"))
 
 
@@ -1289,6 +1299,10 @@ label lc_ui_shot_tour:
             store._history_list.append(entry)
 
         def _lc_shot(name):
+            only = os.environ.get("LC_UI_ONLY", "")
+            if only and name not in only.split(","):
+                _lc_mark("skip " + name)
+                return
             _lc_mark("pause " + name)
             renpy.show_screen("lc_shot_helper", name)
             renpy.pause(0.7, hard=True)
@@ -1512,6 +1526,15 @@ style say_dialogue:
     textalign 0.0
     ymaximum None
     xmaximum 1520
+    layout "tex"
+
+style lc_history_what is default:
+    xalign 0.0
+    xanchor 0.0
+    xsize 500
+    min_width 500
+    textalign 0.0
+    justify False
     layout "tex"
 
 style say_label:
