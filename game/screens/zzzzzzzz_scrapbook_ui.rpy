@@ -957,6 +957,8 @@ screen history():
                             null width 140
                         text what:
                             substitute False
+                            xalign 0.0
+                            text_align 0.0
                             xsize 1280
                             font ("fonts/PatrickHand-Regular.ttf" if (h.who and not said) else "fonts/Caveat[wght].ttf")
                             size 34
@@ -1272,6 +1274,20 @@ label lc_ui_shot_tour:
                     renpy.hide_screen(scr)
             _lc_mark("saved " + name + " qm=" + str(renpy.get_screen("quick_menu") is not None))
 
+        def _lc_seed_line(who, what):
+            entry = renpy.character.HistoryEntry()
+            entry.kind = "adv"
+            entry.who = who
+            entry.what = what
+            entry.who_args = {}
+            entry.what_args = {}
+            entry.window_args = {}
+            entry.show_args = {}
+            entry.image_tag = None
+            entry.multiple = None
+            entry.rollback_identifier = None
+            store._history_list.append(entry)
+
         def _lc_shot(name):
             _lc_mark("pause " + name)
             renpy.show_screen("lc_shot_helper", name)
@@ -1330,11 +1346,11 @@ label lc_ui_shot_tour:
     $ _lc_shot("05_preferences")
     hide screen preferences
 
-    $ renpy.say(None, "The villa was already bright when I woke.", interact=False)
-    $ renpy.say(gf, "Morning. You're not getting up yet, are you?", interact=False)
-    $ renpy.say(mc, "Wasn't planning to.", interact=False)
-    $ renpy.say(None, "Someone walked past the glass.", interact=False)
-    $ renpy.say(gf, "Nothing. Just noticing.", interact=False)
+    $ _lc_seed_line(None, "The villa was already bright when I woke.")
+    $ _lc_seed_line(girlfriend_name, "Morning. You're not getting up yet, are you?")
+    $ _lc_seed_line(player_name, "Wasn't planning to.")
+    $ _lc_seed_line(None, "Someone walked past the glass.")
+    $ _lc_seed_line(girlfriend_name, "Nothing. Just noticing.")
     $ lc_history_record_choice("Can we talk somewhere quieter?")
     window hide
     $ renpy.show_screen("history")
