@@ -4,13 +4,17 @@ Implemented against main `c920dd9c1acb91d03c3301f370bc2dd967fe9915` (Ren'Py 8.5.
 
 ## Player behaviour
 
-Days 1–5 now call one reusable review before handing off to the next day or the existing demo ending. The review uses only the current save's recorded day, not the persistent gallery's unlocked images. Up to five moments are selected across the day; each moment uses the latest variant actually shown. Cards fade/drop in with a small tilt, can be revealed immediately, and can be animated or static. Dream cards are labelled.
+Days 1–5 now call one reusable review before handing off to the next day or the existing demo ending. The review uses only the current save's recorded day, not the persistent gallery's unlocked images. Up to five moments are selected across the day; each moment uses the latest variant actually shown.
+
+The recap is a scrapbook. The scene fades to a night window, then the journal opens. Polaroids drop in one at a time (a missing or single photograph still lays out cleanly). Stat bars then grow from the day-start snapshot (`record["start"]`, yesterday) to the day's end, staggered, with a green flash for a gain and a red one for a loss. A click, or Space, skips every animation to that settled page. Continue, Enter, or Escape leaves the review. Dream cards are labelled. Gameplay Settings still toggles the whole scrapbook animation.
 
 The existing Information Transparency setting controls detail:
 
-- Immersive: story summary, photographs and optional character titles; no numbers or route label.
-- Insight: qualitative changes in player-facing stats and current direction.
-- Full / Developer: exact net stat changes and expandable actual choice effects after clamping. Direct story/debug adjustments contribute to totals but are not fabricated as choices.
+- Immersive: two-line diary, photographs and optional character titles; no numbers, bars, or route stamp.
+- Insight: direction arrows for the seven player-facing stats that changed, and the lines the player chose, without numbers.
+- Full / Developer: exact yesterday-to-today numbers for every stat that changed, plus the choice lines and their clamped deltas. "Show choice details" hides or shows those deltas. Choice lines are the menu text, never internal ids. Direct story/debug adjustments contribute to totals but are not fabricated as choices.
+
+Optional stings, if a later pass adds them: `audio/sfx/review_paper.ogg` when a photo lands and `audio/sfx/review_tick.ogg` when a bar settles. Missing files stay silent.
 
 Gameplay Settings adds animation, Story/Genre/Off titles, brief sprite badges (off by default), and Day One dream Full/Summary/Ask controls. Status shows the titles and can reopen the latest completed review. The summary option skips only the Day One dream presentation; all three waking responses and their consequences remain shared. It does not disable NTR elsewhere.
 

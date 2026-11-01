@@ -20,7 +20,9 @@ class DayReviewTests(unittest.TestCase):
             persistent=SimpleNamespace(lc_title_style='story', lc_title_badges=False))
         self.values = {}
         self.shown = []
-        self.config = SimpleNamespace(show=lambda name, *a, **kw: self.shown.append(name))
+        self.config = SimpleNamespace(
+            show=lambda name, *a, **kw: self.shown.append(name),
+            gamedir=str(ROOT / "game"))
         self.gallery = {}
         for i in range(8):
             self.gallery[str(i)] = dict(id=str(i), tab='ch01_d1', title='Moment '+str(i),
@@ -172,6 +174,125 @@ class DayReviewTests(unittest.TestCase):
         self.assertEqual(self.call('lc_review_latest'), 'ch01_d6')
         self.assertEqual(self.call('lc_review_cards', 'ch01_d6')[0]['image'], 'day6_photo')
         self.assertEqual(self.store.lc_review_days['ch01_d6']['route'], 'love')
+
+    def test_scrapbook_bars_use_the_day_start_snapshot(self):
+        self.begin()
+        self.store.relationship_stats['love'] += 4
+        self.store.partner_stats['secrecy'] += 7
+        self.store.player_stats['acceptance'] += 1
+        self.finish()
+        self.store.relationship_stats['love'] = 0
+        insight = self.call('lc_review_bar_rows', 'ch01_d1', 'insight')
+        full = self.call('lc_review_bar_rows', 'ch01_d1', 'full')
+        self.assertEqual(self.call('lc_review_bar_rows', 'ch01_d1', 'normal'), [])
+        self.assertEqual([row['stat'] for row in insight], ['love', 'acceptance'])
+        self.assertEqual(insight[0]['yesterday'], 50)
+        self.assertEqual(insight[0]['today'], 54)
+        self.assertNotIn('secrecy', [row['stat'] for row in insight])
+        self.assertIn('secrecy', [row['stat'] for row in full])
+        self.assertEqual(self.call('lc_review_unchanged_count', 'ch01_d1', 'insight'), 5)
+        self.assertEqual(self.call('lc_review_unchanged_count', 'ch01_d1', 'full'), 8)
+        self.assertEqual(self.call('lc_review_yesterday', 'ch01_d1')['relationship']['love'], 50)
+
+    def test_partial_day_has_no_bars(self):
+        self.finish()
+        self.assertEqual(self.call('lc_review_bar_rows', 'ch01_d1', 'full'), [])
+        self.assertFalse(self.call('lc_review_show_stats', 'ch01_d1', 'full'))
+
+    def test_choice_lines_are_readable_text(self):
+        self.store.girlfriend_name = 'Leia'
+        self.store.friend_name = 'Julian'
+        self.store.player_name = 'Ryan'
+        self.assertEqual(self.call('lc_review_choice_text', 'ch01_d3_ntr_talk'), 'Can we talk somewhere quieter?')
+        self.assertEqual(
+            self.call('lc_review_choice_text', 'ch01_d3_dessert_recommended'),
+            'Ask the bartender what they recommend.')
+        named = self.call('lc_review_choice_text', 'ch01_d5_snorkel_leia_first')
+        self.assertIn('Leia', named)
+        self.assertNotIn('ch01_', named)
+        self.assertNotIn('{girlfriend}', named)
+        unknown = self.call('lc_review_choice_text', 'ch01_d9_not_a_real_choice')
+        self.assertNotIn('ch01_', unknown)
+        self.assertNotEqual(unknown, 'ch01_d9_not_a_real_choice')
+        import re
+        ids = set(re.findall(r'apply_choice\("([^"]+)"\)', '\n'.join(
+            p.read_text() for p in (ROOT / 'game').rglob('*.rpy'))))
+        for choice_id in sorted(ids):
+            text = self.call('lc_review_choice_text', choice_id)
+            self.assertNotIn(choice_id, text, choice_id)
+            self.assertNotIn('ch01_', text, choice_id)
+            self.assertTrue(text.strip(), choice_id)
+
+    def test_choice_rows_quote_the_line_not_the_id(self):
+        self.begin()
+        before = self.call('lc_review_stats')
+        self.store.relationship_stats['love'] += 2
+        self.store.relationship_stats['trust'] += 2
+        self.call('lc_review_note_choice', 'ch01_d3_ntr_talk', before)
+        rows = self.call('lc_review_choice_rows', 'ch01_d1')
+        self.assertEqual(rows[0][0], 'Can we talk somewhere quieter?')
+        self.assertNotIn('ch01_', rows[0][0])
+        self.assertIn('Love +2', rows[0][1])
+
+    def test_diary_is_two_short_lines(self):
+        self.values['ch01_d3_lane'] = 'ntr'
+        self.values['ch01_d3_ntr_repair_effort'] = 'talk'
+        self.call('lc_review_begin', 'ch01_d3')
+        self.call('lc_review_finish', 'ch01_d3')
+        lines = self.call('lc_review_diary', 'ch01_d3')
+        self.assertEqual(len(lines), 2)
+        self.assertIn('talk it through', lines[0])
+        self.assertIn('girlfriend_name', lines[1])
+        for line in lines:
+            self.assertLess(len(line), 90)
+        for route in self.env['LC_REVIEW_ROUTES']:
+            self.store.lc_review_days['ch01_d1'] = {'route': route, 'summary': 'Unused.'}
+            pair = self.call('lc_review_diary', 'ch01_d1')
+            self.assertEqual(len(pair), 2)
+            self.assertTrue(all(len(part) < 90 for part in pair))
+
+    def test_polaroid_slots_cover_zero_one_and_five(self):
+        self.assertEqual(self.call('lc_review_polaroid_slots', 0), [])
+        one = self.call('lc_review_polaroid_slots', 1)
+        five = self.call('lc_review_polaroid_slots', 5)
+        self.assertEqual(len(one), 1)
+        self.assertEqual(len(five), 5)
+        origins = []
+        for slot in five:
+            self.assertGreaterEqual(slot['x'], 40)
+            self.assertLessEqual(slot['x'] + 108, 318)
+            self.assertGreaterEqual(slot['y'], 16)
+            self.assertLessEqual(slot['y'] + 86, 320)
+            origins.append((slot['x'], slot['y']))
+        self.assertEqual(len(set(origins)), 5)
+
+    def test_bar_stagger_stays_near_three_seconds(self):
+        for count in range(1, 12):
+            starts = [self.call('lc_review_bar_timing', i, 0, count)[0] for i in range(count)]
+            duration = self.call('lc_review_bar_timing', 0, 0, count)[1]
+            span = (starts[-1] - starts[0]) + duration
+            self.assertLessEqual(span, 3.05)
+            self.assertEqual(duration, 0.6)
+            self.assertEqual(starts, sorted(starts))
+
+    def test_scrapbook_screen_skips_and_animates(self):
+        screen = (ROOT / 'game' / 'screens' / 'day_review_screen.rpy').read_text()
+        review = (ROOT / 'game' / 'systems' / 'day_review.rpy').read_text()
+        self.assertIn('AnimatedValue', screen)
+        self.assertIn('SetScreenVariable("skipped", True)', screen)
+        self.assertIn('screen lc_review_night_screen', screen)
+        self.assertIn('call screen lc_review_night_screen', review)
+        self.assertIn('def lc_review_sfx', review)
+        fonts = ROOT / 'game' / 'fonts'
+        for name in ('Silkscreen-Regular.ttf', 'Silkscreen-Bold.ttf', 'Caveat[wght].ttf',
+                     'OFL-Silkscreen.txt', 'OFL-Caveat.txt'):
+            self.assertTrue((fonts / name).is_file(), name)
+        self.assertIn('SIL Open Font License', (fonts / 'OFL-Silkscreen.txt').read_text())
+        self.assertIn('SIL Open Font License', (fonts / 'OFL-Caveat.txt').read_text())
+        art = ROOT / 'game' / 'images' / 'ui' / 'scrapbook'
+        for name in ('night.png', 'spread.png', 'polaroid.png', 'tape_top.png', 'bar_gain.png',
+                     'bar_loss.png', 'bar_track.png', 'bar_fill_love.png'):
+            self.assertTrue((art / name).is_file(), name)
 
     def test_dream_summary_has_no_effects_and_waking_menu_is_shared(self):
         text=(ROOT/'game/chapters/ch01/ch01_scenes_14_30.rpy').read_text()
