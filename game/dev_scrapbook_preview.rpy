@@ -217,18 +217,21 @@ init python:
             super(LcScrapbookFrameGrab, self).__init__(**kwargs)
             self.interval = float(interval)
             self.limit = int(limit)
-            self.saved = 0
 
         def render(self, width, height, st, at):
-            while self.saved < self.limit and st + 0.001 >= self.saved * self.interval:
+            # The counter lives on the store. Rebuilding this displayable
+            # when a bar changes phase must not start the sequence over.
+            if store.lc_scrapbook_frame < self.limit and st + 0.001 >= store.lc_scrapbook_frame * self.interval:
                 lc_scrapbook_grab_frame()
-                self.saved += 1
-            if self.saved < self.limit:
-                renpy.redraw(self, max(0.01, self.saved * self.interval - st))
+            if store.lc_scrapbook_frame >= self.limit:
+                renpy.quit()
+            else:
+                nxt = store.lc_scrapbook_frame * self.interval
+                renpy.redraw(self, max(0.01, nxt - st))
             return renpy.Render(1, 1)
 
         def event(self, ev, x, y, st):
-            if self.saved >= self.limit:
+            if store.lc_scrapbook_frame >= self.limit:
                 renpy.quit()
             return None
 
