@@ -433,14 +433,15 @@ init 20 python:
             return text
         return "\u201c" + text + "\u201d"
 
-    def lc_review_pack_chips(chips, limit=500):
+    def lc_review_pack_chips(chips, limit=700):
         """Wrap stat chips onto lines that fit the journal's right page."""
         rows = []
         current = []
         width = 0
         for chip in chips:
             shown = "{} {:+d}".format(chip["label"], chip["value"])
-            chip_width = 36 + 20 * len(shown)
+            # Silkscreen at the chip size is about 12px a glyph, plus the tick and padding.
+            chip_width = 40 + 12 * len(shown)
             if current and width + chip_width > limit:
                 rows.append(current)
                 current = []

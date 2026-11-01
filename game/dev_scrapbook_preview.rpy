@@ -35,6 +35,22 @@ init -999 python:
 init python:
     import os
 
+    def lc_scrapbook_save_surface(surf, path):
+        """Dump the pygame window as RGBX plus a size header.
+
+        This software renderer stores R,G,B,pad. pygame.image.save treats the
+        pad as a color channel and the saved picture slides off the right edge.
+        The capture script turns the dump into a PNG.
+        """
+        import ctypes
+        width, height = surf.get_size()
+        pitch = surf.get_pitch()
+        raw = ctypes.string_at(surf._pixels_address, pitch * height)
+        with open(path + ".rgbx", "wb") as handle:
+            handle.write(raw)
+        with open(path + ".meta", "w") as handle:
+            handle.write("{} {} {}\n".format(width, height, pitch))
+
     def lc_scrapbook_preview_build(photos=4):
         start = {
             "relationship": {"love": 50, "trust": 50, "boredom": 20, "momentum": 0},
@@ -46,6 +62,42 @@ init python:
             "partner": dict(start["partner"], secrecy=4),
             "player": dict(start["player"], acceptance=11),
         }
+        choices = [
+            {"id": "ch01_d3_ntr_talk", "deltas": [
+                ("relationship", "love", 2),
+                ("relationship", "trust", 2),
+                ("relationship", "boredom", -2),
+                ("partner", "secrecy", -1),
+            ]},
+            {"id": "ch01_d3_dessert_recommended", "deltas": [
+                ("player", "acceptance", 1),
+            ]},
+        ]
+        if photos < 0:
+            # Worst case: every stat moved, and several long choice lines.
+            end = {
+                "relationship": {"love": 61, "trust": 44, "boredom": 28, "momentum": 6},
+                "partner": {"curiosity": 27, "temptation": 16, "exhibitionism": 18, "boundary_looseness": 14, "secrecy": 9},
+                "player": {"jealousy": 26, "acceptance": 17},
+            }
+            choices = [
+                {"id": "ch01_d3_ntr_talk", "deltas": [
+                    ("relationship", "love", 4), ("relationship", "trust", -3),
+                    ("relationship", "boredom", 2), ("relationship", "momentum", 1),
+                ]},
+                {"id": "ch01_d3_dessert_recommended", "deltas": [
+                    ("partner", "curiosity", 3), ("partner", "temptation", 2),
+                    ("partner", "exhibitionism", 4), ("player", "acceptance", 2),
+                ]},
+                {"id": "ch01_d4_ntr_ask_gently", "deltas": [
+                    ("partner", "secrecy", -2), ("partner", "boundary_looseness", 1),
+                    ("player", "jealousy", 3),
+                ]},
+                {"id": "ch01_d5_ntr_u_press_hard", "deltas": [
+                    ("relationship", "love", -2), ("partner", "secrecy", 2),
+                ]},
+            ]
+            photos = 4
         gallery = [
             {"id": "arrival", "image": "ch01_villa_arrival", "caption": "Arrival", "dream": False},
             {"id": "window", "image": "ch01_bedroom_window", "caption": "The window", "dream": False},
@@ -58,17 +110,7 @@ init python:
                 "start": start,
                 "end": end,
                 "moments": gallery[:photos],
-                "choices": [
-                    {"id": "ch01_d3_ntr_talk", "deltas": [
-                        ("relationship", "love", 2),
-                        ("relationship", "trust", 2),
-                        ("relationship", "boredom", -2),
-                        ("partner", "secrecy", -1),
-                    ]},
-                    {"id": "ch01_d3_dessert_recommended", "deltas": [
-                        ("player", "acceptance", 1),
-                    ]},
-                ],
+                "choices": choices,
                 "route": "ntr_talked",
                 "facts": {},
                 "titles_before": ("Curious Partner", "Affectionate Partner"),
@@ -105,7 +147,7 @@ label lc_scrapbook_preview:
     $ quick_menu = False
     $ phone_hud_enabled = False
     scene black
-    $ lc_scrapbook_preview_build(1 if lc_scrapbook_shot == "one" else (0 if lc_scrapbook_shot == "zero" else 4))
+    $ lc_scrapbook_preview_build(-1 if lc_scrapbook_shot == "worst" else (1 if lc_scrapbook_shot == "one" else (0 if lc_scrapbook_shot == "zero" else 4)))
     $ persistent.choice_display_mode = "insight" if lc_scrapbook_shot in ("insight", "one", "zero", "night") else "full"
     if lc_scrapbook_shot == "night":
         show screen lc_review_night_screen("ch01_d3")
@@ -137,7 +179,7 @@ init python:
             ))
         window = getattr(draw, "window", None)
         if window is not None:
-            renpy.pygame.image.save(window, store.lc_scrapbook_shot_path)
+            lc_scrapbook_save_surface(window, store.lc_scrapbook_shot_path)
         else:
             renpy.screenshot(store.lc_scrapbook_shot_path)
         if store.lc_scrapbook_shot == "anim":
@@ -158,7 +200,7 @@ init python:
         path = os.path.join(store.lc_scrapbook_frame_dir, "f%03d.png" % store.lc_scrapbook_frame)
         window = getattr(renpy.display.draw, "window", None)
         if window is not None:
-            renpy.pygame.image.save(window, path)
+            lc_scrapbook_save_surface(window, path)
         else:
             renpy.screenshot(path)
         store.lc_scrapbook_frame += 1

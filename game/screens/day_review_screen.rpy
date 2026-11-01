@@ -114,6 +114,14 @@ style lc_stat_bar is bar:
     ysize 21
     xsize 600
 
+style lc_review_viewport is viewport
+style lc_review_side is side
+style lc_review_vscrollbar is vscrollbar:
+    xsize 10
+    base_bar Solid("#e3d5b8")
+    thumb Solid("#8a6a50")
+    unscrollable "hide"
+
 init python:
     class LcReviewDelta(renpy.Displayable):
         """The green gain or red loss on a stat bar.
@@ -122,14 +130,14 @@ init python:
         then flashes for a third of a second. delay <= 0 draws the settled segment.
         """
 
-        def __init__(self, old, new, delay, **kwargs):
+        def __init__(self, old, new, delay, width=600, **kwargs):
             super(LcReviewDelta, self).__init__(**kwargs)
             self.old = float(old)
             self.new = float(new)
             self.delay = float(delay)
             self.t0 = None
-            self.inner = 600
-            self.height = 21
+            self.inner = int(width)
+            self.height = 14
             self.gain = Frame("images/ui/scrapbook/bar_gain.png", 0, 6, 0, 0)
             self.flash = Frame("images/ui/scrapbook/bar_flash.png", 0, 6, 0, 0)
             self.loss = "images/ui/scrapbook/bar_loss.png"
@@ -253,14 +261,22 @@ screen lc_review_night_screen(day_id):
 
 screen lc_review_tag(who, title):
     fixed:
-        xsize 372
-        ysize 120
-        add "images/ui/scrapbook/tag.png"
-        text who style "lc_pixel_bold" size 24 color "#5a4030" xpos 48 ypos 16 xmaximum 300 substitute False
-        text title style "lc_hand_tag" xpos 46 ypos 50 xmaximum 310 substitute False
+        xsize 356
+        ysize 92
+        add Transform("images/ui/scrapbook/tag.png", xysize=(356, 92))
+        text who style "lc_pixel_bold" size 18 color "#5a4030" xpos 44 ypos 10 xmaximum 290 substitute False
+        text title style "lc_hand_tag" size 26 xpos 42 ypos 38 xmaximum 296 substitute False
 
 
-screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact):
+screen lc_review_bar_column(rows, offset, photo_count, bar_count, skipped, exact, pitch, col_w):
+    vbox:
+        spacing 0
+        xsize col_w
+        for index, row in enumerate(rows):
+            use lc_review_bar_row(row, index + offset, photo_count, bar_count, skipped, exact, pitch, col_w)
+
+
+screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pitch=56, col_w=730):
     $ timing = lc_review_bar_timing(index, photo_count, bar_count)
     $ start = timing[0]
     $ duration = timing[1]
@@ -280,37 +296,46 @@ screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact):
     elif show_flash:
         timer 0.30 action SetScreenVariable("phase", "done")
 
+    $ narrow = col_w < 500
+    $ label_size = 16 if narrow else 18
+    $ icon_size = 30 if narrow else 39
+    $ label_x = icon_size + 6
+    $ number_reserve = (100 if narrow else 124) if exact else 4
+    $ bar_x = label_x
+    $ bar_w = max(80, col_w - bar_x - 36)
     fixed:
-        xsize 762
-        ysize 72
-        add "images/ui/scrapbook/icon_{}.png".format(look["icon"]) xpos 0 ypos 26
-        text row["label"] style "lc_pixel" size 24 color "#3b2a30" xpos 48 ypos 0
+        xsize col_w
+        ysize pitch
+        add Transform("images/ui/scrapbook/icon_{}.png".format(look["icon"]), xysize=(icon_size, icon_size)) xpos 0 yalign 0.5
+        text row["label"] style "lc_pixel" size label_size color "#3b2a30" xpos label_x ypos 0 xmaximum (col_w - label_x - number_reserve)
         if exact:
             hbox:
                 xanchor 1.0
-                xpos 654
+                xpos (col_w - 2)
                 ypos 0
-                spacing 6
-                text str(row["yesterday"]) style "lc_pixel_dim" size 24
+                spacing 4
+                text str(row["yesterday"]) style "lc_pixel_dim" size label_size
                 add "images/ui/scrapbook/arrow_mid.png" yalign 0.55
                 if show_run or show_flash:
                     add LcReviewTick(row["yesterday"], row["today"], duration) yalign 0.45
                 elif show_final:
-                    text str(row["today"]) style "lc_pixel" size 24 color ("#5f8a32" if row["delta"] > 0 else "#a8453f")
+                    text str(row["today"]) style "lc_pixel" size label_size color ("#5f8a32" if row["delta"] > 0 else "#a8453f")
                 else:
-                    text str(row["yesterday"]) style "lc_pixel_dim" size 24
+                    text str(row["yesterday"]) style "lc_pixel_dim" size label_size
         hbox:
-            xpos 48
-            ypos 34
-            spacing 10
+            xpos bar_x
+            ypos (pitch - 20)
+            spacing 6
             fixed:
-                xsize 606
-                ysize 27
-                add Solid("#3b2a30")
+                xsize (bar_w + 6)
+                ysize 20
+                add Solid("#3b2a30") xysize (bar_w + 6, 20)
                 bar:
                     style "lc_stat_bar"
                     xpos 3
                     ypos 3
+                    xsize bar_w
+                    ysize 14
                     left_bar Frame(fill, 0, 6, 0, 0)
                     right_bar Frame("images/ui/scrapbook/bar_track.png", 0, 3, 0, 0)
                     if show_run or show_flash:
@@ -320,15 +345,15 @@ screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact):
                     else:
                         value StaticValue(row["yesterday"], 100.0)
                 if show_run or show_flash:
-                    add LcReviewDelta(row["yesterday"], row["today"], duration) xpos 3 ypos 3
+                    add LcReviewDelta(row["yesterday"], row["today"], duration, bar_w) xpos 3 ypos 3
                 elif show_final:
-                    add LcReviewDelta(row["yesterday"], row["today"], 0) xpos 3 ypos 3
+                    add LcReviewDelta(row["yesterday"], row["today"], 0, bar_w) xpos 3 ypos 3
                 else:
-                    add Solid("#7a6266") xpos (3 + int(round(row["yesterday"] * 6))) ypos 2 xsize 3 ysize 23
+                    add Solid("#7a6266") xpos (3 + int(round(row["yesterday"] * bar_w / 100.0))) ypos 2 xsize 3 ysize 16
             if show_flash:
-                add arrow yalign 0.45 at lc_arrow_pop
+                add arrow yalign 0.5 at lc_arrow_pop
             elif show_final:
-                add arrow yalign 0.45
+                add arrow yalign 0.5
 
 
 screen lc_day_review_screen(day_id, replay=False, skipped=False):
@@ -420,119 +445,170 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
             text ticket["number"] style "lc_pixel_bold" size 24 color "#6a2338" xpos 286 ypos 52
         add "images/ui/scrapbook/tape_corner_flip.png" xpos (lc_px(96) + 324) ypos (lc_px(250) - 18)
 
+    # Right page sits on the paper (x 966–1806, y 42–960). Choices scroll
+    # in the space above a reserved block, so every moved stat, both tags,
+    # and the handwriting stay on the page. Eight or more bars wrap to two columns.
+    $ page_w = 730
+    $ text_w = 710
+    $ bar_n = len(bars)
+    $ two_col = bar_n >= 8
+    $ bar_pitch = (48 if two_col else (44 if bar_n >= 7 else (50 if bar_n >= 5 else 56)))
+    $ bar_rows = (((bar_n + 1) // 2) if two_col else bar_n)
+    $ col_w = (((page_w - 14) // 2) if two_col else page_w)
+    $ page_h = 890
+    $ footer_h = 0
+    $ footer_n = 0
+    if show_stats:
+        $ footer_h += 24
+        $ footer_n += 1
+    if show_stats and bars:
+        $ footer_h += bar_rows * bar_pitch
+        $ footer_n += 1
+    if show_stats and (unchanged or not bars):
+        $ footer_h += 22
+        $ footer_n += 1
+    if exact and record.get("modified"):
+        $ footer_h += 32
+        $ footer_n += 1
+    if titles[0]:
+        $ footer_h += 92
+        $ footer_n += 1
+    if footer_n > 1:
+        $ footer_h += 4 * (footer_n - 1)
+    $ split_at = ((bar_n + 1) // 2) if two_col else bar_n
     fixed:
-        xpos lc_px(338)
-        ypos lc_px(18)
-        xsize lc_px(256)
-        ysize lc_px(292)
+        xpos lc_px(336)
+        ypos 50
+        xsize page_w
+        ysize page_h
+        clipping True
         vbox:
-            spacing 8
+            spacing 4
+            xsize page_w
+            ysize (page_h - footer_h)
             hbox:
-                spacing 14
-                text night["kicker"] style "lc_pixel_bold" size 32 color "#3b2a30"
+                spacing 10
+                xsize text_w
+                text night["kicker"] style "lc_pixel_bold" size 28 color "#3b2a30"
                 if night["title"]:
                     add "images/ui/scrapbook/diamond.png" yalign 0.55
-                    text night["title"] style "lc_pixel_bold" size 32 color "#3b2a30" xmaximum 420
+                    text night["title"] style "lc_pixel_bold" size 28 color "#3b2a30" xmaximum 360
             fixed:
-                xsize 740
-                ysize 44
+                xsize page_w
+                ysize 36
                 if night["chapter"]:
-                    text night["chapter"] style "lc_pixel" size 24 color "#7a6266" yalign 0.5
+                    text night["chapter"] style "lc_pixel" size 18 color "#7a6266" yalign 0.5 xmaximum 360
                 if mode != "normal":
                     frame:
                         xalign 1.0
                         yalign 0.5
                         background Frame("images/ui/scrapbook/stamp.png", 9, 9, 9, 9)
-                        padding (16, 6)
-                        text route_label.upper() style "lc_pixel_bold" size 24 color "#a83a5a"
-            add "images/ui/scrapbook/rule_dots.png" xsize 740 ysize 3
-            viewport:
-                xsize 750
-                ysize 560
+                        padding (12, 4)
+                        text route_label.upper() style "lc_pixel_bold" size 18 color "#a83a5a"
+            add "images/ui/scrapbook/rule_dots.png" xsize text_w ysize 3
+            text diary[0] style "lc_hand" size 32 xsize text_w
+            add "images/ui/scrapbook/rule.png" xsize text_w ysize 3
+            text diary[1] style "lc_hand" size 32 xsize text_w
+            add "images/ui/scrapbook/rule.png" xsize text_w ysize 3
+            if record.get("partial"):
+                text "This page was started mid-day. Earlier changes were not kept." style "lc_hand_quote" size 26 color "#8a5a40" xsize text_w
+            if any(card.get("dream") for card in cards):
+                text "A dream is not what happened." style "lc_hand_quote" size 26 color "#8a5a40" xsize text_w
+            viewport id "lc_review_choices":
+                style_prefix "lc_review"
+                xfill True
+                yfill True
                 mousewheel True
                 draggable True
                 arrowkeys True
+                scrollbars "vertical"
                 vbox:
-                    xsize 730
-                    spacing 6
-                    text diary[0] style "lc_hand" xmaximum 730
-                    add "images/ui/scrapbook/rule.png" xsize 730 ysize 3
-                    text diary[1] style "lc_hand" xmaximum 730
-                    add "images/ui/scrapbook/rule.png" xsize 730 ysize 3
-                    if record.get("partial"):
-                        text "This page was started mid-day. Earlier changes were not kept." style "lc_hand_quote" size 28 color "#8a5a40" xmaximum 730
-                    if any(card.get("dream") for card in cards):
-                        text "A dream is not what happened." style "lc_hand_quote" size 28 color "#8a5a40" xmaximum 730
+                    xsize text_w
+                    spacing 4
                     if choices:
-                        null height 8
                         hbox:
                             spacing 8
                             add "images/ui/scrapbook/bubble.png" yalign 0.5
-                            text "WHAT I SAID" style "lc_pixel" size 24 color "#7a6266" yalign 0.5
+                            text "WHAT I SAID" style "lc_pixel" size 18 color "#7a6266" yalign 0.5
                         for row in choices:
-                            text lc_review_quote(row["text"]) style "lc_hand_quote" xsize 680 substitute False
+                            text lc_review_quote(row["text"]) style "lc_hand_quote" size 28 xsize text_w substitute False
                             if exact and show_choices:
                                 for line in row["lines"]:
                                     hbox:
-                                        spacing 6
+                                        spacing 4
+                                        box_wrap True
+                                        xsize text_w
                                         for chip in line:
                                             frame:
                                                 background Frame("images/ui/scrapbook/chip_up.png" if chip["value"] > 0 else "images/ui/scrapbook/chip_down.png", 6, 6, 6, 6)
-                                                padding (8, 1)
+                                                padding (6, 0)
                                                 hbox:
-                                                    spacing 4
+                                                    spacing 3
                                                     add ("images/ui/scrapbook/tick_up.png" if chip["value"] > 0 else "images/ui/scrapbook/tick_down.png") yalign 0.5
-                                                    text chip["text"] style "lc_pixel" size 24 color ("#5f8a32" if chip["value"] > 0 else "#a8453f") yalign 0.5
+                                                    text chip["text"] style "lc_pixel" size 16 color ("#5f8a32" if chip["value"] > 0 else "#a8453f") yalign 0.5
                         if exact:
                             textbutton ("HIDE CHOICE DETAILS" if show_choices else "SHOW CHOICE DETAILS"):
                                 action ToggleScreenVariable("show_choices")
                                 text_style "lc_pixel"
-                                text_size 18
+                                text_size 16
                                 text_color "#7a6266"
                                 text_hover_color "#3b2a30"
                                 background None
                                 hover_background None
-                                padding (0, 6)
-                    if show_stats:
-                        null height 8
+                                padding (0, 2)
+        if footer_h:
+            vbox:
+                yalign 1.0
+                xsize page_w
+                ysize footer_h
+                spacing 4
+                if show_stats:
+                    fixed:
+                        xsize page_w
+                        ysize 24
                         hbox:
                             spacing 8
+                            yalign 0.5
                             add "images/ui/scrapbook/mark.png" yalign 0.5
-                            text "SINCE YESTERDAY" style "lc_pixel" size 24 color "#7a6266" yalign 0.5
-                        for index, row in enumerate(bars):
-                            use lc_review_bar_row(row, index, len(cards), len(bars), skipped, exact)
-                        if unchanged:
+                            text "SINCE YESTERDAY" style "lc_pixel" size 18 color "#7a6266" yalign 0.5
+                if show_stats and bars:
+                    fixed:
+                        xsize page_w
+                        ysize (bar_rows * bar_pitch)
+                        if two_col:
                             hbox:
-                                spacing 10
-                                text "{} UNCHANGED".format(unchanged) style "lc_pixel" size 24 color "#7a6266" yalign 0.5
-                                add "images/ui/scrapbook/rule.png" yalign 0.5 xsize 280 ysize 3
-                        elif not bars:
-                            text "Nothing moved today." style "lc_pixel" size 24 color "#7a6266"
-                    if exact and record.get("modified"):
-                        text "This playthrough includes developer or Route Explorer adjustments." style "lc_hand_quote" size 26 color "#8a5a40" xmaximum 730
-        if titles[0]:
-            hbox:
-                spacing 8
-                xpos 0
-                ypos 748
-                use lc_review_tag(player_name, titles[0])
-                use lc_review_tag(girlfriend_name, titles[1])
+                                spacing 14
+                                use lc_review_bar_column(bars[:split_at], 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w)
+                                use lc_review_bar_column(bars[split_at:], split_at, len(cards), bar_n, skipped, exact, bar_pitch, col_w)
+                        else:
+                            use lc_review_bar_column(bars, 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w)
+                if show_stats and unchanged:
+                    text "{} UNCHANGED".format(unchanged) style "lc_pixel" size 16 color "#7a6266" ysize 22
+                elif show_stats and not bars:
+                    text "Nothing moved today." style "lc_pixel" size 16 color "#7a6266" ysize 22
+                if exact and record.get("modified"):
+                    text "Developer or Route Explorer adjustments are included." style "lc_hand_quote" size 22 color "#8a5a40" xsize text_w ysize 32
+                if titles[0]:
+                    hbox:
+                        spacing 8
+                        ysize 92
+                        use lc_review_tag(player_name, titles[0])
+                        use lc_review_tag(girlfriend_name, titles[1])
 
     fixed:
-        xpos 980
-        ypos 1005
+        xpos 1310
+        ypos 996
         xsize 144
         ysize 48
         add Frame("images/ui/scrapbook/keycap.png", 9, 9, 9, 9) xysize (144, 48)
         text "SPACE" style "lc_pixel" size 24 color "#cdb9a8" align (0.5, 0.5)
 
-    # Continue sits on the table beside the book, clear of the page.
-    add "images/ui/scrapbook/continue.png" xpos 1160 ypos 1000
-    text ("CLOSE" if replay else "CONTINUE") xpos 1220 ypos 1018 style "lc_pixel_bold" size 24 color "#fff3f7"
-    add "images/ui/scrapbook/continue_arrow.png" xpos 1408 ypos 1022
+    add "images/ui/scrapbook/continue.png" xpos 1472 ypos 988
+    text ("CLOSE" if replay else "CONTINUE") xpos 1536 ypos 1006 style "lc_pixel_bold" size 24 color "#fff3f7"
+    add "images/ui/scrapbook/continue_arrow.png" xpos 1720 ypos 1010
     button:
-        xpos 1160
-        ypos 1000
+        xpos 1472
+        ypos 988
         xysize (312, 66)
         background None
         hover_background None
