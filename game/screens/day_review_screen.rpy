@@ -273,7 +273,7 @@ screen lc_review_bar_column(rows, offset, photo_count, bar_count, skipped, exact
         spacing 0
         xsize col_w
         for index, row in enumerate(rows):
-            use lc_review_bar_row(row, index + offset, photo_count, bar_count, skipped, exact, pitch, col_w)
+            use lc_review_bar_row(row, index + offset, photo_count, bar_count, skipped, exact, pitch, col_w) id row["stat"]
 
 
 screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pitch=56, col_w=730):
@@ -578,10 +578,10 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                         if two_col:
                             hbox:
                                 spacing 14
-                                use lc_review_bar_column(bars[:split_at], 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w)
-                                use lc_review_bar_column(bars[split_at:], split_at, len(cards), bar_n, skipped, exact, bar_pitch, col_w)
+                                use lc_review_bar_column(bars[:split_at], 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w) id "bars_left"
+                                use lc_review_bar_column(bars[split_at:], split_at, len(cards), bar_n, skipped, exact, bar_pitch, col_w) id "bars_right"
                         else:
-                            use lc_review_bar_column(bars, 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w)
+                            use lc_review_bar_column(bars, 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w) id "bars"
                 if show_stats and unchanged:
                     text "{} UNCHANGED".format(unchanged) style "lc_pixel" size 16 color "#7a6266" ysize 22
                 elif show_stats and not bars:
