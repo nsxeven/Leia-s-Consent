@@ -153,6 +153,23 @@ init python:
         return chips
 
 
+    JOURNAL_MENU_SCREENS = (
+        "save", "load", "preferences", "history", "help", "about",
+        "chapter_select", "gallery_screen", "status_screen",
+        "shop_screen", "wardrobe_screen", "player_settings_screen",
+        "main_menu",
+    )
+
+    def lc_journal_menu_open():
+        """True while a journal page is up, so the in-game quick menu stays off it."""
+        if store.main_menu:
+            return True
+        for name in JOURNAL_MENU_SCREENS:
+            if renpy.get_screen(name) is not None:
+                return True
+        return False
+
+
     def lc_journal_tab_rows():
         rows = []
         if store.main_menu:
@@ -531,7 +548,7 @@ screen choice(items):
 screen quick_menu():
     zorder 100
 
-    if quick_menu and not main_menu:
+    if quick_menu and not lc_journal_menu_open():
         if store.lc_cinematic_mode:
             hbox:
                 xpos 1776
@@ -550,14 +567,14 @@ screen quick_menu():
         else:
             hbox:
                 xpos 132
-                ypos 1026
+                ypos 1040
                 spacing 0
                 use lc_keycap_button(lc_day_caption(), NullAction())
 
             hbox:
                 xpos 1788
                 xanchor 1.0
-                ypos 1026
+                ypos 1040
                 spacing 8
                 use lc_keycap_button("BACK", Rollback(), "gui/scrapbook/icon_back.png")
                 use lc_keycap_button("LOG", ShowMenu("history"), "gui/scrapbook/icon_log.png")
@@ -573,7 +590,7 @@ screen quick_menu():
     variant "touch"
     zorder 100
 
-    if quick_menu and not main_menu:
+    if quick_menu and not lc_journal_menu_open():
         hbox:
             xalign 0.5
             ypos 1020
@@ -692,7 +709,7 @@ screen file_slots(title):
                         font "fonts/Caveat[wght].ttf"
 
             hbox:
-                xpos 700
+                xpos 800
                 ypos 8
                 spacing 6
                 if config.has_autosave:
@@ -702,20 +719,17 @@ screen file_slots(title):
                 for page in range(1, 10):
                     use lc_keycap_button(str(page), FilePage(page))
 
-            text "A = AUTO    Q = QUICK" xpos 700 ypos 58 size 21 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
+            text "A = AUTO    Q = QUICK" xpos 800 ypos 58 size 21 color "#3b2a30" font "fonts/Silkscreen-Regular.ttf"
 
-            grid 4 2:
-                xpos 0
-                ypos 110
-                xspacing 28
-                yspacing 18
-
-                for i in range(8):
-                    $ slot = i + 1
+            for slot_row, slot_y in enumerate((128, 448)):
+                for slot_col, slot_x in enumerate((20, 390, 800, 1170)):
+                    $ slot = slot_row * 4 + slot_col + 1
                     $ filled = FileLoadable(slot)
                     button:
+                        xpos slot_x
+                        ypos slot_y
                         action FileAction(slot)
-                        xysize (360, 300)
+                        xysize (350, 300)
                         background None
                         padding (0, 0)
                         key "save_delete" action FileDelete(slot)
@@ -754,7 +768,7 @@ screen file_slots(title):
                                         align (0.5, 0.5)
                                         spacing 4
                                         text "EMPTY" xalign 0.5 size 24 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
-                                        text "SLOT [slot]" xalign 0.5 size 21 color "#a8988a" font "fonts/Silkscreen-Regular.ttf"
+                                        text "SLOT [slot]" xalign 0.5 size 21 color "#3b2a30" font "fonts/Silkscreen-Regular.ttf"
 
             key "save_page_prev" action FilePagePrevious()
             key "save_page_next" action FilePageNext()
@@ -1211,7 +1225,7 @@ screen lc_demo_end_screen():
 
 screen lc_shot_helper(name):
     zorder 2000
-    timer 0.12 action Function(_lc_snap, name)
+    timer 0.55 action Function(_lc_snap, name)
 
 
 ## Shot tour (LC_UI_SHOTS=1) ##################################################
@@ -1229,6 +1243,9 @@ label lc_ui_shot_tour:
     $ _shot_dir = os.environ.get("LC_UI_SHOT_DIR", "/tmp/lc_ui_shots")
     $ os.makedirs(_shot_dir, exist_ok=True)
     $ lc_ui_shooting = True
+    $ preferences.fullscreen = True
+    $ preferences.physical_size = (1920, 1080)
+    pause 0.4
     $ lc_ui_shots = []
 
     python:
@@ -1237,6 +1254,10 @@ label lc_ui_shot_tour:
                 handle.write(msg + "\n")
 
         def _lc_snap(name):
+            try:
+                renpy.game.interface.set_mouse_pos(4, 4, 0)
+            except Exception:
+                pass
             path = os.path.join(store._shot_dir, name + ".png")
             renpy.screenshot(path)
             store.lc_ui_shots.append(path)
@@ -1254,7 +1275,7 @@ label lc_ui_shot_tour:
         def _lc_shot(name):
             _lc_mark("pause " + name)
             renpy.show_screen("lc_shot_helper", name)
-            renpy.pause(0.3, hard=True)
+            renpy.pause(0.7, hard=True)
 
     scene bg ch01_pool_day
     $ _lc_mark("qm screen " + str(renpy.get_screen("quick_menu")) + " flag " + str(quick_menu))
@@ -1309,6 +1330,13 @@ label lc_ui_shot_tour:
     $ _lc_shot("05_preferences")
     hide screen preferences
 
+    $ renpy.say(None, "The villa was already bright when I woke.", interact=False)
+    $ renpy.say(gf, "Morning. You're not getting up yet, are you?", interact=False)
+    $ renpy.say(mc, "Wasn't planning to.", interact=False)
+    $ renpy.say(None, "Someone walked past the glass.", interact=False)
+    $ renpy.say(gf, "Nothing. Just noticing.", interact=False)
+    $ lc_history_record_choice("Can we talk somewhere quieter?")
+    window hide
     $ renpy.show_screen("history")
     $ _lc_shot("06_history")
     hide screen history

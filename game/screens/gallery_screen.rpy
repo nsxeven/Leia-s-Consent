@@ -54,8 +54,8 @@ screen gallery_card(gallery_id):
                             xalign 0.5
                             yalign 0.5
                             spacing 6
-                            text "LOCKED" size 34 color "#8f8390" xalign 0.5
-                            text "? ? ?" size 22 color "#665d68" xalign 0.5
+                            text "LOCKED" size 34 color "#efe4cd" xalign 0.5
+                            text "? ? ?" size 22 color "#d6c8e0" xalign 0.5
 
                     if unlocked and art_state != "final":
                         frame:
