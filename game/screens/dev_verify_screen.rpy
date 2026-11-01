@@ -8,14 +8,14 @@ screen dev_verify_menu():
 
     key "K_ESCAPE" action Return("systems")
 
-    add Solid("#17151a")
+    add "gui/scrapbook/bg_table.png"
 
     frame:
         xalign 0.5
         yalign 0.5
         xsize 1450
         ysize 850
-        background Solid("#1d1920")
+        background Frame("gui/scrapbook/frame_card.png", 9, 9)
         padding (34, 30)
 
         vbox:
@@ -28,8 +28,8 @@ screen dev_verify_menu():
 
                 vbox:
                     spacing 4
-                    text "DEVELOPMENT VERIFICATION" size 38 color "#ffffff"
-                    text "Scroll to access every system and save-state check." size 17 color "#aa9dab"
+                    text "DEVELOPMENT VERIFICATION" size 38 color "#3b2a30"
+                    text "Scroll to access every system and save-state check." size 17 color "#7a6266"
 
                 textbutton "Back to Systems":
                     xalign 1.0

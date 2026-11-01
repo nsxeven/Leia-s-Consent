@@ -10,34 +10,34 @@ screen status_stat_row(row):
         hbox:
             xfill True
 
-            text row["label"] size 21 color "#f3edf4"
+            text row["label"] size 21 color "#3b2a30"
 
             if row["detail"]:
-                text row["detail"] size 18 color "#d7c8d4" xalign 1.0
+                text row["detail"] size 18 color "#7a6266" xalign 1.0
 
         bar:
             value StaticValue(row["value"], 100)
             xfill True
             ysize 16
-            left_bar Solid("#cc5d91")
-            right_bar Solid("#3a303d")
+            left_bar Frame("gui/scrapbook/bar_love.png", 6, 6)
+            right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
 
         if row["internal_key"]:
-            text row["internal_key"] size 15 color "#8f8291"
+            text row["internal_key"] size 15 color "#7a6266"
 
 
 screen status_section(title, rows):
 
     frame:
         xfill True
-        background Solid("#211c25")
+        background Frame("gui/scrapbook/frame_card.png", 9, 9)
         padding (24, 22)
 
         vbox:
             spacing 17
             xfill True
 
-            text title size 26 color "#ffffff"
+            text title size 26 color "#3b2a30"
 
             for row in rows:
                 use status_stat_row(row)
@@ -45,7 +45,7 @@ screen status_section(title, rows):
 
 screen status_screen():
 
-    modal True
+    modal (not lc_ui_shooting)
     zorder 180
 
     key "K_ESCAPE" action Return()
@@ -56,15 +56,16 @@ screen status_screen():
     $ ryan_rows = status_ryan_rows(mode)
     $ route_rows = status_route_rows(mode)
 
-    add Solid("#141117")
+    add "gui/scrapbook/bg_game_menu.png"
+    use lc_journal_tabs(1686)
 
     frame:
-        xalign 0.5
-        yalign 0.5
-        xsize 1740
-        ysize 980
-        background Solid("#19151d")
-        padding (42, 34)
+        xpos 70
+        ypos 48
+        xsize 1580
+        ysize 900
+        background None
+        padding (28, 18)
 
         vbox:
             spacing 22
@@ -76,14 +77,14 @@ screen status_screen():
 
                 vbox:
                     spacing 3
-                    text "STATUS" size 46 color "#ffffff"
-                    text "A snapshot of your relationship and where things currently stand." size 19 color "#aa9dab"
+                    text "STATUS" size 46 color "#3b2a30"
+                    text "A snapshot of your relationship and where things currently stand." size 19 color "#7a6266"
 
                 vbox:
                     xalign 1.0
                     spacing 8
 
-                    text "Display: [transparency_mode_label()]" size 20 color "#e0d4df" xalign 1.0
+                    text "Display: [transparency_mode_label()]" size 20 color "#7a6266" xalign 1.0
 
                     textbutton "Close":
                         xalign 1.0
@@ -97,7 +98,7 @@ screen status_screen():
 
                     frame:
                         xfill True
-                        background Solid("#2a222c")
+                        background Frame("gui/scrapbook/frame_card.png", 9, 9)
                         padding (26, 20)
 
                         vbox:
@@ -105,20 +106,20 @@ screen status_screen():
 
                             hbox:
                                 xfill True
-                                text "[girlfriend_name] right now" size 27 color "#ffffff"
-                                text "Current outfit: [current_outfit_name()]" size 18 color "#b9aabb" xalign 1.0
+                                text "[girlfriend_name] right now" size 27 color "#3b2a30"
+                                text "Current outfit: [current_outfit_name()]" size 18 color "#7a6266" xalign 1.0
 
-                            text "[leia_overview_text()]" size 20 color "#e8dfe7" line_spacing 4
+                            text "[leia_overview_text()]" size 20 color "#3b2a30" line_spacing 4
 
                     if persistent.lc_title_style != "off":
                         $ lc_status_titles = lc_character_titles()
-                        text (player_name + " · " + lc_status_titles[0]) size 21 color "#f1a8c8" substitute False
-                        text (girlfriend_name + " · " + lc_status_titles[1]) size 21 color "#f1a8c8" substitute False
+                        text (player_name + " · " + lc_status_titles[0]) size 21 color "#cc0066" substitute False
+                        text (girlfriend_name + " · " + lc_status_titles[1]) size 21 color "#cc0066" substitute False
                     if lc_review_latest():
                         textbutton "Review last completed day":
                             action Show("lc_review_history_screen", day_id=lc_review_latest())
 
-                    text "[status_mode_note()]" size 17 color "#8f8291"
+                    text "[status_mode_note()]" size 17 color "#7a6266"
 
                     hbox:
                         spacing 20

@@ -9,15 +9,15 @@ screen outfit_style_meter(label, value):
 
         hbox:
             xfill True
-            text label size 17 color "#d8cad5"
-            text "[value]" size 16 color "#a99ba8" xalign 1.0
+            text label size 17 color "#7a6266"
+            text "[value]" size 16 color "#7a6266" xalign 1.0
 
         bar:
             value StaticValue(value, 100)
             xfill True
             ysize 12
-            left_bar Solid("#cc5d91")
-            right_bar Solid("#3a303d")
+            left_bar Frame("gui/scrapbook/bar_love.png", 6, 6)
+            right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
 
 
 screen wardrobe_screen():
@@ -41,15 +41,16 @@ screen wardrobe_screen():
     $ selected_requirements = outfit_requirement_text(wardrobe_selected_outfit, mode)
     $ selected_styles = outfit_style_rows(wardrobe_selected_outfit)
 
-    add Solid("#141117")
+    add "gui/scrapbook/bg_game_menu.png"
+    use lc_journal_tabs(1686)
 
     frame:
-        xalign 0.5
-        yalign 0.5
-        xsize 1740
-        ysize 980
-        background Solid("#19151d")
-        padding (42, 34)
+        xpos 70
+        ypos 48
+        xsize 1580
+        ysize 900
+        background None
+        padding (28, 18)
 
         vbox:
             spacing 18
@@ -61,33 +62,33 @@ screen wardrobe_screen():
 
                 vbox:
                     spacing 3
-                    text "WARDROBE" size 46 color "#ffffff"
-                    text "Browse [girlfriend_name]'s owned outfits and choose what to ask her to wear." size 19 color "#aa9dab"
+                    text "WARDROBE" size 46 color "#3b2a30"
+                    text "Browse [girlfriend_name]'s owned outfits and choose what to ask her to wear." size 19 color "#7a6266"
 
                 vbox:
                     xalign 1.0
                     spacing 7
-                    text "Display: [transparency_mode_label()]" size 18 color "#d8cad5" xalign 1.0
+                    text "Display: [transparency_mode_label()]" size 18 color "#7a6266" xalign 1.0
                     textbutton "Close":
                         xalign 1.0
                         action Return()
 
             frame:
                 xfill True
-                background Solid("#2a222c")
+                background Frame("gui/scrapbook/frame_card.png", 9, 9)
                 padding (22, 15)
 
                 hbox:
                     xfill True
-                    text "Currently wearing: [current_outfit_name()]" size 20 color "#ffffff"
-                    text "Owned outfits: [len(valid_owned_outfit_ids())]" size 18 color "#b9aabb" xalign 1.0
+                    text "Currently wearing: [current_outfit_name()]" size 20 color "#3b2a30"
+                    text "Owned outfits: [len(valid_owned_outfit_ids())]" size 18 color "#7a6266" xalign 1.0
 
             if last_wardrobe_message:
                 frame:
                     xfill True
-                    background Solid("#30242e")
+                    background Frame("gui/scrapbook/frame_kraft.png", 9, 9)
                     padding (20, 13)
-                    text "[last_wardrobe_message]" size 17 color "#e6d9e3"
+                    text "[last_wardrobe_message]" size 17 color "#3b2a30"
 
             hbox:
                 spacing 20
@@ -97,7 +98,7 @@ screen wardrobe_screen():
                 frame:
                     xsize 505
                     yfill True
-                    background Solid("#1d1920")
+                    background Frame("gui/scrapbook/frame_card.png", 9, 9)
                     padding (18, 18)
 
                     vbox:
@@ -107,8 +108,8 @@ screen wardrobe_screen():
 
                         hbox:
                             xfill True
-                            text "OWNED" size 24 color "#ffffff"
-                            text "[len(valid_owned_outfit_ids())]" size 17 color "#a99ba8" xalign 1.0
+                            text "OWNED" size 24 color "#3b2a30"
+                            text "[len(valid_owned_outfit_ids())]" size 17 color "#7a6266" xalign 1.0
 
                         use lc_scroll_body:
                             vbox:
@@ -126,8 +127,8 @@ screen wardrobe_screen():
                                     button:
                                         xfill True
                                         padding (20, 18)
-                                        background (Solid("#3b2a38") if card_selected else Solid("#211c25"))
-                                        hover_background Solid("#30242f")
+                                        background (Frame("gui/scrapbook/frame_card_on.png", 9, 9) if card_selected else Frame("gui/scrapbook/frame_card.png", 9, 9))
+                                        hover_background Frame("gui/scrapbook/frame_paper_hi.png", 9, 9)
                                         action SetScreenVariable("wardrobe_selected_outfit", outfit_id)
 
                                         vbox:
@@ -136,18 +137,18 @@ screen wardrobe_screen():
 
                                             hbox:
                                                 xfill True
-                                                text "[card_name]" size 23 color "#ffffff"
-                                                text "[card_category]" size 15 color "#a99ba8" xalign 1.0
+                                                text "[card_name]" size 23 color "#3b2a30"
+                                                text "[card_category]" size 15 color "#7a6266" xalign 1.0
 
                                             text "[card_status]" size 16 color card_status_color
 
                                             if equipped_outfit == outfit_id:
-                                                text "CURRENT OUTFIT" size 14 color "#f1a8c8"
+                                                text "CURRENT OUTFIT" size 14 color "#cc0066"
 
                 frame:
                     xfill True
                     yfill True
-                    background Solid("#211c25")
+                    background Frame("gui/scrapbook/frame_card.png", 9, 9)
                     padding (28, 24)
 
                     use lc_scroll_body:
@@ -160,29 +161,29 @@ screen wardrobe_screen():
 
                                 vbox:
                                     spacing 5
-                                    text "[selected_name]" size 34 color "#ffffff"
-                                    text "[selected_category]" size 17 color "#f1a8c8"
+                                    text "[selected_name]" size 34 color "#3b2a30"
+                                    text "[selected_category]" size 17 color "#cc0066"
 
                                 text "[selected_status]" size 18 color selected_status_color xalign 1.0
 
-                            text "[selected_description]" size 20 color "#ddd2db" line_spacing 4
+                            text "[selected_description]" size 20 color "#3b2a30" line_spacing 4
 
                             frame:
                                 xfill True
-                                background Solid("#2a242d")
+                                background Frame("gui/scrapbook/frame_card.png", 9, 9)
                                 padding (20, 17)
 
                                 vbox:
                                     spacing 7
-                                    text "HOW [girlfriend_name.upper()] FEELS ABOUT IT" size 17 color "#f1a8c8"
-                                    text "[selected_note]" size 18 color "#eee7ed" line_spacing 3
+                                    text "HOW [girlfriend_name.upper()] FEELS ABOUT IT" size 17 color "#cc0066"
+                                    text "[selected_note]" size 18 color "#3b2a30" line_spacing 3
 
                             vbox:
                                 spacing 8
-                                text "SUITED FOR" size 18 color "#ffffff"
-                                text "[selected_contexts]" size 17 color "#b9aabb"
+                                text "SUITED FOR" size 18 color "#3b2a30"
+                                text "[selected_contexts]" size 17 color "#7a6266"
 
-                            text "STYLE PROFILE" size 22 color "#ffffff"
+                            text "STYLE PROFILE" size 22 color "#3b2a30"
 
                             grid 2 2:
                                 spacing 18
@@ -191,32 +192,32 @@ screen wardrobe_screen():
                                 for style_label, style_value in selected_styles:
                                     frame:
                                         xfill True
-                                        background Solid("#272129")
+                                        background Frame("gui/scrapbook/frame_card.png", 9, 9)
                                         padding (16, 13)
                                         use outfit_style_meter(style_label, style_value)
 
                             if selected_requirements:
                                 frame:
                                     xfill True
-                                    background Solid("#2a242d")
+                                    background Frame("gui/scrapbook/frame_card.png", 9, 9)
                                     padding (20, 17)
 
                                     vbox:
                                         spacing 8
-                                        text "COMFORT REQUIREMENTS" size 18 color "#ffffff"
-                                        text "[selected_requirements]" size 16 color "#cdbfca" line_spacing 4
+                                        text "COMFORT REQUIREMENTS" size 18 color "#3b2a30"
+                                        text "[selected_requirements]" size 16 color "#5a4030" line_spacing 4
 
                             elif mode == "normal" and not can_wear(wardrobe_selected_outfit):
-                                text "Her exact comfort requirements are hidden in Immersive mode." size 16 color "#918493"
+                                text "Her exact comfort requirements are hidden in Immersive mode." size 16 color "#7a6266"
 
                             null height 4
 
                             if equipped_outfit == wardrobe_selected_outfit:
                                 frame:
                                     xfill True
-                                    background Solid("#3b2a38")
+                                    background Frame("gui/scrapbook/frame_card_on.png", 9, 9)
                                     padding (20, 15)
-                                    text "CURRENTLY EQUIPPED" size 18 color "#f1a8c8" xalign 0.5
+                                    text "CURRENTLY EQUIPPED" size 18 color "#cc0066" xalign 0.5
                             else:
                                 textbutton "Ask [girlfriend_name] to wear this":
                                     xfill True

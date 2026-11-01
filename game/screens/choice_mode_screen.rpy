@@ -7,7 +7,7 @@ screen choice_mode_screen():
 
     key "K_ESCAPE" action Return()
 
-    add Solid("#000000aa")
+    add "gui/scrapbook/bg_table.png"
 
     frame:
         xalign 0.5
