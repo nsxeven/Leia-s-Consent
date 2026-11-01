@@ -119,7 +119,7 @@ init python:
         entry = renpy.character.HistoryEntry()
         entry.kind = "adv"
         entry.who = "I SAID"
-        entry.what = renpy.filter_text_tags(head)
+        entry.what = renpy.filter_text_tags(head, deny=set())
         entry.who_args = {}
         entry.what_args = {}
         entry.window_args = {}
