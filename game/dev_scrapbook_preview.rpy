@@ -154,7 +154,7 @@ label lc_scrapbook_preview:
         call screen lc_scrapbook_grabber(1.3, 1)
     elif lc_scrapbook_shot == "anim":
         $ lc_scrapbook_frame = 0
-        $ lc_scrapbook_frame_limit = 32
+        $ lc_scrapbook_frame_limit = 36
         show screen lc_day_review_screen("ch01_d3", skipped=False)
         call screen lc_scrapbook_anim_grabber
     else:
@@ -204,11 +204,36 @@ init python:
         else:
             renpy.screenshot(path)
         store.lc_scrapbook_frame += 1
-        if store.lc_scrapbook_frame >= store.lc_scrapbook_frame_limit:
-            renpy.quit()
+
+    class LcScrapbookFrameGrab(renpy.Displayable):
+        """Save frames from render time, without restarting the interaction.
+
+        A timer action restarts the interaction every frame. That resets the
+        clock the stat-bar timers read, so the bars never leave yesterday.
+        Render time keeps moving for the whole call, and so do the bars.
+        """
+
+        def __init__(self, interval, limit, **kwargs):
+            super(LcScrapbookFrameGrab, self).__init__(**kwargs)
+            self.interval = float(interval)
+            self.limit = int(limit)
+            self.saved = 0
+
+        def render(self, width, height, st, at):
+            while self.saved < self.limit and st + 0.001 >= self.saved * self.interval:
+                lc_scrapbook_grab_frame()
+                self.saved += 1
+            if self.saved < self.limit:
+                renpy.redraw(self, max(0.01, self.saved * self.interval - st))
+            return renpy.Render(1, 1)
+
+        def event(self, ev, x, y, st):
+            if self.saved >= self.limit:
+                renpy.quit()
+            return None
 
 
 screen lc_scrapbook_anim_grabber():
-    modal True
+    # Not modal: time events have to reach the journal so its bars can run.
     zorder 400
-    timer 0.18 repeat True action Function(lc_scrapbook_grab_frame)
+    add LcScrapbookFrameGrab(0.18, lc_scrapbook_frame_limit)
