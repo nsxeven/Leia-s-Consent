@@ -88,7 +88,7 @@ label lc_phone_shot_tour:
         phone_add_message("group", "julian", "I'm downstairs.", message_id="shot_j1", mark_unread=True, notify=False)
         phone_add_message("group", "julian", "If either of you makes us miss this flight I am leaving without you.", message_id="shot_j2", mark_unread=True, notify=False)
         phone_add_message("group", "leia", "Two minutes! I can't find my sunglasses.", message_id="shot_l1", mark_unread=True, notify=False)
-        phone_send_player_message("group", "They're on your head.", message_id="shot_p1")
+        phone_add_message("group", "player", text="They're on your head.", message_id="shot_p1", attachment_id="bg ch01_pool_day", attachment_label="Pool", mark_unread=False, notify=False)
         phone_add_message("group", "leia", "...I knew that.", message_id="shot_l2", mark_unread=True, notify=False)
         phone_add_message("group", "maya", "Taxi's here. Julian is timing us.", message_id="shot_m1", mark_unread=True, notify=False)
         phone_add_message("leia", "leia", "...I knew that.", message_id="shot_leia_dm", mark_unread=True, notify=False)
@@ -128,6 +128,11 @@ label lc_phone_shot_tour:
     $ _lc_phone_shot("06_photo_viewer")
     hide screen lc_phone_photo_viewer
 
+    python:
+        store.money = 9000
+        for _oid in shop_outfit_ids():
+            OUTFIT_DEFINITIONS[_oid]["cost"] = 1250
+            break
     $ _lc_open_phone("shop")
     $ _lc_phone_shot("09_shop")
 

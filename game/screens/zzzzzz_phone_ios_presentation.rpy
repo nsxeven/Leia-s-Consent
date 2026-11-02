@@ -95,6 +95,14 @@ init 95 python:
             return clean
         return clean[: max(1, limit - 3)].rstrip() + "..."
 
+    def lc_phone_price(amount):
+        """Dollar label with a thousands separator, so $1250 reads as $1,250."""
+        try:
+            value = int(amount)
+        except Exception:
+            return "${}".format(amount)
+        return "${:,}".format(value)
+
     def lc_phone_home_caption():
         raw = lc_day_caption()
         parts = [part for part in raw.split("  ") if part]
@@ -507,57 +515,71 @@ screen phone_screen():
                                 $ _body = (_message.get("text") or "").strip()
                                 $ _attachment = _message.get("attachment_id")
                                 $ _kind = ("out_" if _out else "in_") + theme
-                                vbox:
+                                # 75% of the 642 screen. Bubbles hug the text up to this, then wrap.
+                                $ _bubble_max = 480
+                                hbox:
                                     xfill True
-                                    spacing 2
-                                    if row["show_name"]:
-                                        text phone_sender_label(_sender):
-                                            style "lc_sw_pixel"
-                                            color lc_phone_name_color(_sender)
-                                            xpos 78
-                                    hbox:
-                                        xfill True
-                                        spacing 12
-                                        if _out:
-                                            null width 1 xfill True
-                                        else:
+                                    spacing 0
+                                    # box_align keeps spare width on one side, so bubbles
+                                    # stay flush instead of being spread toward the centre.
+                                    box_align (1.0 if _out else 0.0)
+                                    if not _out:
+                                        null width 8
+                                        fixed:
+                                            xysize (36, 36)
+                                            yalign 1.0
+                                            if row["tail"]:
+                                                add Transform(lc_phone_avatar(_sender), nearest=True, xysize=(36, 36))
+                                                text lc_phone_initial(_sender):
+                                                    style "lc_sw_pixel_bold"
+                                                    color lc_phone_avatar_ink(_sender)
+                                                    xalign 0.5
+                                                    yalign 0.45
+                                        null width 8
+                                    vbox:
+                                        spacing 2
+                                        xmaximum _bubble_max
+                                        xalign (1.0 if _out else 0.0)
+                                        if row["show_name"]:
+                                            text phone_sender_label(_sender):
+                                                style "lc_sw_pixel"
+                                                color lc_phone_name_color(_sender)
+                                                xalign 0.0
+                                        if _body:
+                                            # fit_first keeps the tail on the bubble corner
+                                            # without stretching the row to the viewport.
                                             fixed:
-                                                xysize (36, 36)
-                                                yalign 1.0
-                                                if row["tail"]:
-                                                    add Transform(lc_phone_avatar(_sender), nearest=True, xysize=(36, 36))
-                                                    text lc_phone_initial(_sender):
-                                                        style "lc_sw_pixel_bold"
-                                                        color lc_phone_avatar_ink(_sender)
-                                                        xalign 0.5
-                                                        yalign 0.45
-                                        vbox:
-                                            spacing 0
-                                            xmaximum 450
-                                            xalign (1.0 if _out else 0.0)
-                                            if _body:
+                                                fit_first True
+                                                xalign (1.0 if _out else 0.0)
                                                 frame:
                                                     style "lc_sw_frame"
                                                     background Frame(lc_phone_art("bubble_" + _kind), 12, 12)
                                                     padding (14, 6, 14, 8)
-                                                    xmaximum 450
+                                                    xmaximum _bubble_max
+                                                    xfill False
                                                     text _body:
                                                         style "lc_sw_hand"
                                                         size 30
                                                         line_spacing 0
+                                                        xalign 0.0
+                                                        text_align 0.0
                                                         color (c["out_t"] if _out else c["txt"])
-                                                        xmaximum 410
+                                                        xmaximum (_bubble_max - 28)
                                                 if row["tail"]:
                                                     add Transform(lc_phone_art("tail_" + _kind), nearest=True):
                                                         xalign (1.0 if _out else 0.0)
-                                                        yoffset -14
-                                            if _attachment and renpy.has_image(_attachment):
-                                                button:
-                                                    style "lc_sw_hit"
-                                                    xysize (420, 236)
-                                                    xalign (1.0 if _out else 0.0)
-                                                    action Show("lc_phone_photo_viewer", photo_asset=_attachment)
-                                                    add lc_phone_rounded_photo(_attachment, 420, 236)
+                                                        yalign 1.0
+                                                        xoffset (4 if _out else -4)
+                                                        yoffset 2
+                                        if _attachment and renpy.has_image(_attachment):
+                                            button:
+                                                style "lc_sw_hit"
+                                                xysize (min(420, _bubble_max), 220)
+                                                xalign (1.0 if _out else 0.0)
+                                                xfill False
+                                                action Show("lc_phone_photo_viewer", photo_asset=_attachment)
+                                                add lc_phone_rounded_photo(_attachment, min(420, _bubble_max), 220)
+                                    null width 16
                             null height 12
                     fixed:
                         ypos 894
@@ -754,7 +776,7 @@ screen phone_screen():
                                                         size 28
                                                         color c["mut"]
                                                         xmaximum 360
-                                                text "$[phone_outfit_cost]":
+                                                text "[lc_phone_price(phone_outfit_cost)]":
                                                     style "lc_sw_pixel_bold"
                                                     color c["txt"]
                                             text phone_outfit_status:
@@ -762,15 +784,19 @@ screen phone_screen():
                                                 size 18
                                                 color c["acc"]
                                             if phone_outfit_state == "available":
-                                                textbutton "BUY FOR $[phone_outfit_cost]":
+                                                textbutton "BUY FOR [lc_phone_price(phone_outfit_cost)]":
                                                     style "lc_sw_hit"
                                                     xfill True
-                                                    ysize 48
-                                                    background Frame(lc_phone_art("key_berry"), 18, 15)
-                                                    hover_background Frame(lc_phone_art("key_berry"), 18, 15)
+                                                    yminimum 68
+                                                    padding (36, 18)
+                                                    background Frame(lc_phone_art("key_berry"), 16, 16)
+                                                    hover_background Frame(lc_phone_art("key_berry"), 16, 16)
                                                     text_font "fonts/Silkscreen-Bold.ttf"
+                                                    text_size 21
                                                     text_antialias False
                                                     text_hinting "none"
+                                                    text_xalign 0.5
+                                                    text_yalign 0.5
                                                     text_color "#faf4e8"
                                                     action Function(purchase_outfit, outfit_id)
                                             elif phone_outfit_state == "owned":
@@ -1007,12 +1033,19 @@ screen lc_phone_status():
                                     xmaximum 540
                                 textbutton "GOT IT":
                                     style "lc_sw_hit"
-                                    xfill True
-                                    ysize 48
-                                    background Frame(lc_phone_art("key_berry"), 18, 15)
+                                    xalign 0.0
+                                    xfill False
+                                    xminimum 200
+                                    yminimum 64
+                                    padding (32, 16)
+                                    background Frame(lc_phone_art("key_berry"), 16, 16)
+                                    hover_background Frame(lc_phone_art("key_berry"), 16, 16)
                                     text_font "fonts/Silkscreen-Bold.ttf"
+                                    text_size 24
                                     text_antialias False
                                     text_hinting "none"
+                                    text_xalign 0.5
+                                    text_yalign 0.5
                                     text_color "#faf4e8"
                                     action Function(lc_mark_status_intro_seen)
                     frame:
