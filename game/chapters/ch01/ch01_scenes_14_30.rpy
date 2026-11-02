@@ -12,6 +12,9 @@ label ch01_scene_13b_night_pool:
     # sequence and movie night. Nothing goes wrong here; that is the point.
     scene bg ch01_pool_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "Nobody was ready for bed yet."
     "We carried the shop bags outside instead, where the pool lights turned the water blue against the dark and the ocean had become more sound than view."
@@ -55,6 +58,9 @@ label ch01_scene_13b_night_pool:
     $ exit_cinematic_mode()
     scene bg ch01_pool_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "[girlfriend_name] glanced at me a second later."
 
@@ -88,6 +94,9 @@ label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "[girlfriend_name] rubbed both hands over her face and stared down at the dinner dress as if she had only just remembered she was still wearing it."
 
@@ -106,6 +115,8 @@ label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "[girlfriend_name] returned in an oversized sleep tee and short lounge shorts, hair pulled back loosely. [friend_name] had changed too. I finally poured myself the drink I'd skipped all evening."
 
@@ -293,6 +304,8 @@ label ch01_scene_18_private_under_blanket:
     # The seated group CG includes Julian, so retire it while he is absent.
     scene bg ch01_villa_living_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     $ ch01_movie_respected_request = (
         get_story_value("ch01_movie_first_response") == "stopped"
@@ -860,6 +873,8 @@ label ch01_scene_28_ryan_leia_alone:
 
     scene bg ch01_villa_living_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "The villa became noticeably quieter once [friend_name]'s door closed upstairs."
     "[girlfriend_name] stayed beside me, turning her empty glass slowly between both hands."

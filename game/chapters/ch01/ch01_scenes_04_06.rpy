@@ -121,6 +121,7 @@ label ch01_scene_05_photography:
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
     with dissolve
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
     if selected_pool_outfit == "pool_bolder":
         show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
     else:
@@ -179,6 +180,7 @@ label ch01_scene_05_photography:
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
     with dissolve
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
 
     if selected_pool_outfit == "pool_bolder":
         show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
@@ -323,6 +325,7 @@ label ch01_scene_05_photography:
 
     scene bg ch01_pool_day
     with dissolve
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
 
     if selected_pool_outfit == "pool_bolder":
         show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle

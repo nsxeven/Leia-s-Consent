@@ -14,6 +14,7 @@ label ch01_scene_01_arrival:
 
     scene bg ch01_car_day
     with fade
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -90,6 +91,7 @@ label ch01_scene_02_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_corridor
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -109,6 +111,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_master_enter
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -220,6 +223,9 @@ label ch01_scene_03_outfit_choice:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
 
@@ -228,6 +234,7 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -247,6 +254,7 @@ label ch01_scene_03_outfit_choice:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -288,6 +296,7 @@ label ch01_scene_03_outfit_choice:
         $ exit_cinematic_mode()
         scene bg ch01_master_bedroom_curtains
         with dissolve
+        show ryan_casual at prologue_other_enter_left, leia_body_idle
         show leia_blue_bikini smile at prologue_leia_enter_right, leia_body_idle
         with sprite_enter_exit
     else:
@@ -301,6 +310,7 @@ label ch01_scene_03_outfit_choice:
         $ exit_cinematic_mode()
         scene bg ch01_master_bedroom_curtains
         with dissolve
+        show ryan_casual at prologue_other_enter_left, leia_body_idle
         show leia_white_ruffle smile at prologue_leia_enter_right, leia_body_idle
         with sprite_enter_exit
 

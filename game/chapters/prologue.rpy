@@ -346,6 +346,7 @@ label prologue_start:
     mc "Because it's true."
 
     scene bg prologue_packing
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_casual smile at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 

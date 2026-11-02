@@ -6,6 +6,9 @@ label ch01_scene_07_did_he_see:
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "I found her in the bathroom doorway, still half-turned toward the mirror, one hand pressed to her cheek."
 
@@ -72,6 +75,8 @@ label ch01_scene_07_did_he_see:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "The bathroom door opened."
 
@@ -96,6 +101,7 @@ label ch01_scene_07_did_he_see:
 
     scene bg ch01_villa_entry_day
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -170,6 +176,9 @@ label ch01_scene_08_drive_to_dinner:
 
     scene bg ch01_car_day
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     gf "Okay, actual question. If we had to listen to one artist for the rest of this trip—"
     friend "No."
@@ -428,6 +437,7 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -795,6 +805,8 @@ label ch01_scene_12_shop_and_drive_back:
     $ exit_cinematic_mode()
     scene bg ch01_car_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "The car became quiet enough that [friend_name] lowered his voice."
 
