@@ -3,13 +3,11 @@
 
 label ch01_scene_04_pool_arrival:
 
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
-
     scene bg ch01_pool_day
     with fade
-
-    with dissolve
+    # Ryan is on screen from the start; Leia joins when she comes outside.
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "[friend_name] had already claimed the shaded end of the pool by the time I came downstairs."
 
