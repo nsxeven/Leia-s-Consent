@@ -699,28 +699,28 @@ screen phone_screen():
                             style "lc_sw_pixel_bold"
                             size 48
                             color c["txt"]
-                            xpos 30
+                            xpos 36
                             ypos 96
                     elif phone_app == "photos":
                         text "PHOTOS":
                             style "lc_sw_pixel_bold"
                             size 48
                             color c["txt"]
-                            xpos 30
+                            xpos 36
                             ypos 96
                     elif phone_app == "wallet":
                         text "WALLET":
                             style "lc_sw_pixel_bold"
                             size 48
                             color c["txt"]
-                            xpos 30
+                            xpos 36
                             ypos 96
                     elif phone_app == "delivery":
                         text "DELIVERY":
                             style "lc_sw_pixel_bold"
                             size 48
                             color c["txt"]
-                            xpos 30
+                            xpos 36
                             ypos 96
 
                     viewport:
@@ -729,193 +729,194 @@ screen phone_screen():
                         mousewheel True
                         draggable True
                         scrollbars None
-                        vbox:
-                            xfill True
-                            spacing 18
-                            xpos 24
-                            xsize 594
+                        frame:
+                            style "lc_sw_frame"
+                            background None
+                            xsize 642
+                            padding (36, 0, 36, 18)
+                            vbox:
+                                spacing 18
+                                xfill True
 
-                            if phone_app == "shop":
-                                text "Purchases add outfits to [girlfriend_name]'s wardrobe. Whether she wears them is tracked separately.":
-                                    style "lc_sw_hand"
-                                    size 30
-                                    color c["mut"]
-                                    xmaximum 594
-                                if last_shop_message:
-                                    text "[last_shop_message]":
+                                if phone_app == "shop":
+                                    text "Purchases add outfits to [girlfriend_name]'s wardrobe. Whether she wears them is tracked separately.":
                                         style "lc_sw_hand"
                                         size 30
-                                        color c["txt"]
-                                        xmaximum 594
-                                for outfit_id in shop_outfit_ids():
-                                    $ phone_outfit = get_outfit(outfit_id)
-                                    $ phone_outfit_name = phone_outfit["name"]
-                                    $ phone_outfit_description = phone_outfit["description"]
-                                    $ phone_outfit_cost = phone_outfit["cost"]
-                                    $ phone_outfit_state = shop_item_state(outfit_id)
-                                    $ phone_outfit_status = shop_item_status_label(outfit_id)
+                                        color c["mut"]
+                                        xmaximum 570
+                                    if last_shop_message:
+                                        text "[last_shop_message]":
+                                            style "lc_sw_hand"
+                                            size 30
+                                            color c["txt"]
+                                            xmaximum 570
+                                    for outfit_id in shop_outfit_ids():
+                                        $ phone_outfit = get_outfit(outfit_id)
+                                        $ phone_outfit_name = phone_outfit["name"]
+                                        $ phone_outfit_description = phone_outfit["description"]
+                                        $ phone_outfit_cost = phone_outfit["cost"]
+                                        $ phone_outfit_state = shop_item_state(outfit_id)
+                                        $ phone_outfit_status = shop_item_status_label(outfit_id)
+                                        frame:
+                                            style "lc_sw_frame"
+                                            xfill True
+                                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                            padding (18, 16)
+                                            vbox:
+                                                spacing 8
+                                                xfill True
+                                                hbox:
+                                                    spacing 12
+                                                    add Transform(lc_phone_art("icon_shop"), nearest=True)
+                                                    vbox:
+                                                        spacing 4
+                                                        xfill True
+                                                        text phone_outfit_name:
+                                                            style "lc_sw_pixel_bold"
+                                                            color c["txt"]
+                                                        text phone_outfit_description:
+                                                            style "lc_sw_hand"
+                                                            size 28
+                                                            color c["mut"]
+                                                            xmaximum 430
+                                                text phone_outfit_status:
+                                                    style "lc_sw_pixel"
+                                                    size 18
+                                                    color c["acc"]
+                                                if phone_outfit_state == "available":
+                                                    textbutton "BUY FOR [lc_phone_price(phone_outfit_cost)]":
+                                                        style "lc_sw_hit"
+                                                        xfill True
+                                                        yminimum 68
+                                                        padding (36, 18)
+                                                        background Frame(lc_phone_art("key_berry"), 16, 16)
+                                                        hover_background Frame(lc_phone_art("key_berry"), 16, 16)
+                                                        text_font "fonts/Silkscreen-Bold.ttf"
+                                                        text_size 21
+                                                        text_antialias False
+                                                        text_hinting "none"
+                                                        text_xalign 0.5
+                                                        text_yalign 0.5
+                                                        text_color "#faf4e8"
+                                                        action Function(purchase_outfit, outfit_id)
+                                                elif phone_outfit_state == "owned":
+                                                    text "OWNED":
+                                                        style "lc_sw_pixel_bold"
+                                                        color "#4f7a2a"
+                                                        xalign 0.5
+                                                else:
+                                                    text ("NEED $[phone_outfit_cost]" if phone_outfit_state == "insufficient" else "LOCKED"):
+                                                        style "lc_sw_pixel"
+                                                        color c["mut"]
+                                                        xalign 0.5
+
+                                elif phone_app == "photos":
+                                    $ photo_items = phone_photo_items()
+                                    if photo_items:
+                                        for photo in photo_items:
+                                            $ photo_asset = photo.get("asset_id")
+                                            $ photo_label = photo.get("label", "Photo")
+                                            vbox:
+                                                spacing 6
+                                                xfill True
+                                                if photo_asset and renpy.has_image(photo_asset):
+                                                    button:
+                                                        style "lc_sw_hit"
+                                                        xfill True
+                                                        ysize 320
+                                                        action Show("lc_phone_photo_viewer", photo_asset=photo_asset)
+                                                        add lc_phone_rounded_photo(photo_asset, 570, 320)
+                                                else:
+                                                    frame:
+                                                        style "lc_sw_frame"
+                                                        xfill True
+                                                        ysize 180
+                                                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                                        add Transform(lc_phone_art("icon_photos"), nearest=True) xalign 0.5 yalign 0.5
+                                                text photo_label:
+                                                    style "lc_sw_pixel"
+                                                    color c["mut"]
+                                                    xalign 0.5
+                                                if current_choice_mode() == "developer":
+                                                    text "Asset: [photo_asset]":
+                                                        style "lc_sw_pixel"
+                                                        size 18
+                                                        color c["mut"]
+                                                        xalign 0.5
+                                    else:
+                                        vbox:
+                                            spacing 16
+                                            xfill True
+                                            add Transform(lc_phone_art("icon_photos"), nearest=True) xalign 0.5
+                                            text "YOUR PHOTOS":
+                                                style "lc_sw_pixel_bold"
+                                                color c["txt"]
+                                                xalign 0.5
+                                            text "Story photos and pictures people send you collect here.":
+                                                style "lc_sw_hand"
+                                                size 30
+                                                color c["mut"]
+                                                text_align 0.5
+                                                xalign 0.5
+                                                xmaximum 540
+
+                                elif phone_app == "wallet":
                                     frame:
                                         style "lc_sw_frame"
                                         xfill True
                                         background Frame(lc_phone_art("card_" + theme), 18, 18)
-                                        padding (18, 16)
+                                        padding (24, 28)
                                         vbox:
-                                            spacing 8
+                                            spacing 12
                                             xfill True
-                                            hbox:
-                                                spacing 12
-                                                add Transform(lc_phone_art("icon_shop"), nearest=True)
-                                                vbox:
-                                                    spacing 4
-                                                    xfill True
-                                                    text phone_outfit_name:
-                                                        style "lc_sw_pixel_bold"
-                                                        color c["txt"]
-                                                    text phone_outfit_description:
-                                                        style "lc_sw_hand"
-                                                        size 28
-                                                        color c["mut"]
-                                                        xmaximum 360
-                                                text "[lc_phone_price(phone_outfit_cost)]":
-                                                    style "lc_sw_pixel_bold"
-                                                    color c["txt"]
-                                            text phone_outfit_status:
-                                                style "lc_sw_pixel"
-                                                size 18
-                                                color c["acc"]
-                                            if phone_outfit_state == "available":
-                                                textbutton "BUY FOR [lc_phone_price(phone_outfit_cost)]":
-                                                    style "lc_sw_hit"
-                                                    xfill True
-                                                    yminimum 68
-                                                    padding (36, 18)
-                                                    background Frame(lc_phone_art("key_berry"), 16, 16)
-                                                    hover_background Frame(lc_phone_art("key_berry"), 16, 16)
-                                                    text_font "fonts/Silkscreen-Bold.ttf"
-                                                    text_size 21
-                                                    text_antialias False
-                                                    text_hinting "none"
-                                                    text_xalign 0.5
-                                                    text_yalign 0.5
-                                                    text_color "#faf4e8"
-                                                    action Function(purchase_outfit, outfit_id)
-                                            elif phone_outfit_state == "owned":
-                                                text "OWNED":
-                                                    style "lc_sw_pixel_bold"
-                                                    color "#4f7a2a"
-                                                    xalign 0.5
-                                            else:
-                                                text ("NEED $[phone_outfit_cost]" if phone_outfit_state == "insufficient" else "LOCKED"):
-                                                    style "lc_sw_pixel"
-                                                    color c["mut"]
-                                                    xalign 0.5
-
-                            elif phone_app == "photos":
-                                $ photo_items = phone_photo_items()
-                                if photo_items:
-                                    for photo in photo_items:
-                                        $ photo_asset = photo.get("asset_id")
-                                        $ photo_label = photo.get("label", "Photo")
-                                        vbox:
-                                            spacing 6
-                                            xfill True
-                                            if photo_asset and renpy.has_image(photo_asset):
-                                                button:
-                                                    style "lc_sw_hit"
-                                                    xysize (594, 334)
-                                                    action Show("lc_phone_photo_viewer", photo_asset=photo_asset)
-                                                    add lc_phone_rounded_photo(photo_asset, 594, 334)
-                                            else:
-                                                frame:
-                                                    style "lc_sw_frame"
-                                                    xfill True
-                                                    ysize 180
-                                                    background Frame(lc_phone_art("card_" + theme), 18, 18)
-                                                    add Transform(lc_phone_art("icon_photos"), nearest=True) xalign 0.5 yalign 0.5
-                                            text photo_label:
+                                            add Transform(lc_phone_art("icon_wallet"), nearest=True) xalign 0.5
+                                            text "AVAILABLE":
                                                 style "lc_sw_pixel"
                                                 color c["mut"]
                                                 xalign 0.5
-                                            if current_choice_mode() == "developer":
-                                                text "Asset: [photo_asset]":
-                                                    style "lc_sw_pixel"
-                                                    size 18
-                                                    color c["mut"]
-                                                    xalign 0.5
-                                else:
-                                    vbox:
-                                        spacing 16
-                                        xfill True
-                                        add Transform(lc_phone_art("icon_photos"), nearest=True) xalign 0.5
-                                        text "YOUR PHOTOS":
-                                            style "lc_sw_pixel_bold"
-                                            color c["txt"]
-                                            xalign 0.5
-                                        text "Story photos and pictures people send you collect here.":
-                                            style "lc_sw_hand"
-                                            size 30
-                                            color c["mut"]
-                                            text_align 0.5
-                                            xalign 0.5
-                                            xmaximum 540
-
-                            elif phone_app == "wallet":
-                                frame:
-                                    style "lc_sw_frame"
-                                    xfill True
-                                    background Frame(lc_phone_art("card_" + theme), 18, 18)
-                                    padding (24, 28)
-                                    vbox:
-                                        spacing 12
-                                        xfill True
-                                        add Transform(lc_phone_art("icon_wallet"), nearest=True) xalign 0.5
-                                        text "AVAILABLE":
-                                            style "lc_sw_pixel"
-                                            color c["mut"]
-                                            xalign 0.5
-                                        text "$[money]":
-                                            style "lc_sw_pixel_bold"
-                                            size 64
-                                            color c["txt"]
-                                            xalign 0.5
-                                        if last_money_reason:
-                                            text "Last change: [last_money_change]":
-                                                style "lc_sw_hand"
-                                                size 30
+                                            text "$[money]":
+                                                style "lc_sw_pixel_bold"
+                                                size 64
                                                 color c["txt"]
                                                 xalign 0.5
-                                            text "[last_money_reason]":
-                                                style "lc_sw_hand"
-                                                size 28
-                                                color c["mut"]
-                                                xalign 0.5
+                                            if last_money_reason:
+                                                text "Last change: [last_money_change]":
+                                                    style "lc_sw_hand"
+                                                    size 30
+                                                    color c["txt"]
+                                                    xalign 0.5
+                                                text "[last_money_reason]":
+                                                    style "lc_sw_hand"
+                                                    size 28
+                                                    color c["mut"]
+                                                    xalign 0.5
+                                                    text_align 0.5
+                                                    xmaximum 520
+
+                                elif phone_app == "delivery":
+                                    frame:
+                                        style "lc_sw_frame"
+                                        xfill True
+                                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                        padding (24, 36)
+                                        vbox:
+                                            spacing 16
+                                            xfill True
+                                            add Transform(lc_phone_art("icon_delivery"), nearest=True) xalign 0.5
+                                            text "NO ACTIVE DELIVERIES":
+                                                style "lc_sw_pixel_bold"
+                                                color c["txt"]
                                                 text_align 0.5
+                                                xalign 0.5
+                                            text "Orders show up here when a delivery actually happens.":
+                                                style "lc_sw_hand"
+                                                size 30
+                                                color c["mut"]
+                                                text_align 0.5
+                                                xalign 0.5
                                                 xmaximum 520
 
-                            elif phone_app == "delivery":
-                                frame:
-                                    style "lc_sw_frame"
-                                    xfill True
-                                    background Frame(lc_phone_art("card_" + theme), 18, 18)
-                                    padding (24, 36)
-                                    vbox:
-                                        spacing 16
-                                        xfill True
-                                        add Transform(lc_phone_art("icon_delivery"), nearest=True) xalign 0.5
-                                        text "NO ACTIVE DELIVERIES":
-                                            style "lc_sw_pixel_bold"
-                                            color c["txt"]
-                                            text_align 0.5
-                                            xalign 0.5
-                                        text "Orders show up here when a delivery actually happens.":
-                                            style "lc_sw_hand"
-                                            size 30
-                                            color c["mut"]
-                                            text_align 0.5
-                                            xalign 0.5
-                                            xmaximum 520
-
-                            null height 36
+                                null height 36
                     use lc_sw_home_bar(c["txt"])
 
         add Transform(lc_phone_art("bezel_" + theme), nearest=True)
@@ -1101,39 +1102,36 @@ screen lc_phone_settings_mode(mode_id):
         style "lc_sw_hit"
         xfill True
         yminimum 96
-        padding (16, 14)
+        padding (28, 16)
         background Frame(lc_phone_art("key_berry" if _selected else "card_" + theme), 18, 15)
         hover_background Frame(lc_phone_art("key_berry"), 18, 15)
         action Function(lc_phone_set_information_mode, mode_id)
-        hbox:
-            spacing 14
+        vbox:
+            spacing 4
             xfill True
-            yalign 0.5
-            fixed:
-                xysize (36, 36)
-                yalign 0.5
+            hbox:
+                xfill True
+                box_align 0.0
+                spacing 16
+                text _info["label"].upper():
+                    style "lc_sw_pixel_bold"
+                    color ("#faf4e8" if _selected else c["txt"])
+                    yalign 0.5
                 if _selected:
                     text "ON":
                         style "lc_sw_pixel_bold"
                         size 18
                         color "#faf4e8"
-                        xalign 0.5
                         yalign 0.5
-            vbox:
-                spacing 4
-                xfill True
-                text _info["label"].upper():
-                    style "lc_sw_pixel_bold"
-                    color ("#faf4e8" if _selected else c["txt"])
-                text _info["tagline"]:
-                    style "lc_sw_hand"
-                    size 28
-                    color ("#fbe7d8" if _selected else c["mut"])
-                text _info["description"]:
-                    style "lc_sw_hand"
-                    size 26
-                    color ("#fbe7d8" if _selected else c["mut"])
-                    xmaximum 460
+            text _info["tagline"]:
+                style "lc_sw_hand"
+                size 28
+                color ("#fbe7d8" if _selected else c["mut"])
+            text _info["description"]:
+                style "lc_sw_hand"
+                size 26
+                color ("#fbe7d8" if _selected else c["mut"])
+                xmaximum 420
 
 
 screen lc_phone_settings():
@@ -1161,7 +1159,7 @@ screen lc_phone_settings():
                 style "lc_sw_pixel_bold"
                 size 48
                 color c["txt"]
-                xpos 30
+                xpos 36
                 ypos 96
             viewport:
                 ypos 168
@@ -1169,39 +1167,43 @@ screen lc_phone_settings():
                 mousewheel True
                 draggable True
                 scrollbars None
-                vbox:
-                    spacing 12
-                    xpos 24
-                    xsize 594
-                    text "These settings only change what the interface reveals. They never alter stats, story outcomes, or difficulty.":
-                        style "lc_sw_hand"
-                        size 28
-                        color c["mut"]
-                        text_align 0.5
-                        xalign 0.5
-                        xmaximum 560
-                    use lc_phone_settings_mode("normal")
-                    use lc_phone_settings_mode("insight")
-                    use lc_phone_settings_mode("full")
-                    use lc_phone_settings_mode("developer")
-                    textbutton "OPEN STATUS":
-                        style "lc_sw_hit"
+                frame:
+                    style "lc_sw_frame"
+                    background None
+                    xsize 642
+                    padding (36, 0, 36, 18)
+                    vbox:
+                        spacing 12
                         xfill True
-                        ysize 54
-                        background Frame(lc_phone_art("card_" + theme), 18, 18)
-                        hover_background Frame(lc_phone_art("key_berry"), 18, 15)
-                        text_font "fonts/Silkscreen-Bold.ttf"
-                        text_antialias False
-                        text_hinting "none"
-                        text_idle_color c["acc"]
-                        text_hover_color "#faf4e8"
-                        action [Hide("lc_phone_settings"), Show("lc_phone_status")]
-                    if current_choice_mode() == "developer":
-                        text "Developer exposes internal IDs, stat keys, route tendencies, and debug information.":
+                        text "These settings only change what the interface reveals. They never alter stats, story outcomes, or difficulty.":
                             style "lc_sw_hand"
-                            size 26
+                            size 28
                             color c["mut"]
-                            xmaximum 560
-                    null height 18
+                            text_align 0.5
+                            xalign 0.5
+                            xmaximum 540
+                        use lc_phone_settings_mode("normal")
+                        use lc_phone_settings_mode("insight")
+                        use lc_phone_settings_mode("full")
+                        use lc_phone_settings_mode("developer")
+                        textbutton "OPEN STATUS":
+                            style "lc_sw_hit"
+                            xfill True
+                            ysize 54
+                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                            hover_background Frame(lc_phone_art("key_berry"), 18, 15)
+                            text_font "fonts/Silkscreen-Bold.ttf"
+                            text_antialias False
+                            text_hinting "none"
+                            text_idle_color c["acc"]
+                            text_hover_color "#faf4e8"
+                            action [Hide("lc_phone_settings"), Show("lc_phone_status")]
+                        if current_choice_mode() == "developer":
+                            text "Developer exposes internal IDs, stat keys, route tendencies, and debug information.":
+                                style "lc_sw_hand"
+                                size 26
+                                color c["mut"]
+                                xmaximum 540
+                        null height 18
             use lc_sw_home_bar(c["txt"])
         add Transform(lc_phone_art("bezel_" + theme), nearest=True)
