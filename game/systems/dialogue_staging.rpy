@@ -10,12 +10,12 @@
 # is independent of source canvas size.
 
 # --- Sprite height (whole game) ---------------------------------------------
-# One place for how high every dialogue sprite stands. The dialogue box top is
-# y=792; at -50 the 900px envelope's knees (~72% down) land at about y=780, so
-# legs/clothes down to the knee stay visible above the box. Entering sprites
-# start 18px lower and ease up to the resting height.
-define lc_sprite_yoffset = -50
-define lc_sprite_enter_yoffset = -32
+# One place for how high every dialogue sprite stands. The dialogue box spans
+# y=792..1014. At -80 the 900px envelope's bottom (feet) sits at y=1000, tucked
+# behind the box, while the knees (~72% down) land at about y=750, above it.
+# Entering sprites start 14px lower (feet still hidden) and ease up.
+define lc_sprite_yoffset = -80
+define lc_sprite_enter_yoffset = -66
 
 # --- Leia (always RIGHT) --------------------------------------------------
 transform leia_enter_right:
