@@ -1561,3 +1561,42 @@ style nvl_window:
 style nvl_dialogue:
     color "#34242c"
     font "fonts/PatrickHand-Regular.ttf"
+
+
+## Title cards (centered / vcentered) ##########################################
+# The scrapbook say screen pins its box to the bottom strip with fixed xpos/ypos.
+# Ren'Py's built-in centered narrator injects centered_window/centered_text
+# (0.5 anchors) into that same box, which pushed every title card off the left
+# edge. Title cards get their own screen so the strip and the cards never mix.
+
+init python:
+    # Re-point the built-in narrators (not redefined, so no lint warning).
+    centered.screen = "lc_title_card"
+    vcentered.screen = "lc_title_card"
+
+screen lc_title_card(who, what):
+    window id "window":
+        text what id "what"
+
+style centered_window:
+    background None
+    xalign 0.5
+    yalign 0.5
+    xfill False
+    yfill False
+    xmaximum 1560
+    padding (0, 0)
+
+style centered_text:
+    font "fonts/PatrickHand-Regular.ttf"
+    size 44
+    color "#f4ebdc"
+    outlines [(2, "#1e1628c0", 0, 0)]
+    line_spacing 6
+    textalign 0.5
+    xalign 0.5
+    yalign 0.5
+    layout "subtitle"
+
+style centered_vtext is centered_text:
+    vertical True

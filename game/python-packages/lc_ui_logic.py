@@ -32,6 +32,38 @@ DAY_EXCEPTIONS = frozenset({
     "ch01_drive_to_dinner",
 })
 
+# Night or late-evening images whose names carry no night token.
+# Add new night CGs here when their name does not say so.
+NIGHT_EXCEPTIONS = frozenset({
+    # Day 1: walk to the shop, drive back, carry, lounge
+    "ch01_walk_back_01",
+    "ch01_walk_back_call",
+    "ch01_trip_catch",
+    "ch01_trip_catch_followup",
+    "ch01_trip_catch_aftermath",
+    "ch01_drive_back_seating",
+    "ch01_julian_carry",
+    "ch01_carry_dress_shift",
+    "ch01_lounge_micro_test",
+    # Day 2: sunset pool, game night, bedroom finales
+    "ch01_d2_love_pool_oral_01",
+    "ch01_d2_love_pool_oral_02",
+    "ch01_d2_julian_underwear_reveal",
+    "ch01_d2_love_bedroom_01",
+    "ch01_d2_love_bedroom_02",
+    "ch01_d2_exhib_bed_open_01",
+    "ch01_d2_exhib_bed_open_02",
+    "ch01_d2_exhib_bed_open_03",
+    "ch01_d2_exhib_bed_open_04",
+    # Day 4: terrace at night
+    "ch01_d4_exhib_watching",
+    "ch01_d4_exhib_terrace_01",
+    "ch01_d4_exhib_terrace_02",
+    "ch01_d4_ntr_terrace_talk",
+    # Day 5: sunset deck
+    "ch01_d5_ntr_deck_alone",
+})
+
 # Cues from the style-guide motion sheet. Playback is a no-op until audio exists.
 UI_CUES = {
     "polaroid": 0.35,
@@ -82,6 +114,8 @@ def infer_dialogue_theme(image_names, manual=None, fallback="day"):
         key = _attribute_key(name)
         if key in DAY_EXCEPTIONS:
             continue
+        if key in NIGHT_EXCEPTIONS:
+            return "night"
         parts = set(key.split("_"))
         if parts & NIGHT_PARTS:
             return "night"
