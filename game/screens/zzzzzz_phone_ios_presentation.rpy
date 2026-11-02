@@ -1,11 +1,10 @@
-# ACTIVE PHONE PRESENTATION.
-# This late-loading screen intentionally overrides the legacy phone_screen.rpy
-# handset layout. Make Phone Messages/Photos/Home presentation changes here.
-# zzzzzzz_phone_hardware_polish.rpy owns only the external handset hardware overlay.
+# ACTIVE PHONE PRESENTATION — Sweetheart.
+# Late-loading phone_screen. Story still reads phone_app and phone_thread.
+# Pixel art is pre-scaled 3x (nearest). Patrick Hand stays smooth at 1080p.
+# The scrapbook case overlay must not draw on top of this (see the hardware file).
 
-# Cohesive mobile-style Phone presentation.
-# Presentation only: story/Phone state and app logic remain in the existing systems.
-# Final Status / Settings icon art can later replace the placeholder icon tiles.
+default lc_phone_hearts = True
+
 
 init 95 python:
     import datetime
@@ -13,132 +12,235 @@ init 95 python:
     def lc_phone_clock_text():
         return datetime.datetime.now().strftime("%H:%M")
 
+    def lc_phone_theme():
+        theme = getattr(store, "lc_dialogue_theme", "day")
+        return theme if theme in ("day", "night") else "day"
+
+    def lc_phone_palette(theme=None):
+        theme = theme or lc_phone_theme()
+        if theme == "night":
+            return {
+                "bg": "#251722",
+                "nav": "#301e2c",
+                "line": "#4a2c40",
+                "inc": "#40293a",
+                "out": "#a8305e",
+                "out_t": "#faf4e8",
+                "acc": "#f08ab0",
+                "mut": "#b58a9e",
+                "txt": "#f3e2ea",
+                "stamp": "#93708a",
+                "track": "#4a2c40",
+                "bar": "#a8305e",
+            }
+        return {
+            "bg": "#f8e7e5",
+            "nav": "#fdf3ef",
+            "line": "#e9c6c8",
+            "inc": "#fffbf5",
+            "out": "#a8305e",
+            "out_t": "#faf4e8",
+            "acc": "#a8305e",
+            "mut": "#8a5f69",
+            "txt": "#4a2633",
+            "stamp": "#9a7078",
+            "track": "#e9c6c8",
+            "bar": "#a8305e",
+        }
+
+    def lc_phone_name_color(sender, theme=None):
+        theme = theme or lc_phone_theme()
+        day = {
+            "leia": "#b8325e",
+            "julian": "#4f7a2a",
+            "maya": "#94680e",
+            "player": "#a8305e",
+            "ryan": "#a8305e",
+        }
+        night = {
+            "leia": "#f39ab8",
+            "julian": "#a9cf7a",
+            "maya": "#e9c46a",
+            "player": "#f08ab0",
+            "ryan": "#f08ab0",
+        }
+        table = night if theme == "night" else day
+        return table.get(sender, lc_phone_palette(theme)["txt"])
+
+    def lc_phone_avatar_ink(sender):
+        return {
+            "leia": "#6a2338",
+            "julian": "#3e5a2a",
+            "maya": "#6a4a14",
+            "player": "#2f4a52",
+            "ryan": "#2f4a52",
+        }.get(sender, "#4a2633")
+
+    def lc_phone_avatar(sender):
+        who = sender if sender in ("leia", "julian", "maya", "ryan") else "system"
+        if sender == "player":
+            who = "ryan"
+        return "gui/phone/sweetheart/avatar_%s.png" % who
+
+    def lc_phone_initial(sender):
+        label = phone_sender_label(sender) or "?"
+        return label[:1].upper()
+
+    def lc_phone_art(name):
+        return "gui/phone/sweetheart/%s.png" % name
+
+    def lc_phone_one_line(text, limit=36):
+        clean = " ".join((text or "").split())
+        if len(clean) <= limit:
+            return clean
+        return clean[: max(1, limit - 3)].rstrip() + "..."
+
+    def lc_phone_price(amount):
+        """Dollar label with a thousands separator, so $1250 reads as $1,250."""
+        try:
+            value = int(amount)
+        except Exception:
+            return "${}".format(amount)
+        return "${:,}".format(value)
+
+    def lc_phone_home_caption():
+        raw = lc_day_caption()
+        parts = [part for part in raw.split("  ") if part]
+        if len(parts) == 2 and parts[1] == "DAY":
+            return parts[0]
+        if len(parts) == 2:
+            return parts[0] + "  -  " + parts[1]
+        return raw
+
+    def lc_phone_list_preview(thread_id):
+        thread = phone_messages_for_thread(thread_id)
+        preview = phone_thread_preview(thread_id)
+        if not thread:
+            return preview
+        sender = thread[-1].get("sender")
+        if thread_id == "group" and sender:
+            who = "You" if sender == "player" else phone_sender_label(sender)
+            return who + ": " + preview
+        return preview
+
+    def lc_phone_thread_rows(thread_id):
+        if not thread_id:
+            return []
+        messages = phone_messages_for_thread(thread_id)
+        rows = []
+        for index, message in enumerate(messages):
+            sender = message.get("sender") or "system"
+            prev_sender = messages[index - 1].get("sender") if index else None
+            next_sender = messages[index + 1].get("sender") if index + 1 < len(messages) else None
+            outgoing = sender == "player"
+            rows.append({
+                "message": message,
+                "sender": sender,
+                "outgoing": outgoing,
+                "show_name": (not outgoing) and sender != prev_sender,
+                "tail": sender != next_sender,
+            })
+        return rows
+
+    def lc_phone_rounded_photo(asset_id, width, height):
+        photo = Transform(asset_id, xysize=(width, height), fit="cover")
+        mask = Transform("gui/phone/sweetheart/photo_mask.png", xysize=(width, height))
+        return AlphaMask(photo, mask)
+
+
+style lc_sw_pixel is default:
+    font "fonts/Silkscreen-Regular.ttf"
+    size 24
+    antialias False
+    hinting "none"
+    adjust_spacing False
+    color "#4a2633"
+
+style lc_sw_pixel_bold is lc_sw_pixel:
+    font "fonts/Silkscreen-Bold.ttf"
+
+style lc_sw_hand is default:
+    font "fonts/PatrickHand-Regular.ttf"
+    size 33
+    color "#4a2633"
+    adjust_spacing False
+
+style lc_sw_hit is button:
+    background None
+    hover_background None
+    padding (0, 0)
+    xpadding 0
+    ypadding 0
+    xminimum 0
+    yminimum 0
+
+style lc_sw_frame is frame:
+    background None
+    padding (0, 0)
+    xpadding 0
+    ypadding 0
+    yminimum 0
+
 
 screen lc_phone_extra_apps():
-    # Supersedes the temporary bottom Status/Settings dock. Both are now native
-    # app tiles inside the main Phone home grid below.
+    # Wins over the older Status/Settings docks. Both apps live on the home grid.
     pass
 
 
-screen lc_ios_app_tile(app_id, label, subtitle, action, icon_path=None, placeholder_text=None, badge_text=None):
+screen lc_sw_px(name, xpos=0, ypos=0):
+    add Transform(lc_phone_art(name), nearest=True):
+        xpos xpos
+        ypos ypos
+
+
+screen lc_sw_status_bar(ink=None):
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
+    $ color = ink or c["txt"]
+    $ glyphs = "glyphs_wallpaper" if ink else ("glyphs_night" if theme == "night" else "glyphs_day")
     fixed:
-        xsize 172
-        ysize 166
-
-        button:
-            xfill True
-            yfill True
-            padding (6, 6)
-            background None
-            hover_background Frame("gui/phone/rounded_white.png", 24, 24)
-            action action
-
-            vbox:
-                xalign 0.5
-                spacing 5
-
-                fixed:
-                    xsize 96
-                    ysize 96
-                    xalign 0.5
-
-                    if icon_path:
-                        add icon_path xysize (92, 92) xalign 0.5 yalign 0.5
-                    else:
-                        frame:
-                            xysize (92, 92)
-                            xalign 0.5
-                            yalign 0.5
-                            background (Frame("gui/phone/rounded_pink.png", 28, 28) if app_id == "status" else Frame("gui/phone/rounded_blue.png", 28, 28))
-                            text placeholder_text size (34 if app_id == "status" else 27) color ("#ffffff" if app_id == "status" else "#007aff") bold True xalign 0.5 yalign 0.5
-
-                    if badge_text:
-                        frame:
-                            xpos 69
-                            ypos -4
-                            xminimum 27
-                            ysize 27
-                            padding (7, 2)
-                            background Frame("gui/phone/unread_badge.svg", 12, 12)
-                            text badge_text size 11 color "#ffffff" bold True xalign 0.5 yalign 0.5
-
-                text label size 16 color "#1c1c1e" bold True xalign 0.5
-                text subtitle size 11 color "#6d6d72" xalign 0.5 text_align 0.5 xmaximum 155
-
-
-screen lc_ios_status_bar():
-    fixed:
-        xfill True
-        ysize 48
-
-        text "[lc_phone_clock_text()]" size 14 color "#1c1c1e" bold True xpos 16 yalign 0.5
-
-        frame:
+        xysize (642, 48)
+        text "[lc_phone_clock_text()]":
+            style "lc_sw_pixel_bold"
+            color color
+            xpos 42
+            ypos 6
+        add Transform(lc_phone_art("island"), nearest=True):
             xalign 0.5
-            yalign 0.5
-            xsize 138
-            ysize 31
-            background Frame("gui/phone/rounded_shell.png", 18, 18)
+            ypos 9
+        add Transform(lc_phone_art(glyphs), nearest=True):
+            xpos 498
+            ypos 6
 
+
+screen lc_sw_home_bar(color):
+    fixed:
+        xysize (642, 1020)
+        add Solid(color):
+            xalign 0.5
+            ypos 996
+            xsize 204
+            ysize 9
+
+
+screen lc_sw_back(action, label="HOME", xpos=18, ypos=54):
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
+    button:
+        style "lc_sw_hit"
+        xpos xpos
+        ypos ypos
+        ysize 36
+        xminimum 96
+        action action
         hbox:
-            xalign 0.965
+            spacing 9
             yalign 0.5
-            spacing 7
-            text "•••" size 15 color "#1c1c1e" bold True
-            text "Wi-Fi" size 12 color "#1c1c1e"
-            frame:
-                xsize 30
-                ysize 15
+            add Transform(lc_phone_art("chevron_" + theme), nearest=True) yalign 0.5
+            text label:
+                style "lc_sw_pixel_bold"
+                color c["acc"]
                 yalign 0.5
-                padding (2, 2)
-                background Frame("gui/phone/rounded_light.png", 8, 8)
-                frame:
-                    xfill True
-                    yfill True
-                    background Solid("#1c1c1e")
-
-
-screen lc_ios_back_button(label, action, xpos_value=0, ypos_value=0):
-    textbutton label:
-        xpos xpos_value
-        ypos ypos_value
-        xminimum 112
-        ysize 43
-        padding (14, 6)
-        background Frame("gui/phone/rounded_white.png", 22, 22)
-        hover_background Frame("gui/phone/rounded_blue.png", 22, 22)
-        text_idle_color "#007aff"
-        text_hover_color "#007aff"
-        text_size 15
-        text_bold True
-        text_xalign 0.5
-        text_yalign 0.5
-        action action
-
-
-screen lc_ios_done_button(action, xalign_value=1.0, ypos_value=0):
-    textbutton "Done":
-        xalign xalign_value
-        ypos ypos_value
-        xminimum 84
-        ysize 43
-        padding (14, 6)
-        background Frame("gui/phone/rounded_button_blue.png", 22, 22)
-        hover_background Frame("gui/phone/rounded_button_blue_hover.png", 22, 22)
-        text_idle_color "#ffffff"
-        text_hover_color "#ffffff"
-        text_size 15
-        text_bold True
-        text_xalign 0.5
-        text_yalign 0.5
-        action action
-
-
-init 96 python:
-    def lc_phone_rounded_photo(asset_id, width, height):
-        photo = Transform(asset_id, xysize=(width, height), fit="cover")
-        mask = Transform("gui/phone/photo_round_mask.svg", xysize=(width, height))
-        return AlphaMask(photo, mask)
 
 
 screen lc_phone_photo_viewer(photo_asset):
@@ -148,43 +250,44 @@ screen lc_phone_photo_viewer(photo_asset):
     key "K_ESCAPE" action Hide("lc_phone_photo_viewer")
     key "mouseup_3" action Hide("lc_phone_photo_viewer")
 
-    add Solid("#000000")
+    add Solid("#12080e")
 
     if photo_asset and renpy.has_image(photo_asset):
         add photo_asset:
             xalign 0.5
             yalign 0.5
             fit "contain"
-            xysize (1920, 1080)
+            xysize (1760, 960)
 
     button:
+        style "lc_sw_hit"
         xfill True
         yfill True
-        background None
         action Hide("lc_phone_photo_viewer")
 
-    textbutton "Done":
-        xalign 0.965
-        yalign 0.035
-        xminimum 100
-        ysize 48
-        background Frame("gui/phone/rounded_button_blue.png", 22, 22)
-        hover_background Frame("gui/phone/rounded_button_blue_hover.png", 22, 22)
-        text_idle_color "#ffffff"
-        text_hover_color "#ffffff"
-        text_size 16
-        text_bold True
-        text_xalign 0.5
-        text_yalign 0.5
+    button:
+        style "lc_sw_hit"
+        xpos 1680
+        ypos 36
+        xminimum 150
+        ysize 54
+        background Frame(lc_phone_art("key_berry"), 18, 15)
+        hover_background Frame(lc_phone_art("key_berry"), 18, 15)
         action Hide("lc_phone_photo_viewer")
+        text "DONE":
+            style "lc_sw_pixel_bold"
+            color "#faf4e8"
+            xalign 0.5
+            yalign 0.5
 
+
+# Message rows are inlined in phone_screen. A used screen is given the full
+# area offered by its parent, which would swallow the thread viewport.
 
 screen phone_screen():
     modal True
     zorder 310
 
-    # A tapped notification pre-selects its app/thread (single use: cleared
-    # once the screen is actually shown); otherwise the phone opens on Home.
     default phone_app = lc_phone_link_app()
     default phone_thread = lc_phone_link_thread()
     default hovered_app = None
@@ -194,250 +297,459 @@ screen phone_screen():
 
     key "K_ESCAPE" action Hide("phone_screen")
 
-    add Solid("#00000066")
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
 
-    frame:
+    add Solid("#120810c4")
+
+    fixed:
         xalign 0.5
         yalign 0.5
-        xsize 690
-        ysize 1070
-        background None
-        padding (15, 15)
+        xysize (702, 1068)
 
         fixed:
-            xfill True
-            yfill True
+            xpos 30
+            ypos 24
+            xysize (642, 1020)
+            clipping True
 
-            frame:
-                xfill True
-                yfill True
-                background Frame("gui/phone/rounded_screen.png", 30, 30)
-                padding (18, 12)
+            if phone_app == "home":
+                add Transform(lc_phone_art("wallpaper"), nearest=True)
+                use lc_sw_status_bar("#5a2533")
+                text "[lc_phone_clock_text()]":
+                    style "lc_sw_pixel_bold"
+                    size 96
+                    color "#5a2533"
+                    xalign 0.5
+                    ypos 48
+                text "[lc_phone_home_caption()]":
+                    style "lc_sw_pixel_bold"
+                    color "#5a2533"
+                    xalign 0.5
+                    ypos 168
+                    outlines [(3, "#fbe7d8", 1, 1), (0, "#fbe7d8", 0, 0)]
+                $ unread_total = phone_total_unread()
+                $ unread_badge = phone_unread_badge_label() if unread_total else None
+                $ status_badge = "!" if not getattr(persistent, "status_page_intro_seen", False) else None
 
-                fixed:
-                    xfill True
-                    yfill True
+                ## Home grid: Delivery, Status, Settings. Dock holds the other four.
+                for slot, app_id, label, badge, action in (
+                    (0, "delivery", "DELIVERY", None, SetScreenVariable("phone_app", "delivery")),
+                    (1, "status", "STATUS", status_badge, Show("lc_phone_status")),
+                    (2, "settings", "SETTINGS", None, Show("lc_phone_settings")),
+                ):
+                    $ ix = 57 + slot * 147
+                    button:
+                        style "lc_sw_hit"
+                        xpos ix
+                        ypos (204 if hovered_app == app_id else 210)
+                        xysize (78, 120)
+                        action action
+                        hovered SetScreenVariable("hovered_app", app_id)
+                        unhovered SetScreenVariable("hovered_app", None)
+                        add Transform(lc_phone_art("icon_" + app_id), nearest=True)
+                        if badge:
+                            fixed:
+                                xpos 48
+                                ypos -12
+                                xysize (33, 33)
+                                add Transform(lc_phone_art("badge_small"), nearest=True)
+                                text badge:
+                                    style "lc_sw_pixel_bold"
+                                    size 18
+                                    color "#faf4e8"
+                                    xalign 0.5
+                                    yalign 0.45
+                    text label:
+                        style "lc_sw_pixel"
+                        color "#3b2a30"
+                        xpos (ix + 36)
+                        xanchor 0.5
+                        ypos 292
+                        outlines [(3, "#fbe7d8", 1, 1)]
 
-                    if phone_app == "home":
-                        add Solid("#f0eaf2")
-                    else:
-                        add Solid("#f2f2f7")
+                add Solid("#faf4e8"):
+                    xpos 306
+                    ypos 852
+                    xysize (9, 9)
+                add Solid("#b5a5ab"):
+                    xpos 324
+                    ypos 852
+                    xysize (9, 9)
 
-                    vbox:
-                        spacing 8
-                        xfill True
-                        yfill True
+                add Transform(lc_phone_art("dock"), nearest=True):
+                    xpos 21
+                    ypos 882
+                for slot, app_id, action in (
+                    (0, "messages", SetScreenVariable("phone_app", "messages")),
+                    (1, "photos", SetScreenVariable("phone_app", "photos")),
+                    (2, "shop", SetScreenVariable("phone_app", "shop")),
+                    (3, "wallet", SetScreenVariable("phone_app", "wallet")),
+                ):
+                    $ ix = 57 + slot * 147
+                    button:
+                        style "lc_sw_hit"
+                        xpos ix
+                        ypos (888 if hovered_app == app_id else 894)
+                        xysize (78, 78)
+                        action action
+                        hovered SetScreenVariable("hovered_app", app_id)
+                        unhovered SetScreenVariable("hovered_app", None)
+                        add Transform(lc_phone_art("icon_" + app_id), nearest=True)
+                        if app_id == "messages" and unread_badge:
+                            fixed:
+                                xpos 48
+                                ypos -12
+                                xysize (33, 33)
+                                add Transform(lc_phone_art("badge_small"), nearest=True)
+                                text unread_badge:
+                                    style "lc_sw_pixel_bold"
+                                    size 18
+                                    color "#faf4e8"
+                                    xalign 0.5
+                                    yalign 0.45
+                use lc_sw_home_bar("#faf4e8")
 
-                        use lc_ios_status_bar
+                if current_choice_mode() == "developer":
+                    hbox:
+                        xpos 36
+                        ypos 800
+                        spacing 12
+                        textbutton "SEED":
+                            style "lc_sw_hit"
+                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                            text_font "fonts/Silkscreen-Regular.ttf"
+                            text_antialias False
+                            text_hinting "none"
+                            text_color c["txt"]
+                            text_size 18
+                            xminimum 140
+                            ysize 42
+                            action Function(phone_debug_seed_messages)
+                        textbutton "CLEAR":
+                            style "lc_sw_hit"
+                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                            text_font "fonts/Silkscreen-Regular.ttf"
+                            text_antialias False
+                            text_hinting "none"
+                            text_color c["txt"]
+                            text_size 18
+                            xminimum 140
+                            ysize 42
+                            action Function(phone_debug_clear_messages)
 
+            else:
+                add Solid(c["bg"])
+                if lc_phone_hearts and phone_app in ("messages", "thread"):
+                    add Transform(lc_phone_art("hearts_" + theme), nearest=True)
+
+                if phone_app == "thread":
+                    add Solid(c["nav"]):
+                        xysize (642, 156)
+                    add Solid(c["line"]):
+                        ypos 156
+                        xysize (642, 3)
+                    use lc_sw_status_bar()
+                    $ back_count = phone_total_unread()
+                    use lc_sw_back(SetScreenVariable("phone_app", "messages"), "", xpos=12, ypos=66)
+                    if back_count > 0:
                         fixed:
+                            xpos 48
+                            ypos 66
+                            xysize (36, 30)
+                            add Transform(lc_phone_art("badge_" + theme), nearest=True, xysize=(36, 30))
+                            text "[back_count]":
+                                style "lc_sw_pixel_bold"
+                                size 18
+                                color "#faf4e8"
+                                xalign 0.5
+                                yalign 0.4
+                    if phone_thread == "group":
+                        add Transform(lc_phone_art("avatar_group"), nearest=True):
+                            xalign 0.5
+                            ypos 48
+                    else:
+                        fixed:
+                            xalign 0.5
+                            ypos 48
+                            xysize (54, 54)
+                            add Transform(lc_phone_avatar(phone_thread or "system"), nearest=True, xysize=(54, 54))
+                            text lc_phone_initial(phone_thread or "system"):
+                                style "lc_sw_pixel_bold"
+                                size 28
+                                color lc_phone_avatar_ink(phone_thread or "system")
+                                xalign 0.5
+                                yalign 0.45
+                    text phone_thread_label(phone_thread).upper():
+                        style "lc_sw_pixel_bold"
+                        color c["txt"]
+                        xalign 0.5
+                        ypos 108
+                    viewport:
+                        ypos 168
+                        xysize (642, 726)
+                        mousewheel True
+                        draggable True
+                        scrollbars None
+                        yinitial 0.0
+                        vbox:
                             xfill True
-                            ysize 98
-
-                            if phone_app != "home":
-                                use lc_ios_back_button(("‹ Messages" if phone_app == "thread" else "‹ Back"), [SetScreenVariable("phone_app", "messages") if phone_app == "thread" else SetScreenVariable("phone_app", "home"), SetScreenVariable("phone_thread", None) if phone_app != "thread" else NullAction()], xpos_value=0, ypos_value=2)
-
-                            vbox:
-                                xpos 0
-                                ypos 50
-                                spacing 0
-
-                                if phone_app == "home":
-                                    text "Phone" size 34 color "#1c1c1e" bold True
-                                    text "[player_name]'s apps" size 13 color "#6d6d72"
-                                elif phone_app == "messages":
-                                    text "Messages" size 31 color "#1c1c1e" bold True
-                                elif phone_app == "thread":
-                                    text "[phone_thread_label(phone_thread)]" size 28 color "#1c1c1e" bold True
-                                elif phone_app == "shop":
-                                    text "Shop" size 31 color "#1c1c1e" bold True
-                                elif phone_app == "photos":
-                                    text "Photos" size 31 color "#1c1c1e" bold True
-                                elif phone_app == "wallet":
-                                    text "Wallet" size 31 color "#1c1c1e" bold True
-                                elif phone_app == "delivery":
-                                    text "Delivery" size 31 color "#1c1c1e" bold True
-
-                            use lc_ios_done_button(Hide("phone_screen"), xalign_value=1.0, ypos_value=2)
-
-                        if phone_app == "home":
-                            $ phone_photo_count = len(phone_photo_items())
-                            $ unread_total = phone_total_unread()
-                            $ unread_badge = str(unread_total) if unread_total > 0 else None
-                            $ status_badge = "!" if not getattr(persistent, "status_page_intro_seen", False) else None
-
-                            frame:
-                                xfill True
-                                yfill True
-                                background Solid("#ffffff00")
-                                padding (8, 8)
-
-                                vbox:
-                                    spacing 8
+                            spacing 4
+                            first_spacing 4
+                            if phone_thread:
+                                text "TODAY  [lc_phone_clock_text()]":
+                                    style "lc_sw_pixel"
+                                    color c["stamp"]
+                                    xalign 0.5
+                            $ thread_rows = lc_phone_thread_rows(phone_thread)
+                            if not thread_rows:
+                                text "No messages yet.":
+                                    style "lc_sw_hand"
+                                    color c["mut"]
+                                    xalign 0.5
+                                    text_align 0.5
+                            for row in thread_rows:
+                                $ _sender = row["sender"]
+                                $ _out = row["outgoing"]
+                                $ _message = row["message"]
+                                $ _body = (_message.get("text") or "").strip()
+                                $ _attachment = _message.get("attachment_id")
+                                $ _kind = ("out_" if _out else "in_") + theme
+                                # 75% of the 642 screen. Bubbles hug the text up to this, then wrap.
+                                $ _bubble_max = 480
+                                hbox:
                                     xfill True
-
-                                    grid 3 3:
-                                        spacing 7
-                                        xalign 0.5
-
-                                        use lc_ios_app_tile("messages", "Messages", ("{} unread".format(unread_total) if unread_total else "Conversations"), SetScreenVariable("phone_app", "messages"), icon_path="gui/phone/icons/messages.png", badge_text=unread_badge)
-                                        use lc_ios_app_tile("photos", "Photos", ("{} saved".format(phone_photo_count) if phone_photo_count else "Camera roll"), SetScreenVariable("phone_app", "photos"), icon_path="gui/phone/icons/photos.png")
-                                        use lc_ios_app_tile("shop", "Shop", "{} items".format(len(shop_outfit_ids())), SetScreenVariable("phone_app", "shop"), icon_path="gui/phone/icons/shop.png")
-                                        use lc_ios_app_tile("wallet", "Wallet", "${}".format(money), SetScreenVariable("phone_app", "wallet"), icon_path="gui/phone/icons/wallet.png")
-                                        use lc_ios_app_tile("delivery", "Delivery", "Orders", SetScreenVariable("phone_app", "delivery"), icon_path="gui/phone/icons/delivery.png")
-                                        use lc_ios_app_tile("status", "Status", "Relationship", Show("lc_phone_status"), placeholder_text="ST", badge_text=status_badge)
-                                        use lc_ios_app_tile("settings", "Settings", transparency_mode_label(), Show("lc_phone_settings"), placeholder_text="SET")
-                                        null width 172 height 166
-                                        null width 172 height 166
-
-                                    if current_choice_mode() == "developer":
-                                        frame:
-                                            xfill True
-                                            background Frame("gui/phone/rounded_white.png", 24, 24)
-                                            padding (14, 12)
-                                            vbox:
-                                                spacing 7
-                                                text "DEVELOPER TOOLS" size 12 color "#c53e71" bold True
-                                                hbox:
-                                                    spacing 8
-                                                    textbutton "Seed messages":
-                                                        xsize 240
-                                                        ysize 40
-                                                        background Frame("gui/phone/rounded_light.png", 20, 20)
-                                                        hover_background Frame("gui/phone/rounded_blue.png", 20, 20)
-                                                        text_idle_color "#1c1c1e"
-                                                        text_hover_color "#007aff"
-                                                        text_xalign 0.5
-                                                        text_yalign 0.5
-                                                        action Function(phone_debug_seed_messages)
-                                                    textbutton "Clear messages":
-                                                        xsize 240
-                                                        ysize 40
-                                                        background Frame("gui/phone/rounded_light.png", 20, 20)
-                                                        hover_background Frame("gui/phone/rounded_blue.png", 20, 20)
-                                                        text_idle_color "#1c1c1e"
-                                                        text_hover_color "#007aff"
-                                                        text_xalign 0.5
-                                                        text_yalign 0.5
-                                                        action Function(phone_debug_clear_messages)
-
-                        elif phone_app == "messages":
-                            viewport:
-                                xfill True
-                                yfill True
-                                mousewheel True
-                                draggable True
-                                vbox:
-                                    spacing 9
-                                    xfill True
-                                    for thread_id in PHONE_THREAD_ORDER:
-                                        $ thread_name = phone_thread_label(thread_id)
-                                        $ thread_preview = phone_thread_preview(thread_id)
-                                        $ unread_count = phone_thread_unread_count(thread_id)
-                                        button:
-                                            xfill True
-                                            ysize 94
-                                            padding (14, 11)
-                                            background Frame("gui/phone/rounded_white.png", 25, 25)
-                                            hover_background Frame("gui/phone/rounded_blue.png", 25, 25)
-                                            action [Function(phone_mark_thread_read, thread_id), SetScreenVariable("phone_thread", thread_id), SetScreenVariable("phone_app", "thread")]
-                                            hbox:
-                                                spacing 13
-                                                xfill True
-                                                yalign 0.5
-                                                add "gui/phone/icons/messages.png" xysize (54, 54) yalign 0.5
-                                                vbox:
-                                                    spacing 4
-                                                    xfill True
-                                                    yalign 0.5
-                                                    hbox:
-                                                        xfill True
-                                                        text "[thread_name]" size 18 color "#1c1c1e" bold (unread_count > 0)
-                                                        if unread_count > 0:
-                                                            frame:
-                                                                xalign 1.0
-                                                                xminimum 31
-                                                                ysize 26
-                                                                padding (7, 2)
-                                                                background Frame("gui/phone/unread_badge.svg", 12, 12)
-                                                                text "[unread_count]" size 11 color "#ffffff" bold True xalign 0.5 yalign 0.5
-                                                    text "[thread_preview]" size 13 color "#6d6d72" xmaximum 435
-
-                        elif phone_app == "thread":
-                            $ thread_messages = phone_messages_for_thread(phone_thread)
-                            viewport:
-                                xfill True
-                                yfill True
-                                mousewheel True
-                                draggable True
-                                yinitial 1.0
-                                vbox:
-                                    spacing 10
-                                    xfill True
-                                    if not thread_messages:
-                                        frame:
-                                            xfill True
-                                            background Frame("gui/phone/rounded_white.png", 24, 24)
-                                            padding (18, 18)
-                                            text "No messages yet." size 15 color "#8e8e93" xalign 0.5
-                                    for message in thread_messages:
-                                        $ message_sender = phone_sender_label(message.get("sender", "system"))
-                                        $ from_player = message.get("sender") == "player"
-                                        $ message_text = message.get("text", "")
-                                        $ attachment_id = message.get("attachment_id")
-                                        $ attachment_label = message.get("attachment_label", "Photo attachment")
-                                        $ bubble_text = "#ffffff" if from_player else "#1c1c1e"
-                                        vbox:
-                                            xfill True
-                                            spacing 3
-                                            if not from_player:
-                                                text "[message_sender]" size 11 color "#8e8e93" xalign 0.02
-                                            if message_text:
+                                    spacing 0
+                                    # box_align keeps spare width on one side, so bubbles
+                                    # stay flush instead of being spread toward the centre.
+                                    box_align (1.0 if _out else 0.0)
+                                    if not _out:
+                                        null width 8
+                                        fixed:
+                                            xysize (36, 36)
+                                            yalign 1.0
+                                            if row["tail"]:
+                                                add Transform(lc_phone_avatar(_sender), nearest=True, xysize=(36, 36))
+                                                text lc_phone_initial(_sender):
+                                                    style "lc_sw_pixel_bold"
+                                                    color lc_phone_avatar_ink(_sender)
+                                                    xalign 0.5
+                                                    yalign 0.45
+                                        null width 8
+                                    vbox:
+                                        spacing 2
+                                        xmaximum _bubble_max
+                                        xalign (1.0 if _out else 0.0)
+                                        if row["show_name"]:
+                                            text phone_sender_label(_sender):
+                                                style "lc_sw_pixel"
+                                                color lc_phone_name_color(_sender)
+                                                xalign 0.0
+                                        if _body:
+                                            # fit_first keeps the tail on the bubble corner
+                                            # without stretching the row to the viewport.
+                                            fixed:
+                                                fit_first True
+                                                xalign (1.0 if _out else 0.0)
                                                 frame:
-                                                    xmaximum 460
-                                                    xalign (1.0 if from_player else 0.0)
-                                                    background (Frame("gui/phone/bubble_outgoing.png", 30, 30) if from_player else Frame("gui/phone/bubble_incoming.png", 30, 30))
-                                                    padding ((17, 12, 20, 15) if from_player else (20, 12, 17, 15))
-                                                    text "[message_text]" size 16 color bubble_text line_spacing 3
-                                            if attachment_id:
-                                                vbox:
-                                                    xmaximum 460
-                                                    xalign (1.0 if from_player else 0.0)
-                                                    spacing 4
-                                                    if renpy.has_image(attachment_id):
-                                                        button:
-                                                            xalign (1.0 if from_player else 0.0)
-                                                            xysize (430, 242)
-                                                            padding (0, 0)
-                                                            background None
-                                                            hover_background None
-                                                            action Show("lc_phone_photo_viewer", photo_asset=attachment_id)
-                                                            add lc_phone_rounded_photo(attachment_id, 430, 242)
-                                                    else:
-                                                        add "gui/phone/icons/photos.png" xysize (72, 72) xalign 0.5
-                                                    if current_choice_mode() == "developer":
-                                                        text "Asset: [attachment_id]" size 9 color "#8e8e93" xalign 0.5
+                                                    style "lc_sw_frame"
+                                                    background Frame(lc_phone_art("bubble_" + _kind), 12, 12)
+                                                    padding (14, 6, 14, 8)
+                                                    xmaximum _bubble_max
+                                                    xfill False
+                                                    text _body:
+                                                        style "lc_sw_hand"
+                                                        size 30
+                                                        line_spacing 0
+                                                        xalign 0.0
+                                                        text_align 0.0
+                                                        color (c["out_t"] if _out else c["txt"])
+                                                        xmaximum (_bubble_max - 28)
+                                                if row["tail"]:
+                                                    add Transform(lc_phone_art("tail_" + _kind), nearest=True):
+                                                        xalign (1.0 if _out else 0.0)
+                                                        yalign 1.0
+                                                        xoffset (4 if _out else -4)
+                                                        yoffset 2
+                                        if _attachment and renpy.has_image(_attachment):
+                                            button:
+                                                style "lc_sw_hit"
+                                                xysize (min(420, _bubble_max), 220)
+                                                xalign (1.0 if _out else 0.0)
+                                                xfill False
+                                                action Show("lc_phone_photo_viewer", photo_asset=_attachment)
+                                                add lc_phone_rounded_photo(_attachment, min(420, _bubble_max), 220)
+                                    null width 16
+                            null height 12
+                    fixed:
+                        ypos 894
+                        xysize (642, 126)
+                        add Solid(c["line"]) xysize (642, 3)
+                        add Solid(c["nav"]):
+                            ypos 3
+                            xysize (642, 123)
+                        add Transform(lc_phone_art("plus_" + theme), nearest=True):
+                            xpos 21
+                            ypos 24
+                        add Frame(lc_phone_art("field_" + theme), 24, 24):
+                            xpos 78
+                            ypos 21
+                            xysize (468, 51)
+                        text "Message":
+                            style "lc_sw_hand"
+                            size 30
+                            color c["mut"]
+                            xpos 102
+                            ypos 28
+                        add Transform(lc_phone_art("send_" + theme), nearest=True):
+                            xpos 564
+                            ypos 24
+                    use lc_sw_home_bar(c["txt"])
 
-                        elif phone_app == "shop":
-                            frame:
-                                xfill True
-                                background Frame("gui/phone/rounded_blue.png", 24, 24)
-                                padding (14, 12)
-                                text "Purchases add outfits to [girlfriend_name]'s Wardrobe. Her willingness to wear them is tracked separately." size 13 color "#2c2c2e" line_spacing 3
-                            if last_shop_message:
-                                frame:
+                elif phone_app == "messages":
+                    use lc_sw_status_bar()
+                    use lc_sw_back(SetScreenVariable("phone_app", "home"))
+                    text "MESSAGES":
+                        style "lc_sw_pixel_bold"
+                        size 48
+                        color c["txt"]
+                        xpos 30
+                        ypos 96
+                    add Transform(lc_phone_art("compose_" + theme), nearest=True):
+                        xpos 582
+                        ypos 60
+                    add Transform(lc_phone_art("search_" + theme), nearest=True):
+                        xpos 27
+                        ypos 162
+                    text "Search":
+                        style "lc_sw_hand"
+                        size 28
+                        color c["mut"]
+                        xpos 84
+                        ypos 168
+                    viewport:
+                        ypos 222
+                        xysize (642, 740)
+                        mousewheel True
+                        draggable True
+                        scrollbars None
+                        vbox:
+                            xfill True
+                            for thread_id in PHONE_THREAD_ORDER:
+                                $ thread_name = phone_thread_label(thread_id)
+                                $ thread_preview = lc_phone_one_line(lc_phone_list_preview(thread_id), 34)
+                                $ unread_count = phone_thread_unread_count(thread_id)
+                                button:
+                                    style "lc_sw_hit"
                                     xfill True
-                                    background Frame("gui/phone/rounded_yellow.png", 24, 24)
-                                    padding (14, 11)
-                                    text "[last_shop_message]" size 13 color "#4a3a16"
-                            viewport:
+                                    ysize 96
+                                    hover_background Solid(c["nav"])
+                                    action [Function(phone_mark_thread_read, thread_id), SetScreenVariable("phone_thread", thread_id), SetScreenVariable("phone_app", "thread")]
+                                    if unread_count > 0:
+                                        add Transform(lc_phone_art("dot"), nearest=True):
+                                            xpos 12
+                                            ypos 30
+                                    if thread_id == "group":
+                                        add Transform(lc_phone_art("avatar_group"), nearest=True):
+                                            xpos 36
+                                            ypos 18
+                                    else:
+                                        fixed:
+                                            xpos 36
+                                            ypos 18
+                                            xysize (54, 54)
+                                            add Transform(lc_phone_avatar(thread_id), nearest=True, xysize=(54, 54))
+                                            text lc_phone_initial(thread_id):
+                                                style "lc_sw_pixel_bold"
+                                                color lc_phone_avatar_ink(thread_id)
+                                                xalign 0.5
+                                                yalign 0.45
+                                    text thread_name.upper():
+                                        style ("lc_sw_pixel_bold" if unread_count else "lc_sw_pixel")
+                                        color c["txt"]
+                                        xpos 108
+                                        ypos 16
+                                    text ("NOW" if unread_count else ""):
+                                        style "lc_sw_pixel"
+                                        color (c["acc"] if unread_count else c["mut"])
+                                        xpos 520
+                                        ypos 16
+                                        xanchor 1.0
+                                    add Transform(lc_phone_art("chevron_" + theme), nearest=True):
+                                        xpos 588
+                                        ypos 22
+                                    text thread_preview:
+                                        style "lc_sw_hand"
+                                        size 30
+                                        color (c["txt"] if unread_count else c["mut"])
+                                        xpos 108
+                                        ypos 48
+                                        xmaximum 480
+                                    add Solid(c["line"]):
+                                        xpos 108
+                                        ypos 93
+                                        xysize (534, 3)
+                    use lc_sw_home_bar(c["txt"])
+
+                else:
+                    use lc_sw_status_bar()
+                    use lc_sw_back([SetScreenVariable("phone_app", "home"), SetScreenVariable("phone_thread", None)])
+                    if phone_app == "shop":
+                        text "SHOP":
+                            style "lc_sw_pixel_bold"
+                            size 48
+                            color c["txt"]
+                            xpos 36
+                            ypos 96
+                    elif phone_app == "photos":
+                        text "PHOTOS":
+                            style "lc_sw_pixel_bold"
+                            size 48
+                            color c["txt"]
+                            xpos 36
+                            ypos 96
+                    elif phone_app == "wallet":
+                        text "WALLET":
+                            style "lc_sw_pixel_bold"
+                            size 48
+                            color c["txt"]
+                            xpos 36
+                            ypos 96
+                    elif phone_app == "delivery":
+                        text "DELIVERY":
+                            style "lc_sw_pixel_bold"
+                            size 48
+                            color c["txt"]
+                            xpos 36
+                            ypos 96
+
+                    viewport:
+                        ypos 168
+                        xysize (642, 800)
+                        mousewheel True
+                        draggable True
+                        scrollbars None
+                        frame:
+                            style "lc_sw_frame"
+                            background None
+                            xsize 642
+                            padding (36, 0, 36, 18)
+                            vbox:
+                                spacing 18
                                 xfill True
-                                yfill True
-                                mousewheel True
-                                draggable True
-                                vbox:
-                                    spacing 11
-                                    xfill True
+
+                                if phone_app == "shop":
+                                    text "Purchases add outfits to [girlfriend_name]'s wardrobe. Whether she wears them is tracked separately.":
+                                        style "lc_sw_hand"
+                                        size 30
+                                        color c["mut"]
+                                        xmaximum 570
+                                    if last_shop_message:
+                                        text "[last_shop_message]":
+                                            style "lc_sw_hand"
+                                            size 30
+                                            color c["txt"]
+                                            xmaximum 570
                                     for outfit_id in shop_outfit_ids():
                                         $ phone_outfit = get_outfit(outfit_id)
                                         $ phone_outfit_name = phone_outfit["name"]
@@ -445,170 +757,214 @@ screen phone_screen():
                                         $ phone_outfit_cost = phone_outfit["cost"]
                                         $ phone_outfit_state = shop_item_state(outfit_id)
                                         $ phone_outfit_status = shop_item_status_label(outfit_id)
-                                        $ phone_outfit_status_color = shop_item_status_color(outfit_id)
                                         frame:
+                                            style "lc_sw_frame"
                                             xfill True
-                                            background Frame("gui/phone/rounded_white.png", 24, 24)
-                                            padding (15, 14)
+                                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                            padding (18, 16)
                                             vbox:
                                                 spacing 8
                                                 xfill True
                                                 hbox:
                                                     spacing 12
-                                                    add "gui/phone/icons/shop.png" xysize (64, 64)
+                                                    add Transform(lc_phone_art("icon_shop"), nearest=True)
                                                     vbox:
-                                                        spacing 3
+                                                        spacing 4
                                                         xfill True
-                                                        text "[phone_outfit_name]" size 18 color "#1c1c1e" bold True
-                                                        text "[phone_outfit_description]" size 13 color "#6d6d72" xmaximum 410
-                                                    text "$[phone_outfit_cost]" size 16 color "#1c1c1e" bold True xalign 1.0
-                                                text "[phone_outfit_status]" size 12 color phone_outfit_status_color
+                                                        text phone_outfit_name:
+                                                            style "lc_sw_pixel_bold"
+                                                            color c["txt"]
+                                                        text phone_outfit_description:
+                                                            style "lc_sw_hand"
+                                                            size 28
+                                                            color c["mut"]
+                                                            xmaximum 430
+                                                text phone_outfit_status:
+                                                    style "lc_sw_pixel"
+                                                    size 18
+                                                    color c["acc"]
                                                 if phone_outfit_state == "available":
-                                                    textbutton "Buy for $[phone_outfit_cost]":
+                                                    textbutton "BUY FOR [lc_phone_price(phone_outfit_cost)]":
+                                                        style "lc_sw_hit"
                                                         xfill True
-                                                        ysize 44
-                                                        background Frame("gui/phone/rounded_button_blue.png", 22, 22)
-                                                        hover_background Frame("gui/phone/rounded_button_blue_hover.png", 22, 22)
-                                                        text_idle_color "#ffffff"
-                                                        text_hover_color "#ffffff"
+                                                        yminimum 68
+                                                        padding (36, 18)
+                                                        background Frame(lc_phone_art("key_berry"), 16, 16)
+                                                        hover_background Frame(lc_phone_art("key_berry"), 16, 16)
+                                                        text_font "fonts/Silkscreen-Bold.ttf"
+                                                        text_size 21
+                                                        text_antialias False
+                                                        text_hinting "none"
                                                         text_xalign 0.5
                                                         text_yalign 0.5
+                                                        text_color "#faf4e8"
                                                         action Function(purchase_outfit, outfit_id)
                                                 elif phone_outfit_state == "owned":
-                                                    textbutton "Owned":
-                                                        xfill True
-                                                        ysize 42
-                                                        background Frame("gui/phone/rounded_green.png", 22, 22)
-                                                        text_idle_color "#26734d"
-                                                        text_xalign 0.5
-                                                        text_yalign 0.5
-                                                        sensitive False
+                                                    text "OWNED":
+                                                        style "lc_sw_pixel_bold"
+                                                        color "#4f7a2a"
+                                                        xalign 0.5
                                                 else:
-                                                    textbutton ("Need $[phone_outfit_cost]" if phone_outfit_state == "insufficient" else "Locked"):
-                                                        xfill True
-                                                        ysize 42
-                                                        background Frame("gui/phone/rounded_light.png", 22, 22)
-                                                        text_idle_color "#8e8e93"
-                                                        text_xalign 0.5
-                                                        text_yalign 0.5
-                                                        sensitive False
+                                                    text ("NEED $[phone_outfit_cost]" if phone_outfit_state == "insufficient" else "LOCKED"):
+                                                        style "lc_sw_pixel"
+                                                        color c["mut"]
+                                                        xalign 0.5
 
-                        elif phone_app == "photos":
-                            $ photo_items = phone_photo_items()
-                            if photo_items:
-                                viewport:
-                                    xfill True
-                                    yfill True
-                                    mousewheel True
-                                    draggable True
-                                    vbox:
-                                        spacing 10
-                                        xfill True
+                                elif phone_app == "photos":
+                                    $ photo_items = phone_photo_items()
+                                    if photo_items:
                                         for photo in photo_items:
                                             $ photo_asset = photo.get("asset_id")
                                             $ photo_label = photo.get("label", "Photo")
                                             vbox:
-                                                spacing 4
+                                                spacing 6
                                                 xfill True
                                                 if photo_asset and renpy.has_image(photo_asset):
                                                     button:
-                                                        xalign 0.5
-                                                        xysize (540, 304)
-                                                        padding (0, 0)
-                                                        background None
-                                                        hover_background None
+                                                        style "lc_sw_hit"
+                                                        xfill True
+                                                        ysize 320
                                                         action Show("lc_phone_photo_viewer", photo_asset=photo_asset)
-                                                        fixed:
-                                                            xfill True
-                                                            yfill True
-                                                            clipping True
-                                                            add lc_phone_rounded_photo(photo_asset, 540, 304)
+                                                        add lc_phone_rounded_photo(photo_asset, 570, 320)
                                                 else:
                                                     frame:
+                                                        style "lc_sw_frame"
                                                         xfill True
-                                                        ysize 190
-                                                        background Frame("gui/phone/rounded_light.png", 22, 22)
-                                                        add "gui/phone/icons/photos.png" xysize (96, 96) xalign 0.5 yalign 0.5
+                                                        ysize 180
+                                                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                                        add Transform(lc_phone_art("icon_photos"), nearest=True) xalign 0.5 yalign 0.5
+                                                text photo_label:
+                                                    style "lc_sw_pixel"
+                                                    color c["mut"]
+                                                    xalign 0.5
                                                 if current_choice_mode() == "developer":
-                                                    text "Asset: [photo_asset]" size 9 color "#8e8e93" xalign 0.5
-                            else:
-                                frame:
-                                    xfill True
-                                    background Frame("gui/phone/rounded_white.png", 26, 26)
-                                    padding (25, 25)
-                                    vbox:
-                                        spacing 14
-                                        add "gui/phone/icons/photos.png" xysize (110, 110) xalign 0.5
-                                        text "Your Photos" size 23 color "#1c1c1e" bold True xalign 0.5
-                                        text "Story photos and received image attachments collect here automatically." size 14 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
-
-                        elif phone_app == "wallet":
-                            frame:
-                                xfill True
-                                background Frame("gui/phone/rounded_white.png", 26, 26)
-                                padding (26, 26)
-                                vbox:
-                                    spacing 13
-                                    add "gui/phone/icons/wallet.png" xysize (104, 104) xalign 0.5
-                                    text "AVAILABLE MONEY" size 12 color "#8e8e93" xalign 0.5
-                                    text "$[money]" size 42 color "#1c1c1e" bold True xalign 0.5
-                                    if last_money_reason:
-                                        frame:
+                                                    text "Asset: [photo_asset]":
+                                                        style "lc_sw_pixel"
+                                                        size 18
+                                                        color c["mut"]
+                                                        xalign 0.5
+                                    else:
+                                        vbox:
+                                            spacing 16
                                             xfill True
-                                            background Frame("gui/phone/rounded_light.png", 22, 22)
-                                            padding (14, 12)
-                                            vbox:
-                                                spacing 4
-                                                text "Last change: [last_money_change]" size 14 color "#3a3a3c" xalign 0.5
-                                                text "[last_money_reason]" size 13 color "#8e8e93" xalign 0.5
+                                            add Transform(lc_phone_art("icon_photos"), nearest=True) xalign 0.5
+                                            text "YOUR PHOTOS":
+                                                style "lc_sw_pixel_bold"
+                                                color c["txt"]
+                                                xalign 0.5
+                                            text "Story photos and pictures people send you collect here.":
+                                                style "lc_sw_hand"
+                                                size 30
+                                                color c["mut"]
+                                                text_align 0.5
+                                                xalign 0.5
+                                                xmaximum 540
 
-                        elif phone_app == "delivery":
-                            frame:
-                                xfill True
-                                background Frame("gui/phone/rounded_white.png", 26, 26)
-                                padding (26, 26)
-                                vbox:
-                                    spacing 14
-                                    add "gui/phone/icons/delivery.png" xysize (112, 112) xalign 0.5
-                                    text "No Active Deliveries" size 22 color "#1c1c1e" bold True xalign 0.5
-                                    text "Orders will appear here when story delivery events are introduced." size 14 color "#6d6d72" text_align 0.5 xalign 0.5 line_spacing 4
+                                elif phone_app == "wallet":
+                                    frame:
+                                        style "lc_sw_frame"
+                                        xfill True
+                                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                        padding (24, 28)
+                                        vbox:
+                                            spacing 12
+                                            xfill True
+                                            add Transform(lc_phone_art("icon_wallet"), nearest=True) xalign 0.5
+                                            text "AVAILABLE":
+                                                style "lc_sw_pixel"
+                                                color c["mut"]
+                                                xalign 0.5
+                                            text "$[money]":
+                                                style "lc_sw_pixel_bold"
+                                                size 64
+                                                color c["txt"]
+                                                xalign 0.5
+                                            if last_money_reason:
+                                                text "Last change: [last_money_change]":
+                                                    style "lc_sw_hand"
+                                                    size 30
+                                                    color c["txt"]
+                                                    xalign 0.5
+                                                text "[last_money_reason]":
+                                                    style "lc_sw_hand"
+                                                    size 28
+                                                    color c["mut"]
+                                                    xalign 0.5
+                                                    text_align 0.5
+                                                    xmaximum 520
 
-                    frame:
-                        xalign 0.5
-                        yalign 0.995
-                        xsize 126
-                        ysize 5
-                        background Frame("gui/phone/rounded_shell.png", 10, 10)
+                                elif phone_app == "delivery":
+                                    frame:
+                                        style "lc_sw_frame"
+                                        xfill True
+                                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                                        padding (24, 36)
+                                        vbox:
+                                            spacing 16
+                                            xfill True
+                                            add Transform(lc_phone_art("icon_delivery"), nearest=True) xalign 0.5
+                                            text "NO ACTIVE DELIVERIES":
+                                                style "lc_sw_pixel_bold"
+                                                color c["txt"]
+                                                text_align 0.5
+                                                xalign 0.5
+                                            text "Orders show up here when a delivery actually happens.":
+                                                style "lc_sw_hand"
+                                                size 30
+                                                color c["mut"]
+                                                text_align 0.5
+                                                xalign 0.5
+                                                xmaximum 520
+
+                                null height 36
+                    use lc_sw_home_bar(c["txt"])
+
+        add Transform(lc_phone_art("bezel_" + theme), nearest=True)
 
 
 screen lc_phone_status_row(row):
+    $ c = lc_phone_palette()
     vbox:
-        spacing 5
+        spacing 6
         xfill True
         hbox:
             xfill True
-            text row["label"] size 14 color "#1c1c1e" bold True
+            text row["label"]:
+                style "lc_sw_pixel_bold"
+                color c["txt"]
             if row["detail"]:
-                text row["detail"] size 12 color "#6d6d72" xalign 1.0
+                text row["detail"]:
+                    style "lc_sw_pixel"
+                    size 18
+                    color c["mut"]
+                    xalign 1.0
         bar:
             value StaticValue(row["value"], 100)
             xfill True
-            ysize 9
-            left_bar Solid("#cc5d91")
-            right_bar Solid("#dedee3")
+            ysize 12
+            left_bar Solid(c["bar"])
+            right_bar Solid(c["track"])
         if row["internal_key"]:
-            text row["internal_key"] size 9 color "#8e8e93"
+            text row["internal_key"]:
+                style "lc_sw_pixel"
+                size 18
+                color c["mut"]
 
 
 screen lc_phone_status_section(title, rows):
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
     frame:
+        style "lc_sw_frame"
         xfill True
-        background Frame("gui/phone/rounded_white.png", 24, 24)
-        padding (16, 14)
+        background Frame(lc_phone_art("card_" + theme), 18, 18)
+        padding (18, 16)
         vbox:
-            spacing 11
+            spacing 14
             xfill True
-            text title size 13 color "#8e8e93" bold True
+            text title:
+                style "lc_sw_pixel"
+                color c["mut"]
             for row in rows:
                 use lc_phone_status_row(row)
 
@@ -618,137 +974,164 @@ screen lc_phone_status():
     zorder 340
     key "K_ESCAPE" action Hide("lc_phone_status")
 
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
     $ _mode = current_choice_mode()
     $ _relationship_rows = status_relationship_rows(_mode)
     $ _leia_rows = status_leia_rows(_mode)
     $ _ryan_rows = status_ryan_rows(_mode)
     $ _route_rows = status_route_rows(_mode)
 
-    add Solid("#00000066")
-
-    frame:
+    add Solid("#120810c4")
+    fixed:
         xalign 0.5
         yalign 0.5
-        xsize 690
-        ysize 1070
-        background None
-        padding (15, 15)
-
-        frame:
-            xfill True
-            yfill True
-            background Frame("gui/phone/rounded_screen.png", 30, 30)
-            padding (18, 12)
-
-            vbox:
-                spacing 8
-                xfill True
-                yfill True
-                use lc_ios_status_bar
-
-                fixed:
-                    xfill True
-                    ysize 100
-                    use lc_ios_back_button("‹ Phone", Hide("lc_phone_status"), xpos_value=0, ypos_value=2)
-                    use lc_ios_done_button(Hide("lc_phone_status"), xalign_value=1.0, ypos_value=2)
-                    vbox:
-                        ypos 51
-                        spacing 0
-                        text "Status" size 31 color "#1c1c1e" bold True
-                        text "[transparency_mode_label()] visibility" size 12 color "#6d6d72"
-
-                viewport:
-                    xfill True
-                    yfill True
-                    mousewheel True
-                    draggable True
-                    vbox:
-                        spacing 11
-                        xfill True
-
-                        if not getattr(persistent, "status_page_intro_seen", False):
-                            frame:
-                                xfill True
-                                background Frame("gui/phone/rounded_blue.png", 24, 24)
-                                padding (16, 14)
-                                vbox:
-                                    spacing 7
-                                    text "YOUR LIVE DASHBOARD" size 13 color "#007aff" bold True
-                                    text "Status tracks the relationship, [girlfriend_name]'s developing traits, and [player_name]'s mindset. What you can see depends on Settings." size 13 color "#2c2c2e" line_spacing 3
-                                    textbutton "Got it":
-                                        xfill True
-                                        ysize 41
-                                        background Frame("gui/phone/rounded_button_blue.png", 22, 22)
-                                        hover_background Frame("gui/phone/rounded_button_blue_hover.png", 22, 22)
-                                        text_idle_color "#ffffff"
-                                        text_hover_color "#ffffff"
-                                        text_xalign 0.5
-                                        text_yalign 0.5
-                                        action Function(lc_mark_status_intro_seen)
-
+        xysize (702, 1068)
+        fixed:
+            xpos 30
+            ypos 24
+            xysize (642, 1020)
+            clipping True
+            add Solid(c["bg"])
+            use lc_sw_status_bar()
+            use lc_sw_back(Hide("lc_phone_status"))
+            text "STATUS":
+                style "lc_sw_pixel_bold"
+                size 48
+                color c["txt"]
+                xpos 30
+                ypos 96
+            text transparency_mode_label().upper():
+                style "lc_sw_pixel"
+                color c["mut"]
+                xpos 420
+                ypos 114
+            viewport:
+                ypos 168
+                xysize (642, 800)
+                mousewheel True
+                draggable True
+                scrollbars None
+                vbox:
+                    spacing 16
+                    xpos 24
+                    xsize 594
+                    if not getattr(persistent, "status_page_intro_seen", False):
                         frame:
+                            style "lc_sw_frame"
                             xfill True
-                            background Frame("gui/phone/rounded_white.png", 24, 24)
-                            padding (16, 14)
+                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                            padding (18, 16)
                             vbox:
-                                spacing 5
-                                text "[girlfriend_name] right now" size 17 color "#1c1c1e" bold True
-                                text "[leia_overview_text()]" size 13 color "#5f5f64" line_spacing 3
-
-                        use lc_phone_status_section("RELATIONSHIP", _relationship_rows)
-                        use lc_phone_status_section(girlfriend_name.upper(), _leia_rows)
-                        use lc_phone_status_section(player_name.upper(), _ryan_rows)
-                        if _route_rows:
-                            use lc_phone_status_section("ROUTE TENDENCIES", _route_rows)
-
-                        textbutton "Open Settings":
-                            xfill True
-                            ysize 46
-                            background Frame("gui/phone/rounded_white.png", 22, 22)
-                            hover_background Frame("gui/phone/rounded_blue.png", 22, 22)
-                            text_idle_color "#007aff"
-                            text_hover_color "#007aff"
-                            text_xalign 0.5
-                            text_yalign 0.5
-                            action [Hide("lc_phone_status"), Show("lc_phone_settings")]
-
-                        text "[status_mode_note()]" size 11 color "#8e8e93" text_align 0.5 xalign 0.5
-                        null height 12
-
-                frame:
-                    xalign 0.5
-                    xsize 126
-                    ysize 5
-                    background Frame("gui/phone/rounded_shell.png", 10, 10)
+                                spacing 8
+                                text "YOUR LIVE DASHBOARD":
+                                    style "lc_sw_pixel_bold"
+                                    color c["acc"]
+                                text "Status tracks the relationship, [girlfriend_name], and [player_name]. Settings chooses how much of it you can see.":
+                                    style "lc_sw_hand"
+                                    size 30
+                                    color c["txt"]
+                                    xmaximum 540
+                                textbutton "GOT IT":
+                                    style "lc_sw_hit"
+                                    xalign 0.0
+                                    xfill False
+                                    xminimum 200
+                                    yminimum 64
+                                    padding (32, 16)
+                                    background Frame(lc_phone_art("key_berry"), 16, 16)
+                                    hover_background Frame(lc_phone_art("key_berry"), 16, 16)
+                                    text_font "fonts/Silkscreen-Bold.ttf"
+                                    text_size 24
+                                    text_antialias False
+                                    text_hinting "none"
+                                    text_xalign 0.5
+                                    text_yalign 0.5
+                                    text_color "#faf4e8"
+                                    action Function(lc_mark_status_intro_seen)
+                    frame:
+                        style "lc_sw_frame"
+                        xfill True
+                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                        padding (18, 16)
+                        vbox:
+                            spacing 8
+                            text "[girlfriend_name] right now":
+                                style "lc_sw_pixel_bold"
+                                color c["txt"]
+                            text "[leia_overview_text()]":
+                                style "lc_sw_hand"
+                                size 28
+                                color c["mut"]
+                                xmaximum 540
+                    use lc_phone_status_section("RELATIONSHIP", _relationship_rows)
+                    use lc_phone_status_section(girlfriend_name.upper(), _leia_rows)
+                    use lc_phone_status_section(player_name.upper(), _ryan_rows)
+                    if _route_rows:
+                        use lc_phone_status_section("ROUTE TENDENCIES", _route_rows)
+                    textbutton "OPEN SETTINGS":
+                        style "lc_sw_hit"
+                        xfill True
+                        ysize 54
+                        background Frame(lc_phone_art("card_" + theme), 18, 18)
+                        hover_background Frame(lc_phone_art("key_berry"), 18, 15)
+                        text_font "fonts/Silkscreen-Bold.ttf"
+                        text_antialias False
+                        text_hinting "none"
+                        text_idle_color c["acc"]
+                        text_hover_color "#faf4e8"
+                        action [Hide("lc_phone_status"), Show("lc_phone_settings")]
+                    text "[status_mode_note()]":
+                        style "lc_sw_hand"
+                        size 28
+                        color c["mut"]
+                        text_align 0.5
+                        xalign 0.5
+                        xmaximum 540
+                    null height 18
+            use lc_sw_home_bar(c["txt"])
+        add Transform(lc_phone_art("bezel_" + theme), nearest=True)
 
 
 screen lc_phone_settings_mode(mode_id):
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
     $ _selected = current_choice_mode() == mode_id
     $ _info = transparency_mode_info(mode_id)
-
     button:
+        style "lc_sw_hit"
         xfill True
-        yminimum 88
-        padding (16, 12)
-        background Frame("gui/phone/rounded_white.png", 24, 24)
-        hover_background Frame("gui/phone/rounded_blue.png", 24, 24)
+        yminimum 96
+        padding (28, 16)
+        background Frame(lc_phone_art("key_berry" if _selected else "card_" + theme), 18, 15)
+        hover_background Frame(lc_phone_art("key_berry"), 18, 15)
         action Function(lc_phone_set_information_mode, mode_id)
-
-        hbox:
-            spacing 12
+        vbox:
+            spacing 4
             xfill True
-            yalign 0.5
-            frame:
-                xsize 42
-                ysize 42
-                background (Frame("gui/phone/rounded_pink.png", 18, 18) if _selected else Frame("gui/phone/rounded_light.png", 18, 18))
-                text ("✓" if _selected else "") size 21 color "#ffffff" bold True xalign 0.5 yalign 0.5
-            vbox:
-                spacing 3
+            hbox:
                 xfill True
-                text _info["label"] size 17 color "#1c1c1e" bold True
-                text _info["tagline"] size 12 color "#5f5f64"
-                text _info["description"] size 11 color "#8e8e93" line_spacing 2 xmaximum 430
+                box_align 0.0
+                spacing 16
+                text _info["label"].upper():
+                    style "lc_sw_pixel_bold"
+                    color ("#faf4e8" if _selected else c["txt"])
+                    yalign 0.5
+                if _selected:
+                    text "ON":
+                        style "lc_sw_pixel_bold"
+                        size 18
+                        color "#faf4e8"
+                        yalign 0.5
+            text _info["tagline"]:
+                style "lc_sw_hand"
+                size 28
+                color ("#fbe7d8" if _selected else c["mut"])
+            text _info["description"]:
+                style "lc_sw_hand"
+                size 26
+                color ("#fbe7d8" if _selected else c["mut"])
+                xmaximum 420
 
 
 screen lc_phone_settings():
@@ -756,80 +1139,71 @@ screen lc_phone_settings():
     zorder 340
     key "K_ESCAPE" action Hide("lc_phone_settings")
 
-    add Solid("#00000066")
+    $ c = lc_phone_palette()
+    $ theme = lc_phone_theme()
 
-    frame:
+    add Solid("#120810c4")
+    fixed:
         xalign 0.5
         yalign 0.5
-        xsize 690
-        ysize 1070
-        background None
-        padding (15, 15)
-
-        frame:
-            xfill True
-            yfill True
-            background Frame("gui/phone/rounded_screen.png", 30, 30)
-            padding (18, 12)
-
-            vbox:
-                spacing 8
-                xfill True
-                yfill True
-                use lc_ios_status_bar
-
-                fixed:
-                    xfill True
-                    ysize 100
-                    use lc_ios_back_button("‹ Phone", Hide("lc_phone_settings"), xpos_value=0, ypos_value=2)
-                    use lc_ios_done_button(Hide("lc_phone_settings"), xalign_value=1.0, ypos_value=2)
-                    vbox:
-                        ypos 51
-                        spacing 0
-                        text "Settings" size 31 color "#1c1c1e" bold True
-                        text "Information visibility" size 12 color "#6d6d72"
-
+        xysize (702, 1068)
+        fixed:
+            xpos 30
+            ypos 24
+            xysize (642, 1020)
+            clipping True
+            add Solid(c["bg"])
+            use lc_sw_status_bar()
+            use lc_sw_back(Hide("lc_phone_settings"))
+            text "SETTINGS":
+                style "lc_sw_pixel_bold"
+                size 48
+                color c["txt"]
+                xpos 36
+                ypos 96
+            viewport:
+                ypos 168
+                xysize (642, 800)
+                mousewheel True
+                draggable True
+                scrollbars None
                 frame:
-                    xfill True
-                    background Frame("gui/phone/rounded_blue.png", 24, 24)
-                    padding (14, 12)
-                    text "These settings only change what the interface reveals. They never alter stats, story outcomes, or difficulty." size 12 color "#5f5f64" text_align 0.5 xalign 0.5 line_spacing 3
-
-                viewport:
-                    xfill True
-                    yfill True
-                    mousewheel True
-                    draggable True
+                    style "lc_sw_frame"
+                    background None
+                    xsize 642
+                    padding (36, 0, 36, 18)
                     vbox:
-                        spacing 9
+                        spacing 12
                         xfill True
+                        text "These settings only change what the interface reveals. They never alter stats, story outcomes, or difficulty.":
+                            style "lc_sw_hand"
+                            size 28
+                            color c["mut"]
+                            text_align 0.5
+                            xalign 0.5
+                            xmaximum 540
                         use lc_phone_settings_mode("normal")
                         use lc_phone_settings_mode("insight")
                         use lc_phone_settings_mode("full")
                         use lc_phone_settings_mode("developer")
-
-                        textbutton "Open Status":
+                        textbutton "OPEN STATUS":
+                            style "lc_sw_hit"
                             xfill True
-                            ysize 46
-                            background Frame("gui/phone/rounded_white.png", 22, 22)
-                            hover_background Frame("gui/phone/rounded_blue.png", 22, 22)
-                            text_idle_color "#007aff"
-                            text_hover_color "#007aff"
-                            text_xalign 0.5
-                            text_yalign 0.5
+                            ysize 54
+                            background Frame(lc_phone_art("card_" + theme), 18, 18)
+                            hover_background Frame(lc_phone_art("key_berry"), 18, 15)
+                            text_font "fonts/Silkscreen-Bold.ttf"
+                            text_antialias False
+                            text_hinting "none"
+                            text_idle_color c["acc"]
+                            text_hover_color "#faf4e8"
                             action [Hide("lc_phone_settings"), Show("lc_phone_status")]
-
                         if current_choice_mode() == "developer":
-                            frame:
-                                xfill True
-                                background Frame("gui/phone/rounded_yellow.png", 22, 22)
-                                padding (14, 12)
-                                text "Developer exposes internal IDs, stat keys, route tendencies, and debug information. It is intended for testing rather than a first blind playthrough." size 11 color "#4a3a16" line_spacing 3
-
-                        null height 12
-
-                frame:
-                    xalign 0.5
-                    xsize 126
-                    ysize 5
-                    background Frame("gui/phone/rounded_shell.png", 10, 10)
+                            text "Developer exposes internal IDs, stat keys, route tendencies, and debug information.":
+                                style "lc_sw_hand"
+                                size 26
+                                color c["mut"]
+                                xmaximum 540
+                        null height 18
+            use lc_sw_home_bar(c["txt"])
+        add Transform(lc_phone_art("bezel_" + theme), nearest=True)

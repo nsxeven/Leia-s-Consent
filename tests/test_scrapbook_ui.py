@@ -1,7 +1,10 @@
 """Scrapbook UI helpers: night paper, day label, choice chips."""
 
+import sys
 import unittest
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "game" / "python-packages"))
 
 from lc_ui_logic import (
     chip_label,

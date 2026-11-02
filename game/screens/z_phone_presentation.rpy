@@ -13,7 +13,7 @@ transform phone_notification_slide:
     alpha 0.0
     yoffset -170
     parallel:
-        easeout 0.30 yoffset 28
+        easeout 0.30 yoffset 15
     parallel:
         linear 0.45 alpha 1.0
     pause 3.2
@@ -40,55 +40,42 @@ screen phone_quick_access():
 
     zorder 110
     default hud_hovered = False
+    $ _hud_on = phone_unlocked and phone_hud_enabled and quick_menu and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen") and not renpy.get_screen("lc_phone_status") and not renpy.get_screen("lc_phone_settings") and not renpy.get_screen("lc_phone_photo_viewer")
 
-    if phone_unlocked and phone_hud_enabled and quick_menu and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen"):
-        fixed:
-            xalign 0.985
-            yalign 0.91
-            xsize 108
-            ysize 108
+    # Pixel iPhone, centred on the old 108x108 slot (centre 1839, 939).
+    # The art is 114x150 with padding; the drawn phone is 84x126. The hit
+    # target is 90x132 around that phone, clear of the dialogue box and the
+    # quick menu.
+    if _hud_on:
+        $ _btn_theme = "night" if store.lc_dialogue_theme == "night" else "day"
+        $ _btn_state = "hover" if hud_hovered else "idle"
+        add Transform("gui/phone/sweetheart/phone_btn_%s_%s.png" % (_btn_theme, _btn_state), nearest=True):
+            xpos 1785
+            ypos 858
+            xysize (114, 150)
 
-            if hud_hovered:
-                add "gui/phone/icon_glow.svg":
-                    xysize (106, 106)
+        button:
+            style "lc_sw_hit"
+            xpos 1794
+            ypos 873
+            xysize (90, 132)
+            action Show("phone_screen")
+            hovered SetScreenVariable("hud_hovered", True)
+            unhovered SetScreenVariable("hud_hovered", False)
+
+        if phone_total_unread() > 0:
+            $ _badge = phone_unread_badge_label()
+            $ _badge_w = 39 if len(_badge) <= 1 else (18 + 15 * len(_badge))
+            fixed:
+                xpos (1893 - _badge_w)
+                ypos (861 if hud_hovered else 864)
+                xysize (_badge_w, 39)
+                add Transform("gui/phone/sweetheart/badge_%s.png" % _btn_theme, nearest=True, xysize=(_badge_w, 39))
+                text "[_badge]":
+                    style "lc_sw_pixel_bold"
+                    color "#faf4e8"
                     xalign 0.5
-                    yalign 0.5
-
-                add "gui/phone/icons/phone.png":
-                    xysize (84, 84)
-                    xalign 0.5
-                    yalign 0.5
-            else:
-                add "gui/phone/icons/phone.png":
-                    xysize (74, 74)
-                    xalign 0.5
-                    yalign 0.5
-                    alpha 0.94
-
-            button:
-                xfill True
-                yfill True
-                background None
-                hover_background None
-                action Show("phone_screen")
-                hovered SetScreenVariable("hud_hovered", True)
-                unhovered SetScreenVariable("hud_hovered", False)
-
-            if phone_total_unread() > 0:
-                fixed:
-                    xpos 61
-                    ypos 1
-                    xsize 42
-                    ysize 32
-
-                    add "gui/phone/unread_badge.svg"
-
-                    text "[phone_unread_badge_label()]":
-                        size 12
-                        color "#ffffff"
-                        bold True
-                        xalign 0.5
-                        yalign 0.5
+                    yalign 0.55
 
 
 screen phone_notification_banner():
@@ -160,7 +147,7 @@ screen phone_first_use_tutorial():
             spacing 16
             xfill True
 
-            add "gui/phone/icons/phone.png" xysize (92, 92) xalign 0.5
+            add Transform("gui/phone/sweetheart/phone_btn_day_idle.png", nearest=True) xysize (114, 150) xalign 0.5
             text "PHONE UNLOCKED" size 31 color "#1c1c1e" bold True xalign 0.5
             text "Messages, photos, purchases, deliveries, and other updates can appear on [player_name]'s phone as the story progresses." size 20 color "#3a3a3c" text_align 0.5 xalign 0.5 line_spacing 5
             text "New activity can appear as a notification at the top of the screen. The badge on the Phone shows how many unread messages are waiting." size 18 color "#8e8e93" text_align 0.5 xalign 0.5 line_spacing 4

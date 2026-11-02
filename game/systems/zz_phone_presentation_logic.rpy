@@ -7,14 +7,14 @@ init python:
     PHONE_NOTIFICATION_TITLE_MAX = 32
 
     PHONE_APP_ICON_PATHS = {
-        "Phone": "gui/phone/icons/phone.png",
-        "Messages": "gui/phone/icons/messages.png",
-        "Photos": "gui/phone/icons/photos.png",
-        "Shop": "gui/phone/icons/shop.png",
-        "Online Shop": "gui/phone/icons/shop.png",
-        "Delivery": "gui/phone/icons/delivery.png",
-        "Orders": "gui/phone/icons/delivery.png",
-        "Wallet": "gui/phone/icons/wallet.png",
+        "Phone": "gui/phone/sweetheart/icon_messages.png",
+        "Messages": "gui/phone/sweetheart/icon_messages.png",
+        "Photos": "gui/phone/sweetheart/icon_photos.png",
+        "Shop": "gui/phone/sweetheart/icon_shop.png",
+        "Online Shop": "gui/phone/sweetheart/icon_shop.png",
+        "Delivery": "gui/phone/sweetheart/icon_delivery.png",
+        "Orders": "gui/phone/sweetheart/icon_delivery.png",
+        "Wallet": "gui/phone/sweetheart/icon_wallet.png",
     }
 
     def phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX):
@@ -69,13 +69,14 @@ init python:
         renpy.restart_interaction()
         return None
 
-    def phone_queue_notification(app, title, body, kind="message", thread_id=None):
+    def phone_queue_notification(app, title, body, kind="message", thread_id=None, sender=None):
         item = {
             "app": app,
             "title": phone_notification_preview(title, PHONE_NOTIFICATION_TITLE_MAX),
             "body": phone_notification_preview(body, PHONE_NOTIFICATION_BODY_MAX),
             "kind": kind,
             "thread_id": thread_id,
+            "sender": sender or "",
         }
         renpy.store.phone_notification_queue.append(item)
         if renpy.store.phone_notification_current is None:
@@ -171,7 +172,17 @@ init python:
             else:
                 preview = text.strip() if text.strip() else "New message"
                 kind = "message"
-            phone_queue_notification(notification_app, title, preview, kind=kind, thread_id=thread_id)
+            sender_name = ""
+            if sender_id not in (None, "player", "system"):
+                sender_name = phone_sender_label(sender_id)
+            phone_queue_notification(
+                notification_app,
+                title,
+                preview,
+                kind=kind,
+                thread_id=thread_id,
+                sender=sender_name,
+            )
 
         return added
 
