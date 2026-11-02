@@ -28,6 +28,13 @@ class ThemeTests(unittest.TestCase):
     def test_drive_to_dinner_is_day(self):
         self.assertEqual(infer_dialogue_theme(["cg ch01_drive_to_dinner"]), "day")
 
+    def test_night_cgs_without_a_night_token(self):
+        for name in ("cg ch01_walk_back_01", "cg ch01_trip_catch_aftermath",
+                     "cg ch01_drive_back_seating", "cg ch01_julian_carry",
+                     "cg ch01_carry_dress_shift", "cg ch01_d4_exhib_terrace_01"):
+            self.assertEqual(infer_dialogue_theme([name]), "night", name)
+        self.assertEqual(infer_dialogue_theme(["cg ch01_towel_shift_01"]), "day")
+
     def test_manual_override_and_empty_fallback(self):
         self.assertEqual(infer_dialogue_theme(["bg ch01_pool_day"], manual="night"), "night")
         self.assertEqual(infer_dialogue_theme([], fallback="night"), "night")
