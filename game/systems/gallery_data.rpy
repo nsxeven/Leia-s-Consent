@@ -39,7 +39,6 @@ init -2 python:
     # Images that are still Composite text placeholders (final art pending).
     GALLERY_PLACEHOLDER_IMAGES = set([
         # Day 1
-        "ch01_drive_back_seating", "ch01_carry_dress_shift",
         "ch01_night_pool_attention", "ch01_movie_cuddle_blanket", "ch01_movie_no_blanket",
         "ch01_lounge_micro_test",
         "ch01_dream_towel_replay", "ch01_dream_towel_shift", "ch01_dream_towel_curtain",
@@ -129,12 +128,18 @@ init -2 python:
         "A stranger, a photo, and a spilled drink.",
         [("ch01_dinner_photo_ask", "The photo ask"), ("ch01_dinner_spill_01", "Impact"), ("ch01_dinner_spill_02", "Aftermath"),
          ("ch01_dinner_spill_03", "The glance"), ("ch01_dinner_spill_04", "A second glance")])
+    gallery_row("d1_sticky_bra", "ch01_d1", "Giving up",
+        "Leia leans in to whisper that her sticky bra is giving up.",
+        ["ch01_dinner_sticky_bra"])
     gallery_row("d1_dinner_restroom", "ch01_d1", "Back from the restroom",
         "On her way back from the restroom, another man slows in the corridor.",
         [("ch01_dinner_restroom_return_01", "Return 1"), ("ch01_dinner_restroom_return_02", "Return 2")])
+    gallery_row("d1_walk_back", "ch01_d1", "Walk to the shop",
+        "Leia hangs on Ryan's arm, then Maya calls.",
+        [("ch01_walk_back_01", "On my arm"), ("ch01_walk_back_call", "Maya calling")])
     gallery_row("d1_trip_catch", "ch01_d1", "The catch",
         "Leia's heel catches on the path and Julian catches her.",
-        ["ch01_trip_catch"])
+        [("ch01_trip_catch", "The catch"), ("ch01_trip_catch_followup", "Realising"), ("ch01_trip_catch_aftermath", "Aftermath")])
     gallery_row("d1_drive_back", "ch01_d1", "Drive back",
         "The ride home: Julian up front, Leia in the back seat.",
         ["ch01_drive_back_seating"])

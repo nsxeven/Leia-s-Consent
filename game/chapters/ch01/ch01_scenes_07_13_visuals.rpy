@@ -43,27 +43,25 @@ image cg ch01_dinner_restroom_return_02 = At("images/cg/ch01/CH1D1_CG_DinnerRest
 image cg ch01_dinner_return_braless = "cg ch01_dinner_restroom_return_01"
 image cg ch01_dinner_stranger_compliment = "cg ch01_dinner_restroom_return_01"
 
-# Actual Day 1 fall sequence. Preserve 01 -> 02 ordering and Ryan POV.
+# Dinner: Leia leans in to tell Ryan her sticky bra is giving up.
+image cg ch01_dinner_sticky_bra = At("images/cg/ch01/CH1D1_CG_StickyBraConfession_01.webp", prologue_fullscreen)
+
+# Walk to the shop: 01 = Leia leans in on Ryan's arm (Julian ahead),
+# then Maya's incoming call on Ryan's phone.
+image cg ch01_walk_back_01 = At("images/cg/ch01/CH1D1_CG_StreetWalkBack_01.webp", prologue_fullscreen)
+image cg ch01_walk_back_call = At("images/cg/ch01/CH1D1_CG_StreetWalkBack_02.webp", prologue_fullscreen)
+
+# Actual Day 1 fall sequence. Preserve 01 -> 02 -> 03 ordering and Ryan POV.
 image cg ch01_trip_catch = At("images/cg/ch01/CH1D1_CG_StreetWalkFall_01.webp", prologue_fullscreen)
 image cg ch01_trip_catch_followup = At("images/cg/ch01/CH1D1_CG_StreetWalkFall_02.webp", prologue_fullscreen)
+image cg ch01_trip_catch_aftermath = At("images/cg/ch01/CH1D1_CG_StreetWalkFall_03.webp", prologue_fullscreen)
 
-image cg ch01_drive_back_seating = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#1d293b"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DRIVE-02 — RETURN CAR SEATING\nRYAN DRIVING / JULIAN FRONT / LEIA LYING IN REAR", size=52, color="#ffffff"),
-)
+# Drive back to the villa: Leia lying in the back seat.
+image cg ch01_drive_back_seating = At("images/cg/ch01/CH1D1_CG_DriveToVilla_01.webp", prologue_fullscreen)
 
-image cg ch01_julian_carry = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#31384a"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-CARRY-01 — JULIAN PRINCESS-CARRIES LEIA\nRYAN AHEAD WITH KEYS", size=52, color="#ffffff"),
-)
-
-image cg ch01_carry_dress_shift = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#403747"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-CARRY-02 — DRESS NECKLINE SHIFTS\nJULIAN'S HANDS OCCUPIED / RYAN'S VIEW OBSCURED\nAMBIGUOUS VIEWING ANGLE", size=52, color="#ffffff"),
-)
+# Carry from the car: 01 = Julian lifts Leia out, 02 = the dress-shift beat.
+image cg ch01_julian_carry = At("images/cg/ch01/CH1D1_CG_Carry_01.webp", prologue_fullscreen)
+image cg ch01_carry_dress_shift = At("images/cg/ch01/CH1D1_CG_Carry_02.webp", prologue_fullscreen)
 
 
 # Dinner stranger — fixed-coordinate production layers.
