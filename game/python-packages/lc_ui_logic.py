@@ -43,6 +43,7 @@ NIGHT_EXCEPTIONS = frozenset({
     "ch01_trip_catch_aftermath",
     "ch01_drive_back_seating",
     "ch01_julian_carry",
+    "ch01_carry_walk",
     "ch01_carry_dress_shift",
     "ch01_lounge_micro_test",
     # Day 2: sunset pool, game night, bedroom finales

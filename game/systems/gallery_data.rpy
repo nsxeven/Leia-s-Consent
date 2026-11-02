@@ -145,7 +145,7 @@ init -2 python:
         ["ch01_drive_back_seating"])
     gallery_row("d1_julian_carry", "ch01_d1", "Carried home",
         "Leia is carried inside.",
-        [("ch01_julian_carry", "The carry"), ("ch01_carry_dress_shift", "Dress shift")])
+        [("ch01_julian_carry", "The carry"), ("ch01_carry_walk", "To the door"), ("ch01_carry_dress_shift", "Dress shift")])
     gallery_row("d1_night_pool", "ch01_d1", "Night pool",
         "Julian's eyes drift toward Leia by the pool at night.",
         ["ch01_night_pool_attention"])
