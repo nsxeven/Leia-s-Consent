@@ -224,7 +224,9 @@ label ch01_scene_09_dinner:
     friend "You have approximately four hundred photos from today."
     gf "Of food and the pool. I want one of us."
     mc "There are three of us. That's what selfies are for."
-    hide ryan
+    # Ryan steps out of frame before the stranger enters from the left.
+    hide ryan_casual
+    with sprite_enter_exit
     gf "No. I want one where nobody's arm looks six feet long."
 
     "She stood and glanced around for someone to ask."
@@ -846,6 +848,9 @@ label ch01_scene_13_back_at_villa:
 
     scene bg ch01_villa_night
     with fade
+    # Leia is asleep in the car and Julian has no sprite yet; Ryan stays on screen.
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "When I parked, [girlfriend_name] didn't move."
     "She was still curled across the back seat, completely asleep."
@@ -895,6 +900,8 @@ label ch01_scene_13_back_at_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     $ ch01_carry_brush_text = format_choice("ch01_carry_brush", "We're almost inside. Just keep going.")
     $ ch01_carry_lookaway_text = format_choice("ch01_carry_lookaway", "Then keep your eyes off her and bring her inside.")
@@ -967,8 +974,13 @@ label ch01_scene_13_back_at_villa:
 
     scene bg ch01_villa_living_night
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "[friend_name] lowered her onto the sofa. [girlfriend_name] sat there blinking for a second while her brain caught up with the room."
+
+    show leia_purple_dress_no_bra flustered at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     friend "Your girlfriend is a logistical problem."
     mc "You volunteered."

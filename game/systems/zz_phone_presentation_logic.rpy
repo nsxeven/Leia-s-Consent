@@ -69,17 +69,57 @@ init python:
         renpy.restart_interaction()
         return None
 
-    def phone_queue_notification(app, title, body, kind="message"):
+    def phone_queue_notification(app, title, body, kind="message", thread_id=None):
         item = {
             "app": app,
             "title": phone_notification_preview(title, PHONE_NOTIFICATION_TITLE_MAX),
             "body": phone_notification_preview(body, PHONE_NOTIFICATION_BODY_MAX),
             "kind": kind,
+            "thread_id": thread_id,
         }
         renpy.store.phone_notification_queue.append(item)
         if renpy.store.phone_notification_current is None:
             phone_show_next_notification()
         return None
+
+    # Notification deep link: (phone_app, phone_thread) read once by the
+    # phone_screen defaults the next time the phone opens.
+    PHONE_NOTIFICATION_APP_SCREENS = {
+        "Messages": "messages",
+        "Photos": "photos",
+        "Shop": "shop",
+        "Online Shop": "shop",
+        "Delivery": "delivery",
+        "Orders": "delivery",
+        "Wallet": "wallet",
+    }
+
+    def lc_phone_open_from_notification(item):
+        """Open the phone straight on the notification's app or chat thread."""
+        item = item or {}
+        if not getattr(renpy.store, "phone_unlocked", False):
+            phone_finish_notification()
+            return None
+        thread_id = item.get("thread_id")
+        if thread_id:
+            phone_mark_thread_read(thread_id)
+            target = ("thread", thread_id)
+        else:
+            target = (PHONE_NOTIFICATION_APP_SCREENS.get((item.get("app") or "").strip(), "home"), None)
+        renpy.store.lc_phone_deep_link = target
+        # Drop the rest of the banner queue's current card; the next one still shows.
+        phone_finish_notification()
+        renpy.show_screen("phone_screen")
+        renpy.restart_interaction()
+        return None
+
+    def lc_phone_link_app():
+        link = getattr(renpy.store, "lc_phone_deep_link", None)
+        return link[0] if link else "home"
+
+    def lc_phone_link_thread():
+        link = getattr(renpy.store, "lc_phone_deep_link", None)
+        return link[1] if link else None
 
     def phone_show_next_notification():
         if renpy.store.phone_notification_current is not None:
@@ -131,7 +171,7 @@ init python:
             else:
                 preview = text.strip() if text.strip() else "New message"
                 kind = "message"
-            phone_queue_notification(notification_app, title, preview, kind=kind)
+            phone_queue_notification(notification_app, title, preview, kind=kind, thread_id=thread_id)
 
         return added
 

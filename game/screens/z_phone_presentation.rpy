@@ -3,6 +3,7 @@
 default phone_unlocked = False
 default phone_hud_enabled = True
 default phone_notification_current = None
+default lc_phone_deep_link = None
 default phone_notification_queue = []
 default persistent.phone_tutorial_seen = False
 
