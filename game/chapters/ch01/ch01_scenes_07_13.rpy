@@ -250,7 +250,8 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_spill_01
     with dissolve
 
-    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them."
+    # Impact beat: screen shake on the collision line (same as the prologue dare).
+    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them." with hpunch
 
     # The impact beat is over. Return to the restaurant for the immediate
     # apology using the post-spill wet sprite state.
