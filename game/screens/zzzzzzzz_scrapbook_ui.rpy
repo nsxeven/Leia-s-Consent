@@ -86,6 +86,14 @@ init python:
         config.always_shown_screens.append("quick_menu")
 
 
+    def lc_phone_covers_scene():
+        """True while the handset (or a full-screen photo from it) is open."""
+        for name in ("phone_screen", "lc_phone_status", "lc_phone_settings", "lc_phone_photo_viewer"):
+            if renpy.get_screen(name):
+                return True
+        return False
+
+
     def lc_name_kind(who):
         if not who:
             return "neutral"
@@ -403,6 +411,7 @@ screen say(who, what):
     # from lc_dialogue_theme either way.
     $ theme = store.lc_dialogue_theme if store.lc_dialogue_theme in ("day", "night") else "day"
     $ cg = lc_cg_on_screen()
+    $ _phone_up = lc_phone_covers_scene()
     $ box = ("lc_say_cg_%s" % theme) if cg else ("gui/scrapbook/say_%s.png" % theme)
     $ kind = lc_name_kind(who)
     $ ink = "#ece2f2" if theme == "night" else "#34242c"
@@ -410,7 +419,9 @@ screen say(who, what):
 
     window:
         id "window"
-        xpos 132
+        # Park the box off-screen while the phone is open. The say ids have to
+        # stay in the tree or Ren'Py will not advance dialogue.
+        xpos (-2400 if _phone_up else 132)
         ypos 792
         xsize 1656
         ysize 222
@@ -450,10 +461,11 @@ screen say(who, what):
             line_spacing 8
             outlines ([(2, halo, 0, 0)] if cg else [])
 
-        add "gui/scrapbook/tape_corner.png" xpos -18 ypos -18
-        add "gui/scrapbook/tape_corner_flip.png" xpos 1600 ypos -18
+        if not _phone_up:
+            add "gui/scrapbook/tape_corner.png" xpos -18 ypos -18
+            add "gui/scrapbook/tape_corner_flip.png" xpos 1600 ypos -18
 
-    if not renpy.variant("small") and not cg:
+    if not _phone_up and not renpy.variant("small") and not cg:
         add SideImage() xalign 0.0 yalign 1.0
 
 
@@ -576,7 +588,7 @@ screen choice(items):
 screen quick_menu():
     zorder 100
 
-    if quick_menu and not lc_journal_menu_open():
+    if quick_menu and not lc_journal_menu_open() and not lc_phone_covers_scene():
         # Same layout under the box for sprites and CGs; over a CG the keys
         # are ghosted so the art stays clear.
         $ ghost = lc_cg_on_screen()
@@ -605,7 +617,7 @@ screen quick_menu():
     variant "touch"
     zorder 100
 
-    if quick_menu and not lc_journal_menu_open():
+    if quick_menu and not lc_journal_menu_open() and not lc_phone_covers_scene():
         hbox:
             xalign 0.5
             ypos 1020
@@ -1119,7 +1131,7 @@ screen phone_notification_overlay():
             padding (16, 12)
             hbox:
                 spacing 12
-                add "gui/phone/icons/messages.png" xysize (42, 42) yalign 0.5
+                add Transform("gui/phone/sweetheart/icon_messages.png", nearest=True) yalign 0.5
                 vbox:
                     spacing 2
                     text _phone_toast.get("title", "Phone") size 24 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
@@ -1130,25 +1142,57 @@ screen phone_notification_overlay():
 screen phone_notification_banner():
     zorder 620
     if phone_notification_current:
+        $ _note = phone_notification_current
+        $ _theme = lc_phone_theme()
+        $ _c = lc_phone_palette(_theme)
+        $ _sender = (_note.get("sender") or "").strip()
+        $ _thread = (_note.get("title") or "").strip()
+        $ _show_thread = bool(_sender and _thread and _sender.lower() != _thread.lower())
         fixed:
             at phone_notification_slide
             xalign 0.5
-            yalign 0.0
-            xsize 700
-            ysize 116
-            # Tap the banner to jump straight into that app/thread, like a phone.
+            ypos 0
+            xysize (696, 144)
+            # Tap anywhere on the banner to open that app or thread.
             button:
-                background Frame("gui/scrapbook/frame_paper.png", 9, 9)
-                hover_background Frame("gui/scrapbook/frame_paper_hi.png", 9, 9)
-                padding (18, 12)
+                style "lc_sw_hit"
                 xfill True
                 yfill True
-                action Function(lc_phone_open_from_notification, phone_notification_current)
-                vbox:
-                    spacing 2
-                    text phone_notification_current["app"] size 18 color "#cc0066" font "fonts/Silkscreen-Bold.ttf"
-                    text phone_notification_current["title"] size 28 color "#3b2a30" font "fonts/PatrickHand-Regular.ttf"
-                    text phone_notification_current["body"] size 24 color "#7a6266" font "fonts/Caveat[wght].ttf"
+                background Transform(lc_phone_art("banner_" + _theme), nearest=True)
+                hover_background Transform(lc_phone_art("banner_" + _theme), nearest=True)
+                action Function(lc_phone_open_from_notification, _note)
+                add Transform(lc_phone_art("icon_messages"), nearest=True):
+                    xpos 30
+                    ypos 33
+                text (_note.get("app") or "Messages").upper():
+                    style "lc_sw_pixel"
+                    color _c["mut"]
+                    xpos 120
+                    ypos 12
+                text "NOW":
+                    style "lc_sw_pixel_bold"
+                    color _c["acc"]
+                    xpos 660
+                    xanchor 1.0
+                    ypos 12
+                hbox:
+                    xpos 120
+                    ypos 40
+                    spacing 12
+                    text (_sender or _thread or "MESSAGE").upper():
+                        style "lc_sw_pixel_bold"
+                        color _c["txt"]
+                    if _show_thread:
+                        text ("IN " + _thread.upper()):
+                            style "lc_sw_pixel"
+                            color _c["mut"]
+                text lc_phone_one_line(_note.get("body") or "", 42):
+                    style "lc_sw_hand"
+                    size 30
+                    color _c["txt"]
+                    xpos 120
+                    ypos 78
+                    xmaximum 540
         timer 3.75 action Function(phone_finish_notification)
 
 
@@ -1265,6 +1309,8 @@ label splashscreen:
         import os
         if os.environ.get("LC_UI_SHOTS") == "1":
             renpy.jump("lc_ui_shot_tour")
+        if os.environ.get("LC_PHONE_SHOTS") == "1":
+            renpy.jump("lc_phone_shot_tour")
     return
 
 
