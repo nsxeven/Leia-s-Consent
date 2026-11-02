@@ -883,6 +883,9 @@ label ch01_scene_13_back_at_villa:
     mc "Just don't drop her."
     friend "Open the door."
 
+    scene cg ch01_carry_walk
+    with dissolve
+
     "I walked ahead with the keys while [friend_name] followed more slowly."
     "Without the sticky bra beneath her dress, the neckline was less secure than it had been when we left the villa."
 

@@ -59,9 +59,11 @@ image cg ch01_trip_catch_aftermath = At("images/cg/ch01/CH1D1_CG_StreetWalkFall_
 # Drive back to the villa: Leia lying in the back seat.
 image cg ch01_drive_back_seating = At("images/cg/ch01/CH1D1_CG_DriveToVilla_01.webp", prologue_fullscreen)
 
-# Carry from the car: 01 = Julian lifts Leia out, 02 = the dress-shift beat.
+# Carry from the car: 01 = Julian lifts Leia out, 02 = walking her to the door
+# (dress still in place), 03 = the dress slips, from Julian's view.
 image cg ch01_julian_carry = At("images/cg/ch01/CH1D1_CG_Carry_01.webp", prologue_fullscreen)
-image cg ch01_carry_dress_shift = At("images/cg/ch01/CH1D1_CG_Carry_02.webp", prologue_fullscreen)
+image cg ch01_carry_walk = At("images/cg/ch01/CH1D1_CG_Carry_02.webp", prologue_fullscreen)
+image cg ch01_carry_dress_shift = At("images/cg/ch01/CH1D1_CG_Carry_03.webp", prologue_fullscreen)
 
 
 # Dinner stranger — fixed-coordinate production layers.
