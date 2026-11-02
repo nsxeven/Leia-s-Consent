@@ -7,6 +7,11 @@ default lc_ui_shooting = False
 default lc_dialogue_theme_manual = None
 default lc_dialogue_theme_scene = ()
 
+# See-through dialogue paper used over full-screen CGs. Same art and size as the
+# sprite box; only the opacity differs (matches the old CG strip opacity).
+image lc_say_cg_day = Transform("gui/scrapbook/say_day.png", alpha=0.74)
+image lc_say_cg_night = Transform("gui/scrapbook/say_night.png", alpha=0.82)
+
 init python:
     import lc_ui_logic
 
@@ -63,6 +68,18 @@ init python:
 
     if lc_refresh_dialogue_theme not in config.start_interact_callbacks:
         config.start_interact_callbacks.append(lc_refresh_dialogue_theme)
+
+
+    def lc_cg_on_screen():
+        """True while a full-screen CG (`cg` tag) is on the master layer.
+
+        Drives the see-through dialogue box for the whole game, so scenes do
+        not need enter_cinematic_mode() for the box to match the art.
+        """
+        try:
+            return "cg" in renpy.get_showing_tags("master")
+        except Exception:
+            return bool(store.lc_cinematic_mode)
 
     # Keep the quick menu up even when an interaction suppresses ordinary overlays.
     if "quick_menu" not in config.always_shown_screens:
@@ -380,19 +397,23 @@ screen lc_keycap_button(label, action, icon=None, selected_on=False, width=None,
 ## Say ########################################################################
 
 screen say(who, what):
+    # One box size for the whole game. A full-screen CG on screen (any `cg`
+    # image on the master layer) switches to the see-through variant of the
+    # same box; sprites/backgrounds use the opaque one. Day/night paper comes
+    # from lc_dialogue_theme either way.
     $ theme = store.lc_dialogue_theme if store.lc_dialogue_theme in ("day", "night") else "day"
-    $ cg = store.lc_cinematic_mode
+    $ cg = lc_cg_on_screen()
+    $ box = ("lc_say_cg_%s" % theme) if cg else ("gui/scrapbook/say_%s.png" % theme)
     $ kind = lc_name_kind(who)
-    $ box = "gui/scrapbook/say_cg_%s.png" % theme if cg else "gui/scrapbook/say_%s.png" % theme
     $ ink = "#ece2f2" if theme == "night" else "#34242c"
     $ halo = "#1e1628c0" if theme == "night" else "#efe4cdc0"
 
     window:
         id "window"
-        xpos (120 if cg else 132)
-        ypos (942 if cg else 792)
-        xsize (1680 if cg else 1656)
-        ysize (108 if cg else 222)
+        xpos 132
+        ypos 792
+        xsize 1656
+        ysize 222
         background box
         padding (0, 0)
 
@@ -400,9 +421,9 @@ screen say(who, what):
             window:
                 id "namebox"
                 style "namebox"
-                xpos (60 if cg else 54)
-                ypos (-30 if cg else -42)
-                ysize (42 if cg else 54)
+                xpos 54
+                ypos -42
+                ysize 54
                 background Frame("gui/scrapbook/name_%s.png" % kind, 9, 9)
                 padding (18, 4, 16, 4)
 
@@ -413,28 +434,24 @@ screen say(who, what):
                         add "gui/scrapbook/icon_heart.png" yalign 0.5
                     text who id "who":
                         font "fonts/Silkscreen-Bold.ttf"
-                        size (21 if cg else 24)
+                        size 24
                         color lc_name_color(kind)
                         yalign 0.5
 
         text what id "what" at lc_dialogue_text_fade:
             xanchor 0.0
-            xpos (72 if cg else 84)
-            ypos (16 if cg else 28)
-            xsize (1480 if cg else 1500)
-            ysize (78 if cg else 176)
+            xpos 84
+            ypos 28
+            xsize 1500
+            ysize 176
             font "fonts/PatrickHand-Regular.ttf"
-            size (34 if cg else 42)
+            size 42
             color ink
-            line_spacing (2 if cg else 8)
+            line_spacing 8
             outlines ([(2, halo, 0, 0)] if cg else [])
 
-        if cg:
-            add "gui/scrapbook/tape_h.png" xpos -8 ypos -16
-            add "gui/scrapbook/tape_h.png" xpos 1600 ypos -16
-        else:
-            add "gui/scrapbook/tape_corner.png" xpos -18 ypos -18
-            add "gui/scrapbook/tape_corner_flip.png" xpos 1600 ypos -18
+        add "gui/scrapbook/tape_corner.png" xpos -18 ypos -18
+        add "gui/scrapbook/tape_corner_flip.png" xpos 1600 ypos -18
 
     if not renpy.variant("small") and not cg:
         add SideImage() xalign 0.0 yalign 1.0
@@ -485,62 +502,73 @@ screen choice(items):
             ysize 48
             text "WHAT DO I SAY?" size 24 color "#5a4030" font "fonts/Silkscreen-Bold.ttf" yalign 0.5
 
+    # Starts 24px higher with 24px of top padding inside, so the hover tape on
+    # the first option is not clipped. Options grow to fit: minimum height is
+    # three lines of choice text, and longer captions/chips extend the card.
     viewport:
         xpos (80 if dev else 100)
-        ypos (70 if dev else 150)
+        ypos (46 if dev else 126)
         xsize (1500 if dev else 980)
-        ysize (700 if dev else 620)
+        ysize (1000 if dev else 920)
         scrollbars ("vertical" if dev else None)
         mousewheel True
         draggable dev
 
-        vbox:
-            spacing (10 if dev else 16)
-            for i, item in enumerate(items):
-                if i < 9:
-                    key "K_%d" % (i + 1) action lc_choice_actions(item)
-                button:
-                    action lc_choice_actions(item)
-                    sensitive item.action.get_sensitive()
-                    xsize (1460 if dev else 820)
-                    ysize (90 if dev else 132)
-                    yfill False
-                    background Frame(("gui/scrapbook/frame_paper.png" if dev else "gui/scrapbook/frame_choice.png"), (9 if dev else 18), 12, 12, 12)
-                    hover_background Frame(("gui/scrapbook/frame_paper_hi.png" if dev else "gui/scrapbook/frame_choice_hi.png"), (9 if dev else 18), 12, 12, 12)
-                    padding (18, 12, 18, 12)
-                    at lc_choice_slide
-                    hovered Function(lc_ui_play, "tick")
+        frame:
+            background None
+            padding (0, 24, 0, 12)
+            vbox:
+                spacing (10 if dev else 16)
+                for i, item in enumerate(items):
+                    if i < 9:
+                        key "K_%d" % (i + 1) action lc_choice_actions(item)
+                    button:
+                        action lc_choice_actions(item)
+                        sensitive item.action.get_sensitive()
+                        xsize (1460 if dev else 820)
+                        yminimum (90 if dev else 180)
+                        yfill False
+                        background Frame(("gui/scrapbook/frame_paper.png" if dev else "gui/scrapbook/frame_choice.png"), (9 if dev else 18), 12, 12, 12)
+                        hover_background Frame(("gui/scrapbook/frame_paper_hi.png" if dev else "gui/scrapbook/frame_choice_hi.png"), (9 if dev else 18), 12, 12, 12)
+                        padding (18, 12, 18, 14)
+                        at lc_choice_slide
+                        hovered Function(lc_ui_play, "tick")
 
-                    hbox:
-                        spacing 14
-                        frame:
-                            xysize (42, 42)
-                            background Frame("gui/scrapbook/frame_paper.png", 9, 9)
-                            text str(i + 1) xalign 0.5 yalign 0.5 size 24 color "#7a6266" font "fonts/Silkscreen-Bold.ttf"
-                        vbox:
-                            spacing 6
-                            xsize (1360 if dev else 700)
-                            if dev:
-                                text item.caption:
-                                    size 28
-                                    color "#34242c"
-                                    font "fonts/PatrickHand-Regular.ttf"
-                                    xalign 0.0
-                            else:
-                                $ line, chips = lc_ui_logic.parse_choice_caption(item.caption)
-                                text line:
-                                    size 40
-                                    color "#34242c"
-                                    font "fonts/PatrickHand-Regular.ttf"
-                                    xalign 0.0
-                                if chips:
-                                    hbox:
-                                        spacing 8
-                                        for chip_name, chip_amount, chip_exact in chips:
-                                            use lc_chip(chip_name, chip_amount, chip_exact)
+                        # Two children would be wrapped in a full-height Fixed;
+                        # fit_first sizes the card to the text row instead.
+                        fixed:
+                            fit_first True
+                            hbox:
+                                spacing 14
+                                frame:
+                                    xysize (42, 42)
+                                    background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+                                    text str(i + 1) xalign 0.5 yalign 0.5 size 24 color "#7a6266" font "fonts/Silkscreen-Bold.ttf"
+                                vbox:
+                                    spacing 6
+                                    xsize (1360 if dev else 700)
+                                    if dev:
+                                        text item.caption:
+                                            size 28
+                                            color "#34242c"
+                                            font "fonts/PatrickHand-Regular.ttf"
+                                            xalign 0.0
+                                    else:
+                                        $ line, chips = lc_ui_logic.parse_choice_caption(item.caption)
+                                        text line:
+                                            size 40
+                                            color "#34242c"
+                                            font "fonts/PatrickHand-Regular.ttf"
+                                            xalign 0.0
+                                        if chips:
+                                            hbox:
+                                                box_wrap True
+                                                spacing 8
+                                                for chip_name, chip_amount, chip_exact in chips:
+                                                    use lc_chip(chip_name, chip_amount, chip_exact)
 
-                    if not dev:
-                        add "gui/scrapbook/tape_corner_pink_flip.png" xpos 760 ypos -20 at lc_only_hover
+                            if not dev:
+                                add "gui/scrapbook/tape_corner_pink_flip.png" xpos 760 ypos -20 at lc_only_hover
 
 
 ## Quick menu #################################################################
@@ -549,41 +577,28 @@ screen quick_menu():
     zorder 100
 
     if quick_menu and not lc_journal_menu_open():
-        if store.lc_cinematic_mode:
-            hbox:
-                xpos 1776
-                xanchor 1.0
-                ypos 888
-                spacing 9
-                use lc_keycap_button("", Rollback(), "gui/scrapbook/icon_back.png", width=42, ghost=True)
-                use lc_keycap_button("", ShowMenu("history"), "gui/scrapbook/icon_log.png", width=42, ghost=True)
-                use lc_keycap_button("", Skip(), "gui/scrapbook/icon_skip.png", width=42, ghost=True)
-                use lc_keycap_button("", Preference("auto-forward", "toggle"), "gui/scrapbook/icon_auto.png", width=42, selected_on=preferences.afm_enable, ghost=True)
-                use lc_keycap_button("", ShowMenu("save"), "gui/scrapbook/icon_save.png", width=42, ghost=True)
-                use lc_keycap_button("", QuickSave(), "gui/scrapbook/icon_qsave.png", width=42, ghost=True)
-                use lc_keycap_button("", QuickLoad(), "gui/scrapbook/icon_qload.png", width=42, ghost=True)
-                use lc_keycap_button("", ShowMenu("preferences"), "gui/scrapbook/icon_prefs.png", width=42, ghost=True)
-                use lc_keycap_button("", HideInterface(), "gui/scrapbook/icon_hide.png", width=42, ghost=True)
-        else:
-            hbox:
-                xpos 132
-                ypos 1040
-                spacing 0
-                use lc_keycap_button(lc_day_caption(), NullAction())
+        # Same layout under the box for sprites and CGs; over a CG the keys
+        # are ghosted so the art stays clear.
+        $ ghost = lc_cg_on_screen()
+        hbox:
+            xpos 132
+            ypos 1040
+            spacing 0
+            use lc_keycap_button(lc_day_caption(), NullAction(), ghost=ghost)
 
-            hbox:
-                xpos 1788
-                xanchor 1.0
-                ypos 1040
-                spacing 8
-                use lc_keycap_button("BACK", Rollback(), "gui/scrapbook/icon_back.png")
-                use lc_keycap_button("LOG", ShowMenu("history"), "gui/scrapbook/icon_log.png")
-                use lc_keycap_button("SKIP", Skip(), "gui/scrapbook/icon_skip.png")
-                use lc_keycap_button("AUTO", Preference("auto-forward", "toggle"), "gui/scrapbook/icon_auto.png", selected_on=preferences.afm_enable)
-                use lc_keycap_button("SAVE", ShowMenu("save"), "gui/scrapbook/icon_save.png")
-                use lc_keycap_button("Q.SAVE", QuickSave(), "gui/scrapbook/icon_qsave.png")
-                use lc_keycap_button("Q.LOAD", QuickLoad(), "gui/scrapbook/icon_qload.png")
-                use lc_keycap_button("PREFS", ShowMenu("preferences"), "gui/scrapbook/icon_prefs.png")
+        hbox:
+            xpos 1788
+            xanchor 1.0
+            ypos 1040
+            spacing 8
+            use lc_keycap_button("BACK", Rollback(), "gui/scrapbook/icon_back.png", ghost=ghost)
+            use lc_keycap_button("LOG", ShowMenu("history"), "gui/scrapbook/icon_log.png", ghost=ghost)
+            use lc_keycap_button("SKIP", Skip(), "gui/scrapbook/icon_skip.png", ghost=ghost)
+            use lc_keycap_button("AUTO", Preference("auto-forward", "toggle"), "gui/scrapbook/icon_auto.png", selected_on=preferences.afm_enable, ghost=ghost)
+            use lc_keycap_button("SAVE", ShowMenu("save"), "gui/scrapbook/icon_save.png", ghost=ghost)
+            use lc_keycap_button("Q.SAVE", QuickSave(), "gui/scrapbook/icon_qsave.png", ghost=ghost)
+            use lc_keycap_button("Q.LOAD", QuickLoad(), "gui/scrapbook/icon_qload.png", ghost=ghost)
+            use lc_keycap_button("PREFS", ShowMenu("preferences"), "gui/scrapbook/icon_prefs.png", ghost=ghost)
 
 
 screen quick_menu():
@@ -1121,11 +1136,14 @@ screen phone_notification_banner():
             yalign 0.0
             xsize 700
             ysize 116
-            frame:
+            # Tap the banner to jump straight into that app/thread, like a phone.
+            button:
                 background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+                hover_background Frame("gui/scrapbook/frame_paper_hi.png", 9, 9)
                 padding (18, 12)
                 xfill True
                 yfill True
+                action Function(lc_phone_open_from_notification, phone_notification_current)
                 vbox:
                     spacing 2
                     text phone_notification_current["app"] size 18 color "#cc0066" font "fonts/Silkscreen-Bold.ttf"

@@ -107,9 +107,6 @@ label ch01_scene_04_pool_arrival:
 
 label ch01_scene_05_photography:
 
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
-
     $ enter_cinematic_mode()
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     if selected_pool_outfit == "pool_bolder":
@@ -406,6 +403,9 @@ label ch01_scene_06_friendship_and_towel:
 
     scene bg ch01_pool_lounge
     with dissolve
+    # Leia is upstairs; Ryan stays on screen by the pool (Julian has no sprite yet).
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     "With [girlfriend_name] upstairs, the villa became unexpectedly quiet."
     "[friend_name] passed me a cold drink and sank back into the lounger."
@@ -502,6 +502,8 @@ label ch01_scene_06_friendship_and_towel:
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
     with dissolve
+    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     $ ch01_pre_towel_stance = chapter_stance("ch01")
 

@@ -183,9 +183,14 @@ screen phone_screen():
     modal True
     zorder 310
 
-    default phone_app = "home"
-    default phone_thread = None
+    # A tapped notification pre-selects its app/thread (single use: cleared
+    # once the screen is actually shown); otherwise the phone opens on Home.
+    default phone_app = lc_phone_link_app()
+    default phone_thread = lc_phone_link_thread()
     default hovered_app = None
+
+    on "show" action SetVariable("lc_phone_deep_link", None)
+    on "replace" action SetVariable("lc_phone_deep_link", None)
 
     key "K_ESCAPE" action Hide("phone_screen")
 

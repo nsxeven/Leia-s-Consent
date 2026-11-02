@@ -96,7 +96,7 @@ transform ch01_stranger_approach_left:
     xpos -0.28
     xanchor 0.5
     yalign 1.0
-    yoffset 180
+    yoffset lc_sprite_yoffset
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
@@ -106,7 +106,7 @@ transform ch01_stranger_collision_close:
     xpos 0.45
     xanchor 0.5
     yalign 1.0
-    yoffset 180
+    yoffset lc_sprite_yoffset
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
@@ -115,7 +115,7 @@ transform ch01_leia_collision_close:
     xpos 0.55
     xanchor 0.5
     yalign 1.0
-    yoffset 180
+    yoffset lc_sprite_yoffset
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
@@ -124,7 +124,7 @@ transform ch01_stranger_collision_reset:
     xpos 0.45
     xanchor 0.5
     yalign 1.0
-    yoffset 180
+    yoffset lc_sprite_yoffset
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
@@ -134,7 +134,7 @@ transform ch01_leia_collision_reset:
     xpos 0.55
     xanchor 0.5
     yalign 1.0
-    yoffset 180
+    yoffset lc_sprite_yoffset
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
@@ -144,7 +144,7 @@ transform ch01_stranger_exit_left:
     xpos 0.22
     xanchor 0.5
     yalign 1.0
-    yoffset 180
+    yoffset lc_sprite_yoffset
     xysize (760, 900)
     fit "contain"
     xzoom 1.0

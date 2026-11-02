@@ -232,7 +232,9 @@ label prologue_start:
     show leia_prologue_party skeptical
     with sprite_change
     gf "Fine. Dare."
-    friend "Kiss [player_name]."
+    # Dare lands: screen shake. AUDIO TODO (parked): record scratch here and
+    # stop the party music/ambience on this line once the audio pass happens.
+    friend "Kiss [player_name]." with hpunch
     show leia_prologue_party flustered
     with sprite_change
     "The room changed temperature."
