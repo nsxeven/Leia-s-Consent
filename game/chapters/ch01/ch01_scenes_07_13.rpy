@@ -331,16 +331,25 @@ label ch01_scene_09_dinner:
 
     "Most of the drink came off the fabric. The problem was what had gotten underneath it."
 
+    $ enter_cinematic_mode()
+    scene cg ch01_dinner_sticky_bra
+    with dissolve
+
     "A few minutes later, [girlfriend_name] leaned close to me while [friend_name] was distracted by the menu."
 
-    show leia_purple_dress_wet flustered
-    with sprite_change
     gf "Babe."
     mc "Mm?"
     gf "My sticky bra is literally giving up."
     mc "Giving up?"
     gf "As in one side is barely attached anymore. I think the drink got under it."
     gf "I might have to take it off."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_restaurant_evening
+    with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     $ ch01_bra_reassure_text = format_choice("ch01_bra_reassure", "Do whatever makes you comfortable. You'll be fine.")
     $ ch01_bra_playful_text = format_choice("ch01_bra_playful", "If you're comfortable with it... that's kind of hot.")
@@ -529,20 +538,19 @@ label ch01_scene_10_after_dinner_drinks:
 
 label ch01_scene_11_walk_and_catch:
 
-    scene bg ch01_island_walk_night
+    $ enter_cinematic_mode()
+    scene cg ch01_walk_back_01
     with fade
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
 
     "The shop was only a short walk away. [girlfriend_name] still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
-    show leia_purple_dress_no_bra pout
-    with sprite_change
     gf "I'm not drunk."
     mc "Nobody said you were."
     friend "That statement usually means somebody is drunk."
     gf "Traitor."
+
+    scene cg ch01_walk_back_call
+    with dissolve
 
     "My phone started ringing."
     "The name on the screen belonged to a female friend from back home—someone I had not expected to hear from on this trip."
@@ -559,7 +567,6 @@ label ch01_scene_11_walk_and_catch:
     "Ahead of me, [girlfriend_name] turned around to check why I had stopped."
     "She tried to walk backward while doing it."
 
-    $ enter_cinematic_mode()
     scene cg ch01_trip_catch
     with dissolve
 
@@ -576,6 +583,9 @@ label ch01_scene_11_walk_and_catch:
     mc "Yeah. [friend_name] caught her. Talk tomorrow."
     phone_friend "Okay. Text me."
     "I ended the call and hurried toward them."
+
+    scene cg ch01_trip_catch_aftermath
+    with dissolve
 
     gf "[friend_name]!"
     friend "I was catching you!"
