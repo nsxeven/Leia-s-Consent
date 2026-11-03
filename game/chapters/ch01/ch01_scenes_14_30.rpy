@@ -113,10 +113,12 @@ label ch01_scene_14_movie_setup:
     $ set_story_value("ch01_dinner_dress_state", "changed_out_at_villa")
     $ set_story_value("ch01_movie_blanket_state", "on")
     $ set_story_value("ch01_movie_night_started", True)
+    $ lc_julian_outfit = "lounge"
 
     scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "[girlfriend_name] returned in a white camisole and short lounge shorts, her hair down and loose. [friend_name] had changed too, and was already at the kitchen counter with two glasses of whisky."
@@ -134,6 +136,7 @@ label ch01_scene_14_movie_setup:
     scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_lounge smile at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     gf "Congratulations. You may now participate."
@@ -154,8 +157,8 @@ label ch01_scene_14_movie_setup:
     "For ten quiet minutes, the movie actually held our attention."
 
     $ exit_cinematic_mode()
-    # Continue the conversation over the seated composition. There is no
-    # production loungewear sprite yet, so do not show a wrong outfit.
+    # Continue the conversation over the seated composition (everyone is on
+    # the sofa under the blanket, so the CG stays instead of standing sprites).
     scene cg ch01_movie_cuddle_blanket
     with dissolve
 
@@ -165,6 +168,10 @@ label ch01_scene_14_movie_setup:
 
 
 label ch01_scene_15_under_blanket:
+
+    $ enter_cinematic_mode()
+    scene cg ch01_movie_blanket_hand
+    with dissolve
 
     "At some point [girlfriend_name] settled deeper against me and pulled the blanket higher over both of us."
     "My hand, already resting at her waist, wandered lazily along her side and upper thigh beneath the blanket."
@@ -228,6 +235,10 @@ label ch01_scene_16_can_he_tell:
 
     # Pacing Revision v2 — combine the old "can he tell?" and "Julian notices"
     # loops into one escalation instead of asking the player the same question twice.
+    # Back to the wide sofa CG: Julian is in view for "can he tell?".
+    scene cg ch01_movie_cuddle_blanket
+    with dissolve
+
     "The movie carried on for a few minutes before [girlfriend_name] leaned closer, keeping her voice beneath the soundtrack."
 
     if get_story_value("ch01_movie_first_response") == "stopped":
@@ -321,6 +332,7 @@ label ch01_scene_18_private_under_blanket:
     scene bg ch01_villa_living_night
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     $ ch01_movie_respected_request = (
@@ -923,6 +935,7 @@ label ch01_scene_28_ryan_leia_alone:
     scene bg ch01_villa_living_night
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "The villa became noticeably quieter once [friend_name]'s door closed upstairs."
@@ -1097,6 +1110,8 @@ label ch01_scene_24_looking_counts:
 
 label ch01_scene_30_end_day_one:
 
+    # Day 1 sprite staging ends here; Julian no longer swaps into Ryan's slot.
+    $ lc_julian_outfit = None
     scene bg ch01_villa_bedroom_night
     with fade
 
