@@ -43,6 +43,7 @@ label ch01_scene_13b_night_pool:
     friend "I absolutely do."
 
     "[girlfriend_name] laughed and moved to sit along the edge of the pool, bare feet just above the water."
+    "[friend_name] topped up his whisky and wandered over to sit on the edge beside her, feet in the water."
     "For a while she simply listened, leaning back on her hands while [friend_name] finished another story."
 
     $ enter_cinematic_mode()
@@ -455,8 +456,36 @@ label ch01_scene_20_no_hiding_place:
     "My hand settled naturally on [girlfriend_name]'s thigh. Nothing about the gesture would have looked strange from across the sofa."
     "[girlfriend_name] looked down at it anyway. Then at [friend_name]. Then back at me."
 
-    $ ch01_noblanket_behave_text = format_choice("ch01_noblanket_behave", "Leave your hand there and behave.")
-    $ ch01_noblanket_test_text = format_choice("ch01_noblanket_test", "Slide it up to her backside and see how she reacts.")
+    # Fixed beat: the grab always happens, but only after Leia gives a clear go-ahead.
+    $ ch01_grab_promised_to_ask = (
+        get_story_value("ch01_private_movie_response") == "apologized"
+        and not (
+            get_story_value("ch01_movie_first_response") == "stopped"
+            and get_story_value("ch01_can_tell_response") in ("reassured", "teased")
+        )
+    )
+    if ch01_grab_promised_to_ask:
+        "I hadn't forgotten what she'd asked me earlier. This time, I asked first."
+    "I let my fingers drift a little higher and raised a brow at her, a silent question."
+    "[girlfriend_name] glanced at [friend_name]. He was hunched toward the screen, drink in hand."
+    "Then she looked back at me and gave the smallest nod."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_movie_ass_grab_01
+    with dissolve
+
+    "I slid my hand up to the curve of her backside."
+    "[girlfriend_name] went still. All [friend_name] had to do was turn his head."
+    "She didn't stop me. She shifted back into my palm instead, just slightly."
+
+    scene cg ch01_movie_ass_grab_02
+    with dissolve
+
+    "I squeezed once. Her breath caught, and she pressed her lips together to keep from making a sound."
+
+    $ exit_cinematic_mode()
+    $ ch01_noblanket_behave_text = format_choice("ch01_noblanket_behave", "Ease your hand back to her thigh and behave.")
+    $ ch01_noblanket_test_text = format_choice("ch01_noblanket_test", "Keep it there a little longer.")
     $ ch01_noblanket_tease_text = format_choice("ch01_noblanket_tease", "Problem?")
     $ ch01_noblanket_phone_text = format_choice("ch01_noblanket_phone", "Pull your hand away and check your phone.")
 
@@ -464,34 +493,19 @@ label ch01_scene_20_no_hiding_place:
         "[ch01_noblanket_behave_text]":
             $ apply_choice("ch01_noblanket_behave")
             $ set_story_value("ch01_noblanket_response", "behaved")
-            "I left my hand exactly where it was and turned my attention back to the movie."
+            "I eased my hand back down to her thigh and turned my attention back to the movie."
             "A few seconds later [girlfriend_name] leaned against me again."
 
         "[ch01_noblanket_test_text]":
             $ apply_choice("ch01_noblanket_test")
             $ set_story_value("ch01_noblanket_response", "tested")
-            "I slid my hand from her thigh to the curve of her backside, slowly enough that she could stop me with a single look."
-
-            $ enter_cinematic_mode()
-            scene cg ch01_movie_ass_grab_01
-            with dissolve
-
-            "[girlfriend_name] went still. Her eyes cut toward [friend_name]. All he had to do was turn his head."
-            "I left my hand resting there and waited, giving her the chance to push it away."
-            "She didn't. She shifted back into my palm instead, just slightly."
-
-            scene cg ch01_movie_ass_grab_02
-            with dissolve
-
-            "I squeezed once. When she answered, it was barely a whisper under the soundtrack."
+            "I left my hand exactly where it was."
+            "[friend_name] reached for his drink without looking over. [girlfriend_name] didn't move away."
+            "When she finally spoke, it was barely a whisper under the soundtrack."
             gf "Behave."
             mc "I am."
             gf "Barely."
             "She caught my wrist and steered my hand back down to her thigh, biting back a smile the whole time."
-
-            $ exit_cinematic_mode()
-            scene cg ch01_movie_no_blanket
-            with dissolve
 
         "[ch01_noblanket_tease_text]":
             $ apply_choice("ch01_noblanket_tease")
@@ -510,6 +524,9 @@ label ch01_scene_20_no_hiding_place:
             gf "Never mind."
             mc "Hm?"
             gf "Nothing."
+
+    scene cg ch01_movie_no_blanket
+    with dissolve
 
     $ set_story_flag("ch01_scene_20_complete")
     jump ch01_scene_21_watching_julian
