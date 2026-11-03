@@ -22,7 +22,7 @@ layeredimage ryan_casual_layers:
     always "images/sprites/ryan/Base_Casual.png"
     always "images/sprites/ryan/Chest_Casual.png" at leia_chest_breathe
 
-image ryan_casual = Fixed(lc_sprite_silhouette("ryan_casual_layers"), xysize=(941, 1672))
+image ryan_casual = Fixed(lc_left_slot(Fixed(lc_sprite_silhouette("ryan_casual_layers"), xysize=(941, 1672))), xysize=(941, 1672))
 
 
 # Pool / beach state: same black shorts, shirt removed.
@@ -30,4 +30,4 @@ layeredimage ryan_pool_layers:
     always "images/sprites/ryan/Base_BlackShorts.png"
     always "images/sprites/ryan/Chest_Nude.png" at leia_chest_breathe
 
-image ryan_pool = Fixed(lc_sprite_silhouette("ryan_pool_layers"), xysize=(941, 1672))
+image ryan_pool = Fixed(lc_left_slot(Fixed(lc_sprite_silhouette("ryan_pool_layers"), xysize=(941, 1672))), xysize=(941, 1672))

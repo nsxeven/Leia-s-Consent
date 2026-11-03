@@ -403,3 +403,40 @@ image leia_purple_dress_no_bra flustered = Fixed(lc_sprite_silhouette("leia_purp
 image leia_purple_dress_no_bra skeptical = Fixed(lc_sprite_silhouette("leia_purple_dress_no_bra_layers skeptical"), xysize=(941, 1672))
 image leia_purple_dress_no_bra angry = Fixed(lc_sprite_silhouette("leia_purple_dress_no_bra_layers angry"), xysize=(941, 1672))
 image leia_purple_dress_no_bra ahegao = Fixed(lc_sprite_silhouette("leia_purple_dress_no_bra_layers ahegao"), xysize=(941, 1672))
+
+
+# Leia — Chapter One Day One movie-night loungewear: white camisole + black
+# lounge shorts (outfit id resort_loungewear).
+layeredimage leia_lounge_layers:
+
+    always "images/sprites/leia/CH1/Base_Lounge.png"
+    always "images/sprites/leia/CH1/Chest_Lounge.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_lounge neutral = Fixed(lc_sprite_silhouette("leia_lounge_layers neutral"), xysize=(941, 1672))
+image leia_lounge smile = Fixed(lc_sprite_silhouette("leia_lounge_layers smile"), xysize=(941, 1672))
+image leia_lounge shy = Fixed(lc_sprite_silhouette("leia_lounge_layers shy"), xysize=(941, 1672))
+image leia_lounge pout = Fixed(lc_sprite_silhouette("leia_lounge_layers pout"), xysize=(941, 1672))
+image leia_lounge flustered = Fixed(lc_sprite_silhouette("leia_lounge_layers flustered"), xysize=(941, 1672))
+image leia_lounge skeptical = Fixed(lc_sprite_silhouette("leia_lounge_layers skeptical"), xysize=(941, 1672))
+image leia_lounge angry = Fixed(lc_sprite_silhouette("leia_lounge_layers angry"), xysize=(941, 1672))
+image leia_lounge ahegao = Fixed(lc_sprite_silhouette("leia_lounge_layers ahegao"), xysize=(941, 1672))

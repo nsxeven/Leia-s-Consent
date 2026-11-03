@@ -18,6 +18,8 @@ image cg ch01_night_pool_attention = At("images/cg/ch01/CH1D1_CG_PoolTension_01.
 image bg ch01_villa_bedroom_night = At("images/backgrounds/villa/villa_master_night.webp", prologue_bg_blur)
 
 image cg ch01_movie_cuddle_blanket = At("images/cg/ch01/CH1D1_CG_MovieBlanket_01.webp", prologue_fullscreen)
+# Scene 15: Leia settled against Ryan, his hand at her hip under the blanket.
+image cg ch01_movie_blanket_hand = At("images/cg/ch01/CH1D1_CG_MovieBlanket_02.webp", prologue_fullscreen)
 
 # Blanket draped over the sofa, Leia smiling at Ryan, Julian mid-movie.
 image cg ch01_movie_no_blanket = At("images/cg/ch01/CH1D1_CG_MovieStare_01.webp", prologue_fullscreen)

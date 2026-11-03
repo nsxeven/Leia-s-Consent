@@ -6,6 +6,8 @@ label chapter_one_start:
 
     $ set_story_flag("ch01_started")
     $ set_phone_hud_enabled(True)
+    # Julian swaps into Ryan's slot on his lines (sprites/julian.rpy).
+    $ lc_julian_outfit = "travel"
 
     jump ch01_scene_01_arrival
 

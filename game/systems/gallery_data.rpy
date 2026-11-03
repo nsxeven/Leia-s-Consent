@@ -154,7 +154,7 @@ init -2 python:
         ["ch01_villa_night_julian_drink"])
     gallery_row("d1_movie_night", "ch01_d1", "Movie night",
         "Movie night on the couch, with or without the blanket.",
-        [("ch01_movie_cuddle_blanket", "With the blanket"), ("ch01_movie_no_blanket", "No blanket")])
+        [("ch01_movie_cuddle_blanket", "With the blanket"), ("ch01_movie_blanket_hand", "Under the blanket"), ("ch01_movie_no_blanket", "No blanket")])
     gallery_row("d1_movie_risk", "ch01_d1", "One turn of the head",
         "Blanket off, Leia nods, and Ryan's hand finds her backside while Julian watches the movie.",
         [("ch01_movie_ass_grab_01", "The risk"), ("ch01_movie_ass_grab_02", "The squeeze")])

@@ -149,6 +149,7 @@ label ch01_scene_07_did_he_see:
 
 label ch01_scene_08_drive_to_dinner:
 
+    $ lc_julian_outfit = "evening"
     $ set_story_value("ch01_default_car_seating", "ryan_driver_leia_front_julian_rear")
 
     $ enter_cinematic_mode()
@@ -856,7 +857,7 @@ label ch01_scene_13_back_at_villa:
 
     scene bg ch01_villa_night
     with fade
-    # Leia is asleep in the car and Julian has no sprite yet; Ryan stays on screen.
+    # Leia is asleep in the car; Ryan stays on screen and Julian swaps in on his lines.
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
 
@@ -909,6 +910,8 @@ label ch01_scene_13_back_at_villa:
     "I turned. From my angle, [girlfriend_name]'s body and [friend_name]'s supporting arm hid whatever he could see. All I could tell was that [friend_name] looked deeply uncomfortable about having to announce it."
 
     $ exit_cinematic_mode()
+    # Julian is carrying Leia here, so no standing Julian sprite until he sets her down.
+    $ lc_julian_outfit = None
     scene bg ch01_villa_night
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
@@ -994,6 +997,7 @@ label ch01_scene_13_back_at_villa:
     friend "A mistake I will reflect on privately."
 
     $ exit_cinematic_mode()
+    $ lc_julian_outfit = "evening"
     scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle

@@ -3,6 +3,7 @@
 
 label ch01_scene_04_pool_arrival:
 
+    $ lc_julian_outfit = "pool"
     scene bg ch01_pool_day
     with fade
     # Ryan is on screen from the start; Leia joins when she comes outside.
@@ -404,7 +405,7 @@ label ch01_scene_06_friendship_and_towel:
 
     scene bg ch01_pool_lounge
     with dissolve
-    # Leia is upstairs; Ryan stays on screen by the pool (Julian has no sprite yet).
+    # Leia is upstairs; Ryan stays on screen by the pool (Julian swaps in on his lines).
     show ryan_pool at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
 
