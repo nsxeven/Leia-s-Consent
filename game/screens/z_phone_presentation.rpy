@@ -40,7 +40,9 @@ screen phone_quick_access():
 
     zorder 110
     default hud_hovered = False
-    $ _hud_on = phone_unlocked and phone_hud_enabled and quick_menu and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen") and not renpy.get_screen("lc_phone_status") and not renpy.get_screen("lc_phone_settings") and not renpy.get_screen("lc_phone_photo_viewer")
+    # Hidden on every full-screen CG (same detection as the see-through text box),
+    # so CGs never show the button whether or not a scene called enter_cinematic_mode().
+    $ _hud_on = phone_unlocked and phone_hud_enabled and quick_menu and not lc_cg_on_screen() and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen") and not renpy.get_screen("lc_phone_status") and not renpy.get_screen("lc_phone_settings") and not renpy.get_screen("lc_phone_photo_viewer")
 
     # Pixel iPhone, centred on the old 108x108 slot (centre 1839, 939).
     # The art is 114x150 with padding; the drawn phone is 84x126. The hit

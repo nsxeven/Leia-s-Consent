@@ -871,6 +871,7 @@ label ch01_day2_scene_10_leia_maya_photo:
 
     $ exit_cinematic_mode()
     scene bg ch01_d2_island_day
+    with dissolve
 
     "[girlfriend_name] saved the photo immediately."
 
