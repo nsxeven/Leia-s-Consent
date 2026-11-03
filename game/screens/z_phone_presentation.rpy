@@ -50,18 +50,16 @@ screen phone_quick_access():
     # quick menu.
     if _hud_on:
         $ _btn_theme = "night" if store.lc_dialogue_theme == "night" else "day"
-        $ _btn_state = "hover" if hud_hovered else "idle"
-        add Transform("gui/phone/sweetheart/phone_btn_%s_%s.png" % (_btn_theme, _btn_state), nearest=True):
+        # The highlight comes from the button's own focus state (idle/hover art),
+        # so it can never stick when the phone opens and hides the button before
+        # an "unhovered" arrives. The hit area is the drawn phone itself.
+        imagebutton:
+            idle Transform("gui/phone/sweetheart/phone_btn_%s_idle.png" % _btn_theme, nearest=True)
+            hover Transform("gui/phone/sweetheart/phone_btn_%s_hover.png" % _btn_theme, nearest=True)
             xpos 1785
             ypos 858
-            xysize (114, 150)
-
-        button:
-            style "lc_sw_hit"
-            xpos 1794
-            ypos 873
-            xysize (90, 132)
-            action Show("phone_screen")
+            focus_mask True
+            action [SetScreenVariable("hud_hovered", False), Show("phone_screen")]
             hovered SetScreenVariable("hud_hovered", True)
             unhovered SetScreenVariable("hud_hovered", False)
 
