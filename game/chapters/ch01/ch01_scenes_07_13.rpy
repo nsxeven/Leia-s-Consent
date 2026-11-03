@@ -994,7 +994,7 @@ label ch01_scene_13_back_at_villa:
     friend "A mistake I will reflect on privately."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress_no_bra flustered at prologue_leia_enter_right, leia_body_idle

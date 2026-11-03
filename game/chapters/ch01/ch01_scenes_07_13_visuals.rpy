@@ -17,6 +17,8 @@ image bg ch01_shop_night = At("images/backgrounds/chapter 1/ch01_conveniencestor
 image bg ch01_villa_night = At("images/backgrounds/villa/villa_frontdoor_night.webp", prologue_bg_blur)
 
 image bg ch01_villa_living_night = At("images/backgrounds/villa/villa_living_night.webp", prologue_bg_blur)
+# Lights still on: arriving home and the movie setup, up to "Press play".
+image bg ch01_villa_living_evening = At("images/backgrounds/villa/villa_living_evening.webp", prologue_bg_blur)
 
 image cg ch01_drive_to_dinner = At("images/cg/ch01/CH1D1_CG_DriveToDinner_01.webp", prologue_fullscreen)
 image cg ch01_dinner_arrival = At("images/cg/ch01/CH1D1_CG_DinnerArrival_01.webp", prologue_fullscreen)
