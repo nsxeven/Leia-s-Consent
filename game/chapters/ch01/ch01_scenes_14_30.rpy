@@ -93,7 +93,7 @@ label ch01_scene_13b_night_pool:
 
 label ch01_scene_14_movie_setup:
 
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
@@ -114,7 +114,7 @@ label ch01_scene_14_movie_setup:
     $ set_story_value("ch01_movie_blanket_state", "on")
     $ set_story_value("ch01_movie_night_started", True)
 
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
@@ -131,7 +131,7 @@ label ch01_scene_14_movie_setup:
     "I finally had the drink I'd skipped all evening."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
