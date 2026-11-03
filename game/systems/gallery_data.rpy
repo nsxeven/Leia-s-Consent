@@ -156,8 +156,8 @@ init -2 python:
         "Movie night on the couch, with or without the blanket.",
         [("ch01_movie_cuddle_blanket", "With the blanket"), ("ch01_movie_no_blanket", "No blanket")])
     gallery_row("d1_movie_risk", "ch01_d1", "One turn of the head",
-        "Blanket off, Ryan's hand finds Leia's backside while Julian watches the movie.",
-        [("ch01_movie_ass_grab_01", "Testing"), ("ch01_movie_ass_grab_02", "The squeeze")])
+        "Blanket off, Leia nods, and Ryan's hand finds her backside while Julian watches the movie.",
+        [("ch01_movie_ass_grab_01", "The risk"), ("ch01_movie_ass_grab_02", "The squeeze")])
     gallery_row("d1_lounge_micro_test", "ch01_d1", "Lounge",
         "A moment in the lounge when nothing accidental forces the decision.",
         ["ch01_lounge_micro_test"])
