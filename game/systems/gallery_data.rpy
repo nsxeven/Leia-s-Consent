@@ -39,7 +39,6 @@ init -2 python:
     # Images that are still Composite text placeholders (final art pending).
     GALLERY_PLACEHOLDER_IMAGES = set([
         # Day 1
-        "ch01_night_pool_attention", "ch01_movie_cuddle_blanket", "ch01_movie_no_blanket",
         "ch01_lounge_micro_test",
         "ch01_dream_towel_replay", "ch01_dream_towel_shift", "ch01_dream_towel_curtain",
         "ch01_dream_stranger_behind", "ch01_dream_stranger_look", "ch01_dream_stranger_reach",
@@ -145,13 +144,20 @@ init -2 python:
         ["ch01_drive_back_seating"])
     gallery_row("d1_julian_carry", "ch01_d1", "Carried home",
         "Leia is carried inside.",
-        [("ch01_julian_carry", "The carry"), ("ch01_carry_walk", "To the door"), ("ch01_carry_dress_shift", "Dress shift")])
+        [("ch01_julian_carry", "The carry"), ("ch01_carry_walk", "To the door"), ("ch01_carry_dress_shift", "Dress shift"),
+         ("ch01_sofa_half_asleep_night", "Back to sleep")])
     gallery_row("d1_night_pool", "ch01_d1", "Night pool",
         "Julian's eyes drift toward Leia by the pool at night.",
         ["ch01_night_pool_attention"])
+    gallery_row("d1_julian_drink", "ch01_d1", "A drink for the driver",
+        "Back downstairs after changing, Julian hands Ryan a whisky.",
+        ["ch01_villa_night_julian_drink"])
     gallery_row("d1_movie_night", "ch01_d1", "Movie night",
         "Movie night on the couch, with or without the blanket.",
         [("ch01_movie_cuddle_blanket", "With the blanket"), ("ch01_movie_no_blanket", "No blanket")])
+    gallery_row("d1_movie_risk", "ch01_d1", "One turn of the head",
+        "Blanket off, Ryan's hand finds Leia's backside while Julian watches the movie.",
+        [("ch01_movie_ass_grab_01", "Testing"), ("ch01_movie_ass_grab_02", "The squeeze")])
     gallery_row("d1_lounge_micro_test", "ch01_d1", "Lounge",
         "A moment in the lounge when nothing accidental forces the decision.",
         ["ch01_lounge_micro_test"])
@@ -160,6 +166,9 @@ init -2 python:
         [("ch01_dream_towel_replay", "Towel replay"), ("ch01_dream_towel_shift", "Towel shift"), ("ch01_dream_towel_curtain", "Curtain"),
          ("ch01_dream_stranger_behind", "Behind her"), ("ch01_dream_stranger_look", "The look"), ("ch01_dream_stranger_reach", "The reach")],
         dream=True)
+    gallery_row("d1_wake_up", "ch01_d1", "Waking up",
+        "Ryan wakes from the dream. Leia is asleep beside him, exactly where she'd been.",
+        ["ch01_dream_wake_night"])
 
     # --------------------------------------------------------------------- Day 2
     gallery_row("d2_photo_leia_maya", "ch01_d2", "Leia and Maya",
