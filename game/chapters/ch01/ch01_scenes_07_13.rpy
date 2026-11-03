@@ -340,11 +340,12 @@ label ch01_scene_09_dinner:
 
     "Most of the drink came off the fabric. The problem was what had gotten underneath it."
 
+    "A few minutes later, [girlfriend_name] leaned close to me while [friend_name] was distracted by the menu."
+
+    # The lean-in CG lands on her first whispered line, not on the narration.
     $ enter_cinematic_mode()
     scene cg ch01_dinner_sticky_bra
     with dissolve
-
-    "A few minutes later, [girlfriend_name] leaned close to me while [friend_name] was distracted by the menu."
 
     gf "Babe."
     mc "Mm?"
