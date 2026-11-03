@@ -55,6 +55,7 @@ label prologue_start:
     "For a while, we all ended up squeezed around the same couch, talking over drinks and whoever happened to be loudest."
 
     scene bg prologue_party
+    with dissolve
     show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
@@ -177,13 +178,11 @@ label prologue_start:
     with sprite_change
     gf "Come on."
 
-    hide leia_prologue_party
-    hide ryan_prologue_party
-    with sprite_enter_exit
-
+    # Both leave with the location change itself (one dissolve), then Leia enters.
     scene bg prologue_truthordare
-    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
     with dissolve
+    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
     "Most of the dares were harmless."
@@ -269,6 +268,7 @@ label prologue_start:
     "The room cheered like we'd accomplished something."
 
     scene bg prologue_truthordare
+    with dissolve
     show leia_prologue_party smile at prologue_leia_enter_right, leia_body_idle
     show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
@@ -285,6 +285,7 @@ label prologue_start:
     $ set_story_flag("prologue_first_kiss_complete")
 
     scene cg prologue_present_stare
+    with dissolve
 
     gf "[player_name]?"
     gf "You're staring again."
@@ -346,6 +347,7 @@ label prologue_start:
     mc "Because it's true."
 
     scene bg prologue_packing
+    with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_casual smile at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit

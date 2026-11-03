@@ -323,14 +323,11 @@ label ch01_scene_09_dinner:
     $ set_story_flag("ch01_dinner_stranger_collision")
     $ set_story_flag("ch01_leia_stranger_second_glance")
 
+    # The stranger has walked off-screen; Ryan steps back in on the left while
+    # Leia stays in her slot (no scene reset, which made her blink).
     hide stranger_casual_wet
-    hide leia_purple_dress
-    with sprite_enter_exit
-
-    scene bg ch01_restaurant_evening
-    with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
+    show leia_purple_dress_wet flustered at prologue_leia_right, leia_body_idle
     with sprite_enter_exit
 
     "[friend_name] pushed the remaining napkins across the table without commenting on where [girlfriend_name] had been looking."
@@ -661,11 +658,8 @@ label ch01_scene_11_walk_and_catch:
 
 label ch01_scene_11b_female_friend:
 
-    scene bg ch01_island_walk_night
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra skeptical at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
-
+    # Continues straight from scene 11 on the same path; Ryan and Leia are
+    # already on screen, so no scene reset (it made both sprites blink).
     show leia_purple_dress_no_bra skeptical
     with sprite_change
     gf "Who was that?"

@@ -163,8 +163,7 @@ label ch01_scene_03_outfit_choice:
     "She held up the first: flattering, familiar, and comfortable."
     "The second was still normal resort swimwear, just a little bolder than anything she usually wore around our friends."
 
-    hide leia_casual
-    with sprite_enter_exit
+    # Sprites leave with the scene change itself (one dissolve), not a separate fade first.
     $ enter_cinematic_mode()
     scene cg ch01_swimsuit_choice
     with dissolve
@@ -232,17 +231,13 @@ label ch01_scene_03_outfit_choice:
     hide leia_casual
     with sprite_enter_exit
 
-    scene bg ch01_master_bedroom
-    with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    # Same room, a few minutes later: Ryan stays put and Leia walks back in.
     show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "A moment later, the bathroom door opened again."
     "[girlfriend_name] stepped back into the bedroom with a towel wrapped around herself and crossed to the glass wall."
 
-    hide leia_towel
-    with sprite_enter_exit
     $ enter_cinematic_mode()
     scene cg ch01_bedroom_window
     with dissolve
