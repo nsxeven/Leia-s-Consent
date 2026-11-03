@@ -990,7 +990,7 @@ label ch01_day5_scene_08_love_cove:
     "She looked at the horizon, not at me, and let out one long breath."
     gf "Your turn."
 
-    $ d5_lv_dream = format_choice("ch01_d5_love_secret_dream", "Tell her about the curtain dream. The part I didn't say.")
+    $ d5_lv_dream = format_choice("ch01_d5_love_secret_dream", "Tell her about the restaurant dream. The part I didn't say.")
     $ d5_lv_mirror = format_choice("ch01_d5_love_secret_mirror", "Tell her I practiced asking her out in the bathroom mirror.")
     $ d5_lv_owe = format_choice("ch01_d5_love_secret_owe", "Say 'I owe you one' and keep it for later.")
 
@@ -998,11 +998,11 @@ label ch01_day5_scene_08_love_cove:
         "[d5_lv_dream]":
             $ apply_choice("ch01_d5_love_secret_dream")
             $ set_story_value("ch01_d5_secret_traded", "dream")
-            mc "The curtain dream. I told you there was a curtain. I didn't tell you that you were on the other side of it, looking back at me, and you weren't upset."
-            mc "You were curious. And I woke up scared that I liked it."
+            mc "The restaurant dream. I told you it was about dinner. I didn't tell you he had his hand on you, and you didn't stop him. You leaned into it."
+            mc "You weren't upset. And I woke up scared that some part of me liked it."
             "I braced for something. She didn't give me anything to brace against."
             gf "Dreams aren't evidence. They're weather. You can tell me the weather any day you want."
-            gf "And for what it's worth, I'm still on this side of the curtain. Where you can see me."
+            gf "And for what it's worth, I'm still right here. Next to you. Where you can see me."
             "She moved her hand to cover mine, wet, warm, certain."
         "[d5_lv_mirror]":
             $ apply_choice("ch01_d5_love_secret_mirror")

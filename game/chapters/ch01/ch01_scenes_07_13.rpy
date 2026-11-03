@@ -83,10 +83,11 @@ label ch01_scene_07_did_he_see:
     $ grant_story_outfit("resort_dinner_dress", equip=True)
     $ set_story_value("ch01_dinner_bra_state", "sticky_bra_on")
     $ set_story_value("ch01_dinner_dress_state", "normal")
-    with dissolve
 
-    show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    # Dress reveal CG holds through her first exchange; sprites return at the door.
+    $ enter_cinematic_mode()
+    scene cg ch01_dress_reveal
+    with dissolve
 
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
 
@@ -94,11 +95,9 @@ label ch01_scene_07_did_he_see:
     mc "Nothing."
     gf "That was a very obvious something."
     mc "You look amazing."
-
-    show leia_purple_dress smile
-    with sprite_change
     gf "Better answer."
 
+    $ exit_cinematic_mode()
     scene bg ch01_villa_entry_day
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle

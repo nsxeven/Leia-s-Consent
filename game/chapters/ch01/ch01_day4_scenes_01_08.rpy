@@ -72,7 +72,7 @@ label ch01_day4_scene_01_wake:
         if get_story_value("ch01_dream_response") == "grounded":
             "The dream from the first night had long since gone back to being only a dream."
         else:
-            "Somewhere under the quiet, the first night's dream and its sheer curtain were still there. Daylight kept it small."
+            "Somewhere under the quiet, the first night's dream and its replay of the restaurant were still there. Daylight kept it small."
 
     elif d4_lane == "exhibitionism":
         "The curtains were still open. Sunlight laid a bright stripe across the bed and across [girlfriend_name], who stood at the window wrapped in the top sheet and very little else."
@@ -85,7 +85,7 @@ label ch01_day4_scene_01_wake:
         gf "I think we're getting braver."
         mc "Together."
         gf "Together. Come here before I lose my nerve for the sheet."
-        "The first night's dream had also had a curtain in it. That one had frightened me. This one, open to the light, only made me smile."
+        "The first night's dream had put her on show for a stranger, without asking either of us. That one had frightened me. This one, our choice, open to the light, only made me smile."
 
     else:
         "I woke to cool sheets and the dull weight of last night's dream."
