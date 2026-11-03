@@ -281,6 +281,29 @@ screen lc_phone_photo_viewer(photo_asset):
             yalign 0.5
 
 
+# Click outside the handset to close it, like tapping away from a real phone.
+# The backdrop is a full-screen invisible button behind the handset; the
+# handset itself sits on a click-catcher so taps on empty parts of the screen
+# or bezel never fall through to the backdrop.
+screen lc_phone_backdrop(close_action):
+    button:
+        style "lc_sw_hit"
+        xfill True
+        yfill True
+        keyboard_focus False
+        background Solid("#120810c4")
+        hover_background Solid("#120810c4")
+        action close_action
+
+
+screen lc_phone_body_blocker():
+    button:
+        style "lc_sw_hit"
+        xysize (702, 1068)
+        keyboard_focus False
+        action NullAction()
+
+
 # Message rows are inlined in phone_screen. A used screen is given the full
 # area offered by its parent, which would swallow the thread viewport.
 
@@ -300,12 +323,13 @@ screen phone_screen():
     $ c = lc_phone_palette()
     $ theme = lc_phone_theme()
 
-    add Solid("#120810c4")
+    use lc_phone_backdrop(Hide("phone_screen"))
 
     fixed:
         xalign 0.5
         yalign 0.5
         xysize (702, 1068)
+        use lc_phone_body_blocker
 
         fixed:
             xpos 30
@@ -982,11 +1006,12 @@ screen lc_phone_status():
     $ _ryan_rows = status_ryan_rows(_mode)
     $ _route_rows = status_route_rows(_mode)
 
-    add Solid("#120810c4")
+    use lc_phone_backdrop([Hide("lc_phone_status"), Hide("phone_screen")])
     fixed:
         xalign 0.5
         yalign 0.5
         xysize (702, 1068)
+        use lc_phone_body_blocker
         fixed:
             xpos 30
             ypos 24
@@ -1142,11 +1167,12 @@ screen lc_phone_settings():
     $ c = lc_phone_palette()
     $ theme = lc_phone_theme()
 
-    add Solid("#120810c4")
+    use lc_phone_backdrop([Hide("lc_phone_settings"), Hide("phone_screen")])
     fixed:
         xalign 0.5
         yalign 0.5
         xysize (702, 1068)
+        use lc_phone_body_blocker
         fixed:
             xpos 30
             ypos 24
