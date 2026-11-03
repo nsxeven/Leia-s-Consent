@@ -40,8 +40,6 @@ init -2 python:
     GALLERY_PLACEHOLDER_IMAGES = set([
         # Day 1
         "ch01_lounge_micro_test",
-        "ch01_dream_towel_replay", "ch01_dream_towel_shift", "ch01_dream_towel_curtain",
-        "ch01_dream_stranger_behind", "ch01_dream_stranger_look", "ch01_dream_stranger_reach",
         # Day 2
         "ch01_d2_photo_leia_maya",
         "ch01_d2_boutique_changing_room", "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
@@ -117,6 +115,9 @@ init -2 python:
     gallery_row("d1_towel_did_he_see", "ch01_d1", "Did he see?",
         "Leia wonders what Julian saw.",
         ["ch01_towel_did_he_see"])
+    gallery_row("d1_dress_reveal", "ch01_d1", "The dress",
+        "Leia steps out in the dress she packed for dinner.",
+        ["ch01_dress_reveal"])
     gallery_row("d1_drive_to_dinner", "ch01_d1", "Drive to dinner",
         "On the way to dinner.",
         ["ch01_drive_to_dinner"])
@@ -163,9 +164,8 @@ init -2 python:
         ["ch01_lounge_micro_test"])
     gallery_row("d1_dream", "ch01_d1", "The dream",
         "Ryan's dream at the end of the day. A dream is not evidence.",
-        [("ch01_dream_towel_replay", "Towel replay"), ("ch01_dream_towel_shift", "Towel shift"), ("ch01_dream_towel_curtain", "Curtain"),
-         ("ch01_dream_stranger_behind", "Behind her"), ("ch01_dream_stranger_look", "The look"), ("ch01_dream_stranger_reach", "The reach")],
-        dream=True)
+        [("ch01_dream_dinner_beside", "Beside her"), ("ch01_dream_dinner_grab", "The grab"), ("ch01_dream_dinner_rub", "She lets him")],
+        mature=True, dream=True)
     gallery_row("d1_wake_up", "ch01_d1", "Waking up",
         "Ryan wakes from the dream. Leia is asleep beside him, exactly where she'd been.",
         ["ch01_dream_wake_night"])

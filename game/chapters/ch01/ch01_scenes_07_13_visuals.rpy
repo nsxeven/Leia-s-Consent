@@ -21,6 +21,8 @@ image bg ch01_villa_living_night = At("images/backgrounds/villa/villa_living_nig
 image bg ch01_villa_living_evening = At("images/backgrounds/villa/villa_living_evening.webp", prologue_bg_blur)
 
 image cg ch01_drive_to_dinner = At("images/cg/ch01/CH1D1_CG_DriveToDinner_01.webp", prologue_fullscreen)
+# Scene 7: Leia steps out of the bathroom in her dinner dress.
+image cg ch01_dress_reveal = At("images/cg/ch01/CH1D1_LilacDressReveal_01.webp", prologue_fullscreen)
 image cg ch01_dinner_arrival = At("images/cg/ch01/CH1D1_CG_DinnerArrival_01.webp", prologue_fullscreen)
 image cg ch01_dinner_photo_ask = At("images/cg/ch01/CH1D1_CG_DinnerPhotoAsk_01.webp", prologue_fullscreen)
 

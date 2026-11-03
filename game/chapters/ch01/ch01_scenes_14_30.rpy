@@ -1189,82 +1189,56 @@ label ch01_scene_30_end_day_one:
     $ lc_dream_presentation = persistent.lc_day1_dream
     if lc_dream_presentation == "ask":
         menu:
-            "The next sequence is a dream containing betrayal-themed imagery."
+            "The next sequence is a nightmare containing betrayal-themed imagery and an unwanted touch."
             "Show the full dream.":
                 $ lc_dream_presentation = "show"
             "Read a brief summary instead.":
                 $ lc_dream_presentation = "summary"
 
     if lc_dream_presentation == "summary":
-        "The day's awkward moments tangled into an unsettling dream about jealousy and betrayal."
+        "The dinner collision replayed in my sleep, twisted into an ugly dream about the stranger, [girlfriend_name], and me unable to stop any of it."
         "It was something my sleeping mind invented, not something that had happened."
     else:
         $ enter_cinematic_mode()
-        scene cg ch01_dream_towel_replay
+        scene cg ch01_dream_dinner_beside
         with dissolve
 
-        "I was back by the pool."
-        "[girlfriend_name] stood upstairs again, wet hair over one shoulder and the same small towel wrapped around her."
-
-        gf "Dinner is at seven!"
-        friend "Six twenty-three."
-        gf "Why are both of you still sitting there?"
-
-        scene cg ch01_dream_towel_shift
-        with dissolve
-
-        "She stepped farther out. The towel shifted exactly the way I remembered."
-
-        mc "[girlfriend_name]—"
-
-        "Nothing came out."
-
-        "I tried again. My mouth moved, but there was no sound."
-        "She kept talking, completely unaware."
-
-        "The towel rode a little higher as she turned back toward the bedroom."
-
-        scene cg ch01_dream_towel_curtain
-        with dissolve
-
-        "Then she reached for the curtain and pulled it across the glass."
-
-        "For a second, relief washed through me."
-
-        "Then I remembered."
-
-        "{i}These barely cover anything.{/i}"
-
-        "The sheer fabric softened her outline. It did not hide it."
-
-        scene cg ch01_dream_stranger_behind
-        with dissolve
-
-        "Behind the sheer curtain, [girlfriend_name] turned away from the window."
-        "Someone was standing behind her."
+        "I was back at the restaurant."
+        "Same table. Same candles. The same low music I hadn't noticed the first time."
+        "[girlfriend_name] stood beside our table in her dress, and he was standing next to her."
         "The man from dinner."
+        "There was no collision this time. No spilled drink. No apology. He was simply there, close enough that his arm touched hers."
 
-        "There was no door opening. No footsteps. One moment she was alone; the next he was simply there."
+        stranger "Want me to take that photo for you?"
+        gf "Would you?"
 
-        "{i}[girlfriend_name].{/i}"
+        "She smiled up at him the way she'd smiled at me that afternoon."
+        "I tried to say her name. My mouth moved. Nothing came out."
 
-        "Still no voice."
-
-        scene cg ch01_dream_stranger_look
+        scene cg ch01_dream_dinner_grab
         with dissolve
 
-        "Her eyes dropped immediately, following the same path they had at dinner."
-        "This time, she didn't correct herself."
+        "His hand settled at the small of her back."
+        "Then it slid lower, slipped under the hem of her dress, and took a slow, deliberate handful of her."
+        "Right there at the table. In front of me."
 
-        "I tried to call her name again."
-        "Nothing."
+        "[girlfriend_name] gasped, one small, startled sound."
+        "She should have stepped away. In the dream, she didn't."
 
-        scene cg ch01_dream_stranger_reach
+        "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
+
+        scene cg ch01_dream_dinner_rub
         with dissolve
 
-        "She stepped closer."
-        "Slowly, almost experimentally, she reached toward him."
-        "Her hand disappeared between their silhouettes—"
+        "His palm began to move, rubbing slow circles over the curve of her, unhurried, like he had every right to."
+        "Color climbed her cheeks. She leaned toward him. Only slightly. Only enough."
+        "Her eyes dropped, following the same path they had at dinner."
+        "This time, she didn't bring them back up."
+
+        "That was the cruelest part. It was my own mind writing her that way, not her."
+
+        "I called her name again. Nothing."
+        "He bent to say something against her ear, and she laughed—"
 
         scene black
         with dissolve
@@ -1278,6 +1252,7 @@ label ch01_scene_30_end_day_one:
     with dissolve
 
     "[girlfriend_name] was asleep beside me, breathing softly, exactly where she'd been."
+    "None of it had happened. At the real dinner he had apologised, laughed at himself, and walked back to his own table."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_bedroom_night

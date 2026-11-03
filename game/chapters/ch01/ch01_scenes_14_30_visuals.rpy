@@ -49,43 +49,15 @@ image ch01_photo_late_favourite_white = "ch01_photo_late_favourite"
 image ch01_photo_late_favourite_blue = "ch01_photo_late_favourite"
 
 
-# Day One closing dream. These are temporary composition placeholders; keep the
-# stable IDs when replacing them with final CG variants.
-image cg ch01_dream_towel_replay = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#393747"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-01 — MEMORY REPLAY\nLEIA UPSTAIRS IN TOWEL / RYAN + JULIAN BELOW", size=50, color="#ffffff"),
-)
-
-image cg ch01_dream_towel_shift = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#493947"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-02 — TOWEL SHIFTS\nRYAN TRIES TO WARN HER / NO VOICE", size=50, color="#ffffff"),
-)
-
-image cg ch01_dream_towel_curtain = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#353a47"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-TOWEL-03 — SHEER CURTAIN DRAWN\nLEIA THINKS SHE HAS PRIVACY", size=50, color="#ffffff"),
-)
-
-image cg ch01_dream_stranger_behind = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#30323d"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-04 — IMPOSSIBLE APPEARANCE\nDINNER STRANGER BEHIND LEIA / BOTH SEEN THROUGH SHEER", size=50, color="#ffffff"),
-)
-
-image cg ch01_dream_stranger_look = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#34313d"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-05 — DINNER MEMORY DISTORTED\nLEIA'S GAZE DROPS / SHE DOES NOT LOOK AWAY", size=50, color="#ffffff"),
-)
-
-image cg ch01_dream_stranger_reach = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#2e3039"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-06 — DREAM ESCALATION\nLEIA REACHES TOWARD HIM / CUT TO BLACK", size=50, color="#ffffff"),
-)
+# Day One closing nightmare (darryn, 2026-11-04): Ryan's dream replays a
+# dramatised version of the dinner collision. The towel/curtain dream beats
+# were retired with this rewrite.
+# 01: the stranger beside Leia at the restaurant.
+image cg ch01_dream_dinner_beside = At("images/cg/ch01/CH1D1_CG_BBCStrangerNightmare_01.webp", prologue_fullscreen)
+# 02: his hand grabs her backside (inset panel).
+image cg ch01_dream_dinner_grab = At("images/cg/ch01/CH1D1_CG_BBCStrangerNightmare_02.webp", prologue_fullscreen)
+# 03: he keeps rubbing; she leans into it.
+image cg ch01_dream_dinner_rub = At("images/cg/ch01/CH1D1_CG_BBCStrangerNightmare_03.webp", prologue_fullscreen)
 
 # Waking from the dream: Leia asleep beside Ryan.
 image cg ch01_dream_wake_night = At("images/cg/ch01/CH1D1_CG_NightmareWakeUp.webp", prologue_fullscreen)
