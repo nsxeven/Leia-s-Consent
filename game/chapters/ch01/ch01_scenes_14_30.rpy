@@ -118,7 +118,22 @@ label ch01_scene_14_movie_setup:
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
 
-    "[girlfriend_name] returned in an oversized sleep tee and short lounge shorts, hair pulled back loosely. [friend_name] had changed too. I finally poured myself the drink I'd skipped all evening."
+    "[girlfriend_name] returned in a white camisole and short lounge shorts, her hair down and loose. [friend_name] had changed too, and was already at the kitchen counter with two glasses of whisky."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_villa_night_julian_drink
+    with dissolve
+
+    friend "You drove all day. You've earned this."
+    mc "First sensible thing you've said since we landed."
+
+    "I finally had the drink I'd skipped all evening."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_villa_living_night
+    with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    with sprite_enter_exit
 
     gf "Congratulations. You may now participate."
     mc "I've been participating all day."
@@ -441,7 +456,7 @@ label ch01_scene_20_no_hiding_place:
     "[girlfriend_name] looked down at it anyway. Then at [friend_name]. Then back at me."
 
     $ ch01_noblanket_behave_text = format_choice("ch01_noblanket_behave", "Leave your hand there and behave.")
-    $ ch01_noblanket_test_text = format_choice("ch01_noblanket_test", "Move it slightly higher and see how she reacts.")
+    $ ch01_noblanket_test_text = format_choice("ch01_noblanket_test", "Slide it up to her backside and see how she reacts.")
     $ ch01_noblanket_tease_text = format_choice("ch01_noblanket_tease", "Problem?")
     $ ch01_noblanket_phone_text = format_choice("ch01_noblanket_phone", "Pull your hand away and check your phone.")
 
@@ -455,11 +470,28 @@ label ch01_scene_20_no_hiding_place:
         "[ch01_noblanket_test_text]":
             $ apply_choice("ch01_noblanket_test")
             $ set_story_value("ch01_noblanket_response", "tested")
-            "I shifted my hand only slightly—still somewhere completely defensible as ordinary couple contact."
-            "[girlfriend_name]'s eyes narrowed. I stopped there."
+            "I slid my hand from her thigh to the curve of her backside, slowly enough that she could stop me with a single look."
+
+            $ enter_cinematic_mode()
+            scene cg ch01_movie_ass_grab_01
+            with dissolve
+
+            "[girlfriend_name] went still. Her eyes cut toward [friend_name]. All he had to do was turn his head."
+            "I left my hand resting there and waited, giving her the chance to push it away."
+            "She didn't. She shifted back into my palm instead, just slightly."
+
+            scene cg ch01_movie_ass_grab_02
+            with dissolve
+
+            "I squeezed once. When she answered, it was barely a whisper under the soundtrack."
             gf "Behave."
             mc "I am."
             gf "Barely."
+            "She caught my wrist and steered my hand back down to her thigh, biting back a smile the whole time."
+
+            $ exit_cinematic_mode()
+            scene cg ch01_movie_no_blanket
+            with dissolve
 
         "[ch01_noblanket_tease_text]":
             $ apply_choice("ch01_noblanket_tease")
@@ -536,7 +568,7 @@ label ch01_scene_21_watching_julian:
 
 label ch01_scene_22_first_micro_test:
 
-    "[girlfriend_name] got up for her drink. When she dropped back onto the sofa, the loose neckline of her sleep tee had shifted slightly from the way she'd been lying against me."
+    "[girlfriend_name] got up for her drink. When she dropped back onto the sofa, the thin neckline of her camisole had shifted slightly from the way she'd been lying against me."
     "She noticed almost immediately."
     "Her hand started toward the fabric, stopped, and her eyes flicked toward [friend_name]."
     "He was watching the movie."
@@ -1209,10 +1241,15 @@ label ch01_scene_30_end_day_one:
 
     "My eyes opened."
 
-    scene bg ch01_villa_bedroom_night
+    $ enter_cinematic_mode()
+    scene cg ch01_dream_wake_night
     with dissolve
 
     "[girlfriend_name] was asleep beside me, breathing softly, exactly where she'd been."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_villa_bedroom_night
+    with dissolve
 
     "I stared at the ceiling for a moment."
 

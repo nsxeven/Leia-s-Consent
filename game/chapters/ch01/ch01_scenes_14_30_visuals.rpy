@@ -12,25 +12,22 @@ image bg ch01_villa_kitchen_night = Composite(
 image bg ch01_pool_evening = At("images/backgrounds/villa/villa_pool_evening.webp", prologue_bg_blur)
 image bg ch01_pool_night = At("images/backgrounds/villa/villa_pool_night.webp", prologue_bg_blur)
 
-image cg ch01_night_pool_attention = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#202a3a"),
-    (90, 70), Text("CG PLACEHOLDER\nCH1D1_CG_NightPool_01 — FIRST NON-ACCIDENTAL GAZE\nLEIA AT POOL EDGE / JULIAN GLANCES / RYAN NOTICES\nALL THREE COMPOSITIONALLY RELEVANT", size=48, color="#ffffff"),
-)
+# Night pool: Leia at the pool edge, Julian beside her with a whisky.
+image cg ch01_night_pool_attention = At("images/cg/ch01/CH1D1_CG_PoolTension_01.webp", prologue_fullscreen)
 
 image bg ch01_villa_bedroom_night = At("images/backgrounds/villa/villa_master_night.webp", prologue_bg_blur)
 
-image cg ch01_movie_cuddle_blanket = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#34303d"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-MOVIE-01 — MOVIE NIGHT\nRYAN + LEIA CUDDLED UNDER BLANKET / JULIAN NEARBY", size=50, color="#ffffff"),
-)
+image cg ch01_movie_cuddle_blanket = At("images/cg/ch01/CH1D1_CG_MovieBlanket_01.webp", prologue_fullscreen)
 
-image cg ch01_movie_no_blanket = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#3d3540"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-MOVIE-02 — BLANKET REMOVED\nLEIA IN VILLA LOUNGEWEAR / OPEN SOFA POSTURE", size=50, color="#ffffff"),
-)
+# Blanket draped over the sofa, Leia smiling at Ryan, Julian mid-movie.
+image cg ch01_movie_no_blanket = At("images/cg/ch01/CH1D1_CG_MovieStare_01.webp", prologue_fullscreen)
+
+# Blanket off: Ryan's hand on Leia's backside (01), then the squeeze (02).
+image cg ch01_movie_ass_grab_01 = At("images/cg/ch01/CH1D1_CG_MovieAssGrab_01.webp", prologue_fullscreen)
+image cg ch01_movie_ass_grab_02 = At("images/cg/ch01/CH1D1_CG_MovieAssGrab_02.webp", prologue_fullscreen)
+
+# Back downstairs after changing: Julian hands Ryan a whisky at the counter.
+image cg ch01_villa_night_julian_drink = At("images/cg/ch01/CH1D1_CG_JulianDrink.webp", prologue_fullscreen)
 
 image cg ch01_lounge_micro_test = Composite(
     (1920, 1080),
@@ -87,3 +84,6 @@ image cg ch01_dream_stranger_reach = Composite(
     (0, 0), Solid("#2e3039"),
     (90, 70), Text("CG PLACEHOLDER\nCH01-DREAM-STRANGER-06 — DREAM ESCALATION\nLEIA REACHES TOWARD HIM / CUT TO BLACK", size=50, color="#ffffff"),
 )
+
+# Waking from the dream: Leia asleep beside Ryan.
+image cg ch01_dream_wake_night = At("images/cg/ch01/CH1D1_CG_NightmareWakeUp.webp", prologue_fullscreen)

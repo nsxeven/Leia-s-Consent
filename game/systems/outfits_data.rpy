@@ -115,7 +115,7 @@ init python:
         "resort_loungewear": {
             "name": "Villa Loungewear",
             "category": "casual",
-            "description": "Leia's oversized sleep tee and short lounge shorts for winding down at the villa.",
+            "description": "Leia's white camisole and short lounge shorts for winding down at the villa.",
             "cost": 0,
             "shop_visible": False,
             "story_grant": True,

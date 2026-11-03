@@ -65,6 +65,9 @@ image cg ch01_julian_carry = At("images/cg/ch01/CH1D1_CG_Carry_01.webp", prologu
 image cg ch01_carry_walk = At("images/cg/ch01/CH1D1_CG_Carry_02.webp", prologue_fullscreen)
 image cg ch01_carry_dress_shift = At("images/cg/ch01/CH1D1_CG_Carry_03.webp", prologue_fullscreen)
 
+# Set down on the villa sofa, Leia drifts straight back to sleep.
+image cg ch01_sofa_half_asleep_night = At("images/cg/ch01/CH1D1_CG_HalfAsleep_01.webp", prologue_fullscreen)
+
 
 # Dinner stranger — fixed-coordinate production layers.
 # All five PNGs share one 941x1672 canvas, so dry and wet swap in place with no
