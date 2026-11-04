@@ -1247,7 +1247,7 @@ label ch01_scene_30_end_day_one:
         "Right there at the table. In front of me."
 
         "[girlfriend_name] gasped, one small, startled sound."
-        "She should have stepped away. In the dream, she didn't."
+        mc "Babe, are you okay?"
 
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
