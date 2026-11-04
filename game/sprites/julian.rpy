@@ -8,12 +8,18 @@
 #     current outfit while `lc_julian_speaking` is true.
 #   - `lc_say_swap` (config.say_arguments_callback) flips that flag per line;
 #     the slot crossfades itself (0.2s), so the text box and Leia are untouched.
-#   - Julian only appears where Ryan's sprite is already on screen, so scenes
-#     that keep Ryan off (CGs, the post-towel lounge, bed scenes) stay empty.
+#   - Julian only appears where Ryan's sprite (or the empty `julian_slot`) is
+#     on screen, so scenes that keep the left slot clear (CGs, the post-towel
+#     lounge, bed scenes) stay empty.
+#   - `julian_slot` is an empty left slot that shows Julian only while he is
+#     speaking. Use it where Ryan is off screen but Julian talks (Prologue
+#     truth or dare). Hide it before Ryan enters the same slot.
 #   - `lc_julian_outfit` says what he is wearing; None means no swap
-#     (Prologue party: no art yet; while he carries Leia; Day 2 onwards).
+#     (while he carries Leia; Day 2 onwards).
 #
 # Outfit art (941x1672 canvas, same envelope as Ryan and Leia):
+#   party   -> black button-up + khaki shorts (stand-in until party art exists;
+#              darryn, 2026-11-04). Swap the file in julian_party_layers later.
 #   travel  -> cream shirt + olive shorts
 #   pool    -> swim shorts
 #   evening -> black button-up + khaki shorts
@@ -26,7 +32,7 @@ init -1 python:
 
     import time as _lc_time
 
-    LC_JULIAN_OUTFITS = ("travel", "pool", "evening", "lounge")
+    LC_JULIAN_OUTFITS = ("party", "travel", "pool", "evening", "lounge")
     LC_SWAP_SECONDS = 0.2
 
     # Last swap, kept outside the store (not saved, not rolled back):
@@ -78,6 +84,9 @@ init python:
 init 1:
     # init 1: lc_sprite_silhouette is defined at init 0 in leia_prologue_party.rpy,
     # which loads after this file.
+    layeredimage julian_party_layers:
+        always "images/sprites/julian/BASE_BlackShirt.png"
+
     layeredimage julian_travel_layers:
         always "images/sprites/julian/BASE_CreamShirt.png"
 
@@ -90,7 +99,11 @@ init 1:
     layeredimage julian_lounge_layers:
         always "images/sprites/julian/BASE_BlackTeeGreyShorts.png"
 
+    image julian_party = Fixed(lc_sprite_silhouette("julian_party_layers"), xysize=(941, 1672))
     image julian_travel = Fixed(lc_sprite_silhouette("julian_travel_layers"), xysize=(941, 1672))
     image julian_pool = Fixed(lc_sprite_silhouette("julian_pool_layers"), xysize=(941, 1672))
     image julian_evening = Fixed(lc_sprite_silhouette("julian_evening_layers"), xysize=(941, 1672))
     image julian_lounge = Fixed(lc_sprite_silhouette("julian_lounge_layers"), xysize=(941, 1672))
+
+    # Empty left slot: nothing on screen until Julian speaks.
+    image julian_slot = Fixed(lc_left_slot(Null()), xysize=(941, 1672))

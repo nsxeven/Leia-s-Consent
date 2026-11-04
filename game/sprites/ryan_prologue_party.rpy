@@ -13,7 +13,7 @@ layeredimage ryan_prologue_party_layers:
 
 
 # Reuse the stable production silhouette treatment and breathing envelope.
-image ryan_prologue_party = Fixed(lc_sprite_silhouette("ryan_prologue_party_layers"), xysize=(941, 1672))
+image ryan_prologue_party = Fixed(lc_left_slot(Fixed(lc_sprite_silhouette("ryan_prologue_party_layers"), xysize=(941, 1672))), xysize=(941, 1672))
 
 
 # Chapter One Ryan — deliberately plain visual treatment.

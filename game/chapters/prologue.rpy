@@ -27,6 +27,9 @@ label prologue_name_setup:
 label prologue_start:
 
     $ set_story_flag("prologue_started")
+    # Julian swaps into the left slot on his lines (sprites/julian.rpy).
+    # Party outfit = black shirt stand-in until party art exists.
+    $ lc_julian_outfit = "party"
 
     scene black
     with fade
@@ -182,6 +185,8 @@ label prologue_start:
     scene bg prologue_truthordare
     with dissolve
     show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
+    # Ryan is off screen here; Julian appears in the empty left slot on his lines.
+    show julian_slot at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
@@ -206,6 +211,7 @@ label prologue_start:
     "[girlfriend_name] looked around once."
     "Then she pointed at me."
 
+    hide julian_slot
     show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
     mc "Me?"
@@ -215,6 +221,7 @@ label prologue_start:
     "Nobody had asked me."
     "That did not seem important at the time."
     hide ryan_prologue_party
+    show julian_slot at prologue_other_enter_left, leia_body_idle
     with sprite_enter_exit
     friend "Okay. Next round, you are not choosing Truth again."
     show leia_prologue_party skeptical
@@ -246,6 +253,7 @@ label prologue_start:
     gf "I know."
     "And then she moved closer anyway."
     hide leia_prologue_party
+    hide julian_slot
     hide ryan_prologue_party
     scene cg prologue_first_kiss_01
     with dissolve
@@ -278,6 +286,7 @@ label prologue_start:
     mc "Worth asking."
     hide leia_prologue_party
     hide ryan_prologue_party
+    $ lc_julian_outfit = None
     scene black
     with fade
     "And somehow... that was the beginning."
