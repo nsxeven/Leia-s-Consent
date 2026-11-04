@@ -142,6 +142,27 @@ init 95 python:
             })
         return rows
 
+    # Chat threads stick to the newest message (darryn, 2026-11-04): a thread
+    # opens at the bottom, and when a staged reply lands while it is open the
+    # view slides down to it, like a real messaging app. Used by every thread.
+    LC_PHONE_SCROLL_SECONDS = 0.35
+
+    def lc_phone_thread_ranged(adj):
+        # Called by Ren'Py whenever the thread's scrollable height changes.
+        target = adj.range
+        if not getattr(adj, "_lc_opened", False):
+            adj._lc_opened = True
+            adj.change(target)
+            return
+        amount = target - adj.value
+        if amount > 0:
+            adj.animate(amount, LC_PHONE_SCROLL_SECONDS, renpy.atl.warpers["easeout"])
+        else:
+            adj.change(target)
+
+    def lc_phone_thread_adjustment():
+        return ui.adjustment(ranged=lc_phone_thread_ranged)
+
     def lc_phone_rounded_photo(asset_id, width, height):
         photo = Transform(asset_id, xysize=(width, height), fit="cover")
         mask = Transform("gui/phone/sweetheart/photo_mask.png", xysize=(width, height))
@@ -314,6 +335,8 @@ screen phone_screen():
     default phone_app = lc_phone_link_app()
     default phone_thread = lc_phone_link_thread()
     default hovered_app = None
+    # One scroll position per open thread; a fresh phone session starts each at the bottom.
+    default thread_adjs = {}
 
     on "show" action SetVariable("lc_phone_deep_link", None)
     on "replace" action SetVariable("lc_phone_deep_link", None)
@@ -509,13 +532,14 @@ screen phone_screen():
                         color c["txt"]
                         xalign 0.5
                         ypos 108
+                    $ thread_yadj = thread_adjs.setdefault(phone_thread, lc_phone_thread_adjustment())
                     viewport:
                         ypos 168
                         xysize (642, 726)
                         mousewheel True
                         draggable True
                         scrollbars None
-                        yinitial 0.0
+                        yadjustment thread_yadj
                         vbox:
                             xfill True
                             spacing 4
