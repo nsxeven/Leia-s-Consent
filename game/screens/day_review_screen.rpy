@@ -126,11 +126,16 @@ init python:
     class LcReviewDelta(renpy.Displayable):
         """The green gain or red loss on a stat bar.
 
-        Moves linearly over `delay` seconds, the same clock AnimatedValue uses,
-        then flashes for a third of a second. delay <= 0 draws the settled segment.
+        Owns the whole moving part of the bar on ONE clock: the static fill
+        underneath stops at min(old, new), and this draws the stat's own fill,
+        the change segment and a dark divider at the boundary, so colours never
+        drift apart. Ends with one soft glow instead of a strobe.
+        delay <= 0 draws the settled state.
         """
 
-        def __init__(self, old, new, delay, width=600, **kwargs):
+        GLOW = 0.45
+
+        def __init__(self, old, new, delay, width=600, fill=None, **kwargs):
             super(LcReviewDelta, self).__init__(**kwargs)
             self.old = float(old)
             self.new = float(new)
@@ -138,45 +143,59 @@ init python:
             self.t0 = None
             self.inner = int(width)
             self.height = 14
+            self.fill = Frame(fill, 0, 6, 0, 0) if fill else None
             self.gain = Frame("images/ui/scrapbook/bar_gain.png", 0, 6, 0, 0)
+            # Losses read clearly red: bar_loss_red.png is the gain art's pixel
+            # shading on a red ramp (the old pale-pink bar_loss.png read as faded).
+            self.loss = Frame("images/ui/scrapbook/bar_loss_red.png", 0, 6, 0, 0)
+            self.divider = Solid("#3b2a30")
             self.flash = Frame("images/ui/scrapbook/bar_flash.png", 0, 6, 0, 0)
-            self.loss = "images/ui/scrapbook/bar_loss.png"
 
         def _px(self, value):
             return int(round(value * self.inner / 100.0))
 
+        def _blit(self, rv, d, x0, x1, st, at, alpha=1.0):
+            if x1 - x0 <= 0:
+                return
+            piece = renpy.render(Transform(d, alpha=alpha) if alpha < 1.0 else d, x1 - x0, self.height, st, at)
+            rv.blit(piece, (x0, 0))
+
         def render(self, width, height, st, at):
             if self.t0 is None:
                 self.t0 = st
+            elapsed = st - self.t0
             if self.delay <= 0:
                 frac = 1.0
             else:
-                frac = min(1.0, max(0.0, (st - self.t0) / self.delay))
+                frac = min(1.0, max(0.0, elapsed / self.delay))
+                # Ease out so the bar settles instead of stopping dead.
+                frac = 1.0 - (1.0 - frac) ** 2
             current = self.old + (self.new - self.old) * frac
-            lo = min(self.old, current)
-            hi = max(self.old, current)
-            x0 = self._px(lo)
-            x1 = self._px(hi)
             rv = renpy.Render(self.inner, self.height)
-            seg = x1 - x0
-            if seg > 0:
-                elapsed = 0 if self.t0 is None else (st - self.t0)
-                flashing = (
-                    self.delay > 0
-                    and frac >= 1.0
-                    and (elapsed - self.delay) < 0.30
-                    and int((elapsed - self.delay) * 20) % 2 == 0
-                )
-                if flashing:
-                    piece = renpy.render(self.flash, seg, self.height, st, at)
-                elif self.new >= self.old:
-                    piece = renpy.render(self.gain, seg, self.height, st, at)
-                else:
-                    piece = renpy.render(
-                        Transform(self.loss, crop=(0, 0, seg, self.height)),
-                        seg, self.height, st, at)
-                rv.blit(piece, (x0, 0))
-            if self.delay > 0 and (st - self.t0) < self.delay + 0.30:
+            gain = self.new >= self.old
+            if gain:
+                seg0, seg1 = self._px(self.old), self._px(current)
+                self._blit(rv, self.gain, seg0, seg1, st, at)
+                divider = seg0
+            else:
+                # Not-yet-lost part keeps the stat's own colour.
+                if self.fill is not None:
+                    self._blit(rv, self.fill, self._px(self.new), self._px(current), st, at)
+                seg0, seg1 = self._px(current), self._px(self.old)
+                self._blit(rv, self.loss, seg0, seg1, st, at)
+                divider = self._px(self.new)
+            # One soft glow over the change once it lands (no flicker).
+            after = elapsed - self.delay
+            if self.delay > 0 and 0 <= after < self.GLOW:
+                import math
+                glow = 0.55 * math.sin(math.pi * after / self.GLOW)
+                lo, hi = min(seg0, seg1), max(seg0, seg1)
+                self._blit(rv, self.flash, lo, hi, st, at, alpha=glow)
+            # Dark divider where today's change begins, so the change never
+            # merges with a similar native colour (e.g. green Momentum).
+            if abs(self.new - self.old) > 0 and 0 < divider < self.inner:
+                self._blit(rv, self.divider, max(0, divider - 2), divider + 1, st, at)
+            if self.delay > 0 and elapsed < self.delay + self.GLOW:
                 renpy.redraw(self, 0)
             return rv
 
@@ -197,6 +216,7 @@ init python:
                 frac = 1.0
             else:
                 frac = min(1.0, max(0.0, (st - self.t0) / self.delay))
+                frac = 1.0 - (1.0 - frac) ** 2
             value = int(round(self.old + (self.new - self.old) * frac))
             color = "#5f8a32" if self.new > self.old else "#a8453f"
             text = Text(
@@ -296,7 +316,7 @@ screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pit
     elif show_run:
         timer duration action [SetDict(phases, row["stat"], "flash"), Function(lc_review_sfx, "tick")]
     elif show_flash:
-        timer 0.30 action SetDict(phases, row["stat"], "done")
+        timer 0.45 action SetDict(phases, row["stat"], "done")
 
     $ narrow = col_w < 500
     $ label_size = 16 if narrow else 18
@@ -340,16 +360,16 @@ screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pit
                     ysize 14
                     left_bar Frame(fill, 0, 6, 0, 0)
                     right_bar Frame("images/ui/scrapbook/bar_track.png", 0, 3, 0, 0)
-                    if show_run or show_flash:
-                        value AnimatedValue(value=row["today"], range=100.0, delay=duration, old_value=row["yesterday"])
-                    elif show_final:
-                        value StaticValue(row["today"], 100.0)
+                    # The stat's own fill stays still at the lower value; the
+                    # moving part is drawn by LcReviewDelta on a single clock.
+                    if show_run or show_flash or show_final:
+                        value StaticValue(min(row["yesterday"], row["today"]), 100.0)
                     else:
                         value StaticValue(row["yesterday"], 100.0)
                 if show_run or show_flash:
-                    add LcReviewDelta(row["yesterday"], row["today"], duration, bar_w) xpos 3 ypos 3
+                    add LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill) xpos 3 ypos 3
                 elif show_final:
-                    add LcReviewDelta(row["yesterday"], row["today"], 0, bar_w) xpos 3 ypos 3
+                    add LcReviewDelta(row["yesterday"], row["today"], 0, bar_w, fill) xpos 3 ypos 3
                 else:
                     add Solid("#7a6266") xpos (3 + int(round(row["yesterday"] * bar_w / 100.0))) ypos 2 xsize 3 ysize 16
             if show_flash:
