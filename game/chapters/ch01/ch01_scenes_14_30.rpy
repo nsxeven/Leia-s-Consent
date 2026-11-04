@@ -955,7 +955,8 @@ label ch01_scene_27_late_photo_drop:
 
 label ch01_scene_28_ryan_leia_alone:
 
-    scene bg ch01_villa_living_evening
+    # darryn: night art is explicitly wanted from Julian going upstairs (scene 28) to the end of Day 1.
+    scene bg ch01_villa_living_night
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
@@ -1135,7 +1136,7 @@ label ch01_scene_30_end_day_one:
 
     # Day 1 sprite staging ends here; Julian no longer swaps into Ryan's slot.
     $ lc_julian_outfit = None
-    scene bg ch01_villa_bedroom_evening
+    scene bg ch01_villa_bedroom_night
     with fade
 
     "We switched off the downstairs lights and finally headed upstairs."
@@ -1278,7 +1279,7 @@ label ch01_scene_30_end_day_one:
     "None of it had happened. At the real dinner he had apologised, laughed at himself, and walked back to his own table."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_bedroom_evening
+    scene bg ch01_villa_bedroom_night
     with dissolve
 
     "I stared at the ceiling for a moment."
