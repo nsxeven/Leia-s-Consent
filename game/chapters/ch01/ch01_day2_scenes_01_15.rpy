@@ -288,7 +288,7 @@ label ch01_day2_start:
 
 label ch01_day2_scene_01_morning_after:
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
 
     "Morning arrived slowly through the useless decorative curtains."
@@ -378,7 +378,7 @@ label ch01_day2_scene_01_morning_after:
             mc "In the last four seconds?"
             gf "Growth."
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with dissolve
 
     gf "You were a menace last night."

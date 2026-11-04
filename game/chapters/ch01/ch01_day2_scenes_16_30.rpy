@@ -1366,7 +1366,7 @@ label ch01_day2_scene_30_bedroom:
             and choice_tag_count("open", ch01_d2_choice_ids()) >= 1
         )
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
 
     "Upstairs, we drank water and took a few quiet minutes to let the alcohol and noise settle."
@@ -1456,7 +1456,7 @@ label ch01_day2_scene_30_love:
     "Nothing about it needed an audience."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with dissolve
 
     "Afterward [girlfriend_name] curled against me."
@@ -1545,7 +1545,7 @@ label ch01_day2_scene_30_exhibition:
     "We finished the game we had started, safely inside the room and fully aware that the imagined audience was only part of the roleplay."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with dissolve
 
     "A few minutes later [girlfriend_name] looked at the still-open curtains."
@@ -1648,7 +1648,7 @@ label ch01_day2_scene_30_ntr_nightmare:
     with hpunch
     pause 0.3
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
 
     "I woke hard enough to pull the sheet with me."

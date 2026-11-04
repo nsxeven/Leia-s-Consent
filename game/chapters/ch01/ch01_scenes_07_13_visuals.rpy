@@ -5,6 +5,8 @@ image bg ch01_villa_entry_day = At("images/backgrounds/villa/villa_frontdoor_day
 image bg ch01_villa_entry_evening = At("images/backgrounds/villa/villa_frontdoor_evening.webp", prologue_bg_blur)
 
 image bg ch01_car_night = At("images/backgrounds/car/car_night.webp", prologue_bg_blur)
+# Evening car (game-wide rule: evening art after dark; *_night reserved for sneaky scenes).
+image bg ch01_car_evening = At("images/backgrounds/car/car_evening.webp", prologue_bg_blur)
 
 image bg ch01_restaurant_evening = At("images/backgrounds/chapter 1/ch01_restaurant.webp", prologue_bg_blur)
 

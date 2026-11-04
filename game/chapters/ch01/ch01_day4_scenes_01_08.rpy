@@ -49,7 +49,7 @@ label ch01_day4_scene_01_wake:
     $ d4_variant = get_story_value("ch01_d4_d3_variant", "love_private")
     $ d4_d2_end = get_story_value("ch01_d2_end_route", "love")
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
 
     if d4_lane == "love":
@@ -202,7 +202,7 @@ label ch01_day4_scene_02_phone_morning:
 
 label ch01_day4_scene_02_phone_ntr:
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with dissolve
 
     python:
