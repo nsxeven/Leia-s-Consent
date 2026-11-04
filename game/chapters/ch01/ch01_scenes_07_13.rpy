@@ -860,12 +860,14 @@ label ch01_scene_12_shop_and_drive_back:
 
 label ch01_scene_13_back_at_villa:
 
-    # Out of the car: Julian goes back to swapping into Ryan's slot.
-    $ lc_julian_outfit = "evening"
+    # Leia is asleep (in the car, then carried) and has no sprite, so Julian
+    # stands in the right slot with Ryan on the left until they reach the sofa
+    # (darryn). No swap here; it resumes when Leia's sprite returns.
+    $ lc_julian_outfit = None
     scene bg ch01_villa_night
     with fade
-    # Leia is asleep in the car; Ryan stays on screen and Julian swaps in on his lines.
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show julian_evening at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "When I parked, [girlfriend_name] didn't move."
@@ -917,11 +919,12 @@ label ch01_scene_13_back_at_villa:
     "I turned. From my angle, [girlfriend_name]'s body and [friend_name]'s supporting arm hid whatever he could see. All I could tell was that [friend_name] looked deeply uncomfortable about having to announce it."
 
     $ exit_cinematic_mode()
-    # Julian is carrying Leia here, so no standing Julian sprite until he sets her down.
+    # Still at the door with Leia asleep: Ryan left, Julian right (no swap).
     $ lc_julian_outfit = None
     scene bg ch01_villa_night
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show julian_evening at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     $ ch01_carry_brush_text = format_choice("ch01_carry_brush", "We're almost inside. Just keep going.")
