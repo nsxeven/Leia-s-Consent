@@ -459,9 +459,13 @@ label ch01_scene_19_too_hot:
     "But whatever had felt private under the blanket no longer had anywhere to hide."
 
     $ exit_cinematic_mode()
-    # After the blanket comes off, hold the matching sofa composition.
-    scene cg ch01_movie_no_blanket
+    # Back-and-forth conversation runs on BG + sprites (darryn); the sofa CG
+    # only marks the blanket coming off. Julian swaps into Ryan's slot.
+    scene bg ch01_villa_living_evening
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     $ set_story_flag("ch01_scene_19_complete")
     jump ch01_scene_20_no_hiding_place
@@ -541,8 +545,11 @@ label ch01_scene_20_no_hiding_place:
             mc "Hm?"
             gf "Nothing."
 
-    scene cg ch01_movie_no_blanket
+    scene bg ch01_villa_living_evening
     with dissolve
+    show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
+    with sprite_enter_exit
 
     $ set_story_flag("ch01_scene_20_complete")
     jump ch01_scene_21_watching_julian
@@ -626,8 +633,11 @@ label ch01_scene_22_first_micro_test:
             $ set_story_value("ch01_micro_test_response", "warned")
             mc "Your top."
             "[girlfriend_name] fixed it immediately."
-            scene cg ch01_movie_no_blanket
+            scene bg ch01_villa_living_evening
             with dissolve
+            show ryan_casual at prologue_other_enter_left, leia_body_idle
+            show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
+            with sprite_enter_exit
             gf "Thanks."
             mc "Mm."
 
@@ -636,8 +646,11 @@ label ch01_scene_22_first_micro_test:
             $ set_story_value("ch01_micro_test_response", "silent_choice")
             "I said nothing."
             "[girlfriend_name] held my gaze for a second, then eventually adjusted the neckline herself."
-            scene cg ch01_movie_no_blanket
+            scene bg ch01_villa_living_evening
             with dissolve
+            show ryan_casual at prologue_other_enter_left, leia_body_idle
+            show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
+            with sprite_enter_exit
             "The pause before she did it was the part I remembered."
 
         "[ch01_micro_open_text]":
@@ -656,14 +669,20 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] blinked."
             gf "Okay."
             "She fixed the top herself and turned back to the screen."
-            scene cg ch01_movie_no_blanket
+            scene bg ch01_villa_living_evening
             with dissolve
+            show ryan_casual at prologue_other_enter_left, leia_body_idle
+            show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
+            with sprite_enter_exit
 
     # The deliberate-open branch settles back to a normal seated image after
     # the player's chosen moment. Other branches reset as Leia adjusts.
     if get_story_value("ch01_micro_test_response") == "knowingly_left":
-        scene cg ch01_movie_no_blanket
+        scene bg ch01_villa_living_evening
         with dissolve
+        show ryan_casual at prologue_other_enter_left, leia_body_idle
+        show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
+        with sprite_enter_exit
 
     $ set_story_flag("ch01_scene_22_complete")
     jump ch01_scene_23_relationship_philosophy
