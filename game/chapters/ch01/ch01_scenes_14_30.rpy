@@ -10,7 +10,7 @@ label ch01_scene_13b_night_pool:
 
     # Pacing Revision v2 — a non-accidental attention beat between the carry
     # sequence and movie night. Nothing goes wrong here; that is the point.
-    scene bg ch01_pool_night
+    scene bg ch01_pool_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
@@ -57,7 +57,7 @@ label ch01_scene_13b_night_pool:
     $ set_story_flag("ch01_night_pool_julian_glance")
 
     $ exit_cinematic_mode()
-    scene bg ch01_pool_night
+    scene bg ch01_pool_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
@@ -333,7 +333,7 @@ label ch01_scene_18_private_under_blanket:
 
     "The second [friend_name] disappeared toward the kitchen, [girlfriend_name] turned to me."
     # The seated group CG includes Julian, so retire it while he is absent.
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
@@ -936,7 +936,7 @@ label ch01_scene_27_late_photo_drop:
 
 label ch01_scene_28_ryan_leia_alone:
 
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
@@ -1116,7 +1116,7 @@ label ch01_scene_30_end_day_one:
 
     # Day 1 sprite staging ends here; Julian no longer swaps into Ryan's slot.
     $ lc_julian_outfit = None
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
 
     "We switched off the downstairs lights and finally headed upstairs."
@@ -1259,7 +1259,7 @@ label ch01_scene_30_end_day_one:
     "None of it had happened. At the real dinner he had apologised, laughed at himself, and walked back to his own table."
 
     $ exit_cinematic_mode()
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with dissolve
 
     "I stared at the ceiling for a moment."

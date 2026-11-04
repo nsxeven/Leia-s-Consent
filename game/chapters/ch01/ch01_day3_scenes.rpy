@@ -58,7 +58,7 @@ label ch01_day3_start:
     $ d3_lane = "ntr" if d3_end in ("ntr_confirmed", "mixed_unresolved") else ("exhibitionism" if d3_end == "exhibitionism" else "love")
     $ set_story_value("ch01_d3_lane", d3_lane)
     $ set_story_value("ch01_d3_ntr_repair_effort", "none")
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
     if d3_lane == "love":
         "[girlfriend_name] woke beside me, still curled against my shoulder."
@@ -519,7 +519,7 @@ label ch01_day3_group_return:
     jump ch01_day3_bedroom
 
 label ch01_day3_bedroom:
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
     if d3_lane == "love":
         gf "The balcony was my favourite part."
@@ -567,7 +567,7 @@ label ch01_day3_bedroom:
         "[girlfriend_name]: toilet*"
         "Typing..."
         "The indicator never stopped."
-        scene bg ch01_villa_bedroom_night
+        scene bg ch01_villa_bedroom_evening
         with fade
         "I woke sharply. [girlfriend_name] was asleep beside me."
         gf "[player_name]...? What's wrong?"

@@ -785,7 +785,7 @@ label ch01_day4_scene_14_night_after:
     $ d4_lane = get_story_value("ch01_d4_lane", "love")
     $ d4_pending = get_story_value("ch01_d4_end_route_pending", "love")
 
-    scene bg ch01_villa_bedroom_night
+    scene bg ch01_villa_bedroom_evening
     with fade
 
     if d4_lane == "love":

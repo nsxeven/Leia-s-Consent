@@ -152,7 +152,7 @@ label lc_phone_shot_tour:
     hide screen lc_phone_settings
 
     $ lc_dialogue_theme = "night"
-    scene bg ch01_villa_living_night
+    scene bg ch01_villa_living_evening
     $ _lc_open_phone("thread", "group")
     $ _lc_phone_shot("04_thread_night")
     hide screen phone_screen

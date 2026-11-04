@@ -16,6 +16,10 @@ image bg ch01_pool_night = At("images/backgrounds/villa/villa_pool_night.webp", 
 image cg ch01_night_pool_attention = At("images/cg/ch01/CH1D1_CG_PoolTension_01.webp", prologue_fullscreen)
 
 image bg ch01_villa_bedroom_night = At("images/backgrounds/villa/villa_master_night.webp", prologue_bg_blur)
+# Game-wide rule (darryn, 2026-11-04): scenes use the EVENING art after dark.
+# The *_night backgrounds are reserved for future sneaky-plan scenes and are
+# only used where darryn explicitly asks for night.
+image bg ch01_villa_bedroom_evening = At("images/backgrounds/villa/villa_master_evening.webp", prologue_bg_blur)
 
 image cg ch01_movie_cuddle_blanket = At("images/cg/ch01/CH1D1_CG_MovieBlanket_01.webp", prologue_fullscreen)
 # Scene 15: Leia settled against Ryan, his hand at her hip under the blanket.

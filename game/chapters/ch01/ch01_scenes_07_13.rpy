@@ -803,7 +803,7 @@ label ch01_scene_12_shop_and_drive_back:
     # Leia is asleep in the back with no lines, so Julian takes the right slot
     # for the whole car talk (darryn). No swap here: Ryan stays left.
     $ lc_julian_outfit = None
-    scene bg ch01_car_night
+    scene bg ch01_car_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show julian_evening at prologue_leia_enter_right, leia_body_idle
@@ -864,7 +864,7 @@ label ch01_scene_13_back_at_villa:
     # stands in the right slot with Ryan on the left until they reach the sofa
     # (darryn). No swap here; it resumes when Leia's sprite returns.
     $ lc_julian_outfit = None
-    scene bg ch01_villa_night
+    scene bg ch01_villa_entry_evening
     with fade
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show julian_evening at prologue_leia_enter_right, leia_body_idle
@@ -921,7 +921,7 @@ label ch01_scene_13_back_at_villa:
     $ exit_cinematic_mode()
     # Still at the door with Leia asleep: Ryan left, Julian right (no swap).
     $ lc_julian_outfit = None
-    scene bg ch01_villa_night
+    scene bg ch01_villa_entry_evening
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
     show julian_evening at prologue_leia_enter_right, leia_body_idle
