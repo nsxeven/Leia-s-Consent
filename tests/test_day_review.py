@@ -278,7 +278,13 @@ class DayReviewTests(unittest.TestCase):
     def test_scrapbook_screen_skips_and_animates(self):
         screen = (ROOT / 'game' / 'screens' / 'day_review_screen.rpy').read_text()
         review = (ROOT / 'game' / 'systems' / 'day_review.rpy').read_text()
-        self.assertIn('AnimatedValue', screen)
+        # Bars animate on one clock in LcReviewDelta (eased, soft glow, no strobe);
+        # the stat's own fill stays static at the lower value underneath.
+        self.assertIn('class LcReviewDelta', screen)
+        self.assertIn('LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill)', screen)
+        self.assertIn('StaticValue(min(row["yesterday"], row["today"]), 100.0)', screen)
+        self.assertNotIn('% 2 == 0', screen)  # the old 20 Hz flash strobe
+        self.assertTrue((ROOT / 'game' / 'images' / 'ui' / 'scrapbook' / 'bar_loss_red.png').is_file())
         self.assertIn('SetScreenVariable("skipped", True)', screen)
         self.assertIn('screen lc_review_night_screen', screen)
         self.assertIn('call screen lc_review_night_screen', review)
