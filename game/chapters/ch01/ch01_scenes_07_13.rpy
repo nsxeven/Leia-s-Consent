@@ -98,6 +98,8 @@ label ch01_scene_07_did_he_see:
     gf "Better answer."
 
     $ exit_cinematic_mode()
+    # Dressed for dinner from here on (darryn): Julian's swim shorts are pool-only.
+    $ lc_julian_outfit = "evening"
     scene bg ch01_villa_entry_day
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
@@ -798,9 +800,13 @@ label ch01_scene_12_shop_and_drive_back:
     "Within a few minutes, her breathing had settled into the slow rhythm of somebody who had actually committed to the plan."
 
     $ exit_cinematic_mode()
+    # Leia is asleep in the back with no lines, so Julian takes the right slot
+    # for the whole car talk (darryn). No swap here: Ryan stays left.
+    $ lc_julian_outfit = None
     scene bg ch01_car_night
     with dissolve
     show ryan_casual at prologue_other_enter_left, leia_body_idle
+    show julian_evening at prologue_leia_enter_right, leia_body_idle
     with sprite_enter_exit
 
     "The car became quiet enough that [friend_name] lowered his voice."
@@ -854,6 +860,8 @@ label ch01_scene_12_shop_and_drive_back:
 
 label ch01_scene_13_back_at_villa:
 
+    # Out of the car: Julian goes back to swapping into Ryan's slot.
+    $ lc_julian_outfit = "evening"
     scene bg ch01_villa_night
     with fade
     # Leia is asleep in the car; Ryan stays on screen and Julian swaps in on his lines.

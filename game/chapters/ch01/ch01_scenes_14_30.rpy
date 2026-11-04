@@ -150,7 +150,7 @@ label ch01_scene_14_movie_setup:
     gf "Press play."
 
     $ enter_cinematic_mode()
-    scene cg ch01_movie_cuddle_blanket
+    scene cg ch01_movie_blanket_hand
     with dissolve
 
     "[girlfriend_name] tucked herself against my side beneath a throw blanket while [friend_name] claimed the other end of the sofa. Snacks covered most of the coffee table."
@@ -159,7 +159,8 @@ label ch01_scene_14_movie_setup:
     $ exit_cinematic_mode()
     # Continue the conversation over the seated composition (everyone is on
     # the sofa under the blanket, so the CG stays instead of standing sprites).
-    scene cg ch01_movie_cuddle_blanket
+    # MovieBlanket_02 holds until "She caught my wrist." (darryn).
+    scene cg ch01_movie_blanket_hand
     with dissolve
 
     $ set_story_flag("ch01_scene_14_complete")
@@ -171,10 +172,13 @@ label ch01_scene_15_under_blanket:
 
     $ enter_cinematic_mode()
     scene cg ch01_movie_blanket_hand
-    with dissolve
 
     "At some point [girlfriend_name] settled deeper against me and pulled the blanket higher over both of us."
     "My hand, already resting at her waist, wandered lazily along her side and upper thigh beneath the blanket."
+
+    # Wide sofa CG (MovieBlanket_01) from her reaction onward.
+    scene cg ch01_movie_cuddle_blanket
+    with dissolve
 
     "She caught my wrist."
 
