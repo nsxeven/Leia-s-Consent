@@ -36,7 +36,7 @@ screen lc_tc_tab(label, value, tab):
         padding (18, 8)
         background (Frame("gui/title/chip_hover.png", 20, 20) if tab == value else Frame("gui/title/chip.png", 20, 20))
         hover_background Frame("gui/title/chip_hover.png", 20, 20)
-        action SetDict(lc_title_ui, "tab", value)
+        action [Function(lc_ui_play, "pick"), SetDict(lc_title_ui, "tab", value)]
         hovered Function(lc_ui_play, "tick")
         text label.upper() style "lc_tc_tab_text"
 
@@ -48,7 +48,7 @@ screen lc_tc_tile(thumb, label, selected, locked, action, w, h):
         xsize (w + 12)
         background Frame("gui/title/card_hover.png" if selected else "gui/title/card.png", 24, 24)
         hover_background Frame("gui/title/card_hover.png", 24, 24)
-        action (Function(renpy.notify, "Locked: reach this in the story to unlock it.") if locked else action)
+        action ([Function(lc_ui_play, "thud"), Function(renpy.notify, "Locked: reach this in the story to unlock it.")] if locked else [Function(lc_ui_play, "pick"), action])
         hovered Function(lc_ui_play, "tick")
         vbox:
             spacing 6
@@ -132,7 +132,7 @@ screen lc_title_customiser(tab):
                     padding (16, 8)
                     background Frame("gui/title/chip.png", 20, 20)
                     hover_background Frame("gui/title/chip_hover.png", 20, 20)
-                    action ToggleField(persistent, "lc_title_all_memories")
+                    action [Function(lc_ui_play, "tap"), ToggleField(persistent, "lc_title_all_memories")]
                     hovered Function(lc_ui_play, "tick")
                     text ("18+ options: shown" if persistent.lc_title_all_memories else "18+ options: hidden") style "lc_title_small_text" color "#ffffffd0"
                 null width 120
@@ -140,14 +140,14 @@ screen lc_title_customiser(tab):
                     padding (16, 8)
                     background Frame("gui/title/chip.png", 20, 20)
                     hover_background Frame("gui/title/chip_hover.png", 20, 20)
-                    action Function(lc_title_reset)
+                    action [Function(lc_ui_play, "tap"), Function(lc_title_reset)]
                     hovered Function(lc_ui_play, "tick")
                     text "Reset" style "lc_title_small_text" color "#ffffffd0"
                 button:
                     padding (22, 8)
                     background Frame("gui/title/chip_hover.png", 20, 20)
                     hover_background Frame("gui/title/chip_hover.png", 20, 20)
-                    action SetDict(lc_title_ui, "editing", False)
+                    action [Function(lc_ui_play, "back"), SetDict(lc_title_ui, "editing", False)]
                     hovered Function(lc_ui_play, "tick")
                     text "Done" style "lc_title_small_text" color "#ffffff"
 

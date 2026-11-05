@@ -135,11 +135,11 @@ style lc_title_caption_text is default:
     textalign 0.5
 
 
-screen lc_title_item(label, action):
+screen lc_title_item(label, action, sound="tap"):
     button:
         style "lc_title_item_button"
         xysize (380, 50)
-        action action
+        action [Function(lc_ui_play, sound), action]
         hovered Function(lc_ui_play, "tick")
         text label.upper() style "lc_title_item_text" xpos -10 ypos -10 at lc_title_item_slide
         text label.upper() style "lc_title_item_glow_text" xpos -10 ypos -10 at lc_title_item_slide, lc_title_item_glow
@@ -160,8 +160,8 @@ screen lc_title_polaroid(card):
             if card["locked"]:
                 action NullAction()
             else:
-                action ShowMenu("gallery_screen")
-                hovered Function(lc_ui_play, "tick")
+                action [Function(lc_ui_play, "polaroid"), ShowMenu("gallery_screen")]
+                hovered Function(lc_ui_play, "rustle")
                 hover_foreground "gui/title/polaroid_hover.png"
             add "gui/title/polaroid.png"
             fixed:
@@ -212,7 +212,7 @@ screen lc_title_continue(slot):
         padding (12, 12)
         background Frame("gui/title/card.png", 24, 24)
         hover_background Frame("gui/title/card_hover.png", 24, 24)
-        action FileLoad(slot, confirm=False, slot=True)
+        action [Function(lc_ui_play, "load"), FileLoad(slot, confirm=False, slot=True)]
         hovered Function(lc_ui_play, "tick")
         at lc_title_fade(0.5, 0.7)
         hbox:
@@ -284,7 +284,7 @@ screen lc_title_front(slot):
         ypos (360 if slot else 250)
         spacing 0
         at lc_title_fade(0.6, 0.7)
-        use lc_title_item("New Game", Start())
+        use lc_title_item("New Game", Start(), "load")
         use lc_title_item("Load", ShowMenu("load"))
         use lc_title_item("Gallery", ShowMenu("gallery_screen"))
         use lc_title_item("Customise", SetDict(lc_title_ui, "editing", True))

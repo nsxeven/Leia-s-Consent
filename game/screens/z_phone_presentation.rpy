@@ -60,7 +60,7 @@ screen phone_quick_access():
             ypos 858
             focus_mask True
             action [SetScreenVariable("hud_hovered", False), Show("phone_screen")]
-            hovered SetScreenVariable("hud_hovered", True)
+            hovered [SetScreenVariable("hud_hovered", True), Function(lc_ui_play, "tick")]
             unhovered SetScreenVariable("hud_hovered", False)
 
         if phone_total_unread() > 0:
