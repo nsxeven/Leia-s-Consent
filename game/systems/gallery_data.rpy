@@ -157,9 +157,13 @@ init -2 python:
     gallery_row("d1_movie_risk", "ch01_d1", "One turn of the head",
         "Blanket off, Leia nods, and Ryan's hand finds her backside while Julian watches the movie.",
         [("ch01_movie_ass_grab_01", "The risk"), ("ch01_movie_ass_grab_02", "The squeeze")])
+    gallery_row("d1_movie_glance", "ch01_d1", "The glance",
+        "Back on the sofa, Leia checks where everyone's eyes are.",
+        [("ch01_movie_micro_test_glance", "The glance")])
     gallery_row("d1_lounge_micro_test", "ch01_d1", "Lounge",
         "A moment in the lounge when nothing accidental forces the decision.",
-        [("ch01_movie_micro_test_glance", "The glance"), ("ch01_lounge_micro_test", "Her choice")])
+        [("ch01_lounge_micro_test", "Her choice")],
+        mature=True)
     gallery_row("d1_dream", "ch01_d1", "The dream",
         "Ryan's dream at the end of the day. A dream is not evidence.",
         [("ch01_dream_dinner_beside", "Beside her"), ("ch01_dream_dinner_grab", "The grab"), ("ch01_dream_dinner_rub", "She lets him")],
