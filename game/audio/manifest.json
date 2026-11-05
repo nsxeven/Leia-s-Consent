@@ -1264,6 +1264,96 @@
     "license": "CC0 1.0"
    },
    "processing": "HQ preview; leading silence trimmed (-45 dB), -6 dB gain, fade out 200 ms from 1.25 s"
+  },
+  {
+   "name": "ui/key_1",
+   "file": "ui/key_1.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.07,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
+    "license": "original work, owned by the project"
+   }
+  },
+  {
+   "name": "ui/key_2",
+   "file": "ui/key_2.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.07,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
+    "license": "original work, owned by the project"
+   }
+  },
+  {
+   "name": "ui/key_3",
+   "file": "ui/key_3.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.07,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
+    "license": "original work, owned by the project"
+   }
+  },
+  {
+   "name": "ui/key_4",
+   "file": "ui/key_4.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.07,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
+    "license": "original work, owned by the project"
+   }
+  },
+  {
+   "name": "ui/key_back",
+   "file": "ui/key_back.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.06,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
+    "license": "original work, owned by the project"
+   }
+  },
+  {
+   "name": "ui/key_enter",
+   "file": "ui/key_enter.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.11,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
+    "license": "original work, owned by the project"
+   }
   }
  ],
  "secondary_sources": [

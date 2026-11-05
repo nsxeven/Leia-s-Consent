@@ -59,3 +59,5 @@ Synthesised by the Leia's Consent team (numpy, `build_assets.py`); fully owned b
 `sfx/heartbeat_fast`, `sfx/heartbeat_slow`, `sfx/phone_notify`, `sfx/phone_ring`, `sfx/timer_beeps`, `ui/app_tap`, `ui/back`, `ui/bar`, `ui/gain`, `ui/loss`, `ui/message_pop`, `ui/notify`, `ui/paper`, `ui/phone_close`, `ui/phone_open`, `ui/pick`, `ui/polaroid`, `ui/rustle`, `ui/save`, `ui/tap`, `ui/thud`, `ui/tick`
 
 Processing: trimmed, faded, loudness-balanced and encoded to OGG Vorbis 44.1 kHz. Ambience beds and music are seamless loops. See `manifest.json` for per-file notes.
+
+Name-card typing sounds `ui/key_1`..`ui/key_4`, `ui/key_back`, `ui/key_enter`: synthesised in-house (original work, no third-party source).
