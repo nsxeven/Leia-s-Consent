@@ -6,9 +6,7 @@ label ch01_scene_07_did_he_see:
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
-    show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="pool", leia="towel", julian="pool")
 
     "I found her in the bathroom doorway, still half-turned toward the mirror, one hand pressed to her cheek."
 
@@ -75,8 +73,7 @@ label ch01_scene_07_did_he_see:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", julian="pool")
 
     "The bathroom door opened."
 
@@ -99,12 +96,9 @@ label ch01_scene_07_did_he_see:
 
     $ exit_cinematic_mode()
     # Dressed for dinner from here on (darryn): Julian's swim shorts are pool-only.
-    $ lc_julian_outfit = "evening"
     scene bg ch01_villa_entry_day
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress", julian="evening")
 
     "[friend_name] was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
 
@@ -150,7 +144,6 @@ label ch01_scene_07_did_he_see:
 
 label ch01_scene_08_drive_to_dinner:
 
-    $ lc_julian_outfit = "evening"
     $ set_story_value("ch01_default_car_seating", "ryan_driver_leia_front_julian_rear")
 
     $ enter_cinematic_mode()
@@ -178,9 +171,7 @@ label ch01_scene_08_drive_to_dinner:
 
     scene bg ch01_car_day
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress", julian="evening")
 
     gf "Okay, actual question. If we had to listen to one artist for the rest of this trip—"
     friend "No."
@@ -201,6 +192,7 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     with fade
+    $ cast()
 
     $ enter_cinematic_mode()
     scene cg ch01_dinner_arrival
@@ -209,9 +201,8 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress smile at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress", julian="evening")
+    $ face("leia", "smile")
 
     "Dinner started exactly the way I expected: [girlfriend_name] taking photos of the food, [friend_name] pretending to object, and me being ordered to move my glass out of every shot."
 
@@ -236,12 +227,13 @@ label ch01_scene_09_dinner:
     gf "Of food and the pool. I want one of us."
     mc "There are three of us. That's what selfies are for."
     # Ryan steps out of frame before the stranger enters from the left.
-    hide ryan_casual
-    with sprite_enter_exit
+    $ cast_remove("ryan")
     gf "No. I want one where nobody's arm looks six feet long."
 
     "She stood and glanced around for someone to ask."
 
+    # Hand-choreographed collision: automatic staging pauses until cast_resume.
+    $ cast_hold()
     # Dry stranger approaches from screen-left (pre-spill sprite state).
     show stranger_casual_dry at ch01_stranger_approach_left, leia_body_idle
     pause 1.1
@@ -251,7 +243,6 @@ label ch01_scene_09_dinner:
     # DinnerPhotoAsk_01 begins as the stranger enters Leia's path, before the
     # actual collision. Keep this beat on the CG; the dry sprite is retired here
     # and the wet sprite takes over after the impact CG.
-    hide stranger_casual_dry
     $ enter_cinematic_mode()
     scene cg ch01_dinner_photo_ask
     with dissolve
@@ -328,14 +319,14 @@ label ch01_scene_09_dinner:
     # The stranger has walked off-screen; Ryan steps back in on the left while
     # Leia stays in her slot (no scene reset, which made her blink).
     hide stranger_casual_wet
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_wet flustered at prologue_leia_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_wet", julian="evening")
+    $ face("leia", "flustered")
+    # Leia's hand-placed sprite becomes her normal right slot (same spot, no blink).
+    $ cast_resume(leia="leia_purple_dress_wet")
 
     "[friend_name] pushed the remaining napkins across the table without commenting on where [girlfriend_name] had been looking."
     friend "Successful photo mission?"
-    show leia_purple_dress_wet angry
-    with sprite_change
+    $ face("leia", "angry")
     gf "Not one word."
     mc "We didn't even get the photo."
     gf "I hate both of you."
@@ -359,9 +350,8 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_wet flustered at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_wet", julian="evening")
+    $ face("leia", "flustered")
 
     $ ch01_bra_reassure_text = format_choice("ch01_bra_reassure", "Do whatever makes you comfortable. You'll be fine.")
     $ ch01_bra_playful_text = format_choice("ch01_bra_playful", "If you're comfortable with it... that's kind of hot.")
@@ -379,8 +369,7 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_bra_playful")
             $ set_story_value("ch01_bra_response", "playful_open")
             mc "If you're comfortable with it... that's kind of hot."
-            show leia_purple_dress_wet shy
-            with sprite_change
+            $ face("leia", "shy")
             gf "[player_name]."
             mc "What? You asked."
             gf "I said my bra was falling off. I did not ask you to make it worse."
@@ -391,16 +380,14 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_bra_cover")
             $ set_story_value("ch01_bra_response", "cautious")
             mc "Take it off if you need to, but maybe keep your jacket nearby."
-            show leia_purple_dress_wet neutral
-            with sprite_change
+            $ face("leia", "neutral")
             gf "Fair. Let me fix this before it falls out on its own."
 
     gf "I'm going to the bathroom. If [friend_name] asks, I spilled a drink. That's all he needs to know."
     mc "Understood."
 
     "[girlfriend_name] disappeared toward the restroom with her handbag tucked under one arm."
-    hide leia_purple_dress_wet
-    with sprite_enter_exit
+    $ cast_remove("leia")
 
     # Canonical staging: Ryan remains LEFT. Leia is hidden while physically absent.
     # Julian may occupy RIGHT once a Julian sprite asset exists; do not substitute Ryan/Leia for him.
@@ -437,14 +424,12 @@ label ch01_scene_09_dinner:
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
+    $ face("leia", "shy")
 
     "She caught me looking."
 
-    show leia_purple_dress_no_bra skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Don't."
     mc "I didn't say anything."
     gf "Your face did."
@@ -488,8 +473,7 @@ label ch01_scene_09_dinner:
 
     "He kept walking. Nothing dramatic. [girlfriend_name] glanced down at herself and back at me."
 
-    show leia_purple_dress_no_bra flustered
-    with sprite_change
+    $ face("leia", "flustered")
     gf "Why is everyone looking at me today?"
     mc "Today?"
     gf "What does that mean?"
@@ -505,16 +489,14 @@ label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra shy at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
+    $ face("leia", "shy")
 
     "We should have left after dessert. Instead, [friend_name] noticed the bar."
 
     friend "One drink."
     mc "For you two. I'm driving."
-    show leia_purple_dress_no_bra smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Responsible [player_name] is very attractive."
     friend "Responsible [player_name] is ruining my attempt to make this a group activity."
     mc "Someone has to get both of you home."
@@ -613,9 +595,8 @@ label ch01_scene_11_walk_and_catch:
     $ exit_cinematic_mode()
     scene bg ch01_island_walk_night
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra flustered at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
+    $ face("leia", "flustered")
 
     "I had seen enough from the corner of my eye to understand why both of them suddenly looked awkward."
 
@@ -663,8 +644,7 @@ label ch01_scene_11b_female_friend:
 
     # Continues straight from scene 11 on the same path; Ryan and Leia are
     # already on screen, so no scene reset (it made both sprites blink).
-    show leia_purple_dress_no_bra skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Who was that?"
     mc "A friend from back home. She saw the posts and realised we're both here."
     gf "She?"
@@ -730,15 +710,13 @@ label ch01_scene_12_shop_and_drive_back:
 
     scene bg ch01_shop_night
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra smile at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
+    $ face("leia", "smile")
 
     "The shop reset the mood almost immediately."
     "[girlfriend_name] filled the basket with snacks according to a system neither [friend_name] nor I understood, while [friend_name] contributed increasingly questionable bottles from the drinks aisle."
 
-    show leia_purple_dress_no_bra skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Put that back."
     friend "Why?"
     gf "Because the label has a skull on it."
@@ -765,8 +743,7 @@ label ch01_scene_12_shop_and_drive_back:
     mc "Fine. Ask him about the sunglasses phase."
     friend "There was no phase."
     mc "He wore them indoors."
-    show leia_purple_dress_no_bra smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Oh, I need photos."
     friend "You need a better boyfriend."
     gf "No, this one comes with useful historical records."
@@ -802,12 +779,9 @@ label ch01_scene_12_shop_and_drive_back:
     $ exit_cinematic_mode()
     # Leia is asleep in the back with no lines, so Julian takes the right slot
     # for the whole car talk (darryn). No swap here: Ryan stays left.
-    $ lc_julian_outfit = None
     scene bg ch01_car_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show julian_evening at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", julian="evening")
 
     "The car became quiet enough that [friend_name] lowered his voice."
 
@@ -863,12 +837,9 @@ label ch01_scene_13_back_at_villa:
     # Leia is asleep (in the car, then carried) and has no sprite, so Julian
     # stands in the right slot with Ryan on the left until they reach the sofa
     # (darryn). No swap here; it resumes when Leia's sprite returns.
-    $ lc_julian_outfit = None
     scene bg ch01_villa_entry_evening
     with fade
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show julian_evening at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", julian="evening")
 
     "When I parked, [girlfriend_name] didn't move."
     "She was still curled across the back seat, completely asleep."
@@ -920,12 +891,9 @@ label ch01_scene_13_back_at_villa:
 
     $ exit_cinematic_mode()
     # Still at the door with Leia asleep: Ryan left, Julian right (no swap).
-    $ lc_julian_outfit = None
     scene bg ch01_villa_entry_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show julian_evening at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", julian="evening")
 
     $ ch01_carry_brush_text = format_choice("ch01_carry_brush", "We're almost inside. Just keep going.")
     $ ch01_carry_lookaway_text = format_choice("ch01_carry_lookaway", "Then keep your eyes off her and bring her inside.")
@@ -1007,12 +975,10 @@ label ch01_scene_13_back_at_villa:
     friend "A mistake I will reflect on privately."
 
     $ exit_cinematic_mode()
-    $ lc_julian_outfit = "evening"
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra flustered at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
+    $ face("leia", "flustered")
 
     gf "I can hear both of you now."
     mc "Welcome back."

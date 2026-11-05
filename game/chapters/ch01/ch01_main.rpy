@@ -6,8 +6,7 @@ label chapter_one_start:
 
     $ set_story_flag("ch01_started")
     $ set_phone_hud_enabled(True)
-    # Julian swaps into Ryan's slot on his lines (sprites/julian.rpy).
-    $ lc_julian_outfit = "travel"
+    # Sprites come from the cast (systems/cast_staging.rpy).
 
     jump ch01_scene_01_arrival
 
@@ -16,19 +15,15 @@ label ch01_scene_01_arrival:
 
     scene bg ch01_car_day
     with fade
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual", julian="travel")
 
     "By the time the transfer car turned into the villa's driveway, [girlfriend_name] had taken thirty-seven photos."
     "Thirty-eight, if the blurry one of [friend_name] asleep in the transfer car counted."
 
-    show leia_casual smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "This place doesn't look real."
     mc "You've said that about the airport, the boat, and a coconut."
-    show leia_casual pout
-    with sprite_change
+    $ face("leia", "pout")
     gf "The coconut was very photogenic."
 
     with dissolve
@@ -38,16 +33,14 @@ label ch01_scene_01_arrival:
 
     mc "Should I be worried that everyone here knows you?"
     friend "They know the booking."
-    show leia_casual skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "The booking has a face?"
     friend "Apparently a very trustworthy one."
 
     "He said it like the private transfer, waiting staff, and seamless arrival were ordinary."
     "That was [friend_name]'s version of showing off: arranging something ridiculous, then acting as though it had happened by accident."
 
-    show leia_casual smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Wait—don't move. Both of you."
     mc "Another photo?"
     gf "First proper holiday photo. Try to look happy."
@@ -66,18 +59,14 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_exterior
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual", julian="travel")
 
     "The cart followed a narrow path through palms and stopped in front of a two-storey villa facing the ocean."
 
-    show leia_casual skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "[friend_name]."
     friend "Yes?"
-    show leia_casual smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "This is not a villa. This is a small country."
     friend "The listing said 'intimate.'"
     mc "Compared to what? An airport?"
@@ -93,19 +82,15 @@ label ch01_scene_02_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_corridor
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual", julian="travel")
 
     friend "There are two rooms upstairs. You two take the master."
     mc "You booked the place. You take it."
     friend "And listen to you argue through the wall because your room is smaller? No."
-    show leia_casual skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "We don't argue."
     mc "We conduct loud relationship reviews."
-    show leia_casual pout
-    with sprite_change
+    $ face("leia", "pout")
     gf "He gets poor performance ratings."
 
     "[friend_name] waved us toward the stairs before I could object again."
@@ -113,9 +98,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_master_enter
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual", julian="travel")
 
     "The master bedroom took up most of the second floor."
     "One wall was almost entirely glass, looking down over the pool and past it to the ocean."
@@ -125,8 +108,7 @@ label ch01_scene_02_villa:
     with dissolve
 
     mc "I'm looking."
-    show leia_casual skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "At the ocean."
     mc "Still looking."
 
@@ -149,14 +131,11 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual", julian="travel")
 
     "Unpacking took less than five minutes. Deciding what to wear took considerably longer."
 
-    show leia_casual smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Okay. Opinion."
     mc "Dangerous opening."
     gf "I brought two swimsuits."
@@ -224,18 +203,15 @@ label ch01_scene_03_outfit_choice:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual", julian="travel")
 
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
 
-    hide leia_casual
-    with sprite_enter_exit
+    $ cast_remove("leia")
 
     # Same room, a few minutes later: Ryan stays put and Leia walks back in.
-    show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast_add(leia="towel")
+    $ face("leia", "neutral")
 
     "A moment later, the bathroom door opened again."
     "[girlfriend_name] stepped back into the bedroom with a towel wrapped around herself and crossed to the glass wall."
@@ -251,9 +227,7 @@ label ch01_scene_03_outfit_choice:
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_towel neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="towel", julian="travel")
 
     gf "...Seriously?"
     mc "What?"
@@ -270,14 +244,12 @@ label ch01_scene_03_outfit_choice:
     mc "I was just thinking you look good."
     gf "I'm wearing a towel."
     mc "Exactly."
-    show leia_towel smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Pervert."
 
     "She was smiling when she turned back toward the bathroom."
 
-    hide leia_towel
-    with sprite_enter_exit
+    $ cast_remove("leia")
 
     $ set_story_flag("ch01_first_outfit_choice_complete")
     $ set_story_flag("ch01_scene_03_complete")
@@ -293,9 +265,8 @@ label ch01_scene_03_outfit_choice:
         $ exit_cinematic_mode()
         scene bg ch01_master_bedroom_curtains
         with dissolve
-        show ryan_casual at prologue_other_enter_left, leia_body_idle
-        show leia_blue_bikini smile at prologue_leia_enter_right, leia_body_idle
-        with sprite_enter_exit
+        $ cast(ryan="casual", leia="blue_bikini", julian="travel")
+        $ face("leia", "smile")
     else:
         "A few minutes later, [girlfriend_name] stepped out in the swimsuit she already trusted."
         $ enter_cinematic_mode()
@@ -307,17 +278,15 @@ label ch01_scene_03_outfit_choice:
         $ exit_cinematic_mode()
         scene bg ch01_master_bedroom_curtains
         with dissolve
-        show ryan_casual at prologue_other_enter_left, leia_body_idle
-        show leia_white_ruffle smile at prologue_leia_enter_right, leia_body_idle
-        with sprite_enter_exit
+        $ cast(ryan="casual", leia="white_ruffle", julian="travel")
+        $ face("leia", "smile")
 
     "From downstairs, [friend_name] called that the pool—and the cold drinks—were waiting."
 
     if selected_pool_outfit == "pool_bolder":
-        hide leia_blue_bikini
+        $ cast_remove("leia")
     else:
-        hide leia_white_ruffle
-    with sprite_enter_exit
+        $ cast_remove("leia")
 
     $ set_story_flag("ch01_scenes_01_03_complete")
 

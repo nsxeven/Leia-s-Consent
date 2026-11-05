@@ -3,12 +3,10 @@
 
 label ch01_scene_04_pool_arrival:
 
-    $ lc_julian_outfit = "pool"
     scene bg ch01_pool_day
     with fade
     # Ryan is on screen from the start; Leia joins when she comes outside.
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="pool", julian="pool")
 
     "[friend_name] had already claimed the shaded end of the pool by the time I came downstairs."
 
@@ -28,7 +26,8 @@ label ch01_scene_04_pool_arrival:
     # The outfit reveal was already shown at the end of Scene 3. Do not replay
     # the sprite entrance transform here; keep Leia at her normal pool framing.
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini shy at prologue_leia_enter_right, leia_body_idle
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "shy")
         with dissolve
         "The new swimsuit was not outrageous. It was simply cut higher at the hips and showed more of her than [friend_name] had ever seen."
         "[girlfriend_name] stopped just beyond the doorway, pretending not to wait for my reaction."
@@ -37,16 +36,15 @@ label ch01_scene_04_pool_arrival:
         gf "I want to hear you say it."
         mc "You look incredible."
         "Some of the tension left her shoulders."
-        show leia_blue_bikini smile
-        with sprite_change
+        $ face("leia", "smile")
         gf "Better."
     else:
-        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "neutral")
         with dissolve
         "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
-        show leia_white_ruffle smile
-        with sprite_change
+        $ face("leia", "smile")
         gf "I know. This one has already passed quality control."
 
     with dissolve
@@ -56,10 +54,8 @@ label ch01_scene_04_pool_arrival:
     friend "Of the pool waiting while you flirt? Extremely."
 
     if selected_pool_outfit == "pool_bolder":
-        hide leia_blue_bikini
         scene cg ch01_sunscreen_blue
     else:
-        hide leia_white_ruffle
         scene cg ch01_sunscreen_white
     with dissolve
 
@@ -83,10 +79,8 @@ label ch01_scene_04_pool_arrival:
     gf "Very responsible."
 
     if selected_pool_outfit == "pool_bolder":
-        hide leia_blue_bikini
         scene cg ch01_pool_hand_pull_blue
     else:
-        hide leia_white_ruffle
         scene cg ch01_pool_hand_pull_white
     with dissolve
 
@@ -122,22 +116,24 @@ label ch01_scene_05_photography:
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
     with dissolve
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    $ cast(ryan="pool", julian="pool")
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "neutral")
     else:
-        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "neutral")
 
     friend "Give me the phone."
 
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
 
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini shy
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "shy")
     else:
-        show leia_white_ruffle shy
-    with sprite_change
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "shy")
     gf "Wait. Why do I actually look good?"
     mc "You say that like it's unusual."
     gf "When you take the photo, it is."
@@ -181,13 +177,14 @@ label ch01_scene_05_photography:
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
     with dissolve
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    $ cast(ryan="pool", julian="pool")
 
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "neutral")
     else:
-        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "neutral")
 
     "She was improving, but every time she noticed the camera she became stiff again."
 
@@ -326,13 +323,14 @@ label ch01_scene_05_photography:
 
     scene bg ch01_pool_day
     with dissolve
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
+    $ cast(ryan="pool", julian="pool")
 
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini neutral at prologue_leia_enter_right, leia_body_idle
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "neutral")
     else:
-        show leia_white_ruffle neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "neutral")
 
     "[friend_name] lowered the phone after the last shot."
 
@@ -355,10 +353,11 @@ label ch01_scene_05_photography:
     # Pacing Revision v2 — an ordinary friendship beat before the towel incident.
     # Leia and Julian should become friends through more than accidents and exposure.
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini smile
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "smile")
     else:
-        show leia_white_ruffle smile
-    with sprite_change
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "smile")
     gf "Can I ask you something?"
     mc "Dangerous opening."
     gf "Has [friend_name] always been like this?"
@@ -380,20 +379,20 @@ label ch01_scene_05_photography:
     gf "Don't get used to it."
     mc "Give it a day. She gets meaner when she's comfortable."
     if selected_pool_outfit == "pool_bolder":
-        show leia_blue_bikini pout
+        $ cast_add(leia="blue_bikini")
+        $ face("leia", "pout")
     else:
-        show leia_white_ruffle pout
-    with sprite_change
+        $ cast_add(leia="white_ruffle")
+        $ face("leia", "pout")
     gf "Excuse me?"
     friend "Good. You'll fit in."
 
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
     if selected_pool_outfit == "pool_bolder":
-        hide leia_blue_bikini
+        $ cast_remove("leia")
     else:
-        hide leia_white_ruffle
-    with sprite_enter_exit
+        $ cast_remove("leia")
 
     $ set_story_flag("ch01_scene_05_complete")
 
@@ -405,9 +404,8 @@ label ch01_scene_06_friendship_and_towel:
 
     scene bg ch01_pool_lounge
     with dissolve
-    # Leia is upstairs; Ryan stays on screen by the pool (Julian swaps in on his lines).
-    show ryan_pool at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    # Leia is upstairs; Ryan stays on screen by the pool.
+    $ cast(ryan="pool", julian="pool")
 
     "With [girlfriend_name] upstairs, the villa became unexpectedly quiet."
     "[friend_name] passed me a cold drink and sank back into the lounger."
@@ -504,6 +502,7 @@ label ch01_scene_06_friendship_and_towel:
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
     with dissolve
+    $ cast(ryan="pool", julian="pool")
 
     $ ch01_pre_towel_stance = chapter_stance("ch01")
 

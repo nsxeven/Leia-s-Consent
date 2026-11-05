@@ -12,9 +12,7 @@ label ch01_scene_13b_night_pool:
     # sequence and movie night. Nothing goes wrong here; that is the point.
     scene bg ch01_pool_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     "Nobody was ready for bed yet."
     "We carried the shop bags outside instead, where the pool lights turned the water blue against the dark and the ocean had become more sound than view."
@@ -59,9 +57,7 @@ label ch01_scene_13b_night_pool:
     $ exit_cinematic_mode()
     scene bg ch01_pool_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     "[girlfriend_name] glanced at me a second later."
 
@@ -95,9 +91,7 @@ label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_purple_dress_no_bra neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     "[girlfriend_name] rubbed both hands over her face and stared down at the dinner dress as if she had only just remembered she was still wearing it."
 
@@ -113,13 +107,10 @@ label ch01_scene_14_movie_setup:
     $ set_story_value("ch01_dinner_dress_state", "changed_out_at_villa")
     $ set_story_value("ch01_movie_blanket_state", "on")
     $ set_story_value("ch01_movie_night_started", True)
-    $ lc_julian_outfit = "lounge"
 
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     "[girlfriend_name] returned in a white camisole and short lounge shorts, her hair down and loose. [friend_name] had changed too, and was already at the kitchen counter with two glasses of whisky."
 
@@ -135,9 +126,8 @@ label ch01_scene_14_movie_setup:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_lounge smile at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ face("leia", "smile")
 
     gf "Congratulations. You may now participate."
     mc "I've been participating all day."
@@ -335,9 +325,7 @@ label ch01_scene_18_private_under_blanket:
     # The seated group CG includes Julian, so retire it while he is absent.
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     $ ch01_movie_respected_request = (
         get_story_value("ch01_movie_first_response") == "stopped"
@@ -460,12 +448,10 @@ label ch01_scene_19_too_hot:
 
     $ exit_cinematic_mode()
     # Back-and-forth conversation runs on BG + sprites (darryn); the sofa CG
-    # only marks the blanket coming off. Julian swaps into Ryan's slot.
+    # only marks the blanket coming off. Staging follows the cast.
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     $ set_story_flag("ch01_scene_19_complete")
     jump ch01_scene_20_no_hiding_place
@@ -547,9 +533,7 @@ label ch01_scene_20_no_hiding_place:
 
     scene bg ch01_villa_living_evening
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     $ set_story_flag("ch01_scene_20_complete")
     jump ch01_scene_21_watching_julian
@@ -635,9 +619,7 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] fixed it immediately."
             scene bg ch01_villa_living_evening
             with dissolve
-            show ryan_casual at prologue_other_enter_left, leia_body_idle
-            show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-            with sprite_enter_exit
+            $ cast(ryan="casual", leia="lounge", julian="lounge")
             gf "Thanks."
             mc "Mm."
 
@@ -648,9 +630,7 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] held my gaze for a second, then eventually adjusted the neckline herself."
             scene bg ch01_villa_living_evening
             with dissolve
-            show ryan_casual at prologue_other_enter_left, leia_body_idle
-            show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-            with sprite_enter_exit
+            $ cast(ryan="casual", leia="lounge", julian="lounge")
             "The pause before she did it was the part I remembered."
 
         "[ch01_micro_open_text]":
@@ -671,18 +651,14 @@ label ch01_scene_22_first_micro_test:
             "She fixed the top herself and turned back to the screen."
             scene bg ch01_villa_living_evening
             with dissolve
-            show ryan_casual at prologue_other_enter_left, leia_body_idle
-            show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-            with sprite_enter_exit
+            $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     # The deliberate-open branch settles back to a normal seated image after
     # the player's chosen moment. Other branches reset as Leia adjusts.
     if get_story_value("ch01_micro_test_response") == "knowingly_left":
         scene bg ch01_villa_living_evening
         with dissolve
-        show ryan_casual at prologue_other_enter_left, leia_body_idle
-        show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-        with sprite_enter_exit
+        $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     $ set_story_flag("ch01_scene_22_complete")
     jump ch01_scene_23_relationship_philosophy
@@ -958,9 +934,7 @@ label ch01_scene_28_ryan_leia_alone:
     # darryn: night art is explicitly wanted from Julian going upstairs (scene 28) to the end of Day 1.
     scene bg ch01_villa_living_night
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_lounge neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     "The villa became noticeably quieter once [friend_name]'s door closed upstairs."
     "[girlfriend_name] stayed beside me, turning her empty glass slowly between both hands."
@@ -1134,10 +1108,10 @@ label ch01_scene_24_looking_counts:
 
 label ch01_scene_30_end_day_one:
 
-    # Day 1 sprite staging ends here; Julian no longer swaps into Ryan's slot.
-    $ lc_julian_outfit = None
+    # Day 1 sprite staging ends here; nobody is on screen in bed.
     scene bg ch01_villa_bedroom_night
     with fade
+    $ cast()
 
     "We switched off the downstairs lights and finally headed upstairs."
     "[girlfriend_name] plugged her phone in beside the bed and climbed under the covers."
@@ -1281,6 +1255,7 @@ label ch01_scene_30_end_day_one:
     $ exit_cinematic_mode()
     scene bg ch01_villa_bedroom_night
     with dissolve
+    $ cast()
 
     "I stared at the ceiling for a moment."
 
