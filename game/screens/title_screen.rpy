@@ -160,7 +160,7 @@ screen lc_title_polaroid(card):
             if card["locked"]:
                 action NullAction()
             else:
-                action [Function(lc_ui_play, "polaroid"), ShowMenu("gallery_screen")]
+                action [Function(lc_ui_play, "polaroid"), Show("lc_title_photo_view", card=card)]
                 hovered Function(lc_ui_play, "rustle")
                 hover_foreground "gui/title/polaroid_hover.png"
             add "gui/title/polaroid.png"
@@ -175,6 +175,63 @@ screen lc_title_polaroid(card):
                 else:
                     add lc_title_photo(card["image"])
             text card["title"] style "lc_title_caption_text" xpos 124 xanchor 0.5 ypos 188 xmaximum 190
+
+
+transform lc_title_photo_dim:
+    on show:
+        alpha 0.0
+        easein 0.25 alpha 1.0
+    on hide:
+        easeout 0.2 alpha 0.0
+
+transform lc_title_photo_pop:
+    subpixel True
+    xalign 0.5
+    yalign 0.5
+    on show:
+        alpha 0.0
+        zoom 0.92
+        rotate -2.0
+        easein 0.3 alpha 1.0 zoom 1.0 rotate 0.0
+    on hide:
+        easeout 0.18 alpha 0.0 zoom 0.96
+
+
+# Clicking a reel polaroid opens that memory over the title screen, dimmed
+# behind like the phone. Click anywhere, Esc or right-click to put it back.
+screen lc_title_photo_view(card):
+    modal True
+    zorder 200
+
+    key "K_ESCAPE" action [Function(lc_ui_play, "back"), Hide("lc_title_photo_view")]
+    key "game_menu" action [Function(lc_ui_play, "back"), Hide("lc_title_photo_view")]
+
+    button at lc_title_photo_dim:
+        xfill True
+        yfill True
+        padding (0, 0)
+        keyboard_focus False
+        background Solid("#120810c4")
+        hover_background Solid("#120810c4")
+        action [Function(lc_ui_play, "back"), Hide("lc_title_photo_view")]
+
+    button at lc_title_photo_pop:
+        padding (0, 0)
+        keyboard_focus False
+        background None
+        action [Function(lc_ui_play, "back"), Hide("lc_title_photo_view")]
+        fixed:
+            fit_first True
+            frame:
+                padding (28, 28, 28, 92)
+                background Solid("#fbf6ee")
+                add Transform(ImageReference(("cg", card["image"])), fit="contain", xysize=(1240, 698))
+            text card["title"]:
+                style "lc_title_caption_text"
+                size 46
+                xalign 0.5
+                yalign 1.0
+                yoffset -20
 
 
 screen lc_title_reel():
