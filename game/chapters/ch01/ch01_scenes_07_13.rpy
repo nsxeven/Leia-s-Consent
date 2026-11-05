@@ -252,7 +252,10 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_spill_01
     with dissolve
 
-    # The spill CG remains a still impact frame; no sensual motion treatment.
+    # The spill frame stays still; only the collision itself gets a brief comedy shake.
+    $ lc_shake("m")
+    pause 0.40
+    $ lc_reset_camera()
     "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them."
 
     # The impact beat is over. Return to the restaurant for the immediate
@@ -544,7 +547,7 @@ label ch01_scene_11_walk_and_catch:
     friend "That statement usually means somebody is drunk."
     gf "Traitor."
 
-    scene cg ch01_walk_back_call
+    scene cg ch01_walk_back_call at lc_punch_zoom
     with dissolve
 
     "My phone started ringing."
@@ -586,6 +589,9 @@ label ch01_scene_11_walk_and_catch:
     friend "I was catching you!"
 
     "[girlfriend_name]'s face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry."
+    $ lc_shake("s")
+    pause 0.25
+    $ lc_reset_camera()
 
     gf "Watch your hands!"
     friend "I didn't exactly submit a landing plan!"

@@ -83,6 +83,9 @@ label ch01_scene_04_pool_arrival:
     else:
         scene cg ch01_pool_hand_pull_white at lc_shake_m
     with dissolve
+    show lc_effect_flash_blue at lc_flash
+    pause 0.18
+    hide lc_effect_flash_blue
 
     "She caught my wrist, stepped backward—and pulled me into the pool with her."
 
@@ -110,6 +113,9 @@ label ch01_scene_05_photography:
 
     "Eventually, [girlfriend_name] decided the afternoon required photographic evidence."
     "Her first group selfie caught me blinking and [friend_name] looking as if he had been summoned against his will."
+    show lc_effect_flash_white at lc_flash
+    pause 0.18
+    hide lc_effect_flash_white
 
     gf "How are both of you bad at having faces?"
 
@@ -127,6 +133,9 @@ label ch01_scene_05_photography:
     friend "Give me the phone."
 
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
+    show lc_effect_flash_white at lc_flash
+    pause 0.18
+    hide lc_effect_flash_white
 
     if selected_pool_outfit == "pool_bolder":
         $ cast_add(leia="blue_bikini")
@@ -153,9 +162,9 @@ label ch01_scene_05_photography:
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
     # The shutter fires only after the setup CG has had a full dialogue beat.
-    scene lc_photo_flash_white at lc_flash
-    with Dissolve(0.06)
-    pause 0.04
+    show lc_effect_flash_white at lc_flash
+    pause 0.18
+    hide lc_effect_flash_white
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_photo_capture_01_b
     else:
@@ -210,9 +219,9 @@ label ch01_scene_05_photography:
             "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
 
-            scene lc_photo_flash_white at lc_flash
-            with Dissolve(0.06)
-            pause 0.04
+            show lc_effect_flash_white at lc_flash
+            pause 0.18
+            hide lc_effect_flash_white
             if selected_pool_outfit == "pool_bolder":
                 scene cg ch01_photo_capture_02_b
             else:
@@ -244,9 +253,9 @@ label ch01_scene_05_photography:
 
             # Capture 02 is the actual second photograph. Flash directly into it
             # rather than showing the obsolete pool-edge placeholder first.
-            scene lc_photo_flash_white at lc_flash
-            with Dissolve(0.06)
-            pause 0.04
+            show lc_effect_flash_white at lc_flash
+            pause 0.18
+            hide lc_effect_flash_white
             if selected_pool_outfit == "pool_bolder":
                 scene cg ch01_photo_capture_02_b
             else:
@@ -264,9 +273,9 @@ label ch01_scene_05_photography:
 
             "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
 
-            scene lc_photo_flash_white at lc_flash
-            with Dissolve(0.06)
-            pause 0.04
+            show lc_effect_flash_white at lc_flash
+            pause 0.18
+            hide lc_effect_flash_white
             if selected_pool_outfit == "pool_bolder":
                 scene cg ch01_photo_capture_03_b
             else:
@@ -301,9 +310,9 @@ label ch01_scene_05_photography:
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
 
-                scene lc_photo_flash_white at lc_flash
-                with Dissolve(0.06)
-                pause 0.04
+                show lc_effect_flash_white at lc_flash
+                pause 0.18
+                hide lc_effect_flash_white
                 if selected_pool_outfit == "pool_bolder":
                     scene cg ch01_photo_capture_02_b
                 else:
@@ -491,6 +500,9 @@ label ch01_scene_06_friendship_and_towel:
     friend "I'm looking at the water."
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
+    $ lc_shake("s")
+    pause 0.25
+    $ lc_reset_camera()
     mc "Just go inside."
     gf "I was trying to tell you to get ready!"
     mc "Message received."

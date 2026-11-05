@@ -47,9 +47,9 @@ label ch01_scene_01_arrival:
     friend "I paid for the villa. I am contractually delighted."
 
     "I laughed just as she took it."
-    show expression Solid("#ffffff") at lc_flash
+    show lc_effect_flash_white at lc_flash
     pause 0.18
-    hide expression Solid("#ffffff")
+    hide lc_effect_flash_white
     "For once, she lowered the phone without checking the result ten times."
 
     $ set_story_flag("ch01_scene_01_complete")
@@ -75,7 +75,7 @@ label ch01_scene_02_villa:
     mc "Compared to what? An airport?"
 
     $ enter_cinematic_mode()
-    scene cg ch01_villa_arrival
+    scene cg ch01_villa_arrival at lc_push_in(6.0, 1.0, 1.05)
     with dissolve
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."

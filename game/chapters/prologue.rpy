@@ -39,7 +39,7 @@ label prologue_start:
     with fade
     centered "{size=54}FOUR YEARS AGO{/size}\n{size=34}End of First Year{/size}"
 
-    scene cg prologue_party_arrival
+    scene cg prologue_party_arrival at lc_push_in(8.0, 1.0, 1.06)
     with dissolve
 
     "I noticed [girlfriend_name] before I ever spoke to her."
@@ -194,6 +194,9 @@ label prologue_start:
     "Then she pointed at me."
 
     mc "Me?"
+    $ lc_punch()
+    pause 0.25
+    $ lc_reset_camera()
     $ face("leia", "shy")
     gf "You asked."
     "Nobody had asked me."
@@ -212,9 +215,9 @@ label prologue_start:
     gf "Fine. Dare."
     # The dare is a comedic impact, never an intimate/exposure effect.
     friend "Kiss [player_name]."
-    show expression Solid("#00000000") at lc_shake_s
+    $ lc_shake("s")
     pause 0.25
-    hide expression Solid("#00000000")
+    $ lc_reset_camera()
     $ face("leia", "flustered")
     "The room changed temperature."
     "Or maybe that was just me."
@@ -234,16 +237,21 @@ label prologue_start:
 
     "It was not smooth."
     "Our noses nearly collided. Somebody laughed before we'd even figured out the angle."
+    $ lc_shake("s")
+    pause 0.25
+    $ lc_reset_camera()
     friend "Oh my God, just kiss already."
     "[girlfriend_name] laughed."
 
-    scene cg prologue_first_kiss_03 at lc_warm_bloom
+    scene cg prologue_first_kiss_03
+    show lc_effect_warm_bloom at lc_warm_bloom
     with dissolve
 
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
     "The room cheered like we'd accomplished something."
 
+    hide lc_effect_warm_bloom
     scene bg prologue_truthordare
     with dissolve
     $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
@@ -252,8 +260,11 @@ label prologue_start:
     mc "...Does that mean I win Truth or Dare?"
     gf "No."
     mc "Worth asking."
+    scene expression Solid("#ffffff")
+    with Dissolve(0.25)
+    pause 0.15
     scene black
-    with fade
+    with Dissolve(0.35)
     "And somehow... that was the beginning."
 
     $ set_story_flag("prologue_first_kiss_complete")
@@ -353,7 +364,7 @@ label prologue_start:
 
     $ enter_cinematic_mode()
 
-    scene cg prologue_departure
+    scene cg prologue_departure at lc_push_in(6.0, 1.0, 1.05)
     with dissolve
 
     "Our first trip together."

@@ -285,6 +285,9 @@ label ch01_scene_16_can_he_tell:
             mc "Fair."
 
     "Before either of us could keep circling the question, [friend_name] paused the movie."
+    $ lc_punch()
+    pause 0.25
+    $ lc_reset_camera()
 
     friend "Okay. Do you need the bathroom or something?"
     gf "What?"
@@ -1204,6 +1207,7 @@ label ch01_scene_30_end_day_one:
         $ enter_cinematic_mode()
         scene cg ch01_dream_dinner_beside at lc_dream_sway
         with dissolve
+        show lc_effect_dream_vignette at lc_dream_vignette
 
         "I was back at the restaurant."
         "Same table. Same candles. The same low music I hadn't noticed the first time."
@@ -1219,6 +1223,7 @@ label ch01_scene_30_end_day_one:
 
         scene cg ch01_dream_dinner_grab at lc_dream_sway
         with dissolve
+        show lc_effect_dream_vignette at lc_dream_vignette
 
         "His hand settled at the small of her back."
         "Then it slid lower, slipped under the hem of her dress, and took a slow, deliberate handful of her."
@@ -1231,6 +1236,7 @@ label ch01_scene_30_end_day_one:
 
         scene cg ch01_dream_dinner_rub at lc_dream_sway
         with dissolve
+        show lc_effect_dream_vignette at lc_dream_vignette
 
         "His palm began to move, rubbing slow circles over the curve of her, unhurried, like he had every right to."
         "Color climbed her cheeks. She leaned toward him. Only slightly. Only enough."
@@ -1242,6 +1248,7 @@ label ch01_scene_30_end_day_one:
         "I called her name again. Nothing."
         "He bent to say something against her ear, and she laughed—"
 
+        hide lc_effect_dream_vignette
         scene black
         with dissolve
 
@@ -1250,13 +1257,11 @@ label ch01_scene_30_end_day_one:
     "My eyes opened."
 
     $ enter_cinematic_mode()
-    scene black
-    with None
-    show expression Solid("#00000000") at lc_shake_m
-    pause 0.40
-    hide expression Solid("#00000000")
     scene cg ch01_dream_wake_night
     with dissolve
+    $ lc_shake("m")
+    pause 0.40
+    $ lc_reset_camera()
 
     "[girlfriend_name] was asleep beside me, breathing softly, exactly where she'd been."
     "None of it had happened. At the real dinner he had apologised, laughed at himself, and walked back to his own table."
