@@ -47,6 +47,9 @@ label ch01_scene_01_arrival:
     friend "I paid for the villa. I am contractually delighted."
 
     "I laughed just as she took it."
+    show expression Solid("#ffffff") at lc_flash
+    pause 0.18
+    hide expression Solid("#ffffff")
     "For once, she lowered the phone without checking the result ten times."
 
     $ set_story_flag("ch01_scene_01_complete")
