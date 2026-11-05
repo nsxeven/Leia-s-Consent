@@ -478,14 +478,14 @@ label ch01_scene_20_no_hiding_place:
     "Then she looked back at me and gave the smallest nod."
 
     $ enter_cinematic_mode()
-    scene cg ch01_movie_ass_grab_01
+    scene cg ch01_movie_ass_grab_01 at lc_push_in(6.0, 1.0, 1.045)
     with dissolve
 
     "I slid my hand up to the curve of her backside."
     "[girlfriend_name] went still. All [friend_name] had to do was turn his head."
     "She didn't stop me. She shifted back into my palm instead, just slightly."
 
-    scene cg ch01_movie_ass_grab_02
+    scene cg ch01_movie_ass_grab_02 at lc_push_in(6.0, 1.0, 1.045)
     with dissolve
 
     "I squeezed once. Her breath caught, and she pressed her lips together to keep from making a sound."
@@ -594,7 +594,7 @@ label ch01_scene_21_watching_julian:
 label ch01_scene_22_first_micro_test:
 
     $ enter_cinematic_mode()
-    scene cg ch01_movie_micro_test_glance
+    scene cg ch01_movie_micro_test_glance at lc_push_in(6.0, 1.0, 1.045)
     with dissolve
 
     "[girlfriend_name] got up for her drink. When she dropped back onto the sofa, the thin neckline of her camisole had shifted slightly from the way she'd been lying against me."
@@ -603,7 +603,7 @@ label ch01_scene_22_first_micro_test:
     "He was watching the movie."
     "Then she looked at me."
 
-    scene cg ch01_lounge_micro_test
+    scene cg ch01_lounge_micro_test at lc_push_in(6.0, 1.0, 1.045)
     with dissolve
 
     "She knew. I knew she knew. For the first time that day, nothing accidental had forced the decision for her."
@@ -1202,7 +1202,7 @@ label ch01_scene_30_end_day_one:
         "It was something my sleeping mind invented, not something that had happened."
     else:
         $ enter_cinematic_mode()
-        scene cg ch01_dream_dinner_beside
+        scene cg ch01_dream_dinner_beside at lc_dream_sway
         with dissolve
 
         "I was back at the restaurant."
@@ -1217,7 +1217,7 @@ label ch01_scene_30_end_day_one:
         "She smiled up at him the way she'd smiled at me that afternoon."
         "I tried to say her name. My mouth moved. Nothing came out."
 
-        scene cg ch01_dream_dinner_grab
+        scene cg ch01_dream_dinner_grab at lc_dream_sway
         with dissolve
 
         "His hand settled at the small of her back."
@@ -1229,7 +1229,7 @@ label ch01_scene_30_end_day_one:
 
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
-        scene cg ch01_dream_dinner_rub
+        scene cg ch01_dream_dinner_rub at lc_dream_sway
         with dissolve
 
         "His palm began to move, rubbing slow circles over the curve of her, unhurried, like he had every right to."
@@ -1250,6 +1250,11 @@ label ch01_scene_30_end_day_one:
     "My eyes opened."
 
     $ enter_cinematic_mode()
+    scene black
+    with None
+    show expression Solid("#00000000") at lc_shake_m
+    pause 0.40
+    hide expression Solid("#00000000")
     scene cg ch01_dream_wake_night
     with dissolve
 

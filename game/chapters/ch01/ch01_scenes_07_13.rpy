@@ -83,7 +83,7 @@ label ch01_scene_07_did_he_see:
 
     # Dress reveal CG holds through her first exchange; sprites return at the door.
     $ enter_cinematic_mode()
-    scene cg ch01_dress_reveal
+    scene cg ch01_dress_reveal at lc_push_in(5.0, 1.0, 1.06)
     with dissolve
 
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
@@ -252,8 +252,8 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_spill_01
     with dissolve
 
-    # Impact beat: screen shake on the collision line (same as the prologue dare).
-    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them." with hpunch
+    # The spill CG remains a still impact frame; no sensual motion treatment.
+    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them."
 
     # The impact beat is over. Return to the restaurant for the immediate
     # apology using the post-spill wet sprite state.
@@ -562,7 +562,7 @@ label ch01_scene_11_walk_and_catch:
     "Ahead of me, [girlfriend_name] turned around to check why I had stopped."
     "She tried to walk backward while doing it."
 
-    scene cg ch01_trip_catch
+    scene cg ch01_trip_catch at lc_shake_m
     with dissolve
 
     "Her heel caught the edge of the path."

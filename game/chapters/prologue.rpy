@@ -12,6 +12,11 @@ label prologue_name_setup:
 
     centered "{size=48}LEIA'S CONSENT{/size}\n\nBefore we begin..."
 
+    # Ease from the title card onto the paper table before the name cards
+    # appear (the cut straight into the first input felt abrupt).
+    scene expression "gui/scrapbook/bg_table.png"
+    with Dissolve(0.8)
+
     $ entered_player_name = renpy.input("Your name", default=player_name, exclude="{}[]", length=20).strip()
     $ player_name = entered_player_name if entered_player_name else "Ryan"
 
@@ -205,9 +210,11 @@ label prologue_start:
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
     $ face("leia", "skeptical")
     gf "Fine. Dare."
-    # Dare lands: screen shake. AUDIO TODO (parked): record scratch here and
-    # stop the party music/ambience on this line once the audio pass happens.
-    friend "Kiss [player_name]." with hpunch
+    # The dare is a comedic impact, never an intimate/exposure effect.
+    friend "Kiss [player_name]."
+    show expression Solid("#00000000") at lc_shake_s
+    pause 0.25
+    hide expression Solid("#00000000")
     $ face("leia", "flustered")
     "The room changed temperature."
     "Or maybe that was just me."
@@ -230,7 +237,7 @@ label prologue_start:
     friend "Oh my God, just kiss already."
     "[girlfriend_name] laughed."
 
-    scene cg prologue_first_kiss_03
+    scene cg prologue_first_kiss_03 at lc_warm_bloom
     with dissolve
 
     "Then she kissed me."
@@ -251,7 +258,7 @@ label prologue_start:
 
     $ set_story_flag("prologue_first_kiss_complete")
 
-    scene cg prologue_present_stare
+    scene cg prologue_present_stare at lc_push_in(5.0, 1.0, 1.05)
     with dissolve
 
     gf "[player_name]?"

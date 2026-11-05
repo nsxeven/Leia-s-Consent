@@ -79,9 +79,9 @@ label ch01_scene_04_pool_arrival:
     gf "Very responsible."
 
     if selected_pool_outfit == "pool_bolder":
-        scene cg ch01_pool_hand_pull_blue
+        scene cg ch01_pool_hand_pull_blue at lc_shake_m
     else:
-        scene cg ch01_pool_hand_pull_white
+        scene cg ch01_pool_hand_pull_white at lc_shake_m
     with dissolve
 
     "She caught my wrist, stepped backward—and pulled me into the pool with her."
@@ -153,7 +153,7 @@ label ch01_scene_05_photography:
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
     # The shutter fires only after the setup CG has had a full dialogue beat.
-    scene lc_photo_flash_white
+    scene lc_photo_flash_white at lc_flash
     with Dissolve(0.06)
     pause 0.04
     if selected_pool_outfit == "pool_bolder":
@@ -210,7 +210,7 @@ label ch01_scene_05_photography:
             "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
 
-            scene lc_photo_flash_white
+            scene lc_photo_flash_white at lc_flash
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
@@ -244,7 +244,7 @@ label ch01_scene_05_photography:
 
             # Capture 02 is the actual second photograph. Flash directly into it
             # rather than showing the obsolete pool-edge placeholder first.
-            scene lc_photo_flash_white
+            scene lc_photo_flash_white at lc_flash
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
@@ -264,7 +264,7 @@ label ch01_scene_05_photography:
 
             "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
 
-            scene lc_photo_flash_white
+            scene lc_photo_flash_white at lc_flash
             with Dissolve(0.06)
             pause 0.04
             if selected_pool_outfit == "pool_bolder":
@@ -301,7 +301,7 @@ label ch01_scene_05_photography:
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
 
-                scene lc_photo_flash_white
+                scene lc_photo_flash_white at lc_flash
                 with Dissolve(0.06)
                 pause 0.04
                 if selected_pool_outfit == "pool_bolder":
@@ -485,7 +485,7 @@ label ch01_scene_06_friendship_and_towel:
     "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
     "Beside me, [friend_name] turned deliberately toward the pool."
 
-    scene cg ch01_towel_realization
+    scene cg ch01_towel_realization at lc_punch_zoom
     with dissolve
 
     friend "I'm looking at the water."

@@ -468,13 +468,28 @@ screen say(who, what):
         add SideImage() xalign 0.0 yalign 1.0
 
 
+# Name cards ease in (fade + small rise) instead of popping on; the table
+# fades in under them when nothing is behind the screen yet.
+transform lc_input_bg_in:
+    on show:
+        alpha 0.0
+        linear 0.5 alpha 1.0
+
+transform lc_input_card_in:
+    subpixel True
+    on show:
+        alpha 0.0 yoffset 28
+        easein 0.45 alpha 1.0 yoffset 0
+    on hide:
+        easeout 0.22 alpha 0.0 yoffset -14
+
 screen input(prompt):
     modal True
     zorder 150
 
-    add "gui/scrapbook/bg_table.png"
+    add "gui/scrapbook/bg_table.png" at lc_input_bg_in
 
-    frame:
+    frame at lc_input_card_in:
         xalign 0.5
         yalign 0.45
         xsize 780
