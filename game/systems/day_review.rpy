@@ -415,15 +415,28 @@ init 20 python:
             return 0.35
         return lc_review_photo_land(photo_count - 1) + 0.16
 
+    # Bars run strictly one after another (darryn, 2026-11-04): each bar
+    # finishes, glows, then the next starts, so no two ever animate together.
+    LC_REVIEW_BAR_RUN = 0.55
+    LC_REVIEW_BAR_GAP = 0.15
+
     def lc_review_bar_timing(index, photo_count, bar_count):
-        """(start, duration) so the staggered run itself stays within about 3 seconds."""
-        duration = 0.60
-        if bar_count <= 1:
-            stagger = 0.0
-        else:
-            stagger = min(0.35, (3.0 - duration) / float(bar_count - 1))
-        start = lc_review_bars_lead(photo_count) + index * stagger
+        """(start, duration): sequential, no overlap between bars."""
+        duration = LC_REVIEW_BAR_RUN
+        start = lc_review_bars_lead(photo_count) + index * (duration + LC_REVIEW_BAR_GAP)
         return (start, duration)
+
+    # Wall-clock start per animating bar, keyed by stat. Screens rebuild their
+    # displayables whenever any bar changes phase; keeping the start time here
+    # means a rebuilt bar carries on instead of restarting from yesterday.
+    lc_review_anim_clock = {}
+
+    def lc_review_anim_start(key):
+        import time
+        return lc_review_anim_clock.setdefault(key, time.time())
+
+    def lc_review_anim_reset():
+        lc_review_anim_clock.clear()
 
     def lc_review_quote(text):
         text = (text or "").strip()
@@ -663,6 +676,7 @@ label lc_day_review(day_id):
     # Night first, then the journal. A click during the night skips every
     # animation and opens the scrapbook already settled.
     $ lc_review_skipped = False
+    $ lc_review_anim_reset()
     if persistent.lc_recap_animation:
         call screen lc_review_night_screen(day_id)
         $ lc_review_skipped = (_return == "skip")
