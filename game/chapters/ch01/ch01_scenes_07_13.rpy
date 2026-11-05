@@ -83,7 +83,7 @@ label ch01_scene_07_did_he_see:
 
     # Dress reveal CG holds through her first exchange; sprites return at the door.
     $ enter_cinematic_mode()
-    scene cg ch01_dress_reveal
+    scene cg ch01_dress_reveal at lc_push_in
     with dissolve
 
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
@@ -253,7 +253,7 @@ label ch01_scene_09_dinner:
     with dissolve
 
     # Impact beat: screen shake on the collision line (same as the prologue dare).
-    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them." with hpunch
+    "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them." with lc_shake("m")
 
     # The impact beat is over. Return to the restaurant for the immediate
     # apology using the post-spill wet sprite state.
@@ -547,7 +547,7 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_walk_back_call
     with dissolve
 
-    "My phone started ringing."
+    "My phone started ringing." with lc_shake("s")
     "The name on the screen belonged to a female friend from back home—someone I had not expected to hear from on this trip."
 
     mc "Hang on."
@@ -565,7 +565,7 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_trip_catch
     with dissolve
 
-    "Her heel caught the edge of the path."
+    "Her heel caught the edge of the path." with lc_shake("m")
     "[friend_name] reacted before I did, catching her around the waist and upper body before she hit the ground."
     "In the scramble, one of his hands landed against the side of her breast for a split second."
     "Both of them realised at almost exactly the same time."
@@ -585,7 +585,7 @@ label ch01_scene_11_walk_and_catch:
     gf "[friend_name]!"
     friend "I was catching you!"
 
-    "[girlfriend_name]'s face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry."
+    "[girlfriend_name]'s face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry." with lc_shake("s")
 
     gf "Watch your hands!"
     friend "I didn't exactly submit a landing plan!"

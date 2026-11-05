@@ -16,16 +16,12 @@ init python:
     import lc_ui_logic
 
     def lc_ui_play(cue):
-        """Style-guide sound hook. No-op until game/audio/ui_<cue>.ogg exists.
+        """Style-guide sound hook: game/audio/ui/<cue>.ogg on the "ui" channel.
 
-        Timings (seconds): polaroid 0.35, rustle 0.40, tape 0.08, bar 0.60,
-        tick (hover), thud 0.12.
+        Silent until the file exists (systems/lc_fx.rpy). "tick" is the hover
+        sound and is rate-limited so sweeping the mouse doesn't stutter.
         """
-        if cue not in lc_ui_logic.UI_CUES:
-            return
-        path = "audio/ui_%s.ogg" % cue
-        if renpy.loadable(path):
-            renpy.play(path, channel="sound")
+        lc_ui_sound(cue, hover=(cue == "tick"))
 
 
     def lc_shown_scene_names():
@@ -469,13 +465,28 @@ screen say(who, what):
         add SideImage() xalign 0.0 yalign 1.0
 
 
+# Name cards ease in (fade + small rise) instead of popping on; the table
+# fades in under them when nothing is behind the screen yet.
+transform lc_input_bg_in:
+    on show:
+        alpha 0.0
+        linear 0.5 alpha 1.0
+
+transform lc_input_card_in:
+    subpixel True
+    # Show only: each renpy.input() card leaves at once and the next one
+    # eases in, so consecutive name cards never overlap.
+    on show:
+        alpha 0.0 yoffset 28
+        easein 0.45 alpha 1.0 yoffset 0
+
 screen input(prompt):
     modal True
     zorder 150
 
-    add "gui/scrapbook/bg_table.png"
+    add "gui/scrapbook/bg_table.png" at lc_input_bg_in
 
-    frame:
+    frame at lc_input_card_in:
         xalign 0.5
         yalign 0.45
         xsize 780
@@ -813,7 +824,7 @@ screen preferences():
                 text "SETTINGS KEEP ACROSS SAVES" size 21 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
 
                 hbox:
-                    spacing 80
+                    spacing 40
                     vbox:
                         spacing 6
                         text "DISPLAY" size 21 color "#7a6266" font "fonts/Silkscreen-Bold.ttf"
@@ -825,6 +836,11 @@ screen preferences():
                         textbutton _("UNSEEN TEXT") action Preference("skip", "toggle") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("AFTER CHOICES") action Preference("after choices", "toggle") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("TRANSITIONS") action InvertSelected(Preference("transitions", "toggle")) style "lc_check_button" text_style "lc_check_text"
+                    vbox:
+                        spacing 6
+                        text "EFFECTS" size 21 color "#7a6266" font "fonts/Silkscreen-Bold.ttf"
+                        textbutton _("SCREEN SHAKE") action ToggleField(persistent, "lc_screen_shake") style "lc_check_button" text_style "lc_check_text"
+                        textbutton _("CAMERA FLASH") action ToggleField(persistent, "lc_camera_flash") style "lc_check_button" text_style "lc_check_text"
 
                 null height 8
                 use lc_pref_slider("TEXT SPEED", Preference("text speed"), "gui/scrapbook/bar_pink.png", ("MAX" if preferences.text_cps == 0 else "%d" % preferences.text_cps))
@@ -833,8 +849,9 @@ screen preferences():
                     use lc_pref_slider("MUSIC", Preference("music volume"), "gui/scrapbook/bar_purple.png", "%d%%" % int(preferences.get_volume("music") * 100))
                 if config.has_sound:
                     use lc_pref_slider("SOUND", Preference("sound volume"), "gui/scrapbook/bar_gold.png", "%d%%" % int(preferences.get_volume("sound") * 100))
-                if config.has_voice:
-                    use lc_pref_slider("VOICE", Preference("voice volume"), "gui/scrapbook/bar_grey.png", "%d%%" % int(preferences.get_volume("voice") * 100))
+                if config.has_sound:
+                    use lc_pref_slider("AMBIENCE", Preference("mixer ambience volume"), "gui/scrapbook/bar_teal.png", "%d%%" % int(preferences.get_volume("ambience") * 100))
+                    use lc_pref_slider("UI SOUNDS", Preference("mixer ui volume"), "gui/scrapbook/bar_grey.png", "%d%%" % int(preferences.get_volume("ui") * 100))
                 textbutton _("MUTE ALL") action Preference("all mute", "toggle") style "lc_check_button" text_style "lc_check_text"
 
             vbox:
