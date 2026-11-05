@@ -40,6 +40,9 @@ transform leia_right:
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
+    # Full opacity, always: a sprite re-shown mid-entrance (fast clicks,
+    # skip, expression change) must not keep the half-faded alpha.
+    alpha 1.0
 
 # --- Other speakers (always LEFT) -----------------------------------------
 transform other_enter_left:
@@ -64,6 +67,9 @@ transform other_left:
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
+    # Full opacity, always: a sprite re-shown mid-entrance (fast clicks,
+    # skip, expression change) must not keep the half-faded alpha.
+    alpha 1.0
 
 # Backward-compatible aliases (existing scripts use the prologue_ names).
 # Prefer the short names above in new code.
@@ -90,6 +96,9 @@ transform prologue_leia_right:
     xysize (760, 900)
     fit "contain"
     xzoom -1.0
+    # Full opacity, always: a sprite re-shown mid-entrance (fast clicks,
+    # skip, expression change) must not keep the half-faded alpha.
+    alpha 1.0
 
 transform prologue_other_enter_left:
     xpos 0.22
@@ -113,3 +122,6 @@ transform prologue_other_left:
     xysize (760, 900)
     fit "contain"
     xzoom 1.0
+    # Full opacity, always: a sprite re-shown mid-entrance (fast clicks,
+    # skip, expression change) must not keep the half-faded alpha.
+    alpha 1.0
