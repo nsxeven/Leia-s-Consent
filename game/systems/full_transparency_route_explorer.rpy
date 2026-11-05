@@ -37,6 +37,8 @@ init 200 python:
     }
 
     def lc_route_explorer_allowed():
+        if getattr(store, "LC_DAY1_DEMO_BUILD", False) and not config.developer:
+            return False
         mode = current_choice_mode()
         return mode == "full" or (mode == "developer" and config.developer)
 
