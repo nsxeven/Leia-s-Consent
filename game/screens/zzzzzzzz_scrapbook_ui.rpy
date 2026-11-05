@@ -566,18 +566,23 @@ screen choice(items):
                                             font "fonts/PatrickHand-Regular.ttf"
                                             xalign 0.0
                                     else:
-                                        $ line, chips = lc_ui_logic.parse_choice_caption(item.caption)
+                                        # Story menus pass "[some_text]" unsubstituted; fill it in
+                                        # first so the stat line can be split off and coloured
+                                        # (gains LC_DELTA_UP, losses LC_DELTA_DOWN).
+                                        $ line, chips = lc_ui_logic.parse_choice_caption(lc_choice_caption(item.caption))
                                         text line:
                                             size 40
                                             color "#34242c"
                                             font "fonts/PatrickHand-Regular.ttf"
                                             xalign 0.0
+                                            substitute False
                                         if chips:
-                                            hbox:
-                                                box_wrap True
-                                                spacing 8
-                                                for chip_name, chip_amount, chip_exact in chips:
-                                                    use lc_chip(chip_name, chip_amount, chip_exact)
+                                            text lc_choice_effect_markup(chips):
+                                                size 36
+                                                color "#34242c"
+                                                font "fonts/PatrickHand-Regular.ttf"
+                                                xalign 0.0
+                                                substitute False
 
                             if not dev:
                                 add "gui/scrapbook/tape_corner_pink_flip.png" xpos 760 ypos -20 at lc_only_hover

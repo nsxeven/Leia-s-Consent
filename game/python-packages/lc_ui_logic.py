@@ -187,6 +187,28 @@ def parse_choice_caption(caption):
     return head.strip(), chips
 
 
+def effect_markup(chips, up="#5aa874", down="#d4636e", neutral=None, arrow_font="DejaVuSans.ttf"):
+    """Ren'Py markup for a choice's stat line: "[Love +1 • Trust -1]".
+
+    Each gain is coloured `up` and each loss `down`; brackets and separators keep
+    the card's normal ink. Insight-mode chips (exact=False) show arrows instead of
+    numbers, drawn in `arrow_font` because the handwriting fonts have no arrow
+    glyphs. Brackets are plain text, so render with `substitute False`.
+    """
+    parts = []
+    for name, amount, exact in chips:
+        amount = int(amount)
+        label = (name or "").replace("{", "{{")
+        if exact:
+            shown = "{} {:+d}".format(label, amount)
+        else:
+            arrow = "\u2191" if amount > 0 else ("\u2193" if amount < 0 else "\u2192")
+            shown = "{} {{font={}}}{}{{/font}}".format(label, arrow_font, arrow)
+        colour = up if amount > 0 else (down if amount < 0 else neutral)
+        parts.append("{{color={}}}{}{{/color}}".format(colour, shown) if colour else shown)
+    return "[" + " \u2022 ".join(parts) + "]"
+
+
 def speaker_color(who, aliases=None):
     """Ink color for a history name. Unknown speakers use warm plum."""
     if not who:
