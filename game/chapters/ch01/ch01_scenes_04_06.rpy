@@ -360,11 +360,11 @@ label ch01_scene_05_photography:
         $ face("leia", "smile")
     gf "Can I ask you something?"
     mc "Dangerous opening."
-    gf "Has [friend_name] always been like this?"
+    gf "Was [friend_name] this ridiculous before I knew him?"
     friend "I'm standing right here."
-    mc "Define 'this.'"
+    mc "Define 'ridiculous.'"
     gf "The villa. The photos. Acting like all of this is completely normal."
-    mc "Oh. Yes."
+    mc "Oh. Worse."
     friend "That sounded judgmental."
     mc "He once booked a private room for six people because the normal table was 'too loud.'"
     friend "It was too loud."
@@ -374,10 +374,10 @@ label ch01_scene_05_photography:
 
     "She looked at me, amused."
 
-    gf "I can see why you two are friends."
+    gf "Four years, and I still can't decide if you're charming or a problem."
     friend "Careful. That's almost nice."
     gf "Don't get used to it."
-    mc "Give it a day. She gets meaner when she's comfortable."
+    mc "Give it a day. She gets meaner on holiday."
     if selected_pool_outfit == "pool_bolder":
         $ cast_add(leia="blue_bikini")
         $ face("leia", "pout")
@@ -385,7 +385,7 @@ label ch01_scene_05_photography:
         $ cast_add(leia="white_ruffle")
         $ face("leia", "pout")
     gf "Excuse me?"
-    friend "Good. You'll fit in."
+    friend "Good. Means the trip's working."
 
     gf "I'm showering before dinner. Try not to drown while I'm gone."
 
