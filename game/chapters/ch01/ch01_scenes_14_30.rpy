@@ -323,6 +323,7 @@ label ch01_scene_18_private_under_blanket:
 
     "The second [friend_name] disappeared toward the kitchen, [girlfriend_name] turned to me."
     # The seated group CG includes Julian, so retire it while he is absent.
+    $ exit_cinematic_mode()
     scene bg ch01_villa_living_evening
     with dissolve
     $ cast(ryan="casual", leia="lounge", julian="lounge")

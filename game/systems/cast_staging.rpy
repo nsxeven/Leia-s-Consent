@@ -87,15 +87,15 @@ init python:
         return True
 
     def _lc_staging_blocked():
+        # Sprites follow what is actually on screen: hidden only while a `cg`
+        # image is showing. (Not lc_cinematic_mode: a scene that forgets
+        # exit_cinematic_mode() after a CG must not lose its sprites.)
         if store.lc_cast_held or not store.lc_cast:
             return True
-        if getattr(store, "lc_cinematic_mode", False):
-            return True
-        cg_check = getattr(store, "lc_cg_on_screen", None)
         try:
-            return bool(cg_check and cg_check())
+            return "cg" in renpy.get_showing_tags("master")
         except Exception:
-            return False
+            return bool(getattr(store, "lc_cinematic_mode", False))
 
     def lc_stage_speaker(who):
         """Put `who` on stage for the line they are about to say."""
