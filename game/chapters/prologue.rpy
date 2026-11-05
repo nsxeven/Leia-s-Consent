@@ -27,9 +27,8 @@ label prologue_name_setup:
 label prologue_start:
 
     $ set_story_flag("prologue_started")
-    # Julian swaps into the left slot on his lines (sprites/julian.rpy).
+    # Sprites come from the cast (systems/cast_staging.rpy).
     # Party outfit = black shirt stand-in until party art exists.
-    $ lc_julian_outfit = "party"
 
     scene black
     with fade
@@ -59,19 +58,15 @@ label prologue_start:
 
     scene bg prologue_party
     with dissolve
-    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(leia="prologue_party")
 
     gf "Technically, you're both wrong."
     "She said it quietly enough that the conversation almost rolled straight over her."
-    show leia_prologue_party shy
-    with sprite_change
+    $ face("leia", "shy")
     gf "...Never mind."
-    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    $ cast_add(ryan="prologue_party")
     mc "No, no. You can't say that and then retreat."
-    show leia_prologue_party smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "I can absolutely retreat."
     mc "Too late. Explain."
     "She did."
@@ -80,12 +75,10 @@ label prologue_start:
     "And somewhere in the middle of it, the version of her I had invented from across the room disappeared."
 
     mc "Oh."
-    show leia_prologue_party neutral
-    with sprite_change
+    $ face("leia", "neutral")
     gf "What?"
     mc "Nothing. Keep going."
-    show leia_prologue_party skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     "She narrowed her eyes at me and continued anyway."
 
     "What was I actually thinking?"
@@ -94,20 +87,17 @@ label prologue_start:
         "She's a complete dork.":
             $ set_story_value("prologue_ryan_first_impression", "dork")
             mc "You're a complete dork, aren't you?"
-            show leia_prologue_party pout
-            with sprite_change
+            $ face("leia", "pout")
             gf "You made me explain it!"
             mc "And I'm glad I did."
 
         "She's way easier to talk to than I expected.":
             $ set_story_value("prologue_ryan_first_impression", "comfortable")
             mc "You're not what I expected."
-            show leia_prologue_party skeptical
-            with sprite_change
+            $ face("leia", "skeptical")
             gf "That sounded dangerously close to an insult."
             mc "It wasn't."
-            show leia_prologue_party smile
-            with sprite_change
+            $ face("leia", "smile")
             gf "Good recovery."
 
         "I am definitely in trouble.":
@@ -133,9 +123,7 @@ label prologue_start:
     # before Truth or Dare turns their chemistry into a public event.
     scene bg prologue_party_kitchen
     with dissolve
-    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
-    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
 
     "A while later I escaped to the kitchen in search of another drink."
     "She was already there, studying the bottles on the counter like one of them had personally offended her."
@@ -143,12 +131,10 @@ label prologue_start:
     mc "Hiding?"
     gf "Recharging."
     mc "Different word for hiding."
-    show leia_prologue_party skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "I came to get a drink."
     mc "You've been holding the same one for twenty minutes."
-    show leia_prologue_party shy
-    with sprite_change
+    $ face("leia", "shy")
     gf "...You noticed that?"
     mc "I notice things."
 
@@ -160,14 +146,12 @@ label prologue_start:
     mc "You were doing fine."
     gf "I spent the first hour pretending to check my phone."
     mc "Very convincing. I thought you were terrifying."
-    show leia_prologue_party skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Terrifying?"
     mc "Absolutely."
     gf "I was standing there holding a red cup."
     mc "Menacingly."
-    show leia_prologue_party smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "You're an idiot."
 
     "She said it while smiling."
@@ -177,33 +161,26 @@ label prologue_start:
     mc "We could stay hidden."
     gf "Recharging."
     mc "Right. Sorry."
-    show leia_prologue_party smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Come on."
 
     # Both leave with the location change itself (one dissolve), then Leia enters.
     scene bg prologue_truthordare
     with dissolve
-    show leia_prologue_party neutral at prologue_leia_enter_right, leia_body_idle
-    # Ryan is off screen here; Julian appears in the empty left slot on his lines.
-    show julian_slot at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
     "Most of the dares were harmless."
     "Somebody had to send an embarrassing text. Someone else drank something that should never have been mixed."
     "[girlfriend_name], meanwhile, had discovered an extremely advanced strategy."
 
-    show leia_prologue_party neutral
-    with sprite_change
+    $ face("leia", "neutral")
     gf "Truth."
     friend "Again?"
-    show leia_prologue_party skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Yes. Again."
     friend "Coward."
-    show leia_prologue_party smile
-    with sprite_change
+    $ face("leia", "smile")
     gf "Alive coward."
 
     "The next question came from somewhere across the circle."
@@ -211,50 +188,35 @@ label prologue_start:
     "[girlfriend_name] looked around once."
     "Then she pointed at me."
 
-    hide julian_slot
-    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
     mc "Me?"
-    show leia_prologue_party shy
-    with sprite_change
+    $ face("leia", "shy")
     gf "You asked."
     "Nobody had asked me."
     "That did not seem important at the time."
-    hide ryan_prologue_party
-    show julian_slot at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
     friend "Okay. Next round, you are not choosing Truth again."
-    show leia_prologue_party skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Watch me."
     friend "Chicken."
-    show leia_prologue_party pout
-    with sprite_change
+    $ face("leia", "pout")
     gf "I'm not a chicken."
     friend "Then pick Dare."
 
     "Three people immediately joined in."
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
-    show leia_prologue_party skeptical
-    with sprite_change
+    $ face("leia", "skeptical")
     gf "Fine. Dare."
     # Dare lands: screen shake. AUDIO TODO (parked): record scratch here and
     # stop the party music/ambience on this line once the audio pass happens.
     friend "Kiss [player_name]." with hpunch
-    show leia_prologue_party flustered
-    with sprite_change
+    $ face("leia", "flustered")
     "The room changed temperature."
     "Or maybe that was just me."
     "She looked at [friend_name]. Then at me."
 
     mc "You don't actually have to."
-    show leia_prologue_party shy
-    with sprite_change
+    $ face("leia", "shy")
     gf "I know."
     "And then she moved closer anyway."
-    hide leia_prologue_party
-    hide julian_slot
-    hide ryan_prologue_party
     scene cg prologue_first_kiss_01
     with dissolve
 
@@ -277,16 +239,12 @@ label prologue_start:
 
     scene bg prologue_truthordare
     with dissolve
-    show leia_prologue_party smile at prologue_leia_enter_right, leia_body_idle
-    show ryan_prologue_party at prologue_other_enter_left, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
+    $ face("leia", "smile")
 
     mc "...Does that mean I win Truth or Dare?"
     gf "No."
     mc "Worth asking."
-    hide leia_prologue_party
-    hide ryan_prologue_party
-    $ lc_julian_outfit = None
     scene black
     with fade
     "And somehow... that was the beginning."
@@ -357,9 +315,8 @@ label prologue_start:
 
     scene bg prologue_packing
     with dissolve
-    show ryan_casual at prologue_other_enter_left, leia_body_idle
-    show leia_casual smile at prologue_leia_enter_right, leia_body_idle
-    with sprite_enter_exit
+    $ cast(ryan="casual", leia="casual")
+    $ face("leia", "smile")
 
     gf "Ready?"
 
@@ -367,32 +324,26 @@ label prologue_start:
         "Been ready.":
             $ set_story_value("prologue_departure_reply", "ready")
             mc "Been ready."
-            show leia_casual skeptical
-            with sprite_change
+            $ face("leia", "skeptical")
             gf "You were still packing ten minutes ago."
             mc "Emotionally ready."
-            show leia_casual smile
-            with sprite_change
+            $ face("leia", "smile")
 
         "I still think we're forgetting something.":
             $ set_story_value("prologue_departure_reply", "forgetting")
             mc "I still think we're forgetting something."
-            show leia_casual neutral
-            with sprite_change
+            $ face("leia", "neutral")
             gf "If we are, we're buying it there."
             mc "That is an expensive philosophy."
-            show leia_casual smile
-            with sprite_change
+            $ face("leia", "smile")
 
         "Ask me when [friend_name] starts snoring on the plane.":
             $ set_story_value("prologue_departure_reply", "snoring")
             mc "Ask me when [friend_name] starts snoring on the plane."
-            show leia_casual smile
-            with sprite_change
+            $ face("leia", "smile")
             gf "I'm recording it this time."
 
 
-    hide leia_casual
     $ enter_cinematic_mode()
 
     scene cg prologue_departure
