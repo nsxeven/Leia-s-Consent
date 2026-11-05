@@ -20,8 +20,8 @@ label ch01_scene_13b_night_pool:
     gf "Okay. This was worth the ridiculous villa."
     friend "Finally. Gratitude."
     gf "I said the villa was worth it. I said nothing about you."
-    mc "She's getting comfortable."
-    friend "I noticed."
+    mc "Holiday [girlfriend_name] is meaner. I warned you."
+    friend "You did."
 
     "We opened the snacks on the low table and let the first day of the trip finally slow down."
 
@@ -1162,8 +1162,8 @@ label ch01_scene_30_end_day_one:
         "Nothing had happened. The fact that nothing had happened was part of what made the possibility feel new."
     else:
         $ set_story_value("ch01_day1_route_pressure", "mixed")
-        "Yesterday, [friend_name] had simply been my friend."
-        "By the end of the day, he'd started becoming [girlfriend_name]'s friend too, and none of us had decided yet what that would mean."
+        "[friend_name] had been our friend for four years. One day under the same roof had already shown me corners of that friendship I'd never had to think about."
+        "None of us had decided yet what they would mean."
 
     # Ryan falls asleep with the day's towel incident still somewhere in the back of his mind.
     # This is a dream, not a route lock: it combines the real accident with the
