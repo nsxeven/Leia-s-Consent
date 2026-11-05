@@ -1222,7 +1222,7 @@ label ch01_scene_30_end_day_one:
         "Right there at the table. In front of me."
 
         "[girlfriend_name] gasped, one small, startled sound."
-        mc "Babe, are you okay?"
+        "{i}Babe, are you okay?{/i} The words never made it past my throat."
 
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
