@@ -18,7 +18,7 @@ class TitleScreenTests(unittest.TestCase):
     def test_assets_exist(self):
         for name in ("shade_left.png", "shade_bottom.png", "vignette.png", "light_leak.png", "bokeh.png",
                      "polaroid.png", "polaroid_hover.png", "locked.png", "card.png", "card_hover.png",
-                     "chip.png", "chip_hover.png", "logo.png", "badge18.png"):
+                     "chip.png", "chip_hover.png", "logo.png", "logo_line.png", "badge18.png"):
             self.assertTrue((GAME / "gui" / "title" / name).is_file(), name)
         for name in ("Nunito-Bold.ttf", "Nunito-ExtraBold.ttf", "Fredoka-SemiBold.ttf", "OFL-Nunito.txt", "OFL-Fredoka.txt"):
             self.assertTrue((GAME / "fonts" / name).is_file(), name)
