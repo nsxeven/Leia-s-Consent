@@ -874,7 +874,8 @@ screen preferences():
                     spacing 12
                     if config.developer or not LC_DAY1_DEMO_BUILD:
                         textbutton "DEVELOPER" action Function(set_choice_display_mode, "developer")
-                    textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
+                    if config.developer or not LC_DAY1_DEMO_BUILD:
+                        textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
 
                 if mode_now == "developer":
                     text "Developer mode is on. Pick Immersive, Insight, or Full Transparency to leave it." size 28 color "#7a6266" font "fonts/Caveat[wght].ttf"
