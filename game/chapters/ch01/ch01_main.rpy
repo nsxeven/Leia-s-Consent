@@ -102,7 +102,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_master_enter
     with dissolve
-    $ lc_amb("room_tone", 0.5)
+    $ lc_amb("room_tone")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "The master bedroom took up most of the second floor."
@@ -136,7 +136,7 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
-    $ lc_amb("room_tone", 0.5)
+    $ lc_amb("room_tone")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "Unpacking took less than five minutes. Deciding what to wear took considerably longer."

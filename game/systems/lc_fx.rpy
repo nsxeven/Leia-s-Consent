@@ -36,6 +36,20 @@ init -2 python:
 
     LC_AUDIO_EXTS = (".ogg", ".opus", ".wav", ".mp3")
 
+    # ONE place to tune levels after playtesting: "kind/name": multiplier
+    # (1.0 = as mastered, 0.5 = about -6 dB, 0.0 = muted). Credits and
+    # sources for every file: game/audio/CREDITS.md.
+    LC_AUDIO_GAIN = {
+        "amb/room_tone": 0.6,   # quiet indoor A/C hum under every villa/bedroom scene
+        # "sfx/splash_big": 0.8,
+        # "amb/party": 1.0,
+        # "music/lounge_piano": 0.7,
+        # "ui/tick": 0.6,
+    }
+
+    def lc_audio_gain(kind, name, volume=1.0):
+        return max(0.0, float(volume) * LC_AUDIO_GAIN.get("%s/%s" % (kind, name), 1.0))
+
     def lc_audio_path(kind, name):
         """game/audio/<kind>/<name>.<ext> if it exists, else None."""
         if not name:
@@ -91,14 +105,14 @@ init -2 python:
     def lc_sfx(name, volume=1.0):
         path = lc_audio_path("sfx", name)
         if path:
-            renpy.music.play(path, channel="audio", relative_volume=volume)
+            renpy.music.play(path, channel="audio", relative_volume=lc_audio_gain("sfx", name, volume))
         return path
 
     def lc_amb(name, volume=1.0, fadein=1.5, fadeout=1.5):
         path = lc_audio_path("amb", name)
         if path:
             renpy.music.play(path, channel="ambience", loop=True, fadein=fadein, fadeout=fadeout,
-                             if_changed=True, relative_volume=volume)
+                             if_changed=True, relative_volume=lc_audio_gain("amb", name, volume))
         else:
             renpy.music.stop(channel="ambience", fadeout=fadeout)
         return path
@@ -110,7 +124,7 @@ init -2 python:
         path = lc_audio_path("music", name)
         if path:
             renpy.music.play(path, channel="music", loop=True, fadein=fadein, fadeout=fadeout,
-                             if_changed=True, relative_volume=volume)
+                             if_changed=True, relative_volume=lc_audio_gain("music", name, volume))
         return path
 
     def lc_music_stop(fadeout=2.0):
@@ -144,7 +158,7 @@ init -2 python:
             _lc_ui_last["t"] = now
         path = lc_audio_path("ui", name)
         if path:
-            renpy.music.play(path, channel="ui", relative_volume=volume)
+            renpy.music.play(path, channel="ui", relative_volume=lc_audio_gain("ui", name, volume))
         return path
 
 

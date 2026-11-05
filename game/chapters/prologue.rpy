@@ -268,7 +268,7 @@ label prologue_start:
 
     scene cg prologue_present_stare
     with dissolve
-    $ lc_amb("room_tone", 0.5)
+    $ lc_amb("room_tone")
 
     gf "[player_name]?"
     gf "You're staring again."
@@ -297,7 +297,6 @@ label prologue_start:
     "[friend_name] was coming too."
     "My best friend since before [girlfriend_name] and I were even a thing. The same idiot who had, technically, started the whole thing."
 
-    $ lc_sfx("phone_notify")
     $ phone_add_message(
         "group",
         "julian",
@@ -311,7 +310,6 @@ label prologue_start:
     # The Phone notification already presents Julian's message; do not
     # duplicate its contents through the VN textbox.
 
-    $ lc_sfx("phone_notify")
     $ phone_add_message(
         "group",
         "julian",
@@ -335,7 +333,7 @@ label prologue_start:
 
     scene bg prologue_packing
     with dissolve
-    $ lc_amb("room_tone", 0.5)
+    $ lc_amb("room_tone")
     $ cast(ryan="casual", leia="casual")
     $ face("leia", "smile")
 
