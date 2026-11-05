@@ -872,7 +872,8 @@ screen preferences():
 
                 hbox:
                     spacing 12
-                    textbutton "DEVELOPER" action Function(set_choice_display_mode, "developer")
+                    if config.developer or not LC_DAY1_DEMO_BUILD:
+                        textbutton "DEVELOPER" action Function(set_choice_display_mode, "developer")
                     textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
 
                 if mode_now == "developer":

@@ -1247,7 +1247,8 @@ screen lc_phone_settings():
                         use lc_phone_settings_mode("normal")
                         use lc_phone_settings_mode("insight")
                         use lc_phone_settings_mode("full")
-                        use lc_phone_settings_mode("developer")
+                        if config.developer or not LC_DAY1_DEMO_BUILD:
+                            use lc_phone_settings_mode("developer")
                         textbutton "OPEN STATUS":
                             style "lc_sw_hit"
                             xfill True
