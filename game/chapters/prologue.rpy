@@ -12,6 +12,11 @@ label prologue_name_setup:
 
     centered "{size=48}LEIA'S CONSENT{/size}\n\nBefore we begin..."
 
+    # Ease from the title card onto the paper table before the name cards
+    # appear (the cut straight into the first input felt abrupt).
+    scene expression "gui/scrapbook/bg_table.png"
+    with Dissolve(0.8)
+
     $ entered_player_name = renpy.input("Your name", default=player_name, exclude="{}[]", length=20).strip()
     $ player_name = entered_player_name if entered_player_name else "Ryan"
 
@@ -34,7 +39,7 @@ label prologue_start:
     with fade
     centered "{size=54}FOUR YEARS AGO{/size}\n{size=34}End of First Year{/size}"
 
-    scene cg prologue_party_arrival
+    scene cg prologue_party_arrival at lc_push_in
     with dissolve
 
     "I noticed [girlfriend_name] before I ever spoke to her."
@@ -188,7 +193,7 @@ label prologue_start:
     "[girlfriend_name] looked around once."
     "Then she pointed at me."
 
-    mc "Me?"
+    mc "Me?" with lc_punch()
     $ face("leia", "shy")
     gf "You asked."
     "Nobody had asked me."
@@ -205,9 +210,8 @@ label prologue_start:
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
     $ face("leia", "skeptical")
     gf "Fine. Dare."
-    # Dare lands: screen shake. AUDIO TODO (parked): record scratch here and
-    # stop the party music/ambience on this line once the audio pass happens.
-    friend "Kiss [player_name]." with hpunch
+    # Dare lands: small screen shake (lc_shake respects the SCREEN SHAKE setting).
+    friend "Kiss [player_name]." with lc_shake("s")
     $ face("leia", "flustered")
     "The room changed temperature."
     "Or maybe that was just me."
@@ -226,13 +230,14 @@ label prologue_start:
     with dissolve
 
     "It was not smooth."
-    "Our noses nearly collided. Somebody laughed before we'd even figured out the angle."
+    "Our noses nearly collided. Somebody laughed before we'd even figured out the angle." with lc_shake("s")
     friend "Oh my God, just kiss already."
     "[girlfriend_name] laughed."
 
     scene cg prologue_first_kiss_03
     with dissolve
 
+    $ lc_flash("#ffe2cf", 0.4, 0.9)
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
     "The room cheered like we'd accomplished something."
@@ -346,7 +351,7 @@ label prologue_start:
 
     $ enter_cinematic_mode()
 
-    scene cg prologue_departure
+    scene cg prologue_departure at lc_push_in
     with dissolve
 
     "Our first trip together."

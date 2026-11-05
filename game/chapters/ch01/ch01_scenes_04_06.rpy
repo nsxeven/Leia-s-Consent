@@ -84,7 +84,8 @@ label ch01_scene_04_pool_arrival:
         scene cg ch01_pool_hand_pull_white
     with dissolve
 
-    "She caught my wrist, stepped backward—and pulled me into the pool with her."
+    $ lc_flash("#e6f6ff", 0.45, 0.5)
+    "She caught my wrist, stepped backward—and pulled me into the pool with her." with lc_shake("m")
 
     mc "Traitor."
     gf "You were taking too long."
@@ -109,6 +110,7 @@ label ch01_scene_05_photography:
     with dissolve
 
     "Eventually, [girlfriend_name] decided the afternoon required photographic evidence."
+    $ lc_photo()
     "Her first group selfie caught me blinking and [friend_name] looking as if he had been summoned against his will."
 
     gf "How are both of you bad at having faces?"
@@ -126,6 +128,7 @@ label ch01_scene_05_photography:
 
     friend "Give me the phone."
 
+    $ lc_photo()
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
 
     if selected_pool_outfit == "pool_bolder":
@@ -482,14 +485,14 @@ label ch01_scene_06_friendship_and_towel:
     scene cg ch01_towel_shift_03
     with dissolve
 
-    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]."
+    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]." with lc_punch()
     "Beside me, [friend_name] turned deliberately toward the pool."
 
     scene cg ch01_towel_realization
     with dissolve
 
     friend "I'm looking at the water."
-    gf "You weren't two seconds ago!"
+    gf "You weren't two seconds ago!" with lc_shake("s")
     friend "I didn't know there was going to be a test!"
     mc "Just go inside."
     gf "I was trying to tell you to get ready!"

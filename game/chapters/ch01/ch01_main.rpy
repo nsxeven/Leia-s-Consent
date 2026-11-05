@@ -46,6 +46,7 @@ label ch01_scene_01_arrival:
     gf "First proper holiday photo. Try to look happy."
     friend "I paid for the villa. I am contractually delighted."
 
+    $ lc_photo()
     "I laughed just as she took it."
     "For once, she lowered the phone without checking the result ten times."
 
@@ -72,7 +73,7 @@ label ch01_scene_02_villa:
     mc "Compared to what? An airport?"
 
     $ enter_cinematic_mode()
-    scene cg ch01_villa_arrival
+    scene cg ch01_villa_arrival at lc_push_in
     with dissolve
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
