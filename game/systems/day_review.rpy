@@ -642,7 +642,7 @@ init 20 python:
             for ext in (".ogg", ".wav"):
                 path = "audio/sfx/review_{}{}".format(name, ext)
                 if renpy.loadable(path):
-                    renpy.sound.play(path)
+                    cue(path, "sound")
                     return path
         except Exception:
             return None

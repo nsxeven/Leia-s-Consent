@@ -56,6 +56,8 @@ default last_choice_id = None
 default persistent.choice_display_mode = "normal"
 default persistent.full_transparency_notice_seen = False
 default persistent.gallery_unlocked = []
+default persistent.lc_screen_shake = True
+default persistent.lc_camera_flash = True
 
 # Chapter Select (see systems/chapter_select.rpy).
 default persistent.ch01_chapter_select_unlocked = False

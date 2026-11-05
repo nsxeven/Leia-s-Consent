@@ -24,8 +24,7 @@ init python:
         if cue not in lc_ui_logic.UI_CUES:
             return
         path = "audio/ui_%s.ogg" % cue
-        if renpy.loadable(path):
-            renpy.play(path, channel="sound")
+        return globals().get("cue", lambda *_args, **_kwargs: None)(path, "ui")
 
 
     def lc_shown_scene_names():
@@ -833,8 +832,12 @@ screen preferences():
                     use lc_pref_slider("MUSIC", Preference("music volume"), "gui/scrapbook/bar_purple.png", "%d%%" % int(preferences.get_volume("music") * 100))
                 if config.has_sound:
                     use lc_pref_slider("SOUND", Preference("sound volume"), "gui/scrapbook/bar_gold.png", "%d%%" % int(preferences.get_volume("sound") * 100))
+                use lc_pref_slider("AMBIENCE", Preference("ambience volume"), "gui/scrapbook/bar_teal.png", "%d%%" % int(preferences.get_volume("ambience") * 100))
+                use lc_pref_slider("UI", Preference("ui volume"), "gui/scrapbook/bar_grey.png", "%d%%" % int(preferences.get_volume("ui") * 100))
                 if config.has_voice:
                     use lc_pref_slider("VOICE", Preference("voice volume"), "gui/scrapbook/bar_grey.png", "%d%%" % int(preferences.get_volume("voice") * 100))
+                textbutton _("SCREEN SHAKE") action ToggleField(persistent, "lc_screen_shake", True, False) style "lc_check_button" text_style "lc_check_text"
+                textbutton _("CAMERA FLASH") action ToggleField(persistent, "lc_camera_flash", True, False) style "lc_check_button" text_style "lc_check_text"
                 textbutton _("MUTE ALL") action Preference("all mute", "toggle") style "lc_check_button" text_style "lc_check_text"
 
             vbox:
