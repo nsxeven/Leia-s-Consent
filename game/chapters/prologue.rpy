@@ -218,6 +218,7 @@ label prologue_start:
     gf "Fine. Dare."
     # Dare lands: small screen shake (lc_shake respects the SCREEN SHAKE setting).
     $ lc_duck()
+    $ lc_sfx("record_scratch")
     friend "Kiss [player_name]." with lc_shake("s")
     $ face("leia", "flustered")
     "The room changed temperature."

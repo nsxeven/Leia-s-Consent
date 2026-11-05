@@ -916,7 +916,16 @@
     "title": "Supermarket_Ambience.wav",
     "license": "CC0 1.0"
    },
-   "processing": "section 2.0-57.5s (least-eventful window by 1 s RMS), loop body 54s with 1.5s equal-power tail->head crossfade; integrated -30.0 LUFS"
+   "processing": "section 2.0-57.5s (least-eventful window by 1 s RMS), loop body 54s with 1.5s equal-power tail->head crossfade; integrated -30.0 LUFS; plus faint distant ocean waves (Freesound #59564 beach_waves.mp3 by 3bagbrew, CC0 1.0, high-pass 90 Hz / low-pass 650 Hz, ~4.4 dB under the store bed, 3 s seam crossfade), re-levelled to -30 LUFS",
+   "extra_sources": [
+    {
+     "freesound_id": 59564,
+     "url": "https://freesound.org/people/3bagbrew/sounds/59564/",
+     "author": "3bagbrew",
+     "title": "beach_waves.mp3",
+     "license": "CC0 1.0"
+    }
+   ]
   },
   {
    "name": "amb/room_tone",
@@ -1235,6 +1244,26 @@
    "peak_dbfs": -13.0,
    "source": "synthesised by Leia's Consent team",
    "processing": "synth: soft low thud 110->55 Hz, 0.12 s; peak -13 dBFS (<= -12 after encode), momentary loudness capped at -27.0 LUFS"
+  },
+  {
+   "name": "sfx/record_scratch",
+   "file": "sfx/record_scratch.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.458,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "peak_dbfs": -3.6,
+   "source": {
+    "freesound_id": 43404,
+    "url": "https://freesound.org/people/simkiott/sounds/43404/",
+    "author": "simkiott",
+    "title": "record_scratch.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "HQ preview; leading silence trimmed (-45 dB), -6 dB gain, fade out 200 ms from 1.25 s"
   }
  ],
  "secondary_sources": [
