@@ -1164,10 +1164,20 @@ label ch01_day2_scene_11b_boutique:
     "[girlfriend_name] still had the black mini over one arm."
 
     if d2_mall_ryan_present:
-        "The boutique's catalogue was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe; whether she actually agreed to wear it later was a separate question."
         $ set_story_flag("ch01_d2_boutique_shop_open")
-        $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
-        call screen shop_screen
+        if LC_SHOP_ENABLED:
+            "The boutique's catalogue was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe; whether she actually agreed to wear it later was a separate question."
+            $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
+            call screen shop_screen
+        else:
+            # The Shop is switched off while it's under development
+            # (LC_SHOP_ENABLED); the purchase happens as an in-story choice.
+            "I could buy it for her. Whether she actually agreed to wear it later was a separate question."
+            menu:
+                "Buy the black mini for her." if can_afford(get_outfit("boutique_cutout_mini")["cost"]):
+                    $ purchase_outfit("boutique_cutout_mini")
+                "Leave it.":
+                    pass
         if owns_outfit("boutique_cutout_mini"):
             $ set_story_value("ch01_d2_mall_outfit_source", "ryan")
             $ set_story_flag("ch01_d2_boutique_outfit_owned")
@@ -1179,7 +1189,10 @@ label ch01_day2_scene_11b_boutique:
         else:
             # Ryan chose not to buy it, so Leia buys the Black Cutout Mini herself.
             # (Ryan buying it still stands; there is no "nobody buys it" outcome.)
-            "I closed the Shop without buying anything."
+            if LC_SHOP_ENABLED:
+                "I closed the Shop without buying anything."
+            else:
+                "I left the dress where it was."
             "[girlfriend_name] looked back at the black dress for several seconds, then carried it to the counter herself."
             $ grant_story_outfit("boutique_cutout_mini", equip=False)
             $ set_story_value("ch01_d2_mall_outfit_source", "leia")

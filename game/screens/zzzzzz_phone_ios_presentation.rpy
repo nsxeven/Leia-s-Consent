@@ -786,7 +786,18 @@ screen phone_screen():
                                 spacing 18
                                 xfill True
 
-                                if phone_app == "shop":
+                                if phone_app == "shop" and not LC_SHOP_ENABLED:
+                                    # Shop under development (LC_SHOP_ENABLED in shop_screen.rpy).
+                                    text "COMING SOON":
+                                        style "lc_sw_pixel_bold"
+                                        size 30
+                                        color c["acc"]
+                                    text "The Shop is still under development. New outfits for [girlfriend_name] will arrive here in a future update.":
+                                        style "lc_sw_hand"
+                                        size 30
+                                        color c["mut"]
+                                        xmaximum 570
+                                elif phone_app == "shop":
                                     text "Purchases add outfits to [girlfriend_name]'s wardrobe. Whether she wears them is tracked separately.":
                                         style "lc_sw_hand"
                                         size 30

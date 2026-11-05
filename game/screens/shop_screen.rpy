@@ -1,6 +1,27 @@
 # Player-facing outfit shop.
 # Purchasing adds ownership only; wear acceptance remains a separate Wardrobe decision.
 
+# The Shop is still under development (darryn, 2026-11-06): while this is False
+# the Shop (here and the phone app) shows a "coming soon" card instead of the
+# outfit list. Story beats that used the Shop offer an in-story choice instead.
+define LC_SHOP_ENABLED = False
+
+screen lc_shop_coming_soon(close_action):
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 1100
+        padding (48, 40)
+        background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+
+        vbox:
+            spacing 18
+            text "OUTFIT SHOP" size 42 color "#3b2a30"
+            text "Coming soon" size 30 color "#cc0066"
+            text "The Shop is still under development. New outfits for [girlfriend_name] will be available here in a future update." size 22 color "#7a6266" line_spacing 4
+            textbutton "Close":
+                action close_action
+
 screen shop_screen():
 
     modal True
@@ -13,7 +34,10 @@ screen shop_screen():
     add "gui/scrapbook/bg_game_menu.png"
     use lc_journal_tabs(1686)
 
-    if shop_selected_outfit is None:
+    if not LC_SHOP_ENABLED:
+        use lc_shop_coming_soon(Return())
+
+    elif shop_selected_outfit is None:
         frame:
             xalign 0.5
             yalign 0.5
