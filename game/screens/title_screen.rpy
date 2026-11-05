@@ -8,21 +8,33 @@
 # Hover rule: hover effects only move things with offsets/zoom inside a
 # fixed-size box, so nothing hovering ever changes layout (no menu or reel shift).
 
-define LC_TITLE_BG = "images/backgrounds/villa/villa_pool_evening.webp"
-define LC_TITLE_SPRITE = "leia_purple_dress smile"
+# Background, outfit and expression come from the customiser
+# (systems/title_customiser.rpy; defaults: pool evening, lilac dress, smile).
 
 transform lc_title_bg_drift:
     subpixel True
     xalign 0.5
     yalign 0.5
-    zoom 1.16
+    zoom 1.01
     block:
-        ease 26.0 zoom 1.22
-        ease 26.0 zoom 1.16
+        ease 26.0 zoom 1.06
+        ease 26.0 zoom 1.01
         repeat
 
-# Leia: placed by her (off-screen) feet so the body breathing envelope
-# (same timing as leia_body_idle in game) rises and settles from the bottom.
+# Logo: floats gently once it has landed (the sheen is in lc_title_logo()).
+transform lc_title_logo_float:
+    subpixel True
+    zoom 0.78
+    yoffset 0
+    pause 1.3
+    block:
+        ease 3.4 yoffset -6
+        ease 3.4 yoffset 0
+        repeat
+
+# Leia: placed by her (off-screen) feet so the body breathing rises and settles
+# from the bottom. Slower than in game; chest and hair use the same timing
+# (LC_TITLE_BREATH, systems/title_customiser.rpy).
 transform lc_title_leia:
     subpixel True
     zoom 0.74
@@ -35,10 +47,10 @@ transform lc_title_leia:
         easein 1.0 alpha 1.0
     parallel:
         block:
-            linear 0.65 yzoom 0.985
-            pause 0.10
-            linear 0.65 yzoom 1.0
-            pause 0.10
+            ease LC_TITLE_BREATH yzoom 0.985
+            pause LC_TITLE_BREATH_PAUSE
+            ease LC_TITLE_BREATH yzoom 1.0
+            pause LC_TITLE_BREATH_PAUSE
             repeat
 
 transform lc_title_fade(delay=0.0, dur=0.8):
@@ -217,45 +229,27 @@ screen lc_title_continue(slot):
 
 
 screen lc_title_screen():
-    default extras = False
+    on "show" action [SetDict(lc_title_ui, "editing", False), SetDict(lc_title_ui, "extras", False)]
     $ slot = lc_title_continue_slot()
     $ version = lc_title_version()
 
     # Background, light and Leia.
-    add LC_TITLE_BG at lc_title_bg_drift
+    add lc_title_bg_now() at lc_title_bg_drift
     add "gui/title/light_leak.png"
     add "gui/title/shade_left.png"
     add SnowBlossom(Transform("gui/title/bokeh.png", alpha=0.55), count=14, border=60, xspeed=(-18, 18), yspeed=(-34, -10), start=6, horizontal=False)
-    add LC_TITLE_SPRITE at lc_title_leia
+    add lc_title_leia_now() at lc_title_leia
     add "gui/title/vignette.png"
     add "gui/title/shade_bottom.png" yalign 1.0
 
-    # One-line logo across the top left, then Continue and the menu.
-    add "gui/title/logo_line.png" zoom 0.78 xpos 96 ypos 58 at lc_title_logo_in
+    $ credit = lc_title_current_outfit()["credit"]
+    if credit:
+        text credit style "lc_title_small_text" xalign 1.0 xoffset -60 ypos 700 italic True
 
-    if slot:
-        use lc_title_continue(slot)
-
-    vbox:
-        xpos 136
-        ypos (372 if slot else 262)
-        spacing 0
-        at lc_title_fade(0.6, 0.7)
-        use lc_title_item("New Game", Start())
-        use lc_title_item("Load", ShowMenu("load"))
-        use lc_title_item("Gallery", ShowMenu("gallery_screen"))
-        use lc_title_item("Settings", ShowMenu("preferences"))
-        use lc_title_item("Extras", ToggleScreenVariable("extras"))
-        if extras:
-            hbox:
-                spacing 26
-                xoffset 4
-                ysize 36
-                if chapter_select_unlocked():
-                    textbutton "Chapters" action ShowMenu("chapter_select") text_style "lc_title_small_text" text_hover_color "#ff9fc8"
-                textbutton "About" action ShowMenu("about") text_style "lc_title_small_text" text_hover_color "#ff9fc8"
-                textbutton "Help" action ShowMenu("help") text_style "lc_title_small_text" text_hover_color "#ff9fc8"
-        use lc_title_item("Quit", Quit(confirm=False))
+    if lc_title_ui["editing"]:
+        use lc_title_customiser(lc_title_ui["tab"])
+    else:
+        use lc_title_front(slot)
 
     # Corners.
     hbox:
@@ -269,5 +263,40 @@ screen lc_title_screen():
 
     use lc_title_reel()
 
-    key "K_RETURN" action Start()
-    key "K_KP_ENTER" action Start()
+    if not lc_title_ui["editing"]:
+        key "K_RETURN" action Start()
+        key "K_KP_ENTER" action Start()
+
+
+screen lc_title_front(slot):
+    # One-line logo across the top left (floats, with a sheen), then Continue and the menu.
+    fixed at lc_title_logo_in:
+        xpos 96
+        ypos 58
+        xysize (860, 140)
+        add lc_title_logo() at lc_title_logo_float
+
+    if slot:
+        use lc_title_continue(slot)
+
+    vbox:
+        xpos 136
+        ypos (360 if slot else 250)
+        spacing 0
+        at lc_title_fade(0.6, 0.7)
+        use lc_title_item("New Game", Start())
+        use lc_title_item("Load", ShowMenu("load"))
+        use lc_title_item("Gallery", ShowMenu("gallery_screen"))
+        use lc_title_item("Customise", SetDict(lc_title_ui, "editing", True))
+        use lc_title_item("Settings", ShowMenu("preferences"))
+        use lc_title_item("Extras", ToggleDict(lc_title_ui, "extras"))
+        if lc_title_ui["extras"]:
+            hbox:
+                spacing 26
+                xoffset 4
+                ysize 36
+                if chapter_select_unlocked():
+                    textbutton "Chapters" action ShowMenu("chapter_select") text_style "lc_title_small_text" text_hover_color "#ff9fc8"
+                textbutton "About" action ShowMenu("about") text_style "lc_title_small_text" text_hover_color "#ff9fc8"
+                textbutton "Help" action ShowMenu("help") text_style "lc_title_small_text" text_hover_color "#ff9fc8"
+        use lc_title_item("Quit", Quit(confirm=False))
