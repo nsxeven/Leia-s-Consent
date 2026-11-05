@@ -505,6 +505,7 @@ label ch01_scene_06_friendship_and_towel:
     with dissolve
 
     friend "I'm looking at the water."
+    $ lc_sfx("record_scratch")
     gf "You weren't two seconds ago!" with lc_shake("s")
     friend "I didn't know there was going to be a test!"
     mc "Just go inside."

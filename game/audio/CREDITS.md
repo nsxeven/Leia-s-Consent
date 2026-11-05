@@ -9,7 +9,7 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 | amb/bar | [General Chatter In Bar](https://freesound.org/people/squareal/sounds/237398/) (#237398) | squareal | CC0 1.0 |
 | amb/car_day, amb/car_night | [Car_interior_driving.wav](https://freesound.org/people/Lydmakeren/sounds/510479/) (#510479) | Lydmakeren | CC0 1.0 |
 | amb/dream | [Soft Tonal Wind_01](https://freesound.org/people/janbezouska/sounds/397091/) (#397091) | janbezouska | CC0 1.0 |
-| amb/night_pool, amb/pool_day | [beach_waves.mp3](https://freesound.org/people/3bagbrew/sounds/59564/) (#59564) | 3bagbrew | CC0 1.0 |
+| amb/night_pool, amb/pool_day, amb/shop (faint waves layer) | [beach_waves.mp3](https://freesound.org/people/3bagbrew/sounds/59564/) (#59564) | 3bagbrew | CC0 1.0 |
 | amb/night_pool | [Night Crickets Back Porch.aiff](https://freesound.org/people/hdfreema/sounds/333221/) (#333221) | hdfreema | CC0 1.0 |
 | amb/party | [Party background chatter real 1.wav](https://freesound.org/people/dbspin/sounds/396684/) (#396684) | dbspin | CC0 1.0 |
 | amb/pool_day, sfx/splash_big, sfx/splash_small | [Big Water Splash](https://freesound.org/people/qubodup/sounds/442773/) (#442773) | qubodup | CC0 1.0 |
@@ -21,6 +21,7 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 | music/lounge_piano | [Lounge Piano Loop](https://freesound.org/people/NearTheAtmoshphere/sounds/704972/) (#704972) | NearTheAtmoshphere | CC0 1.0 |
 | sfx/body_bump | [bump into someone sfx](https://freesound.org/people/rubydrop/sounds/816469/) (#816469) | rubydrop | CC0 1.0 |
 | sfx/camera_shutter | [iPhone Camera Capture.wav](https://freesound.org/people/pooky1/sounds/431588/) (#431588) | pooky1 | CC0 1.0 |
+| sfx/record_scratch | [record_scratch.wav](https://freesound.org/people/simkiott/sounds/43404/) (#43404) | simkiott | CC0 1.0 |
 | sfx/car_door | [car door close.wav](https://freesound.org/people/monotraum/sounds/208695/) (#208695) | monotraum | CC0 1.0 |
 | sfx/car_horn | [Car_horn_short.wav](https://freesound.org/people/deleted_user_2104797/sounds/164625/) (#164625) | deleted_user_2104797 | CC0 1.0 |
 | sfx/catch_thud | [Light Body thud (on clothing)](https://freesound.org/people/JonasTisell/sounds/496187/) (#496187) | JonasTisell | CC0 1.0 |
