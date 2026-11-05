@@ -253,7 +253,7 @@ screen lc_sw_back(action, label="HOME", xpos=18, ypos=54):
         ypos ypos
         ysize 36
         xminimum 96
-        action action
+        action [Function(lc_ui_play, "back"), action]
         hbox:
             spacing 9
             yalign 0.5
@@ -338,7 +338,8 @@ screen phone_screen():
     # One scroll position per open thread; a fresh phone session starts each at the bottom.
     default thread_adjs = {}
 
-    on "show" action SetVariable("lc_phone_deep_link", None)
+    on "show" action [SetVariable("lc_phone_deep_link", None), Function(lc_ui_play, "phone_open")]
+    on "hide" action Function(lc_ui_play, "phone_close")
     on "replace" action SetVariable("lc_phone_deep_link", None)
 
     key "K_ESCAPE" action Hide("phone_screen")
@@ -391,7 +392,7 @@ screen phone_screen():
                         xpos ix
                         ypos (204 if hovered_app == app_id else 210)
                         xysize (78, 120)
-                        action action
+                        action [Function(lc_ui_play, "app_tap"), action]
                         hovered SetScreenVariable("hovered_app", app_id)
                         unhovered SetScreenVariable("hovered_app", None)
                         add Transform(lc_phone_art("icon_" + app_id), nearest=True)
@@ -439,7 +440,7 @@ screen phone_screen():
                         xpos ix
                         ypos (888 if hovered_app == app_id else 894)
                         xysize (78, 78)
-                        action action
+                        action [Function(lc_ui_play, "app_tap"), action]
                         hovered SetScreenVariable("hovered_app", app_id)
                         unhovered SetScreenVariable("hovered_app", None)
                         add Transform(lc_phone_art("icon_" + app_id), nearest=True)

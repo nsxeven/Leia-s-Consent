@@ -130,7 +130,7 @@ init python:
 
 
     def lc_choice_actions(item):
-        return [Function(lc_history_record_choice, item.caption), item.action]
+        return [Function(lc_ui_play, "pick"), Function(lc_history_record_choice, item.caption), item.action]
 
 
     def lc_history_record_choice(caption):
@@ -309,7 +309,6 @@ screen lc_side_tab(label, action, index, y, accent=False, xpos=1686):
         padding (21, 0, 12, 0)
         action action
         selected (True if accent else action.get_selected())
-        hovered Function(lc_ui_play, "tick")
         at (lc_tab_out if accent else lc_tab_slide)
 
         hbox:
@@ -337,7 +336,6 @@ screen lc_menu_footer(hints=None):
             padding (12, 6)
             ysize 42
             action Return()
-            hovered Function(lc_ui_play, "tick")
             at lc_lift
             text "ESC" style "lc_key_text" yalign 0.5
         text "RETURN" yalign 0.5 size 24 color "#cdb9a8" font "fonts/Silkscreen-Regular.ttf"
@@ -388,7 +386,6 @@ screen lc_keycap_button(label, action, icon=None, selected_on=False, width=None,
         selected_idle_background Frame("gui/scrapbook/frame_keycap_on.png", 9, 9)
         selected_hover_background Frame("gui/scrapbook/frame_keycap_on.png", 9, 9)
         action action
-        hovered Function(lc_ui_play, "tick")
         at (lc_cg_key if ghost else lc_lift)
         hbox:
             spacing 6
@@ -759,7 +756,7 @@ screen file_slots(title):
                     button:
                         xpos slot_x
                         ypos slot_y
-                        action FileAction(slot)
+                        action [Function(lc_ui_play, ("save" if is_save else "load")), FileAction(slot)]
                         xysize (350, 300)
                         background None
                         padding (0, 0)
@@ -890,7 +887,6 @@ screen lc_pref_slider(label, value, fill, readout):
                 left_bar Frame(fill, 6, 6)
                 right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
                 thumb "gui/scrapbook/slider_thumb.png"
-                hovered Function(lc_ui_play, "tick")
             text readout yalign 0.5 size 21 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
 
 
@@ -904,7 +900,6 @@ screen lc_info_card(mode_id, mode_now):
         background Frame(("gui/scrapbook/frame_card_on.png" if on else "gui/scrapbook/frame_card.png"), 9, 9)
         hover_background Frame("gui/scrapbook/frame_card_on.png", 9, 9)
         padding (16, 10)
-        hovered Function(lc_ui_play, "tick")
 
         vbox:
             spacing 4
@@ -1151,6 +1146,9 @@ screen phone_notification_overlay():
 
 screen phone_notification_banner():
     zorder 620
+    # Each banner is a fresh show (or a replace when the queue rolls on).
+    on "show" action Function(lc_ui_play, "notify")
+    on "replace" action Function(lc_ui_play, "notify")
     if phone_notification_current:
         $ _note = phone_notification_current
         $ _theme = lc_phone_theme()

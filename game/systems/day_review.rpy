@@ -632,11 +632,15 @@ init 20 python:
             })
         return rows
 
+    # Review cue -> shared UI sound (game/audio/ui/) when no review sting exists.
+    LC_REVIEW_UI_FALLBACK = {"tick": "bar", "paper": "polaroid"}
+
     def lc_review_sfx(name):
         """Play audio/sfx/review_<name>.ogg or .wav when it exists.
 
-        The game does not ship review stings yet. A missing file is silent,
-        so the hook is safe to call when a polaroid lands or a bar settles.
+        Otherwise fall back to the UI sound kit (a bar settling -> ui/bar, a
+        polaroid landing -> ui/polaroid). A missing file is silent, so the hook
+        is safe to call when a polaroid lands or a bar settles.
         """
         try:
             for ext in (".ogg", ".wav"):
@@ -644,6 +648,7 @@ init 20 python:
                 if renpy.loadable(path):
                     renpy.sound.play(path)
                     return path
+            return lc_ui_sound(LC_REVIEW_UI_FALLBACK.get(name, name))
         except Exception:
             return None
         return None

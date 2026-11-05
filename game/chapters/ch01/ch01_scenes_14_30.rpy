@@ -12,6 +12,7 @@ label ch01_scene_13b_night_pool:
     # sequence and movie night. Nothing goes wrong here; that is the point.
     scene bg ch01_pool_evening
     with dissolve
+    $ lc_amb("night_pool")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     "Nobody was ready for bed yet."
@@ -41,6 +42,7 @@ label ch01_scene_13b_night_pool:
     friend "I absolutely do."
 
     "[girlfriend_name] laughed and moved to sit along the edge of the pool, bare feet just above the water."
+    $ lc_sfx("ice_clink")
     "[friend_name] topped up his whisky and wandered over to sit on the edge beside her, feet in the water."
     "For a while she simply listened, leaning back on her hands while [friend_name] finished another story."
 
@@ -91,6 +93,7 @@ label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_evening
     with dissolve
+    $ lc_amb("room_tone")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     "[girlfriend_name] rubbed both hands over her face and stared down at the dinner dress as if she had only just remembered she was still wearing it."
@@ -137,6 +140,7 @@ label ch01_scene_14_movie_setup:
     "[friend_name] found a terrible movie. [girlfriend_name] vetoed two better ones purely because he recommended them, then approved the terrible one because the trailer made her laugh."
 
     friend "Democracy has failed."
+    $ lc_sfx("remote_click")
     gf "Press play."
 
     $ enter_cinematic_mode()
@@ -284,6 +288,8 @@ label ch01_scene_16_can_he_tell:
             gf "To me, maybe."
             mc "Fair."
 
+    $ lc_sfx("remote_click")
+    $ lc_duck()
     "Before either of us could keep circling the question, [friend_name] paused the movie."
 
     friend "Okay. Do you need the bathroom or something?"
@@ -409,6 +415,7 @@ label ch01_scene_18_private_under_blanket:
 
     with dissolve
 
+    $ lc_sfx("ice_clink")
     "[friend_name] returned balancing a bowl of ice, two soft drinks and three glasses."
     scene cg ch01_movie_cuddle_blanket
     with dissolve
@@ -428,6 +435,8 @@ label ch01_scene_18_private_under_blanket:
 
 label ch01_scene_19_too_hot:
 
+    $ lc_sfx("remote_click")
+    $ lc_unduck()
     "The movie resumed. [friend_name] had barely settled back down before [girlfriend_name] started tugging at the blanket."
 
     gf "Okay, I'm actually dying under this thing."
@@ -480,6 +489,8 @@ label ch01_scene_20_no_hiding_place:
     $ enter_cinematic_mode()
     scene cg ch01_movie_ass_grab_01 at lc_push_in
     with dissolve
+    $ lc_duck()
+    $ lc_sfx("heartbeat_slow")
 
     "I slid my hand up to the curve of her backside."
     "[girlfriend_name] went still. All [friend_name] had to do was turn his head."
@@ -532,6 +543,7 @@ label ch01_scene_20_no_hiding_place:
             mc "Hm?"
             gf "Nothing."
 
+    $ lc_unduck()
     scene bg ch01_villa_living_evening
     with dissolve
     $ cast(ryan="casual", leia="lounge", julian="lounge")
@@ -596,6 +608,8 @@ label ch01_scene_22_first_micro_test:
     $ enter_cinematic_mode()
     scene cg ch01_movie_micro_test_glance at lc_push_in
     with dissolve
+    $ lc_duck()
+    $ lc_sfx("heartbeat_slow")
 
     "[girlfriend_name] got up for her drink. When she dropped back onto the sofa, the thin neckline of her camisole had shifted slightly from the way she'd been lying against me."
     "She noticed almost immediately."
@@ -657,6 +671,7 @@ label ch01_scene_22_first_micro_test:
             with dissolve
             $ cast(ryan="casual", leia="lounge", julian="lounge")
 
+    $ lc_unduck()
     # The deliberate-open branch settles back to a normal seated image after
     # the player's chosen moment. Other branches reset as Leia adjusts.
     if get_story_value("ch01_micro_test_response") == "knowingly_left":
@@ -806,10 +821,12 @@ label ch01_scene_26_the_compliment:
     else:
         "[friend_name] looked between us, apparently deciding that there was no answer left that would make the conversation less awkward."
 
+        $ lc_duck()
         friend "Obviously you're attractive."
         "[girlfriend_name] went quiet for half a second."
         friend "You're an attractive woman. I'm pretty sure [player_name] knows that."
         gf "That was very diplomatic."
+        $ lc_unduck()
         friend "I've had a difficult day."
 
         $ set_story_value("ch01_julian_compliment_given", True)
@@ -938,6 +955,7 @@ label ch01_scene_28_ryan_leia_alone:
     # darryn: night art is explicitly wanted from Julian going upstairs (scene 28) to the end of Day 1.
     scene bg ch01_villa_living_night
     with dissolve
+    $ lc_sfx("door_close", 0.5)
     $ cast(ryan="casual", leia="lounge", julian="lounge")
 
     "The villa became noticeably quieter once [friend_name]'s door closed upstairs."
@@ -1115,11 +1133,14 @@ label ch01_scene_30_end_day_one:
     # Day 1 sprite staging ends here; nobody is on screen in bed.
     scene bg ch01_villa_bedroom_night
     with fade
+    $ lc_amb("room_tone")
     $ cast()
 
+    $ lc_sfx("light_switch")
     "We switched off the downstairs lights and finally headed upstairs."
     "[girlfriend_name] plugged her phone in beside the bed and climbed under the covers."
 
+    $ lc_sfx("phone_notify")
     "Before either of us could settle, my phone lit up one last time."
 
     python:
@@ -1198,12 +1219,14 @@ label ch01_scene_30_end_day_one:
                 $ lc_dream_presentation = "summary"
 
     if lc_dream_presentation == "summary":
+        $ lc_amb("dream")
         "The dinner collision replayed in my sleep, twisted into an ugly dream about the stranger, [girlfriend_name], and me unable to stop any of it."
         "It was something my sleeping mind invented, not something that had happened."
     else:
         $ enter_cinematic_mode()
         scene cg ch01_dream_dinner_beside at lc_dream_sway
         with dissolve
+        $ lc_amb("dream")
 
         "I was back at the restaurant."
         "Same table. Same candles. The same low music I hadn't noticed the first time."
@@ -1215,6 +1238,7 @@ label ch01_scene_30_end_day_one:
         gf "Would you?"
 
         "She smiled up at him the way she'd smiled at me that afternoon."
+        $ lc_duck(0.15)
         "I tried to say her name. My mouth moved. Nothing came out."
 
         scene cg ch01_dream_dinner_grab at lc_dream_sway
@@ -1227,6 +1251,7 @@ label ch01_scene_30_end_day_one:
         "[girlfriend_name] gasped, one small, startled sound."
         "{i}Babe, are you okay?{/i} The words never made it past my throat."
 
+        $ lc_sfx("heartbeat_fast")
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
         scene cg ch01_dream_dinner_rub at lc_dream_sway
@@ -1245,10 +1270,14 @@ label ch01_scene_30_end_day_one:
         # Hard cut out of the nightmare, then Ryan jolts awake.
         scene black
         with Dissolve(0.08)
+        $ lc_amb_stop(0.1)
 
         $ exit_cinematic_mode()
 
+    $ lc_sfx("gasp_wake")
     "My eyes opened." with lc_shake("m")
+    $ lc_unduck()
+    $ lc_amb("room_tone")
 
     $ enter_cinematic_mode()
     scene cg ch01_dream_wake_night
@@ -1300,6 +1329,7 @@ label ch01_scene_30_end_day_one:
     $ set_story_flag("ch01_day_01_complete")
     $ set_story_flag("ch01_scenes_14_30_complete")
 
+    $ lc_amb_stop()
     scene black
     with fade
 

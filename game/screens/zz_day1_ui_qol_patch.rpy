@@ -66,7 +66,25 @@ init 90 python:
             "title": title,
             "body": body,
         }
+        lc_choice_feedback_sound(effects, mode)
         return None
+
+
+    def lc_choice_feedback_sound(effects, mode):
+        """ui/gain when the choice's net stat change is positive, ui/loss when negative.
+
+        Silent in Immersive (normal) mode, where stat directions stay hidden, and
+        when every amount is zero. Queued so the choice's "pick" tap isn't cut off.
+        """
+        if mode == "normal":
+            return None
+        amounts = [amount for _group, _stat, amount in effects]
+        if not any(amounts):
+            return None
+        path = lc_audio_path("ui", "gain" if sum(amounts) > 0 else "loss")
+        if path:
+            renpy.music.queue(path, channel="ui", clear_queue=True)
+        return path
 
 
     def maybe_show_status_choice_tutorial(choice_id):

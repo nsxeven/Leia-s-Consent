@@ -12,6 +12,7 @@ label ch01_scene_27_late_photo_drop_staged:
     mc "Goodnight, grandpa."
     gf "Night."
 
+    $ lc_sfx("phone_notify")
     "A moment later my phone lit up."
 
     # Respect the pool-photo stop choice. The deleted solo capture must not
@@ -43,6 +44,7 @@ label ch01_scene_27_late_photo_drop_staged:
         set_story_value("ch01_late_photo_followup_stage", 0)
         set_story_value("ch01_late_photo_force_complete_on_open", False)
 
+    $ lc_sfx("phone_vibrate")
     "[girlfriend_name] glanced down when her own phone buzzed against the sofa cushion. Her thumbs started moving a second later."
     "Whatever she sent stayed in the Trip Group for me to discover on the Phone."
 

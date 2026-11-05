@@ -6,6 +6,7 @@ label ch01_scene_07_did_he_see:
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
+    $ lc_amb("room_tone")
     $ cast(ryan="pool", leia="towel", julian="pool")
 
     "I found her in the bathroom doorway, still half-turned toward the mirror, one hand pressed to her cheek."
@@ -75,6 +76,7 @@ label ch01_scene_07_did_he_see:
     with dissolve
     $ cast(ryan="casual", julian="pool")
 
+    $ lc_sfx("door_open")
     "The bathroom door opened."
 
     $ grant_story_outfit("resort_dinner_dress", equip=True)
@@ -98,6 +100,7 @@ label ch01_scene_07_did_he_see:
     # Dressed for dinner from here on (darryn): Julian's swim shorts are pool-only.
     scene bg ch01_villa_entry_day
     with dissolve
+    $ lc_amb("villa_day")
     $ cast(ryan="casual", leia="purple_dress", julian="evening")
 
     "[friend_name] was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
@@ -149,6 +152,7 @@ label ch01_scene_08_drive_to_dinner:
     $ enter_cinematic_mode()
     scene cg ch01_drive_to_dinner
     with dissolve
+    $ lc_amb("car_day")
 
     "I drove. [girlfriend_name] took the passenger seat beside me without thinking about it, and [friend_name] climbed into the back."
     "It was our natural arrangement: [girlfriend_name] beside me, [friend_name] behind us, the two of them taking turns insulting my driving from different directions."
@@ -157,6 +161,7 @@ label ch01_scene_08_drive_to_dinner:
     mc "I'm under it."
     friend "Technically true. Emotionally false."
 
+    $ lc_sfx("radio_static")
     "[girlfriend_name] reached over and changed the song before the chorus."
 
     mc "I liked that one."
@@ -192,6 +197,8 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     with fade
+    $ lc_amb("restaurant")
+    $ lc_music("lounge_piano")
     $ cast()
 
     $ enter_cinematic_mode()
@@ -253,6 +260,8 @@ label ch01_scene_09_dinner:
     with dissolve
 
     # Impact beat: screen shake on the collision line (same as the prologue dare).
+    $ lc_sfx("body_bump")
+    $ lc_sfx("drink_spill")
     "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them." with lc_shake("m")
 
     # The impact beat is over. Return to the restaurant for the immediate
@@ -489,11 +498,14 @@ label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
     with dissolve
+    $ lc_music_stop()
+    $ lc_amb("bar")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "shy")
 
     "We should have left after dessert. Instead, [friend_name] noticed the bar."
 
+    $ lc_sfx("glass_clink")
     friend "One drink."
     mc "For you two. I'm driving."
     $ face("leia", "smile")
@@ -536,6 +548,7 @@ label ch01_scene_11_walk_and_catch:
     $ enter_cinematic_mode()
     scene cg ch01_walk_back_01
     with fade
+    $ lc_amb("street_night")
 
     "The shop was only a short walk away. [girlfriend_name] still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
@@ -547,6 +560,7 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_walk_back_call
     with dissolve
 
+    $ lc_sfx("phone_ring")
     "My phone started ringing." with lc_shake("s")
     "The name on the screen belonged to a female friend from back home—someone I had not expected to hear from on this trip."
 
@@ -565,7 +579,9 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_trip_catch
     with dissolve
 
+    $ lc_sfx("stumble")
     "Her heel caught the edge of the path." with lc_shake("m")
+    $ lc_sfx("catch_thud")
     "[friend_name] reacted before I did, catching her around the waist and upper body before she hit the ground."
     "In the scramble, one of his hands landed against the side of her breast for a split second."
     "Both of them realised at almost exactly the same time."
@@ -585,6 +601,7 @@ label ch01_scene_11_walk_and_catch:
     gf "[friend_name]!"
     friend "I was catching you!"
 
+    $ lc_sfx("slap_light")
     "[girlfriend_name]'s face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry." with lc_shake("s")
 
     gf "Watch your hands!"
@@ -644,6 +661,7 @@ label ch01_scene_11b_female_friend:
 
     # Continues straight from scene 11 on the same path; Ryan and Leia are
     # already on screen, so no scene reset (it made both sprites blink).
+    $ lc_amb("street_night")
     $ face("leia", "skeptical")
     gf "Who was that?"
     mc "A friend from back home. She saw the posts and realised we're both here."
@@ -710,9 +728,11 @@ label ch01_scene_12_shop_and_drive_back:
 
     scene bg ch01_shop_night
     with dissolve
+    $ lc_amb("shop")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "smile")
 
+    $ lc_sfx("shop_bell")
     "The shop reset the mood almost immediately."
     "[girlfriend_name] filled the basket with snacks according to a system neither [friend_name] nor I understood, while [friend_name] contributed increasingly questionable bottles from the drinks aisle."
 
@@ -723,6 +743,7 @@ label ch01_scene_12_shop_and_drive_back:
     friend "That's branding."
     mc "That's a warning."
 
+    $ lc_sfx("chips_rustle")
     "[girlfriend_name] dropped two bags of chips into the basket."
 
     friend "Those are terrible."
@@ -755,6 +776,7 @@ label ch01_scene_12_shop_and_drive_back:
     mc "Historically successful terrible dare, remember?"
     friend "I take it back."
 
+    $ lc_sfx("register_beep")
     "By the time we paid, [girlfriend_name] was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
 
     gf "I want to lie down."
@@ -766,6 +788,7 @@ label ch01_scene_12_shop_and_drive_back:
     $ enter_cinematic_mode()
     scene cg ch01_drive_back_seating
     with dissolve
+    $ lc_amb("car_night")
 
     "[girlfriend_name] climbed into the rear seat so she could stretch out. [friend_name] took the front passenger seat beside me."
     "It was the first time that day our positions had changed: [friend_name] beside me, [girlfriend_name] behind us."
@@ -839,6 +862,7 @@ label ch01_scene_13_back_at_villa:
     # (darryn). No swap here; it resumes when Leia's sprite returns.
     scene bg ch01_villa_entry_evening
     with fade
+    $ lc_amb("night_pool")
     $ cast(ryan="casual", julian="evening")
 
     "When I parked, [girlfriend_name] didn't move."
@@ -853,6 +877,7 @@ label ch01_scene_13_back_at_villa:
     friend "She's gone."
     mc "Helpful."
 
+    $ lc_sfx("car_door")
     "I opened the rear door and tried to lift her without waking her properly."
     "It lasted about three seconds. Sleeping [girlfriend_name] had somehow become twice as difficult to carry as awake [girlfriend_name]."
 
@@ -874,6 +899,7 @@ label ch01_scene_13_back_at_villa:
     scene cg ch01_carry_walk
     with dissolve
 
+    $ lc_sfx("keys")
     "I walked ahead with the keys while [friend_name] followed more slowly."
     "Without the sticky bra beneath her dress, the neckline was less secure than it had been when we left the villa."
 
@@ -950,7 +976,9 @@ label ch01_scene_13_back_at_villa:
             mc "You're the one who called me back."
             friend "Because I'm trying to be a good person. Open the door."
 
+    $ lc_sfx("door_unlock")
     "I unlocked the villa and held the door while [friend_name] carried her inside."
+    $ lc_amb("room_tone")
 
     if get_story_value("ch01_leia_wake_reason") == "voices_at_door":
         "The voices finally did what the drive home hadn't. [girlfriend_name] stirred against [friend_name]'s shoulder as we crossed the doorway."
@@ -977,6 +1005,7 @@ label ch01_scene_13_back_at_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_evening
     with dissolve
+    $ lc_amb("room_tone")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "flustered")
 

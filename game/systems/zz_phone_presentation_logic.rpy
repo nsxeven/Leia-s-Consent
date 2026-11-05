@@ -164,6 +164,9 @@ init python:
             mark_unread=mark_unread,
         )
 
+        if added and sender_id != "player":
+            lc_phone_message_pop(thread_id)
+
         if added and notify and sender_id != "player":
             title = notification_title or phone_thread_label(thread_id)
             if attachment_id:
@@ -185,6 +188,19 @@ init python:
             )
 
         return added
+
+    def lc_phone_message_pop(thread_id):
+        """UI pop when a message lands in the chat thread that is open right now."""
+        try:
+            if not renpy.get_screen("phone_screen"):
+                return None
+            if renpy.get_screen_variable("phone_app", screen="phone_screen") != "thread":
+                return None
+            if renpy.get_screen_variable("phone_thread", screen="phone_screen") != thread_id:
+                return None
+        except Exception:
+            return None
+        return lc_ui_sound("message_pop")
 
     def debug_reset_phone_tutorial():
         persistent.phone_tutorial_seen = False

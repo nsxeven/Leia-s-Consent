@@ -5,6 +5,7 @@ label ch01_scene_04_pool_arrival:
 
     scene bg ch01_pool_day
     with fade
+    $ lc_amb("pool_day")
     # Ryan is on screen from the start; Leia joins when she comes outside.
     $ cast(ryan="pool", julian="pool")
 
@@ -85,12 +86,14 @@ label ch01_scene_04_pool_arrival:
     with dissolve
 
     $ lc_flash("#e6f6ff", 0.45, 0.5)
+    $ lc_sfx("splash_big")
     "She caught my wrist, stepped backward—and pulled me into the pool with her." with lc_shake("m")
 
     mc "Traitor."
     gf "You were taking too long."
     friend "For legal purposes, I saw nothing."
 
+    $ lc_sfx("splash_small")
     "The next several minutes dissolved into splashing, bad attempts to push one another underwater, and [friend_name] protecting his drink with more commitment than he had shown anything else all day."
 
     $ set_story_flag("ch01_scene_04_complete")
@@ -108,6 +111,7 @@ label ch01_scene_05_photography:
     else:
         scene cg ch01_photo_group_white
     with dissolve
+    $ lc_amb("pool_day")
 
     "Eventually, [girlfriend_name] decided the afternoon required photographic evidence."
     $ lc_photo()
@@ -128,6 +132,7 @@ label ch01_scene_05_photography:
 
     friend "Give me the phone."
 
+    $ lc_sfx("timer_beeps")
     $ lc_photo()
     "He propped it against a glass, set the timer, and somehow produced a picture in which all three of us looked human."
 
@@ -156,6 +161,7 @@ label ch01_scene_05_photography:
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 
     # The shutter fires only after the setup CG has had a full dialogue beat.
+    $ lc_sfx("camera_shutter")
     scene lc_photo_flash_white
     with Dissolve(0.06)
     pause 0.04
@@ -213,6 +219,7 @@ label ch01_scene_05_photography:
             "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
 
+            $ lc_sfx("camera_shutter")
             scene lc_photo_flash_white
             with Dissolve(0.06)
             pause 0.04
@@ -247,6 +254,7 @@ label ch01_scene_05_photography:
 
             # Capture 02 is the actual second photograph. Flash directly into it
             # rather than showing the obsolete pool-edge placeholder first.
+            $ lc_sfx("camera_shutter")
             scene lc_photo_flash_white
             with Dissolve(0.06)
             pause 0.04
@@ -267,6 +275,7 @@ label ch01_scene_05_photography:
 
             "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
 
+            $ lc_sfx("camera_shutter")
             scene lc_photo_flash_white
             with Dissolve(0.06)
             pause 0.04
@@ -304,6 +313,7 @@ label ch01_scene_05_photography:
 
                 "She took a breath, forgot about the camera for a moment, and finally got the photograph she wanted."
 
+                $ lc_sfx("camera_shutter")
                 scene lc_photo_flash_white
                 with Dissolve(0.06)
                 pause 0.04
@@ -407,6 +417,7 @@ label ch01_scene_06_friendship_and_towel:
 
     scene bg ch01_pool_lounge
     with dissolve
+    $ lc_amb("pool_day")
     # Leia is upstairs; Ryan stays on screen by the pool.
     $ cast(ryan="pool", julian="pool")
 
@@ -432,6 +443,7 @@ label ch01_scene_06_friendship_and_towel:
 
     "I laughed. This was [friend_name]—the same person who had been there before [girlfriend_name] and me, and who had helped make us possible without ever asking for anything in return."
 
+    $ lc_sfx("sliding_door")
     gf "[player_name]!"
 
     "We both looked up."
@@ -480,6 +492,7 @@ label ch01_scene_06_friendship_and_towel:
     "Her eyes followed mine downward."
     "The argument disappeared from her face as she finally understood the angle."
 
+    $ lc_duck()
     gf "...Oh."
 
     scene cg ch01_towel_shift_03
@@ -499,12 +512,15 @@ label ch01_scene_06_friendship_and_towel:
     mc "Message received."
     gf "Shut up."
 
+    $ lc_sfx("sliding_door")
+    $ lc_sfx("curtain")
     "[girlfriend_name] disappeared inside, still clutching the towel against herself, and pulled the sheer curtain across the glass."
     "A moment later she retreated farther into the room."
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_lounge
     with dissolve
+    $ lc_unduck()
     $ cast(ryan="pool", julian="pool")
 
     $ ch01_pre_towel_stance = chapter_stance("ch01")
