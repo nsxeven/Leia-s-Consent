@@ -632,20 +632,8 @@ screen quick_menu():
 
 screen main_menu():
     tag menu
-    add "gui/scrapbook/bg_main_menu.png"
-    use lc_journal_tabs(1314)
-
-    text "[config.version]" xpos 1760 ypos 1044 size 21 color "#8a6e5e" font "fonts/Silkscreen-Regular.ttf"
-
-    hbox:
-        xpos 1500
-        ypos 1012
-        spacing 10
-        use lc_keycap_button("ENTER", Start())
-        text "OPEN" yalign 0.5 size 24 color "#cdb9a8" font "fonts/Silkscreen-Regular.ttf"
-
-    key "K_RETURN" action Start()
-    key "K_KP_ENTER" action Start()
+    # Golden Hour title screen + memory reel (darryn 2026-11-06): screens/title_screen.rpy.
+    use lc_title_screen()
 
 
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, hints=None):
