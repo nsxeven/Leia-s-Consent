@@ -41,6 +41,7 @@ label prologue_start:
 
     scene cg prologue_party_arrival at lc_push_in
     with dissolve
+    $ lc_amb("party")
 
     "I noticed [girlfriend_name] before I ever spoke to her."
     "That wasn't difficult. Half the room probably had."
@@ -128,6 +129,7 @@ label prologue_start:
     # before Truth or Dare turns their chemistry into a public event.
     scene bg prologue_party_kitchen
     with dissolve
+    $ lc_duck(0.25)
     $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
 
     "A while later I escaped to the kitchen in search of another drink."
@@ -172,6 +174,8 @@ label prologue_start:
     # Both leave with the location change itself (one dissolve), then Leia enters.
     scene bg prologue_truthordare
     with dissolve
+    $ lc_amb("party")
+    $ lc_unduck()
     $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
 
     "By the time somebody suggested Truth or Dare, the room had reached that specific stage of a college party where terrible ideas started sounding organized."
@@ -193,6 +197,7 @@ label prologue_start:
     "[girlfriend_name] looked around once."
     "Then she pointed at me."
 
+    $ lc_sfx("crowd_ooh")
     mc "Me?" with lc_punch()
     $ face("leia", "shy")
     gf "You asked."
@@ -206,11 +211,13 @@ label prologue_start:
     gf "I'm not a chicken."
     friend "Then pick Dare."
 
+    $ lc_sfx("cheer_small")
     "Three people immediately joined in."
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
     $ face("leia", "skeptical")
     gf "Fine. Dare."
     # Dare lands: small screen shake (lc_shake respects the SCREEN SHAKE setting).
+    $ lc_duck()
     friend "Kiss [player_name]." with lc_shake("s")
     $ face("leia", "flustered")
     "The room changed temperature."
@@ -240,6 +247,8 @@ label prologue_start:
     $ lc_flash("#ffe2cf", 0.4, 0.9)
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
+    $ lc_unduck()
+    $ lc_sfx("cheer_small")
     "The room cheered like we'd accomplished something."
 
     scene bg prologue_truthordare
@@ -252,12 +261,14 @@ label prologue_start:
     mc "Worth asking."
     scene black
     with fade
+    $ lc_amb_stop()
     "And somehow... that was the beginning."
 
     $ set_story_flag("prologue_first_kiss_complete")
 
     scene cg prologue_present_stare
     with dissolve
+    $ lc_amb("room_tone", 0.5)
 
     gf "[player_name]?"
     gf "You're staring again."
@@ -265,6 +276,7 @@ label prologue_start:
     gf "Four years and you still haven't learned to be subtle."
     mc "Wasn't trying to be."
     "She tried not to smile and failed."
+    $ lc_sfx("suitcase_zip")
     "She reached for my hand, gave it a quick squeeze, and went back to packing as though it were the most ordinary thing in the world."
 
     scene cg prologue_packing_banter
@@ -285,6 +297,7 @@ label prologue_start:
     "[friend_name] was coming too."
     "My best friend since before [girlfriend_name] and I were even a thing. The same idiot who had, technically, started the whole thing."
 
+    $ lc_sfx("phone_notify")
     $ phone_add_message(
         "group",
         "julian",
@@ -298,6 +311,7 @@ label prologue_start:
     # The Phone notification already presents Julian's message; do not
     # duplicate its contents through the VN textbox.
 
+    $ lc_sfx("phone_notify")
     $ phone_add_message(
         "group",
         "julian",
@@ -313,6 +327,7 @@ label prologue_start:
     $ phone_unlock_with_tutorial()
     $ set_phone_hud_enabled(True)
 
+    $ lc_sfx("car_horn")
     gf "He's been downstairs for two minutes."
     mc "He's rich. His time is worth more."
     gf "You say that every time he rushes you."
@@ -320,6 +335,7 @@ label prologue_start:
 
     scene bg prologue_packing
     with dissolve
+    $ lc_amb("room_tone", 0.5)
     $ cast(ryan="casual", leia="casual")
     $ face("leia", "smile")
 
@@ -353,6 +369,7 @@ label prologue_start:
 
     scene cg prologue_departure at lc_push_in
     with dissolve
+    $ lc_sfx("suitcase_wheels")
 
     "Our first trip together."
     "Four years after [friend_name] dared her to kiss me."
@@ -360,12 +377,14 @@ label prologue_start:
 
     gf "[player_name]!"
     mc "Coming!"
+    $ lc_sfx("door_close")
 
     $ set_story_flag("prologue_complete")
     $ set_story_flag("prologue_story_locked")
 
     scene black
     with fade
+    $ lc_amb_stop()
     centered "{size=72}LEIA'S CONSENT{/size}\n{size=34}Every boundary starts somewhere.{/size}"
 
     scene black

@@ -15,6 +15,7 @@ label ch01_scene_01_arrival:
 
     scene bg ch01_car_day
     with fade
+    $ lc_amb("car_day")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "By the time the transfer car turned into the villa's driveway, [girlfriend_name] had taken thirty-seven photos."
@@ -60,6 +61,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_exterior
     with dissolve
+    $ lc_amb("villa_day")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "The cart followed a narrow path through palms and stopped in front of a two-storey villa facing the ocean."
@@ -83,6 +85,7 @@ label ch01_scene_02_villa:
     $ exit_cinematic_mode()
     scene bg ch01_villa_corridor
     with dissolve
+    $ lc_amb("villa_day")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     friend "There are two rooms upstairs. You two take the master."
@@ -99,6 +102,7 @@ label ch01_scene_02_villa:
 
     scene bg ch01_villa_master_enter
     with dissolve
+    $ lc_amb("room_tone", 0.5)
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "The master bedroom took up most of the second floor."
@@ -132,6 +136,7 @@ label ch01_scene_03_outfit_choice:
 
     scene bg ch01_master_bedroom
     with dissolve
+    $ lc_amb("room_tone", 0.5)
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "Unpacking took less than five minutes. Deciding what to wear took considerably longer."
@@ -206,6 +211,7 @@ label ch01_scene_03_outfit_choice:
     with dissolve
     $ cast(ryan="casual", leia="casual", julian="travel")
 
+    $ lc_sfx("door_close")
     "Swimsuit decided, [girlfriend_name] gathered it up and disappeared into the bathroom to change."
 
     $ cast_remove("leia")
@@ -214,6 +220,7 @@ label ch01_scene_03_outfit_choice:
     $ cast_add(leia="towel")
     $ face("leia", "neutral")
 
+    $ lc_sfx("door_open")
     "A moment later, the bathroom door opened again."
     "[girlfriend_name] stepped back into the bedroom with a towel wrapped around herself and crossed to the glass wall."
 
@@ -223,6 +230,7 @@ label ch01_scene_03_outfit_choice:
 
     gf "Wait. I'm definitely closing these first."
 
+    $ lc_sfx("curtain")
     "She caught one of the light curtains and pulled it across the window."
 
     $ exit_cinematic_mode()
@@ -248,6 +256,7 @@ label ch01_scene_03_outfit_choice:
     $ face("leia", "smile")
     gf "Pervert."
 
+    $ lc_sfx("door_close")
     "She was smiling when she turned back toward the bathroom."
 
     $ cast_remove("leia")
@@ -256,6 +265,7 @@ label ch01_scene_03_outfit_choice:
     $ set_story_flag("ch01_scene_03_complete")
 
     if selected_pool_outfit == "pool_bolder":
+        $ lc_sfx("door_open")
         "A few minutes later, [girlfriend_name] stepped out in the new swimsuit."
         $ enter_cinematic_mode()
         scene cg ch01_swimsuit_choice_blue
@@ -269,6 +279,7 @@ label ch01_scene_03_outfit_choice:
         $ cast(ryan="casual", leia="blue_bikini", julian="travel")
         $ face("leia", "smile")
     else:
+        $ lc_sfx("door_open")
         "A few minutes later, [girlfriend_name] stepped out in the swimsuit she already trusted."
         $ enter_cinematic_mode()
         scene cg ch01_swimsuit_choice_white
