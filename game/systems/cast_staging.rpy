@@ -84,6 +84,7 @@ init python:
             pos = prologue_other_enter_left if entering else prologue_other_left
         renpy.show(name, at_list=[pos, leia_body_idle], tag=LC_SLOT_TAG[slot])
         store.lc_stage[slot] = who
+        lc_title_note_sprite(name[0])  # unlocks this outfit on the title-screen customiser
         return True
 
     def _lc_staging_blocked():
