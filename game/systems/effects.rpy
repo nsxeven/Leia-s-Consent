@@ -113,7 +113,7 @@ transform lc_dream_sway:
 image lc_effect_flash_white = Solid("#ffffff")
 image lc_effect_flash_blue = Solid("#dff7ff")
 image lc_effect_warm_bloom = Solid("#ffd9a8")
-image lc_effect_dream_vignette = Solid("#10101c")
+image lc_effect_dream_vignette = "gui/title/vignette.png"
 
 transform lc_dream_vignette:
     alpha 0.0
