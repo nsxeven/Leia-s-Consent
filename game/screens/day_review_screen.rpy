@@ -135,8 +135,9 @@ init python:
 
         GLOW = 0.45
 
-        def __init__(self, old, new, delay, width=600, fill=None, **kwargs):
+        def __init__(self, old, new, delay, width=600, fill=None, key=None, **kwargs):
             super(LcReviewDelta, self).__init__(**kwargs)
+            self.key = key
             self.old = float(old)
             self.new = float(new)
             self.delay = float(delay)
@@ -163,7 +164,11 @@ init python:
         def render(self, width, height, st, at):
             if self.t0 is None:
                 self.t0 = st
-            elapsed = st - self.t0
+            if self.key is not None and self.delay > 0:
+                import time
+                elapsed = time.time() - lc_review_anim_start(self.key)
+            else:
+                elapsed = st - self.t0
             if self.delay <= 0:
                 frac = 1.0
             else:
@@ -188,7 +193,7 @@ init python:
             after = elapsed - self.delay
             if self.delay > 0 and 0 <= after < self.GLOW:
                 import math
-                glow = 0.55 * math.sin(math.pi * after / self.GLOW)
+                glow = 0.22 * math.sin(math.pi * after / self.GLOW)
                 lo, hi = min(seg0, seg1), max(seg0, seg1)
                 self._blit(rv, self.flash, lo, hi, st, at, alpha=glow)
             # Dark divider where today's change begins, so the change never
@@ -202,8 +207,9 @@ init python:
     class LcReviewTick(renpy.Displayable):
         """Today's number, counting from yesterday in step with the bar."""
 
-        def __init__(self, old, new, delay, **kwargs):
+        def __init__(self, old, new, delay, key=None, **kwargs):
             super(LcReviewTick, self).__init__(**kwargs)
+            self.key = key
             self.old = int(old)
             self.new = int(new)
             self.delay = float(delay)
@@ -215,7 +221,12 @@ init python:
             if self.delay <= 0:
                 frac = 1.0
             else:
-                frac = min(1.0, max(0.0, (st - self.t0) / self.delay))
+                if self.key is not None:
+                    import time
+                    elapsed = time.time() - lc_review_anim_start(self.key)
+                else:
+                    elapsed = st - self.t0
+                frac = min(1.0, max(0.0, elapsed / self.delay))
                 frac = 1.0 - (1.0 - frac) ** 2
             value = int(round(self.old + (self.new - self.old) * frac))
             color = "#5f8a32" if self.new > self.old else "#a8453f"
@@ -339,7 +350,7 @@ screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pit
                 text str(row["yesterday"]) style "lc_pixel_dim" size label_size
                 add "images/ui/scrapbook/arrow_mid.png" yalign 0.55
                 if show_run or show_flash:
-                    add LcReviewTick(row["yesterday"], row["today"], duration) yalign 0.45
+                    add LcReviewTick(row["yesterday"], row["today"], duration, key=row["stat"]) yalign 0.45
                 elif show_final:
                     text str(row["today"]) style "lc_pixel" size label_size color ("#5f8a32" if row["delta"] > 0 else "#a8453f")
                 else:
@@ -367,7 +378,7 @@ screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pit
                     else:
                         value StaticValue(row["yesterday"], 100.0)
                 if show_run or show_flash:
-                    add LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill) xpos 3 ypos 3
+                    add LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill, key=row["stat"]) xpos 3 ypos 3
                 elif show_final:
                     add LcReviewDelta(row["yesterday"], row["today"], 0, bar_w, fill) xpos 3 ypos 3
                 else:
@@ -445,13 +456,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                         add Transform(Transform("cg " + card["image"], fit="cover", xysize=(98, 64)), zoom=3, nearest=True)
                 if card.get("dream"):
                     text "DREAM" style "lc_pixel_bold" size 18 color "#a83a5a" xpos 24 ypos 214
-                for tape_name in slot["tapes"]:
-                    if tape_name == "top":
-                        add "images/ui/scrapbook/tape_top.png" xpos 117 ypos -10 at (lc_tape_still if skipped else lc_tape_in(land))
-                    elif tape_name == "corner":
-                        add "images/ui/scrapbook/tape_corner.png" xpos -18 ypos -16 at (lc_tape_still if skipped else lc_tape_in(land))
-                    else:
-                        add "images/ui/scrapbook/tape_corner_flip.png" xpos 270 ypos -16 at (lc_tape_still if skipped else lc_tape_in(land))
+                # No tape on the polaroids (darryn, 2026-11-04).
             if not skipped:
                 timer land action Function(lc_review_sfx, "paper")
 

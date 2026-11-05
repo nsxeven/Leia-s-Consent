@@ -266,14 +266,12 @@ class DayReviewTests(unittest.TestCase):
             origins.append((slot['x'], slot['y']))
         self.assertEqual(len(set(origins)), 5)
 
-    def test_bar_stagger_stays_near_three_seconds(self):
+    def test_bars_run_one_after_another(self):
         for count in range(1, 12):
-            starts = [self.call('lc_review_bar_timing', i, 0, count)[0] for i in range(count)]
-            duration = self.call('lc_review_bar_timing', 0, 0, count)[1]
-            span = (starts[-1] - starts[0]) + duration
-            self.assertLessEqual(span, 3.05)
-            self.assertEqual(duration, 0.6)
-            self.assertEqual(starts, sorted(starts))
+            timings = [self.call('lc_review_bar_timing', i, 0, count) for i in range(count)]
+            for (start, duration), (next_start, _) in zip(timings, timings[1:]):
+                self.assertGreaterEqual(next_start, start + duration)
+            self.assertEqual([t[0] for t in timings], sorted(t[0] for t in timings))
 
     def test_scrapbook_screen_skips_and_animates(self):
         screen = (ROOT / 'game' / 'screens' / 'day_review_screen.rpy').read_text()
@@ -281,7 +279,9 @@ class DayReviewTests(unittest.TestCase):
         # Bars animate on one clock in LcReviewDelta (eased, soft glow, no strobe);
         # the stat's own fill stays static at the lower value underneath.
         self.assertIn('class LcReviewDelta', screen)
-        self.assertIn('LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill)', screen)
+        self.assertIn('LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill, key=row["stat"])', screen)
+        self.assertIn('def lc_review_anim_start', review)  # shared clock: rebuilt bars don't restart
+        self.assertNotIn('for tape_name in slot["tapes"]', screen)  # no tape on polaroids
         self.assertIn('StaticValue(min(row["yesterday"], row["today"]), 100.0)', screen)
         self.assertNotIn('% 2 == 0', screen)  # the old 20 Hz flash strobe
         self.assertTrue((ROOT / 'game' / 'images' / 'ui' / 'scrapbook' / 'bar_loss_red.png').is_file())
