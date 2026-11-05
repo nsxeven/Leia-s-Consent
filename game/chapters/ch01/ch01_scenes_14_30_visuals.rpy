@@ -35,11 +35,11 @@ image cg ch01_movie_ass_grab_02 = At("images/cg/ch01/CH1D1_CG_MovieAssGrab_02.we
 # Back downstairs after changing: Julian hands Ryan a whisky at the counter.
 image cg ch01_villa_night_julian_drink = At("images/cg/ch01/CH1D1_CG_JulianDrink.webp", prologue_fullscreen)
 
-image cg ch01_lounge_micro_test = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#433746"),
-    (90, 70), Text("CG PLACEHOLDER\nCH01-MOVIE-03 — FIRST DELIBERATE MICRO-TEST\nLOUNGE TOP SHIFT / LEIA AWARE / JULIAN UNAWARE", size=50, color="#ffffff"),
-)
+# Scene 22, the first deliberate exhibition test during the movie.
+# 01: Leia back on the sofa, glancing at Ryan; Julian watching the film behind her.
+# 02: the shifted camisole, the moment of choice (kept the placeholder's stable name).
+image cg ch01_movie_micro_test_glance = At("images/cg/ch01/CH1D1_CG_MovieTest_01.webp", prologue_fullscreen)
+image cg ch01_lounge_micro_test = At("images/cg/ch01/CH1D1_CG_MovieTest_02.webp", prologue_fullscreen)
 
 image ch01_photo_late_favourite = Composite(
     (1080, 1350),

@@ -593,13 +593,16 @@ label ch01_scene_21_watching_julian:
 
 label ch01_scene_22_first_micro_test:
 
+    $ enter_cinematic_mode()
+    scene cg ch01_movie_micro_test_glance
+    with dissolve
+
     "[girlfriend_name] got up for her drink. When she dropped back onto the sofa, the thin neckline of her camisole had shifted slightly from the way she'd been lying against me."
     "She noticed almost immediately."
     "Her hand started toward the fabric, stopped, and her eyes flicked toward [friend_name]."
     "He was watching the movie."
     "Then she looked at me."
 
-    $ enter_cinematic_mode()
     scene cg ch01_lounge_micro_test
     with dissolve
 
