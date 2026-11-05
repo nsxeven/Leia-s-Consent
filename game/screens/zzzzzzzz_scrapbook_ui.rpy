@@ -481,6 +481,8 @@ screen input(prompt):
     modal True
     zorder 150
 
+    on "show" action Function(lc_input_reset)
+
     add "gui/scrapbook/bg_table.png" at lc_input_bg_in
 
     frame at lc_input_card_in:
@@ -504,7 +506,9 @@ screen input(prompt):
                 background Frame("gui/scrapbook/frame_paper.png", 9, 9)
                 padding (16, 8)
                 xfill True
-                input id "input" color "#3b2a30" font "fonts/Caveat[wght].ttf" size 48
+                input id "input" color "#3b2a30" font "fonts/Caveat[wght].ttf" size 48:
+                    changed lc_input_typed
+                    action Function(lc_input_submit)
 
 
 ## Choice #####################################################################
