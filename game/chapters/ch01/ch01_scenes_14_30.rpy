@@ -120,6 +120,9 @@ label ch01_scene_14_movie_setup:
     "[girlfriend_name] returned in a white camisole and short lounge shorts, her hair down and loose. [friend_name] had changed too, and was already at the kitchen counter with two glasses of whisky."
 
     $ enter_cinematic_mode()
+    # Julian hands Ryan the whisky: ice into the glass, then the pour (darryn).
+    $ lc_sfx("ice_glass")
+    $ lc_sfx("whisky_pour")
     scene cg ch01_villa_night_julian_drink
     with dissolve
 

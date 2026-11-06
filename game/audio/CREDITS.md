@@ -95,3 +95,5 @@ Leia's short scream `sfx/leia_scream`: supplied by the project developer.
 Leia's exasperated laugh `sfx/leia_angry_laugh`: supplied by the project developer.
 
 Leia's grunt `sfx/leia_grunt`: supplied by the project developer.
+
+Ice in glass `sfx/ice_glass` and pour `sfx/whisky_pour` (Julian's whisky CG): supplied by the project developer.

@@ -2263,6 +2263,38 @@
     "license": "supplied by the project owner"
    },
    "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's grunt ('I wasn't worried.')"
+  },
+  {
+   "name": "sfx/ice_glass",
+   "file": "sfx/ice_glass.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.13,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Ice in Glass.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silence trimmed (first 1.13 s kept), peak -8 dBFS, 44.1 kHz; Julian's whisky CG"
+  },
+  {
+   "name": "sfx/whisky_pour",
+   "file": "sfx/whisky_pour.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 4.7,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Water Pouring.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "0.7 s lead-in so it follows the ice, first 4 s of the pour kept, 0.8 s fade-out, levelled to about -24 LUFS, 44.1 kHz; Julian's whisky CG"
   }
  ],
  "secondary_sources": [
