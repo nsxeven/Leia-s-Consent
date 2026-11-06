@@ -68,3 +68,5 @@ Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the 
 Crowd chatter `amb/crowd` (party, restaurant, bar): supplied by the project developer.
 
 Squish `sfx/squish` (nightmare dinner CG): supplied by the project developer.
+
+Leia's breaths and moans `voice/leia/*` (40 clips): MoanBox by Selenyhr (https://selenyhr.itch.io/), released under the Unlicense (public domain).

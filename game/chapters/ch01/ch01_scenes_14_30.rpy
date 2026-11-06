@@ -499,6 +499,7 @@ label ch01_scene_20_no_hiding_place:
     scene cg ch01_movie_ass_grab_02 at lc_push_in
     with dissolve
 
+    $ lc_breath_start(1, moans=False)  # Leia holding it in (darryn)
     "I squeezed once. Her breath caught, and she pressed her lips together to keep from making a sound."
 
     $ exit_cinematic_mode()
@@ -543,6 +544,7 @@ label ch01_scene_20_no_hiding_place:
             mc "Hm?"
             gf "Nothing."
 
+    $ lc_breath_stop()
     $ lc_unduck()
     scene bg ch01_villa_living_evening
     with dissolve
@@ -1243,6 +1245,7 @@ label ch01_scene_30_end_day_one:
         $ lc_duck(0.15)
         "I tried to say her name. My mouth moved. Nothing came out."
 
+        $ lc_sfx("slap_light")  # spank as the second nightmare CG appears (darryn)
         scene cg ch01_dream_dinner_grab at lc_dream_sway
         with dissolve
 
@@ -1250,6 +1253,7 @@ label ch01_scene_30_end_day_one:
         "Then it slid lower, slipped under the hem of her dress, and took a slow, deliberate handful of her."
         "Right there at the table. In front of me."
 
+        $ lc_breath_start(1, moans=False)
         "[girlfriend_name] gasped, one small, startled sound."
         "{i}Babe, are you okay?{/i} The words never made it past my throat."
 
@@ -1257,6 +1261,7 @@ label ch01_scene_30_end_day_one:
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
         $ lc_sfx("squish")  # darryn's sound, as the rub CG (BBCStrangerNightmare_03) appears
+        $ lc_breath_start(2)  # stronger on the third CG (darryn)
         scene cg ch01_dream_dinner_rub at lc_dream_sway
         with dissolve
 
@@ -1274,6 +1279,7 @@ label ch01_scene_30_end_day_one:
         scene black
         with Dissolve(0.08)
         $ lc_amb_stop(0.1)
+        $ lc_breath_stop(0.1)
 
         $ exit_cinematic_mode()
 
