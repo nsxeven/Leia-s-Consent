@@ -38,16 +38,15 @@ class DemoAudioTests(unittest.TestCase):
         self.assertNotIn("CHECK:", text)
         self.assertTrue((AUDIO / "CREDITS.md").is_file())
 
-    def test_prologue_party_is_chatter_only(self):
+    def test_prologue_party_is_chatter_with_muffled_music(self):
         src = (GAME / "chapters" / "prologue.rpy").read_text(encoding="utf-8")
         self.assertIn('lc_amb("crowd")', src)  # darryn's crowd chatter for busy places
-        self.assertNotIn("lc_music(", src)  # darryn: no party music
+        self.assertIn('lc_bgm("party")', src)  # BGM plan: faint muffled party pop under it
 
     def test_restaurant_has_chatter_and_soft_music(self):
         src = (GAME / "chapters" / "ch01" / "ch01_scenes_07_13.rpy").read_text(encoding="utf-8")
         self.assertIn('lc_amb("restaurant")', src)  # darryn's restaurant recording
-        self.assertIn('lc_music("lounge_piano")', src)
-        self.assertIn("lc_music_stop()", src)
+        self.assertIn('lc_bgm("lounge_piano")', src)  # restaurant and bar
 
 
 if __name__ == "__main__":

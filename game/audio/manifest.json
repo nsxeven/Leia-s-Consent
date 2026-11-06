@@ -2295,6 +2295,162 @@
     "license": "supplied by the project owner"
    },
    "processing": "0.7 s lead-in so it follows the ice, first 4 s of the pour kept, 0.8 s fade-out, levelled to about -24 LUFS, 44.1 kHz; Julian's whisky CG"
+  },
+  {
+   "name": "music/party",
+   "file": "music/party.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 35.399,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -19.9,
+   "source": {
+    "freesound_id": 575759,
+    "url": "https://freesound.org/people/code_box/sounds/575759/",
+    "author": "code_box",
+    "title": "Rabbit Bop",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'party' (darryn's pick); silence-trimmed, low-passed 650 Hz x2 + 60 Hz high-pass ('from the next room'), -38 LUFS, loop body 35.4 s with a 3 s crossfade seam; integrated -38.0 LUFS, true peak -19.9 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/polaroid_summer",
+   "file": "music/polaroid_summer.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 147.278,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -13.2,
+   "source": {
+    "opengameart_url": "https://opengameart.org/content/talking-cute-chiptune",
+    "author": "Pro Sensory",
+    "title": "Talking Cute (Chiptune)",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'polaroid_summer' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 147.3 s with a 3 s crossfade seam; integrated -28.0 LUFS, true peak -13.2 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/cozy_home",
+   "file": "music/cozy_home.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 37.412,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -11.1,
+   "source": {
+    "freesound_id": 629176,
+    "url": "https://freesound.org/people/holizna/sounds/629176/",
+    "author": "holizna",
+    "title": "Lofi Vinyl E-Piano Loop 95 BPM.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'cozy_home' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 37.4 s with a 3 s crossfade seam; integrated -28.0 LUFS, true peak -11.1 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/sunny_island",
+   "file": "music/sunny_island.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 48.691,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -14.2,
+   "source": {
+    "opengameart_url": "https://opengameart.org/content/feel-good-island-loop",
+    "author": "AntumDeluge",
+    "title": "Feel Good Island Loop",
+    "license": "CC0 1.0 (dual-licensed; used under CC0)"
+   },
+   "processing": "BGM theme 'sunny_island' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 48.7 s with a 3 s crossfade seam; integrated -27.9 LUFS, true peak -14.2 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/cheeky",
+   "file": "music/cheeky.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 36.273,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -14.4,
+   "source": {
+    "opengameart_url": "https://opengameart.org/content/8-bit-i-am-not-clumsy",
+    "author": "HydroGene",
+    "title": "8-bit - I am not clumsy!",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'cheeky' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 36.3 s with a 3 s crossfade seam; integrated -27.9 LUFS, true peak -14.4 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/warm_night",
+   "file": "music/warm_night.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 218.027,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -16.1,
+   "source": {
+    "freesound_id": 680400,
+    "url": "https://freesound.org/people/noel.wav/sounds/680400/",
+    "author": "noel.wav",
+    "title": "Chill Lofi - lost stars.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'warm_night' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 218.0 s with a 3 s crossfade seam; integrated -28.0 LUFS, true peak -16.1 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/under_blanket",
+   "file": "music/under_blanket.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 210.0,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -13.9,
+   "source": {
+    "opengameart_url": "https://opengameart.org/content/calm-relax-1-synthwave-421k",
+    "author": "cynicmusic",
+    "title": "Calm Relax 1 (Synthwave 421k)",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'under_blanket' (darryn's pick); silence-trimmed, first 3.5 min of a 7.9 min track, loop body 210.0 s with a 3 s crossfade seam; integrated -28.1 LUFS, true peak -13.9 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "music/quiet_thoughts",
+   "file": "music/quiet_thoughts.ogg",
+   "kind": "music",
+   "status": "ok",
+   "duration": 51.848,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q4",
+   "loop": true,
+   "peak_dbfs": -12.8,
+   "source": {
+    "freesound_id": 761294,
+    "url": "https://freesound.org/people/Jadis0x/sounds/761294/",
+    "author": "Jadis0x",
+    "title": "Melancholic Piano Loop",
+    "license": "CC0 1.0"
+   },
+   "processing": "BGM theme 'quiet_thoughts' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 51.8 s with a 3 s crossfade seam; integrated -28.0 LUFS, true peak -12.8 dBTP; OGG Vorbis q4"
   }
  ],
  "secondary_sources": [

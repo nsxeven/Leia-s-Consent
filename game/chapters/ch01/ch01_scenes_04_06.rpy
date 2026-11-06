@@ -6,6 +6,7 @@ label ch01_scene_04_pool_arrival:
     scene bg ch01_pool_day
     with fade
     $ lc_amb("pool_day")
+    $ lc_bgm("sunny_island")
     # Ryan is on screen from the start; Leia joins when she comes outside.
     $ cast(ryan="pool", julian="pool")
 
@@ -428,6 +429,7 @@ label ch01_scene_06_friendship_and_towel:
     scene bg ch01_pool_lounge
     with dissolve
     $ lc_amb("pool_day")
+    $ lc_bgm("sunny_island")
     # Leia is upstairs; Ryan stays on screen by the pool.
     $ cast(ryan="pool", julian="pool")
 
@@ -459,6 +461,7 @@ label ch01_scene_06_friendship_and_towel:
     "We both looked up."
 
     $ enter_cinematic_mode()
+    $ lc_bgm("cheeky")  # towel mishap
     scene cg ch01_towel_call_down
     with dissolve
 
@@ -505,6 +508,7 @@ label ch01_scene_06_friendship_and_towel:
     $ lc_duck()
     gf "...Oh."
 
+    $ lc_bgm_cut()  # comic beat: music stops dead on the scratch
     $ lc_sfx("record_scratch")  # darryn: scratch + shake on TowelShift_03
     scene cg ch01_towel_shift_03
     with dissolve
@@ -514,6 +518,7 @@ label ch01_scene_06_friendship_and_towel:
 
     scene cg ch01_towel_realization
     with dissolve
+    $ lc_bgm_resume(1.5)
 
     friend "I'm looking at the water."
     $ lc_sfx("leia_angry_laugh")

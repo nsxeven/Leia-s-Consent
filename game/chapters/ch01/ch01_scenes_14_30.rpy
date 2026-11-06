@@ -13,6 +13,7 @@ label ch01_scene_13b_night_pool:
     scene bg ch01_pool_evening
     with dissolve
     $ lc_amb("night_pool")
+    $ lc_bgm("warm_night")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     "Nobody was ready for bed yet."
@@ -95,6 +96,7 @@ label ch01_scene_14_movie_setup:
     scene bg ch01_villa_living_evening
     with dissolve
     $ lc_amb("room_tone")
+    $ lc_bgm("under_blanket", fadein=4.0)
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
     $ lc_sfx("leia_sigh", 0.8)
@@ -498,6 +500,7 @@ label ch01_scene_20_no_hiding_place:
     scene cg ch01_movie_ass_grab_01 at lc_push_in
     with dissolve
     $ lc_duck()
+    $ lc_bgm_hush()  # intimate beat: breaths + SFX only
     $ lc_sfx("heartbeat_slow")
 
     "I slid my hand up to the curve of her backside."
@@ -555,6 +558,7 @@ label ch01_scene_20_no_hiding_place:
 
     $ lc_breath_stop()
     $ lc_unduck()
+    $ lc_bgm_resume(3.0)
     scene bg ch01_villa_living_evening
     with dissolve
     $ cast(ryan="casual", leia="lounge", julian="lounge")
@@ -970,6 +974,7 @@ label ch01_scene_28_ryan_leia_alone:
     # Light switch clicks as the room drops to the night art (darryn).
     $ lc_sfx("light_switch")
     scene bg ch01_villa_living_night
+    $ lc_bgm("quiet_thoughts", fadein=3.0)
     with dissolve
     $ lc_sfx("door_close", 0.5)
     $ cast(ryan="casual", leia="lounge", julian="lounge")
@@ -1150,6 +1155,7 @@ label ch01_scene_30_end_day_one:
     scene bg ch01_villa_bedroom_night
     with fade
     $ lc_amb("room_tone")
+    $ lc_bgm("quiet_thoughts")
     $ cast()
 
     $ lc_sfx("light_switch")
@@ -1235,6 +1241,7 @@ label ch01_scene_30_end_day_one:
             "Read a brief summary instead.":
                 $ lc_dream_presentation = "summary"
 
+    $ lc_bgm_hush(1.5)  # the nightmare plays in silence (dream ambience only)
     if lc_dream_presentation == "summary":
         $ lc_amb("dream")
         "The dinner collision replayed in my sleep, twisted into an ugly dream about the stranger, [girlfriend_name], and me unable to stop any of it."
@@ -1300,6 +1307,7 @@ label ch01_scene_30_end_day_one:
     "My eyes opened." with lc_shake("m")
     $ lc_unduck()
     $ lc_amb("room_tone")
+    $ lc_bgm("quiet_thoughts", fadein=4.0)  # back after the nightmare
 
     $ enter_cinematic_mode()
     scene cg ch01_dream_wake_night

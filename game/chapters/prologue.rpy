@@ -42,6 +42,7 @@ label prologue_start:
     scene cg prologue_party_arrival at lc_push_in
     with dissolve
     $ lc_amb("crowd")
+    $ lc_bgm("party")  # muffled party pop under the chatter (darryn)
 
     "I noticed [girlfriend_name] before I ever spoke to her."
     "That wasn't difficult. Half the room probably had."
@@ -219,6 +220,7 @@ label prologue_start:
     gf "Fine. Dare."
     # Dare lands: small screen shake (lc_shake respects the SCREEN SHAKE setting).
     $ lc_duck()
+    $ lc_bgm_cut()  # comic beat: music stops dead on the scratch
     $ lc_sfx("record_scratch")
     friend "Kiss [player_name]." with lc_shake("s")
     $ face("leia", "flustered")
@@ -250,6 +252,7 @@ label prologue_start:
     $ lc_flash("#ffe2cf", 0.4, 0.9)
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
+    $ lc_bgm_resume()
     $ lc_unduck()
     $ lc_sfx("cheer_small")
     "The room cheered like we'd accomplished something."
@@ -265,6 +268,7 @@ label prologue_start:
     scene black
     with fade
     $ lc_amb_stop()
+    $ lc_bgm_stop()
     "And somehow... that was the beginning."
 
     $ set_story_flag("prologue_first_kiss_complete")
@@ -273,6 +277,7 @@ label prologue_start:
     with dissolve
     $ lc_breath_once()  # Leia's soft inhale on each packing CG (darryn)
     $ lc_amb("room_tone")
+    $ lc_bgm("cozy_home")
 
     gf "[player_name]?"
     gf "You're staring again."
@@ -389,6 +394,7 @@ label prologue_start:
     scene black
     with fade
     $ lc_amb_stop()
+    $ lc_bgm_stop(3.0)
     centered "{size=72}LEIA'S CONSENT{/size}\n{size=34}Every boundary starts somewhere.{/size}"
 
     scene black
