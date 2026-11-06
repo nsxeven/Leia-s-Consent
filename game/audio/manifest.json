@@ -2183,6 +2183,22 @@
     "license": "supplied by the project owner"
    },
    "processing": "silent tail trimmed, peak -8 dBFS, 60 ms fade-out, 44.1 kHz; Leia's laugh on narrated laugh lines"
+  },
+  {
+   "name": "sfx/leia_giggle",
+   "file": "sfx/leia_giggle.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 2.927506,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Giggle.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "peak -9 dBFS, 80 ms fade-out, 44.1 kHz; Leia's soft/held-back giggles"
   }
  ],
  "secondary_sources": [
