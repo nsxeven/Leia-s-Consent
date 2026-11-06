@@ -97,6 +97,7 @@ label ch01_scene_14_movie_setup:
     $ lc_amb("room_tone")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
 
+    $ lc_sfx("leia_sigh", 0.8)
     "[girlfriend_name] rubbed both hands over her face and stared down at the dinner dress as if she had only just remembered she was still wearing it."
 
     gf "I'm changing before I fall asleep in this again."

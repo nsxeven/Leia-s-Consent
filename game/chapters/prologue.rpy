@@ -213,6 +213,7 @@ label prologue_start:
 
     $ lc_sfx("cheer_small")
     "Three people immediately joined in."
+    $ lc_sfx("leia_sigh")
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
     $ face("leia", "skeptical")
     gf "Fine. Dare."
