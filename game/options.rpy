@@ -30,6 +30,13 @@ define config.version = "1.0.0"
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
+Leia's Consent — Day One Demo, version 1.0.0.
+
+© 2026 NSX Studios. All rights reserved.
+
+Made with Ren'Py. Music and sound effects are CC0 (public domain) from Freesound and OpenGameArt, plus sounds supplied by the developer. Leia's breath and voice clips are from MoanBox by Selenyhr (Unlicense / public domain). Fonts: Fredoka, Nunito, Caveat, Patrick Hand and Silkscreen (SIL Open Font License). The full audio credits ship with the game in game/audio/CREDITS.md.
+
+All characters are adults. This is a work of fiction.
 """)
 
 
@@ -199,6 +206,19 @@ init python:
     build.classify('tools/**', None)
     build.classify('work/**', None)
     build.classify('context_memo.rpy', None)
+    # Public demo (darryn): ship compiled scripts only, and leave developer/QA
+    # tools, personal saves and caches out of the build.
+    build.classify('game/**.rpy', None)
+    build.classify('game/saves/**', None)
+    build.classify('game/cache/**', None)
+    for _lc_dev in ('game/chapters/dev_sandbox.rpy*', 'game/chapters/story_state_test.rpy*',
+                    'game/chapters/systems_vertical_slice.rpy*', 'game/dev_phone_shots.rpy*',
+                    'game/dev_scrapbook_preview.rpy*', 'game/screens/debug_screen.rpy*',
+                    'game/screens/dev_menu_shell.rpy*', 'game/screens/dev_systems_menu_screen.rpy*',
+                    'game/screens/dev_verify_screen.rpy*', 'game/screens/story_state_test_screen.rpy*',
+                    'game/systems/dev_notifications.rpy*'):
+        build.classify(_lc_dev, None)
+    build.documentation('game/audio/CREDITS.md')
     build.classify('**/__pycache__/**', None)
     build.classify('**.pyc', None)
 
