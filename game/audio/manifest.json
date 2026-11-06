@@ -2101,6 +2101,22 @@
     "license": "Unlicense (public domain)"
    },
    "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "sfx/sunscreen_rub",
+   "file": "sfx/sunscreen_rub.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 25.421905,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": true,
+   "source": {
+    "provided_by": "darryn (project developer), 'Squishing Squirt.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "leading silence removed, levelled to about -24 LUFS, peak-limited (source clipped at +3 dBFS), edge fades; loops under the sunscreen-apply CG"
   }
  ],
  "secondary_sources": [

@@ -30,6 +30,8 @@ default persistent.lc_camera_flash = True
 init -10 python:
     renpy.music.register_channel("ambience", mixer="ambience", loop=True, stop_on_mute=True, tight=True)
     renpy.music.register_channel("ui", mixer="ui", loop=False, stop_on_mute=True)
+    # Looping story sound under a beat (e.g. sunscreen being rubbed in); Sound slider.
+    renpy.music.register_channel("sfx_loop", mixer="sfx", loop=True, stop_on_mute=True)
 
 init -2 python:
     import time as _lc_fx_time
@@ -119,6 +121,17 @@ init -2 python:
 
     def lc_amb_stop(fadeout=1.5):
         renpy.music.stop(channel="ambience", fadeout=fadeout)
+
+    def lc_sfx_loop(name, volume=1.0, fadein=0.3):
+        """Loop audio/sfx/<name> until lc_sfx_loop_stop(); a missing file is silent."""
+        path = lc_audio_path("sfx", name)
+        if path:
+            renpy.music.play(path, channel="sfx_loop", loop=True, fadein=fadein,
+                             relative_volume=lc_audio_gain("sfx", name, volume))
+        return path
+
+    def lc_sfx_loop_stop(fadeout=0.8):
+        renpy.music.stop(channel="sfx_loop", fadeout=fadeout)
 
     def lc_music(name, volume=1.0, fadein=2.0, fadeout=2.0):
         path = lc_audio_path("music", name)
