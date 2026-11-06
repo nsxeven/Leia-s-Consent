@@ -270,6 +270,7 @@ label ch01_scene_03_outfit_choice:
         $ enter_cinematic_mode()
         scene cg ch01_swimsuit_choice_blue
         with dissolve
+        $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
         gf "Well?"
         mc "Still think I answered too fast?"
         gf "Maybe not."
@@ -284,6 +285,7 @@ label ch01_scene_03_outfit_choice:
         $ enter_cinematic_mode()
         scene cg ch01_swimsuit_choice_white
         with dissolve
+        $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
         gf "Comfort first."
         mc "You still look incredible."
         gf "Correct answer."

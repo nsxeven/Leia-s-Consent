@@ -77,5 +77,12 @@ init python:
                          relative_volume=LC_BREATH_GAIN * volume)
         return seq
 
+    def lc_breath_once(intensity=1, volume=1.0):
+        """One random soft inhale (a single breath on a Leia CG); never loops."""
+        f = _lc_breath_pick("inhale", max(1, int(intensity)), None)
+        if f:
+            renpy.music.play(f, channel="lc_breath", loop=False, relative_volume=LC_BREATH_GAIN * volume)
+        return f
+
     def lc_breath_stop(fadeout=1.2):
         renpy.music.stop(channel="lc_breath", fadeout=fadeout)

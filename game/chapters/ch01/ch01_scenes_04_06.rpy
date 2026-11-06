@@ -71,6 +71,7 @@ label ch01_scene_04_pool_arrival:
     else:
         scene cg ch01_sunscreen_apply_white
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
     $ lc_sfx_loop("sunscreen_rub")  # darryn's Squishing Squirt, while he rubs it in
 
     "I worked the sunscreen across her shoulders and down the centre of her back."
@@ -172,6 +173,7 @@ label ch01_scene_05_photography:
     else:
         scene cg ch01_photo_capture_01_a
     with Dissolve(0.08)
+    $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
     $ set_story_value("ch01_pool_capture_count", 1)
 
     friend "Relax your shoulders."
@@ -230,6 +232,7 @@ label ch01_scene_05_photography:
             else:
                 scene cg ch01_photo_capture_02_a
             with Dissolve(0.08)
+            $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
             $ set_story_value("ch01_pool_capture_count", 2)
 
             # Hold the successful second capture on screen for a dialogue beat.
@@ -265,6 +268,7 @@ label ch01_scene_05_photography:
             else:
                 scene cg ch01_photo_capture_02_a
             with Dissolve(0.08)
+            $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
 
             "She turned beside the pool, angling her body away from the camera before looking back over her shoulder."
             "The pose came more naturally this time. Less instruction, less stiffness."
@@ -286,6 +290,7 @@ label ch01_scene_05_photography:
             else:
                 scene cg ch01_photo_capture_03_a
             with Dissolve(0.08)
+            $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
             $ set_story_value("ch01_pool_capture_count", 3)
 
             # Hold the photograph without invoking say/centered dialogue UI.
@@ -324,6 +329,7 @@ label ch01_scene_05_photography:
                 else:
                     scene cg ch01_photo_capture_02_a
                 with Dissolve(0.08)
+                $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
                 $ set_story_value("ch01_pool_capture_count", 2)
                 $ exit_cinematic_mode()
             else:
@@ -497,18 +503,18 @@ label ch01_scene_06_friendship_and_towel:
     $ lc_duck()
     gf "...Oh."
 
+    $ lc_sfx("record_scratch")  # darryn: scratch + shake on TowelShift_03
     scene cg ch01_towel_shift_03
     with dissolve
 
-    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]." with lc_punch()
+    "She grabbed the towel tighter against herself, cheeks flushing as she looked from me to [friend_name]." with lc_shake("s")
     "Beside me, [friend_name] turned deliberately toward the pool."
 
     scene cg ch01_towel_realization
     with dissolve
 
     friend "I'm looking at the water."
-    $ lc_sfx("record_scratch")
-    gf "You weren't two seconds ago!" with lc_shake("s")
+    gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
     mc "Just go inside."
     gf "I was trying to tell you to get ready!"
