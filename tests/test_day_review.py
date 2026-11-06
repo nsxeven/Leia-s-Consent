@@ -273,6 +273,24 @@ class DayReviewTests(unittest.TestCase):
                 self.assertGreaterEqual(next_start, start + duration)
             self.assertEqual([t[0] for t in timings], sorted(t[0] for t in timings))
 
+    def test_row_phase_is_strictly_sequential(self):
+        # Only index 1 is running; earlier done, later waiting.
+        self.assertEqual(self.call('lc_review_row_phase', 0, 1, 'run', False), 'done')
+        self.assertEqual(self.call('lc_review_row_phase', 1, 1, 'run', False), 'run')
+        self.assertEqual(self.call('lc_review_row_phase', 1, 1, 'flash', False), 'flash')
+        self.assertEqual(self.call('lc_review_row_phase', 2, 1, 'run', False), 'wait')
+        self.assertEqual(self.call('lc_review_row_phase', 0, 0, 'lead', False), 'wait')
+        self.assertEqual(self.call('lc_review_row_phase', 3, 3, 'done_all', False), 'done')
+        self.assertEqual(self.call('lc_review_row_phase', 1, 1, 'run', True), 'done')  # skip finishes all
+
+    def test_anim_begin_returns_none_and_resets_clock(self):
+        self.call('lc_review_anim_reset')
+        self.assertIsNone(self.call('lc_review_anim_begin', 'love'))
+        first = self.call('lc_review_anim_start', 'love')
+        self.call('lc_review_anim_begin', 'love')
+        second = self.call('lc_review_anim_start', 'love')
+        self.assertGreaterEqual(second, first)
+
     def test_scrapbook_screen_skips_and_animates(self):
         screen = (ROOT / 'game' / 'screens' / 'day_review_screen.rpy').read_text()
         review = (ROOT / 'game' / 'systems' / 'day_review.rpy').read_text()
@@ -281,7 +299,13 @@ class DayReviewTests(unittest.TestCase):
         self.assertIn('class LcReviewDelta', screen)
         self.assertIn('LcReviewDelta(row["yesterday"], row["today"], duration, bar_w, fill, key=row["stat"])', screen)
         self.assertIn('def lc_review_anim_start', review)  # shared clock: rebuilt bars don't restart
+        self.assertIn('def lc_review_row_phase', review)
+        self.assertIn('def lc_review_anim_begin', review)
+        self.assertIn('default seq_phase = "lead"', screen)
+        self.assertIn('lc_review_row_phase(index, seq_i, seq_phase, skipped)', screen)
+        self.assertNotIn('SetDict(phases', screen)  # no per-row phase timers
         self.assertNotIn('for tape_name in slot["tapes"]', screen)  # no tape on polaroids
+        self.assertIn('photos_settled', screen)  # polaroids freeze after lead
         self.assertIn('StaticValue(min(row["yesterday"], row["today"]), 100.0)', screen)
         self.assertNotIn('% 2 == 0', screen)  # the old 20 Hz flash strobe
         self.assertTrue((ROOT / 'game' / 'images' / 'ui' / 'scrapbook' / 'bar_loss_red.png').is_file())

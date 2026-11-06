@@ -415,28 +415,55 @@ init 20 python:
             return 0.35
         return lc_review_photo_land(photo_count - 1) + 0.16
 
-    # Bars run strictly one after another (darryn, 2026-11-04): each bar
-    # finishes, glows, then the next starts, so no two ever animate together.
+    # Bars run strictly one after another (darryn): each bar finishes, glows,
+    # then the next starts. LC_REVIEW_BAR_GAP is the beat between bars after
+    # the glow (the live sequencer uses flash/glow, then advances).
     LC_REVIEW_BAR_RUN = 0.55
     LC_REVIEW_BAR_GAP = 0.15
+    LC_REVIEW_BAR_GLOW = 0.45
 
     def lc_review_bar_timing(index, photo_count, bar_count):
-        """(start, duration): sequential, no overlap between bars."""
+        """Legacy (start, duration) for tests. The live screen uses a single
+        sequencer (lead → run → flash → next) instead of per-row absolute timers."""
         duration = LC_REVIEW_BAR_RUN
         start = lc_review_bars_lead(photo_count) + index * (duration + LC_REVIEW_BAR_GAP)
         return (start, duration)
 
-    # Wall-clock start per animating bar, keyed by stat. Screens rebuild their
-    # displayables whenever any bar changes phase; keeping the start time here
-    # means a rebuilt bar carries on instead of restarting from yesterday.
+    # Wall-clock start per animating bar, keyed by stat. The scrapbook screen
+    # rebuilds whenever the sequencer advances; keeping the start time here
+    # means a rebuilt LcReviewDelta/Tick carries on instead of restarting.
     lc_review_anim_clock = {}
 
     def lc_review_anim_start(key):
         import time
         return lc_review_anim_clock.setdefault(key, time.time())
 
+    def lc_review_anim_begin(key):
+        """Stamp a fresh wall-clock for the bar that is about to run. Always None
+        so it is safe as a screen-timer Function action."""
+        import time
+        lc_review_anim_clock[key] = time.time()
+        return None
+
     def lc_review_anim_reset():
         lc_review_anim_clock.clear()
+
+    def lc_review_row_phase(index, seq_i, seq_phase, skipped):
+        """Derive one row's visual phase from the single screen sequencer.
+
+        Only one bar is ever in run/flash. Earlier bars are done; later bars
+        wait. Per-row screen timers used to own their own delays — every
+        SetDict rebuild restarted those timers, so bars overlapped or stalled.
+        """
+        if skipped or seq_phase == "done_all":
+            return "done"
+        if seq_phase == "lead" or index > seq_i:
+            return "wait"
+        if index < seq_i:
+            return "done"
+        if seq_phase in ("run", "flash"):
+            return seq_phase
+        return "wait"
 
     def lc_review_quote(text):
         text = (text or "").strip()

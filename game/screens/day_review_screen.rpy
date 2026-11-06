@@ -299,35 +299,27 @@ screen lc_review_tag(who, title):
         text title style "lc_hand_tag" size 26 xpos 42 ypos 38 xmaximum 296 substitute False
 
 
-screen lc_review_bar_column(rows, offset, photo_count, bar_count, skipped, exact, pitch, col_w, phases):
+screen lc_review_bar_column(rows, offset, skipped, exact, pitch, col_w, seq_i, seq_phase):
     vbox:
         spacing 0
         xsize col_w
         for index, row in enumerate(rows):
-            use lc_review_bar_row(row, index + offset, photo_count, bar_count, skipped, exact, pitch, col_w, phases) id row["stat"]
+            use lc_review_bar_row(row, index + offset, skipped, exact, pitch, col_w, seq_i, seq_phase) id row["stat"]
 
 
-screen lc_review_bar_row(row, index, photo_count, bar_count, skipped, exact, pitch=56, col_w=730, phases=None):
-    $ timing = lc_review_bar_timing(index, photo_count, bar_count)
-    $ start = timing[0]
-    $ duration = timing[1]
+screen lc_review_bar_row(row, index, skipped, exact, pitch=56, col_w=730, seq_i=0, seq_phase="done_all"):
+    $ duration = LC_REVIEW_BAR_RUN
     $ look = LC_REVIEW_BAR_STYLE[row["stat"]]
     $ fill = "images/ui/scrapbook/bar_fill_{}.png".format(row["stat"])
     $ arrow = "images/ui/scrapbook/arrow_up.png" if row["delta"] > 0 else "images/ui/scrapbook/arrow_down.png"
-    # Phase lives on the journal screen. A used screen is inlined, so
-    # SetScreenVariable would write the parent and this row would stay on wait.
-    $ phase = "done" if skipped or phases is None else phases.get(row["stat"], "wait")
+    # Phase comes from the parent screen's single sequencer. Rows must not own
+    # timers: a SetDict/SetScreenVariable rebuild used to restart every other
+    # row's wait/run timer and made bars overlap or stall.
+    $ phase = lc_review_row_phase(index, seq_i, seq_phase, skipped)
     $ show_wait = (not skipped) and phase == "wait"
     $ show_run = (not skipped) and phase == "run"
     $ show_flash = (not skipped) and phase == "flash"
     $ show_final = skipped or phase == "done"
-
-    if show_wait:
-        timer start action SetDict(phases, row["stat"], "run")
-    elif show_run:
-        timer duration action [SetDict(phases, row["stat"], "flash"), Function(lc_review_sfx, "tick")]
-    elif show_flash:
-        timer 0.45 action SetDict(phases, row["stat"], "done")
 
     $ narrow = col_w < 500
     $ label_size = 16 if narrow else 18
@@ -395,7 +387,10 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
     if replay or not persistent.lc_recap_animation:
         $ skipped = True
     default show_choices = True
-    default bar_phase = {}
+    # One sequencer for every changed bar. lead → run → flash → next/done_all.
+    # Never give each row its own absolute-delay timer (those restart on rebuild).
+    default seq_i = 0
+    default seq_phase = "lead"
     $ mode = current_choice_mode()
     $ exact = mode in ("full", "developer")
     $ night = lc_review_night_copy(day_id)
@@ -433,6 +428,10 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
 
     add "images/ui/scrapbook/spread.png" at (lc_spread_still if skipped else lc_spread_in)
 
+    # Once the bar sequencer leaves "lead", freeze polaroids on their landed
+    # pose. Otherwise every seq_phase rebuild restarts lc_polaroid_drop ATL.
+    $ photos_settled = skipped or seq_phase != "lead"
+
     if not cards:
         text "No photographs\nfrom today." style "lc_hand" textalign 0.5 xpos lc_px(38) ypos lc_px(88) xsize lc_px(280) color "#7a5648"
     else:
@@ -441,7 +440,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
             $ px = lc_px(slot["x"] + 54)
             $ py = lc_px(slot["y"] + 43)
             $ land = lc_review_photo_land(index)
-            fixed at (lc_polaroid_still(slot["tilt"], px, py) if skipped else lc_polaroid_drop(lc_review_photo_delay(index), slot["tilt"], px, py)):
+            fixed at (lc_polaroid_still(slot["tilt"], px, py) if photos_settled else lc_polaroid_drop(lc_review_photo_delay(index), slot["tilt"], px, py)):
                 xsize lc_px(108)
                 ysize lc_px(86)
                 add Solid("#140a0866") xpos 8 ypos 12 xsize 324 ysize 258
@@ -457,7 +456,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                 if card.get("dream"):
                     text "DREAM" style "lc_pixel_bold" size 18 color "#a83a5a" xpos 24 ypos 214
                 # No tape on the polaroids (darryn, 2026-11-04).
-            if not skipped:
+            if (not skipped) and seq_phase == "lead":
                 timer land action Function(lc_review_sfx, "paper")
 
     if len(cards) < 5:
@@ -504,6 +503,20 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
     if footer_n > 1:
         $ footer_h += 4 * (footer_n - 1)
     $ split_at = ((bar_n + 1) // 2) if two_col else bar_n
+
+    # Single bar sequencer. Only one timer exists at a time, so a phase change
+    # rebuild cannot restart a sibling bar's clock.
+    if (not skipped) and show_stats and bars:
+        if seq_phase == "lead":
+            timer lc_review_bars_lead(len(cards)) action [SetScreenVariable("seq_i", 0), SetScreenVariable("seq_phase", "run"), Function(lc_review_anim_begin, bars[0]["stat"])]
+        elif seq_phase == "run":
+            timer LC_REVIEW_BAR_RUN action [SetScreenVariable("seq_phase", "flash"), Function(lc_review_sfx, "tick")]
+        elif seq_phase == "flash":
+            if seq_i + 1 < bar_n:
+                timer LC_REVIEW_BAR_GLOW action [SetScreenVariable("seq_i", seq_i + 1), SetScreenVariable("seq_phase", "run"), Function(lc_review_anim_begin, bars[seq_i + 1]["stat"])]
+            else:
+                timer LC_REVIEW_BAR_GLOW action SetScreenVariable("seq_phase", "done_all")
+
     fixed:
         xpos lc_px(336)
         ypos 50
@@ -606,10 +619,10 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                         if two_col:
                             hbox:
                                 spacing 14
-                                use lc_review_bar_column(bars[:split_at], 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w, bar_phase) id "bars_left"
-                                use lc_review_bar_column(bars[split_at:], split_at, len(cards), bar_n, skipped, exact, bar_pitch, col_w, bar_phase) id "bars_right"
+                                use lc_review_bar_column(bars[:split_at], 0, skipped, exact, bar_pitch, col_w, seq_i, seq_phase) id "bars_left"
+                                use lc_review_bar_column(bars[split_at:], split_at, skipped, exact, bar_pitch, col_w, seq_i, seq_phase) id "bars_right"
                         else:
-                            use lc_review_bar_column(bars, 0, len(cards), bar_n, skipped, exact, bar_pitch, col_w, bar_phase) id "bars"
+                            use lc_review_bar_column(bars, 0, skipped, exact, bar_pitch, col_w, seq_i, seq_phase) id "bars"
                 if show_stats and unchanged:
                     text "{} UNCHANGED".format(unchanged) style "lc_pixel" size 16 color "#7a6266" ysize 22
                 elif show_stats and not bars:
