@@ -401,6 +401,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
     $ choices = lc_review_choice_details(day_id) if mode != "normal" else []
     $ diary = lc_review_diary(day_id)
     $ titles = lc_review_titles(day_id)
+    $ stickers = lc_review_stickers(day_id) if titles[0] else []
     $ ticket = lc_review_ticket(day_id)
     $ record = lc_review_days[day_id]
     $ show_stats = lc_review_show_stats(day_id, mode)
@@ -510,6 +511,9 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
         $ footer_n += 1
     if titles[0]:
         $ footer_h += 92
+        $ footer_n += 1
+    if stickers:
+        $ footer_h += 34
         $ footer_n += 1
     if footer_n > 1:
         $ footer_h += 4 * (footer_n - 1)
@@ -648,6 +652,20 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                         ysize 92
                         use lc_review_tag(player_name, titles[0])
                         use lc_review_tag(girlfriend_name, titles[1])
+                if stickers:
+                    # Moment stickers (darryn): up to two standout choices of the day.
+                    hbox:
+                        spacing 10
+                        ysize 34
+                        for sticker in stickers:
+                            frame:
+                                background Solid("#f4dde3")
+                                padding (10, 4)
+                                yalign 0.5
+                                hbox:
+                                    spacing 6
+                                    add "images/ui/scrapbook/mark.png" yalign 0.5
+                                    text sticker.upper() style "lc_pixel" size 16 color "#8a3058" yalign 0.5 substitute False
 
     fixed:
         xpos 1310
