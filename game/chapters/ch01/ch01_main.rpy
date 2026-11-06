@@ -78,6 +78,7 @@ label ch01_scene_02_villa:
     $ enter_cinematic_mode()
     scene cg ch01_villa_arrival at lc_push_in
     with dissolve
+    $ lc_sfx("leia_gasp")  # darryn: Leia's gasp at the villa reveal
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
     gf "Look at that view."
