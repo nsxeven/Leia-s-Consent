@@ -1292,23 +1292,126 @@ screen lc_adult_notice_screen():
     key "game_menu" action Return(False)
 
 
+## Demo end card (darryn): shown after the Day 1 review in demo builds
+## (LC_DAY1_DEMO_BUILD). Same living backdrop as the title screen, the one-line
+## logo with its sheen, a thank-you, upcoming releases, Patreon and Discord.
+define LC_PATREON_URL = "https://www.patreon.com/c/LeiasConsent"
+define LC_DISCORD_URL = "https://discord.gg/HYmrB8Gjwj"
+
+transform lc_demo_in(delay=0.0, dy=22):
+    subpixel True
+    alpha 0.0
+    yoffset dy
+    pause delay
+    easein 0.75 alpha 1.0 yoffset 0
+
+transform lc_demo_slide(delay=0.0):
+    subpixel True
+    alpha 0.0
+    xoffset -40
+    pause delay
+    easein 0.6 alpha 1.0 xoffset 0
+
+transform lc_demo_pulse:
+    subpixel True
+    zoom 1.0
+    block:
+        ease 0.9 zoom 1.06
+        ease 0.9 zoom 1.0
+        repeat
+
+transform lc_demo_glow:
+    alpha 0.35
+    block:
+        ease 1.4 alpha 0.85
+        ease 1.4 alpha 0.35
+        repeat
+
+screen lc_demo_release_row(title, note, badge, delay):
+    hbox at lc_demo_slide(delay):
+        spacing 18
+        fixed:
+            xysize (170, 40)
+            yalign 0.5
+            add Solid("#ff8fc0" if badge == "NEXT UP" else "#ffffff40") xysize (170, 40)
+            text badge font "fonts/Silkscreen-Bold.ttf" size 18 color ("#3b1028" if badge == "NEXT UP" else "#ffffff") xalign 0.5 yalign 0.5
+            if badge == "NEXT UP":
+                add Solid("#ffffff40") xysize (170, 40) at lc_demo_glow
+        vbox:
+            spacing 2
+            yalign 0.5
+            text title font "fonts/Fredoka-SemiBold.ttf" size 34 color "#ffffff"
+            text note style "lc_title_small_text" size 22 color "#ffffffc0"
+
 screen lc_demo_end_screen():
     modal True
-    add "gui/scrapbook/bg_table.png"
-    add Solid("#120c18cc")
-    frame:
-        xalign 0.5
-        yalign 0.5
-        xsize 980
-        yminimum 360
-        background Frame("gui/scrapbook/frame_night.png", 9, 9)
-        padding (40, 36)
-        vbox:
-            spacing 16
-            text "THANK YOU FOR PLAYING" xalign 0.5 size 42 color "#d6c8e0" font "fonts/Silkscreen-Bold.ttf"
-            text "This demo includes the Prologue and Chapter One, Day One." xalign 0.5 text_align 0.5 size 36 color "#efe4cd" font "fonts/PatrickHand-Regular.ttf"
-            text "More of the story is in development." xalign 0.5 size 32 color "#cbb8d4" font "fonts/Caveat[wght].ttf"
-            textbutton "RETURN" action Return() xalign 0.5
+    zorder 190
+    on "show" action Function(lc_bgm, "polaroid_summer", 3.0)
+
+    # Living backdrop, same layers as the title screen.
+    add lc_title_bg_now() at lc_title_bg_drift
+    add "gui/title/light_leak.png"
+    add "gui/title/shade_left.png"
+    add SnowBlossom(Transform("gui/title/bokeh.png", alpha=0.6), count=18, border=60, xspeed=(-18, 18), yspeed=(-40, -12), start=4, horizontal=False)
+    add lc_title_leia_now() at lc_title_leia
+    add "gui/title/vignette.png"
+    add "gui/title/shade_bottom.png" yalign 1.0
+
+    # One-line logo with its sheen, floating.
+    fixed at lc_title_logo_in:
+        xpos 96
+        ypos 58
+        xysize (860, 140)
+        add lc_title_logo() at lc_title_logo_float
+
+    vbox:
+        xpos 136
+        ypos 236
+        xsize 900
+        spacing 14
+
+        text "Thank you for playing the demo!" font "fonts/Fredoka-SemiBold.ttf" size 54 color "#ffffff" at lc_demo_in(0.9)
+        text "You've finished the Prologue and Chapter One, Day One. Your tags, stickers and gallery unlocks are saved for the full game." style "lc_title_small_text" size 25 color "#ffffffd0" xmaximum 860 at lc_demo_in(1.2)
+
+        null height 18
+        text "UPCOMING RELEASES" font "fonts/Silkscreen-Bold.ttf" size 26 color "#ff9fc8" at lc_demo_in(1.6)
+        use lc_demo_release_row("Day 2", "The next update", "NEXT UP", 1.9)
+        use lc_demo_release_row("Days 3–5", "In development", "SOON", 2.2)
+
+        null height 22
+        text "Follow along, get early builds and vote on what comes next:" style "lc_title_small_text" size 22 color "#ffffffb0" at lc_demo_in(2.6)
+        hbox at lc_demo_in(2.8):
+            spacing 18
+            button:
+                xysize (330, 66)
+                background Solid("#ff6fae")
+                hover_background Solid("#ff8fc0")
+                action [Function(lc_ui_play, "tap"), OpenURL(LC_PATREON_URL)]
+                hovered Function(lc_ui_play, "tick")
+                at lc_demo_pulse
+                text "SUPPORT ON PATREON" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
+            button:
+                xysize (300, 66)
+                background Solid("#5865f2")
+                hover_background Solid("#7983f5")
+                action [Function(lc_ui_play, "tap"), OpenURL(LC_DISCORD_URL)]
+                hovered Function(lc_ui_play, "tick")
+                text "JOIN THE DISCORD" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
+
+        null height 8
+        fixed at lc_demo_in(3.1):
+            xysize (380, 50)
+            use lc_title_item("Main Menu", Return(), "back")
+
+    hbox:
+        xalign 1.0
+        xoffset -40
+        ypos 34
+        spacing 14
+        text "DEMO" style "lc_title_small_text" yalign 0.5
+        add "gui/title/badge18.png" yalign 0.5
+
+    key "game_menu" action Return()
 
 
 screen lc_shot_helper(name):
