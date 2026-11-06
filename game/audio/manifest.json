@@ -195,20 +195,17 @@
    "file": "sfx/drink_spill.ogg",
    "kind": "sfx",
    "status": "ok",
-   "duration": 0.829,
-   "channels": 1,
+   "duration": 2.05,
+   "channels": 2,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
-   "peak_dbfs": -6.8,
+   "peak_dbfs": -11.4,
    "source": {
-    "freesound_id": 319418,
-    "url": "https://freesound.org/people/Braleven/sounds/319418/",
-    "author": "Braleven",
-    "title": "Small Water Spill",
-    "license": "CC0 1.0"
+    "provided_by": "darryn (project developer), 'Drink Splash.m4a'",
+    "license": "supplied by the project owner"
    },
-   "processing": "cut 0.131-0.960s of preview (onset = first sample -30.0 dB under peak, minus 4 ms; tail thr -50.0 dB), fade in 6 ms / out 60 ms, peak-normalised -3 dBFS; balanced -3.2 dB (cap -8 dB vs splash_big)"
+   "processing": "leading silence removed, trimmed to the first 2.05 s (main splash), 0.15 s fade-out, levelled to about -24 LUFS, peak-limited; replaces the earlier Freesound #319418 spill"
   },
   {
    "name": "sfx/body_bump",

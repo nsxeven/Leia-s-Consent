@@ -33,7 +33,6 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 | sfx/door_close | [Door closing, modern apartment, springy #15](https://freesound.org/people/JapanYoshiTheGamer/sounds/648831/) (#648831) | JapanYoshiTheGamer | CC0 1.0 |
 | sfx/door_open | [dorm door opening.wav](https://freesound.org/people/pagancow/sounds/15419/) (#15419) | pagancow | CC0 1.0 |
 | sfx/door_unlock | [Hotel room door unlocking](https://freesound.org/people/wlabarron/sounds/494128/) (#494128) | wlabarron | CC0 1.0 |
-| sfx/drink_spill | [Small Water Spill](https://freesound.org/people/Braleven/sounds/319418/) (#319418) | Braleven | CC0 1.0 |
 | sfx/gasp_wake | [Man gasp of breath](https://freesound.org/people/ckvoiceover/sounds/401333/) (#401333) | ckvoiceover | CC0 1.0 |
 | sfx/glass_clink | [Cheers!.wav](https://freesound.org/people/dazza007/sounds/433721/) (#433721) | dazza007 | CC0 1.0 |
 | sfx/ice_clink | [Putting ice cubes into glassWAV](https://freesound.org/people/13GPanska_Gorbusinova_Anna/sounds/377995/) (#377995) | 13GPanska_Gorbusinova_Anna | CC0 1.0 |
@@ -63,3 +62,5 @@ Processing: trimmed, faded, loudness-balanced and encoded to OGG Vorbis 44.1 kHz
 Name-card typing sounds `ui/key_1`..`ui/key_4`, `ui/key_back`, `ui/key_enter`: synthesised in-house (original work, no third-party source).
 
 Polaroid hover sound `ui/tock`: synthesised in-house (original work, no third-party source).
+
+Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the earlier Freesound spill).
