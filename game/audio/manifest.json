@@ -1354,6 +1354,21 @@
     "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
     "license": "original work, owned by the project"
    }
+  },
+  {
+   "name": "ui/tock",
+   "file": "ui/tock.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.12,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "synth": "in-house (scratch/sfx/make_hover.py, option F): 520 Hz muted tone + short band-noise tap",
+    "license": "original work, owned by the project"
+   }
   }
  ],
  "secondary_sources": [

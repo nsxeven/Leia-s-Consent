@@ -161,7 +161,7 @@ screen lc_title_polaroid(card):
                 action NullAction()
             else:
                 action [Function(lc_ui_play, "polaroid"), Show("lc_title_photo_view", card=card)]
-                hovered Function(lc_ui_play, "rustle")
+                hovered Function(lc_ui_play, "tock")
                 hover_foreground "gui/title/polaroid_hover.png"
             add "gui/title/polaroid.png"
             fixed:
