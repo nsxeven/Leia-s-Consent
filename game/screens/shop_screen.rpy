@@ -55,7 +55,7 @@ screen shop_screen():
     else:
         $ selected_outfit = get_outfit(shop_selected_outfit)
         $ selected_name = selected_outfit["name"]
-        $ selected_description = selected_outfit["description"]
+        $ selected_description = gallery_customize_names(selected_outfit["description"])
         $ selected_cost = selected_outfit["cost"]
         $ selected_category = outfit_category_label(shop_selected_outfit)
         $ selected_contexts = outfit_context_text(shop_selected_outfit)

@@ -80,7 +80,7 @@ init python:
         return (
             ("Choices", info["choices"]),
             ("Status", info["status"]),
-            ("Wardrobe", info["wardrobe"]),
+            ("Wardrobe", gallery_customize_names(info["wardrobe"])),
             ("Routes", info["routes"]),
         )
 

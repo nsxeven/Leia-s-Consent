@@ -203,7 +203,7 @@ screen gallery_preview_screen(gallery_id):
     $ chapter_label = gallery_chapter_label(entry["chapter"])
     $ page_info = entry["pages"][gp_page]
     $ page_image = page_info["image"]
-    $ page_label = page_info["label"]
+    $ page_label = gallery_customize_names(page_info["label"])
     $ page_is_placeholder = gallery_is_placeholder(page_image)
     $ pages_have, pages_total = gallery_pages_counts(gallery_id)
     $ route_text = gallery_customize_names(entry["route"])
