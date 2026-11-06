@@ -71,6 +71,7 @@ label ch01_scene_04_pool_arrival:
     else:
         scene cg ch01_sunscreen_apply_white
     with dissolve
+    $ lc_sfx_loop("sunscreen_rub")  # darryn's Squishing Squirt, while he rubs it in
 
     "I worked the sunscreen across her shoulders and down the centre of her back."
     "When my hands slowed near her waist, she looked back at me."
@@ -84,6 +85,7 @@ label ch01_scene_04_pool_arrival:
     else:
         scene cg ch01_pool_hand_pull_white
     with dissolve
+    $ lc_sfx_loop_stop(0.3)
 
     $ lc_flash("#e6f6ff", 0.45, 0.5)
     $ lc_sfx("splash_big")

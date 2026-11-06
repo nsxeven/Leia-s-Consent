@@ -70,3 +70,5 @@ Crowd chatter `amb/crowd` (party, restaurant, bar): supplied by the project deve
 Squish `sfx/squish` (nightmare dinner CG): supplied by the project developer.
 
 Leia's breaths and moans `voice/leia/*` (40 clips): MoanBox by Selenyhr (https://selenyhr.itch.io/), released under the Unlicense (public domain).
+
+Sunscreen rub `sfx/sunscreen_rub`: supplied by the project developer.
