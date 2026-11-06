@@ -802,7 +802,8 @@ label ch01_scene_12_shop_and_drive_back:
     $ exit_cinematic_mode()
     # Leia is asleep in the back with no lines, so Julian takes the right slot
     # for the whole car talk (darryn). No swap here: Ryan stays left.
-    scene bg ch01_car_evening
+    # Night car interior for the drive home (darryn's explicit choice; overrides the evening-art default).
+    scene bg ch01_car_night
     with dissolve
     $ cast(ryan="casual", julian="evening")
 
