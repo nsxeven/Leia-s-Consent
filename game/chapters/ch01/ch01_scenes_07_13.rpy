@@ -566,10 +566,11 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_walk_back_call
     with dissolve
 
-    $ lc_sfx("phone_ring")
+    $ lc_sfx_loop("phone_ring", fadein=0.0)  # darryn's ringtone, rings until Ryan answers
     "My phone started ringing." with lc_shake("s")
     "The name on the screen belonged to a female friend from back home—someone I had not expected to hear from on this trip."
 
+    $ lc_sfx_loop_stop(0.25)
     mc "Hang on."
 
     "I stopped. [girlfriend_name] and [friend_name] kept moving at an easy pace a few steps ahead while I answered."
