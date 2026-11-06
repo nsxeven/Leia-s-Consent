@@ -87,6 +87,7 @@ label ch01_scene_07_did_he_see:
     $ enter_cinematic_mode()
     scene cg ch01_dress_reveal at lc_push_in
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
 
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
 

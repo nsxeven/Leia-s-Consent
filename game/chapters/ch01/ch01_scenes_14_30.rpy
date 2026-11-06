@@ -610,6 +610,7 @@ label ch01_scene_22_first_micro_test:
     $ enter_cinematic_mode()
     scene cg ch01_movie_micro_test_glance at lc_push_in
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
     $ lc_duck()
     $ lc_sfx("heartbeat_slow")
 
@@ -621,6 +622,7 @@ label ch01_scene_22_first_micro_test:
 
     scene cg ch01_lounge_micro_test at lc_push_in
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
 
     "She knew. I knew she knew. For the first time that day, nothing accidental had forced the decision for her."
 
