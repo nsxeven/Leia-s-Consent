@@ -2167,6 +2167,22 @@
     "license": "supplied by the project owner"
    },
    "processing": "silent lead-in/tail trimmed (0.85-1.80 s kept), peak -9 dBFS, short fades, 44.1 kHz"
+  },
+  {
+   "name": "sfx/leia_laugh",
+   "file": "sfx/leia_laugh.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.18,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Laugh.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silent tail trimmed, peak -8 dBFS, 60 ms fade-out, 44.1 kHz; Leia's laugh on narrated laugh lines"
   }
  ],
  "secondary_sources": [

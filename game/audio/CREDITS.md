@@ -83,3 +83,5 @@ Cat call `sfx/cat_call` (restroom-corridor compliment): supplied by the project 
 Text notification `ui/notify` (phone banner) and `sfx/phone_notify` (story text alerts): supplied by the project developer.
 
 Call ringtone `sfx/phone_ring` (Maya's call on the walk back): supplied by the project developer.
+
+Leia's laugh `sfx/leia_laugh`: supplied by the project developer.

@@ -170,6 +170,7 @@ label ch01_scene_08_drive_to_dinner:
     friend "For once, I'm with [girlfriend_name]."
     mc "Get out. Both of you."
 
+    $ lc_sfx("leia_laugh")
     "She laughed and rested her hand on my thigh for a moment before turning the volume up."
     "Nothing about the drive felt unusual. That was what made the seating arrangement feel so ordinary—almost invisible."
 
@@ -227,6 +228,7 @@ label ch01_scene_09_dinner:
     mc "I refuse to validate this story."
     gf "That means it's true."
 
+    $ lc_sfx("leia_laugh")
     "She laughed hard enough to lean forward over the table, and [friend_name] laughed because she was laughing."
     "[girlfriend_name] lifted her phone and looked between the three of us."
 
@@ -320,6 +322,7 @@ label ch01_scene_09_dinner:
     gf "No, no. It's okay. I walked into you."
     stranger "Then we're both terrible at walking."
 
+    $ lc_sfx("leia_laugh")
     "That finally made her laugh. He apologized once more, accepted that nobody was injured, and continued toward his own table with considerably less dignity than he'd arrived with."
 
     # Give the narration a beat, then let him physically leave toward screen-left.
@@ -526,6 +529,7 @@ label ch01_scene_10_after_dinner_drinks:
     mc "I told him. Repeatedly."
     friend "You had no vision."
 
+    $ lc_sfx("leia_laugh")
     "[girlfriend_name] leaned into my shoulder while laughing, then pointed across the table at [friend_name]."
 
     gf "Show me the photo."
@@ -766,6 +770,7 @@ label ch01_scene_12_shop_and_drive_back:
     mc "We were students."
     gf "Water was free."
 
+    $ lc_sfx("leia_laugh")
     "She was laughing hard enough that another shopper glanced over."
 
     mc "Fine. Ask him about the sunglasses phase."
