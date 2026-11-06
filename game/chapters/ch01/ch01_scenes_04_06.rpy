@@ -87,6 +87,7 @@ label ch01_scene_04_pool_arrival:
     else:
         scene cg ch01_pool_hand_pull_white
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
     $ lc_sfx_loop_stop(0.3)
 
     $ lc_flash("#e6f6ff", 0.45, 0.5)
@@ -161,6 +162,7 @@ label ch01_scene_05_photography:
     else:
         scene cg ch01_photo_awkward_a
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "Her first attempt looked less like a holiday photograph and more like evidence for a passport renewal."
 

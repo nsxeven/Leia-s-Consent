@@ -19,6 +19,7 @@ label ch01_scene_07_did_he_see:
     $ enter_cinematic_mode()
     scene cg ch01_towel_did_he_see
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "She watched my reflection instead of looking at me directly."
 
@@ -360,6 +361,7 @@ label ch01_scene_09_dinner:
     $ enter_cinematic_mode()
     scene cg ch01_dinner_sticky_bra
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     gf "Babe."
     mc "Mm?"
@@ -426,6 +428,7 @@ label ch01_scene_09_dinner:
     $ enter_cinematic_mode()
     scene cg ch01_dinner_restroom_return_01
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "On her way back from the restroom, another man slowed as he passed her in the corridor."
 
@@ -599,7 +602,7 @@ label ch01_scene_11_walk_and_catch:
     with dissolve
 
     $ lc_sfx("stumble")
-    $ lc_sfx("leia_scream", 0.7)
+    $ lc_sfx("leia_gasp")  # darryn: she gasps as she trips, before the catch
     "Her heel caught the edge of the path." with lc_shake("m")
     $ lc_sfx("catch_thud")
     "[friend_name] reacted before I did, catching her around the waist and upper body before she hit the ground."
@@ -608,6 +611,7 @@ label ch01_scene_11_walk_and_catch:
 
     scene cg ch01_trip_catch_followup
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     mc "Maya, I'll call you back. [girlfriend_name] just tripped."
     phone_friend "Is she okay?"
@@ -931,6 +935,7 @@ label ch01_scene_13_back_at_villa:
 
     scene cg ch01_carry_dress_shift
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "As [girlfriend_name] relaxed against his supporting arm, the dress shifted lower on one side."
     "From where [friend_name] was carrying her, he could see the problem. With one arm behind her back and the other under her knees, he had no free hand to fix it without risking dropping her."
@@ -1021,6 +1026,7 @@ label ch01_scene_13_back_at_villa:
     $ enter_cinematic_mode()
     scene cg ch01_sofa_half_asleep_night
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "[friend_name] lowered her onto the sofa. [girlfriend_name] curled straight into the cushions, eyes already drifting shut again."
 

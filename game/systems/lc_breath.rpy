@@ -48,12 +48,15 @@ init python:
         pool = [f for f in levels[level] if f != last] or levels[level]
         return renpy.random.choice(pool)
 
-    def lc_breath_sequence(intensity=1, moans=True, length=28):
+    def lc_breath_sequence(intensity=1, moans=True, length=28, moan_chance=None, pause=None):
         intensity = max(1, int(intensity))
-        moan_chance = 0.0 if not moans else min(0.65, 0.12 + 0.17 * (intensity - 1))
-        if intensity == 1 and moans:
-            moan_chance = 0.12
-        pause_lo, pause_hi = {1: (1.2, 2.6), 2: (0.7, 1.8), 3: (0.35, 1.1)}.get(intensity, (0.2, 0.7))
+        if moan_chance is None:
+            moan_chance = 0.0 if not moans else min(0.65, 0.12 + 0.17 * (intensity - 1))
+            if intensity == 1 and moans:
+                moan_chance = 0.12
+        elif not moans:
+            moan_chance = 0.0
+        pause_lo, pause_hi = pause or {1: (1.2, 2.6), 2: (0.7, 1.8), 3: (0.35, 1.1)}.get(intensity, (0.2, 0.7))
         out, last, moans_in_row = [], None, 0
         for _ in range(length):
             if moans_in_row < 2 and renpy.random.random() < moan_chance:
@@ -69,8 +72,9 @@ init python:
             out.append("<silence %.2f>" % renpy.random.uniform(pause_lo, pause_hi))
         return out
 
-    def lc_breath_start(intensity=1, moans=True, fadein=0.6, volume=1.0):
-        seq = lc_breath_sequence(intensity, moans)
+    def lc_breath_start(intensity=1, moans=True, fadein=0.6, volume=1.0, moan_chance=None, pause=None):
+        """moan_chance / pause=(lo, hi) override the intensity defaults (e.g. a dense, moan-heavy beat)."""
+        seq = lc_breath_sequence(intensity, moans, moan_chance=moan_chance, pause=pause)
         if not any(not s.startswith("<") for s in seq):
             return None
         renpy.music.play(seq, channel="lc_breath", loop=True, fadein=fadein,
@@ -84,5 +88,20 @@ init python:
             renpy.music.play(f, channel="lc_breath", loop=False, relative_volume=LC_BREATH_GAIN * volume)
         return f
 
+    def lc_moan_once(intensity=2, volume=1.0):
+        """One random moan on the voice-clip channel, so a running breath loop keeps going."""
+        f = _lc_breath_pick("moan", max(1, int(intensity)), None)
+        if f:
+            renpy.music.play(f, channel="lc_voice", loop=False, relative_volume=LC_BREATH_GAIN * volume)
+        return f
+
+    def lc_inhale_over(intensity=1, volume=1.0):
+        """One random inhale on the voice-clip channel (layered over a running loop)."""
+        f = _lc_breath_pick("inhale", max(1, int(intensity)), None)
+        if f:
+            renpy.music.play(f, channel="lc_voice", loop=False, relative_volume=LC_BREATH_GAIN * volume)
+        return f
+
     def lc_breath_stop(fadeout=1.2):
+        renpy.music.stop(channel="lc_voice", fadeout=min(fadeout, 0.3))
         renpy.music.stop(channel="lc_breath", fadeout=fadeout)
