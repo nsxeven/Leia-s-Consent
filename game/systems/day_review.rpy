@@ -853,7 +853,8 @@ init 20 python:
         if kwargs.get("layer", "master") == "master" and not getattr(store, "_main_menu", False):
             lc_review_record_image(name)
             if entering and getattr(persistent, "lc_title_badges", False):
-                titles = lc_character_titles()
+                # Equipped tags win (systems/lc_tag_collection.rpy).
+                titles = lc_current_titles() if "lc_current_titles" in globals() else lc_character_titles()
                 title = titles[1 if character_id == "leia" else 0]
                 if title:
                     renpy.show_screen("lc_title_badge", character_id, title)

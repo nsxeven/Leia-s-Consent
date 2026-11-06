@@ -112,7 +112,7 @@ screen status_screen():
                             text "[leia_overview_text()]" size 20 color "#3b2a30" line_spacing 4
 
                     if persistent.lc_title_style != "off":
-                        $ lc_status_titles = lc_character_titles()
+                        $ lc_status_titles = lc_current_titles()
                         text (player_name + " · " + lc_status_titles[0]) size 21 color "#cc0066" substitute False
                         text (girlfriend_name + " · " + lc_status_titles[1]) size 21 color "#cc0066" substitute False
                     if lc_review_latest():
