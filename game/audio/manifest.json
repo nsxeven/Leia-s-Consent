@@ -121,14 +121,16 @@
    "file": "sfx/phone_notify.ogg",
    "kind": "sfx",
    "status": "synth",
-   "duration": 0.65,
+   "duration": 1.05,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
-   "peak_dbfs": -15.0,
-   "source": "synthesised by Leia's Consent team",
-   "processing": "synth: soft bell chime E6 -> B5 (partials 1, 2, 2.76, 5.4), 0.65 s; signature notification; peak-normalised -3 dBFS before balance; balanced -12.2 dB (cap -8 dB vs splash_big)"
+   "source": {
+    "provided_by": "darryn (project developer), 'Text Notification.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silent tail trimmed (first 1.05 s kept), peak -14 dBFS, 60 ms fade-out, 44.1 kHz; replaces the earlier synthesised chime"
   },
   {
    "name": "sfx/crowd_ooh",
@@ -1111,14 +1113,16 @@
    "file": "ui/notify.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.65,
+   "duration": 1.05,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
-   "peak_dbfs": -16.2,
-   "source": "synthesised by Leia's Consent team",
-   "processing": "synth: same E6 -> B5 chime as sfx/phone_notify, mixed quieter for UI channel; peak -13 dBFS (<= -12 after encode), momentary loudness capped at -26.0 LUFS"
+   "source": {
+    "provided_by": "darryn (project developer), 'Text Notification.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silent tail trimmed (first 1.05 s kept), peak -14 dBFS, 60 ms fade-out, 44.1 kHz; replaces the earlier synthesised chime"
   },
   {
    "name": "ui/message_pop",
