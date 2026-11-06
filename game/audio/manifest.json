@@ -2113,6 +2113,22 @@
     "license": "supplied by the project owner"
    },
    "processing": "leading silence removed, levelled to about -24 LUFS, peak-limited (source clipped at +3 dBFS), edge fades; loops under the sunscreen-apply CG"
+  },
+  {
+   "name": "sfx/thump",
+   "file": "sfx/thump.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.075011,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Thump.m4a'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "leading silence removed, peak-normalised to -4 dBFS (source clipped), 40 ms fade-out"
   }
  ],
  "secondary_sources": [

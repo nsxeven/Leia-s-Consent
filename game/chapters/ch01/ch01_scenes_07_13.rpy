@@ -255,7 +255,9 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_photo_ask
     with dissolve
 
-    "[girlfriend_name] turned straight into him."
+    # First collision (DinnerPhotoAsk): shake + darryn's thump.
+    $ lc_sfx("thump")
+    "[girlfriend_name] turned straight into him." with lc_shake("m")
 
     scene cg ch01_dinner_spill_01
     with dissolve
