@@ -1366,6 +1366,23 @@
     "synth": "in-house (scratch/sfx/make_hover.py, option F): 520 Hz muted tone + short band-noise tap",
     "license": "original work, owned by the project"
    }
+  },
+  {
+   "name": "amb/crowd",
+   "file": "amb/crowd.ogg",
+   "kind": "ambience",
+   "status": "ok",
+   "duration": 87.8,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": true,
+   "peak_dbfs": -18.2,
+   "source": {
+    "provided_by": "darryn (project developer), 'Muffled Chatter.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "0.5 s trimmed from each end, 40 Hz high-pass, 3 s crossfade loop seam (0.2 dB), levelled to -30 LUFS; used for party, restaurant and bar (crowded places)"
   }
  ],
  "secondary_sources": [
