@@ -41,6 +41,7 @@ label ch01_scene_13b_night_pool:
     gf "Four years ago. You don't get lifetime credit."
     friend "I absolutely do."
 
+    $ lc_sfx("leia_laugh")
     "[girlfriend_name] laughed and moved to sit along the edge of the pool, bare feet just above the water."
     $ lc_sfx("ice_clink")
     "[friend_name] topped up his whisky and wandered over to sit on the edge beside her, feet in the water."
@@ -742,6 +743,7 @@ label ch01_scene_23_relationship_philosophy:
             mc "Someone noticing you doesn't mean I'm losing you."
             gf "And if I noticed them noticing?"
             mc "Still depends what you do with it."
+            $ lc_sfx("leia_laugh", 0.6)
             "[girlfriend_name] laughed softly, but she was clearly thinking about the answer."
 
         "[ch01_philosophy_dont_care_text]":
@@ -1162,6 +1164,7 @@ label ch01_scene_30_end_day_one:
         set_story_flag("ch01_breakfast_reply_pending")
         clear_story_flag("ch01_breakfast_phone_session_active")
 
+    $ lc_sfx("leia_laugh", 0.6)
     "[girlfriend_name] checked the same message on her phone and laughed quietly."
 
     gf "He's dramatic."

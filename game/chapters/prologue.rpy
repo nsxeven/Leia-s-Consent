@@ -240,6 +240,7 @@ label prologue_start:
     "It was not smooth."
     "Our noses nearly collided. Somebody laughed before we'd even figured out the angle." with lc_shake("s")
     friend "Oh my God, just kiss already."
+    $ lc_sfx("leia_laugh")
     "[girlfriend_name] laughed."
 
     scene cg prologue_first_kiss_03

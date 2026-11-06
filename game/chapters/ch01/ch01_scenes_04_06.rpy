@@ -182,6 +182,7 @@ label ch01_scene_05_photography:
     gf "I don't know what to do with my hands."
     mc "You normally have hands. What changed?"
 
+    $ lc_sfx("leia_laugh")
     "She laughed despite herself."
 
     friend "Shift your weight onto one leg. Turn a little toward the water."
@@ -220,6 +221,7 @@ label ch01_scene_05_photography:
             $ enter_cinematic_mode()
 
             "This time she stopped posing long enough to enjoy herself."
+            $ lc_sfx("leia_laugh")
             "She turned beside the pool, then looked back when I made her laugh."
             "The camera caught the smile before she could replace it with something practiced."
 
