@@ -75,7 +75,7 @@ label ch01_scene_04_pool_arrival:
     $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
     $ lc_sfx_loop("sunscreen_rub")  # darryn's Squishing Squirt, while he rubs it in
 
-    "I worked the sunscreen across her shoulders and down the centre of her back."
+    "I worked the sunscreen across her shoulders and down the center of her back."
     "When my hands slowed near her waist, she looked back at me."
 
     gf "You are taking suspiciously long."
@@ -118,7 +118,7 @@ label ch01_scene_05_photography:
     with dissolve
     $ lc_amb("pool_day")
 
-    "Eventually, [girlfriend_name] decided the afternoon required photographic evidence."
+    "Eventually, [girlfriend_name] commandeered [friend_name]'s phone and decided the afternoon required photographic evidence."
     $ lc_photo()
     "Her first group selfie caught me blinking and [friend_name] looking as if he had been summoned against his will."
 
@@ -398,7 +398,7 @@ label ch01_scene_05_photography:
     friend "You enjoyed the villa."
     gf "I can enjoy it and still make fun of you."
 
-    "She looked at me, amused."
+    "She looked at [friend_name], amused."
 
     gf "Four years, and I still can't decide if you're charming or a problem."
     friend "Careful. That's almost nice."

@@ -50,7 +50,7 @@ class TitleCustomiserTests(unittest.TestCase):
         screen = (GAME / "screens" / "title_screen.rpy").read_text(encoding="utf-8")
         self.assertIn("lc_title_bg_now()", screen)
         self.assertIn("lc_title_leia_now()", screen)
-        self.assertIn('use lc_title_item("Customise"', screen)
+        self.assertIn('use lc_title_item("Customize"', screen)
         self.assertIn("use lc_title_customiser(", screen)
         for name in ("panel.png", "logo_sheen.png"):
             self.assertTrue((GAME / "gui" / "title" / name).is_file(), name)

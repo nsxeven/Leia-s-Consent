@@ -32,7 +32,7 @@ label ch01_scene_27_late_photo_drop_staged:
             text=("Almost forgot our first group selfie." if ch01_late_group_only else "Forgot this one. Photographer of the year strikes again."),
             message_id="ch01_trip_group_late_pool_photo",
             attachment_id=ch01_late_photo_asset,
-            attachment_label=("First group selfie" if ch01_late_group_only else "Unsent pool favourite"),
+            attachment_label=("First group selfie" if ch01_late_group_only else "Unsent pool favorite"),
             mark_unread=True,
             notify=True,
             notification_title="Trip Group",

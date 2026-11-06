@@ -344,7 +344,7 @@ screen lc_title_front(slot):
         use lc_title_item("New Game", Start(), "load")
         use lc_title_item("Load", ShowMenu("load"))
         use lc_title_item("Gallery", ShowMenu("gallery_screen"))
-        use lc_title_item("Customise", SetDict(lc_title_ui, "editing", True))
+        use lc_title_item("Customize", SetDict(lc_title_ui, "editing", True))
         use lc_title_item("Settings", ShowMenu("preferences"))
         use lc_title_item("Extras", ToggleDict(lc_title_ui, "extras"))
         if lc_title_ui["extras"]:

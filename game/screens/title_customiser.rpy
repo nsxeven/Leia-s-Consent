@@ -79,7 +79,7 @@ screen lc_title_customiser(tab):
             spacing 14
             hbox:
                 xfill True
-                text "Customise title screen" font "fonts/Fredoka-SemiBold.ttf" size 34 color "#ffffff"
+                text "Customize title screen" font "fonts/Fredoka-SemiBold.ttf" size 34 color "#ffffff"
             hbox:
                 spacing 10
                 use lc_tc_tab("Background", "background", tab)
