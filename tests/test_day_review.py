@@ -309,7 +309,12 @@ class DayReviewTests(unittest.TestCase):
         self.assertIn('StaticValue(min(row["yesterday"], row["today"]), 100.0)', screen)
         self.assertNotIn('% 2 == 0', screen)  # the old 20 Hz flash strobe
         self.assertTrue((ROOT / 'game' / 'images' / 'ui' / 'scrapbook' / 'bar_loss_red.png').is_file())
-        self.assertIn('SetScreenVariable("skipped", True)', screen)
+        self.assertIn('if lc_review_hold_skipped():', screen)  # only the SPACE hold skips
+        self.assertIn('keyup_K_SPACE', screen)
+        self.assertIn('Function(lc_review_hold_tick)', screen)
+        self.assertIn('action NullAction()', screen)  # clicks never skip
+        self.assertNotIn('Return("skip")', screen)  # the night card no longer skips the scrapbook
+        self.assertIn('LC_REVIEW_HOLD_SKIP', review)
         self.assertIn('screen lc_review_night_screen', screen)
         self.assertIn('call screen lc_review_night_screen', review)
         self.assertIn('def lc_review_sfx', review)

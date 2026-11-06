@@ -1,6 +1,7 @@
 # End-of-day scrapbook. Pixel chrome is pre-scaled 3x (nearest) in
 # game/images/ui/scrapbook. Handwriting stays smooth Caveat on top.
-# A click sets `skipped` and every drop, flash and tick snaps to the end.
+# Clicks never skip. Holding SPACE (LC_REVIEW_HOLD_SKIP s) sets `skipped` and
+# every drop, flash and tick snaps to the end.
 
 transform lc_night_in:
     alpha 0.0
@@ -258,10 +259,10 @@ screen lc_review_night_screen(day_id):
     $ ch = lc_px(LC_REVIEW_NIGHT_CARD[3])
 
     timer 3.2 action Return("next")
-    key "K_SPACE" action Return("skip")
-    key "K_RETURN" action Return("skip")
-    key "K_ESCAPE" action Return("skip")
-    key "K_KP_ENTER" action Return("skip")
+    key "K_SPACE" action Return("next")
+    key "K_RETURN" action Return("next")
+    key "K_ESCAPE" action Return("next")
+    key "K_KP_ENTER" action Return("next")
 
     fixed at lc_night_in:
         add "images/ui/scrapbook/night.png"
@@ -287,7 +288,7 @@ screen lc_review_night_screen(day_id):
         background None
         hover_background None
         padding (0, 0)
-        action Return("skip")
+        action Return("next")
 
 
 screen lc_review_tag(who, title):
@@ -407,15 +408,25 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
     $ route_label = LC_REVIEW_ROUTES.get(record.get("route"), LC_REVIEW_ROUTES["mixed"])[0]
     $ leave = Hide("lc_review_history_screen") if replay else Return()
 
-    if not skipped:
-        key "K_SPACE" action SetScreenVariable("skipped", True)
+    default holding = False
+    on "show" action Function(lc_review_hold_reset)
+    # A completed SPACE hold finishes everything (same path as replay/animation-off).
+    if lc_review_hold_skipped():
+        $ skipped = True
+    $ animating = (not skipped) and seq_phase != "done_all"
+
+    if animating:
+        key "keydown_K_SPACE" action [SetScreenVariable("holding", True), Function(lc_review_hold_down)]
+        key "keyup_K_SPACE" action [SetScreenVariable("holding", False), Function(lc_review_hold_up)]
+        if holding:
+            timer 0.05 repeat True action Function(lc_review_hold_tick)
     else:
-        key "K_SPACE" action leave
+        key "keydown_K_SPACE" action Function(lc_review_hold_arm)
+        key "keyup_K_SPACE" action If(lc_review_hold_armed(), leave, Function(lc_review_hold_up))
+        key "K_ESCAPE" action leave
+        key "K_RETURN" action leave
 
-    key "K_ESCAPE" action leave
-    key "K_RETURN" action leave
-
-    # Clicks that miss a real button skip the drops and the bars.
+    # Clicks never skip (darryn): this catcher just swallows stray clicks.
     button:
         xpos 0
         ypos 0
@@ -424,7 +435,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
         background None
         hover_background None
         padding (0, 0)
-        action If(skipped, NullAction(), SetScreenVariable("skipped", True))
+        action NullAction()
 
     add "images/ui/scrapbook/spread.png" at (lc_spread_still if skipped else lc_spread_in)
 
@@ -516,6 +527,8 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                 timer LC_REVIEW_BAR_GLOW action [SetScreenVariable("seq_i", seq_i + 1), SetScreenVariable("seq_phase", "run"), Function(lc_review_anim_begin, bars[seq_i + 1]["stat"])]
             else:
                 timer LC_REVIEW_BAR_GLOW action SetScreenVariable("seq_phase", "done_all")
+    elif (not skipped) and seq_phase == "lead":
+        timer lc_review_bars_lead(len(cards)) action SetScreenVariable("seq_phase", "done_all")
 
     fixed:
         xpos lc_px(336)
@@ -643,10 +656,16 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
         ysize 48
         add Frame("images/ui/scrapbook/keycap.png", 9, 9, 9, 9) xysize (144, 48)
         text "SPACE" style "lc_pixel" size 24 color "#cdb9a8" align (0.5, 0.5)
+        if animating and holding:
+            add Solid("#e8a0b4") xpos 8 ypos 40 ysize 4 xsize max(1, int(128 * lc_review_hold_progress()))
 
-    add "images/ui/scrapbook/continue.png" xpos 1472 ypos 988
-    text ("CLOSE" if replay else "CONTINUE") xpos 1536 ypos 1006 style "lc_pixel_bold" size 24 color "#fff3f7"
-    add "images/ui/scrapbook/continue_arrow.png" xpos 1720 ypos 1010
+    if animating:
+        text "HOLD TO SKIP" style "lc_pixel" size 18 color "#cdb9a8" xanchor 1.0 xpos 1296 ypos 1010
+
+    $ continue_alpha = 0.45 if animating else 1.0
+    add "images/ui/scrapbook/continue.png" xpos 1472 ypos 988 alpha continue_alpha
+    text ("CLOSE" if replay else "CONTINUE") xpos 1536 ypos 1006 style "lc_pixel_bold" size 24 color "#fff3f7" at Transform(alpha=continue_alpha)
+    add "images/ui/scrapbook/continue_arrow.png" xpos 1720 ypos 1010 alpha continue_alpha
     button:
         xpos 1472
         ypos 988
@@ -654,7 +673,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
         background None
         hover_background None
         padding (0, 0)
-        action leave
+        action If(animating, NullAction(), leave)
 
 
 screen lc_review_settings():

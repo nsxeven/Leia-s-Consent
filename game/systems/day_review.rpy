@@ -405,7 +405,7 @@ init 20 python:
         return grid + [slot(118, 214, tilts[4], ("corner_flip",))]
 
     def lc_review_photo_delay(index):
-        return 0.30 + index * 0.42
+        return 0.45 + index * 0.70
 
     def lc_review_photo_land(index):
         return lc_review_photo_delay(index) + 0.34
@@ -413,14 +413,61 @@ init 20 python:
     def lc_review_bars_lead(photo_count):
         if photo_count <= 0:
             return 0.35
-        return lc_review_photo_land(photo_count - 1) + 0.16
+        return lc_review_photo_land(photo_count - 1) + 0.45
 
     # Bars run strictly one after another (darryn): each bar finishes, glows,
     # then the next starts. LC_REVIEW_BAR_GAP is the beat between bars after
     # the glow (the live sequencer uses flash/glow, then advances).
-    LC_REVIEW_BAR_RUN = 0.55
-    LC_REVIEW_BAR_GAP = 0.15
-    LC_REVIEW_BAR_GLOW = 0.45
+    # Slower pacing (darryn: the review felt too quick).
+    LC_REVIEW_BAR_RUN = 1.0
+    LC_REVIEW_BAR_GAP = 0.3
+    LC_REVIEW_BAR_GLOW = 0.6
+
+    # Clicks never skip the review (darryn). Holding SPACE for
+    # LC_REVIEW_HOLD_SKIP seconds finishes every drop and bar; a fresh SPACE
+    # press (or Enter/Esc/Continue) then leaves once everything has landed.
+    # All helpers return None: they run as screen actions, and a non-None
+    # return would end `call screen`.
+    LC_REVIEW_HOLD_SKIP = 0.6
+    _lc_review_hold = {"t": None, "fired": False, "armed": False, "skip": False}
+
+    def lc_review_hold_reset():
+        _lc_review_hold.update(t=None, fired=False, armed=False, skip=False)
+
+    def lc_review_hold_skipped():
+        return _lc_review_hold["skip"]
+
+    def lc_review_hold_down():
+        import time
+        if _lc_review_hold["t"] is None:
+            _lc_review_hold["t"] = time.time()
+
+    def lc_review_hold_up():
+        _lc_review_hold.update(t=None, fired=False, armed=False)
+
+    def lc_review_hold_progress():
+        import time
+        t = _lc_review_hold["t"]
+        if t is None:
+            return 0.0
+        return min(1.0, (time.time() - t) / LC_REVIEW_HOLD_SKIP)
+
+    def lc_review_hold_tick():
+        # Runs every 0.05 s while SPACE is held; the restart it triggers
+        # re-evaluates the screen so the progress bar and the skip check update.
+        if _lc_review_hold["t"] is not None and not _lc_review_hold["fired"] and lc_review_hold_progress() >= 1.0:
+            _lc_review_hold["fired"] = True
+            _lc_review_hold["skip"] = True   # the screen reads this and sets `skipped`
+        return None
+
+    def lc_review_hold_arm():
+        # Only a press that starts after the animation finished may leave,
+        # so the hold that skipped doesn't also close the review on release.
+        if _lc_review_hold["t"] is None:
+            _lc_review_hold["armed"] = True
+
+    def lc_review_hold_armed():
+        return _lc_review_hold["armed"]
 
     def lc_review_bar_timing(index, photo_count, bar_count):
         """Legacy (start, duration) for tests. The live screen uses a single
