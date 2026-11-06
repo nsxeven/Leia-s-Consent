@@ -641,14 +641,16 @@ init 20 python:
         Otherwise fall back to the UI sound kit (a bar settling -> ui/bar, a
         polaroid landing -> ui/polaroid). A missing file is silent, so the hook
         is safe to call when a polaroid lands or a bar settles.
+        Always returns None: it runs as a screen-timer Function action, and
+        any non-None return would end `call screen` and close the review.
         """
         try:
             for ext in (".ogg", ".wav"):
                 path = "audio/sfx/review_{}{}".format(name, ext)
                 if renpy.loadable(path):
                     renpy.sound.play(path)
-                    return path
-            return lc_ui_sound(LC_REVIEW_UI_FALLBACK.get(name, name))
+                    return None
+            lc_ui_sound(LC_REVIEW_UI_FALLBACK.get(name, name))
         except Exception:
             return None
         return None
