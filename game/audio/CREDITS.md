@@ -59,7 +59,7 @@ Synthesised by the Leia's Consent team (numpy, `build_assets.py`); fully owned b
 
 Processing: trimmed, faded, loudness-balanced and encoded to OGG Vorbis 44.1 kHz. Ambience beds and music are seamless loops. See `manifest.json` for per-file notes.
 
-Name-card typing sounds `ui/key_1`..`ui/key_4`, `ui/key_back`, `ui/key_enter`: synthesised in-house (original work, no third-party source).
+Name-card typing sounds `ui/key_1`..`ui/key_6`, `ui/key_back`, `ui/key_enter`: cut from [Keyboard single key presses.wav](https://freesound.org/people/5ro4/sounds/609534/) (#609534) by 5ro4, CC0 1.0.
 
 Polaroid hover sound `ui/tock`: synthesised in-house (original work, no third-party source).
 

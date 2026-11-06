@@ -6,10 +6,10 @@
 ## itself, so the screen also gives it `action Function(lc_input_submit)`,
 ## which returns the typed text (plus any IME text still being composed),
 ## exactly what renpy.input() returned before.
-## Sounds are self-made (game/audio/ui/key_*.ogg) and follow the UI volume slider.
+## Sounds are real key presses (Freesound #609534, CC0; game/audio/ui/key_*.ogg) and follow the UI volume slider.
 
 init python:
-    LC_TYPING_KEYS = ("key_1", "key_2", "key_3", "key_4")
+    LC_TYPING_KEYS = ("key_1", "key_2", "key_3", "key_4", "key_5", "key_6")
     _lc_typing = {"last": None, "n": 0}
 
     def lc_input_reset():
