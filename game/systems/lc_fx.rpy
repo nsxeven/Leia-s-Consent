@@ -21,15 +21,20 @@
 #     $ lc_duck() / lc_unduck()        dip / restore the music and ambience
 #     lc_ui_sound("tap")               game/audio/ui/<name>.ogg on the "ui" channel
 #
-# Settings: Preferences gets SCREEN SHAKE and CAMERA FLASH toggles and
-# AMBIENCE / UI SOUNDS sliders (mixers "ambience" and "ui").
+# Settings: Preferences gets SCREEN SHAKE and CAMERA FLASH toggles and three
+# volume sliders (darryn): BGM (music mixer), SFX (sfx mixer: story sounds,
+# looping sounds, ambience and UI sounds) and VOICE (voice mixer: Leia's
+# breaths plus every character vocal clip in LC_VOICE_SFX).
 
 default persistent.lc_screen_shake = True
 default persistent.lc_camera_flash = True
 
 init -10 python:
-    renpy.music.register_channel("ambience", mixer="ambience", loop=True, stop_on_mute=True, tight=True)
-    renpy.music.register_channel("ui", mixer="ui", loop=False, stop_on_mute=True)
+    # Ambience and UI sounds follow the SFX slider.
+    renpy.music.register_channel("ambience", mixer="sfx", loop=True, stop_on_mute=True, tight=True)
+    renpy.music.register_channel("ui", mixer="sfx", loop=False, stop_on_mute=True)
+    # Character vocal clips (laughs, sighs, gasps...) follow the VOICE slider.
+    renpy.music.register_channel("lc_voice", mixer="voice", loop=False, stop_on_mute=True)
     # Looping story sound under a beat (e.g. sunscreen being rubbed in); Sound slider.
     renpy.music.register_channel("sfx_loop", mixer="sfx", loop=True, stop_on_mute=True)
 
@@ -109,10 +114,17 @@ init -2 python:
 
     # ----------------------------------------------------------------- audio
 
+    # Vocal clips stored under audio/sfx/ that are people's voices, not sounds.
+    LC_VOICE_SFX = frozenset((
+        "leia_angry_laugh", "leia_giggle", "leia_grunt", "leia_laugh", "leia_scream", "leia_sigh",
+        "gasp_wake",
+    ))
+
     def lc_sfx(name, volume=1.0):
         path = lc_audio_path("sfx", name)
         if path:
-            renpy.music.play(path, channel="audio", relative_volume=lc_audio_gain("sfx", name, volume))
+            channel = "lc_voice" if name in LC_VOICE_SFX else "audio"
+            renpy.music.play(path, channel=channel, relative_volume=lc_audio_gain("sfx", name, volume))
         return path
 
     def lc_amb(name, volume=1.0, fadein=1.5, fadeout=1.5):

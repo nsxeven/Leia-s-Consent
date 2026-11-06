@@ -847,13 +847,14 @@ screen preferences():
                 null height 8
                 use lc_pref_slider("TEXT SPEED", Preference("text speed"), "gui/scrapbook/bar_pink.png", ("MAX" if preferences.text_cps == 0 else "%d" % preferences.text_cps))
                 use lc_pref_slider("AUTO-FORWARD", Preference("auto-forward time"), "gui/scrapbook/bar_teal.png", "%d" % preferences.afm_time)
+                # Three volume groups (darryn): BGM, SFX (story sounds, ambience,
+                # UI) and VOICE (Leia's breaths and every vocal clip).
                 if config.has_music:
-                    use lc_pref_slider("MUSIC", Preference("music volume"), "gui/scrapbook/bar_purple.png", "%d%%" % int(preferences.get_volume("music") * 100))
+                    use lc_pref_slider("BGM", Preference("music volume"), "gui/scrapbook/bar_purple.png", "%d%%" % int(preferences.get_volume("music") * 100))
                 if config.has_sound:
-                    use lc_pref_slider("SOUND", Preference("sound volume"), "gui/scrapbook/bar_gold.png", "%d%%" % int(preferences.get_volume("sound") * 100))
-                if config.has_sound:
-                    use lc_pref_slider("AMBIENCE", Preference("mixer ambience volume"), "gui/scrapbook/bar_teal.png", "%d%%" % int(preferences.get_volume("ambience") * 100))
-                    use lc_pref_slider("UI SOUNDS", Preference("mixer ui volume"), "gui/scrapbook/bar_grey.png", "%d%%" % int(preferences.get_volume("ui") * 100))
+                    use lc_pref_slider("SFX", Preference("sound volume"), "gui/scrapbook/bar_gold.png", "%d%%" % int(preferences.get_volume("sfx") * 100))
+                if config.has_voice:
+                    use lc_pref_slider("VOICE", Preference("voice volume"), "gui/scrapbook/bar_teal.png", "%d%%" % int(preferences.get_volume("voice") * 100))
                 textbutton _("MUTE ALL") action Preference("all mute", "toggle") style "lc_check_button" text_style "lc_check_text"
 
             vbox:

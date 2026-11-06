@@ -27,8 +27,9 @@ class EffectsFoundationTests(unittest.TestCase):
             self.assertIn(name, FX)
         self.assertIn("default persistent.lc_screen_shake = True", FX)
         self.assertIn("default persistent.lc_camera_flash = True", FX)
-        self.assertIn('register_channel("ambience", mixer="ambience"', FX)
-        self.assertIn('register_channel("ui", mixer="ui"', FX)
+        self.assertIn('register_channel("ambience", mixer="sfx"', FX)  # SFX slider
+        self.assertIn('register_channel("ui", mixer="sfx"', FX)
+        self.assertIn('register_channel("lc_voice", mixer="voice"', FX)  # VOICE slider
 
     def test_effects_respect_the_toggles(self):
         self.assertRegex(FX, r"def lc_shake\(.*\n(.*\n){0,2}\s+if not persistent\.lc_screen_shake:\n\s+return None")
@@ -40,8 +41,17 @@ class EffectsFoundationTests(unittest.TestCase):
         prefs = ui.split("screen preferences():", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn('ToggleField(persistent, "lc_screen_shake")', prefs)
         self.assertIn('ToggleField(persistent, "lc_camera_flash")', prefs)
-        self.assertIn('Preference("mixer ambience volume")', prefs)
-        self.assertIn('Preference("mixer ui volume")', prefs)
+        for label, pref in (("BGM", "music volume"), ("SFX", "sound volume"), ("VOICE", "voice volume")):
+            self.assertIn('lc_pref_slider("%s", Preference("%s")' % (label, pref), prefs)
+        self.assertNotIn("mixer ambience volume", prefs)
+
+    def test_vocal_clips_route_to_voice(self):
+        import re
+        voices = set(re.findall(r'"([a-z_]+)"', FX.split("LC_VOICE_SFX = frozenset((", 1)[1].split("))", 1)[0]))
+        sfx = {p.stem for p in (GAME / "audio" / "sfx").glob("*.ogg")}
+        self.assertTrue(voices <= sfx, voices - sfx)
+        self.assertTrue({s for s in sfx if s.startswith("leia_")} <= voices)
+        self.assertIn('channel = "lc_voice" if name in LC_VOICE_SFX else "audio"', FX)
 
     def test_prologue_and_day1_use_the_setting_aware_shakes(self):
         for name, src in STORY.items():
