@@ -421,6 +421,7 @@ label ch01_scene_09_dinner:
 
     "On her way back from the restroom, another man slowed as he passed her in the corridor."
 
+    $ lc_sfx("cat_call")  # darryn: as the passerby compliments her
     passerby "Excuse me—just had to say that dress looks incredible on you."
 
     "[girlfriend_name] blinked, caught off guard."
