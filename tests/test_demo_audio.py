@@ -45,7 +45,7 @@ class DemoAudioTests(unittest.TestCase):
 
     def test_restaurant_has_chatter_and_soft_music(self):
         src = (GAME / "chapters" / "ch01" / "ch01_scenes_07_13.rpy").read_text(encoding="utf-8")
-        self.assertIn('lc_amb("crowd")', src)  # darryn's crowd chatter for busy places
+        self.assertIn('lc_amb("restaurant")', src)  # darryn's restaurant recording
         self.assertIn('lc_music("lounge_piano")', src)
         self.assertIn("lc_music_stop()", src)
 
