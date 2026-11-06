@@ -405,7 +405,7 @@ init 20 python:
         return grid + [slot(118, 214, tilts[4], ("corner_flip",))]
 
     def lc_review_photo_delay(index):
-        return 0.45 + index * 0.70
+        return 0.25 + index * 0.35
 
     def lc_review_photo_land(index):
         return lc_review_photo_delay(index) + 0.34
@@ -413,15 +413,15 @@ init 20 python:
     def lc_review_bars_lead(photo_count):
         if photo_count <= 0:
             return 0.35
-        return lc_review_photo_land(photo_count - 1) + 0.45
+        return lc_review_photo_land(photo_count - 1) + 0.20
 
     # Bars run strictly one after another (darryn): each bar finishes, glows,
     # then the next starts. LC_REVIEW_BAR_GAP is the beat between bars after
     # the glow (the live sequencer uses flash/glow, then advances).
-    # Slower pacing (darryn: the review felt too quick).
-    LC_REVIEW_BAR_RUN = 1.0
-    LC_REVIEW_BAR_GAP = 0.3
-    LC_REVIEW_BAR_GLOW = 0.6
+    # Pacing (darryn): about 2x faster than PR #104, ~3.7 s for 3 photos + 3 bars.
+    LC_REVIEW_BAR_RUN = 0.45
+    LC_REVIEW_BAR_GAP = 0.15
+    LC_REVIEW_BAR_GLOW = 0.28
 
     # Clicks never skip the review (darryn). Holding SPACE for
     # LC_REVIEW_HOLD_SKIP seconds finishes every drop and bar; a fresh SPACE
