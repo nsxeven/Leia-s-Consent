@@ -2199,6 +2199,70 @@
     "license": "supplied by the project owner"
    },
    "processing": "peak -9 dBFS, 80 ms fade-out, 44.1 kHz; Leia's soft/held-back giggles"
+  },
+  {
+   "name": "sfx/leia_sigh",
+   "file": "sfx/leia_sigh.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 2.563878,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Sigh.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's sigh"
+  },
+  {
+   "name": "sfx/leia_scream",
+   "file": "sfx/leia_scream.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 0.893311,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Scream.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's short scream (trip on the walk back)"
+  },
+  {
+   "name": "sfx/leia_angry_laugh",
+   "file": "sfx/leia_angry_laugh.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.696395,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Strained Angry Laugh.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's exasperated laugh"
+  },
+  {
+   "name": "sfx/leia_grunt",
+   "file": "sfx/leia_grunt.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 0.751497,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Grunting.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's grunt ('I wasn't worried.')"
   }
  ],
  "secondary_sources": [

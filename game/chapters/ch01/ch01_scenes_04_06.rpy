@@ -516,6 +516,7 @@ label ch01_scene_06_friendship_and_towel:
     with dissolve
 
     friend "I'm looking at the water."
+    $ lc_sfx("leia_angry_laugh")
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
     mc "Just go inside."

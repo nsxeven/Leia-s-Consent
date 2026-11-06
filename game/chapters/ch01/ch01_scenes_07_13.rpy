@@ -345,6 +345,7 @@ label ch01_scene_09_dinner:
     $ face("leia", "angry")
     gf "Not one word."
     mc "We didn't even get the photo."
+    $ lc_sfx("leia_angry_laugh")
     gf "I hate both of you."
 
     "Most of the drink came off the fabric. The problem was what had gotten underneath it."
@@ -591,6 +592,7 @@ label ch01_scene_11_walk_and_catch:
     with dissolve
 
     $ lc_sfx("stumble")
+    $ lc_sfx("leia_scream", 0.7)
     "Her heel caught the edge of the path." with lc_shake("m")
     $ lc_sfx("catch_thud")
     "[friend_name] reacted before I did, catching her around the waist and upper body before she hit the ground."
@@ -703,6 +705,7 @@ label ch01_scene_11b_female_friend:
             $ apply_choice("ch01_friend_reassure")
             $ set_story_value("ch01_female_friend_response", "reassured")
             mc "She's just a friend. You've got nothing to worry about."
+            $ lc_sfx("leia_grunt")
             gf "I wasn't worried."
             mc "You asked five questions in ten seconds."
             gf "I was gathering information."
