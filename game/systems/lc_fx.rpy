@@ -116,7 +116,7 @@ init -2 python:
 
     # Vocal clips stored under audio/sfx/ that are people's voices, not sounds.
     LC_VOICE_SFX = frozenset((
-        "leia_angry_laugh", "leia_giggle", "leia_grunt", "leia_laugh", "leia_scream", "leia_sigh",
+        "leia_angry_laugh", "leia_giggle", "leia_grunt", "leia_kiss", "leia_laugh", "leia_scream", "leia_sigh",
         "gasp_wake",
     ))
 

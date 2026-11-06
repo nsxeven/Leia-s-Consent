@@ -250,6 +250,7 @@ label prologue_start:
     with dissolve
 
     $ lc_flash("#ffe2cf", 0.4, 0.9)
+    $ lc_sfx("leia_kiss")  # darryn's kiss sound (VOICE slider)
     "Then she kissed me."
     "Brief. Warm. Just awkward enough to be real."
     $ lc_bgm_resume()
