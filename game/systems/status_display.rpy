@@ -25,7 +25,8 @@ init python:
 
 
     def status_mode_note():
-        return STATUS_MODE_NOTES.get(current_choice_mode(), STATUS_MODE_NOTES["normal"])
+        # Notes are written with the default names; show the player's typed names.
+        return gallery_customize_names(STATUS_MODE_NOTES.get(current_choice_mode(), STATUS_MODE_NOTES["normal"]))
 
 
     def _status_value(group_name, stat_name):

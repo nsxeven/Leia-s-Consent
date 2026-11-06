@@ -813,7 +813,7 @@ screen phone_screen():
                                     for outfit_id in shop_outfit_ids():
                                         $ phone_outfit = get_outfit(outfit_id)
                                         $ phone_outfit_name = phone_outfit["name"]
-                                        $ phone_outfit_description = phone_outfit["description"]
+                                        $ phone_outfit_description = gallery_customize_names(phone_outfit["description"])
                                         $ phone_outfit_cost = phone_outfit["cost"]
                                         $ phone_outfit_state = shop_item_state(outfit_id)
                                         $ phone_outfit_status = shop_item_status_label(outfit_id)

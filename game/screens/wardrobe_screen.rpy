@@ -32,7 +32,7 @@ screen wardrobe_screen():
     $ mode = current_choice_mode()
     $ selected_outfit = get_outfit(wardrobe_selected_outfit)
     $ selected_name = selected_outfit["name"]
-    $ selected_description = selected_outfit["description"]
+    $ selected_description = gallery_customize_names(selected_outfit["description"])
     $ selected_category = outfit_category_label(wardrobe_selected_outfit)
     $ selected_contexts = outfit_context_text(wardrobe_selected_outfit)
     $ selected_status = outfit_status_short(wardrobe_selected_outfit)
