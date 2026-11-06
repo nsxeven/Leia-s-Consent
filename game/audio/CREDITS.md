@@ -54,7 +54,7 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 
 Synthesised by the Leia's Consent team (numpy, `build_assets.py`); fully owned by the project:
 
-`sfx/heartbeat_fast`, `sfx/heartbeat_slow`, `sfx/phone_ring`, `sfx/timer_beeps`, `ui/app_tap`, `ui/back`, `ui/bar`, `ui/gain`, `ui/loss`, `ui/message_pop`, `ui/paper`, `ui/phone_close`, `ui/phone_open`, `ui/pick`, `ui/polaroid`, `ui/rustle`, `ui/save`, `ui/tap`, `ui/thud`, `ui/tick`
+`sfx/heartbeat_fast`, `sfx/heartbeat_slow`, `sfx/timer_beeps`, `ui/app_tap`, `ui/back`, `ui/bar`, `ui/gain`, `ui/loss`, `ui/message_pop`, `ui/paper`, `ui/phone_close`, `ui/phone_open`, `ui/pick`, `ui/polaroid`, `ui/rustle`, `ui/save`, `ui/tap`, `ui/thud`, `ui/tick`
 
 Processing: trimmed, faded, loudness-balanced and encoded to OGG Vorbis 44.1 kHz. Ambience beds and music are seamless loops. See `manifest.json` for per-file notes.
 
@@ -81,3 +81,5 @@ Dripping `sfx/dripping` (after the dinner spill): supplied by the project develo
 Cat call `sfx/cat_call` (restroom-corridor compliment): supplied by the project developer.
 
 Text notification `ui/notify` (phone banner) and `sfx/phone_notify` (story text alerts): supplied by the project developer.
+
+Call ringtone `sfx/phone_ring` (Maya's call on the walk back): supplied by the project developer.

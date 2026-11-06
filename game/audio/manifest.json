@@ -107,14 +107,16 @@
    "file": "sfx/phone_ring.ogg",
    "kind": "sfx",
    "status": "synth",
-   "duration": 4.0,
+   "duration": 6.635351,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
-   "loop": false,
-   "peak_dbfs": -10.4,
-   "source": "synthesised by Leia's Consent team",
-   "processing": "synth: marimba (partials 1, 3.93, 9.2) alternating E5/B5 x6 notes, rings at 0 and 2.0 s; peak-normalised -3 dBFS before balance; balanced -7.5 dB (cap -3 dB vs splash_big)"
+   "loop": true,
+   "source": {
+    "provided_by": "darryn (project developer), 'Call Ringtone.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "leading silence removed, peak -9 dBFS, 44.1 kHz; loops on sfx_loop until the call is answered. Replaces the earlier synthesised ring."
   },
   {
    "name": "sfx/phone_notify",
