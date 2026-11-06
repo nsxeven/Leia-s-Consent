@@ -1445,6 +1445,22 @@
     "license": "CC0 1.0"
    },
    "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
+  },
+  {
+   "name": "sfx/squish",
+   "file": "sfx/squish.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.031678,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Squish.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "leading silence removed, +4 dB, 30 ms fade-out, resampled to 44.1 kHz"
   }
  ],
  "secondary_sources": [

@@ -1256,6 +1256,7 @@ label ch01_scene_30_end_day_one:
         $ lc_sfx("heartbeat_fast")
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
+        $ lc_sfx("squish")  # darryn's sound, as the rub CG (BBCStrangerNightmare_03) appears
         scene cg ch01_dream_dinner_rub at lc_dream_sway
         with dissolve
 

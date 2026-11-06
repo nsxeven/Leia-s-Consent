@@ -66,3 +66,5 @@ Polaroid hover sound `ui/tock`: synthesised in-house (original work, no third-pa
 Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the earlier Freesound spill).
 
 Crowd chatter `amb/crowd` (party, restaurant, bar): supplied by the project developer.
+
+Squish `sfx/squish` (nightmare dinner CG): supplied by the project developer.
