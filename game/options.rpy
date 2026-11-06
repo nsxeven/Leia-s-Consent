@@ -62,7 +62,10 @@ define config.has_voice = True
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+# BGM plan (darryn): Polaroid Summer on the title screen and menus.
+define config.main_menu_music = "audio/music/polaroid_summer.ogg"
+# Music sits quietly under SFX and ambience; players can raise it in Settings.
+define config.default_music_volume = 0.6
 
 
 ## Transitions #################################################################

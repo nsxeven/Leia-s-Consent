@@ -16,6 +16,7 @@ label ch01_scene_01_arrival:
     scene bg ch01_car_day
     with fade
     $ lc_amb("car_day")
+    $ lc_bgm("sunny_island")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
     "By the time the transfer car turned into the villa's driveway, [girlfriend_name] had taken thirty-seven photos."

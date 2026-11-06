@@ -7,6 +7,7 @@ label ch01_scene_07_did_he_see:
     scene bg ch01_master_bedroom_curtains
     with dissolve
     $ lc_amb("room_tone")
+    $ lc_bgm("cozy_home")
     $ cast(ryan="pool", leia="towel", julian="pool")
 
     "I found her in the bathroom doorway, still half-turned toward the mirror, one hand pressed to her cheek."
@@ -102,6 +103,7 @@ label ch01_scene_07_did_he_see:
     scene bg ch01_villa_entry_day
     with dissolve
     $ lc_amb("villa_day")
+    $ lc_bgm("sunny_island")
     $ cast(ryan="casual", leia="purple_dress", julian="evening")
 
     "[friend_name] was waiting near the door, looking at his phone with an intensity that suggested he had decided the screen was the safest place in the villa."
@@ -154,6 +156,7 @@ label ch01_scene_08_drive_to_dinner:
     scene cg ch01_drive_to_dinner
     with dissolve
     $ lc_amb("car_day")
+    $ lc_bgm("sunny_island")
 
     "I drove. [girlfriend_name] took the passenger seat beside me without thinking about it, and [friend_name] climbed into the back."
     "It was our natural arrangement: [girlfriend_name] beside me, [friend_name] behind us, the two of them taking turns insulting my driving from different directions."
@@ -200,7 +203,7 @@ label ch01_scene_09_dinner:
     scene bg ch01_restaurant_evening
     with fade
     $ lc_amb("restaurant")  # darryn's restaurant recording, a little lower (LC_AUDIO_GAIN)
-    $ lc_music("lounge_piano")
+    $ lc_bgm("lounge_piano")
     $ cast()
 
     $ enter_cinematic_mode()
@@ -508,7 +511,7 @@ label ch01_scene_10_after_dinner_drinks:
 
     scene bg ch01_restaurant_bar
     with dissolve
-    $ lc_music_stop()
+    $ lc_bgm("lounge_piano")  # BGM plan: the lounge piano carries on at the bar
     $ lc_amb("restaurant")  # darryn's restaurant recording, a little lower (LC_AUDIO_GAIN)
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "shy")
@@ -560,6 +563,7 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_walk_back_01
     with fade
     $ lc_amb("street_night")
+    $ lc_bgm("warm_night")
 
     "The shop was only a short walk away. [girlfriend_name] still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
@@ -571,11 +575,13 @@ label ch01_scene_11_walk_and_catch:
     scene cg ch01_walk_back_call
     with dissolve
 
+    $ lc_duck(0.35)  # music dips for the call
     $ lc_sfx_loop("phone_ring", fadein=0.0)  # darryn's ringtone, rings until Ryan answers
     "My phone started ringing." with lc_shake("s")
     "The name on the screen belonged to a female friend from back home—someone I had not expected to hear from on this trip."
 
     $ lc_sfx_loop_stop(0.25)
+    $ lc_unduck()
     mc "Hang on."
 
     "I stopped. [girlfriend_name] and [friend_name] kept moving at an easy pace a few steps ahead while I answered."
@@ -675,6 +681,7 @@ label ch01_scene_11b_female_friend:
     # Continues straight from scene 11 on the same path; Ryan and Leia are
     # already on screen, so no scene reset (it made both sprites blink).
     $ lc_amb("street_night")
+    $ lc_bgm("warm_night")
     $ face("leia", "skeptical")
     gf "Who was that?"
     mc "A friend from back home. She saw the posts and realised we're both here."
@@ -743,6 +750,7 @@ label ch01_scene_12_shop_and_drive_back:
     scene bg ch01_shop_night
     with dissolve
     $ lc_amb("shop")
+    $ lc_bgm("warm_night")
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "smile")
 
@@ -879,6 +887,7 @@ label ch01_scene_13_back_at_villa:
     scene bg ch01_villa_entry_evening
     with fade
     $ lc_amb("night_pool")
+    $ lc_bgm("warm_night")
     $ cast(ryan="casual", julian="evening")
 
     "When I parked, [girlfriend_name] didn't move."

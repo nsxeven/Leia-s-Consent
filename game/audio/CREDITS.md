@@ -18,6 +18,10 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 | amb/street_night | [Atmo_Quiet_Street_Night.wav](https://freesound.org/people/LamaMakesMusic/sounds/403489/) (#403489) | LamaMakesMusic | CC0 1.0 |
 | amb/villa_day | [Gentle ocean waves birdsong and gull.WAV](https://freesound.org/people/jackmichaelking/sounds/518637/) (#518637) | jackmichaelking | CC0 1.0 |
 | music/lounge_piano | [Lounge Piano Loop](https://freesound.org/people/NearTheAtmoshphere/sounds/704972/) (#704972) | NearTheAtmoshphere | CC0 1.0 |
+| music/party | [Rabbit Bop](https://freesound.org/people/code_box/sounds/575759/) (#575759) | code_box | CC0 1.0 |
+| music/cozy_home | [Lofi Vinyl E-Piano Loop 95 BPM.wav](https://freesound.org/people/holizna/sounds/629176/) (#629176) | holizna | CC0 1.0 |
+| music/warm_night | [Chill Lofi - lost stars.wav](https://freesound.org/people/noel.wav/sounds/680400/) (#680400) | noel.wav | CC0 1.0 |
+| music/quiet_thoughts | [Melancholic Piano Loop](https://freesound.org/people/Jadis0x/sounds/761294/) (#761294) | Jadis0x | CC0 1.0 |
 | sfx/body_bump | [bump into someone sfx](https://freesound.org/people/rubydrop/sounds/816469/) (#816469) | rubydrop | CC0 1.0 |
 | sfx/camera_shutter | [iPhone Camera Capture.wav](https://freesound.org/people/pooky1/sounds/431588/) (#431588) | pooky1 | CC0 1.0 |
 | sfx/record_scratch | [record_scratch.wav](https://freesound.org/people/simkiott/sounds/43404/) (#43404) | simkiott | CC0 1.0 |
@@ -97,3 +101,14 @@ Leia's exasperated laugh `sfx/leia_angry_laugh`: supplied by the project develop
 Leia's grunt `sfx/leia_grunt`: supplied by the project developer.
 
 Ice in glass `sfx/ice_glass` and pour `sfx/whisky_pour` (Julian's whisky CG): supplied by the project developer.
+
+## Music from OpenGameArt
+
+These BGM tracks are from [OpenGameArt](https://opengameart.org) and used under **CC0 1.0**. Attribution is not required; we list the uploaders as a courtesy.
+
+| Our file | OpenGameArt entry | Uploader | Licence |
+|---|---|---|---|
+| music/polaroid_summer | [Talking Cute (Chiptune)](https://opengameart.org/content/talking-cute-chiptune) | Pro Sensory | CC0 1.0 |
+| music/sunny_island | [Feel Good Island Loop](https://opengameart.org/content/feel-good-island-loop) | AntumDeluge | CC0 1.0 (dual-licensed; used under CC0) |
+| music/cheeky | [8-bit - I am not clumsy!](https://opengameart.org/content/8-bit-i-am-not-clumsy) | HydroGene | CC0 1.0 |
+| music/under_blanket | [Calm Relax 1 (Synthwave 421k)](https://opengameart.org/content/calm-relax-1-synthwave-421k) | cynicmusic | CC0 1.0 |

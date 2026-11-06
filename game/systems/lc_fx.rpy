@@ -33,6 +33,8 @@ init -10 python:
     # Looping story sound under a beat (e.g. sunscreen being rubbed in); Sound slider.
     renpy.music.register_channel("sfx_loop", mixer="sfx", loop=True, stop_on_mute=True)
 
+default lc_bgm_current = None
+
 init -2 python:
     import time as _lc_fx_time
 
@@ -44,6 +46,8 @@ init -2 python:
     LC_AUDIO_GAIN = {
         "amb/room_tone": 0.6,   # quiet indoor A/C hum under every villa/bedroom scene
         "amb/restaurant": 0.75, # darryn: restaurant recording slightly lower than the other ambience
+        # BGM themes are mastered at -28 LUFS (party: low-passed, -38) so they
+        # sit under ambience and SFX; new players start with Music at 60 %.
         # "sfx/splash_big": 0.8,
         # "amb/party": 1.0,
         # "music/lounge_piano": 0.7,
@@ -143,6 +147,36 @@ init -2 python:
 
     def lc_music_stop(fadeout=2.0):
         renpy.music.stop(channel="music", fadeout=fadeout)
+
+    # ------------------------------------------------------------- BGM themes
+    # darryn's BGM plan: quiet music almost always on, SFX + ambience on top.
+    # One theme per mood (game/audio/music/<theme>.ogg). The same theme across
+    # scenes never restarts (if_changed). Cuts/hushes remember the theme so
+    # lc_bgm_resume() can bring it back after a comic or intimate beat.
+    LC_BGM_THEMES = ("party", "polaroid_summer", "cozy_home", "sunny_island", "cheeky",
+                     "lounge_piano", "warm_night", "under_blanket", "quiet_thoughts")
+
+    def lc_bgm(theme, fadein=2.0, fadeout=2.0):
+        """Play a BGM theme (no restart when it is already playing). Returns None."""
+        store.lc_bgm_current = theme
+        lc_music(theme, fadein=fadein, fadeout=fadeout)
+
+    def lc_bgm_cut():
+        """Comic beat (record scratch): music stops dead; the theme is remembered."""
+        renpy.music.stop(channel="music", fadeout=0.05)
+
+    def lc_bgm_hush(fadeout=1.5):
+        """Intimate beat: fade to silence (breaths + SFX only); theme remembered."""
+        renpy.music.stop(channel="music", fadeout=fadeout)
+
+    def lc_bgm_resume(fadein=2.0):
+        """Bring back the remembered theme after lc_bgm_cut / lc_bgm_hush."""
+        if store.lc_bgm_current:
+            lc_music(store.lc_bgm_current, fadein=fadein)
+
+    def lc_bgm_stop(fadeout=2.0):
+        store.lc_bgm_current = None
+        lc_music_stop(fadeout)
 
     def lc_duck(level=0.3, delay=0.6):
         """Dip music + ambience for a tense or quiet beat."""

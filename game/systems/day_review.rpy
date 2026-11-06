@@ -867,6 +867,7 @@ label lc_day_review(day_id):
     $ lc_review_saved_quick = quick_menu
     $ phone_hud_enabled = False
     $ quick_menu = False
+    $ lc_bgm("polaroid_summer", fadein=3.0)  # BGM plan: the scrapbook theme
     window hide
     # Night first, then the journal. A click during the night skips every
     # animation and opens the scrapbook already settled.
@@ -878,5 +879,6 @@ label lc_day_review(day_id):
     call screen lc_day_review_screen(day_id, skipped=lc_review_skipped)
     $ phone_hud_enabled = lc_review_saved_hud
     $ quick_menu = lc_review_saved_quick
+    $ lc_bgm_stop(2.5)  # the next day picks its own music
     window auto
     return
