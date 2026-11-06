@@ -51,6 +51,7 @@ label ch01_scene_13b_night_pool:
     $ enter_cinematic_mode()
     scene cg ch01_night_pool_attention
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "[friend_name]'s eyes drifted toward her for a moment."
     "There was no towel slipping. No collision. Nothing to catch and nothing to explain."
@@ -462,6 +463,7 @@ label ch01_scene_19_too_hot:
     $ enter_cinematic_mode()
     scene cg ch01_movie_no_blanket
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "Without it, there was nothing unusual about the way we were sitting—just [girlfriend_name] curled beside me in her loungewear."
     "But whatever had felt private under the blanket no longer had anywhere to hide."
@@ -499,6 +501,7 @@ label ch01_scene_20_no_hiding_place:
     $ enter_cinematic_mode()
     scene cg ch01_movie_ass_grab_01 at lc_push_in
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
     $ lc_duck()
     $ lc_bgm_hush()  # intimate beat: breaths + SFX only
     $ lc_sfx("heartbeat_slow")
@@ -1268,12 +1271,15 @@ label ch01_scene_30_end_day_one:
         $ lc_sfx("slap_light")  # spank as the second nightmare CG appears (darryn)
         scene cg ch01_dream_dinner_grab at lc_dream_sway
         with dissolve
+        # darryn: CG 02 is all inhales, plus one moan right after the smack.
+        $ lc_moan_once(2)
+        $ lc_breath_start(2, moans=False, fadein=0.4)
 
         "His hand settled at the small of her back."
         "Then it slid lower, slipped under the hem of her dress, and took a slow, deliberate handful of her."
         "Right there at the table. In front of me."
 
-        $ lc_breath_start(1, moans=False)
+        $ lc_inhale_over(2)
         $ lc_sfx("leia_gasp", 0.8)  # the startled sound the line describes
         "[girlfriend_name] gasped, one small, startled sound."
         "{i}Babe, are you okay?{/i} The words never made it past my throat."
@@ -1282,18 +1288,24 @@ label ch01_scene_30_end_day_one:
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
         $ lc_sfx("squish")  # darryn's sound, as the rub CG (BBCStrangerNightmare_03) appears
-        $ lc_breath_start(2)  # stronger on the third CG (darryn)
+        # darryn: CG 03 spams inhales and moans: dense loop + extra moans layered on top.
+        $ lc_breath_start(4, moan_chance=0.55, pause=(0.05, 0.4), fadein=0.2)
         scene cg ch01_dream_dinner_rub at lc_dream_sway
         with dissolve
 
         "His palm began to move, rubbing slow circles over the curve of her, unhurried, like he had every right to."
+        $ lc_moan_once(3)
         "Color climbed her cheeks. She leaned toward him. Only slightly. Only enough."
+        $ lc_inhale_over(3)
         "Her eyes dropped, following the same path they had at dinner."
+        $ lc_moan_once(3)
         "This time, she didn't bring them back up."
 
         "That was the cruelest part. It was my own mind writing her that way, not her."
 
+        $ lc_moan_once(4)
         "I called her name again. Nothing."
+        $ lc_moan_once(3)
         "He bent to say something against her ear, and she laughed—"
 
         # Hard cut out of the nightmare, then Ryan jolts awake.

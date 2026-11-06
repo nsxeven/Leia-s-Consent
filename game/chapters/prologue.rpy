@@ -239,6 +239,7 @@ label prologue_start:
 
     scene cg prologue_first_kiss_02
     with dissolve
+    $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "It was not smooth."
     "Our noses nearly collided. Somebody laughed before we'd even figured out the angle." with lc_shake("s")

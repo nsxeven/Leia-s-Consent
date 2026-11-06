@@ -27,7 +27,9 @@ class BreathTests(unittest.TestCase):
         self.assertIn("lc_breath_start(", scene20)
         self.assertIn("lc_breath_stop(", scene20)
         dream = src.split('scene cg ch01_dream_dinner_beside', 1)[1].split('lc_sfx("gasp_wake")', 1)[0]
-        self.assertIn("lc_breath_start(2)", dream)
+        self.assertIn("lc_breath_start(2, moans=False", dream)  # CG 02: inhales only
+        self.assertIn("lc_breath_start(4, moan_chance=0.55", dream)  # CG 03: dense inhales + moans
+        self.assertIn("lc_moan_once(", dream)
         self.assertIn("lc_breath_stop(", dream)
 
 
