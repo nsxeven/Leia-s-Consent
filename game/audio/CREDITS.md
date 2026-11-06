@@ -75,3 +75,5 @@ Sunscreen rub `sfx/sunscreen_rub`: supplied by the project developer.
 Restaurant ambience `amb/restaurant` (dinner and the restaurant bar): supplied by the project developer.
 
 Thump `sfx/thump` (first dinner collision): supplied by the project developer.
+
+Dripping `sfx/dripping` (after the dinner spill): supplied by the project developer.

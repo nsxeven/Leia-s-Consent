@@ -267,6 +267,7 @@ label ch01_scene_09_dinner:
     $ lc_sfx("drink_spill")
     "The collision knocked his drink from its path, liquid hanging in the air for a split second before it came down across both of them." with lc_shake("m")
 
+    $ lc_sfx_loop("dripping")  # darryn: drips through the post-collision conversation
     # The impact beat is over. Return to the restaurant for the immediate
     # apology using the post-spill wet sprite state.
     $ exit_cinematic_mode()
@@ -399,6 +400,7 @@ label ch01_scene_09_dinner:
     mc "Understood."
 
     "[girlfriend_name] disappeared toward the restroom with her handbag tucked under one arm."
+    $ lc_sfx_loop_stop(1.5)
     $ cast_remove("leia")
 
     # Canonical staging: Ryan remains LEFT. Leia is hidden while physically absent.
