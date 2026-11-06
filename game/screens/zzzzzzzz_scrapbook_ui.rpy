@@ -176,7 +176,7 @@ init python:
 
     JOURNAL_MENU_SCREENS = (
         "save", "load", "preferences", "history", "help", "about",
-        "chapter_select", "gallery_screen", "status_screen",
+        "chapter_select", "gallery_screen", "status_screen", "lc_tags_screen",
         "shop_screen", "wardrobe_screen", "player_settings_screen",
         "main_menu",
     )
@@ -210,6 +210,7 @@ init python:
             rows.append(("PREFS", ShowMenu("preferences"), False))
             rows.append(("GALLERY", ShowMenu("gallery_screen"), False))
             rows.append(("STATUS", Show("status_screen"), False))
+            rows.append(("TAGS", Show("lc_tags_screen"), False))
             if store._in_replay:
                 rows.append(("END REPLAY", EndReplay(confirm=True), False))
             else:
