@@ -43,6 +43,7 @@ init -2 python:
     # sources for every file: game/audio/CREDITS.md.
     LC_AUDIO_GAIN = {
         "amb/room_tone": 0.6,   # quiet indoor A/C hum under every villa/bedroom scene
+        "amb/restaurant": 0.75, # darryn: restaurant recording slightly lower than the other ambience
         # "sfx/splash_big": 0.8,
         # "amb/party": 1.0,
         # "music/lounge_piano": 0.7,

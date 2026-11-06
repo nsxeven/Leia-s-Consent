@@ -13,7 +13,6 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 | amb/night_pool | [Night Crickets Back Porch.aiff](https://freesound.org/people/hdfreema/sounds/333221/) (#333221) | hdfreema | CC0 1.0 |
 | amb/party | [Party background chatter real 1.wav](https://freesound.org/people/dbspin/sounds/396684/) (#396684) | dbspin | CC0 1.0 |
 | amb/pool_day, sfx/splash_big, sfx/splash_small | [Big Water Splash](https://freesound.org/people/qubodup/sounds/442773/) (#442773) | qubodup | CC0 1.0 |
-| amb/restaurant | [Restaurant ambience chatter](https://freesound.org/people/mycompasstv/sounds/474740/) (#474740) | mycompasstv | CC0 1.0 |
 | amb/room_tone | [Air Conditioner A/C Vent Hum - Room Tone](https://freesound.org/people/Sauron974/sounds/273627/) (#273627) | Sauron974 | CC0 1.0 |
 | amb/shop | [Supermarket_Ambience.wav](https://freesound.org/people/ivolipa/sounds/328732/) (#328732) | ivolipa | CC0 1.0 |
 | amb/street_night | [Atmo_Quiet_Street_Night.wav](https://freesound.org/people/LamaMakesMusic/sounds/403489/) (#403489) | LamaMakesMusic | CC0 1.0 |
@@ -65,10 +64,12 @@ Polaroid hover sound `ui/tock`: synthesised in-house (original work, no third-pa
 
 Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the earlier Freesound spill).
 
-Crowd chatter `amb/crowd` (party, restaurant, bar): supplied by the project developer.
+Crowd chatter `amb/crowd` (Prologue party): supplied by the project developer.
 
 Squish `sfx/squish` (nightmare dinner CG): supplied by the project developer.
 
 Leia's breaths and moans `voice/leia/*` (40 clips): MoanBox by Selenyhr (https://selenyhr.itch.io/), released under the Unlicense (public domain).
 
 Sunscreen rub `sfx/sunscreen_rub`: supplied by the project developer.
+
+Restaurant ambience `amb/restaurant` (dinner and the restaurant bar): supplied by the project developer.

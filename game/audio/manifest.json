@@ -740,20 +740,16 @@
    "file": "amb/restaurant.ogg",
    "kind": "ambience",
    "status": "ok",
-   "duration": 52.0,
+   "duration": 35.656009,
    "channels": 2,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": true,
-   "peak_dbfs": -8.3,
    "source": {
-    "freesound_id": 474740,
-    "url": "https://freesound.org/people/mycompasstv/sounds/474740/",
-    "author": "mycompasstv",
-    "title": "Restaurant ambience chatter",
-    "license": "CC0 1.0"
+    "provided_by": "darryn (project developer), 'Restaurant Sounds.mp3'",
+    "license": "supplied by the project owner"
    },
-   "processing": "section 2.0-55.5s (least-eventful window by 1 s RMS), loop body 52s with 1.5s equal-power tail->head crossfade; integrated -30.0 LUFS"
+   "processing": "40 Hz high-pass, end trimmed for an even seam, 3 s crossfade loop, levelled to -30 LUFS, peak-limited; played at 0.75 via LC_AUDIO_GAIN. Replaces the earlier Freesound #474740 restaurant chatter."
   },
   {
    "name": "amb/bar",

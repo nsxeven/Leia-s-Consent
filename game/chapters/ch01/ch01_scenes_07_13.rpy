@@ -198,7 +198,7 @@ label ch01_scene_09_dinner:
 
     scene bg ch01_restaurant_evening
     with fade
-    $ lc_amb("crowd")
+    $ lc_amb("restaurant")  # darryn's restaurant recording, a little lower (LC_AUDIO_GAIN)
     $ lc_music("lounge_piano")
     $ cast()
 
@@ -500,7 +500,7 @@ label ch01_scene_10_after_dinner_drinks:
     scene bg ch01_restaurant_bar
     with dissolve
     $ lc_music_stop()
-    $ lc_amb("crowd")
+    $ lc_amb("restaurant")  # darryn's restaurant recording, a little lower (LC_AUDIO_GAIN)
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "shy")
 
