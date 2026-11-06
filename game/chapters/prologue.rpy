@@ -41,7 +41,7 @@ label prologue_start:
 
     scene cg prologue_party_arrival at lc_push_in
     with dissolve
-    $ lc_amb("party")
+    $ lc_amb("crowd")
 
     "I noticed [girlfriend_name] before I ever spoke to her."
     "That wasn't difficult. Half the room probably had."
@@ -174,7 +174,7 @@ label prologue_start:
     # Both leave with the location change itself (one dissolve), then Leia enters.
     scene bg prologue_truthordare
     with dissolve
-    $ lc_amb("party")
+    $ lc_amb("crowd")
     $ lc_unduck()
     $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
 

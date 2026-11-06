@@ -64,3 +64,5 @@ Name-card typing sounds `ui/key_1`..`ui/key_4`, `ui/key_back`, `ui/key_enter`: s
 Polaroid hover sound `ui/tock`: synthesised in-house (original work, no third-party source).
 
 Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the earlier Freesound spill).
+
+Crowd chatter `amb/crowd` (party, restaurant, bar): supplied by the project developer.
