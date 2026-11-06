@@ -56,7 +56,7 @@ label ch01_scene_07_did_he_see:
     mc "Accidentally."
     gf "I'm sure the distinction was very obvious from downstairs."
 
-    mc "Seriously. He wasn't standing there staring. The moment he realised what was happening, he turned away."
+    mc "Seriously. He wasn't standing there staring. The moment he realized what was happening, he turned away."
     gf "He did?"
     mc "Yeah. Then he basically tried to pretend it never happened."
 
@@ -224,10 +224,10 @@ label ch01_scene_09_dinner:
     friend "Move it. Respect the artist."
     mc "You two became unbearable very quickly."
 
-    "Somewhere between the starters and the main course, [friend_name] told her a story from university that I had heard at least twenty times."
+    "Somewhere between the starters and the main course, [friend_name] told her a story from college that I had heard at least twenty times."
     "[girlfriend_name] had not."
 
-    gf "No. There is no way he actually said that to the lecturer."
+    gf "No. There is no way he actually said that to the professor."
     friend "Ask him."
     mc "I refuse to validate this story."
     gf "That means it's true."
@@ -345,7 +345,7 @@ label ch01_scene_09_dinner:
     # Leia's hand-placed sprite becomes her normal right slot (same spot, no blink).
     $ cast_resume(leia="leia_purple_dress_wet")
 
-    "[friend_name] pushed the remaining napkins across the table without commenting on where [girlfriend_name] had been looking."
+    "[friend_name] pushed a stack of napkins across the table without commenting on where [girlfriend_name] had been looking."
     friend "Successful photo mission?"
     $ face("leia", "angry")
     gf "Not one word."
@@ -378,7 +378,7 @@ label ch01_scene_09_dinner:
 
     $ ch01_bra_reassure_text = format_choice("ch01_bra_reassure", "Do whatever makes you comfortable. You'll be fine.")
     $ ch01_bra_playful_text = format_choice("ch01_bra_playful", "If you're comfortable with it... that's kind of hot.")
-    $ ch01_bra_cover_text = format_choice("ch01_bra_cover", "Take it off if you need to, but maybe keep your jacket nearby.")
+    $ ch01_bra_cover_text = format_choice("ch01_bra_cover", "Take it off if you need to. I'll keep an eye out.")
 
     menu:
         "[ch01_bra_reassure_text]":
@@ -402,7 +402,7 @@ label ch01_scene_09_dinner:
         "[ch01_bra_cover_text]":
             $ apply_choice("ch01_bra_cover")
             $ set_story_value("ch01_bra_response", "cautious")
-            mc "Take it off if you need to, but maybe keep your jacket nearby."
+            mc "Take it off if you need to. I'll keep an eye out."
             $ face("leia", "neutral")
             gf "Fair. Let me fix this before it falls out on its own."
 
@@ -445,7 +445,7 @@ label ch01_scene_09_dinner:
 
     "By the time she was closer to the table the compliment still sat on her expression."
     "Without the adhesive bra underneath, the fabric sat more naturally against her chest and moved with her instead of holding a fixed shape."
-    "Under the restaurant lighting, small changes in posture made the difference easier to notice than she probably realised."
+    "Under the restaurant lighting, small changes in posture made the difference easier to notice than she probably realized."
 
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
@@ -465,6 +465,7 @@ label ch01_scene_09_dinner:
     # The corridor compliment already happened; keep a light table-side beat so the
     # existing response menu still has a natural moment to fire.
     "A moment later the same man passed near our table and gave [girlfriend_name] another polite nod."
+    passerby "Still stands, by the way."
     gf "Oh—thank you again."
 
     $ ch01_stranger_proud_text = format_choice("ch01_stranger_proud", "Yeah. She looks incredible.")
@@ -495,7 +496,7 @@ label ch01_scene_09_dinner:
             mc "Still looked good."
             gf "You're enjoying this."
             mc "Maybe a little."
-            "Her cheeks coloured, but she did not reach for her jacket."
+            "Her cheeks colored, but she did not cover up."
 
     "He kept walking. Nothing dramatic. [girlfriend_name] glanced down at herself and back at me."
 
@@ -607,7 +608,7 @@ label ch01_scene_11_walk_and_catch:
     $ lc_sfx("catch_thud")
     "[friend_name] reacted before I did, catching her around the waist and upper body before she hit the ground."
     "In the scramble, one of his hands landed against the side of her breast for a split second."
-    "Both of them realised at almost exactly the same time."
+    "Both of them realized at almost exactly the same time."
 
     scene cg ch01_trip_catch_followup
     with dissolve
@@ -689,7 +690,7 @@ label ch01_scene_11b_female_friend:
     $ lc_bgm("warm_night")
     $ face("leia", "skeptical")
     gf "Who was that?"
-    mc "A friend from back home. She saw the posts and realised we're both here."
+    mc "A friend from back home. She saw the posts and realized we're both here."
     gf "She?"
 
     "[friend_name] made a heroic attempt to become interested in a sign across the road."
@@ -808,7 +809,7 @@ label ch01_scene_12_shop_and_drive_back:
     "By the time we paid, [girlfriend_name] was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
 
     gf "I want to lie down."
-    mc "We're walking thirty metres to the car."
+    mc "We're walking thirty meters to the car."
     gf "Then I want to lie down in the car."
 
     $ set_story_value("ch01_return_car_seating", "ryan_driver_julian_front_leia_rear")

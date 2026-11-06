@@ -9,7 +9,7 @@ init python:
         "normal": {
             "label": "Immersive",
             "tagline": "Story-first experience",
-            "description": "Focus on dialogue, behaviour, and reactions. Hidden mechanics stay hidden.",
+            "description": "Focus on dialogue, behavior, and reactions. Hidden mechanics stay hidden.",
             "choices": "No mechanical effects are shown before a choice.",
             "status": "Approximate bars only; internal-only traits stay hidden.",
             "wardrobe": "See whether Leia is comfortable, without exact requirements.",

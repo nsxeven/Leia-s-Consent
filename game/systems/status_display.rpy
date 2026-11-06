@@ -5,7 +5,7 @@ init python:
 
     STATUS_MODE_NOTES = {
         "normal": "A readable snapshot of what Ryan can reasonably perceive.",
-        "insight": "Adds broad behavioural signals without revealing exact values.",
+        "insight": "Adds broad behavioral signals without revealing exact values.",
         "full": "Shows the complete numerical state for route planning.",
         "developer": "Shows exact values together with internal stat keys.",
     }
@@ -126,7 +126,7 @@ init python:
 
 
     def leia_overview_text():
-        """A short, intentionally non-spoilery behavioural summary of Leia."""
+        """A short, intentionally non-spoilery behavioral summary of Leia."""
         relationship = renpy.store.relationship_stats
         partner = renpy.store.partner_stats
         name = renpy.store.girlfriend_name
@@ -161,7 +161,7 @@ init python:
         elif exhibitionism >= 40:
             visibility_line = "She is becoming more comfortable with being noticed, although it still depends heavily on the situation."
         elif exhibitionism >= 20:
-            visibility_line = "She can enjoy a little attention, but she is not yet naturally drawn to being the centre of it."
+            visibility_line = "She can enjoy a little attention, but she is not yet naturally drawn to being the center of it."
         else:
             visibility_line = "She remains quite private about how she presents herself and rarely seeks extra attention."
 

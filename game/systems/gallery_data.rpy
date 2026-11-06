@@ -137,7 +137,7 @@ init -2 python:
         [("ch01_walk_back_01", "On my arm"), ("ch01_walk_back_call", "Maya calling")])
     gallery_row("d1_trip_catch", "ch01_d1", "The catch",
         "Leia's heel catches on the path and Julian catches her.",
-        [("ch01_trip_catch", "The catch"), ("ch01_trip_catch_followup", "Realising"), ("ch01_trip_catch_aftermath", "Aftermath")])
+        [("ch01_trip_catch", "The catch"), ("ch01_trip_catch_followup", "Realizing"), ("ch01_trip_catch_aftermath", "Aftermath")])
     gallery_row("d1_drive_back", "ch01_d1", "Drive back",
         "The ride home: Julian up front, Leia in the back seat.",
         ["ch01_drive_back_seating"])

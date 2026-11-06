@@ -55,7 +55,7 @@ label ch01_scene_13b_night_pool:
 
     "[friend_name]'s eyes drifted toward her for a moment."
     "There was no towel slipping. No collision. Nothing to catch and nothing to explain."
-    "He noticed her, realised I had noticed him noticing, and looked back toward the water."
+    "He noticed her, realized I had noticed him noticing, and looked back toward the water."
 
     $ set_story_flag("ch01_night_pool_julian_glance")
 
@@ -129,7 +129,7 @@ label ch01_scene_14_movie_setup:
     scene cg ch01_villa_night_julian_drink
     with dissolve
 
-    friend "You drove all day. You've earned this."
+    friend "You drove us everywhere tonight. You've earned this."
     mc "First sensible thing you've said since we landed."
 
     "I finally had the drink I'd skipped all evening."
@@ -923,7 +923,7 @@ label ch01_scene_27_late_photo_drop:
             text="Forgot this one. Photographer of the year strikes again.",
             message_id="ch01_trip_group_late_pool_photo",
             attachment_id="ch01_photo_late_favourite",
-            attachment_label="Unsent pool favourite",
+            attachment_label="Unsent pool favorite",
             mark_unread=True,
             notify=True,
             notification_title="Trip Group",
@@ -1327,7 +1327,7 @@ label ch01_scene_30_end_day_one:
     with dissolve
 
     "[girlfriend_name] was asleep beside me, breathing softly, exactly where she'd been."
-    "None of it had happened. At the real dinner he had apologised, laughed at himself, and walked back to his own table."
+    "None of it had happened. At the real dinner he had apologized, laughed at himself, and walked back to his own table."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_bedroom_night
