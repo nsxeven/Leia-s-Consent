@@ -2451,6 +2451,22 @@
     "license": "CC0 1.0"
    },
    "processing": "BGM theme 'quiet_thoughts' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 51.8 s with a 3 s crossfade seam; integrated -28.0 LUFS, true peak -12.8 dBTP; OGG Vorbis q4"
+  },
+  {
+   "name": "sfx/leia_kiss",
+   "file": "sfx/leia_kiss.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 0.86,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Kiss.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "first 0.86 s (trailing silence cut), 80 ms fade-out, -4 dB, limited to -6 dBFS (about -24 LUFS, level with Leia's sigh), 44.1 kHz; Leia's first kiss in the prologue (VOICE slider)"
   }
  ],
  "secondary_sources": [
