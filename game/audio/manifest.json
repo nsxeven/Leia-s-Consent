@@ -1461,6 +1461,646 @@
     "license": "supplied by the project owner"
    },
    "processing": "leading silence removed, +4 dB, 30 ms fade-out, resampled to 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-01",
+   "file": "voice/leia/inhale-i01-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.647,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-02",
+   "file": "voice/leia/inhale-i01-02.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.58,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-02.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-03",
+   "file": "voice/leia/inhale-i01-03.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.548,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-03.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-04",
+   "file": "voice/leia/inhale-i01-04.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.467,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-04.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-05",
+   "file": "voice/leia/inhale-i01-05.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.384,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-05.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-06",
+   "file": "voice/leia/inhale-i01-06.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.419,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-06.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-07",
+   "file": "voice/leia/inhale-i01-07.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.393,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-07.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-08",
+   "file": "voice/leia/inhale-i01-08.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.647,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-08.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-09",
+   "file": "voice/leia/inhale-i01-09.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.528,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-09.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-10",
+   "file": "voice/leia/inhale-i01-10.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.381,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-10.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-11",
+   "file": "voice/leia/inhale-i01-11.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.321,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-11.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-12",
+   "file": "voice/leia/inhale-i01-12.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.35,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-12.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-13",
+   "file": "voice/leia/inhale-i01-13.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.276,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-13.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i01-14",
+   "file": "voice/leia/inhale-i01-14.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.192,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i01-14.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i02-01",
+   "file": "voice/leia/inhale-i02-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.614,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i02-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i02-02",
+   "file": "voice/leia/inhale-i02-02.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.686,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i02-02.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i02-03",
+   "file": "voice/leia/inhale-i02-03.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.751,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i02-03.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i03-01",
+   "file": "voice/leia/inhale-i03-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.419,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i03-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i03-02",
+   "file": "voice/leia/inhale-i03-02.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.377,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i03-02.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/inhale-i03-03",
+   "file": "voice/leia/inhale-i03-03.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.21,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/inhale-i03-03.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i01-01",
+   "file": "voice/leia/moan-i01-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.637,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i01-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i01-02",
+   "file": "voice/leia/moan-i01-02.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.625,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i01-02.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i01-03",
+   "file": "voice/leia/moan-i01-03.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.654,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i01-03.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i01-04",
+   "file": "voice/leia/moan-i01-04.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.612,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i01-04.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i01-05",
+   "file": "voice/leia/moan-i01-05.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.885,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i01-05.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i01-06",
+   "file": "voice/leia/moan-i01-06.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.276,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i01-06.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-01",
+   "file": "voice/leia/moan-i02-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.718,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-02",
+   "file": "voice/leia/moan-i02-02.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.826,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-02.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-03",
+   "file": "voice/leia/moan-i02-03.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.512,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-03.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-04",
+   "file": "voice/leia/moan-i02-04.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.529,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-04.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-05",
+   "file": "voice/leia/moan-i02-05.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.721,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-05.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-06",
+   "file": "voice/leia/moan-i02-06.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.741,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-06.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i02-07",
+   "file": "voice/leia/moan-i02-07.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.637,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i02-07.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i03-01",
+   "file": "voice/leia/moan-i03-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.528,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i03-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i03-02",
+   "file": "voice/leia/moan-i03-02.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.819,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i03-02.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i03-03",
+   "file": "voice/leia/moan-i03-03.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 1.003,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i03-03.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i03-04",
+   "file": "voice/leia/moan-i03-04.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.41,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i03-04.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i03-05",
+   "file": "voice/leia/moan-i03-05.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.43,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i03-05.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i03-06",
+   "file": "voice/leia/moan-i03-06.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.438,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i03-06.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
+  },
+  {
+   "name": "voice/leia/moan-i04-01",
+   "file": "voice/leia/moan-i04-01.ogg",
+   "kind": "voice",
+   "status": "ok",
+   "duration": 0.476,
+   "loop": false,
+   "codec": "vorbis q5",
+   "source": {
+    "pack": "MoanBox 1.0 (minimal, light) by Selenyhr",
+    "url": "https://selenyhr.itch.io/",
+    "file": "game/audio/voice/character01/moan-i04-01.ogg",
+    "license": "Unlicense (public domain)"
+   },
+   "processing": "peak-normalised per type/intensity (inhales -20 dBFS, moans -15 to -10.5 dBFS), 44.1 kHz"
   }
  ],
  "secondary_sources": [

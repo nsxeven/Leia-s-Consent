@@ -1,0 +1,81 @@
+## Leia's breaths and moans for intimate / lewd beats.
+##
+##   $ lc_breath_start(1)                 # soft: mostly breaths, rare small moan
+##   $ lc_breath_start(1, moans=False)    # holding it in: breaths only
+##   $ lc_breath_start(3)                 # louder, quicker, more moans
+##   $ lc_breath_stop()                   # fade out (call when the beat ends)
+##
+## Each start builds a fresh random string of inhales, moans and pauses from
+## game/audio/voice/leia/<inhale|moan>-iNN-MM.ogg (any number of files; new
+## ones are picked up automatically) and loops it on its own channel under
+## the Voice volume slider. Higher intensity = louder files, more moans,
+## shorter pauses. Never more than two moans without a breath in between, and
+## the same clip is never played twice in a row.
+## Sounds: MoanBox by Selenyhr (Unlicense / public domain).
+
+init -5 python:
+    renpy.music.register_channel("lc_breath", mixer="voice", loop=True, stop_on_mute=True, tight=False)
+
+init python:
+    import re as _lc_re
+
+    LC_BREATH_DIR = "audio/voice/leia/"
+    LC_BREATH_GAIN = 1.0      # one knob for the whole system
+    _lc_breath_files = None
+
+    def _lc_breath_index():
+        """{'inhale': {1: [...], 2: [...]}, 'moan': {...}} from the folder."""
+        global _lc_breath_files
+        if _lc_breath_files is None:
+            pat = _lc_re.compile(r"^" + _lc_re.escape(LC_BREATH_DIR) + r"(inhale|exhale|moan)-i(\d+)-(\d+)\.(ogg|opus|mp3|wav)$")
+            idx = {"inhale": {}, "exhale": {}, "moan": {}}
+            for f in renpy.list_files():
+                m = pat.match(f)
+                if m:
+                    idx[m.group(1)].setdefault(int(m.group(2)), []).append(f)
+            _lc_breath_files = idx
+        return _lc_breath_files
+
+    def _lc_breath_pick(kind, intensity, last):
+        levels = _lc_breath_index().get(kind) or {}
+        if not levels:
+            return None
+        avail = sorted(levels)
+        # Mostly the requested level, sometimes one either side.
+        roll = renpy.random.random()
+        want = intensity + (-1 if roll < 0.2 else (1 if roll > 0.85 else 0))
+        level = min(avail, key=lambda a: (abs(a - want), a))
+        pool = [f for f in levels[level] if f != last] or levels[level]
+        return renpy.random.choice(pool)
+
+    def lc_breath_sequence(intensity=1, moans=True, length=28):
+        intensity = max(1, int(intensity))
+        moan_chance = 0.0 if not moans else min(0.65, 0.12 + 0.17 * (intensity - 1))
+        if intensity == 1 and moans:
+            moan_chance = 0.12
+        pause_lo, pause_hi = {1: (1.2, 2.6), 2: (0.7, 1.8), 3: (0.35, 1.1)}.get(intensity, (0.2, 0.7))
+        out, last, moans_in_row = [], None, 0
+        for _ in range(length):
+            if moans_in_row < 2 and renpy.random.random() < moan_chance:
+                kind = "moan"
+                moans_in_row += 1
+            else:
+                kind = "inhale"
+                moans_in_row = 0
+            f = _lc_breath_pick(kind, intensity, last)
+            if f:
+                out.append(f)
+                last = f
+            out.append("<silence %.2f>" % renpy.random.uniform(pause_lo, pause_hi))
+        return out
+
+    def lc_breath_start(intensity=1, moans=True, fadein=0.6, volume=1.0):
+        seq = lc_breath_sequence(intensity, moans)
+        if not any(not s.startswith("<") for s in seq):
+            return None
+        renpy.music.play(seq, channel="lc_breath", loop=True, fadein=fadein,
+                         relative_volume=LC_BREATH_GAIN * volume)
+        return seq
+
+    def lc_breath_stop(fadeout=1.2):
+        renpy.music.stop(channel="lc_breath", fadeout=fadeout)
