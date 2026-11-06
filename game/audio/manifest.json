@@ -2129,6 +2129,22 @@
     "license": "supplied by the project owner"
    },
    "processing": "leading silence removed, peak-normalised to -4 dBFS (source clipped), 40 ms fade-out"
+  },
+  {
+   "name": "sfx/dripping",
+   "file": "sfx/dripping.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 13.896009,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": true,
+   "source": {
+    "provided_by": "darryn (project developer), 'Dripping.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "+6 dB (to about -33 LUFS, a quiet bed), 0.1 s edge fades, 44.1 kHz; loops on sfx_loop through the post-collision conversation"
   }
  ],
  "secondary_sources": [
