@@ -506,6 +506,7 @@ label ch01_scene_06_friendship_and_towel:
     "The argument disappeared from her face as she finally understood the angle."
 
     $ lc_duck()
+    $ lc_sfx("leia_gasp")  # she realises what the towel was showing
     gf "...Oh."
 
     $ lc_bgm_cut()  # comic beat: music stops dead on the scratch

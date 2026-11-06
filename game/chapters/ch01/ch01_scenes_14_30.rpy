@@ -1274,6 +1274,7 @@ label ch01_scene_30_end_day_one:
         "Right there at the table. In front of me."
 
         $ lc_breath_start(1, moans=False)
+        $ lc_sfx("leia_gasp", 0.8)  # the startled sound the line describes
         "[girlfriend_name] gasped, one small, startled sound."
         "{i}Babe, are you okay?{/i} The words never made it past my throat."
 

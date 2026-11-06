@@ -282,6 +282,7 @@ label ch01_scene_09_dinner:
     show leia_purple_dress_wet flustered at ch01_leia_collision_close, leia_body_idle
     with sprite_enter_exit
 
+    $ lc_sfx("leia_gasp")  # shock right after the spill
     gf "Oh my God—I'm so sorry."
     stranger "No, that was me. Are you okay?"
     $ enter_cinematic_mode()

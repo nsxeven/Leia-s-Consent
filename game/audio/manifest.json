@@ -2467,6 +2467,22 @@
     "license": "supplied by the project owner"
    },
    "processing": "first 0.86 s (trailing silence cut), 80 ms fade-out, -4 dB, limited to -6 dBFS (about -24 LUFS, level with Leia's sigh), 44.1 kHz; Leia's first kiss in the prologue (VOICE slider)"
+  },
+  {
+   "name": "sfx/leia_gasp",
+   "file": "sfx/leia_gasp.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 0.94,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Girl Gasp.m4a'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "first gasp of the take (0.64-1.58 s), 20 ms fade-in, 100 ms fade-out, 48 -> 44.1 kHz, integrated -23.1 LUFS, true peak -13.7 dBTP; Leia's gasp of surprise/shock (VOICE slider)"
   }
  ],
  "secondary_sources": [
