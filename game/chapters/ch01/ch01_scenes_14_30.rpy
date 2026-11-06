@@ -953,6 +953,8 @@ label ch01_scene_27_late_photo_drop:
 label ch01_scene_28_ryan_leia_alone:
 
     # darryn: night art is explicitly wanted from Julian going upstairs (scene 28) to the end of Day 1.
+    # Light switch clicks as the room drops to the night art (darryn).
+    $ lc_sfx("light_switch")
     scene bg ch01_villa_living_night
     with dissolve
     $ lc_sfx("door_close", 0.5)
