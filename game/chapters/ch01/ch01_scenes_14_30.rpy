@@ -215,6 +215,7 @@ label ch01_scene_15_under_blanket:
             gf "Because I forgot for a second."
             mc "Exactly."
             gf "You're annoying."
+            $ lc_sfx("leia_giggle", 0.7)
             "She hid the lower half of her face behind the blanket but stayed tucked against me."
 
         "[ch01_movie_dismiss_concern_text]":
@@ -379,12 +380,14 @@ label ch01_scene_18_private_under_blanket:
                 mc "I did manage to behave, didn't I?"
                 gf "For once."
                 mc "High praise."
+                $ lc_sfx("leia_giggle", 0.7)
                 "She was fighting a smile."
             else:
                 mc "You weren't exactly telling me to stop."
                 gf "Because I was trying not to make it obvious!"
                 mc "So that wasn't a no."
                 gf "That is an incredibly annoying way to phrase it."
+                $ lc_sfx("leia_giggle", 0.7)
                 "She was fighting a smile."
 
         "[ch01_private_curiosity_text]":
@@ -525,6 +528,7 @@ label ch01_scene_20_no_hiding_place:
             gf "Behave."
             mc "I am."
             gf "Barely."
+            $ lc_sfx("leia_giggle", 0.6)
             "She caught my wrist and steered my hand back down to her thigh, biting back a smile the whole time."
 
         "[ch01_noblanket_tease_text]":
@@ -743,7 +747,7 @@ label ch01_scene_23_relationship_philosophy:
             mc "Someone noticing you doesn't mean I'm losing you."
             gf "And if I noticed them noticing?"
             mc "Still depends what you do with it."
-            $ lc_sfx("leia_laugh", 0.6)
+            $ lc_sfx("leia_giggle", 0.8)
             "[girlfriend_name] laughed softly, but she was clearly thinking about the answer."
 
         "[ch01_philosophy_dont_care_text]":
@@ -1164,7 +1168,7 @@ label ch01_scene_30_end_day_one:
         set_story_flag("ch01_breakfast_reply_pending")
         clear_story_flag("ch01_breakfast_phone_session_active")
 
-    $ lc_sfx("leia_laugh", 0.6)
+    $ lc_sfx("leia_giggle", 0.8)
     "[girlfriend_name] checked the same message on her phone and laughed quietly."
 
     gf "He's dramatic."

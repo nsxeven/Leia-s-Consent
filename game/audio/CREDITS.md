@@ -85,3 +85,5 @@ Text notification `ui/notify` (phone banner) and `sfx/phone_notify` (story text 
 Call ringtone `sfx/phone_ring` (Maya's call on the walk back): supplied by the project developer.
 
 Leia's laugh `sfx/leia_laugh`: supplied by the project developer.
+
+Leia's giggle `sfx/leia_giggle`: supplied by the project developer.
