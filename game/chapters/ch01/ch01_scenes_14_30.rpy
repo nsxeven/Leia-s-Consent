@@ -37,9 +37,9 @@ label ch01_scene_13b_night_pool:
     "One story became three. [girlfriend_name] retaliated with things I'd done at home that [friend_name] had never heard, and within minutes both of them were comparing notes at my expense."
 
     mc "This friendship was a mistake."
-    gf "You introduced us."
-    friend "Technically I introduced you."
-    gf "Four years ago. You don't get lifetime credit."
+    gf "He's your best friend."
+    friend "Technically I'm the reason you two happened."
+    gf "One dare. Four years ago. You don't get lifetime credit."
     friend "I absolutely do."
 
     $ lc_sfx("leia_laugh")
@@ -1106,9 +1106,9 @@ label ch01_scene_29_private_reflection:
             $ set_story_value("ch01_private_attention_response", "claimed")
             mc "That's okay. I still like knowing you're mine."
             "[girlfriend_name] looked up at me."
-            gf "Possessive again."
-            mc "You complained less this time."
-            gf "Maybe I changed my mind."
+            gf "Possessive."
+            mc "You're not complaining."
+            gf "Not yet."
 
         "[ch01_private_open_text]":
             $ apply_choice("ch01_private_open")
@@ -1212,7 +1212,7 @@ label ch01_scene_30_end_day_one:
         "Nothing had happened. The fact that nothing had happened was part of what made the possibility feel new."
     else:
         $ set_story_value("ch01_day1_route_pressure", "mixed")
-        "[friend_name] had been our friend for four years. One day under the same roof had already shown me corners of that friendship I'd never had to think about."
+        "[friend_name] had been my best friend for longer than I'd known [girlfriend_name]. One day under the same roof had already shown me corners of that friendship I'd never had to think about."
         "None of us had decided yet what they would mean."
 
     # Ryan falls asleep with the day's towel incident still somewhere in the back of his mind.
@@ -1227,8 +1227,8 @@ label ch01_scene_30_end_day_one:
     if ch01_day1_love_ending:
         "[girlfriend_name] settled against my shoulder before we fell asleep."
         gf "Today was good."
-        mc "Even the part where the floor attacked you?"
-        gf "Especially after you stopped making fun of me."
+        mc "Even the part where you tripped?"
+        gf "We don't talk about the path."
         "I kissed her forehead, and she reached for my hand beneath the covers."
 
     "At some point, I fell asleep."

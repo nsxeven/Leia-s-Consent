@@ -799,7 +799,7 @@ label ch01_scene_12_shop_and_drive_back:
 
     "She bumped her shoulder lightly against mine and kept walking."
 
-    friend "I regret introducing you two."
+    friend "I regret ever daring you two."
     gf "Four years too late."
     mc "Historically successful terrible dare, remember?"
     friend "I take it back."
