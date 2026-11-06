@@ -271,6 +271,7 @@ label prologue_start:
 
     scene cg prologue_present_stare
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on each packing CG (darryn)
     $ lc_amb("room_tone")
 
     gf "[player_name]?"
@@ -284,6 +285,7 @@ label prologue_start:
 
     scene cg prologue_packing_banter
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on each packing CG (darryn)
 
     "Our first trip together had somehow taken four years."
     "College. Exams. Money. Work. The usual collection of reasons that always sounded temporary until another year disappeared."
@@ -370,6 +372,7 @@ label prologue_start:
 
     scene cg prologue_departure at lc_push_in
     with dissolve
+    $ lc_breath_once()  # Leia's soft inhale on each packing CG (darryn)
     $ lc_sfx("suitcase_wheels")
 
     "Our first trip together."
