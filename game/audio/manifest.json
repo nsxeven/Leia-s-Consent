@@ -1267,90 +1267,114 @@
    "file": "ui/key_1.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.07,
+   "duration": 0.224,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
    "source": {
-    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
-    "license": "original work, owned by the project"
-   }
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   },
   {
    "name": "ui/key_2",
    "file": "ui/key_2.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.07,
+   "duration": 0.224,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
    "source": {
-    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
-    "license": "original work, owned by the project"
-   }
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   },
   {
    "name": "ui/key_3",
    "file": "ui/key_3.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.07,
+   "duration": 0.224,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
    "source": {
-    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
-    "license": "original work, owned by the project"
-   }
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   },
   {
    "name": "ui/key_4",
    "file": "ui/key_4.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.07,
+   "duration": 0.224,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
    "source": {
-    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
-    "license": "original work, owned by the project"
-   }
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   },
   {
    "name": "ui/key_back",
    "file": "ui/key_back.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.06,
+   "duration": 0.224,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
    "source": {
-    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
-    "license": "original work, owned by the project"
-   }
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   },
   {
    "name": "ui/key_enter",
    "file": "ui/key_enter.ogg",
    "kind": "ui",
    "status": "synth",
-   "duration": 0.11,
+   "duration": 0.224,
    "channels": 1,
    "sample_rate": 44100,
    "codec": "vorbis q5",
    "loop": false,
    "source": {
-    "synth": "in-house (scratch/sfx/make_keys.py): band-passed noise click + low body + bottom-out tick",
-    "license": "original work, owned by the project"
-   }
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   },
   {
    "name": "ui/tock",
@@ -1383,6 +1407,44 @@
     "license": "supplied by the project owner"
    },
    "processing": "0.5 s trimmed from each end, 40 Hz high-pass, 3 s crossfade loop seam (0.2 dB), levelled to -30 LUFS; used for party, restaurant and bar (crowded places)"
+  },
+  {
+   "name": "ui/key_5",
+   "file": "ui/key_5.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.224,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
+  },
+  {
+   "name": "ui/key_6",
+   "file": "ui/key_6.ogg",
+   "kind": "ui",
+   "status": "synth",
+   "duration": 0.224,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "freesound_id": 609534,
+    "url": "https://freesound.org/people/5ro4/sounds/609534/",
+    "author": "5ro4",
+    "title": "Keyboard single key presses.wav",
+    "license": "CC0 1.0"
+   },
+   "processing": "single real key press cut from the recording (onset -4 ms, 0.22 s, 15 ms fade), peak-normalised"
   }
  ],
  "secondary_sources": [
