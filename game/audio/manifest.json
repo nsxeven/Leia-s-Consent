@@ -2145,6 +2145,22 @@
     "license": "supplied by the project owner"
    },
    "processing": "+6 dB (to about -33 LUFS, a quiet bed), 0.1 s edge fades, 44.1 kHz; loops on sfx_loop through the post-collision conversation"
+  },
+  {
+   "name": "sfx/cat_call",
+   "file": "sfx/cat_call.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 0.95,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q5",
+   "loop": false,
+   "source": {
+    "provided_by": "darryn (project developer), 'Cat Call.mp3'",
+    "license": "supplied by the project owner"
+   },
+   "processing": "silent lead-in/tail trimmed (0.85-1.80 s kept), peak -9 dBFS, short fades, 44.1 kHz"
   }
  ],
  "secondary_sources": [

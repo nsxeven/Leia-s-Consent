@@ -77,3 +77,5 @@ Restaurant ambience `amb/restaurant` (dinner and the restaurant bar): supplied b
 Thump `sfx/thump` (first dinner collision): supplied by the project developer.
 
 Dripping `sfx/dripping` (after the dinner spill): supplied by the project developer.
+
+Cat call `sfx/cat_call` (restroom-corridor compliment): supplied by the project developer.
