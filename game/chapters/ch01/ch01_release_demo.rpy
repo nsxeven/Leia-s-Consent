@@ -1,6 +1,6 @@
 # Release-only demo switch. MAIN is the unrestricted development build.
 # Versioned release branches opt into the Day One demo gate independently.
-# release/prologue-day1-demo-v0.2.0: Prologue + Day One demo, gate ON.
+# release/prologue-day1-demo-v1.0.0: first public Prologue + Day One demo, gate ON.
 define LC_DAY1_DEMO_BUILD = True
 
 default persistent.ch01_day1_demo_completed = False
