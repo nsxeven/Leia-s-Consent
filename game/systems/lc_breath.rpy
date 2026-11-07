@@ -13,6 +13,9 @@
 ## the same clip is never played twice in a row.
 ## Sounds: MoanBox by Selenyhr (Unlicense / public domain).
 
+# The loop that is running (its settings), so single moans can resume it; saved with the game.
+default lc_breath_loop = None
+
 init -5 python:
     renpy.music.register_channel("lc_breath", mixer="voice", loop=True, stop_on_mute=True, tight=False)
 
@@ -72,36 +75,69 @@ init python:
             out.append("<silence %.2f>" % renpy.random.uniform(pause_lo, pause_hi))
         return out
 
+    def _lc_breath_loop_seq():
+        """A fresh random string for the loop that is running (None if no loop)."""
+        p = store.lc_breath_loop
+        if not p:
+            return None
+        seq = lc_breath_sequence(p["intensity"], p["moans"], moan_chance=p["moan_chance"], pause=p["pause"])
+        return seq if any(not s.startswith("<") for s in seq) else None
+
     def lc_breath_start(intensity=1, moans=True, fadein=0.6, volume=1.0, moan_chance=None, pause=None):
-        """moan_chance / pause=(lo, hi) override the intensity defaults (e.g. a dense, moan-heavy beat)."""
+        """moan_chance / pause=(lo, hi) override the intensity defaults (e.g. a dense, moan-heavy beat).
+
+        Only one of Leia's sounds plays at a time: if a single moan/inhale is still
+        sounding on the channel, the loop is queued to start right after it.
+        """
         seq = lc_breath_sequence(intensity, moans, moan_chance=moan_chance, pause=pause)
         if not any(not s.startswith("<") for s in seq):
             return None
-        renpy.music.play(seq, channel="lc_breath", loop=True, fadein=fadein,
-                         relative_volume=LC_BREATH_GAIN * volume)
+        single_still_playing = store.lc_breath_loop is None and renpy.music.get_playing(channel="lc_breath")
+        store.lc_breath_loop = {"intensity": intensity, "moans": moans, "moan_chance": moan_chance,
+                                "pause": tuple(pause) if pause else None, "volume": volume}
+        if single_still_playing:
+            renpy.music.queue(seq, channel="lc_breath", loop=True, clear_queue=True,
+                              relative_volume=LC_BREATH_GAIN * volume)
+        else:
+            renpy.music.play(seq, channel="lc_breath", loop=True, fadein=fadein,
+                             relative_volume=LC_BREATH_GAIN * volume)
         return seq
 
     def lc_breath_once(intensity=1, volume=1.0):
-        """One random soft inhale (a single breath on a Leia CG); never loops."""
+        """One random soft inhale (a single breath on a Leia CG); never loops (ends a running loop)."""
         f = _lc_breath_pick("inhale", max(1, int(intensity)), None)
         if f:
+            store.lc_breath_loop = None
             renpy.music.play(f, channel="lc_breath", loop=False, relative_volume=LC_BREATH_GAIN * volume)
         return f
 
-    def lc_moan_once(intensity=2, volume=1.0):
-        """One random moan on the voice-clip channel, so a running breath loop keeps going."""
-        f = _lc_breath_pick("moan", max(1, int(intensity)), None)
-        if f:
-            renpy.music.play(f, channel="lc_voice", loop=False, relative_volume=LC_BREATH_GAIN * volume)
+    def _lc_breath_single(kind, intensity, volume):
+        """Play one clip on Leia's channel without ever stacking two voices.
+
+        Inside a running loop the current clip fades out, this one plays, and the
+        loop carries on afterwards with a fresh random string (darryn: the dream
+        moans used to overlap and sound like two people).
+        """
+        f = _lc_breath_pick(kind, max(1, int(intensity)), None)
+        if not f:
+            return None
+        loop = _lc_breath_loop_seq()
+        renpy.music.play(f, channel="lc_breath", loop=False, fadeout=0.15,
+                         relative_volume=LC_BREATH_GAIN * volume)
+        if loop:
+            renpy.music.queue(loop, channel="lc_breath", loop=True, clear_queue=False,
+                              relative_volume=LC_BREATH_GAIN * store.lc_breath_loop.get("volume", 1.0))
         return f
+
+    def lc_moan_once(intensity=2, volume=1.0):
+        """One random moan; inside a running loop it replaces the loop's next sound instead of layering."""
+        return _lc_breath_single("moan", intensity, volume)
 
     def lc_inhale_over(intensity=1, volume=1.0):
-        """One random inhale on the voice-clip channel (layered over a running loop)."""
-        f = _lc_breath_pick("inhale", max(1, int(intensity)), None)
-        if f:
-            renpy.music.play(f, channel="lc_voice", loop=False, relative_volume=LC_BREATH_GAIN * volume)
-        return f
+        """One random inhale; inside a running loop it replaces the loop's next sound instead of layering."""
+        return _lc_breath_single("inhale", intensity, volume)
 
     def lc_breath_stop(fadeout=1.2):
+        store.lc_breath_loop = None
         renpy.music.stop(channel="lc_voice", fadeout=min(fadeout, 0.3))
         renpy.music.stop(channel="lc_breath", fadeout=fadeout)

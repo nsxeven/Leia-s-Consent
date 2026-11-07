@@ -1288,8 +1288,9 @@ label ch01_scene_30_end_day_one:
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
         $ lc_sfx("cum_in01")  # darryn: Shinlalala pack sound replaces the old squish ("balloon pop"), as the rub CG (BBCStrangerNightmare_03) appears
-        # darryn: CG 03 spams inhales and moans: dense loop + extra moans layered on top.
-        $ lc_breath_start(4, moan_chance=0.55, pause=(0.05, 0.4), fadein=0.2)
+        # darryn: CG 03 = dense inhales and moans, but one voice at a time (players heard two people).
+        # Single moans below replace the loop's next sound instead of layering on top of it.
+        $ lc_breath_start(4, moan_chance=0.4, pause=(0.45, 1.1), fadein=0.2)
         scene cg ch01_dream_dinner_rub at lc_dream_sway
         with dissolve
 

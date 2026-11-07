@@ -28,9 +28,23 @@ class BreathTests(unittest.TestCase):
         self.assertIn("lc_breath_stop(", scene20)
         dream = src.split('scene cg ch01_dream_dinner_beside', 1)[1].split('lc_sfx("gasp_wake")', 1)[0]
         self.assertIn("lc_breath_start(2, moans=False", dream)  # CG 02: inhales only
-        self.assertIn("lc_breath_start(4, moan_chance=0.55", dream)  # CG 03: dense inhales + moans
+        self.assertIn("lc_breath_start(4, moan_chance=0.4", dream)  # CG 03: dense inhales + moans, slower
         self.assertIn("lc_moan_once(", dream)
         self.assertIn("lc_breath_stop(", dream)
+
+    def test_single_clips_never_stack_two_voices(self):
+        # darryn: the dream moans overlapped and sounded like two people. Single
+        # moans/inhales must play on Leia's own channel (replacing the loop's next
+        # sound) rather than on the separate lc_voice channel on top of the loop.
+        src = (GAME / "systems" / "lc_breath.rpy").read_text(encoding="utf-8")
+        single = src.split("def _lc_breath_single(", 1)[1].split("\n    def ", 1)[0]
+        self.assertIn('channel="lc_breath"', single)
+        self.assertNotIn('channel="lc_voice"', single)
+        for fn in ("lc_moan_once", "lc_inhale_over"):
+            body = src.split("def %s(" % fn, 1)[1].split("\n    def ", 1)[0]
+            self.assertIn("_lc_breath_single(", body)
+            self.assertNotIn("lc_voice", body)
+        self.assertIn("default lc_breath_loop = None", src)
 
 
 if __name__ == "__main__":
