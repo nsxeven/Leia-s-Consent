@@ -6,6 +6,7 @@ from pathlib import Path
 
 GAME = Path(__file__).resolve().parents[1] / "game"
 AUDIO = GAME / "audio"
+SFX_FOLDERS = ("sfx", "voice/leia", "voice/ryan", "lewd")
 PATTERNS = {
     "sfx": re.compile(r'lc_sfx\(\s*"([a-z0-9_]+)"'),
     "amb": re.compile(r'lc_amb\(\s*"([a-z0-9_]+)"'),
@@ -24,9 +25,25 @@ class DemoAudioTests(unittest.TestCase):
             src = path.read_text(encoding="utf-8")
             for kind, pat in PATTERNS.items():
                 for name in pat.findall(src):
-                    if not (AUDIO / kind / (name + ".ogg")).is_file():
+                    # lc_sfx() also searches the VOICE and LEWD folders (lc_fx.LC_SFX_SEARCH).
+                    kinds = SFX_FOLDERS if kind == "sfx" else (kind,)
+                    if not any((AUDIO / k / (name + ".ogg")).is_file() for k in kinds):
                         missing.append("%s/%s (%s)" % (kind, name, path.name))
         self.assertEqual(missing, [])
+
+    def test_folders_match_sliders(self):
+        """darryn: vocal clips in voice/, intimate foley in lewd/ (own LEWD slider)."""
+        sfx = {f.stem for f in (AUDIO / "sfx").glob("*.ogg")}
+        self.assertFalse([s for s in sfx if s.startswith("leia_")], "Leia vocals belong in voice/leia/")
+        self.assertFalse([s for s in sfx if re.match(r"(cum_in|cum_out|plapdry|plapwet|pullout|stroke|wet)\d\d$", s)],
+                         "Shinlalala pack belongs in lewd/")
+        self.assertEqual(len(list((AUDIO / "lewd").glob("*.ogg"))), 61)
+        fx = (GAME / "systems" / "lc_fx.rpy").read_text(encoding="utf-8")
+        for kind in SFX_FOLDERS:
+            self.assertIn('("%s", ' % kind, fx)
+        self.assertIn('mixer="lewd"', fx)
+        ui = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        self.assertIn('Preference("mixer lewd volume")', ui)
 
     def test_every_file_is_in_the_manifest_with_a_licence(self):
         manifest = json.loads((AUDIO / "manifest.json").read_text(encoding="utf-8"))

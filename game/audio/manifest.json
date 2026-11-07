@@ -612,9 +612,9 @@
    "processing": "cut 0.016-0.750s of preview (onset = first sample -30.0 dB under peak, minus 4 ms; tail thr -50.0 dB), fade in 6 ms / out 60 ms, peak-normalised -3 dBFS; balanced -1.1 dB (cap -8 dB vs splash_big)"
   },
   {
-   "name": "sfx/gasp_wake",
-   "file": "sfx/gasp_wake.ogg",
-   "kind": "sfx",
+   "name": "voice/ryan/gasp_wake",
+   "file": "voice/ryan/gasp_wake.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 0.802,
    "channels": 1,
@@ -2169,9 +2169,9 @@
    "processing": "silent lead-in/tail trimmed (0.85-1.80 s kept), peak -9 dBFS, short fades, 44.1 kHz"
   },
   {
-   "name": "sfx/leia_laugh",
-   "file": "sfx/leia_laugh.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_laugh",
+   "file": "voice/leia/leia_laugh.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 1.18,
    "channels": 2,
@@ -2185,9 +2185,9 @@
    "processing": "silent tail trimmed, peak -8 dBFS, 60 ms fade-out, 44.1 kHz; Leia's laugh on narrated laugh lines"
   },
   {
-   "name": "sfx/leia_giggle",
-   "file": "sfx/leia_giggle.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_giggle",
+   "file": "voice/leia/leia_giggle.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 2.927506,
    "channels": 2,
@@ -2201,9 +2201,9 @@
    "processing": "peak -9 dBFS, 80 ms fade-out, 44.1 kHz; Leia's soft/held-back giggles"
   },
   {
-   "name": "sfx/leia_sigh",
-   "file": "sfx/leia_sigh.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_sigh",
+   "file": "voice/leia/leia_sigh.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 2.563878,
    "channels": 2,
@@ -2217,9 +2217,9 @@
    "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's sigh"
   },
   {
-   "name": "sfx/leia_scream",
-   "file": "sfx/leia_scream.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_scream",
+   "file": "voice/leia/leia_scream.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 0.893311,
    "channels": 2,
@@ -2233,9 +2233,9 @@
    "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's short scream (trip on the walk back)"
   },
   {
-   "name": "sfx/leia_angry_laugh",
-   "file": "sfx/leia_angry_laugh.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_angry_laugh",
+   "file": "voice/leia/leia_angry_laugh.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 1.696395,
    "channels": 2,
@@ -2249,9 +2249,9 @@
    "processing": "silence trimmed, peak-normalised, short fade-out, 44.1 kHz; Leia's exasperated laugh"
   },
   {
-   "name": "sfx/leia_grunt",
-   "file": "sfx/leia_grunt.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_grunt",
+   "file": "voice/leia/leia_grunt.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 0.751497,
    "channels": 2,
@@ -2453,9 +2453,9 @@
    "processing": "BGM theme 'quiet_thoughts' (darryn's pick); silence-trimmed, 30 Hz high-pass, -28 LUFS, loop body 51.8 s with a 3 s crossfade seam; integrated -28.0 LUFS, true peak -12.8 dBTP; OGG Vorbis q4"
   },
   {
-   "name": "sfx/leia_kiss",
-   "file": "sfx/leia_kiss.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_kiss",
+   "file": "voice/leia/leia_kiss.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 0.86,
    "channels": 2,
@@ -2469,9 +2469,9 @@
    "processing": "first 0.86 s (trailing silence cut), 80 ms fade-out, -4 dB, limited to -6 dBFS (about -24 LUFS, level with Leia's sigh), 44.1 kHz; Leia's first kiss in the prologue (VOICE slider)"
   },
   {
-   "name": "sfx/leia_gasp",
-   "file": "sfx/leia_gasp.ogg",
-   "kind": "sfx",
+   "name": "voice/leia/leia_gasp",
+   "file": "voice/leia/leia_gasp.ogg",
+   "kind": "voice",
    "status": "ok",
    "duration": 0.94,
    "channels": 2,
@@ -2485,9 +2485,9 @@
    "processing": "first gasp of the take (0.64-1.58 s), 20 ms fade-in, 100 ms fade-out, 48 -> 44.1 kHz, integrated -23.1 LUFS, true peak -13.7 dBTP; Leia's gasp of surprise/shock (VOICE slider)"
   },
   {
-   "name": "sfx/cum_in01",
-   "file": "sfx/cum_in01.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_in01",
+   "file": "lewd/cum_in01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.458594,
    "channels": 1,
@@ -2503,9 +2503,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_in02",
-   "file": "sfx/cum_in02.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_in02",
+   "file": "lewd/cum_in02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.615329,
    "channels": 1,
@@ -2521,9 +2521,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_in03",
-   "file": "sfx/cum_in03.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_in03",
+   "file": "lewd/cum_in03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.696599,
    "channels": 1,
@@ -2539,9 +2539,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_out01",
-   "file": "sfx/cum_out01.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_out01",
+   "file": "lewd/cum_out01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.18576,
    "channels": 1,
@@ -2557,9 +2557,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_out02",
-   "file": "sfx/cum_out02.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_out02",
+   "file": "lewd/cum_out02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.345397,
    "channels": 1,
@@ -2575,9 +2575,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_out03",
-   "file": "sfx/cum_out03.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_out03",
+   "file": "lewd/cum_out03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.271383,
    "channels": 1,
@@ -2593,9 +2593,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_out04",
-   "file": "sfx/cum_out04.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_out04",
+   "file": "lewd/cum_out04.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.496327,
    "channels": 1,
@@ -2611,9 +2611,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_out05",
-   "file": "sfx/cum_out05.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_out05",
+   "file": "lewd/cum_out05.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.763356,
    "channels": 1,
@@ -2629,9 +2629,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/cum_out06",
-   "file": "sfx/cum_out06.ogg",
-   "kind": "sfx",
+   "name": "lewd/cum_out06",
+   "file": "lewd/cum_out06.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.725624,
    "channels": 1,
@@ -2647,9 +2647,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry01",
-   "file": "sfx/plapdry01.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry01",
+   "file": "lewd/plapdry01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.147302,
    "channels": 1,
@@ -2665,9 +2665,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry02",
-   "file": "sfx/plapdry02.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry02",
+   "file": "lewd/plapdry02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.200998,
    "channels": 1,
@@ -2683,9 +2683,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry03",
-   "file": "sfx/plapdry03.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry03",
+   "file": "lewd/plapdry03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.148753,
    "channels": 1,
@@ -2701,9 +2701,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry04",
-   "file": "sfx/plapdry04.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry04",
+   "file": "lewd/plapdry04.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.20898,
    "channels": 1,
@@ -2719,9 +2719,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry05",
-   "file": "sfx/plapdry05.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry05",
+   "file": "lewd/plapdry05.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.193741,
    "channels": 1,
@@ -2737,9 +2737,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry06",
-   "file": "sfx/plapdry06.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry06",
+   "file": "lewd/plapdry06.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.205351,
    "channels": 1,
@@ -2755,9 +2755,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry07",
-   "file": "sfx/plapdry07.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry07",
+   "file": "lewd/plapdry07.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.193741,
    "channels": 1,
@@ -2773,9 +2773,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry08",
-   "file": "sfx/plapdry08.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry08",
+   "file": "lewd/plapdry08.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.19737,
    "channels": 1,
@@ -2791,9 +2791,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry09",
-   "file": "sfx/plapdry09.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry09",
+   "file": "lewd/plapdry09.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.199546,
    "channels": 1,
@@ -2809,9 +2809,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry10",
-   "file": "sfx/plapdry10.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry10",
+   "file": "lewd/plapdry10.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.198095,
    "channels": 1,
@@ -2827,9 +2827,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapdry11",
-   "file": "sfx/plapdry11.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapdry11",
+   "file": "lewd/plapdry11.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.198821,
    "channels": 1,
@@ -2845,9 +2845,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/pullout01",
-   "file": "sfx/pullout01.ogg",
-   "kind": "sfx",
+   "name": "lewd/pullout01",
+   "file": "lewd/pullout01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.33161,
    "channels": 1,
@@ -2863,9 +2863,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/pullout02",
-   "file": "sfx/pullout02.ogg",
-   "kind": "sfx",
+   "name": "lewd/pullout02",
+   "file": "lewd/pullout02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.297506,
    "channels": 1,
@@ -2881,9 +2881,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/pullout03",
-   "file": "sfx/pullout03.ogg",
-   "kind": "sfx",
+   "name": "lewd/pullout03",
+   "file": "lewd/pullout03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.323628,
    "channels": 1,
@@ -2899,9 +2899,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke01",
-   "file": "sfx/stroke01.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke01",
+   "file": "lewd/stroke01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.260499,
    "channels": 1,
@@ -2917,9 +2917,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke02",
-   "file": "sfx/stroke02.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke02",
+   "file": "lewd/stroke02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.240907,
    "channels": 1,
@@ -2935,9 +2935,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke03",
-   "file": "sfx/stroke03.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke03",
+   "file": "lewd/stroke03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.124082,
    "channels": 1,
@@ -2953,9 +2953,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke04",
-   "file": "sfx/stroke04.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke04",
+   "file": "lewd/stroke04.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.258322,
    "channels": 1,
@@ -2971,9 +2971,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke05",
-   "file": "sfx/stroke05.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke05",
+   "file": "lewd/stroke05.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.242358,
    "channels": 1,
@@ -2989,9 +2989,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke06",
-   "file": "sfx/stroke06.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke06",
+   "file": "lewd/stroke06.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.248163,
    "channels": 1,
@@ -3007,9 +3007,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke07",
-   "file": "sfx/stroke07.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke07",
+   "file": "lewd/stroke07.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.422313,
    "channels": 1,
@@ -3025,9 +3025,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke08",
-   "file": "sfx/stroke08.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke08",
+   "file": "lewd/stroke08.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.265578,
    "channels": 1,
@@ -3043,9 +3043,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke09",
-   "file": "sfx/stroke09.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke09",
+   "file": "lewd/stroke09.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.400544,
    "channels": 1,
@@ -3061,9 +3061,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/stroke10",
-   "file": "sfx/stroke10.ogg",
-   "kind": "sfx",
+   "name": "lewd/stroke10",
+   "file": "lewd/stroke10.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.39619,
    "channels": 1,
@@ -3079,9 +3079,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet01",
-   "file": "sfx/wet01.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet01",
+   "file": "lewd/wet01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.286621,
    "channels": 1,
@@ -3097,9 +3097,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet02",
-   "file": "sfx/wet02.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet02",
+   "file": "lewd/wet02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.560181,
    "channels": 1,
@@ -3115,9 +3115,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet03",
-   "file": "sfx/wet03.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet03",
+   "file": "lewd/wet03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.365714,
    "channels": 1,
@@ -3133,9 +3133,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet04",
-   "file": "sfx/wet04.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet04",
+   "file": "lewd/wet04.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.406349,
    "channels": 1,
@@ -3151,9 +3151,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet05",
-   "file": "sfx/wet05.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet05",
+   "file": "lewd/wet05.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.809796,
    "channels": 1,
@@ -3169,9 +3169,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet06",
-   "file": "sfx/wet06.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet06",
+   "file": "lewd/wet06.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.525351,
    "channels": 1,
@@ -3187,9 +3187,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet07",
-   "file": "sfx/wet07.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet07",
+   "file": "lewd/wet07.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.420862,
    "channels": 1,
@@ -3205,9 +3205,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet08",
-   "file": "sfx/wet08.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet08",
+   "file": "lewd/wet08.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.371519,
    "channels": 1,
@@ -3223,9 +3223,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet09",
-   "file": "sfx/wet09.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet09",
+   "file": "lewd/wet09.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.400544,
    "channels": 1,
@@ -3241,9 +3241,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet10",
-   "file": "sfx/wet10.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet10",
+   "file": "lewd/wet10.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.323628,
    "channels": 1,
@@ -3259,9 +3259,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet11",
-   "file": "sfx/wet11.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet11",
+   "file": "lewd/wet11.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.372971,
    "channels": 1,
@@ -3277,9 +3277,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/wet12",
-   "file": "sfx/wet12.ogg",
-   "kind": "sfx",
+   "name": "lewd/wet12",
+   "file": "lewd/wet12.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.272834,
    "channels": 1,
@@ -3295,9 +3295,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet01",
-   "file": "sfx/plapwet01.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet01",
+   "file": "lewd/plapwet01.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.168345,
    "channels": 1,
@@ -3313,9 +3313,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet02",
-   "file": "sfx/plapwet02.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet02",
+   "file": "lewd/plapwet02.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.175238,
    "channels": 1,
@@ -3331,9 +3331,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet03",
-   "file": "sfx/plapwet03.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet03",
+   "file": "lewd/plapwet03.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.178866,
    "channels": 1,
@@ -3349,9 +3349,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet04",
-   "file": "sfx/plapwet04.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet04",
+   "file": "lewd/plapwet04.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.163265,
    "channels": 1,
@@ -3367,9 +3367,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet05",
-   "file": "sfx/plapwet05.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet05",
+   "file": "lewd/plapwet05.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.150567,
    "channels": 1,
@@ -3385,9 +3385,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet06",
-   "file": "sfx/plapwet06.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet06",
+   "file": "lewd/plapwet06.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.174512,
    "channels": 1,
@@ -3403,9 +3403,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet07",
-   "file": "sfx/plapwet07.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet07",
+   "file": "lewd/plapwet07.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.173061,
    "channels": 1,
@@ -3421,9 +3421,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet08",
-   "file": "sfx/plapwet08.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet08",
+   "file": "lewd/plapwet08.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.189025,
    "channels": 1,
@@ -3439,9 +3439,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet09",
-   "file": "sfx/plapwet09.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet09",
+   "file": "lewd/plapwet09.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.138594,
    "channels": 1,
@@ -3457,9 +3457,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet10",
-   "file": "sfx/plapwet10.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet10",
+   "file": "lewd/plapwet10.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.174875,
    "channels": 1,
@@ -3475,9 +3475,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet11",
-   "file": "sfx/plapwet11.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet11",
+   "file": "lewd/plapwet11.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.216961,
    "channels": 1,
@@ -3493,9 +3493,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet12",
-   "file": "sfx/plapwet12.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet12",
+   "file": "lewd/plapwet12.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.147302,
    "channels": 1,
@@ -3511,9 +3511,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet13",
-   "file": "sfx/plapwet13.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet13",
+   "file": "lewd/plapwet13.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.217687,
    "channels": 1,
@@ -3529,9 +3529,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet14",
-   "file": "sfx/plapwet14.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet14",
+   "file": "lewd/plapwet14.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.209705,
    "channels": 1,
@@ -3547,9 +3547,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet15",
-   "file": "sfx/plapwet15.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet15",
+   "file": "lewd/plapwet15.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.213333,
    "channels": 1,
@@ -3565,9 +3565,9 @@
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
   },
   {
-   "name": "sfx/plapwet16",
-   "file": "sfx/plapwet16.ogg",
-   "kind": "sfx",
+   "name": "lewd/plapwet16",
+   "file": "lewd/plapwet16.ogg",
+   "kind": "lewd",
    "status": "ok",
    "duration": 0.20898,
    "channels": 1,

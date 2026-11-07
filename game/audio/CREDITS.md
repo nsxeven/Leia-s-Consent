@@ -36,7 +36,7 @@ Licences were checked on each sound's Freesound page (publicdomain/zero) at down
 | sfx/door_close | [Door closing, modern apartment, springy #15](https://freesound.org/people/JapanYoshiTheGamer/sounds/648831/) (#648831) | JapanYoshiTheGamer | CC0 1.0 |
 | sfx/door_open | [dorm door opening.wav](https://freesound.org/people/pagancow/sounds/15419/) (#15419) | pagancow | CC0 1.0 |
 | sfx/door_unlock | [Hotel room door unlocking](https://freesound.org/people/wlabarron/sounds/494128/) (#494128) | wlabarron | CC0 1.0 |
-| sfx/gasp_wake | [Man gasp of breath](https://freesound.org/people/ckvoiceover/sounds/401333/) (#401333) | ckvoiceover | CC0 1.0 |
+| voice/ryan/gasp_wake | [Man gasp of breath](https://freesound.org/people/ckvoiceover/sounds/401333/) (#401333) | ckvoiceover | CC0 1.0 |
 | sfx/glass_clink | [Cheers!.wav](https://freesound.org/people/dazza007/sounds/433721/) (#433721) | dazza007 | CC0 1.0 |
 | sfx/ice_clink | [Putting ice cubes into glassWAV](https://freesound.org/people/13GPanska_Gorbusinova_Anna/sounds/377995/) (#377995) | 13GPanska_Gorbusinova_Anna | CC0 1.0 |
 | sfx/keys | [Keys jingling](https://freesound.org/people/Lightnessko/sounds/390324/) (#390324) | Lightnessko | CC0 1.0 |
@@ -70,15 +70,15 @@ Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the 
 
 Crowd chatter `amb/crowd` (Prologue party): supplied by the project developer.
 
-Squish `sfx/squish` (supplied by the project developer): kept in the library, no longer played; the nightmare dinner CG now uses `sfx/cum_in01` (below).
+Squish `sfx/squish` (supplied by the project developer): kept in the library, no longer played; the nightmare dinner CG now uses `lewd/cum_in01` (below).
 
 **Lewd sounds by Shinlalala.** 61 sound effects from *Shinlalala's Lewd Sound Pack* © 2024 by Shinlalala, licensed under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Files are unmodified and keep their original names:
-`sfx/cum_in01`..`cum_in03`, `sfx/cum_out01`..`cum_out06`, `sfx/plapdry01`..`plapdry11`, `sfx/plapwet01`..`plapwet16`,
-`sfx/pullout01`..`pullout03`, `sfx/stroke01`..`stroke10`, `sfx/wet01`..`wet12`. Any edited version of these files must
+`lewd/cum_in01`..`cum_in03`, `lewd/cum_out01`..`cum_out06`, `lewd/plapdry01`..`plapdry11`, `lewd/plapwet01`..`plapwet16`,
+`lewd/pullout01`..`pullout03`, `lewd/stroke01`..`stroke10`, `lewd/wet01`..`wet12`. Any edited version of these files must
 also be shared under CC BY-SA 4.0 and keep this credit.
 
-Leia's breaths and moans `voice/leia/*` (40 clips): MoanBox by Selenyhr (https://selenyhr.itch.io/), released under the Unlicense (public domain).
+Leia's breaths and moans `voice/leia/inhale-*` and `voice/leia/moan-*` (40 clips): MoanBox by Selenyhr (https://selenyhr.itch.io/), released under the Unlicense (public domain).
 
 Sunscreen rub `sfx/sunscreen_rub`: supplied by the project developer.
 
@@ -94,19 +94,19 @@ Text notification `ui/notify` (phone banner) and `sfx/phone_notify` (story text 
 
 Call ringtone `sfx/phone_ring` (Maya's call on the walk back): supplied by the project developer.
 
-Leia's laugh `sfx/leia_laugh`: supplied by the project developer.
+Leia's laugh `voice/leia/leia_laugh`: supplied by the project developer.
 
-Leia's giggle `sfx/leia_giggle`: supplied by the project developer.
-Leia's kiss `sfx/leia_kiss`: supplied by the project developer.
-Leia's gasp `sfx/leia_gasp`: supplied by the project developer.
+Leia's giggle `voice/leia/leia_giggle`: supplied by the project developer.
+Leia's kiss `voice/leia/leia_kiss`: supplied by the project developer.
+Leia's gasp `voice/leia/leia_gasp`: supplied by the project developer.
 
-Leia's sigh `sfx/leia_sigh`: supplied by the project developer.
+Leia's sigh `voice/leia/leia_sigh`: supplied by the project developer.
 
-Leia's short scream `sfx/leia_scream`: supplied by the project developer.
+Leia's short scream `voice/leia/leia_scream`: supplied by the project developer.
 
-Leia's exasperated laugh `sfx/leia_angry_laugh`: supplied by the project developer.
+Leia's exasperated laugh `voice/leia/leia_angry_laugh`: supplied by the project developer.
 
-Leia's grunt `sfx/leia_grunt`: supplied by the project developer.
+Leia's grunt `voice/leia/leia_grunt`: supplied by the project developer.
 
 Ice in glass `sfx/ice_glass` and pour `sfx/whisky_pour` (Julian's whisky CG): supplied by the project developer.
 
