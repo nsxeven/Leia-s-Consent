@@ -23,14 +23,14 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "1.0.0"
+define config.version = "0.1.0"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
-Leia's Consent — Day One Demo, version 1.0.0.
+Leia's Consent — Day One Demo, version 0.1.0.
 
 © 2026 NSX Studios. All rights reserved.
 
