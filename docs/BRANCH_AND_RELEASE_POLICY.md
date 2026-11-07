@@ -21,6 +21,22 @@ Updated: 2026-10-21
 - Do not merge release-only flags/configuration backwards into `main`. In particular, preserve `LC_DAY1_DEMO_BUILD = False` and `CHAPTER_SELECT_RULE = "always"` on `main`.
 - Do not merge feature PRs #22–24 merely to reconcile branches; review, test and approve their story changes first.
 
+## Version numbers (darryn, 2026-11-08)
+
+Public builds use **`v0.<day>.<patch>`** until the game is complete:
+
+| Build | Version |
+| --- | --- |
+| Prologue + Day One demo (public since 2026-11-06) | `v0.1.0` (bug-fix re-uploads: `v0.1.1`, `v0.1.2` ...) |
+| Build that ends after Day Two | `v0.2.0` |
+| Days Three / Four / Five | `v0.3.0` / `v0.4.0` / `v0.5.0` |
+| Completed game | `v1.x.x` |
+
+- The second number is always the last playable day. The third number is for re-uploads of the same day (fixes only).
+- `config.version` on the release branch is the bare number (`"0.1.0"`); the zips, the F95 thread title, the F95 opening post, the itch upload names and Patreon posts all quote the same `v0.1.0`.
+- `main` keeps `config.version = "dev-main"`; it is never a public build.
+- The first public upload was labelled `1.0.0` (release branch `release/prologue-day1-demo-v1.0.0`, `8e1fadf`); it is the same content as `v0.1.0`. The older internal snapshots `release/prologue-day1-demo-v0.1.0` and `release/prologue-day1-demo-v0.2.0` predate the public demo and are not the public v0.1.0 / v0.2.0; the public v0.1.0 lives on `release/day1-demo-v0.1.0`, and Day Two should use a new name such as `release/day2-v0.2.0`.
+
 ## Important branch-specific settings
 
 | Setting | `main` | Day One demo |
@@ -28,7 +44,7 @@ Updated: 2026-10-21
 | `LC_DAY1_DEMO_BUILD` | `False` | `True` |
 | `CHAPTER_SELECT_RULE` | `"always"` | `"developer_or_unlocked"` (also hidden by demo gate) |
 | Game title | `Leia's Consent` | `Leia's Consent — Day One Demo` |
-| `config.version` | `dev-main` | `0.1.0-demo.1` |
+| `config.version` | `dev-main` | `0.1.0` (see Version numbers) |
 | `build.name` | `LeiasConsentDev` | `LeiasConsentDayOneDemo` |
 | `config.save_directory` | `LeiasConsent-1789068362` (existing dev saves) | `LeiasConsent-DayOneDemo-1789068362` |
 
