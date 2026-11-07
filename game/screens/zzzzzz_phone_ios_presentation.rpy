@@ -984,31 +984,40 @@ screen phone_screen():
 
 screen lc_phone_status_row(row):
     $ c = lc_phone_palette()
-    vbox:
-        spacing 6
+    # Focusable row: hover / keyboard / controller focus shows the stat
+    # explanation (drawn by lc_stat_tip at the end of lc_phone_status).
+    button:
+        style "lc_sw_hit"
         xfill True
-        hbox:
+        padding (6, 4)
+        hover_background Solid(c["line"])
+        tooltip row.get("tooltip")
+        action NullAction()
+        vbox:
+            spacing 6
             xfill True
-            text row["label"]:
-                style "lc_sw_pixel_bold"
-                color c["txt"]
-            if row["detail"]:
-                text row["detail"]:
+            hbox:
+                xfill True
+                text row["label"]:
+                    style "lc_sw_pixel_bold"
+                    color c["txt"]
+                if row["detail"]:
+                    text row["detail"]:
+                        style "lc_sw_pixel"
+                        size 18
+                        color c["mut"]
+                        xalign 1.0
+            bar:
+                value StaticValue(row["value"], 100)
+                xfill True
+                ysize 12
+                left_bar Solid(c["bar"])
+                right_bar Solid(c["track"])
+            if row["internal_key"]:
+                text row["internal_key"]:
                     style "lc_sw_pixel"
                     size 18
                     color c["mut"]
-                    xalign 1.0
-        bar:
-            value StaticValue(row["value"], 100)
-            xfill True
-            ysize 12
-            left_bar Solid(c["bar"])
-            right_bar Solid(c["track"])
-        if row["internal_key"]:
-            text row["internal_key"]:
-                style "lc_sw_pixel"
-                size 18
-                color c["mut"]
 
 
 screen lc_phone_status_section(title, rows):
@@ -1149,9 +1158,18 @@ screen lc_phone_status():
                         text_align 0.5
                         xalign 0.5
                         xmaximum 540
+                    text "Hover over a stat to see what it means.":
+                        style "lc_sw_hand"
+                        size 28
+                        color c["mut"]
+                        text_align 0.5
+                        xalign 0.5
+                        xmaximum 540
                     null height 18
             use lc_sw_home_bar(c["txt"])
         add Transform(lc_phone_art("bezel_" + theme), nearest=True)
+    # Stat explanation card for the focused row (lc_phone_status_row tooltips).
+    use lc_stat_tip(GetTooltip("lc_phone_status"), look="phone")
 
 
 screen lc_phone_settings_mode(mode_id):
