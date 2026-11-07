@@ -11,7 +11,7 @@
 
 label ch01_day2_scene_19b_leia_asks_maya:
 
-    scene bg ch01_villa_living
+    scene bg ch01_villa_entry_day  # front door, afternoon: Maya leaving (day art, darryn)
     with dissolve
 
     "The villa entrance was cool and quiet after the heat of the pool deck."
