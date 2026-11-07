@@ -288,7 +288,7 @@ label ch01_day2_start:
 
 label ch01_day2_scene_01_morning_after:
 
-    scene bg ch01_villa_bedroom_evening
+    scene bg ch01_master_bedroom_curtains  # Day 2 morning: day art (darryn); text mentions the curtains
     with fade
 
     "Morning arrived slowly through the useless decorative curtains."
@@ -378,7 +378,7 @@ label ch01_day2_scene_01_morning_after:
             mc "In the last four seconds?"
             gf "Growth."
 
-    scene bg ch01_villa_bedroom_evening
+    scene bg ch01_master_bedroom_curtains  # Day 2 morning: day art (darryn)
     with dissolve
 
     gf "You were a menace last night."
