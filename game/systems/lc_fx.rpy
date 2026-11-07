@@ -51,6 +51,7 @@ init -2 python:
     LC_AUDIO_GAIN = {
         "amb/room_tone": 0.6,   # quiet indoor A/C hum under every villa/bedroom scene
         "amb/restaurant": 0.75, # darryn: restaurant recording slightly lower than the other ambience
+        "sfx/cum_in01": 1.4,    # Shinlalala pack file is unmodified (peak -10 dBFS); about +3 dB to sit where squish did
         # BGM themes are mastered at -28 LUFS (party: low-passed, -38) so they
         # sit under ambience and SFX; new players start with Music at 60 %.
         # "sfx/splash_big": 0.8,
