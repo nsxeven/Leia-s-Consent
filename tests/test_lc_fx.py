@@ -46,12 +46,13 @@ class EffectsFoundationTests(unittest.TestCase):
         self.assertNotIn("mixer ambience volume", prefs)
 
     def test_vocal_clips_route_to_voice(self):
-        import re
-        voices = set(re.findall(r'"([a-z_]+)"', FX.split("LC_VOICE_SFX = frozenset((", 1)[1].split("))", 1)[0]))
-        sfx = {p.stem for p in (GAME / "audio" / "sfx").glob("*.ogg")}
-        self.assertTrue(voices <= sfx, voices - sfx)
-        self.assertTrue({s for s in sfx if s.startswith("leia_")} <= voices)
-        self.assertIn('channel = "lc_voice" if name in LC_VOICE_SFX else "audio"', FX)
+        # darryn 2026-11-08: the folder decides the slider (LC_SFX_SEARCH).
+        voice = {p.stem for p in (GAME / "audio" / "voice").rglob("*.ogg")}
+        self.assertTrue({"leia_laugh", "leia_gasp", "leia_kiss", "gasp_wake"} <= voice)
+        self.assertIn('("voice/leia", "lc_voice", ', FX)
+        self.assertIn('("voice/ryan", "lc_voice", ', FX)
+        self.assertIn('("lewd", "lc_lewd", "lc_lewd_loop")', FX)
+        self.assertIn('register_channel("lc_voice", mixer="voice"', FX)
 
     def test_prologue_and_day1_use_the_setting_aware_shakes(self):
         for name, src in STORY.items():

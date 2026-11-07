@@ -10,7 +10,9 @@ VOICE = GAME / "audio" / "voice" / "leia"
 class BreathTests(unittest.TestCase):
 
     def test_voice_files_follow_the_naming_scheme(self):
-        files = sorted(p.name for p in VOICE.glob("*.ogg"))
+        # voice/leia/ also holds her one-shot vocal clips (leia_*.ogg, darryn
+        # 2026-11-08); every other file there is a breath/moan for lc_breath.
+        files = sorted(p.name for p in VOICE.glob("*.ogg") if not p.name.startswith("leia_"))
         self.assertGreaterEqual(len(files), 20)
         for name in files:
             self.assertRegex(name, r"^(inhale|exhale|moan)-i\d+-\d+\.ogg$")
