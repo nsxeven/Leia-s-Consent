@@ -3,27 +3,34 @@
 
 screen status_stat_row(row):
 
-    vbox:
-        spacing 5
-        xfill True
+    # Focusable so the stat explanation shows on hover and keyboard/controller
+    # focus; the card itself is drawn by lc_stat_tip at the end of the screen.
+    button:
+        style "lc_stat_tip_row"
+        tooltip row.get("tooltip")
+        action NullAction()
 
-        hbox:
+        vbox:
+            spacing 5
             xfill True
 
-            text row["label"] size 21 color "#3b2a30"
+            hbox:
+                xfill True
 
-            if row["detail"]:
-                text row["detail"] size 18 color "#7a6266" xalign 1.0
+                text row["label"] size 21 color "#3b2a30"
 
-        bar:
-            value StaticValue(row["value"], 100)
-            xfill True
-            ysize 16
-            left_bar Frame("gui/scrapbook/bar_love.png", 6, 6)
-            right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
+                if row["detail"]:
+                    text row["detail"] size 18 color "#7a6266" xalign 1.0
 
-        if row["internal_key"]:
-            text row["internal_key"] size 15 color "#7a6266"
+            bar:
+                value StaticValue(row["value"], 100)
+                xfill True
+                ysize 16
+                left_bar Frame("gui/scrapbook/bar_love.png", 6, 6)
+                right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
+
+            if row["internal_key"]:
+                text row["internal_key"] size 15 color "#7a6266"
 
 
 screen status_section(title, rows):
@@ -120,6 +127,7 @@ screen status_screen():
                             action Show("lc_review_history_screen", day_id=lc_review_latest())
 
                     text "[status_mode_note()]" size 17 color "#7a6266"
+                    text "Hover over a stat to see what it means." size 17 color "#7a6266"
 
                     hbox:
                         spacing 20
@@ -147,4 +155,7 @@ screen status_screen():
                                 use status_section("ROUTE TENDENCIES", route_rows)
 
                     null height 20
+
+    # Stat explanation card for the focused row (status_stat_row tooltips).
+    use lc_stat_tip(GetTooltip("status_screen"))
 

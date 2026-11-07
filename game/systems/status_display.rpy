@@ -51,6 +51,9 @@ init python:
             "value": value,
             "detail": detail,
             "internal_key": internal_key,
+            "stat": stat_name,
+            # Hover/focus explanation (systems/stat_tooltips.rpy), names filled in.
+            "tooltip": lc_stat_tooltip(stat_name, mode),
         }
 
 
@@ -114,12 +117,16 @@ init python:
                 "value": nts_score(),
                 "detail": "{} / 100".format(nts_score()),
                 "internal_key": "nts_score()" if mode == "developer" else "",
+                "stat": "nts_score",
+                "tooltip": lc_stat_tooltip("nts_score", mode),
             },
             {
                 "label": "NTR Tendency",
                 "value": ntr_score(),
                 "detail": "{} / 100".format(ntr_score()),
                 "internal_key": "ntr_score()" if mode == "developer" else "",
+                "stat": "ntr_score",
+                "tooltip": lc_stat_tooltip("ntr_score", mode),
             },
         ]
         return rows

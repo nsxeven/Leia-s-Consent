@@ -380,6 +380,20 @@ screen lc_review_bar_row(row, index, skipped, exact, pitch=56, col_w=730, seq_i=
                 add arrow yalign 0.5 at lc_arrow_pop
             elif show_final:
                 add arrow yalign 0.5
+        # Invisible focus target on top of the row: hover / keyboard focus
+        # shows the stat explanation (lc_stat_tip in lc_day_review_screen).
+        # Only once this bar has settled: a tooltip change restarts the
+        # interaction, which must not happen mid-animation.
+        button:
+            xpos 0
+            ypos 0
+            xsize col_w
+            ysize pitch
+            background None
+            hover_background Solid("#cc006614")
+            padding (0, 0)
+            tooltip (lc_stat_tooltip(row["stat"]) if show_final else None)
+            action NullAction()
 
 
 screen lc_day_review_screen(day_id, replay=False, skipped=False):
@@ -692,6 +706,10 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
         hover_background None
         padding (0, 0)
         action If(animating, NullAction(), leave)
+
+    # Stat explanation card for the focused bar row. The history replay
+    # embeds this screen with `use`, so focus belongs to that screen there.
+    use lc_stat_tip(GetTooltip("lc_review_history_screen" if replay else "lc_day_review_screen"))
 
 
 screen lc_review_settings():
