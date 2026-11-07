@@ -1287,7 +1287,7 @@ label ch01_scene_30_end_day_one:
         $ lc_sfx("heartbeat_fast")
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
 
-        $ lc_sfx("squish")  # darryn's sound, as the rub CG (BBCStrangerNightmare_03) appears
+        $ lc_sfx("cum_in01")  # darryn: Shinlalala pack sound replaces the old squish ("balloon pop"), as the rub CG (BBCStrangerNightmare_03) appears
         # darryn: CG 03 spams inhales and moans: dense loop + extra moans layered on top.
         $ lc_breath_start(4, moan_chance=0.55, pause=(0.05, 0.4), fadein=0.2)
         scene cg ch01_dream_dinner_rub at lc_dream_sway

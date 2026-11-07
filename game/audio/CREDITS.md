@@ -70,7 +70,13 @@ Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the 
 
 Crowd chatter `amb/crowd` (Prologue party): supplied by the project developer.
 
-Squish `sfx/squish` (nightmare dinner CG): supplied by the project developer.
+Squish `sfx/squish` (supplied by the project developer): kept in the library, no longer played; the nightmare dinner CG now uses `sfx/cum_in01` (below).
+
+**Lewd sounds by Shinlalala.** 61 sound effects from *Shinlalala's Lewd Sound Pack* © 2024 by Shinlalala, licensed under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Files are unmodified and keep their original names:
+`sfx/cum_in01`..`cum_in03`, `sfx/cum_out01`..`cum_out06`, `sfx/plapdry01`..`plapdry11`, `sfx/plapwet01`..`plapwet16`,
+`sfx/pullout01`..`pullout03`, `sfx/stroke01`..`stroke10`, `sfx/wet01`..`wet12`. Any edited version of these files must
+also be shared under CC BY-SA 4.0 and keep this credit.
 
 Leia's breaths and moans `voice/leia/*` (40 clips): MoanBox by Selenyhr (https://selenyhr.itch.io/), released under the Unlicense (public domain).
 
