@@ -194,6 +194,17 @@ init python:
     build.classify('README.md', None)
     build.classify('docs/**', None)
 
+    ## Exclude local caches, saves, and Python bytecode from distributions.
+    build.classify('game/cache/**', None)
+    build.classify('game/saves/**', None)
+    build.classify('**/__pycache__/**', None)
+    build.classify('**.pyc', None)
+    ## JoiPlay uses its own Ren'Py engine but needs a desktop launcher to add
+    ## the game. Keep source scripts in this package, alongside compiled scripts;
+    ## desktop packages continue to ship compiled scripts only. Release-only
+    ## exclusions for dev/QA files must precede this rule (first match wins).
+    build.classify('game/**.rpy', 'joiplay')
+    build.package('joiplay', 'zip', 'windows renpy all joiplay', update=False)
     ## To archive files, classify them as 'archive'.
 
     # build.classify('game/**.png', 'archive')

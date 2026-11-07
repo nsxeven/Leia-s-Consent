@@ -537,7 +537,7 @@ screen choice(items):
         ysize (1000 if dev else 920)
         scrollbars ("vertical" if dev else None)
         mousewheel True
-        draggable dev
+        draggable (dev or renpy.variant("touch"))
 
         frame:
             background None
