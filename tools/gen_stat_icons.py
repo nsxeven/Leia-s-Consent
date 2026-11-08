@@ -1,6 +1,6 @@
 """Stat icons, line style (darryn 2026-11-09, draft D): thin rounded outline in
 each stat's Status colour with a soft tint inside. Symbols: Love heart, Trust
-shield + tick, Exhibitionism eye, Temptation flame, Sharing swap arrows.
+shield + tick, Exhibitionism eye, Temptation flame (side lick + inner flame), Sharing two chasing curved arrows.
 
 Writes game/images/ui/scrapbook/icon_<stat>.png (40x40) for the five live stats.
 Colours = STAT_BARS in gen_glass_menu_ui.py / LC_STAT_COLOUR in status_display.rpy.
@@ -9,7 +9,7 @@ Run: uv run --with pillow python tools/gen_stat_icons.py
 import math
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 OUT = Path(__file__).resolve().parents[1] / "game" / "images" / "ui" / "scrapbook"
 SS = 8
@@ -150,9 +150,81 @@ def icon(stat):
     return out.resize((N, N), Image.Resampling.LANCZOS)
 
 
+# ---- Silhouette-based icons (darryn 2026-11-09 references): flame with a side
+# lick and an inner flame cut-out; swap = two curved arrows chasing each other.
+def spline(pts, closed=True, steps=12):
+    """Catmull-Rom through pts (smooth outline)."""
+    out = []
+    n = len(pts)
+    rng = range(n) if closed else range(n - 1)
+    for i in rng:
+        p0, p1 = pts[(i - 1) % n], pts[i]
+        p2, p3 = pts[(i + 1) % n], pts[(i + 2) % n]
+        if not closed:
+            p0 = pts[max(i - 1, 0)]; p2 = pts[min(i + 1, n - 1)]; p3 = pts[min(i + 2, n - 1)]
+        for s in range(steps):
+            u = s / steps
+            out.append(tuple(0.5 * (2 * p1[k] + (-p0[k] + p2[k]) * u + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * u * u
+                                    + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * u ** 3) for k in (0, 1)))
+    return out
+
+
+def flame_mask():
+    k = 40 / 512.0
+    outer = [(270, 8), (292, 115), (335, 200), (390, 255), (418, 330), (405, 420), (350, 482), (262, 506),
+             (175, 497), (112, 445), (92, 360), (112, 285), (150, 222), (163, 255), (192, 274), (186, 190),
+             (212, 95)]
+    inner = [(242, 292), (290, 352), (322, 420), (318, 478), (282, 506), (205, 506), (186, 440), (215, 395),
+             (238, 350)]
+    m = Image.new("L", (N * SS, N * SS)); d = ImageDraw.Draw(m)
+    d.polygon(P(spline([(x * k, y * k) for x, y in outer])), fill=255)
+    d.polygon(P(spline([(x * k, y * k) for x, y in inner])), fill=0)
+    return m
+
+
+def swap_mask():
+    m = Image.new("L", (N * SS, N * SS)); d = ImageDraw.Draw(m)
+    cx, cy, r = 20.0, 20.0, 11.0
+    for rot in (0.0, math.pi):
+        a0, a1 = math.radians(-20) + rot, math.radians(118) + rot
+        outer, inner = [], []
+        for i in range(61):
+            u = i / 60
+            a = a0 + (a1 - a0) * u
+            w = 1.0 + 2.6 * u ** 0.7          # band thickens toward the head
+            outer.append((cx + (r + w) * math.cos(a), cy - (r + w) * math.sin(a)))
+            inner.append((cx + (r - w) * math.cos(a), cy - (r - w) * math.sin(a)))
+        d.polygon(P(outer + inner[::-1]), fill=255)
+        ex, ey = cx + r * math.cos(a1), cy - r * math.sin(a1)
+        rx, ry = math.cos(a1), -math.sin(a1)            # radial
+        tx, ty = -math.sin(a1), -math.cos(a1)           # direction of travel
+        head = [(ex + rx * 8.0, ey + ry * 8.0), (ex + tx * 11.0, ey + ty * 11.0), (ex - rx * 8.0, ey - ry * 8.0)]
+        d.polygon(P(head), fill=255)
+    return m
+
+
+def mask_icon(stat, mask):
+    top, bot = COL[stat]
+    er = mask
+    for _ in range(int(LINE * SS * 0.8)):
+        er = er.filter(ImageFilter.MinFilter(3))
+    stroke = ImageChops.subtract(mask, er)
+    out = Image.new("RGBA", (N * SS, N * SS))
+    soft = Image.new("RGBA", out.size, top + (255,)); soft.putalpha(er.point(lambda v: 70 if v else 0))
+    out.alpha_composite(soft)
+    g = grad(top, bot); g.putalpha(stroke); out.alpha_composite(g)
+    return out.resize((N, N), Image.Resampling.LANCZOS)
+
+
 def main():
     for stat in COL:
-        icon(stat).save(OUT / f"icon_{stat}.png")
+        if stat == "temptation":
+            img = mask_icon(stat, flame_mask())
+        elif stat == "sharing":
+            img = mask_icon(stat, swap_mask())
+        else:
+            img = icon(stat)
+        img.save(OUT / f"icon_{stat}.png")
     print("wrote", len(COL), "line icons to", OUT)
 
 
