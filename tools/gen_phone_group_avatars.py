@@ -1,12 +1,14 @@
 """Build undistorted Trip Group phone portraits from the existing selfies.
 
-The entire 1920x1080 image sits inside a 1920x1920 square, centered vertically:
-source rectangle (0, 0, 1920, 1080), canvas placement (0, 420). No crop or stretch.
-The same circular alpha and border are applied to both swimsuit variants.
+darryn 2026-11-08: zoom in on the three faces, no blurred fill. Each selfie uses a
+square crop (uniform scale, no stretch) chosen so all faces sit inside the circle:
+trio selfies: faces span x 400-1260, y 0-630 of 1920x1080, so the square is
+(310, 0, 1350, 1040). A selfie without an entry falls back to a centred
+full-height square.
 Run: python tools/gen_phone_group_avatars.py
 """
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw
 
 GAME = Path(__file__).resolve().parents[1] / "game"
 OUTPUT = GAME / "gui/phone/sprite_match"
@@ -14,17 +16,22 @@ SIZE = 128
 SCALE = 4
 
 
+# Square crop boxes (left, top, right, bottom) per source file name.
+CROPS = {
+    "CH1D1_CG_PoolSelfie_Trio_White.webp": (310, 0, 1350, 1040),
+    "CH1D1_CG_PoolSelfie_Trio_Blue.webp": (310, 0, 1350, 1040),
+}
+
+
 def render_avatar(source):
     original = Image.open(source).convert("RGB")
-    # A square canvas holds the entire image at native aspect ratio, even for
-    # a future four-person selfie with different source dimensions.
-    side = max(original.size)
-    top = (side - original.height) // 2
-    background = original.resize((side, side), Image.Resampling.LANCZOS).filter(
-        ImageFilter.GaussianBlur(round(side * 95 / 1920)))
-    canvas = Image.new("RGB", (side, side))
-    canvas.paste(background)
-    canvas.paste(original, ((side - original.width) // 2, top))
+    box = CROPS.get(Path(source).name)
+    if box is None:
+        side = min(original.size)
+        left = (original.width - side) // 2
+        box = (left, 0, left + side, side)
+    assert box[2] - box[0] == box[3] - box[1], box
+    canvas = original.crop(box)
     scaled = canvas.resize((SIZE * SCALE, SIZE * SCALE), Image.Resampling.LANCZOS).convert("RGBA")
     mask = Image.new("L", scaled.size)
     draw = ImageDraw.Draw(mask)
