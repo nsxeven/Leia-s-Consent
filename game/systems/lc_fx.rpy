@@ -64,8 +64,19 @@ init -2 python:
         # "ui/tick": 0.6,
     }
 
+    # Whole-group trims on top of the per-file gains above (darryn 2026-11-08:
+    # every SFX-slider sound 30% quieter). Multiplies the clip's own volume, so
+    # relative dips (lc_duck in the Prologue kitchen, quieter per-call volumes)
+    # keep their shape. Voice, lewd and music are untouched.
+    LC_KIND_GAIN = {
+        "sfx": 0.7,   # one-shots and loops in audio/sfx/
+        "amb": 0.7,   # ambience beds
+        "ui": 0.7,    # menu / button sounds
+    }
+
     def lc_audio_gain(kind, name, volume=1.0):
-        return max(0.0, float(volume) * LC_AUDIO_GAIN.get("%s/%s" % (kind, name), 1.0))
+        return max(0.0, float(volume) * LC_KIND_GAIN.get(kind, 1.0)
+                   * LC_AUDIO_GAIN.get("%s/%s" % (kind, name), 1.0))
 
     def lc_audio_path(kind, name):
         """game/audio/<kind>/<name>.<ext> if it exists, else None."""
