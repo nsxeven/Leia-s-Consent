@@ -10,7 +10,7 @@ class DemoEndCardTests(unittest.TestCase):
         ui = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
         card = ui.split("screen lc_demo_end_screen():", 1)[1].split("\nscreen ", 1)[0]
         for needle in ("lc_title_logo()", "Thank you for playing the demo!", "UPCOMING RELEASES",
-                       '"Day 2"', "OpenURL(LC_PATREON_URL)", "OpenURL(LC_DISCORD_URL)", "Return()"):
+                       '"Day 2"', "LC_PATREON_URL,", "LC_DISCORD_URL,", "Return()"):
             self.assertIn(needle, card)
         self.assertIn('define LC_PATREON_URL = "https://www.patreon.com/c/LeiasConsent"', ui)
         self.assertIn('define LC_DISCORD_URL = "https://discord.gg/HYmrB8Gjwj"', ui)

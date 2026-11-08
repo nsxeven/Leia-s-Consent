@@ -1579,6 +1579,35 @@ transform lc_demo_slide(delay=0.0):
     pause delay
     easein 0.6 alpha 1.0 xoffset 0
 
+define LC_DEMO_CTA_W = 330
+define LC_DEMO_CTA_H = 66
+define LC_DEMO_CTA_GAP = 18
+
+transform lc_demo_cta_pulse(phase=0.0):
+    # Breathes about its own centre; `phase` offsets each button's beat.
+    subpixel True
+    zoom 1.0
+    pause phase
+    block:
+        ease 0.9 zoom 1.05
+        ease 0.9 zoom 1.0
+        pause 0.9
+        repeat
+
+screen lc_demo_cta_button(col, row, label, idle_col, hover_col, url, delay, phase):
+    fixed at lc_demo_in(delay):
+        xpos col * (LC_DEMO_CTA_W + LC_DEMO_CTA_GAP)
+        ypos row * (LC_DEMO_CTA_H + LC_DEMO_CTA_GAP)
+        xysize (LC_DEMO_CTA_W, LC_DEMO_CTA_H)
+        button at lc_demo_cta_pulse(phase):
+            align (0.5, 0.5)
+            xysize (LC_DEMO_CTA_W, LC_DEMO_CTA_H)
+            background Solid(idle_col)
+            hover_background Solid(hover_col)
+            action [Function(lc_ui_play, "tap"), OpenURL(url)]
+            hovered Function(lc_ui_play, "tick")
+            text label font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
+
 transform lc_demo_pulse:
     subpixel True
     zoom 1.0
@@ -1647,44 +1676,19 @@ screen lc_demo_end_screen():
 
         null height 22
         text "Follow along, get early builds and vote on what comes next:" style "lc_title_small_text" size 22 color "#ffffffb0" at lc_demo_in(2.6)
-        # Four calls to action (darryn 2026-11-09): Patreon, Discord, X, F95 feedback.
-        hbox at lc_demo_in(2.8):
-            spacing 18
-            button:
-                xysize (330, 66)
-                background Solid("#ff6fae")
-                hover_background Solid("#ff8fc0")
-                action [Function(lc_ui_play, "tap"), OpenURL(LC_PATREON_URL)]
-                hovered Function(lc_ui_play, "tick")
-                at lc_demo_pulse
-                text "SUPPORT ON PATREON" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
-            button:
-                xysize (300, 66)
-                background Solid("#5865f2")
-                hover_background Solid("#7983f5")
-                action [Function(lc_ui_play, "tap"), OpenURL(LC_DISCORD_URL)]
-                hovered Function(lc_ui_play, "tick")
-                text "JOIN THE DISCORD" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
-        hbox at lc_demo_in(3.0):
-            spacing 18
-            button:
-                xysize (330, 66)
-                background Solid("#14171c")
-                hover_background Solid("#2b313b")
-                action [Function(lc_ui_play, "tap"), OpenURL(LC_X_URL)]
-                hovered Function(lc_ui_play, "tick")
-                text "FOLLOW ON X" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
-            button:
-                xysize (300, 66)
-                background Solid("#b8343f")
-                hover_background Solid("#d24a55")
-                action [Function(lc_ui_play, "tap"), OpenURL(LC_F95_URL)]
-                hovered Function(lc_ui_play, "tick")
-                text "FEEDBACK ON F95" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
-        text "Enjoyed it? A like and a comment on the F95 thread really helps, and every bit of feedback gets read." style "lc_title_small_text" size 20 color "#ffffffa0" xmaximum 860 at lc_demo_in(3.2)
+        # Four calls to action in fixed slots (darryn 2026-11-09): each button
+        # enters and pulses on its own, centred in its slot, so the scaling never
+        # moves its neighbours or the text below.
+        fixed:
+            xysize (LC_DEMO_CTA_W * 2 + LC_DEMO_CTA_GAP, LC_DEMO_CTA_H * 2 + LC_DEMO_CTA_GAP)
+            use lc_demo_cta_button(0, 0, "SUPPORT ON PATREON", "#ff6fae", "#ff8fc0", LC_PATREON_URL, 2.8, 0.0)
+            use lc_demo_cta_button(1, 0, "JOIN THE DISCORD", "#5865f2", "#7983f5", LC_DISCORD_URL, 2.95, 0.45)
+            use lc_demo_cta_button(0, 1, "FOLLOW ON X", "#14171c", "#2b313b", LC_X_URL, 3.1, 0.9)
+            use lc_demo_cta_button(1, 1, "FEEDBACK ON F95", "#b8343f", "#d24a55", LC_F95_URL, 3.25, 1.35)
+        text "Enjoyed it? A like and a comment on the F95 thread really helps, and every bit of feedback gets read." style "lc_title_small_text" size 20 color "#ffffffa0" xmaximum 860 at lc_demo_in(3.45)
 
         null height 4
-        fixed at lc_demo_in(3.4):
+        fixed at lc_demo_in(3.6):
             xysize (380, 50)
             use lc_title_item("Main Menu", Return(), "back")
 
