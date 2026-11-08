@@ -58,7 +58,7 @@ class GoldenHourMenuTests(unittest.TestCase):
         prefs=screen(UI,'preferences')
         self.assertIn('slow_cps (preferences.text_cps if preferences.text_cps else None)',prefs)
         for kind in ('bgm','sfx','voice','lewd'):
-            self.assertIn('"'+kind+'")',prefs)
+            self.assertIn('"'+kind+'", ',prefs)  # sample id, then mixer (#151)
         sample = UI.split('def lc_glass_sound_test(kind):',1)[1].split('\ninit 999',1)[0]
         for name in ('glass_test','ice_clink','leia_laugh','wet01'):
             self.assertIn('"'+name+'"',sample)

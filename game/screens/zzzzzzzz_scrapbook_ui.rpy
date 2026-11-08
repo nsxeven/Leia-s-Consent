@@ -936,7 +936,20 @@ screen file_slots(title):
 screen preferences():
     tag menu
 
-    use game_menu(_("Preferences"), hints=[("ENTER", "SELECT")]):
+    use game_menu(_("Preferences"), hints=[("ENTER", "SELECT"), ("WHEEL", "SCROLL")]):
+      # Scrolls when the page is taller than the panel (darryn 2026-11-08).
+      viewport:
+        id "lc_prefs_vp"
+        mousewheel True
+        draggable True
+        scrollbars "vertical"
+        xfill True
+        yfill True
+        vscrollbar_xsize 12
+        vscrollbar_base_bar Frame("gui/glass/bar_track.png", 6, 9)
+        vscrollbar_thumb Frame("gui/glass/bar_pink.png", 6, 9)
+        vscrollbar_unscrollable "hide"
+        side_spacing 12
         hbox:
             spacing 36
             xfill True
@@ -978,13 +991,13 @@ screen preferences():
                 # UI), VOICE (Leia's breaths and every vocal clip) and LEWD
                 # (intimate foley, audio/lewd/).
                 if config.has_music:
-                    use lc_pref_slider("BGM", Preference("music volume"), "gui/glass/bar_honey.png", "%d%%" % int(preferences.get_volume("music") * 100), "bgm")
+                    use lc_pref_slider("BGM", Preference("music volume"), "gui/glass/bar_honey.png", None, "bgm", "music")
                 if config.has_sound:
-                    use lc_pref_slider("SFX", Preference("sound volume"), "gui/glass/bar_amber.png", "%d%%" % int(preferences.get_volume("sfx") * 100), "sfx")
+                    use lc_pref_slider("SFX", Preference("sound volume"), "gui/glass/bar_amber.png", None, "sfx", "sfx")
                 if config.has_voice:
-                    use lc_pref_slider("VOICE", Preference("voice volume"), "gui/glass/bar_peach.png", "%d%%" % int(preferences.get_volume("voice") * 100), "voice")
+                    use lc_pref_slider("VOICE", Preference("voice volume"), "gui/glass/bar_peach.png", None, "voice", "voice")
                 if config.has_sound:
-                    use lc_pref_slider("LEWD", Preference("mixer lewd volume"), "gui/glass/bar_pink.png", "%d%%" % int(preferences.get_volume("lewd") * 100), "lewd")
+                    use lc_pref_slider("LEWD", Preference("mixer lewd volume"), "gui/glass/bar_pink.png", None, "lewd", "lewd")
                 textbutton _("MUTE ALL") action Preference("all mute", "toggle") style "lc_check_button" text_style "lc_check_text"
 
             vbox:
@@ -1011,23 +1024,52 @@ screen preferences():
                     text "Developer mode is on. Pick Immersive, Insight, or Full Transparency to leave it." size 28 color "#dbc8bd" font "fonts/Caveat[wght].ttf"
 
 
-screen lc_pref_slider(label, value, fill, readout, sample=None):
+# Every slider row uses the same fixed columns, so nothing moves when a value
+# changes: [bar 450][readout 64, right-aligned][mute 34][test 34].
+# Volume readouts show the SLIDER position (preferences.get_mixer), which is what
+# the bar draws; get_volume is the dB-curved amplitude (50% sat at ~85% of the bar).
+screen lc_pref_slider(label, value, fill, readout, sample=None, mixer=None):
+    $ _muted = bool(mixer) and preferences.get_mute(mixer)
+    $ _shown = readout if readout is not None else ("%d%%" % int(round(preferences.get_mixer(mixer) * 100)) if mixer else "")
     vbox:
         spacing 2
         xfill True
         text label size 21 color "#fff0dc" font "fonts/Handjet-SemiBold.ttf"
         hbox:
             spacing 12
-            bar:
-                value value
-                xsize 450
-                ysize 24
-                left_bar Frame(fill, 6, 6)
-                right_bar Frame("gui/glass/bar_track.png", 6, 6)
-                thumb "gui/glass/slider_thumb.png"
-            text readout yalign 0.5 size 21 color "#F5C568" font "fonts/Handjet-SemiBold.ttf"
+            # 15px gutters so the thumb (centred on the fill's end) never pokes out.
+            fixed:
+                xsize 480
+                ysize 30
+                bar:
+                    value value
+                    xpos 15
+                    xsize 450
+                    ysize 30
+                    left_bar Frame(fill, 8, 9)
+                    right_bar Frame("gui/glass/bar_track.png", 8, 9)
+                    thumb "gui/glass/slider_thumb.png"
+                    thumb_offset 15
+                    left_gutter 0
+                    right_gutter 0
+            text ("MUTED" if _muted else _shown):
+                xsize 64
+                text_align 1.0
+                xalign 1.0
+                yalign 0.5
+                size 21
+                color ("#d4636e" if _muted else "#F5C568")
+                font "fonts/Handjet-SemiBold.ttf"
+            if mixer:
+                imagebutton:
+                    yalign 0.5
+                    idle ("gui/glass/mute_on.png" if _muted else "gui/glass/mute_off.png")
+                    hover ("gui/glass/mute_on_hover.png" if _muted else "gui/glass/mute_off_hover.png")
+                    action Preference("mixer %s mute" % mixer, "toggle")
+                    tooltip ("Unmute" if _muted else "Mute")
             if sample:
                 imagebutton:
+                    yalign 0.5
                     idle "gui/glass/sound_test.png"
                     hover "gui/glass/sound_test_hover.png"
                     action Function(lc_glass_sound_test, sample)
