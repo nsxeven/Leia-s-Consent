@@ -88,7 +88,7 @@ label prologue_start:
     $ face("leia", "skeptical")
     "She narrowed her eyes at me and continued anyway."
 
-    "What was I actually thinking?"
+    think "What was I actually thinking?"
 
     menu:
         "She's a complete dork.":
@@ -109,7 +109,7 @@ label prologue_start:
 
         "I am definitely in trouble.":
             $ set_story_value("prologue_ryan_first_impression", "smitten")
-            "Right."
+            think "Right."
             "So the problem wasn't that she was intimidating anymore."
             "The problem was that now I actually liked talking to her."
 

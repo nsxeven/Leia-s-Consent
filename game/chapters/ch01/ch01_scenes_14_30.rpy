@@ -1480,7 +1480,8 @@ label ch01_scene_30_end_day_one:
         $ lc_inhale_over(2)
         $ lc_sfx("leia_gasp", 0.8)  # the startled sound the line describes
         "[girlfriend_name] gasped, one small, startled sound."
-        "{i}Babe, are you okay?{/i} The words never made it past my throat."
+        think "Babe, are you okay?"
+        "The words never made it past my throat."
 
         $ lc_sfx("heartbeat_fast")
         "I tried to stand. My legs wouldn't move. Nobody else in the restaurant looked up."
@@ -1535,7 +1536,7 @@ label ch01_scene_30_end_day_one:
 
     "I stared at the ceiling for a moment."
 
-    "{i}What the hell was that?{/i}"
+    think "What the hell was that?"
 
     $ dream_ground_text = format_choice("ch01_dream_ground", "It was a dream. {} hadn't done anything.".format(girlfriend_name))
     $ dream_curiosity_text = format_choice("ch01_dream_curiosity", "Why did that bother me... and why couldn't I stop thinking about it?")
@@ -1547,14 +1548,14 @@ label ch01_scene_30_end_day_one:
             $ set_story_value("ch01_dream_response", "grounded")
             "I turned my head toward her."
             "She was asleep exactly where she'd been before my brain decided to invent the rest."
-            "{i}It was a dream. [girlfriend_name] hadn't done anything.{/i}"
+            think "It was a dream. [girlfriend_name] hadn't done anything."
             "I let the image go instead of making it hers to answer for."
 
         "[dream_curiosity_text]":
             $ apply_choice("ch01_dream_curiosity")
             $ set_story_value("ch01_dream_response", "curious")
             "I shut my eyes again, but the last image stayed there."
-            "{i}Why did that bother me... and why couldn't I stop thinking about it?{/i}"
+            think "Why did that bother me... and why couldn't I stop thinking about it?"
             "Jealousy explained some of it. Not all of it."
             "I wasn't ready to put a name to the rest."
 
@@ -1562,7 +1563,7 @@ label ch01_scene_30_end_day_one:
             $ apply_choice("ch01_dream_withdraw")
             $ set_story_value("ch01_dream_response", "withdrew")
             "I looked away from her and pulled the sheet higher."
-            "{i}Don't think about it. Don't make it a thing.{/i}"
+            think "Don't think about it. Don't make it a thing."
             "There was nothing to confront her about, so I kept the feeling to myself."
             "It was easier than trying to understand why it had stayed with me."
 

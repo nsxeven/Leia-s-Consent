@@ -262,7 +262,7 @@ label ch01_scene_03_outfit_choice:
     "The thin fabric softened the view more than it actually blocked it."
     "I looked at the curtain, then at the towel wrapped around her."
 
-    "{i}That barely covers anything either.{/i}"
+    think "That barely covers anything either."
 
     gf "What? Why are you looking at me like that?"
     mc "I'm not— okay, I was. Sorry. You just look really good, that's all."
