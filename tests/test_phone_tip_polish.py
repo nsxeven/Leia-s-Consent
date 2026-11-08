@@ -23,8 +23,8 @@ class PhoneTipPolishTests(unittest.TestCase):
 
     def test_open_settings_label_centred(self):
         block = PHONE.split('textbutton "Open settings":', 1)[1].split("action", 1)[0]
-        self.assertIn("text_xalign 0.5", block)
-        self.assertIn("text_yalign 0.5", block)
+        # Centred via the shared phone button style (test_phone_buttons.py).
+        self.assertIn('style "lc_phone_btn"', block)
 
 
 if __name__ == "__main__":
