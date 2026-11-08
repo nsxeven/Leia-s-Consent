@@ -127,7 +127,7 @@ label ch01_scene_05_photography:
     gf "Wait, I want this as our Trip Group picture. You two look terrible and I love it."
     friend "If you really want to use the one where I look half asleep, go ahead. It is your phone."
     $ phone_group_avatar_stage = "trio"
-    $ phone_add_message("group", "leia", text="Changed the group picture to our pool selfie.", message_id="ch01_trip_group_trio_photo", mark_unread=False)
+    $ phone_add_message("group", "system", text=girlfriend_name + " changed the group picture.", message_id="ch01_trip_group_trio_photo", mark_unread=False)
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
