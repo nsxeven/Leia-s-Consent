@@ -18,8 +18,8 @@
 # while the scripts load (a normal `define` would be too late).
 
 python early:
-    LC_RELEASE = None
-    LC_RELEASE_VERSION = "dev-main"
+    LC_RELEASE = "day1-demo"
+    LC_RELEASE_VERSION = "0.1.1"
 
     LC_RELEASE_PROFILES = {
         None: {
