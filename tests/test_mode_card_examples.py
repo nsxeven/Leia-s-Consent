@@ -32,5 +32,12 @@ class ModeCardExampleTests(unittest.TestCase):
         self.assertIn('icon_camera.png', card)
 
 
+    def test_fixed_heights(self):
+        card = self.card()
+        self.assertIn("ysize LC_MODE_EXAMPLE_HEIGHT", card)
+        self.assertIn("ysize (LC_MODE_CARD_HEIGHT_PLAIN if", card)
+        self.assertNotIn("yminimum", card)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1083,6 +1083,10 @@ screen lc_pref_slider(label, value, fill, readout, sample=None, mixer=None):
 # Example choices shown on the Insight / Full mode cards, rotating every
 # LC_MODE_EXAMPLE_SECONDS: (caption, [(stat, amount)], path tag, camera text or "").
 define LC_MODE_EXAMPLE_SECONDS = 3.0
+# Fixed sizes so rotating examples never shift the layout.
+define LC_MODE_EXAMPLE_HEIGHT = 66
+define LC_MODE_CARD_HEIGHT = 168
+define LC_MODE_CARD_HEIGHT_PLAIN = 126
 define LC_MODE_CARD_EXAMPLES = (
     ("a sweet answer", [("love", 1), ("trust", 1)], "Love", ""),
     ("a small slip", [("love", -1), ("temptation", 1)], "May lead to NTR", ""),
@@ -1114,7 +1118,7 @@ screen lc_info_card(mode_id, mode_now):
     button:
         action Function(set_player_transparency_mode, mode_id)
         xfill True
-        yminimum 126
+        ysize (LC_MODE_CARD_HEIGHT_PLAIN if mode_id == "normal" else LC_MODE_CARD_HEIGHT)
         background Frame(("gui/glass/nav_active.png" if on else "gui/glass/panel.png"), 12, 12)
         hover_background Frame("gui/glass/nav_active.png", 12, 12)
         padding (16, 10)
@@ -1136,39 +1140,44 @@ screen lc_info_card(mode_id, mode_now):
                 # mode shows, including the NTR heads-up and the photo stamp in Full.
                 if True:
                     $ ex = LC_MODE_CARD_EXAMPLES[lc_mode_example_index() % len(LC_MODE_CARD_EXAMPLES)]
-                    vbox at lc_mode_example_fade:
-                        spacing 4
-                        text ("e.g. " + ex[0]) size 17 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
-                        hbox:
-                            spacing 6
-                            box_wrap True
-                            box_wrap_spacing 4
-                            for (_stat, _amount) in ex[1]:
-                                use lc_chip(STAT_LABELS.get(_stat, _stat), _amount, mode_id != "insight", lc_delta_colour(_stat, _amount, "review"))
-                            if mode_id != "insight":
-                                $ _stamp = lc_stat_model.path_stamp(ex[2])
-                                if _stamp:
-                                    $ _ink = LC_REVIEW_DELTA_INK[_stamp[1]]
-                                    frame at lc_path_stamp_tilt:
-                                        yalign 0.5
-                                        background Solid(_ink)
-                                        padding (2, 2, 2, 2)
-                                        frame:
-                                            background Solid(LC_PATH_STAMP_PAPER)
-                                            padding (7, 0, 7, 1)
-                                            text _stamp[0].upper().replace("->", LC_PATH_STAMP_ARROW) size 19 color _ink font "fonts/Handjet-ExtraBold.ttf" substitute False
-                                if ex[3]:
-                                    frame at lc_path_stamp_tilt:
-                                        yalign 0.5
-                                        background Solid(LC_CG_STAMP_INK)
-                                        padding (2, 2, 2, 2)
-                                        frame:
-                                            background Solid(LC_PATH_STAMP_PAPER)
-                                            padding (6, 1, 8, 1)
-                                            hbox:
-                                                spacing 5
-                                                add "images/ui/scrapbook/icon_camera.png" yalign 0.5
-                                                text ex[3] size 19 color LC_CG_STAMP_INK font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
+                    # Fixed-height slot (darryn 2026-11-08): examples of different
+                    # heights (chips vs tilted stamps) no longer nudge the card.
+                    fixed:
+                        xfill True
+                        ysize LC_MODE_EXAMPLE_HEIGHT
+                        vbox at lc_mode_example_fade:
+                            spacing 4
+                            text ("e.g. " + ex[0]) size 17 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
+                            hbox:
+                                spacing 6
+                                box_wrap True
+                                box_wrap_spacing 4
+                                for (_stat, _amount) in ex[1]:
+                                    use lc_chip(STAT_LABELS.get(_stat, _stat), _amount, mode_id != "insight", lc_delta_colour(_stat, _amount, "review"))
+                                if mode_id != "insight":
+                                    $ _stamp = lc_stat_model.path_stamp(ex[2])
+                                    if _stamp:
+                                        $ _ink = LC_REVIEW_DELTA_INK[_stamp[1]]
+                                        frame at lc_path_stamp_tilt:
+                                            yalign 0.5
+                                            background Solid(_ink)
+                                            padding (2, 2, 2, 2)
+                                            frame:
+                                                background Solid(LC_PATH_STAMP_PAPER)
+                                                padding (7, 0, 7, 1)
+                                                text _stamp[0].upper().replace("->", LC_PATH_STAMP_ARROW) size 19 color _ink font "fonts/Handjet-ExtraBold.ttf" substitute False
+                                    if ex[3]:
+                                        frame at lc_path_stamp_tilt:
+                                            yalign 0.5
+                                            background Solid(LC_CG_STAMP_INK)
+                                            padding (2, 2, 2, 2)
+                                            frame:
+                                                background Solid(LC_PATH_STAMP_PAPER)
+                                                padding (6, 1, 8, 1)
+                                                hbox:
+                                                    spacing 5
+                                                    add "images/ui/scrapbook/icon_camera.png" yalign 0.5
+                                                    text ex[3] size 19 color LC_CG_STAMP_INK font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
 
 ## History ####################################################################
