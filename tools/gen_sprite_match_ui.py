@@ -521,6 +521,13 @@ def build_chrome():
     draw.rounded_rectangle((2, 2, 69, 69), 16, fill="#FFFFFF", outline="#D5DCE7")
     card.save(PHONE / "card.png")
 
+    # Soft pixel-edged row focus, using the same rounded 9-slice shape as cards.
+    row_hover = Image.new("RGBA", (72, 72), (0, 0, 0, 0))
+    row_draw = ImageDraw.Draw(row_hover)
+    row_draw.rounded_rectangle((2, 2, 69, 69), 16, fill="#E7F2FA", outline="#A5C7DD", width=2)
+    row_draw.line((16, 6, 54, 6), fill="#FFFFFF")
+    row_hover.save(PHONE / "row_hover.png")
+
     key = Image.new("RGBA", (72, 72), (0, 0, 0, 0))
     draw = ImageDraw.Draw(key)
     draw.rounded_rectangle((2, 4, 69, 69), 16, fill="#2E74B0")
