@@ -24,8 +24,8 @@ init 5 python:
             ("relationship", "temptation", -3),
         ],
         "ch01_d3_ntr_withdraw": [
-            ("relationship", "love", -2),
-            ("relationship", "temptation", 3),
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 2),
         ],
         "ch01_d3_dessert_chocolate": [
             ("relationship", "trust", 1),
@@ -51,6 +51,7 @@ init 5 python:
             ("relationship", "temptation", -1),
         ],
         "ch01_d4_ntr_text_later": [
+            ("relationship", "love", -1),
             ("relationship", "temptation", 1),
         ],
         "ch01_d4_ntr_text_fine_soft": [
@@ -77,22 +78,19 @@ init 5 python:
             ("relationship", "temptation", -1),
         ],
         "ch01_d4_ntr_guarded": [
+            ("relationship", "trust", -1),
             ("relationship", "temptation", 1),
         ],
         "ch01_d4_ntr_flat": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
+            ("relationship", "temptation", 1),
         ],
-        "ch01_d4_breakfast_leave_it": [
-            ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
-        ],
+        "ch01_d4_breakfast_leave_it": [],  # Neutral: no stats
         "ch01_d4_breakfast_tease": [
             ("relationship", "love", 1),
         ],
         "ch01_d4_breakfast_ask_maya": [
             ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
         ],
         "ch01_d4_photo_candid": [
             ("relationship", "love", 1),
@@ -107,7 +105,7 @@ init 5 python:
         ],
         "ch01_d4_photo_skip": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 3),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d4_julian_thanks": [
             ("relationship", "trust", 1),
@@ -147,11 +145,9 @@ init 5 python:
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
         ],
-        "ch01_d4_toast_group": [
-            ("partner", "exhibitionism", 1),
-        ],
+        "ch01_d4_toast_group": [],  # Neutral: no stats
         "ch01_d4_toast_dare": [
-            ("partner", "exhibitionism", 2),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_d4_love_slow_dance": [
             ("relationship", "love", 2),
@@ -210,9 +206,7 @@ init 5 python:
             ("relationship", "trust", 1),
             ("partner", "exhibitionism", 3),
         ],
-        "ch01_d4_hook_in": [
-            ("partner", "exhibitionism", 1),
-        ],
+        "ch01_d4_hook_in": [],  # Neutral: no stats
         "ch01_d4_hook_ask_leia": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
@@ -253,7 +247,6 @@ init 5 python:
         ],
         "ch01_d5_julian_stay": [
             ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
         ],
         "ch01_d5_julian_joke": [],  # Neutral: no stats
         "ch01_d5_julian_leave": [
@@ -264,6 +257,7 @@ init 5 python:
             ("relationship", "trust", 1),
         ],
         "ch01_d5_bars_check": [
+            ("relationship", "love", -1),
             ("relationship", "temptation", 1),
         ],
         "ch01_d5_snorkel_leia_first": [
@@ -280,11 +274,8 @@ init 5 python:
         ],
         "ch01_d5_bee_calm": [
             ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
         ],
-        "ch01_d5_bee_film": [
-            ("partner", "exhibitionism", 1),
-        ],
+        "ch01_d5_bee_film": [],  # Neutral: no stats
         "ch01_d5_photo_share_group": [
             ("partner", "exhibitionism", 1),
         ],
@@ -412,9 +403,7 @@ init 5 python:
             ("relationship", "love", 1),
             ("relationship", "trust", 2),
         ],
-        "ch01_d5_truth_funny": [
-            ("relationship", "temptation", -1),
-        ],
+        "ch01_d5_truth_funny": [],  # Neutral: no stats
         "ch01_d5_truth_dodge": [
             ("relationship", "trust", -1),
             ("relationship", "temptation", 1),
@@ -479,6 +468,7 @@ init 5 python:
             ("relationship", "temptation", -1),
         ],
         "ch01_d5_invite_keep_quiet": [
+            ("relationship", "trust", -1),
             ("relationship", "temptation", 1),
         ],
     })

@@ -59,12 +59,10 @@ init 1 python:
             ("relationship", "love", 1),
             ("relationship", "trust", 2),
         ],
-        "ch01_d2_maya_catchup": [
-            ("relationship", "trust", 1),
-        ],
+        "ch01_d2_maya_catchup": [],  # Neutral: no stats
         "ch01_d2_maya_dismiss_leia": [
-            ("relationship", "love", -2),
-            ("relationship", "temptation", 3),
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_photo_pair_encourage": [
             ("partner", "exhibitionism", 2),
@@ -85,7 +83,7 @@ init 1 python:
         ],
         "ch01_d2_pool_accuse": [
             ("relationship", "trust", -2),
-            ("relationship", "temptation", 3),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_sunset_connect": [
             ("relationship", "love", 2),
@@ -108,8 +106,8 @@ init 1 python:
             ("partner", "exhibitionism", 3),
         ],
         "ch01_d2_bed_pool_accuse": [
-            ("relationship", "trust", -2),
-            ("relationship", "temptation", 2),
+            ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_wink_repair": [
             ("relationship", "love", 3),
@@ -608,7 +606,7 @@ label ch01_day2_scene_06_jealousy_test:
 
     $ d2_maya_include_text = format_choice("ch01_d2_maya_include", ('Pull ' + girlfriend_name + ' into the conversation.'))
     $ d2_maya_catchup_text = format_choice("ch01_d2_maya_catchup", "Keep catching up normally.")
-    $ d2_maya_dismiss_text = format_choice("ch01_d2_maya_dismiss_leia", "She's fine. Keep talking to Maya.")
+    $ d2_maya_dismiss_text = format_choice("ch01_d2_maya_dismiss_leia", "Lose track of time in the old stories.")
 
     menu:
         "[d2_maya_include_text]":
@@ -624,7 +622,7 @@ label ch01_day2_scene_06_jealousy_test:
 
         "[d2_maya_dismiss_text]":
             $ apply_choice("ch01_d2_maya_dismiss_leia")
-            "[girlfriend_name] looked at me once. I let the moment pass and kept talking to Maya."
+            "One old story turned into three. I didn't notice [girlfriend_name] had gone quiet until she looked at me, and by then Maya was already halfway into the next one."
             "By the time Maya turned the conversation toward her, [girlfriend_name] was smiling again, but the delay had registered."
 
     "Maya eventually rescued me from my own old stories by turning to [girlfriend_name]."
@@ -844,7 +842,7 @@ label ch01_day2_scene_11_missing_pair:
 
     $ d2_pair_encourage_text = format_choice("ch01_d2_photo_pair_encourage", "Go on. Complete the set.")
     $ d2_pair_redirect_text = format_choice("ch01_d2_photo_pair_redirect", "We've got enough photos. Come here, babe.")
-    $ d2_pair_shrug_text = format_choice("ch01_d2_photo_pair_shrug", "Do whatever you want.")
+    $ d2_pair_shrug_text = format_choice("ch01_d2_photo_pair_shrug", "Mm? Yeah, sure. Go ahead.")
 
     menu:
         "[d2_pair_encourage_text]":
@@ -867,10 +865,10 @@ label ch01_day2_scene_11_missing_pair:
         "[d2_pair_shrug_text]":
             $ apply_choice("ch01_d2_photo_pair_shrug")
             $ set_story_value("ch01_d2_leia_julian_photo", "shrugged")
-            mc "Do whatever you want."
-            "[girlfriend_name]'s eyes stayed on me for a fraction longer than necessary."
+            mc "Mm? Yeah, sure, go ahead."
+            "I was still squinting at the map on my phone. [girlfriend_name]'s eyes stayed on me a little longer than they needed to."
             gf "Okay."
-            "She took the photo with [friend_name]. It was ordinary. My indifference was not."
+            "She took the photo with [friend_name]. It was ordinary. I just hadn't looked up for it."
 
     $ set_story_flag("ch01_d2_scene_11_complete")
     jump ch01_day2_scene_11b_boutique
@@ -968,7 +966,7 @@ label ch01_day2_scene_11b_boutique:
 
     if d2_mall_lane == "ntr_risk":
         $ d2_mall_go_text = format_choice("ch01_d2_mall_go_to_leia", "Go see what she wants.")
-        $ d2_mall_leave_text = format_choice("ch01_d2_mall_leave_to_maya", "Let Maya handle it.")
+        $ d2_mall_leave_text = format_choice("ch01_d2_mall_leave_to_maya", "Let Maya handle it. She's better at clothes.")
 
         menu:
             "[d2_mall_go_text]":
@@ -981,7 +979,7 @@ label ch01_day2_scene_11b_boutique:
                 $ apply_choice("ch01_d2_mall_leave_to_maya")
                 $ set_story_value("ch01_d2_mall_ryan_response", "ignored")
                 $ d2_mall_ryan_present = False
-                mc "Maya's already in there. Let her handle it."
+                mc "Maya's better at this than me. I'll just get in the way."
                 "There was a short pause from behind the curtain."
                 gf "...Okay."
     else:
@@ -1001,6 +999,7 @@ label ch01_day2_scene_11b_boutique:
         $ d2_mall_affection_text = format_choice("ch01_d2_mall_reveal_affection", "You look incredible.")
         $ d2_mall_open_text = format_choice("ch01_d2_mall_reveal_open", "Didn't know you had that in you.")
         $ d2_mall_tease_text = format_choice("ch01_d2_mall_reveal_tease", "Maya really did this to you?")
+        $ d2_mall_flat_text = format_choice("ch01_d2_mall_reveal_flat", "It's... nice.")
 
         menu:
             "[d2_mall_affection_text]":
@@ -1021,6 +1020,14 @@ label ch01_day2_scene_11b_boutique:
                 mc "Maya really did this to you?"
                 gf "Against my better judgement."
                 maya "Her judgement is improving."
+
+            "[d2_mall_flat_text]":
+                $ apply_choice("ch01_d2_mall_reveal_flat")
+                mc "It's... yeah. It's nice."
+                gf "Nice."
+                maya "Nice? She looks like that and you've got 'nice'?"
+                mc "I mean really nice. I just— I wasn't ready for it."
+                "[girlfriend_name] tugged the top a little higher and didn't ask me again."
 
         $ exit_cinematic_mode()
         scene bg ch01_d2_boutique

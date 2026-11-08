@@ -213,6 +213,7 @@ label ch01_scene_05_photography:
     $ ch01_photo_support_text = format_choice("ch01_photo_support", "That one looks really good.")
     $ ch01_photo_more_text = format_choice("ch01_photo_more", "Try one sitting by the edge.")
     $ ch01_photo_exit_text = format_choice("ch01_photo_exit", "You look uncomfortable. We can stop.")
+    $ ch01_photo_rush_text = format_choice("ch01_photo_rush", "You look fine, babe. Just smile.")
 
     menu:
         "[ch01_photo_support_text]":
@@ -351,6 +352,22 @@ label ch01_scene_05_photography:
                 gf "Yeah, please delete that first one. I look like I'm getting arrested."
                 friend "Done. The passport photo is gone, I promise."
                 "She slid back into the water beside me, visibly relieved that nobody tried to change her mind."
+
+        "[ch01_photo_rush_text]":
+            $ apply_choice("ch01_photo_rush")
+            $ set_story_value("ch01_photo_stance", "rushed")
+            $ set_story_value("ch01_photo_outcome", "stopped")
+            # Capture 01 is deleted at Leia's request, as on the exit branch.
+            $ set_story_value("ch01_pool_capture_count", 0)
+            $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group_" + ("blue" if selected_pool_outfit == "pool_bolder" else "white"))
+
+            mc "Babe, you look fine. Just smile and it's done."
+            gf "I am smiling. This is my smile."
+            mc "Yeah— no, it's good. Let's just get one."
+            "She held the pose for another second, then dropped it."
+            gf "You know what, it's fine. Delete that first one, [friend_name]. I look like I'm getting arrested."
+            friend "Done. Gone. I promise."
+            "She slid back into the water. She wasn't upset, exactly. She just didn't ask for another one."
 
     scene bg ch01_pool_day
     with dissolve

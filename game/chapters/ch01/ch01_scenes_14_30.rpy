@@ -192,9 +192,9 @@ label ch01_scene_15_under_blanket:
     gf "He's literally right there. Like, right there."
 
     $ ch01_movie_stop_text = format_choice("ch01_movie_stop", "Okay, okay. I'll behave.")
-    $ ch01_movie_subtle_text = format_choice("ch01_movie_subtle", "Then don't make it obvious.")
+    $ ch01_movie_subtle_text = format_choice("ch01_movie_subtle", "Want me to stop? Just say the word.")
     $ ch01_movie_tease_presence_text = format_choice("ch01_movie_tease_presence", "You seemed fine until you remembered he was there.")
-    $ ch01_movie_dismiss_concern_text = format_choice("ch01_movie_dismiss_concern", "You're overthinking it. He won't care.")
+    $ ch01_movie_dismiss_concern_text = format_choice("ch01_movie_dismiss_concern", "Relax. He's watching the movie, he won't notice.")
 
     menu:
         "[ch01_movie_stop_text]":
@@ -209,10 +209,10 @@ label ch01_scene_15_under_blanket:
         "[ch01_movie_subtle_text]":
             $ apply_choice("ch01_movie_subtle")
             $ set_story_value("ch01_movie_first_response", "subtle")
-            mc "Then don't make it obvious."
-            gf "[player_name], that's—"
-            mc "What? I'm just saying."
-            gf "That's not what I said. That's not even close to what I said."
+            mc "I'll stop if you want me to. Just say it."
+            gf "That's not— I didn't say stop. I said he's right there."
+            mc "So... not stop?"
+            gf "Not stop. Just, like, be really, really quiet about it."
             "She kept hold of my wrist for another second, then released it without moving away."
 
         "[ch01_movie_tease_presence_text]":
@@ -228,7 +228,7 @@ label ch01_scene_15_under_blanket:
         "[ch01_movie_dismiss_concern_text]":
             $ apply_choice("ch01_movie_dismiss_concern")
             $ set_story_value("ch01_movie_first_response", "dismissed")
-            mc "You're overthinking it. He won't care."
+            mc "Relax. He's watching the movie. He won't even notice."
             gf "That's not really the point."
             mc "I know."
             gf "Do you?"
@@ -259,7 +259,7 @@ label ch01_scene_16_can_he_tell:
     $ ch01_can_tell_behave_text = format_choice("ch01_can_tell_behave", "Probably not. And I'll behave.")
     $ ch01_can_tell_tease_text = format_choice("ch01_can_tell_tease", "Only if you keep making that face.")
     $ ch01_can_tell_push_text = format_choice("ch01_can_tell_push", "Would it bother you if he could?")
-    $ ch01_can_tell_dismiss_text = format_choice("ch01_can_tell_dismiss", "Does it really matter?")
+    $ ch01_can_tell_dismiss_text = format_choice("ch01_can_tell_dismiss", "Does it really matter if he can?")
 
     menu:
         "[ch01_can_tell_behave_text]":
@@ -293,9 +293,10 @@ label ch01_scene_16_can_he_tell:
         "[ch01_can_tell_dismiss_text]":
             $ apply_choice("ch01_can_tell_dismiss")
             $ set_story_value("ch01_can_tell_response", "dismissed")
-            mc "Does it really matter?"
+            mc "Does it really matter if he can?"
             gf "It does to me. A little."
             mc "Yeah. I guess I get that."
+            "She stayed tucked against me, but she stopped laughing at the movie."
 
     $ lc_sfx("remote_click")
     $ lc_duck()
@@ -362,9 +363,9 @@ label ch01_scene_18_private_under_blanket:
         gf "Trying to make me react while he was sitting right there, like two feet away from us, with the lights on."
 
     $ ch01_private_apologize_text = format_choice("ch01_private_apologize", "I'm glad we could talk." if ch01_movie_respected_request else "Okay. I got carried away. Sorry.")
-    $ ch01_private_playful_text = format_choice("ch01_private_playful", "I did manage to behave, didn't I?" if ch01_movie_respected_request else "You weren't exactly telling me to stop.")
+    $ ch01_private_playful_text = format_choice("ch01_private_playful", "I did manage to behave, didn't I?" if ch01_movie_respected_request else "Sorry. You were kind of cute about it, though.")
     $ ch01_private_curiosity_text = format_choice("ch01_private_curiosity", "Was any part of that interesting to you?" if ch01_movie_respected_request else "Did you actually want me to stop?")
-    $ ch01_private_dismiss_text = format_choice("ch01_private_dismiss", "We don't need to make a big deal of it." if ch01_movie_respected_request else "You're making a big deal out of nothing.")
+    $ ch01_private_dismiss_text = format_choice("ch01_private_dismiss", "We don't need to make a big deal of it." if ch01_movie_respected_request else "It was just a joke, babe. It's not a big deal.")
 
     menu:
         "[ch01_private_apologize_text]":
@@ -392,7 +393,7 @@ label ch01_scene_18_private_under_blanket:
             else:
                 mc "You weren't exactly telling me to stop."
                 gf "Because I was trying not to make it obvious!"
-                mc "So that wasn't a no."
+                mc "So you didn't totally hate it."
                 gf "That is an incredibly annoying way to phrase it."
                 $ lc_sfx("leia_giggle", 0.7)
                 "She was fighting a smile."
@@ -418,7 +419,7 @@ label ch01_scene_18_private_under_blanket:
             if ch01_movie_respected_request:
                 mc "We don't need to make a big deal of it."
             else:
-                mc "You're making a big deal out of nothing."
+                mc "It was just a joke, babe. It's not a big deal."
             "[girlfriend_name]'s expression flattened."
             gf "Right. Fine."
             mc "I didn't mean—"
@@ -520,7 +521,7 @@ label ch01_scene_20_no_hiding_place:
     $ ch01_noblanket_behave_text = format_choice("ch01_noblanket_behave", "Ease your hand back to her thigh and behave.")
     $ ch01_noblanket_test_text = format_choice("ch01_noblanket_test", "Keep it there a little longer.")
     $ ch01_noblanket_tease_text = format_choice("ch01_noblanket_tease", "Problem?")
-    $ ch01_noblanket_phone_text = format_choice("ch01_noblanket_phone", "Pull your hand away and check your phone.")
+    $ ch01_noblanket_phone_text = format_choice("ch01_noblanket_phone", "My phone buzzes. Pull my hand back to check it.")
 
     menu:
         "[ch01_noblanket_behave_text]":
@@ -553,7 +554,7 @@ label ch01_scene_20_no_hiding_place:
         "[ch01_noblanket_phone_text]":
             $ apply_choice("ch01_noblanket_phone")
             $ set_story_value("ch01_noblanket_response", "withdrew_distracted")
-            "I pulled my hand away and checked my phone instead."
+            "My phone buzzed on the armrest. I pulled my hand back to check it without thinking."
             "[girlfriend_name] watched me for half a second before turning back toward the television."
             gf "Never mind."
             mc "Hm?"
@@ -727,7 +728,7 @@ label ch01_scene_23_relationship_philosophy:
     $ ch01_philosophy_couple_text = format_choice("ch01_philosophy_couple", "Some things should stay between the couple.")
     $ ch01_philosophy_trust_text = format_choice("ch01_philosophy_trust", "Trust matters more than arbitrary rules.")
     $ ch01_philosophy_jealousy_fun_text = format_choice("ch01_philosophy_jealousy_fun", "I think a little jealousy can actually be fun.")
-    $ ch01_philosophy_dont_care_text = format_choice("ch01_philosophy_dont_care", "People can do what they want. I don't really care.")
+    $ ch01_philosophy_dont_care_text = format_choice("ch01_philosophy_dont_care", "I don't know. I try not to care about stuff like that.")
 
     menu:
         "[ch01_philosophy_couple_text]":
@@ -765,9 +766,9 @@ label ch01_scene_23_relationship_philosophy:
             $ apply_choice("ch01_philosophy_dont_care")
             $ set_story_value("ch01_relationship_philosophy", "nonchalant")
             $ set_story_value("ch01_looking_philosophy", "indifferent")
-            mc "People can do what they want. I don't really care."
+            mc "I don't know. I try not to care about stuff like that."
             gf "You wouldn't care at all?"
-            mc "Not enough to make rules about somebody looking."
+            mc "I mean... not enough to make rules about somebody looking."
             "[girlfriend_name]'s attention stayed on me for a moment longer than necessary."
             gf "Right."
 
@@ -792,7 +793,7 @@ label ch01_scene_25_julian_put_on_spot:
     $ ch01_julian_change_subject_text = format_choice("ch01_julian_change_subject", "Alright. Enough relationship court.")
     $ ch01_julian_let_play_text = format_choice("ch01_julian_let_play", "Say nothing and let them keep talking.")
     $ ch01_julian_put_spot_text = format_choice("ch01_julian_put_spot", "He's avoiding it because he doesn't want to get himself killed.")
-    $ ch01_julian_dont_care_text = format_choice("ch01_julian_dont_care", "Just answer her. It's not like I care.")
+    $ ch01_julian_dont_care_text = format_choice("ch01_julian_dont_care", "Go on, answer her. I'm not gonna be weird about it.")
 
     menu:
         "[ch01_julian_change_subject_text]":
@@ -823,7 +824,7 @@ label ch01_scene_25_julian_put_on_spot:
         "[ch01_julian_dont_care_text]":
             $ apply_choice("ch01_julian_dont_care")
             $ set_story_value("ch01_julian_attraction_prompt", "ryan_indifferent")
-            mc "Just answer her. It's not like I care."
+            mc "Go on, answer her. I'm not gonna be weird about it."
             "[girlfriend_name] looked at me before she looked back at [friend_name]."
             friend "That somehow makes this worse."
             gf "Well? Answer the question."
@@ -855,7 +856,7 @@ label ch01_scene_26_the_compliment:
         $ ch01_compliment_affirm_text = format_choice("ch01_compliment_affirm", "Of course she is.")
         $ ch01_compliment_tease_text = format_choice("ch01_compliment_tease", "Careful, mate.")
         $ ch01_compliment_enjoy_text = format_choice("ch01_compliment_enjoy", "See? Told you.")
-        $ ch01_compliment_shrug_text = format_choice("ch01_compliment_shrug", "Shrug and check your phone.")
+        $ ch01_compliment_shrug_text = format_choice("ch01_compliment_shrug", "Half-listen. Check the phone that just buzzed.")
 
         menu:
             "[ch01_compliment_affirm_text]":
@@ -887,7 +888,7 @@ label ch01_scene_26_the_compliment:
             "[ch01_compliment_shrug_text]":
                 $ apply_choice("ch01_compliment_shrug")
                 $ set_story_value("ch01_compliment_response", "shrugged")
-                "I shrugged and checked my phone."
+                "My phone had just buzzed. I shrugged and looked down at it, only half listening."
                 "[girlfriend_name]'s attention lingered on me for a second, then returned to [friend_name]."
                 gf "...Thank you."
                 friend "Yeah. Of course."
@@ -1012,7 +1013,7 @@ label ch01_scene_28_ryan_leia_alone:
     $ ch01_alone_apologize_text = format_choice("ch01_alone_apologize", "I'm glad I didn't make you uncomfortable." if not ch01_movie_pressed and not ch01_pressed_julian else "I think I pushed the joke too far.")
     $ ch01_alone_curiosity_text = format_choice("ch01_alone_curiosity", "I was curious how you'd react.")
     $ ch01_alone_open_text = format_choice("ch01_alone_open", "I liked watching you get nervous.")
-    $ ch01_alone_dismiss_text = format_choice("ch01_alone_dismiss", "It was just messing around. Don't overthink it.")
+    $ ch01_alone_dismiss_text = format_choice("ch01_alone_dismiss", "It was just messing around. I didn't mean anything by it.")
 
     menu:
         "[ch01_alone_apologize_text]":
@@ -1052,7 +1053,7 @@ label ch01_scene_28_ryan_leia_alone:
         "[ch01_alone_dismiss_text]":
             $ apply_choice("ch01_alone_dismiss")
             $ set_story_value("ch01_alone_movie_response", "dismissed")
-            mc "It was just messing around. Don't overthink it."
+            mc "It was just messing around. I didn't mean anything by it."
             "[girlfriend_name]'s thumb stopped moving against the glass."
             gf "Right."
             mc "What?"
@@ -1098,7 +1099,7 @@ label ch01_scene_29_private_reflection:
     $ ch01_private_claim_text = format_choice("ch01_private_claim", "That's okay. I still like knowing you're mine.")
     $ ch01_private_open_text = format_choice("ch01_private_open", "I liked seeing you enjoy the attention.")
     $ ch01_private_jealous_text = format_choice("ch01_private_jealous", "I'd be lying if I said I wasn't a little jealous.")
-    $ ch01_private_indifferent_text = format_choice("ch01_private_indifferent", "Doesn't really matter to me either way.")
+    $ ch01_private_indifferent_text = format_choice("ch01_private_indifferent", "I don't know. I didn't really think about it.")
 
     menu:
         "[ch01_private_claim_text]":
@@ -1132,7 +1133,7 @@ label ch01_scene_29_private_reflection:
         "[ch01_private_indifferent_text]":
             $ apply_choice("ch01_private_indifferent")
             $ set_story_value("ch01_private_attention_response", "indifferent")
-            mc "Doesn't really matter to me either way."
+            mc "I don't know. I didn't really think about it."
             "[girlfriend_name] went still for a moment."
             gf "Oh."
             mc "What?"

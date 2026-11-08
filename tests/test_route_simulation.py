@@ -23,15 +23,15 @@ EFF = effective_effects()
 
 # Day 1 menus in play order (ch01_main, scenes 04-06, 07-13, 14-30 up to the Day 1 resolver).
 D1 = [
-    ["ch01_outfit_bolder", "ch01_outfit_comfort", "ch01_outfit_conservative"],
-    ["ch01_photo_support", "ch01_photo_more", "ch01_photo_exit"],
+    ["ch01_outfit_bolder", "ch01_outfit_comfort", "ch01_outfit_conservative", "ch01_outfit_rush"],
+    ["ch01_photo_support", "ch01_photo_more", "ch01_photo_exit", "ch01_photo_rush"],
     ["ch01_towel_laugh", "ch01_towel_boundary", "ch01_towel_forget"],
-    ["ch01_towel_reassure", "ch01_towel_honest", "ch01_towel_tease"],
-    ["ch01_bra_reassure", "ch01_bra_playful", "ch01_bra_cover"],
+    ["ch01_towel_reassure", "ch01_towel_honest", "ch01_towel_tease", "ch01_towel_shrug"],
+    ["ch01_bra_reassure", "ch01_bra_playful", "ch01_bra_cover", "ch01_bra_distracted"],
     ["ch01_stranger_proud", "ch01_stranger_territorial", "ch01_stranger_encourage"],
     ["ch01_catch_ignore", "ch01_catch_check", "ch01_catch_joke", "ch01_catch_boundary"],
     ["ch01_friend_reassure", "ch01_friend_tease", "ch01_friend_boundary"],
-    ["ch01_julian_reassure", "ch01_julian_honest", "ch01_julian_joke"],
+    ["ch01_julian_reassure", "ch01_julian_honest", "ch01_julian_joke", "ch01_julian_fine"],
     ["ch01_carry_brush", "ch01_carry_lookaway", "ch01_carry_fix", "ch01_carry_joke"],
     ["ch01_movie_stop", "ch01_movie_subtle", "ch01_movie_tease_presence", "ch01_movie_dismiss_concern"],
     ["ch01_can_tell_behave", "ch01_can_tell_tease", "ch01_can_tell_push", "ch01_can_tell_dismiss"],
@@ -46,16 +46,21 @@ D1 = [
     ["ch01_private_claim", "ch01_private_open", "ch01_private_jealous", "ch01_private_indifferent"],
 ]
 DREAM = ["ch01_dream_ground", "ch01_dream_curiosity", "ch01_dream_withdraw"]
-# Day 2 menus before the pre-split lane snapshot.
+# Day 2 menus before the pre-split lane snapshot, as they play. The scene 3 Maya
+# menu (ch01_d2_maya_reassure/...) sits in a label overridden by
+# zzzz_ch01_day2_polish_revision.rpy, so it never plays and is left out. The
+# boutique go/leave menu only shows on the NTR-risk lane, and the reveal menu
+# only when Ryan went over (both handled in play()).
 D2_PRE = [
     ["ch01_d2_morning_reassure", "ch01_d2_morning_tease", "ch01_d2_morning_dismiss"],
-    ["ch01_d2_maya_reassure", "ch01_d2_maya_tease_jealousy", "ch01_d2_maya_open_honest"],
     ["ch01_d2_maya_include", "ch01_d2_maya_catchup", "ch01_d2_maya_dismiss_leia"],
     ["ch01_d2_photo_pair_encourage", "ch01_d2_photo_pair_redirect", "ch01_d2_photo_pair_shrug"],
     ["ch01_d2_mall_go_to_leia", "ch01_d2_mall_leave_to_maya"],
-    ["ch01_d2_mall_reveal_affection", "ch01_d2_mall_reveal_open", "ch01_d2_mall_reveal_tease"],
+    ["ch01_d2_mall_reveal_affection", "ch01_d2_mall_reveal_open", "ch01_d2_mall_reveal_tease",
+     "ch01_d2_mall_reveal_flat"],
     ["ch01_d2_postshop_sleep", "ch01_d2_postshop_head", "ch01_d2_postshop_shut_down"],
 ]
+MALL_GO, MALL_REVEAL = 3, 4
 POOL = ["ch01_d2_pool_reassure", "ch01_d2_pool_honest_jealous", "ch01_d2_pool_accuse"]
 SUNSET = ["ch01_d2_sunset_connect", "ch01_d2_sunset_partial", "ch01_d2_sunset_ignore_gate"]
 BED = {"ch01_d2_bed_pool_love": "love", "ch01_d2_bed_pool_exhibition": "exhibitionism",
@@ -103,7 +108,17 @@ def play(d1, d2, pool=None, sunset=None, bed=None, wink=None):
     pressure = m.d1_route_pressure(stats)
     bedtime = m.d1_love_bedtime(pressure, stats)
     apply(pick(DREAM, per_menu(d2, 0)))
+    ryan_at_reveal = True
     for i, menu in enumerate(D2_PRE):
+        if i == MALL_GO:
+            if m.d2_route_lane(stats, pressure, gained_today()) != "ntr_risk":
+                continue
+            choice = pick(menu, per_menu(d2, i + 1))
+            ryan_at_reveal = choice == "ch01_d2_mall_go_to_leia"
+            apply(choice)
+            continue
+        if i == MALL_REVEAL and not ryan_at_reveal:
+            continue
         apply(pick(menu, per_menu(d2, i + 1)))
 
     lane = m.d2_route_lane(stats, pressure, gained_today())          # pre_split
@@ -144,10 +159,16 @@ THREE_SLIPS[12] = NTR                        # + private talk
 PERSONAS = [
     ("pure Love", LOVE, LOVE, {}, ("mixed", True, "love", False)),
     ("Love + Exhibitionism", LE, LE, {}, ("nts_seeded", False, "exhibitionism", False)),
-    ("Love with a playful edge", MIXED_D1, [("Love",)] + [LE] * 7, {}, ("mixed", None, "love", True)),
+    ("Love with a playful edge", MIXED_D1, [("Love",)] + [LE] * 6, {}, ("mixed", None, "love", True)),
     ("Love, two slips on Day 1", TWO_SLIPS, LOVE, {}, ("mixed", False, "love", False)),
     ("three slips on Day 1, then Love", THREE_SLIPS, LOVE, {}, ("ntr_seeded", False, "love", False)),
-    ("Love on Day 1, drifts on Day 2", LOVE, NTR, {}, ("mixed", True, "love", False)),
+    # Slow burn both ways: a loving Day 1 doesn't make Day 2 immune. Slipping on every
+    # Day 2 answer (six slips) opens the NTR-risk lane; the sunset talk still repairs it.
+    ("Love on Day 1, slips on half of Day 2", LOVE, [LOVE, NTR, LOVE, NTR, LOVE, NTR, LOVE], {},
+     ("mixed", True, "love", False)),
+    ("Love on Day 1, slips all through Day 2", LOVE, NTR, {}, ("mixed", True, "ntr_confirmed", False)),
+    ("Love on Day 1, slips all through Day 2, opens up at sunset", LOVE, NTR,
+     {"sunset": "ch01_d2_sunset_connect", "bed": "ch01_d2_bed_pool_love"}, ("mixed", True, "love", False)),
     ("NTR, locked at the wink", NTR, NTR, {"wink": "ch01_d2_wink_reject_hard"}, ("ntr_seeded", False, "ntr_confirmed", False)),
     ("NTR, accuses at the wink", NTR, NTR, {"wink": "ch01_d2_wink_accuse_hard"}, ("ntr_seeded", False, "ntr_confirmed", False)),
     ("NTR, repaired at the wink", NTR, NTR, {"wink": "ch01_d2_wink_repair"}, ("ntr_seeded", False, "love_repaired", False)),
@@ -183,6 +204,41 @@ class RouteSimulationTests(unittest.TestCase):
             prefs = [LOVE] * len(D1)
             prefs[index] = NTR
             self.assertNotEqual(play(prefs, LOVE)[0], "ntr_seeded", menu)
+
+    def test_any_two_slips_never_seed_ntr_and_any_three_do(self):
+        # darryn (choice-sense pass): one Day 1 slip never seeds NTR, three do.
+        # Two must not either, whichever two; and any three must.
+        from itertools import combinations
+        slips = [i for i, menu in enumerate(D1) if any(tag(c) in NTR for c in menu if EFF[c])]
+        self.assertGreaterEqual(len(slips), 18)
+        for n, want in ((2, False), (3, True)):
+            for combo in combinations(slips, n):
+                prefs = [LOVE] * len(D1)
+                for i in combo:
+                    prefs[i] = NTR
+                got = play(prefs, LOVE)[0] == "ntr_seeded"
+                self.assertEqual(got, want, [D1[i][0] for i in combo])
+
+    def test_day1_and_day2_slips_are_small(self):
+        # Slow burn: an ordinary Day 1-2 slip is Temptation +1 with at most a small
+        # Love/Trust cost. Gates (sunset, wink) are the only big moves.
+        menus = D1 + [DREAM] + D2_PRE + [POOL, SUNSET, list(BED), WINK]
+        for menu in menus:
+            for cid in menu:
+                d = m.effect_deltas(EFF[cid])
+                if d.get("temptation", 0) > 0 and cid not in m.CHOICE_GATES:
+                    self.assertEqual(d["temptation"], 1, cid)
+                    self.assertGreaterEqual(min(d.get("love", 0), d.get("trust", 0)), -2, cid)
+                    self.assertIn(tag(cid), ("May lead to NTR",), cid)
+
+    def test_every_day1_and_day2_menu_offers_a_slip(self):
+        # Principle 5: each scored menu has a believable slip, so stamps show a real spread.
+        # Menus without one on purpose: the towel aside with Julian (Leia is off-screen).
+        skip = {"ch01_towel_laugh"}
+        for menu in D1 + [DREAM] + D2_PRE:
+            if menu[0] in skip or menu[0] == "ch01_d2_mall_go_to_leia":
+                continue
+            self.assertTrue(any(tag(c) in NTR and tag(c) != "Neutral" for c in menu), menu)
 
     def test_thresholds_stay_ordered(self):
         t = m.THRESHOLDS

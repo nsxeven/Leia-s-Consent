@@ -251,6 +251,9 @@ init 20 python:
         "ch01_private_claim": "protective", "ch01_private_open": "showoff", "ch01_private_jealous": "honest",
         "ch01_private_indifferent": "detached",
         "ch01_dream_curiosity": "honest", "ch01_dream_withdraw": "detached", "ch01_dream_ground": "supportive",
+        # Choice-sense pass slips (honest mistakes).
+        "ch01_outfit_rush": "detached", "ch01_photo_rush": "detached", "ch01_towel_shrug": "detached",
+        "ch01_bra_distracted": "detached", "ch01_julian_fine": "detached",
     }
     LC_STYLE_TAGS = {
         "protective": ("Her Bodyguard", "Feeling Safe"),

@@ -317,7 +317,7 @@ label ch01_day2_scene_18_pool_aftermath:
 
         $ d2_pool_reassure_text = format_choice("ch01_d2_pool_reassure", "I believe you. It just looked insane for a second.")
         $ d2_pool_honest_text = format_choice("ch01_d2_pool_honest_jealous", "I believe you. I still didn't like walking in on it.")
-        $ d2_pool_accuse_text = format_choice("ch01_d2_pool_accuse", "That was a very convenient explanation.")
+        $ d2_pool_accuse_text = format_choice("ch01_d2_pool_accuse", "I don't know. It just looked... convenient.")
 
         menu:
             "[d2_pool_reassure_text]":
@@ -341,10 +341,10 @@ label ch01_day2_scene_18_pool_aftermath:
             "[d2_pool_accuse_text]":
                 $ apply_choice("ch01_d2_pool_accuse")
                 $ set_story_value("ch01_d2_pool_response", "accused")
-                mc "That was a very convenient explanation."
+                mc "I don't know. It just looked... convenient."
                 "[girlfriend_name] stared at me."
                 gf "Are you serious?"
-                mc "I'm saying what it looked like."
+                mc "No, I— I don't know. I'm saying what it looked like."
                 gf "And I'm telling you what happened."
                 "She stepped away before the conversation could turn into something larger in front of everyone."
 
@@ -1379,7 +1379,7 @@ label ch01_day2_scene_30_bedroom:
 
         $ d2_bed_love_text = format_choice("ch01_d2_bed_pool_love", "I didn't like seeing it, but I believe you.")
         $ d2_bed_ex_text = format_choice("ch01_d2_bed_pool_exhibition", "It bothered me... and I haven't stopped thinking about it.")
-        $ d2_bed_accuse_text = format_choice("ch01_d2_bed_pool_accuse", "I still think it looked convenient.")
+        $ d2_bed_accuse_text = format_choice("ch01_d2_bed_pool_accuse", "I want to believe you. I just keep seeing it.")
 
         menu:
             "[d2_bed_love_text]":
@@ -1407,7 +1407,7 @@ label ch01_day2_scene_30_bedroom:
 
             "[d2_bed_accuse_text]":
                 $ apply_choice("ch01_d2_bed_pool_accuse")
-                mc "I still think it looked convenient."
+                mc "I want to believe you. I just keep seeing it."
                 gf "Then I don't know what else you want me to say."
                 "We went to bed without resolving it."
                 $ set_story_value("ch01_d2_end_route", "mixed_unresolved")

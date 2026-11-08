@@ -37,11 +37,14 @@ init python:
             ("partner", "exhibitionism", 3),
         ],
         "ch01_outfit_comfort": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 2),
+            ("relationship", "trust", 1),
         ],
         "ch01_outfit_conservative": [
-            ("relationship", "trust", 1),
+            ("relationship", "love", 1),
+        ],
+        "ch01_outfit_rush": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_photo_support": [
             ("partner", "exhibitionism", 2),
@@ -52,8 +55,11 @@ init python:
         "ch01_photo_exit": [
             ("relationship", "trust", 2),
         ],
+        "ch01_photo_rush": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
+        ],
         "ch01_towel_laugh": [
-            ("relationship", "love", 1),
             ("partner", "exhibitionism", 1),
         ],
         "ch01_towel_boundary": [
@@ -70,8 +76,11 @@ init python:
             ("partner", "exhibitionism", 1),
         ],
         "ch01_towel_tease": [
-            ("relationship", "love", 1),
             ("partner", "exhibitionism", 1),
+        ],
+        "ch01_towel_shrug": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_bra_reassure": [
             ("relationship", "trust", 2),
@@ -82,11 +91,17 @@ init python:
         "ch01_bra_cover": [
             ("relationship", "trust", 1),
         ],
+        "ch01_bra_distracted": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
+        ],
         "ch01_stranger_proud": [
-            ("partner", "exhibitionism", 2),
+            ("relationship", "love", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_stranger_territorial": [
-            ("relationship", "temptation", -1),
+            ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_stranger_encourage": [
             ("partner", "exhibitionism", 3),
@@ -96,10 +111,12 @@ init python:
             ("relationship", "trust", 1),
         ],
         "ch01_catch_joke": [
-            ("relationship", "love", 1),
             ("partner", "exhibitionism", 1),
         ],
-        "ch01_catch_boundary": [],  # Neutral: no stats
+        "ch01_catch_boundary": [
+            ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
+        ],
         "ch01_friend_reassure": [
             ("relationship", "love", 1),
             ("relationship", "trust", 2),
@@ -108,7 +125,8 @@ init python:
             ("relationship", "love", 1),
         ],
         "ch01_friend_boundary": [
-            ("relationship", "trust", 1),
+            ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_julian_reassure": [
             ("relationship", "trust", 1),
@@ -118,13 +136,18 @@ init python:
             ("relationship", "trust", 1),
         ],
         "ch01_julian_joke": [],  # Neutral: no stats
+        "ch01_julian_fine": [
+            ("relationship", "temptation", 1),
+        ],
         "ch01_carry_brush": [],  # Neutral: no stats
-        "ch01_carry_lookaway": [],  # Neutral: no stats
+        "ch01_carry_lookaway": [
+            ("relationship", "temptation", 1),
+        ],
         "ch01_carry_fix": [
             ("relationship", "trust", 1),
         ],
         "ch01_carry_joke": [
-            ("partner", "exhibitionism", 2),
+            ("partner", "exhibitionism", 1),
         ],
 
         # Movie-night / Day 1 continuation. Open choices raise Exhibitionism
@@ -136,7 +159,7 @@ init python:
         ],
         "ch01_movie_subtle": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 3),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_movie_tease_presence": [
             ("relationship", "love", 1),
@@ -144,7 +167,7 @@ init python:
         ],
         "ch01_movie_dismiss_concern": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
+            ("relationship", "temptation", 1),
         ],
         "ch01_can_tell_behave": [
             ("relationship", "love", 1),
@@ -159,7 +182,7 @@ init python:
         ],
         "ch01_can_tell_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 3),
+            ("relationship", "temptation", 1),
         ],
         "ch01_fidget_cover": [
             ("relationship", "love", 1),
@@ -190,7 +213,7 @@ init python:
         ],
         "ch01_private_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
+            ("relationship", "temptation", 1),
         ],
         "ch01_noblanket_behave": [
             ("relationship", "love", 1),
@@ -205,7 +228,7 @@ init python:
         ],
         "ch01_noblanket_phone": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
+            ("relationship", "temptation", 1),
         ],
         "ch01_watch_claim": [
             ("relationship", "love", 2),
@@ -248,7 +271,7 @@ init python:
         ],
         "ch01_philosophy_dont_care": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 3),
+            ("relationship", "temptation", 1),
         ],
         "ch01_looking_enjoy": [
             ("relationship", "love", 1),
@@ -276,7 +299,7 @@ init python:
         ],
         "ch01_julian_dont_care": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 3),
+            ("relationship", "temptation", 1),
         ],
         "ch01_compliment_affirm": [
             ("relationship", "love", 2),
@@ -291,8 +314,8 @@ init python:
             ("partner", "exhibitionism", 3),
         ],
         "ch01_compliment_shrug": [
-            ("relationship", "love", -2),
-            ("relationship", "temptation", 3),
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_alone_apologize": [
             ("relationship", "love", 1),
@@ -308,7 +331,7 @@ init python:
         ],
         "ch01_alone_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
+            ("relationship", "temptation", 1),
         ],
         "ch01_private_claim": [
             ("relationship", "love", 2),
@@ -322,8 +345,8 @@ init python:
             ("relationship", "love", 1),
         ],
         "ch01_private_indifferent": [
-            ("relationship", "love", -2),
-            ("relationship", "temptation", 3),
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_mall_go_to_leia": [
             ("relationship", "love", 1),
@@ -331,7 +354,7 @@ init python:
         ],
         "ch01_d2_mall_leave_to_maya": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_mall_reveal_affection": [
             ("relationship", "love", 1),
@@ -342,6 +365,10 @@ init python:
         ],
         "ch01_d2_mall_reveal_tease": [
             ("relationship", "love", 1),
+        ],
+        "ch01_d2_mall_reveal_flat": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
     }
 
@@ -354,18 +381,22 @@ init python:
         "ch01_outfit_bolder": ("encouraging", "open", "supportive"),
         "ch01_outfit_comfort": ("neutral", "comfort-first", "supportive"),
         "ch01_outfit_conservative": ("protective", "cautious", "respectful"),
+        "ch01_outfit_rush": ("neutral", "nonchalant", "distracted"),
         "ch01_photo_support": ("encouraging", "supportive"),
         "ch01_photo_more": ("encouraging", "participating", "open"),
         "ch01_photo_exit": ("protective", "comfort-first", "supportive"),
+        "ch01_photo_rush": ("neutral", "nonchalant", "dismissive"),
         "ch01_towel_laugh": ("encouraging", "lighthearted"),
         "ch01_towel_boundary": ("protective", "respectful"),
         "ch01_towel_forget": ("protective", "honest", "cautious"),
         "ch01_towel_reassure": ("neutral", "supportive", "reassuring"),
         "ch01_towel_honest": ("neutral", "honest", "supportive"),
         "ch01_towel_tease": ("encouraging", "lighthearted", "open"),
+        "ch01_towel_shrug": ("neutral", "nonchalant", "dismissive"),
         "ch01_bra_reassure": ("neutral", "supportive", "comfort-first"),
         "ch01_bra_playful": ("encouraging", "participating", "open", "playful"),
         "ch01_bra_cover": ("protective", "cautious", "respectful"),
+        "ch01_bra_distracted": ("neutral", "nonchalant", "distracted"),
         "ch01_stranger_proud": ("encouraging", "supportive", "open", "attentive"),
         "ch01_stranger_territorial": ("protective", "possessive", "cautious", "attentive"),
         "ch01_stranger_encourage": ("encouraging", "participating", "open", "playful", "attentive"),
@@ -379,6 +410,7 @@ init python:
         "ch01_julian_reassure": ("encouraging", "trusting", "open"),
         "ch01_julian_honest": ("protective", "honest", "respectful"),
         "ch01_julian_joke": ("encouraging", "lighthearted", "trusting"),
+        "ch01_julian_fine": ("neutral", "nonchalant", "withdrawal"),
         "ch01_carry_brush": ("encouraging", "trusting", "open"),
         "ch01_carry_lookaway": ("protective", "possessive", "cautious"),
         "ch01_carry_fix": ("neutral", "protective", "supportive"),
@@ -441,6 +473,7 @@ init python:
         "ch01_d2_mall_reveal_affection": ("supportive", "attentive", "love-route"),
         "ch01_d2_mall_reveal_open": ("encouraging", "participating", "open", "exhibitionism-seed"),
         "ch01_d2_mall_reveal_tease": ("encouraging", "playful", "attentive"),
+        "ch01_d2_mall_reveal_flat": ("neutral", "nonchalant", "distracted"),
     }
 
     STANCE_TAGS = ("encouraging", "neutral", "protective")
