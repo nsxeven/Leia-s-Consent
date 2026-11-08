@@ -12,9 +12,9 @@ label ch01_scene_07_did_he_see:
 
     "I found her in the bathroom doorway, still half-turned toward the mirror, one hand pressed to her cheek."
 
-    gf "[player_name]."
-    mc "Yeah?"
-    gf "Did he see?"
+    gf "[player_name]? Come here a sec."
+    mc "Yeah? What's up?"
+    gf "Did he see? Like, actually see. Don't give me the nice-boyfriend version."
 
     $ enter_cinematic_mode()
     scene cg ch01_towel_did_he_see
@@ -32,46 +32,46 @@ label ch01_scene_07_did_he_see:
             $ apply_choice("ch01_towel_reassure")
             $ set_story_value("ch01_towel_followup", "reassured")
             mc "He looked away pretty much immediately."
-            gf "That wasn't exactly what I asked."
-            mc "I don't think he got much of a look."
-            gf "...Okay."
+            gf "That's not what I asked, though. I asked if he saw, not how fast he looked away."
+            mc "I really don't think he got much of a look. It was like a second."
+            gf "A second. Okay. I can live with a second. I think."
 
         "[ch01_towel_honest_text]":
             $ apply_choice("ch01_towel_honest")
             $ set_story_value("ch01_towel_followup", "honest")
             mc "Maybe a little. You asked me to be honest."
-            gf "[player_name]!"
-            mc "What? You asked."
-            gf "I was hoping you'd say no."
+            gf "[player_name]! I know I said be honest, but you could've lied a little."
+            mc "You told me not to do the nice version!"
+            gf "I was hoping the not-nice version would also be no."
 
         "[ch01_towel_tease_text]":
             $ apply_choice("ch01_towel_tease")
             $ set_story_value("ch01_towel_followup", "teased")
             mc "Enough to know we should start using the curtains."
-            gf "Fuck you."
-            mc "That wasn't the reassurance I was aiming for."
-            gf "You're enjoying this far too much."
+            gf "Fuck you. That's not— okay, it's a little funny. It's not funny."
+            mc "Sorry. That sounded better in my head."
+            gf "You're enjoying this way too much, and I'm having a crisis here."
 
-    gf "I was standing in front of a floor-to-ceiling window. In a towel."
-    mc "Accidentally."
-    gf "I'm sure the distinction was very obvious from downstairs."
+    gf "I was standing in front of a giant glass door in a towel, yelling about dinner. Who does that?"
+    mc "It was an accident, though. You were just trying to hurry us up."
+    gf "Oh, I'm sure that was super clear from downstairs."
 
     mc "Seriously. He wasn't standing there staring. The moment he realized what was happening, he turned away."
-    gf "He did?"
-    mc "Yeah. Then he basically tried to pretend it never happened."
+    gf "Wait, he did? Like, right away?"
+    mc "Right away. Then he stared at the pool like he'd never seen water before."
 
-    "She stepped back into the bathroom and rested a hand against the half-open door. A beat passed."
+    "She stepped back into the bathroom and leaned on the half-open door, thinking about it."
 
-    gf "Good."
-    gf "Wait. Now I have to go downstairs."
+    gf "Good. That's... yeah. Good."
+    gf "Wait, no, now I have to go downstairs and sit across from him at dinner like nothing happened."
     mc "You could fake your own death."
-    gf "Would that get me out of dinner?"
+    gf "Would that get me out of dinner? Because I'm kind of considering it."
     mc "Not after you've reminded us about the reservation fourteen times."
 
-    gf "And don't tell him I asked."
+    gf "And don't tell him I asked. Seriously. Don't make it a thing."
     mc "I am not going downstairs and saying, 'By the way, [girlfriend_name] wants to know exactly how much of her you saw.'"
-    gf "[player_name]."
-    mc "Right. Not helping."
+    gf "[player_name], I swear to God."
+    mc "Sorry. Yeah. Not helping. Got it."
 
     $ exit_cinematic_mode()
     scene bg ch01_master_bedroom_curtains
@@ -93,11 +93,11 @@ label ch01_scene_07_did_he_see:
 
     "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
 
-    gf "What?"
-    mc "Nothing."
-    gf "That was a very obvious something."
-    mc "You look amazing."
-    gf "Better answer."
+    gf "What? Why are you looking at me like that? Is it too much?"
+    mc "No. I just... forgot what I was going to say."
+    gf "That's a weird answer. Is that a good weird answer?"
+    mc "You look amazing. That's the answer."
+    gf "See, you should've led with that."
 
     $ exit_cinematic_mode()
     # Dressed for dinner from here on (darryn): Julian's swim shorts are pool-only.
@@ -111,7 +111,7 @@ label ch01_scene_07_did_he_see:
 
     with dissolve
 
-    friend "Ready?"
+    friend "Hey. You guys ready? I already started the car so the seats don't cook us."
     gf "Yeah."
     friend "Cool."
 
@@ -120,28 +120,28 @@ label ch01_scene_07_did_he_see:
 
     gf "[friend_name]?"
     friend "Yeah?"
-    gf "Earlier..."
+    gf "About earlier, on the balcony. I just—"
 
-    friend "You don't have to explain anything."
-    gf "I wasn't going to explain—"
-    friend "Good. Then we're already on the same page."
+    friend "Hey, no, you don't have to explain anything. It's fine."
+    gf "I wasn't going to explain, I was going to— okay, I don't know what I was going to do."
+    friend "Then we're good. That's the whole conversation. We can just be done with it."
 
-    "His smile was smaller than usual. Not teasing. Just reassuring."
+    "His smile was smaller than usual, the kind you give somebody to let them off the hook."
 
-    friend "Bad timing. I looked away. That's it."
-    gf "...Okay."
-    friend "You really don't have to worry about it."
+    friend "It was bad timing, I looked at the pool, and the pool and I had a really nice moment together. That's all that happened."
+    gf "You and the pool had a moment."
+    friend "A really special one. You don't have to worry about it, seriously."
 
-    gf "Thanks."
-    friend "Of course."
+    gf "Thanks, [friend_name]. Really."
+    friend "Of course. It's already gone, I've forgotten the whole thing."
 
     $ set_story_value("ch01_leia_julian_comfort", get_story_value("ch01_leia_julian_comfort", 0) + 1)
     $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) + 1)
 
     friend "Now can we go before we lose this reservation I've been hearing about all day?"
-    gf "We are not losing it."
+    gf "We're not going to lose it, I called them twice."
     mc "We're only late because somebody said \"two minutes\" about an hour ago."
-    gf "Both of you. Shoes. Now."
+    gf "I'm ignoring that. Both of you, shoes, now, we're leaving."
 
     $ set_story_flag("ch01_scene_07_complete")
 
@@ -163,20 +163,20 @@ label ch01_scene_08_drive_to_dinner:
     "It was our natural arrangement: [girlfriend_name] beside me, [friend_name] behind us, the two of them taking turns insulting my driving from different directions."
 
     gf "You know the speed limit applies on holiday too, right?"
-    mc "I'm under it."
-    friend "Technically true. Emotionally false."
+    mc "I'm under it! I'm like two under it."
+    friend "You're under it now because she said something. Thirty seconds ago you were not under it."
 
     $ lc_sfx("radio_static")
     "[girlfriend_name] reached over and changed the song before the chorus."
 
-    mc "I liked that one."
-    gf "That's why I changed it."
-    friend "For once, I'm with [girlfriend_name]."
-    mc "Get out. Both of you."
+    mc "Hey, I liked that one."
+    gf "I know, that's why I changed it. You've played it like six times since we landed."
+    friend "Sorry, man, I'm with her on this one. I know all the words now, and I didn't want to know them."
+    mc "You can both walk to dinner."
 
     $ lc_sfx("leia_laugh")
     "She laughed and rested her hand on my thigh for a moment before turning the volume up."
-    "Nothing about the drive felt unusual. That was what made the seating arrangement feel so ordinary—almost invisible."
+    "None of us thought twice about who sat where. It was just how we'd always done it."
 
     $ exit_cinematic_mode()
 
@@ -185,9 +185,9 @@ label ch01_scene_08_drive_to_dinner:
     $ cast(ryan="casual", leia="purple_dress", julian="evening")
 
     gf "Okay, actual question. If we had to listen to one artist for the rest of this trip—"
-    friend "No."
-    gf "I haven't even said who."
-    friend "Your question is already dangerous."
+    friend "No. I already know where this is going, and the answer's no."
+    gf "I haven't even said who! You don't know who I was going to say."
+    friend "It's the boy band. It's always the boy band. You did this on the way to the airport."
 
     "They immediately found something to disagree about, then somehow ended up taking the same side against me."
     "By the time the restaurant lights appeared ahead, the towel incident had disappeared beneath ordinary conversation."
@@ -201,15 +201,19 @@ label ch01_scene_08_drive_to_dinner:
 
 label ch01_scene_09_dinner:
 
-    scene bg ch01_restaurant_evening
+    # Arrival opens on the DinnerArrival CG (travel = fade) and holds it for
+    # its own lines; it used to flash past with no text (added in ce959ce).
+    $ cast()
+    $ enter_cinematic_mode()
+    scene cg ch01_dinner_arrival
     with fade
     $ lc_amb("restaurant")  # darryn's restaurant recording, a little lower (LC_AUDIO_GAIN)
     $ lc_bgm("lounge_piano")
-    $ cast()
 
-    $ enter_cinematic_mode()
-    scene cg ch01_dinner_arrival
-    with dissolve
+    "The restaurant gave us a table out on the terrace, close enough to the water that we could hear it under the piano."
+    "The food came out faster than any of us expected. [girlfriend_name] ended up with her chin in both hands, listening to [friend_name] explain why he'd ordered the one dish he couldn't pronounce."
+    friend "In my defense, the waiter looked really proud of it, and I didn't want to point at something else and hurt his feelings. So if it's bad, that's on me."
+    gf "That's the nicest dumb reason anyone's ever had for ordering food."
 
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
@@ -217,27 +221,27 @@ label ch01_scene_09_dinner:
     $ cast(ryan="casual", leia="purple_dress", julian="evening")
     $ face("leia", "smile")
 
-    "Dinner started exactly the way I expected: [girlfriend_name] taking photos of the food, [friend_name] pretending to object, and me being ordered to move my glass out of every shot."
+    "After that, dinner went exactly the way I expected: [girlfriend_name] taking photos of every new plate, [friend_name] pretending to object, and me being ordered to move my glass out of every shot."
 
-    gf "You're ruining the composition."
-    mc "It's a glass of water."
-    friend "Move it. Respect the artist."
-    mc "You two became unbearable very quickly."
+    gf "Babe, move your glass. You're ruining the composition."
+    mc "It's a glass of water. People drink water at dinner."
+    friend "Just move it, man. She's been lining this up since the bread came."
+    mc "When did you two start teaming up on me? That was fast."
 
     "Somewhere between the starters and the main course, [friend_name] told her a story from college that I had heard at least twenty times."
     "[girlfriend_name] had not."
 
-    gf "No. There is no way he actually said that to the professor."
-    friend "Ask him."
-    mc "I refuse to validate this story."
-    gf "That means it's true."
+    gf "No. No way. There's no way he actually said that to a professor, to his face."
+    friend "Ask him! He was there, he was sitting right next to me. Ask him."
+    mc "I'm not getting involved in this story."
+    gf "That means it's true! Oh my God, it's true."
 
     $ lc_sfx("leia_laugh")
     "She laughed hard enough to lean forward over the table, and [friend_name] laughed because she was laughing."
     "[girlfriend_name] lifted her phone and looked between the three of us."
 
     gf "We still don't have a proper dinner photo."
-    friend "You have approximately four hundred photos from today."
+    friend "You've taken like four hundred photos today, though. I watched you do it."
     gf "Of food and the pool. I want one of us."
     mc "There are three of us. That's what selfies are for."
     # Ryan steps out of frame before the stranger enters from the left.
@@ -292,7 +296,7 @@ label ch01_scene_09_dinner:
 
     "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more than he probably intended—hard to miss."
     "[girlfriend_name] followed his glance downward."
-    "For a beat, she forgot to look away."
+    "For a second, she forgot to look away."
 
     scene cg ch01_dinner_spill_03
     with dissolve
@@ -315,14 +319,14 @@ label ch01_scene_09_dinner:
     # Ryan breaks the moment; both ease back to their normal dialogue slots.
     show stranger_casual_wet at ch01_stranger_collision_reset, leia_body_idle
     show leia_purple_dress_wet flustered at ch01_leia_collision_reset, leia_body_idle
-    mc "[girlfriend_name]."
-    gf "What?"
-    mc "Your dress."
+    mc "[girlfriend_name]. Babe."
+    gf "What? What's wrong?"
+    mc "Your dress. Look down."
 
     "She looked down at herself and whatever she'd been thinking vanished immediately."
     "The front of her dress was soaked through."
 
-    gf "Shit."
+    gf "Oh no. Shit. This is going to stain."
     stranger "Seriously, I'm sorry. Can I get you another drink? Or—"
     gf "No, no. It's okay. I walked into you."
     stranger "Then we're both terrible at walking."
@@ -346,12 +350,12 @@ label ch01_scene_09_dinner:
     $ cast_resume(leia="leia_purple_dress_wet")
 
     "[friend_name] pushed a stack of napkins across the table without commenting on where [girlfriend_name] had been looking."
-    friend "Successful photo mission?"
+    friend "So, uh. How'd the photo go?"
     $ face("leia", "angry")
-    gf "Not one word."
+    gf "Don't. Not one word, I mean it."
     mc "We didn't even get the photo."
     $ lc_sfx("leia_angry_laugh")
-    gf "I hate both of you."
+    gf "I hate both of you so much right now."
 
     "Most of the drink came off the fabric. The problem was what had gotten underneath it."
 
@@ -363,12 +367,12 @@ label ch01_scene_09_dinner:
     with dissolve
     $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
-    gf "Babe."
-    mc "Mm?"
+    gf "Babe. Babe, come here."
+    mc "Mm? What's up?"
     gf "My sticky bra is literally giving up."
-    mc "Giving up?"
+    mc "Giving up how? What does that mean?"
     gf "As in one side is barely attached anymore. I think the drink got under it."
-    gf "I might have to take it off."
+    gf "I think I have to take it off. In the bathroom. Is that insane?"
 
     $ exit_cinematic_mode()
     scene bg ch01_restaurant_evening
@@ -386,28 +390,28 @@ label ch01_scene_09_dinner:
             $ set_story_value("ch01_bra_response", "reassuring")
             mc "Do whatever makes you comfortable. You'll be fine."
             gf "You say that because you're not the one wearing adhesive underwear."
-            mc "True. I remain tragically underqualified."
+            mc "That's true. I know nothing about adhesive underwear."
 
         "[ch01_bra_playful_text]":
             $ apply_choice("ch01_bra_playful")
             $ set_story_value("ch01_bra_response", "playful_open")
             mc "If you're comfortable with it... that's kind of hot."
             $ face("leia", "shy")
-            gf "[player_name]."
-            mc "What? You asked."
+            gf "[player_name]! We're in a restaurant."
+            mc "What? You asked what I thought."
             gf "I said my bra was falling off. I did not ask you to make it worse."
-            mc "You smiled."
-            gf "Shut up."
+            mc "You're smiling, though."
+            gf "Shut up. This is my stressed face."
 
         "[ch01_bra_cover_text]":
             $ apply_choice("ch01_bra_cover")
             $ set_story_value("ch01_bra_response", "cautious")
             mc "Take it off if you need to. I'll keep an eye out."
             $ face("leia", "neutral")
-            gf "Fair. Let me fix this before it falls out on its own."
+            gf "Thank you. Let me go fix this before it falls off on its own."
 
     gf "I'm going to the bathroom. If [friend_name] asks, I spilled a drink. That's all he needs to know."
-    mc "Understood."
+    mc "Spilled a drink. Got it."
 
     "[girlfriend_name] disappeared toward the restroom with her handbag tucked under one arm."
     $ lc_sfx_loop_stop(1.5)
@@ -419,11 +423,11 @@ label ch01_scene_09_dinner:
     $ set_story_value("ch01_dinner_dress_state", "post_spill_braless")
     $ set_story_flag("ch01_sticky_bra_removed")
 
-    friend "She okay?"
-    mc "Yeah. Wardrobe malfunction."
-    friend "Do I want details?"
-    mc "No."
-    friend "Excellent."
+    friend "Is she okay? She kind of ran."
+    mc "She's fine. Just a wardrobe thing, from the drink."
+    friend "Okay. Is this a thing where I want details, or a thing where I really don't want details?"
+    mc "You really don't."
+    friend "Great. Perfect. I'm going to go look at the dessert menu, then."
 
     $ enter_cinematic_mode()
     scene cg ch01_dinner_restroom_return_01
@@ -436,14 +440,14 @@ label ch01_scene_09_dinner:
     passerby "Excuse me—just had to say that dress looks incredible on you."
 
     "[girlfriend_name] blinked, caught off guard."
-    gf "Oh. Thank you."
+    gf "Oh! Um. Thank you. That's really nice."
 
     "She gave a small, slightly flustered smile and kept walking."
 
     scene cg ch01_dinner_restroom_return_02
     with dissolve
 
-    "By the time she was closer to the table the compliment still sat on her expression."
+    "By the time she got back to the table, she was still half-smiling about it."
     "Without the adhesive bra underneath, the fabric sat more naturally against her chest and moved with her instead of holding a fixed shape."
     "Under the restaurant lighting, small changes in posture made the difference easier to notice than she probably realized."
 
@@ -456,9 +460,9 @@ label ch01_scene_09_dinner:
     "She caught me looking."
 
     $ face("leia", "skeptical")
-    gf "Don't."
+    gf "Don't. I can see you thinking it."
     mc "I didn't say anything."
-    gf "Your face did."
+    gf "You didn't have to. Your face is saying it really loudly."
 
     "[friend_name] looked between us, clearly aware that he had missed part of a conversation, and wisely chose not to ask."
 
@@ -477,24 +481,24 @@ label ch01_scene_09_dinner:
             $ apply_choice("ch01_stranger_proud")
             $ set_story_value("ch01_stranger_response", "proud")
             mc "Yeah. She looks incredible."
-            gf "Okay, you don't have to join in."
-            mc "I agree with the man."
-            gf "You're impossible."
+            gf "Babe, you don't have to join in. Now there's two of you."
+            mc "What? He's right. I agree with the man."
+            gf "You're impossible, you know that?"
 
         "[ch01_stranger_territorial_text]":
             $ apply_choice("ch01_stranger_territorial")
             $ set_story_value("ch01_stranger_response", "territorial")
             mc "Thanks. We've got it from here."
             gf "He was just being nice."
-            mc "I know."
+            mc "I know. I just... I know."
 
         "[ch01_stranger_encourage_text]":
             $ apply_choice("ch01_stranger_encourage")
             $ set_story_value("ch01_stranger_response", "encouraged_risk")
             mc "See? Told you you had nothing to worry about."
             gf "That is not what I was worried about."
-            mc "Still looked good."
-            gf "You're enjoying this."
+            mc "You still look really good, though. That part's true."
+            gf "You're enjoying this, aren't you? A little bit."
             mc "Maybe a little."
             "Her cheeks colored, but she did not cover up."
 
@@ -502,9 +506,9 @@ label ch01_scene_09_dinner:
 
     $ face("leia", "flustered")
     gf "Why is everyone looking at me today?"
-    mc "Today?"
-    gf "What does that mean?"
-    mc "You just normally don't notice."
+    mc "Wait, today?"
+    gf "What's that supposed to mean?"
+    mc "People look at you all the time. You just don't usually notice."
     "She looked at me as if deciding whether that was a compliment or a problem."
 
     $ set_story_flag("ch01_scene_09_complete")
@@ -524,7 +528,7 @@ label ch01_scene_10_after_dinner_drinks:
     "We should have left after dessert. Instead, [friend_name] noticed the bar."
 
     $ lc_sfx("glass_clink")
-    friend "One drink."
+    friend "Okay, hear me out. One drink. Just one, at the bar, and then we go."
     mc "For you two. I'm driving."
     $ face("leia", "smile")
     gf "Responsible [player_name] is very attractive."
@@ -535,17 +539,17 @@ label ch01_scene_10_after_dinner_drinks:
 
     gf "No, explain it again. Why did you think that haircut looked good?"
     friend "It was 2019. Nobody knew anything."
-    mc "I told him. Repeatedly."
-    friend "You had no vision."
+    mc "I told him. I told him so many times."
+    friend "You did, and I didn't listen, and that one's on me. I'll own that."
 
     $ lc_sfx("leia_laugh")
     "[girlfriend_name] leaned into my shoulder while laughing, then pointed across the table at [friend_name]."
 
-    gf "Show me the photo."
-    friend "Absolutely not."
+    gf "Wait, there's a photo? Show me the photo."
+    friend "No. Absolutely not. I've worked really hard to make sure that photo doesn't exist."
     gf "[player_name] has it, doesn't he?"
-    mc "Several."
-    friend "This friendship is over."
+    mc "I have a few. There's a folder."
+    friend "You kept a folder? Of my haircut? That's actually so mean."
 
     "Whatever awkwardness had lingered over dinner seemed to fade as they traded stories."
 
@@ -554,10 +558,10 @@ label ch01_scene_10_after_dinner_drinks:
     $ set_story_flag("ch01_scene_10_complete")
 
     gf "If we're going back, we need snacks."
-    mc "Need?"
+    mc "We need snacks?"
     gf "Need. And more drinks because you haven't had any yet."
     mc "I'm not drinking until we're back at the villa."
-    friend "Then supply run."
+    friend "There's a shop on the way back to the car. We could just walk over and grab stuff."
 
     jump ch01_scene_11_walk_and_catch
 
@@ -572,10 +576,10 @@ label ch01_scene_11_walk_and_catch:
 
     "The shop was only a short walk away. [girlfriend_name] still insisted on hooking both hands around my arm as though the pavement had become personally untrustworthy."
 
-    gf "I'm not drunk."
+    gf "I'm not drunk, for the record. I'm just holding on."
     mc "Nobody said you were."
     friend "That statement usually means somebody is drunk."
-    gf "Traitor."
+    gf "Whose side are you even on? You're supposed to be on my side."
 
     scene cg ch01_walk_back_call
     with dissolve
@@ -587,7 +591,7 @@ label ch01_scene_11_walk_and_catch:
 
     $ lc_sfx_loop_stop(0.25)
     $ lc_unduck()
-    mc "Hang on."
+    mc "Hang on, sorry. Two seconds."
 
     "I stopped. [girlfriend_name] and [friend_name] kept moving at an easy pace a few steps ahead while I answered."
 
@@ -617,7 +621,7 @@ label ch01_scene_11_walk_and_catch:
     mc "Maya, I'll call you back. [girlfriend_name] just tripped."
     phone_friend "Is she okay?"
     mc "Yeah. [friend_name] caught her. Talk tomorrow."
-    phone_friend "Okay. Text me."
+    phone_friend "Go, go. Text me later."
     "I ended the call and hurried toward them."
 
     scene cg ch01_trip_catch_aftermath
@@ -629,10 +633,10 @@ label ch01_scene_11_walk_and_catch:
     $ lc_sfx("slap_light")
     "[girlfriend_name]'s face went bright red. She smacked his shoulder with the back of her hand, more embarrassed than angry." with lc_shake("s")
 
-    gf "Watch your hands!"
+    gf "Watch your hands, oh my God!"
     friend "I didn't exactly submit a landing plan!"
     gf "...Thank you for catching me."
-    friend "You're welcome. Please walk forwards now."
+    friend "You're welcome. Could you maybe walk forwards for the rest of the night? For me?"
 
     $ exit_cinematic_mode()
     scene bg ch01_island_walk_night
@@ -657,24 +661,24 @@ label ch01_scene_11_walk_and_catch:
             $ apply_choice("ch01_catch_check")
             $ set_story_value("ch01_catch_response", "checked_leia")
             mc "You okay, babe?"
-            gf "I'm fine. The floor attacked me."
-            mc "Obviously."
+            gf "I'm fine. The path just came out of nowhere."
+            mc "Paths do that. Especially at night."
 
         "[ch01_catch_joke_text]":
             $ apply_choice("ch01_catch_joke")
             $ set_story_value("ch01_catch_response", "joked")
             mc "Subtle, [friend_name]. Very subtle."
-            friend "Fuck off."
+            friend "Dude. Come on, that's not— fuck off."
             gf "[player_name]!"
             mc "Too soon?"
-            gf "Yes."
+            gf "Yes! Way too soon. He just saved my life."
 
         "[ch01_catch_boundary_text]":
             $ apply_choice("ch01_catch_boundary")
             $ set_story_value("ch01_catch_response", "boundary")
             mc "Careful, mate."
             friend "Yeah. I know. Sorry."
-            gf "It was an accident."
+            gf "Babe, it was an accident. He was catching me."
 
     $ set_story_flag("ch01_accidental_catch_complete")
     $ set_story_flag("ch01_scene_11_complete")
@@ -689,23 +693,23 @@ label ch01_scene_11b_female_friend:
     $ lc_amb("street_night")
     $ lc_bgm("warm_night")
     $ face("leia", "skeptical")
-    gf "Who was that?"
+    gf "So who was that? On the phone."
     mc "A friend from back home. She saw the posts and realized we're both here."
     gf "She?"
 
     "[friend_name] made a heroic attempt to become interested in a sign across the road."
 
-    mc "Yes. She."
-    gf "And she wants to meet you?"
-    mc "Tomorrow, maybe."
-    gf "How do you know her?"
-    mc "We've been friends a while."
-    gf "Have you ever dated?"
-    mc "No. We've always been friends."
+    mc "Yes. She. Why'd you say it like that?"
+    gf "I didn't say it like anything. And she wants to meet you?"
+    mc "Tomorrow, maybe. If we're not busy."
+    gf "And how do you know her? From where?"
+    mc "From back home. We've been friends for ages. It's not a big thing."
+    gf "Have you two ever, like... dated?"
+    mc "No! No. We've always just been friends."
 
-    friend "I'm going to walk slightly over there."
-    gf "Nobody asked you."
-    friend "Exactly why I'm leaving."
+    friend "I'm going to go stand slightly over there. Away from this."
+    gf "Nobody asked you, [friend_name]."
+    friend "I know! That's why I'm leaving!"
 
     "[girlfriend_name]'s tone was playful, but only just. The questions were real."
 
@@ -719,7 +723,7 @@ label ch01_scene_11b_female_friend:
             $ set_story_value("ch01_female_friend_response", "reassured")
             mc "She's just a friend. You've got nothing to worry about."
             $ lc_sfx("leia_grunt")
-            gf "I wasn't worried."
+            gf "I wasn't worried. Who said I was worried?"
             mc "You asked five questions in ten seconds."
             gf "I was gathering information."
             mc "Very calmly."
@@ -729,12 +733,12 @@ label ch01_scene_11b_female_friend:
             $ apply_choice("ch01_friend_tease")
             $ set_story_value("ch01_female_friend_response", "teased_jealousy")
             mc "Wait. Are you jealous?"
-            gf "No."
-            mc "That was fast."
+            gf "No! No. Why would I be jealous?"
+            mc "You answered that really fast."
             gf "I'm not jealous. I'm curious."
             friend "Those are famously different things."
-            gf "[friend_name]."
-            friend "Walking away again."
+            gf "[friend_name], I swear."
+            friend "Yep. Walking away again. Bye."
 
         "[ch01_friend_boundary_text]":
             $ apply_choice("ch01_friend_boundary")
@@ -765,50 +769,50 @@ label ch01_scene_12_shop_and_drive_back:
     "[girlfriend_name] filled the basket with snacks according to a system neither [friend_name] nor I understood, while [friend_name] contributed increasingly questionable bottles from the drinks aisle."
 
     $ face("leia", "skeptical")
-    gf "Put that back."
-    friend "Why?"
+    gf "No. Put that back."
+    friend "What? Why? It looked fun."
     gf "Because the label has a skull on it."
-    friend "That's branding."
-    mc "That's a warning."
+    friend "That's just branding. It's like a pirate thing."
+    mc "I'm pretty sure that's a warning, man."
 
     $ lc_sfx("chips_rustle")
     "[girlfriend_name] dropped two bags of chips into the basket."
 
-    friend "Those are terrible."
+    friend "Oh no, not those. Those are terrible, they taste like a candle."
     gf "You booked a private villa and somehow still have the taste buds of a child."
-    friend "Ask [player_name] what he ate after lectures."
-    mc "Don't."
+    friend "That has nothing to do with the— can we not? Ask [player_name] what he ate in college."
+    mc "Don't. Don't do this."
     gf "What did he eat?"
-    friend "Instant noodles. Dry."
-    gf "No."
-    mc "Once."
-    friend "For an entire semester."
+    friend "Instant noodles. Dry. Straight out of the packet, he'd just crunch on them."
+    gf "No. No way."
+    mc "It was one time."
+    friend "It was an entire semester. Every single night."
     gf "[player_name]!"
-    mc "We were students."
-    gf "Water was free."
+    mc "We were broke! We were students!"
+    gf "You had a kettle! Water was free!"
 
     $ lc_sfx("leia_laugh")
     "She was laughing hard enough that another shopper glanced over."
 
-    mc "Fine. Ask him about the sunglasses phase."
-    friend "There was no phase."
-    mc "He wore them indoors."
+    mc "Okay, fine. Ask him about the sunglasses phase."
+    friend "There was no phase. I don't know what he's talking about."
+    mc "He wore them indoors. For like a year."
     $ face("leia", "smile")
-    gf "Oh, I need photos."
+    gf "Oh, I need photos of that. I need to see that."
     friend "You need a better boyfriend."
     gf "No, this one comes with useful historical records."
 
     "She bumped her shoulder lightly against mine and kept walking."
 
-    friend "I regret ever daring you two."
-    gf "Four years too late."
-    mc "Historically successful terrible dare, remember?"
-    friend "I take it back."
+    friend "I regret ever daring you two. I want that on the record."
+    gf "Well, that's four years too late."
+    mc "This afternoon you wanted a plaque for it."
+    friend "I take the plaque back. I don't want the plaque anymore."
 
     $ lc_sfx("register_beep")
     "By the time we paid, [girlfriend_name] was carrying exactly one packet of chips and acting as if she had personally completed the supply run."
 
-    gf "I want to lie down."
+    gf "I want to lie down. Right now. Here, on the floor."
     mc "We're walking thirty meters to the car."
     gf "Then I want to lie down in the car."
 
@@ -824,7 +828,7 @@ label ch01_scene_12_shop_and_drive_back:
 
     gf "Wake me up when we're home."
     mc "We're ten minutes away."
-    gf "Exactly. That's ten minutes of sleep."
+    gf "So that's ten minutes of sleep. Shh."
 
     "Within a few minutes, her breathing had settled into the slow rhythm of somebody who had actually committed to the plan."
 
@@ -838,10 +842,10 @@ label ch01_scene_12_shop_and_drive_back:
 
     "The car became quiet enough that [friend_name] lowered his voice."
 
-    friend "Hey. About earlier."
-    mc "The fall?"
-    friend "Yeah. I didn't mean to... you know."
-    mc "I know."
+    friend "Hey. Can I say something about earlier?"
+    mc "What, the trip thing?"
+    friend "Yeah. I just— I didn't mean to, you know. Grab anything. I was trying to stop her from hitting the ground."
+    mc "Yeah, I know, man."
     friend "I just don't want you thinking I was taking advantage of the situation."
     friend "She tripped. I caught her. My hand ended up where it shouldn't have. That's it."
 
@@ -855,17 +859,17 @@ label ch01_scene_12_shop_and_drive_back:
             $ set_story_value("ch01_julian_apology_response", "trusted")
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) + 1)
             mc "I know. Don't worry about it."
-            friend "Good."
-            mc "You looked more traumatised than she did."
-            friend "Because I enjoy continuing to be alive."
+            friend "Good. Thanks, man. I've been weird about it this whole drive."
+            mc "You looked more traumatized than she did."
+            friend "Because I like being alive, and she hits harder than you'd think."
 
         "[ch01_julian_honest_text]":
             $ apply_choice("ch01_julian_honest")
             $ set_story_value("ch01_julian_apology_response", "honest_discomfort")
             mc "It bothered me for a second, but I know it was an accident."
-            friend "That's fair."
+            friend "That's fair. I'd probably feel the same."
             mc "Just... be careful."
-            friend "Of course."
+            friend "Of course. Yeah. I will."
 
         "[ch01_julian_joke_text]":
             $ apply_choice("ch01_julian_joke")
@@ -873,8 +877,8 @@ label ch01_scene_12_shop_and_drive_back:
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) + 1)
             mc "Next time, catch her with less enthusiasm."
             friend "Next time I'm letting gravity deal with her."
-            mc "Please don't."
-            friend "Fine. Professional catching only."
+            mc "Please don't drop my girlfriend on a sidewalk."
+            friend "Fine. I'll still catch her, but really professionally. Like a fireman."
 
     "For a moment it was just the two of us again—the same easy friendship we'd had long before this trip."
     "Behind us, [girlfriend_name] shifted in her sleep and pulled her arms closer around herself."
@@ -899,21 +903,21 @@ label ch01_scene_13_back_at_villa:
     "When I parked, [girlfriend_name] didn't move."
     "She was still curled across the back seat, completely asleep."
 
-    mc "[girlfriend_name]."
+    mc "[girlfriend_name]? Hey."
     "Nothing."
     mc "Babe. We're home."
 
     "She made a small sound, pulled herself tighter into the seat, and stayed asleep."
 
-    friend "She's gone."
-    mc "Helpful."
+    friend "She's gone, man. She's not waking up."
+    mc "Thanks, man. I can see that."
 
     $ lc_sfx("car_door")
     "I opened the rear door and tried to lift her without waking her properly."
     "It lasted about three seconds. Sleeping [girlfriend_name] had somehow become twice as difficult to carry as awake [girlfriend_name]."
 
-    friend "Want help?"
-    mc "Yeah. I'll get the door."
+    friend "Do you want me to take her? I don't mind."
+    mc "Yeah, okay. I'll get the door."
 
     $ enter_cinematic_mode()
     scene cg ch01_julian_carry
@@ -922,10 +926,10 @@ label ch01_scene_13_back_at_villa:
     "[friend_name] carefully slipped one arm behind her back and the other beneath her knees, lifting her into a proper princess carry."
     "[girlfriend_name] barely reacted. Her head settled against his shoulder and she kept sleeping."
 
-    mc "Show-off."
-    friend "She's dead weight. That's your problem, not mine."
+    mc "Oh, come on. You just picked her up like it was nothing."
+    friend "You were lifting her wrong, man. You've got to get under the knees."
     mc "Just don't drop her."
-    friend "Open the door."
+    friend "I'm not going to drop her. Just open the door."
 
     scene cg ch01_carry_walk
     with dissolve
@@ -942,8 +946,8 @@ label ch01_scene_13_back_at_villa:
     "From where [friend_name] was carrying her, he could see the problem. With one arm behind her back and the other under her knees, he had no free hand to fix it without risking dropping her."
 
     friend "Uh... [player_name]?"
-    mc "What?"
-    friend "Her dress is slipping."
+    mc "What? What's wrong?"
+    friend "Her dress is, uh. It's slipping. On the side. I can't fix it."
 
     "I turned. From my angle, [girlfriend_name]'s body and [friend_name]'s supporting arm hid whatever he could see. All I could tell was that [friend_name] looked deeply uncomfortable about having to announce it."
 
@@ -965,7 +969,7 @@ label ch01_scene_13_back_at_villa:
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) + 1)
             $ set_story_value("ch01_leia_wake_reason", "voices_at_door")
             mc "We're almost inside. Just keep going."
-            friend "Right. Just letting you know."
+            friend "Right. Yeah. I just didn't want you to think I didn't say anything."
             "[friend_name] adjusted the angle of his supporting arm slightly, keeping [girlfriend_name] closer against him so the neckline would not shift any farther."
 
         "[ch01_carry_lookaway_text]":
@@ -974,8 +978,8 @@ label ch01_scene_13_back_at_villa:
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) - 1)
             $ set_story_value("ch01_leia_wake_reason", "voices_at_door")
             mc "Then keep your eyes off her and bring her inside."
-            friend "I'm not trying to look."
-            mc "I know. Just saying."
+            friend "I'm not trying to look, I swear. That's why I told you."
+            mc "I know. I know. I'm just saying."
             friend "Yeah, no, I get it. Door. I'm looking at the door."
 
         "[ch01_carry_fix_text]":
@@ -986,17 +990,17 @@ label ch01_scene_13_back_at_villa:
             "I stepped back and carefully pulled the neckline securely into place."
             "The movement finally woke her. [girlfriend_name]'s eyes opened halfway."
             gf "Mm...?"
-            mc "Hey. We're home."
-            gf "Why am I moving?"
-            friend "Long story."
-            mc "You refused to wake up."
-            gf "I was sleeping."
+            mc "Hey. Hey, we're home."
+            gf "Why am I... why is everything moving?"
+            friend "It's kind of a long story. You fell asleep."
+            mc "You wouldn't wake up. I tried."
+            gf "Because I was sleeping. That's what sleeping is."
             mc "That's kind of my point."
             friend "Can we finish this conversation inside?"
             gf "...Why are you carrying me?"
             friend "Because your boyfriend needed the keys."
             mc "And because you're apparently made of concrete when you're asleep."
-            gf "Rude."
+            gf "Rude. I'm not concrete, I'm just relaxed."
 
         "[ch01_carry_joke_text]":
             $ apply_choice("ch01_carry_joke")
@@ -1004,7 +1008,7 @@ label ch01_scene_13_back_at_villa:
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) + 1)
             $ set_story_value("ch01_leia_wake_reason", "voices_at_door")
             mc "Careful. Don't enjoy the view too much."
-            friend "I hate this conversation."
+            friend "Dude. I really, really hate this conversation."
             mc "You're the one who called me back."
             friend "Because I'm trying to be a good person. Open the door."
 
@@ -1015,12 +1019,12 @@ label ch01_scene_13_back_at_villa:
     if get_story_value("ch01_leia_wake_reason") == "voices_at_door":
         "The voices finally did what the drive home hadn't. [girlfriend_name] stirred against [friend_name]'s shoulder as we crossed the doorway."
         gf "Mm... we're home?"
-        mc "Finally."
+        mc "Finally. Yeah, we're home."
         gf "Why is [friend_name] carrying me?"
-        friend "Because you wouldn't wake up."
+        friend "Because you wouldn't wake up, and [player_name] tried first, and it was not going well."
         mc "I tried first. Sleeping you weighs approximately twice as much."
         gf "That's not how bodies work."
-        friend "You weren't there."
+        friend "I don't know, you weren't there. It was pretty bad."
         gf "I was literally there."
         mc "Not spiritually."
 
@@ -1031,9 +1035,9 @@ label ch01_scene_13_back_at_villa:
 
     "[friend_name] lowered her onto the sofa. [girlfriend_name] curled straight into the cushions, eyes already drifting shut again."
 
-    friend "Your girlfriend is a logistical problem."
-    mc "You volunteered."
-    friend "A mistake I will reflect on privately."
+    friend "I'm just going to say it, man. Your girlfriend is a logistical problem."
+    mc "You offered! I didn't even ask."
+    friend "I know. I'm going to think about that decision on my own time."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_evening
@@ -1042,9 +1046,9 @@ label ch01_scene_13_back_at_villa:
     $ cast(ryan="casual", leia="purple_dress_no_bra", julian="evening")
     $ face("leia", "flustered")
 
-    gf "I can hear both of you now."
+    gf "I can hear both of you, you know. I'm awake now."
     mc "Welcome back."
-    gf "Barely."
+    gf "Barely. Stop talking about me like I'm luggage."
 
     "[friend_name] laughed, gathered the bags from the doorway, and headed toward the kitchen."
     $ set_story_flag("ch01_scene_13_complete")
