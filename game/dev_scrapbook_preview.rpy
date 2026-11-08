@@ -98,6 +98,10 @@ init python:
                 ]},
             ]
             photos = 4
+        # Stat model v2: the sample data above is written in the old stats; convert it.
+        start = lc_stat_model.migrate_snapshot(start)
+        end = lc_stat_model.migrate_snapshot(end)
+        choices = [dict(c, deltas=lc_stat_model.migrate_deltas(c["deltas"])) for c in choices]
         gallery = [
             {"id": "arrival", "image": "ch01_villa_arrival", "caption": "Arrival", "dream": False},
             {"id": "window", "image": "ch01_bedroom_window", "caption": "The window", "dream": False},

@@ -57,31 +57,31 @@ init 10 python:
     CH01_SELECT_END_PRESETS = {
         "love": dict(
             lane="love", bedroom="love_private", soft_gate=False, wink=False, confirmed=False,
-            pool_suspicion=False, pressure="mixed", stats=dict(love=60, trust=58, boredom=5, exh=10, cur=20, acc=10), hist=[],
+            pool_suspicion=False, pressure="mixed", stats=dict(love=60, trust=58, exh=10, tem=5), hist=[],
         ),
         "exhibitionism": dict(
             lane="exhibitionism", bedroom="exhibition_open_curtains", soft_gate=False, wink=False, confirmed=False,
-            pool_suspicion=False, pressure="nts_seeded", stats=dict(love=55, trust=55, boredom=8, exh=25, cur=26, acc=16), hist=["ch01_d2_morning_tease"],
+            pool_suspicion=False, pressure="nts_seeded", stats=dict(love=55, trust=55, exh=43, tem=8), hist=["ch01_d2_morning_tease"],
         ),
         "love_repaired": dict(
             lane="ntr_risk", bedroom="ntr_gate_repaired", soft_gate=True, wink=True, confirmed=False,
-            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=48, trust=48, boredom=15, exh=10, cur=20, acc=10), hist=["ch01_d2_morning_dismiss"],
+            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=48, trust=48, exh=10, tem=15), hist=["ch01_d2_morning_dismiss"],
         ),
         "mixed_unresolved": dict(
             lane="ntr_risk", bedroom="pool_suspicion_unresolved", soft_gate=False, wink=False, confirmed=False,
-            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=44, trust=44, boredom=20, exh=10, cur=20, acc=10), hist=["ch01_d2_morning_dismiss"],
+            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=44, trust=44, exh=10, tem=20), hist=["ch01_d2_morning_dismiss"],
         ),
         "ntr_confirmed": dict(
             lane="ntr_risk", bedroom="ntr_gate_accusation", soft_gate=True, wink=True, confirmed=True,
-            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=40, trust=40, boredom=24, exh=10, cur=20, acc=10), hist=["ch01_d2_morning_dismiss"],
+            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=40, trust=40, exh=10, tem=24), hist=["ch01_d2_morning_dismiss"],
         ),
     }
 
     # Day Two lane seeds (state at ch01_day2_start, not at the end of Day Two).
     CH01_SELECT_DAY2_PRESETS = {
-        "love": dict(pressure="mixed", stats=dict(love=50, trust=50, boredom=10, exh=10, cur=20, acc=10), hist=[]),
-        "exhibitionism": dict(pressure="nts_seeded", stats=dict(love=50, trust=50, boredom=10, exh=25, cur=26, acc=16), hist=["ch01_d2_morning_tease"]),
-        "ntr_risk": dict(pressure="ntr_seeded", stats=dict(love=44, trust=50, boredom=20, exh=10, cur=20, acc=10), hist=["ch01_d2_morning_dismiss"]),
+        "love": dict(pressure="mixed", stats=dict(love=50, trust=50, exh=10, tem=10), hist=[]),
+        "exhibitionism": dict(pressure="nts_seeded", stats=dict(love=50, trust=50, exh=40, tem=10), hist=["ch01_d2_morning_tease"]),
+        "ntr_risk": dict(pressure="ntr_seeded", stats=dict(love=44, trust=50, exh=10, tem=20), hist=["ch01_d2_morning_dismiss"]),
     }
 
     # Day Four end state seeded for the Day Five presets (a typical playthrough of each route; the choices
@@ -89,7 +89,7 @@ init 10 python:
     CH01_SELECT_DAY5_PRESETS = {
         "love": dict(
             d2="love", lane="love", d3_variant="love_private",
-            stats=dict(love=57, trust=56, boredom=9, exh=10, cur=20, acc=14, sec=5, bnd=10, tem=10, jea=20),
+            stats=dict(love=57, trust=56, exh=12, tem=9),
             d4=dict(end_variant="love_slow_dance", exposure_step="none", exhib_variant="none", photo_style="candid",
                     dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="in", ntr_react=None,
                     ntr_outcome="ntr_confirmed", ntr_fine_count=0, disclosure_when=None, leia_call=None,
@@ -98,7 +98,7 @@ init 10 python:
         ),
         "exhibitionism": dict(
             d2="exhibitionism", lane="exhibitionism", d3_variant="exhibition_window",
-            stats=dict(love=53, trust=50, boredom=10, exh=38, cur=33, acc=24, sec=5, bnd=10, tem=10, jea=20),
+            stats=dict(love=53, trust=50, exh=66, tem=10),
             d4=dict(end_variant="exhib_shared_step", exposure_step="brief_reveal", exhib_variant="shared_step", photo_style="posed",
                     dusk_outfit_id="boutique_cutout_mini", dusk_outfit_source="leia", hook_reply="in", ntr_react=None,
                     ntr_outcome="ntr_confirmed", ntr_fine_count=0, disclosure_when=None, leia_call="brief_reveal",
@@ -107,7 +107,7 @@ init 10 python:
         ),
         "love_repaired": dict(
             d2="ntr_confirmed", lane="ntr", d3_variant="ntr_restroom_nightmare",
-            stats=dict(love=50, trust=60, boredom=16, exh=10, cur=20, acc=12, sec=3, bnd=10, tem=10, jea=20),
+            stats=dict(love=50, trust=60, exh=11, tem=16),
             d4=dict(end_variant="ntr_repaired_thanks", exposure_step="none", exhib_variant="none", photo_style="candid",
                     dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="in", ntr_react="thanks",
                     ntr_outcome="love_repaired", ntr_fine_count=0, disclosure_when="harbor_wall", leia_call=None,
@@ -116,7 +116,7 @@ init 10 python:
         ),
         "ntr_unresolved": dict(
             d2="mixed_unresolved", lane="ntr", d3_variant="ntr_restroom_nightmare",
-            stats=dict(love=43, trust=50, boredom=25, exh=10, cur=20, acc=11, sec=9, bnd=12, tem=10, jea=25),
+            stats=dict(love=43, trust=50, exh=10, tem=31),
             d4=dict(end_variant="ntr_unresolved", exposure_step="none", exhib_variant="none", photo_style="candid",
                     dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="maybe", ntr_react=None,
                     ntr_outcome="ntr_unresolved", ntr_fine_count=0, disclosure_when=None, leia_call=None,
@@ -125,7 +125,7 @@ init 10 python:
         ),
         "ntr_confirmed": dict(
             d2="ntr_confirmed", lane="ntr", d3_variant="ntr_restroom_nightmare",
-            stats=dict(love=35, trust=45, boredom=33, exh=10, cur=20, acc=12, sec=10, bnd=12, tem=15, jea=20),
+            stats=dict(love=35, trust=45, exh=11, tem=45),
             d4=dict(end_variant="ntr_confirmed", exposure_step="none", exhib_variant="none", photo_style="skipped",
                     dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="maybe", ntr_react=None,
                     ntr_outcome="ntr_confirmed", ntr_fine_count=3, disclosure_when=None, leia_call=None,
@@ -155,15 +155,14 @@ init 10 python:
         lc_review_reset()
         store.story_flags = {}
         store.story_values = {}
-        store.relationship_stats.update({"love": stats["love"], "trust": stats["trust"], "boredom": stats["boredom"], "momentum": 0})
-        store.partner_stats.update({"curiosity": stats["cur"], "exhibitionism": stats["exh"]})
-        store.player_stats.update({"acceptance": stats["acc"]})
-        # Optional extra stats (Day Five presets only).
-        for _k, _stat in (("sec", "secrecy"), ("bnd", "boundary_looseness"), ("tem", "temptation")):
-            if _k in stats:
-                store.partner_stats[_stat] = stats[_k]
-        if "jea" in stats:
-            store.player_stats["jealousy"] = stats["jea"]
+        # Stat model v2: Love, Trust, Exhibitionism (exh), Temptation (tem), Sharing (sha, default 0).
+        # Preset numbers are the old presets converted with lc_stat_model.migrate_stats, with the
+        # Exhibitionism routes raised to typical v2 values so the Day 2 lane and the Day 4/5
+        # "her own call" steps resolve the same way they did before.
+        store.relationship_stats = {"love": stats["love"], "trust": stats["trust"],
+                                    "sharing": stats.get("sha", 0), "temptation": stats["tem"]}
+        store.partner_stats = {"exhibitionism": stats["exh"]}
+        store.player_stats = {}
         store.choice_history = list(hist)
         store.last_choice_id = None
         store.owned_outfits = ["casual_default"]
@@ -219,8 +218,14 @@ init 10 python:
             else:
                 for flag in ("ch01_day_03_started", "ch01_d3_complete", "ch01_day_03_complete"):
                     set_story_flag(flag)
-                # Same mapping ch01_day3_start uses.
-                d3_lane_value = "ntr" if base in ("ntr_confirmed", "mixed_unresolved") else ("exhibitionism" if base == "exhibitionism" else "love")
+                # Same mapping ch01_day3_start uses: mixed_unresolved starts Day Three as a
+                # strained Love track and only becomes NTR if Ryan walks away at the club.
+                # The Day Five presets name the Day Four lane they need explicitly.
+                d3_lane_value = "ntr" if base == "ntr_confirmed" else ("exhibitionism" if base == "exhibitionism" else "love")
+                if d5p:
+                    d3_lane_value = d5p["lane"]
+                if base == "mixed_unresolved":
+                    set_story_value("ch01_d3_strained_love", True)
                 set_story_value("ch01_d3_lane", d3_lane_value)
                 set_story_value("ch01_d3_end_variant", {"love": "love_private", "exhibitionism": "exhibition_window", "ntr": "ntr_restroom_nightmare"}[d3_lane_value])
                 # Day Four also reads these Day Three values (same values Day Three writes).

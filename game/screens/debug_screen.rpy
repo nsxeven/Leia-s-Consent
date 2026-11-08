@@ -37,8 +37,7 @@ screen dev_panel():
 
             hbox:
                 spacing 50
-                text "NTS Tendency: [nts_score()]" size 26
-                text "NTR Tendency: [ntr_score()]" size 26
+                text "Current lean: [lc_current_lean_label()]" size 26
                 text "Money: $[money]" size 26
 
             text "Equipped Outfit: [current_outfit_name()]   Owned Outfits: [len(valid_owned_outfit_ids())]" size 20

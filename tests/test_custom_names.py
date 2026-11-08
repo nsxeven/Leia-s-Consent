@@ -4,6 +4,7 @@ Run with: python3 -m unittest discover -s tests -v
 """
 import ast
 import re
+import sys
 import textwrap
 import unittest
 from pathlib import Path
@@ -32,10 +33,11 @@ VISUAL_FILES = [
 ]
 NAME_RE = re.compile(r"\b(?:Leia|Ryan|Julian|LEIA|RYAN|JULIAN)\b")
 CUSTOM = {"girlfriend_name": "Ava", "player_name": "Noah", "friend_name": "Eli"}
+# Stat model v2 groups (game/python-packages/lc_stat_model.py).
 GROUPS = {
-    "relationship": ("love", "trust", "boredom", "momentum"),
-    "partner": ("curiosity", "temptation", "exhibitionism", "boundary_looseness", "secrecy"),
-    "player": ("jealousy", "acceptance"),
+    "relationship": ("love", "trust", "sharing", "temptation"),
+    "partner": ("exhibitionism",),
+    "player": (),
 }
 
 
@@ -195,10 +197,11 @@ class AgeGateTests(unittest.TestCase):
 class Day3ChoiceTests(unittest.TestCase):
     def setUp(self):
         source = (CH01 / "ch01_day3_scenes.rpy").read_text()
-        block = source.split("init 1 python:\n", 1)[1].split("\nlabel ch01_day3_start", 1)[0]
-        self.env = {"CHOICE_EFFECTS": {}, "CHOICE_TAGS": {}}
-        exec(compile(textwrap.dedent(block), "day3_choices", "exec"), self.env)
-        self.effects = self.env["CHOICE_EFFECTS"]
+        # The effective Day Three effects are the v2 re-scoring in
+        # systems/stat_model_v2_later_days.rpy (init 5 wins over the file's init 1).
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from lc_effective_effects import effective_effects
+        self.effects = effective_effects()
         self.scene = source
 
     def test_both_menus_change_stats_and_keep_story_flags(self):
@@ -207,12 +210,14 @@ class Day3ChoiceTests(unittest.TestCase):
         for choice_id in club + dessert:
             self.assertEqual(self.scene.count('apply_choice("{}")'.format(choice_id)), 1)
             rows = self.effects[choice_id]
-            self.assertTrue(rows)
+            if choice_id != "ch01_d3_dessert_recommended":  # Neutral banter: no stats in v2
+                self.assertTrue(rows)
             for group, stat, amount in rows:
                 self.assertIn(stat, GROUPS[group])
                 self.assertNotEqual(amount, 0)
-                self.assertGreaterEqual(amount, -2)
-                self.assertLessEqual(amount, 2)
+                # v2 scale: +-1 ordinary, +-2 strong, +-3 key beat (talking it out at the club).
+                self.assertGreaterEqual(amount, -3)
+                self.assertLessEqual(amount, 3)
 
         def totals(choice_id):
             stats = {group: {stat: 0 for stat in names} for group, names in GROUPS.items()}
@@ -224,14 +229,11 @@ class Day3ChoiceTests(unittest.TestCase):
         talk = totals("ch01_d3_ntr_talk")
         withdraw = totals("ch01_d3_ntr_withdraw")
         self.assertGreater(talk["relationship"]["love"], enjoy["relationship"]["love"])
-        self.assertGreater(talk["relationship"]["trust"], 0)
-        self.assertLess(talk["partner"]["secrecy"], 0)
+        self.assertLess(talk["relationship"]["temptation"], enjoy["relationship"]["temptation"])
         self.assertLess(withdraw["relationship"]["love"], 0)
-        self.assertGreater(withdraw["relationship"]["boredom"], 0)
-        self.assertGreater(withdraw["partner"]["temptation"], 0)
-        self.assertGreater(withdraw["partner"]["secrecy"], 0)
+        self.assertGreater(withdraw["relationship"]["temptation"], 0)
         self.assertEqual(totals("ch01_d3_dessert_chocolate")["relationship"]["trust"], 1)
-        self.assertEqual(totals("ch01_d3_dessert_recommended")["player"]["acceptance"], 1)
+        self.assertEqual(self.effects["ch01_d3_dessert_recommended"], [])
         self.assertEqual(totals("ch01_d3_dessert_surprise")["relationship"]["love"], 1)
 
         self.assertIn('set_story_value("ch01_d3_ntr_repair_effort", "enjoy")', self.scene)

@@ -49,4 +49,4 @@ screen lc_route_explorer_screen():
                                 action Function(lc_route_explorer_set_focus, route_id)
                             text "[route_description]" size 18 color "#5a4030"
 
-            text "Love, Exhibitionism, and NTR risk are the early chapter's available directions. Later specialized routes such as NTS Discovery still require their actual story decisions." size 16 color "#7a6266" line_spacing 3
+            text "Love, Love+Exhib and NTR are the early chapter's available directions. NTS (someone else joining in, always agreed) still requires its own story decisions." size 16 color "#7a6266" line_spacing 3

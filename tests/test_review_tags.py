@@ -4,15 +4,19 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'game' / 'python-packages'))
+import lc_stat_model  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReviewTagTests(unittest.TestCase):
     def setUp(self):
         self.store = SimpleNamespace(
-            relationship_stats=dict(love=50, trust=50, boredom=10, momentum=0),
-            partner_stats=dict(curiosity=20, temptation=10, exhibitionism=10, boundary_looseness=10, secrecy=5),
-            player_stats=dict(jealousy=20, acceptance=10), lc_review_active=None,
+            relationship_stats=dict(love=50, trust=50, sharing=0, temptation=10),
+            partner_stats=dict(exhibitionism=10),
+            player_stats=dict(), lc_review_active=None,
             lc_review_days={}, lc_title_facts={}, modified_save=False,
             persistent=SimpleNamespace(lc_title_style='story', lc_title_badges=False))
         self.config = SimpleNamespace(show=lambda *a, **kw: None, gamedir=str(ROOT / 'game'))
@@ -20,6 +24,7 @@ class ReviewTagTests(unittest.TestCase):
             renpy=SimpleNamespace(showing=lambda tag: False, show_screen=lambda *a, **kw: None),
             get_stat_group=lambda group: getattr(self.store, group + '_stats'),
             get_story_value=lambda key, default=None: default,
+            lc_delta_colour=lambda stat, amount, palette='card': lc_stat_model.delta_kind(stat, amount),
             GALLERY_ENTRIES={}, STAT_LABELS={})
         source = (ROOT / 'game/systems/day_review.rpy').read_text()
         init = source.split('init 20 python:\n', 1)[1].split('\nlabel lc_day_review', 1)[0]

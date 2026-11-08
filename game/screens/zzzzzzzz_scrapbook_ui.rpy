@@ -1528,9 +1528,9 @@ label lc_ui_shot_tour:
                 self.caption = caption
                 self.action = Return(True)
         store._shot_items = [
-            _ShotItem("You're right. Let's just enjoy tonight.\n[Love ↑ • Boredom ↓]"),
-            _ShotItem("Can we talk somewhere quieter?\n[Love ↑ • Trust ↑ • Secrecy ↓]"),
-            _ShotItem("You can enjoy yourself. I'll get a drink.\n[Trust ↓ • Acceptance ↑]"),
+            _ShotItem("You're right. Let's just enjoy tonight.\n[Love ↑ • Temptation ↓]"),
+            _ShotItem("Can we talk somewhere quieter?\n[Love ↑ • Temptation ↓]"),
+            _ShotItem("You can enjoy yourself. I'll get a drink.\n[Love ↓ • Temptation ↑]"),
         ]
     show screen choice(_shot_items)
     show screen say(who="Leia", what="\"Can we just enjoy tonight?\"")

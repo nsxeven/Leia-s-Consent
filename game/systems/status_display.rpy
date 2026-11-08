@@ -6,7 +6,7 @@ init python:
     STATUS_MODE_NOTES = {
         "normal": "A readable snapshot of what Ryan can reasonably perceive.",
         "insight": "Adds broad behavioral signals without revealing exact values.",
-        "full": "Shows the complete numerical state for route planning.",
+        "full": "Shows exact values and the route the story currently leans toward.",
         "developer": "Shows exact values together with internal stat keys.",
     }
 
@@ -58,90 +58,70 @@ init python:
 
 
     def status_relationship_rows(mode=None):
+        """Love and Trust: the two Love-family stats (every mode, one name each)."""
         mode = mode or current_choice_mode()
-        rows = [
-            _status_row("relationship", "love", "Affection", mode),
-            _status_row("relationship", "trust", "Trust", mode),
-            _status_row("relationship", "boredom", "Boredom", mode),
+        return [
+            _status_row("relationship", "love", STAT_LABELS["love"], mode),
+            _status_row("relationship", "trust", STAT_LABELS["trust"], mode),
         ]
-
-        if mode in ("insight", "full", "developer"):
-            rows.append(_status_row("relationship", "momentum", "Momentum", mode))
-
-        return rows
 
 
     def status_leia_rows(mode=None):
+        """Exhibitionism (Love+Exhib / NTS) and Temptation (NTR), in every mode."""
         mode = mode or current_choice_mode()
-
-        if mode == "normal":
-            return [
-                _status_row("partner", "curiosity", "Curiosity", mode),
-                _status_row("partner", "exhibitionism", "Comfort Being Seen", mode),
-                _status_row("partner", "boundary_looseness", "Boundary Flexibility", mode),
-            ]
-
-        if mode == "insight":
-            return [
-                _status_row("partner", "curiosity", "Curiosity", mode),
-                _status_row("partner", "temptation", "Temptation", mode),
-                _status_row("partner", "exhibitionism", "Comfort Being Seen", mode),
-                _status_row("partner", "boundary_looseness", "Boundary Flexibility", mode),
-            ]
-
         return [
-            _status_row("partner", "curiosity", "Curiosity", mode),
-            _status_row("partner", "temptation", "Temptation", mode),
-            _status_row("partner", "exhibitionism", "Exhibitionism", mode),
-            _status_row("partner", "boundary_looseness", "Boundary Flexibility", mode),
-            _status_row("partner", "secrecy", "Secrecy", mode),
+            _status_row("partner", "exhibitionism", STAT_LABELS["exhibitionism"], mode),
+            _status_row("relationship", "temptation", STAT_LABELS["temptation"], mode),
         ]
 
 
     def status_ryan_rows(mode=None):
+        """Sharing: what the two of you have agreed to open up to (NTS). Ryan's
+        column, because every step needs his yes as well as hers."""
         mode = mode or current_choice_mode()
         return [
-            _status_row("player", "jealousy", "Jealousy", mode),
-            _status_row("player", "acceptance", "Acceptance", mode),
+            _status_row("relationship", "sharing", STAT_LABELS["sharing"], mode),
         ]
 
 
+    # Stat that drives each lean; its bar fills the "Current lean" row.
+    LC_LEAN_DRIVER = {
+        "love": "love", "strained": "love", "undecided": "love",
+        "love_exhib": "exhibitionism", "nts": "sharing", "ntr": "temptation",
+    }
+
+
     def status_route_rows(mode=None):
+        """Full / Developer only: one "Current lean" row, computed by the same
+        resolvers the route checks use (lc_current_lean in systems/stats.rpy)."""
         mode = mode or current_choice_mode()
         if mode not in ("full", "developer"):
             return []
 
-        rows = [
+        lean = lc_current_lean()
+        driver = LC_LEAN_DRIVER.get(lean, "love")
+        value = lc_stat(driver)
+        return [
             {
-                "label": "NTS Tendency",
-                "value": nts_score(),
-                "detail": "{} / 100".format(nts_score()),
-                "internal_key": "nts_score()" if mode == "developer" else "",
-                "stat": "nts_score",
-                "tooltip": lc_stat_tooltip("nts_score", mode),
-            },
-            {
-                "label": "NTR Tendency",
-                "value": ntr_score(),
-                "detail": "{} / 100".format(ntr_score()),
-                "internal_key": "ntr_score()" if mode == "developer" else "",
-                "stat": "ntr_score",
-                "tooltip": lc_stat_tooltip("ntr_score", mode),
+                "label": "Current lean: {}".format(lc_stat_model.LEAN_LABELS.get(lean, "Undecided")),
+                "value": value,
+                "detail": "{} {} / 100".format(STAT_LABELS[driver], value),
+                "internal_key": "lc_current_lean() = {}".format(lean) if mode == "developer" else "",
+                "stat": "lean",
+                "tooltip": lc_stat_tooltip("lean", mode),
             },
         ]
-        return rows
 
 
     def leia_overview_text():
         """A short, intentionally non-spoilery behavioral summary of Leia."""
         relationship = renpy.store.relationship_stats
-        partner = renpy.store.partner_stats
         name = renpy.store.girlfriend_name
+        flat = lc_stats_flat()
 
-        closeness = int(round((relationship["love"] + relationship["trust"]) / 2.0))
-        curiosity = partner["curiosity"]
-        exhibitionism = partner["exhibitionism"]
-        boundaries = partner["boundary_looseness"]
+        closeness = int(round((flat["love"] + flat["trust"]) / 2.0))
+        exhibitionism = flat["exhibitionism"]
+        temptation = flat["temptation"]
 
         if closeness >= 80:
             relationship_line = "{} seems deeply secure in the relationship and very comfortable leaning on you.".format(name)
@@ -154,36 +134,24 @@ init python:
         else:
             relationship_line = "{} feels emotionally distant right now and is keeping much more of herself protected.".format(name)
 
-        if curiosity >= 75:
-            curiosity_line = "Her curiosity is becoming difficult to ignore, and she is increasingly willing to explore unfamiliar ideas."
-        elif curiosity >= 50:
-            curiosity_line = "She has a noticeable curious streak and seems increasingly willing to consider new experiences."
-        elif curiosity >= 30:
-            curiosity_line = "Small signs of curiosity are beginning to show, even if she is still cautious about acting on them."
-        else:
-            curiosity_line = "She is still fairly reserved and tends to prefer situations she already understands and trusts."
-
-        if exhibitionism >= 70:
-            visibility_line = "She also seems genuinely comfortable being noticed and drawing attention to herself."
-        elif exhibitionism >= 40:
+        if exhibitionism >= 63:
+            visibility_line = "She seems genuinely comfortable being noticed, as long as you're in on it."
+        elif exhibitionism >= 36:
             visibility_line = "She is becoming more comfortable with being noticed, although it still depends heavily on the situation."
-        elif exhibitionism >= 20:
+        elif exhibitionism >= 19:
             visibility_line = "She can enjoy a little attention, but she is not yet naturally drawn to being the center of it."
         else:
             visibility_line = "She remains quite private about how she presents herself and rarely seeks extra attention."
 
-        if boundaries >= 70:
-            boundary_line = "Her comfort zone has expanded considerably, and ideas that once felt too far may now feel discussable."
-        elif boundaries >= 45:
-            boundary_line = "Her boundaries are becoming more flexible, provided she feels safe and involved in the decision."
-        elif boundaries >= 20:
-            boundary_line = "She may entertain small steps outside her usual comfort zone, but clear reassurance still matters."
+        if temptation >= 30:
+            drift_line = "Lately her attention drifts somewhere you can't follow, and she keeps more of it to herself."
+        elif temptation >= 18:
+            drift_line = "Every so often she seems a little restless, as if part of her is somewhere else."
         else:
-            boundary_line = "For now, she still prefers familiar boundaries and a strong sense of control over what happens next."
+            drift_line = "She seems present and settled when she's with you."
 
-        return "{} {} {} {}".format(
+        return "{} {} {}".format(
             relationship_line,
-            curiosity_line,
             visibility_line,
-            boundary_line,
+            drift_line,
         )

@@ -187,11 +187,13 @@ def parse_choice_caption(caption):
     return head.strip(), chips
 
 
-def effect_markup(chips, up="#5aa874", down="#d4636e", neutral=None, arrow_font="DejaVuSans.ttf"):
+def effect_markup(chips, up="#5aa874", down="#d4636e", neutral=None, arrow_font="DejaVuSans.ttf", colour_for=None):
     """Ren'Py markup for a choice's stat line: "[Love +1 • Trust -1]".
 
-    Each gain is coloured `up` and each loss `down`; brackets and separators keep
-    the card's normal ink. Insight-mode chips (exact=False) show arrows instead of
+    `colour_for(name, amount)` picks each chip's colour by meaning (stat model v2:
+    Temptation up is a warning, Exhibitionism/Sharing keep a route colour); when
+    it is missing or returns None, gains are `up` and losses `down`. Brackets and
+    separators keep the card's normal ink. Insight-mode chips (exact=False) show arrows instead of
     numbers, drawn in `arrow_font` because the handwriting fonts have no arrow
     glyphs. Brackets are plain text, so render with `substitute False`.
     """
@@ -204,7 +206,9 @@ def effect_markup(chips, up="#5aa874", down="#d4636e", neutral=None, arrow_font=
         else:
             arrow = "\u2191" if amount > 0 else ("\u2193" if amount < 0 else "\u2192")
             shown = "{} {{font={}}}{}{{/font}}".format(label, arrow_font, arrow)
-        colour = up if amount > 0 else (down if amount < 0 else neutral)
+        colour = colour_for(name, amount) if colour_for else None
+        if colour is None:
+            colour = up if amount > 0 else (down if amount < 0 else neutral)
         parts.append("{{color={}}}{}{{/color}}".format(colour, shown) if colour else shown)
     return "[" + " \u2022 ".join(parts) + "]"
 

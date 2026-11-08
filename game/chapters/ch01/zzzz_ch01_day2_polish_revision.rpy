@@ -85,7 +85,7 @@ label ch01_day2_scene_13_girls_upstairs_v2:
 
     "Yesterday [girlfriend_name] had asked me that question. Today she had to answer it herself."
 
-    if partner_stats["exhibitionism"] >= 22 or partner_stats["curiosity"] >= 27:
+    if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
         gf "The smaller one."
         maya "Then wear the smaller one."

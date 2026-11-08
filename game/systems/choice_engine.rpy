@@ -13,182 +13,138 @@ init python:
         "developer": "Developer",
     }
 
-    STAT_LABELS = {
-        "love": "Love",
-        "trust": "Trust",
-        "boredom": "Boredom",
-        "momentum": "Momentum",
-        "curiosity": "Curiosity",
-        "temptation": "Temptation",
-        "exhibitionism": "Exhibitionism",
-        "boundary_looseness": "Boundary Looseness",
-        "secrecy": "Secrecy",
-        "jealousy": "Jealousy",
-        "acceptance": "Acceptance",
-    }
+    import lc_stat_model
+
+    # One display name per stat, in every mode and on every screen.
+    STAT_LABELS = dict(lc_stat_model.STAT_LABELS)
 
     # Static definitions. Add future story choices here with stable IDs.
+    # Stat model v2 scoring rule (tests/test_choice_scoring.py enforces it for
+    # every CHOICE_EFFECTS entry): stats are love / trust / sharing / temptation
+    # ("relationship") and exhibitionism ("partner"); at most two stats per
+    # choice (hard gates three), one route stat (Exhibitionism, Sharing or
+    # Temptation), Temptation up never with another stat going up, +-1 ordinary,
+    # +-2 strong, +-3 key beat, gates up to +-5. Neutral banter has no stats.
     CHOICE_EFFECTS = {
         "dev_encourage_curiosity": [
-            ("partner", "curiosity", 5),
-            ("player", "acceptance", 3),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "dev_be_protective": [
             ("relationship", "trust", 3),
-            ("player", "jealousy", 3),
-            ("partner", "boundary_looseness", -2),
         ],
         "ch01_outfit_bolder": [
-            ("partner", "curiosity", 3),
-            ("player", "acceptance", 3),
             ("relationship", "trust", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_outfit_comfort": [
-            ("relationship", "trust", 2),
             ("relationship", "love", 1),
+            ("relationship", "trust", 2),
         ],
         "ch01_outfit_conservative": [
-            ("player", "jealousy", 1),
             ("relationship", "trust", 1),
         ],
         "ch01_photo_support": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_photo_more": [
-            ("partner", "curiosity", 2),
             ("partner", "exhibitionism", 3),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
         ],
         "ch01_photo_exit": [
             ("relationship", "trust", 2),
         ],
         "ch01_towel_laugh": [
             ("relationship", "love", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_towel_boundary": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", 1),
         ],
         "ch01_towel_forget": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", 2),
         ],
         "ch01_towel_reassure": [
             ("relationship", "trust", 1),
         ],
         "ch01_towel_honest": [
             ("relationship", "trust", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_towel_tease": [
             ("relationship", "love", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_bra_reassure": [
             ("relationship", "trust", 2),
         ],
         "ch01_bra_playful": [
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_bra_cover": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", 1),
-            ("partner", "boundary_looseness", -1),
         ],
         "ch01_stranger_proud": [
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_stranger_territorial": [
-            ("player", "jealousy", 2),
-            ("partner", "boundary_looseness", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_stranger_encourage": [
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
-        "ch01_catch_ignore": [
-            ("player", "acceptance", 1),
-        ],
+        "ch01_catch_ignore": [],  # Neutral: no stats
         "ch01_catch_check": [
             ("relationship", "trust", 1),
         ],
         "ch01_catch_joke": [
             ("relationship", "love", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 1),
         ],
-        "ch01_catch_boundary": [
-            ("player", "jealousy", 1),
-        ],
+        "ch01_catch_boundary": [],  # Neutral: no stats
         "ch01_friend_reassure": [
-            ("relationship", "trust", 2),
             ("relationship", "love", 1),
+            ("relationship", "trust", 2),
         ],
         "ch01_friend_tease": [
             ("relationship", "love", 1),
         ],
         "ch01_friend_boundary": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", -1),
         ],
         "ch01_julian_reassure": [
-            ("player", "acceptance", 1),
             ("relationship", "trust", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_julian_honest": [
-            ("player", "jealousy", 1),
             ("relationship", "trust", 1),
         ],
-        "ch01_julian_joke": [
-            ("player", "acceptance", 1),
-        ],
-        "ch01_carry_brush": [
-            ("player", "acceptance", 2),
-        ],
-        "ch01_carry_lookaway": [
-            ("player", "jealousy", 2),
-        ],
+        "ch01_julian_joke": [],  # Neutral: no stats
+        "ch01_carry_brush": [],  # Neutral: no stats
+        "ch01_carry_lookaway": [],  # Neutral: no stats
         "ch01_carry_fix": [
             ("relationship", "trust", 1),
         ],
         "ch01_carry_joke": [
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 2),
         ],
 
-        # Movie-night / Day 1 continuation. Open choices can grow NTS while
-        # still reinforcing love; dismissive choices intentionally create the
-        # boredom / low-love pressure that can later feed the NTR route.
+        # Movie-night / Day 1 continuation. Open choices raise Exhibitionism
+        # (often with Love); dismissive choices raise Temptation and cost Love
+        # or Trust, the pressure that can later feed the NTR route.
         "ch01_movie_stop": [
             ("relationship", "love", 1),
             ("relationship", "trust", 2),
         ],
         "ch01_movie_subtle": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_movie_tease_presence": [
             ("relationship", "love", 1),
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_movie_dismiss_concern": [
             ("relationship", "love", -1),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
-            ("player", "acceptance", 1),
+            ("relationship", "temptation", 2),
         ],
         "ch01_can_tell_behave": [
             ("relationship", "love", 1),
@@ -196,19 +152,14 @@ init python:
         ],
         "ch01_can_tell_tease": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_can_tell_push": [
-            ("partner", "curiosity", 2),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_can_tell_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "boundary_looseness", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_fidget_cover": [
             ("relationship", "love", 1),
@@ -219,13 +170,11 @@ init python:
             ("partner", "exhibitionism", 1),
         ],
         "ch01_fidget_push": [
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_fidget_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_private_apologize": [
             ("relationship", "love", 1),
@@ -233,48 +182,37 @@ init python:
         ],
         "ch01_private_playful": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_private_curiosity": [
             ("relationship", "love", 1),
-            ("partner", "curiosity", 2),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_private_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
+            ("relationship", "temptation", 2),
         ],
         "ch01_noblanket_behave": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
         ],
         "ch01_noblanket_test": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_noblanket_tease": [
             ("relationship", "love", 1),
             ("partner", "exhibitionism", 2),
-            ("relationship", "momentum", 1),
         ],
         "ch01_noblanket_phone": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
+            ("relationship", "temptation", 2),
         ],
         "ch01_watch_claim": [
             ("relationship", "love", 2),
-            ("relationship", "boredom", -1),
-            ("player", "jealousy", 1),
         ],
         "ch01_watch_tease": [
             ("relationship", "love", 1),
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_watch_check": [
             ("relationship", "love", 1),
@@ -282,101 +220,79 @@ init python:
         ],
         "ch01_watch_ignore": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_micro_warn": [
             ("relationship", "trust", 1),
-            ("partner", "boundary_looseness", -1),
         ],
         "ch01_micro_silent": [
-            ("partner", "curiosity", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_micro_open": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_micro_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_philosophy_couple": [
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
-            ("player", "jealousy", 1),
         ],
         "ch01_philosophy_trust": [
             ("relationship", "trust", 2),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_philosophy_jealousy_fun": [
             ("relationship", "love", 1),
-            ("partner", "curiosity", 1),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_philosophy_dont_care": [
             ("relationship", "love", -1),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "boundary_looseness", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_looking_enjoy": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_looking_harmless": [
             ("relationship", "trust", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_looking_boundary": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", 1),
         ],
         "ch01_looking_dont_care": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
+            ("relationship", "temptation", 2),
         ],
         "ch01_julian_change_subject": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
         ],
-        "ch01_julian_let_play": [
-            ("player", "acceptance", 1),
-        ],
+        "ch01_julian_let_play": [],  # Neutral: no stats
         "ch01_julian_put_spot": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_julian_dont_care": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_compliment_affirm": [
             ("relationship", "love", 2),
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
         ],
         "ch01_compliment_tease": [
             ("relationship", "love", 1),
             ("partner", "exhibitionism", 1),
-            ("player", "jealousy", 1),
         ],
         "ch01_compliment_enjoy": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_compliment_shrug": [
             ("relationship", "love", -2),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_alone_apologize": [
             ("relationship", "love", 1),
@@ -384,41 +300,30 @@ init python:
         ],
         "ch01_alone_curiosity": [
             ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-            ("partner", "curiosity", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_alone_open": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_alone_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
+            ("relationship", "temptation", 2),
         ],
         "ch01_private_claim": [
             ("relationship", "love", 2),
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
-            ("player", "jealousy", 1),
         ],
         "ch01_private_open": [
             ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_private_jealous": [
             ("relationship", "love", 1),
-            ("player", "jealousy", 2),
-            ("partner", "boundary_looseness", -1),
         ],
         "ch01_private_indifferent": [
             ("relationship", "love", -2),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_d2_mall_go_to_leia": [
             ("relationship", "love", 1),
@@ -426,17 +331,14 @@ init python:
         ],
         "ch01_d2_mall_leave_to_maya": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 2),
         ],
         "ch01_d2_mall_reveal_affection": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
         ],
         "ch01_d2_mall_reveal_open": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_d2_mall_reveal_tease": [
             ("relationship", "love", 1),
@@ -567,10 +469,26 @@ init python:
 
 
     def get_choice_effects(choice_id):
-        """Return a copy of the effects for a stable choice ID."""
+        """Return a copy of the effects for a stable choice ID.
+
+        Old-style tuples (retired stats such as boredom or curiosity) are folded
+        onto the five v2 stats, so a stale entry can never crash a save; the
+        scoring test still fails on them.
+        """
         if choice_id not in CHOICE_EFFECTS:
             raise ValueError("Unknown choice ID: {}".format(choice_id))
-        return list(CHOICE_EFFECTS[choice_id])
+        return lc_stat_model.fold_legacy_effects(CHOICE_EFFECTS[choice_id])
+
+
+    def lc_choice_route_tag(choice_id):
+        """Full Transparency route tag ('Love', 'Love+Exhib', 'NTS', 'NTR', 'Repair',
+        'May lead to NTR', 'Locks NTR', 'NTR stays open', 'Neutral', ...).
+
+        Derived from the choice's effects plus the route value its branch writes
+        (lc_stat_model.CHOICE_ROUTE_FLAGS), never hand-typed, so tag and chips
+        can't disagree.
+        """
+        return lc_stat_model.choice_route_tag(choice_id, get_choice_effects(choice_id))
 
 
     def get_choice_tags(choice_id):
@@ -666,17 +584,20 @@ init python:
             return base_text
 
         if mode == "insight":
-            return "{}\n[{}]".format(base_text, _choice_effect_text(choice_id, exact=False))
+            effects = _choice_effect_text(choice_id, exact=False)
+            return "{}\n[{}]".format(base_text, effects) if effects else base_text
 
         if mode == "full":
-            return "{}\n[{}]".format(base_text, _choice_effect_text(choice_id, exact=True))
+            effects = _choice_effect_text(choice_id, exact=True)
+            return "{}\n[{}]".format(base_text, effects) if effects else base_text
 
         tags = get_choice_tags(choice_id)
         tag_text = " • Tags: {}".format(", ".join(tags)) if tags else ""
-        return "{}\n[{}]  [ID: {}]{}".format(
+        return "{}\n[{}]  [ID: {}]  [Route: {}]{}".format(
             base_text,
-            _choice_effect_text(choice_id, exact=True),
+            _choice_effect_text(choice_id, exact=True) or "no stats",
             choice_id,
+            lc_choice_route_tag(choice_id),
             tag_text,
         )
 

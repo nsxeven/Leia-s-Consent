@@ -949,7 +949,7 @@ label ch01_day2_scene_26_game_rules:
     if d2_lane == "exhibitionism":
         "[girlfriend_name] drank too."
         "Her eyes flicked to mine over the rim."
-    elif d2_lane == "ntr_risk" and (partner_stats["exhibitionism"] >= 18 or get_story_value("ch01_d2_ntr_soft_gate", False)):
+    elif d2_lane == "ntr_risk" and (lc_stat("exhibitionism") >= LC_T["d2_game_drinks"] or get_story_value("ch01_d2_ntr_soft_gate", False)):
         "[girlfriend_name] hesitated, then drank."
         "This time she kept her attention on the glass."
     else:
@@ -1081,7 +1081,7 @@ label ch01_day2_scene_27_game_escalates:
     if d2_lane == "exhibitionism":
         "[girlfriend_name] looked at me, then drank."
         "We both knew exactly what she meant."
-    elif d2_soft_gate and partner_stats["exhibitionism"] >= 18:
+    elif d2_soft_gate and lc_stat("exhibitionism") >= LC_T["d2_game_drinks"]:
         "[girlfriend_name] drank after a pause."
         "She did not explain."
     else:
@@ -1359,12 +1359,7 @@ label ch01_day2_scene_30_bedroom:
     $ d2_wink = get_story_value("ch01_d2_dinner_wink", False)
     $ d2_pool_suspicion = get_story_flag("ch01_d2_pool_suspicion")
     python:
-        d2_love_exhib_blend = (
-            d2_lane == "love"
-            and partner_stats["exhibitionism"] >= 20
-            and player_stats["acceptance"] >= 15
-            and choice_tag_count("open", ch01_d2_choice_ids()) >= 1
-        )
+        d2_love_exhib_blend = lc_stat_model.d2_love_exhib_blend(d2_lane, lc_stats_flat(), lc_exhib_gained("ch01_d2_"))
 
     scene bg ch01_villa_bedroom_night  # after game night: night art (darryn)
     with fade
