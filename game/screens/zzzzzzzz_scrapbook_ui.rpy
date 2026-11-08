@@ -1561,6 +1561,9 @@ screen lc_adult_notice_screen():
 ## logo with its sheen, a thank-you, upcoming releases, Patreon and Discord.
 define LC_PATREON_URL = "https://www.patreon.com/c/LeiasConsent"
 define LC_DISCORD_URL = "https://discord.gg/HYmrB8Gjwj"
+define LC_X_URL = "https://x.com/LeiasConsent"
+# Thread id link: survives F95 renaming the thread for each version.
+define LC_F95_URL = "https://f95zone.to/threads/321815/"
 
 transform lc_demo_in(delay=0.0, dy=22):
     subpixel True
@@ -1644,6 +1647,7 @@ screen lc_demo_end_screen():
 
         null height 22
         text "Follow along, get early builds and vote on what comes next:" style "lc_title_small_text" size 22 color "#ffffffb0" at lc_demo_in(2.6)
+        # Four calls to action (darryn 2026-11-09): Patreon, Discord, X, F95 feedback.
         hbox at lc_demo_in(2.8):
             spacing 18
             button:
@@ -1661,9 +1665,26 @@ screen lc_demo_end_screen():
                 action [Function(lc_ui_play, "tap"), OpenURL(LC_DISCORD_URL)]
                 hovered Function(lc_ui_play, "tick")
                 text "JOIN THE DISCORD" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
+        hbox at lc_demo_in(3.0):
+            spacing 18
+            button:
+                xysize (330, 66)
+                background Solid("#14171c")
+                hover_background Solid("#2b313b")
+                action [Function(lc_ui_play, "tap"), OpenURL(LC_X_URL)]
+                hovered Function(lc_ui_play, "tick")
+                text "FOLLOW ON X" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
+            button:
+                xysize (300, 66)
+                background Solid("#b8343f")
+                hover_background Solid("#d24a55")
+                action [Function(lc_ui_play, "tap"), OpenURL(LC_F95_URL)]
+                hovered Function(lc_ui_play, "tick")
+                text "FEEDBACK ON F95" font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
+        text "Enjoyed it? A like and a comment on the F95 thread really helps, and every bit of feedback gets read." style "lc_title_small_text" size 20 color "#ffffffa0" xmaximum 860 at lc_demo_in(3.2)
 
-        null height 8
-        fixed at lc_demo_in(3.1):
+        null height 4
+        fixed at lc_demo_in(3.4):
             xysize (380, 50)
             use lc_title_item("Main Menu", Return(), "back")
 
