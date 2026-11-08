@@ -237,6 +237,35 @@ style lc_sw_frame is frame:
     yminimum 0
 
 
+
+# Phone action buttons: ONE format for every button on the phone (darryn
+# 2026-11-08). Same height, label centred both ways, same font and size.
+#   lc_phone_btn          secondary: white card, blue label; blue key + white label on hover
+#   lc_phone_btn_primary  primary:   blue key, white label
+style lc_phone_btn is lc_sw_hit:
+    xfill True
+    ysize 52
+    padding (16, 0)
+    background Frame("gui/phone/sprite_match/card.png", 18, 18)
+    hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
+
+style lc_phone_btn_text is lc_sw_hand:
+    size 24
+    xalign 0.5
+    yalign 0.5
+    text_align 0.5
+    idle_color "#3D8FD4"
+    hover_color "#FFFFFF"
+    insensitive_color "#9BA9BA"
+
+style lc_phone_btn_primary is lc_phone_btn:
+    background Frame("gui/phone/sprite_match/key.png", 18, 18)
+    hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
+
+style lc_phone_btn_primary_text is lc_phone_btn_text:
+    idle_color "#FFFFFF"
+    hover_color "#FFFFFF"
+
 screen lc_phone_extra_apps():
     # Older builds drew a second Status/Settings row on top of the phone.
     # Those apps are on the home grid now, so this overlay stays empty.
@@ -422,22 +451,14 @@ screen phone_screen():
                     ypos 800
                     spacing 12
                     textbutton "Seed":
-                        style "lc_sw_hit"
-                        background Frame("gui/phone/sprite_match/card.png", 16, 16)
-                        text_style "lc_sw_hand"
-                        text_size 22
-                        text_color "#293C53"
+                        style "lc_phone_btn"
+                        xfill False
                         xminimum 120
-                        ysize 42
                         action Function(phone_debug_seed_messages)
                     textbutton "Clear":
-                        style "lc_sw_hit"
-                        background Frame("gui/phone/sprite_match/card.png", 16, 16)
-                        text_style "lc_sw_hand"
-                        text_size 22
-                        text_color "#293C53"
+                        style "lc_phone_btn"
+                        xfill False
                         xminimum 120
-                        ysize 42
                         action Function(phone_debug_clear_messages)
 
         elif phone_app == "thread":
@@ -805,14 +826,7 @@ screen phone_screen():
                                         color "#3D8FD4"
                                     if phone_outfit_state == "available":
                                         textbutton "Buy for [lc_phone_price(phone_outfit_cost)]":
-                                            style "lc_sw_hit"
-                                            xfill True
-                                            yminimum 52
-                                            background Frame("gui/phone/sprite_match/key.png", 16, 16)
-                                            hover_background Frame("gui/phone/sprite_match/key.png", 16, 16)
-                                            text_style "lc_sw_hand"
-                                            text_size 24
-                                            text_color "#FFFFFF"
+                                            style "lc_phone_btn_primary"
                                             action Function(purchase_outfit, outfit_id)
                                     elif phone_outfit_state == "owned":
                                         text "Owned":
@@ -1066,14 +1080,9 @@ screen lc_phone_status():
                                 color "#293C53"
                                 xmaximum 440
                             textbutton "Got it":
-                                style "lc_sw_hit"
+                                style "lc_phone_btn_primary"
+                                xfill False
                                 xminimum 160
-                                yminimum 48
-                                background Frame("gui/phone/sprite_match/key.png", 16, 16)
-                                hover_background Frame("gui/phone/sprite_match/key.png", 16, 16)
-                                text_style "lc_sw_hand"
-                                text_size 24
-                                text_color "#FFFFFF"
                                 action Function(lc_mark_status_intro_seen)
                 frame:
                     style "lc_sw_frame"
@@ -1097,18 +1106,7 @@ screen lc_phone_status():
                 if _route_rows:
                     use lc_phone_status_section("Route tendencies", _route_rows)
                 textbutton "Open settings":
-                    style "lc_sw_hit"
-                    xfill True
-                    ysize 52
-                    # Label centred inside the card, white on the blue hover key.
-                    text_xalign 0.5
-                    text_yalign 0.5
-                    background Frame("gui/phone/sprite_match/card.png", 18, 18)
-                    hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
-                    text_style "lc_sw_hand"
-                    text_size 24
-                    text_idle_color "#3D8FD4"
-                    text_hover_color "#FFFFFF"
+                    style "lc_phone_btn"
                     action [Hide("lc_phone_status"), Show("lc_phone_settings")]
                 text "[status_mode_note()]":
                     style "lc_sw_hand"
@@ -1234,15 +1232,7 @@ screen lc_phone_settings():
                 if config.developer or not LC_IS_RELEASE:
                     use lc_phone_settings_mode("developer")
                 textbutton "Open status":
-                    style "lc_sw_hit"
-                    xfill True
-                    ysize 52
-                    background Frame("gui/phone/sprite_match/card.png", 18, 18)
-                    hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
-                    text_style "lc_sw_hand"
-                    text_size 24
-                    text_idle_color "#3D8FD4"
-                    text_hover_color "#FFFFFF"
+                    style "lc_phone_btn"
                     action [Hide("lc_phone_settings"), Show("lc_phone_status")]
                 if current_choice_mode() == "developer":
                     text "Developer exposes internal IDs, stat keys, route tendencies, and debug information.":
