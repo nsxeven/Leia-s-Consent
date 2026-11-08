@@ -132,7 +132,8 @@ class StatTooltipWiringTests(unittest.TestCase):
         card = self._screen("screens/stat_tooltip_screen.rpy", "lc_stat_tip")
         self.assertIn("showif tip:", card)
         self.assertIn("_last_tip = tip or _last_tip", card)
-        self.assertEqual(card.count("text _last_tip"), 2)
+        # showif builds its child even before any row has focus: never None.
+        self.assertEqual(card.count('text (_last_tip or "")'), 2)
         self.assertEqual(card.count("at lc_stat_tip_fade"), 2)
         self.assertIn("xsize LC_PHONE_CONTENT_WIDTH", card)
         self.assertIn("xsize 540", card)
