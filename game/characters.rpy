@@ -2,6 +2,10 @@
 # Display names are player-customizable; internal character IDs stay fixed.
 
 define mc = Character("player_name", dynamic=True)
+# Ryan's direct inner voice (present-tense words in his head): italic, no name
+# tag. Plain past-tense narration stays on the narrator (darryn 2026-11-08).
+#     think "What the hell was that?"
+define think = Character(None, show_think=True)
 define gf = Character("girlfriend_name", dynamic=True)
 define friend = Character("friend_name", dynamic=True)
 
