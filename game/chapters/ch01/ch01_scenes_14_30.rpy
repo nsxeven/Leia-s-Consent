@@ -92,6 +92,26 @@ label ch01_scene_13b_night_pool:
     jump ch01_scene_14_movie_setup
 
 
+# Upstairs talk (scene 14a) -> movie-night callbacks. A slip upstairs (swallowed it /
+# snapped) gives the dismissive movie options one line of Ryan's inner voice, capped
+# at three per night (darryn). Unset response (old saves) = no callbacks.
+default ch01_upstairs_callbacks_shown = 0
+
+init python:
+
+    def ch01_upstairs_slipped():
+        """True if the player swallowed it or snapped upstairs."""
+        return get_story_value("ch01_upstairs_response") in ("swallowed", "snapped")
+
+    def ch01_upstairs_callback():
+        """Show this movie-night callback? The first three eligible picks only."""
+        global ch01_upstairs_callbacks_shown
+        if not ch01_upstairs_slipped() or ch01_upstairs_callbacks_shown >= 3:
+            return False
+        ch01_upstairs_callbacks_shown += 1
+        return True
+
+
 label ch01_scene_14_movie_setup:
 
     scene bg ch01_villa_living_evening
@@ -109,7 +129,163 @@ label ch01_scene_14_movie_setup:
     gf "Nobody asked you to carry me in the first place!"
     friend "You were asleep. Nobody asked anybody anything. It was a whole situation."
 
-    "We scattered to our rooms for a few minutes. By the time I came back downstairs, the villa had shifted from 'night out' to 'we live here now.'"
+    jump ch01_scene_14a_upstairs_change
+
+
+label ch01_scene_14a_upstairs_change:
+
+    # Evening art: villa scenes between the restaurant and scene 28 keep
+    # *_evening (darryn); night art starts at scene 28.
+    scene bg ch01_villa_bedroom_evening
+    with dissolve
+    $ lc_amb("room_tone")
+    $ cast(ryan="casual", leia="purple_dress_no_bra")
+    $ face("leia", "neutral")
+
+    "[friend_name]'s door closed down the hall, then ours, and for the first time in hours it was only the two of us."
+
+    $ lc_sfx("suitcase_zip")
+    "[girlfriend_name] knelt by her suitcase and dug through it one-handed, holding the loose neckline of her dress in place with the other."
+
+    gf "Where is it— I packed the white one, I know I did, why does everything in here look exactly the same?"
+    mc "Because you packed like we're staying a month."
+    $ face("leia", "smile")
+    gf "Found it! Two minutes. Don't count."
+    mc "I'm already counting. That's one."
+
+    $ lc_sfx("door_close", 0.5)
+    "She took the top and a pair of shorts into the bathroom and pushed the door mostly shut."
+    $ cast_remove("leia")
+
+    # Ryan's inner voice: the day lands while he changes (5 lines on every path).
+    "I swapped the dinner shirt for a T-shirt, and the restaurant came back first: the guy soaked through his white trousers, and how long [girlfriend_name]'s eyes had stayed there. Then the second look."
+
+    if get_story_value("ch01_stranger_response") == "proud":
+        "The man in the corridor. I'd agreed with him out loud, and she'd still been half-smiling about him at the table."
+    elif get_story_value("ch01_stranger_response") == "territorial":
+        "The man in the corridor, and me telling him we had it from here, like a guy in a movie I'd make fun of."
+    elif get_story_value("ch01_stranger_response") == "encouraged_risk":
+        "The man in the corridor, and me telling her she had nothing to worry about while she was still half-smiling about him."
+    else:
+        "The man in the corridor, and how she'd still been half-smiling about him when she sat back down."
+
+    if get_story_value("ch01_catch_response") == "joked":
+        "[friend_name]'s hand on the path, one second in the wrong place, and me making a joke about it because that was easier."
+    elif get_story_value("ch01_catch_response") == "boundary":
+        "[friend_name]'s hand on the path, one second in the wrong place, and me saying 'careful, mate' like he'd planned it."
+    else:
+        "[friend_name]'s hand on the path, one second in the wrong place, while I was standing back there on the phone."
+
+    if get_story_value("ch01_carry_response") == "ryan_fixed":
+        "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. At least she knew about that one. She'd woken up to me fixing it."
+    elif get_story_value("ch01_carry_response") == "look_away":
+        "Then the walk to the door, me with the keys and him with her, and me snapping at him to keep his eyes off her when he was the one who'd told me. That one already had an edge."
+    elif get_story_value("ch01_carry_response") == "joked_about_view":
+        "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. I'd made a joke about the view. She'd slept through all of it, and I hadn't told her."
+    else:
+        "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. I'd said keep going. She'd slept through all of it, and I hadn't told her."
+
+    "Nobody had done anything wrong. I knew that, and I could've listed every reason it was fine. It still sat wrong."
+
+    $ lc_sfx("door_open", 0.5)
+    $ cast_add(leia="lounge")
+    $ face("leia", "smile")
+    "The bathroom door swung open and [girlfriend_name] came out in a white camisole and short lounge shorts, hair down, kicking the dinner dress ahead of her."
+    gf "That dress is retired for the rest of the trip. It smells like a stranger's cocktail. Like, a very specific stranger."
+    mc "Six minutes, by the way."
+    "She groaned at the ceiling and didn't dignify it."
+
+    $ face("leia", "skeptical")
+    gf "Why are you just standing there? You've got your thinking face on. You have, like, one face for thinking and one for being hungry, and that's not the hungry one."
+    mc "Do I? I don't know. Maybe."
+    gf "Babe. What's going on?"
+
+    $ ch01_upstairs_honest_text = format_choice("ch01_upstairs_honest", "Today was a lot. I didn't love watching him carry you.")
+    $ ch01_upstairs_liked_text = format_choice("ch01_upstairs_liked", "Honestly? Seeing people notice you... I didn't hate it.")
+    $ ch01_upstairs_swallow_text = format_choice("ch01_upstairs_swallow", "It's fine. Just a long day.")
+    $ ch01_upstairs_snap_text = format_choice("ch01_upstairs_snap", "Maybe stay awake next time.")
+
+    menu:
+        "[ch01_upstairs_honest_text]":
+            $ apply_choice("ch01_upstairs_honest")
+            $ set_story_value("ch01_upstairs_response", "honest")
+            mc "Today was a lot. I mean, it was good. Mostly good. But I didn't love watching him carry you."
+            $ face("leia", "neutral")
+            "[girlfriend_name] stopped with her hair half tied up."
+            gf "Oh. Wait, because it was [friend_name], or because it wasn't you?"
+            mc "I don't know. Both? He didn't do anything wrong. It's just, all day it kept being somebody else."
+            if get_story_value("ch01_carry_response") == "ryan_fixed":
+                mc "I know I fixed your dress and everything. I just didn't like that he saw it before I did."
+                gf "He told you, though. That's the most [friend_name] thing ever, honestly."
+            elif get_story_value("ch01_carry_response") == "look_away":
+                mc "And I was kind of short with him at the door. Your dress slipped, he told me, and I got weird about it."
+                gf "Wait, my dress— okay, we're coming back to that. Be nice to him, he probably thinks you hate him now."
+            elif get_story_value("ch01_carry_response") == "joked_about_view":
+                mc "Also, your dress slipped on the way in. He told me, and I made a dumb joke instead of fixing it. I should've told you."
+                gf "Oh my God, of course it did. Thank you for telling me. Kind of."
+            else:
+                mc "Also, your dress slipped on the way in. He told me, and I just said keep going. I should've told you."
+                gf "Oh my God, of course it did. Thank you for telling me. Kind of."
+            $ face("leia", "smile")
+            "She came over and wrapped both arms around my middle."
+            gf "I like it when you just tell me stuff. And next time I fall asleep, you carry me. Badly is fine."
+            mc "I've been told I lift wrong."
+            gf "You do lift wrong. I don't care."
+
+        "[ch01_upstairs_liked_text]":
+            $ apply_choice("ch01_upstairs_liked")
+            $ set_story_value("ch01_upstairs_response", "liked")
+            mc "Honestly? Seeing people notice you today... I don't know. I didn't hate it."
+            $ face("leia", "flustered")
+            if get_story_value("ch01_stranger_response") == "territorial":
+                gf "Wait, what? You told the corridor guy 'we've got it from here'!"
+                mc "Yeah. I know. I was confused about it too."
+            else:
+                gf "Wait, what? Like the corridor guy?"
+                mc "Like the corridor guy. And the restaurant guy. You looked at him too, by the way. Twice."
+            gf "He was soaking wet, that's not my fault, anybody would've— don't laugh. Why are you laughing?"
+            mc "I'm not mad about it. I mean it. It was kind of... I don't know. Exciting? Is that weird?"
+            $ face("leia", "shy")
+            $ lc_sfx("leia_giggle", 0.7)
+            gf "It's a little weird. I'm not saying bad weird."
+            "She checked my face, the way she does after anything bold, like she wanted to be sure I'd meant it."
+            gf "We're talking about this properly later, though. Like, actually talking, not you being mysterious and me guessing. Deal?"
+            mc "Deal."
+
+        "[ch01_upstairs_swallow_text]":
+            $ apply_choice("ch01_upstairs_swallow")
+            $ set_story_value("ch01_upstairs_response", "swallowed")
+            mc "It's fine. Just a long day."
+            "It came out easier than it should have."
+            $ face("leia", "skeptical")
+            gf "You sure? You've been kind of quiet since we got back. Like, quieter than normal quiet."
+            mc "Yeah. Just tired. All the driving."
+            "She looked at me a little longer, then nodded, like she'd decided to believe me because I'd asked her to."
+            $ face("leia", "neutral")
+            gf "Well... come down when you're ready. I'll save you the good side of the couch."
+            "She went. I stood there holding the dinner shirt, still carrying the whole day around."
+
+        "[ch01_upstairs_snap_text]":
+            $ apply_choice("ch01_upstairs_snap")
+            $ set_story_value("ch01_upstairs_response", "snapped")
+            mc "Maybe stay awake next time."
+            "I heard it as it left my mouth."
+            $ face("leia", "pout")
+            gf "...Okay. Wow. Sorry for being tired?"
+            mc "No, I— that came out wrong. I didn't mean it like that."
+            gf "How did you mean it, then?"
+            mc "I don't know. It's been a long day. Forget it."
+            "[girlfriend_name] picked the dinner dress up off the floor and folded it, which she never does, very carefully and without looking at me."
+            gf "Sure. Forgotten."
+            "She went down first. She didn't wait for me, and I didn't ask her to."
+
+    $ set_story_flag("ch01_scene_14a_complete")
+    jump ch01_scene_14b_back_downstairs
+
+
+label ch01_scene_14b_back_downstairs:
+
+    $ ch01_upstairs_callbacks_shown = 0
 
     $ grant_story_outfit("resort_loungewear", equip=True)
     $ set_story_value("ch01_dinner_dress_state", "changed_out_at_villa")
@@ -120,7 +296,19 @@ label ch01_scene_14_movie_setup:
     with dissolve
     $ cast(ryan="casual", leia="lounge", julian="lounge")
 
-    "[girlfriend_name] returned in a white camisole and short lounge shorts, her hair down and loose. [friend_name] had changed too, and was already at the kitchen counter with two glasses of whisky."
+    # She was already seen changing upstairs (scene 14a); the mood follows that talk.
+    if get_story_value("ch01_upstairs_response") == "honest":
+        "We came downstairs together, her fingers still hooked through mine, and the villa had shifted from 'night out' to 'we live here now.'"
+    elif get_story_value("ch01_upstairs_response") == "liked":
+        "By the time we came downstairs, she was still giving me little looks like we were in on something, and the villa had shifted from 'night out' to 'we live here now.'"
+    elif get_story_value("ch01_upstairs_response") == "swallowed":
+        "By the time I came back downstairs, the villa had shifted from 'night out' to 'we live here now.' I told myself I had too."
+    elif get_story_value("ch01_upstairs_response") == "snapped":
+        "When I came back downstairs, [girlfriend_name] was already curled at one end of the couch with her phone. She looked up, gave me a small smile, and looked back down."
+    else:
+        "By the time I came back downstairs, the villa had shifted from 'night out' to 'we live here now.'"
+
+    "[friend_name] had changed too, into a T-shirt and shorts, and was already at the kitchen counter with two glasses of whisky."
 
     $ enter_cinematic_mode()
     # Julian hands Ryan the whisky: ice into the glass, then the pour (darryn).
@@ -233,6 +421,8 @@ label ch01_scene_15_under_blanket:
             mc "I know."
             gf "Do you?"
             "I looked back at the movie. [girlfriend_name] did too, but some of the warmth in the moment had gone with it."
+            if ch01_upstairs_callback():
+                "Whatever I hadn't said upstairs was still doing my talking for me."
 
     $ set_story_flag("ch01_scene_15_complete")
     jump ch01_scene_16_can_he_tell
@@ -296,6 +486,8 @@ label ch01_scene_16_can_he_tell:
             mc "Does it really matter if he can?"
             gf "It does to me. A little."
             mc "Yeah. I guess I get that."
+            if ch01_upstairs_callback():
+                "After the restaurant, the corridor and the carry, one more person looking felt like too much to argue about."
             "She stayed tucked against me, but she stopped laughing at the movie."
 
     $ lc_sfx("remote_click")
@@ -424,6 +616,8 @@ label ch01_scene_18_private_under_blanket:
             gf "Right. Fine."
             mc "I didn't mean—"
             gf "It's fine."
+            if ch01_upstairs_callback():
+                "I'd done the same thing to myself upstairs: called it nothing, so I wouldn't have to say it."
 
     with dissolve
 
@@ -616,6 +810,8 @@ label ch01_scene_21_watching_julian:
             $ apply_choice("ch01_watch_ignore")
             $ set_story_value("ch01_watching_response", "ignored")
             "I noticed, but said nothing and kept scrolling."
+            if ch01_upstairs_callback():
+                "I'd spent half of dinner watching where her eyes went. I didn't want to do it again tonight."
             "[girlfriend_name] looked at me once as if waiting for a reaction that never came. Then she looked away."
 
     $ set_story_flag("ch01_scene_21_complete")
@@ -688,6 +884,8 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] blinked."
             gf "Oh. Okay."
             "She fixed the top herself and turned back to the screen."
+            if ch01_upstairs_callback():
+                "It did matter. I'd just decided upstairs that I wasn't having that conversation tonight."
             scene bg ch01_villa_living_evening
             with dissolve
             $ cast(ryan="casual", leia="lounge", julian="lounge")
@@ -771,6 +969,8 @@ label ch01_scene_23_relationship_philosophy:
             mc "I mean... not enough to make rules about somebody looking."
             "[girlfriend_name]'s attention stayed on me for a moment longer than necessary."
             gf "Right."
+            if ch01_upstairs_callback():
+                "The truth was I'd been counting looks all day. Saying I didn't care was easier."
 
     "Across from us, [friend_name] had become extremely interested in the ice inside his glass."
 
@@ -826,6 +1026,8 @@ label ch01_scene_25_julian_put_on_spot:
             $ set_story_value("ch01_julian_attraction_prompt", "ryan_indifferent")
             mc "Go on, answer her. I'm not gonna be weird about it."
             "[girlfriend_name] looked at me before she looked back at [friend_name]."
+            if ch01_upstairs_callback():
+                "[friend_name] had carried her in tonight while I held the keys. Acting like it didn't bother me was easier than saying that."
             friend "That somehow makes this worse."
             gf "Well? Answer the question."
 
@@ -1058,6 +1260,8 @@ label ch01_scene_28_ryan_leia_alone:
             gf "Right."
             mc "What?"
             gf "Nothing. I'm tired."
+            if ch01_upstairs_callback():
+                "Same move I'd made upstairs. Make it small, say one sentence, stop talking."
 
     $ set_story_flag("ch01_scene_28_complete")
     jump ch01_scene_29_private_reflection
@@ -1140,6 +1344,8 @@ label ch01_scene_29_private_reflection:
             gf "Nothing."
             "She stood and picked up her glass."
             gf "Come on. I'm tired."
+            if ch01_upstairs_callback():
+                "I could hear it wasn't true. It was the upstairs thing again, in different words."
 
     $ set_story_flag("ch01_scene_29_complete")
     jump ch01_scene_30_end_day_one

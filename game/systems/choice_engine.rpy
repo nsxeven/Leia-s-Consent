@@ -149,6 +149,23 @@ init python:
         "ch01_carry_joke": [
             ("partner", "exhibitionism", 1),
         ],
+        # Upstairs talk before movie night (scene 14a): say it, enjoy it, or a slip.
+        "ch01_upstairs_honest": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
+        "ch01_upstairs_liked": [
+            ("relationship", "love", 1),
+            ("partner", "exhibitionism", 2),
+        ],
+        "ch01_upstairs_swallow": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
+        ],
+        "ch01_upstairs_snap": [
+            ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
+        ],
 
         # Movie-night / Day 1 continuation. Open choices raise Exhibitionism
         # (often with Love); dismissive choices raise Temptation and cost Love
@@ -415,6 +432,10 @@ init python:
         "ch01_carry_lookaway": ("protective", "possessive", "cautious"),
         "ch01_carry_fix": ("neutral", "protective", "supportive"),
         "ch01_carry_joke": ("encouraging", "lighthearted", "open", "playful"),
+        "ch01_upstairs_honest": ("neutral", "honest", "attentive", "supportive"),
+        "ch01_upstairs_liked": ("encouraging", "open", "honest", "attentive"),
+        "ch01_upstairs_swallow": ("neutral", "nonchalant", "withdrawal"),
+        "ch01_upstairs_snap": ("neutral", "defensive"),
 
         "ch01_movie_stop": ("protective", "attentive", "supportive", "consent-first"),
         "ch01_movie_subtle": ("encouraging", "participating", "open", "playful", "attentive"),

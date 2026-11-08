@@ -33,6 +33,7 @@ D1 = [
     ["ch01_friend_reassure", "ch01_friend_tease", "ch01_friend_boundary"],
     ["ch01_julian_reassure", "ch01_julian_honest", "ch01_julian_joke", "ch01_julian_fine"],
     ["ch01_carry_brush", "ch01_carry_lookaway", "ch01_carry_fix", "ch01_carry_joke"],
+    ["ch01_upstairs_honest", "ch01_upstairs_liked", "ch01_upstairs_swallow", "ch01_upstairs_snap"],
     ["ch01_movie_stop", "ch01_movie_subtle", "ch01_movie_tease_presence", "ch01_movie_dismiss_concern"],
     ["ch01_can_tell_behave", "ch01_can_tell_tease", "ch01_can_tell_push", "ch01_can_tell_dismiss"],
     ["ch01_private_apologize", "ch01_private_playful", "ch01_private_curiosity", "ch01_private_dismiss"],
@@ -151,9 +152,9 @@ def play(d1, d2, pool=None, sunset=None, bed=None, wink=None):
 
 MIXED_D1 = [LE if i % 2 else LOVE for i in range(len(D1))]
 TWO_SLIPS = [LOVE] * len(D1)
-TWO_SLIPS[11] = TWO_SLIPS[18] = NTR          # can_tell + compliment
+TWO_SLIPS[12] = TWO_SLIPS[19] = NTR          # can_tell + compliment
 THREE_SLIPS = list(TWO_SLIPS)
-THREE_SLIPS[12] = NTR                        # + private talk
+THREE_SLIPS[13] = NTR                        # + private talk
 
 # name, Day 1 prefs, Day 2 prefs, branch picks, expected (pressure, bedtime, Day 2 end, blend); None = any
 PERSONAS = [
