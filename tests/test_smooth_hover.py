@@ -49,5 +49,12 @@ class SmoothHoverTests(unittest.TestCase):
         self.assertLess(body.index("try:"), body.index("_LCStyleProxy(real"))
 
 
+    def test_crossfade_is_a_true_dissolve(self):
+        # Two opaque arts must never go see-through mid-hover (#184).
+        self.assertIn('rv.add_shader("renpy.dissolve")', HOOK)
+        self.assertIn("rv.operation = renpy.display.render.DISSOLVE", HOOK)
+        self.assertIn("rv.operation_alpha = True", HOOK)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -34,6 +34,26 @@ init -50 python:
 
         def render(self, width, height, st, at):
             k = self.k
+            if self.old is not None and self.new is not None:
+                # True per-pixel cross-fade (the same shader as Ren'Py's Dissolve):
+                # old * (1 - k) + new * k, alpha included, so two opaque cards
+                # stay opaque the whole way (darryn 2026-11-09: layering two
+                # alpha fades left the card see-through mid-hover).
+                bottom = renpy.render(self.old, width, height, st, at)
+                top = renpy.render(self.new, width, height, st, at)
+                if top.get_size() == bottom.get_size():
+                    w, h = top.get_size()
+                    rv = renpy.Render(w, h)
+                    rv.operation = renpy.display.render.DISSOLVE
+                    rv.operation_alpha = True
+                    rv.operation_complete = k
+                    if renpy.display.render.models:
+                        rv.mesh = True
+                        rv.add_shader("renpy.dissolve")
+                        rv.add_uniform("u_renpy_dissolve", k)
+                    rv.blit(bottom, (0, 0), focus=False, main=False)
+                    rv.blit(top, (0, 0), focus=False, main=False)
+                    return rv
             parts = []
             if self.old is not None:
                 # Opaque art stays under the incoming art until the end so the
