@@ -217,7 +217,7 @@ init python:
             rows.append(("PREFS", ShowMenu("preferences"), False))
             rows.append(("GALLERY", ShowMenu("gallery_screen"), False))
             rows.append(("STATUS", NullAction() if renpy.get_screen("status_screen") else ShowMenu("status_screen", return_to=lc_journal_status_origin()), False))
-            rows.append(("TAGS", Show("lc_tags_screen"), False))
+            rows.append(("TAGS", ShowMenu("lc_tags_screen"), False))
             if store._in_replay:
                 rows.append(("END REPLAY", EndReplay(confirm=True), False))
             else:
@@ -225,6 +225,22 @@ init python:
             rows.append(("QUIT", Quit(confirm=True), False))
         return rows
 
+
+init -1 python:
+    renpy.music.register_channel("lc_glass_bgm_test", mixer="music", loop=False, stop_on_mute=True)
+
+    def lc_glass_sound_test(kind):
+        """Short one-shot on the chosen mixer, never interrupting story BGM."""
+        samples = {"bgm": ("music", "glass_test", "lc_glass_bgm_test"),
+                   "sfx": ("sfx", "ice_clink", "audio"),
+                   "voice": ("voice/leia", "leia_laugh", "lc_voice"),
+                   "lewd": ("lewd", "wet01", "lc_lewd")}
+        folder, name, channel = samples[kind]
+        path = lc_audio_path(folder, name)
+        if path:
+            renpy.music.play(path, channel=channel, loop=False,
+                             relative_volume=lc_audio_gain(folder, name, 0.65))
+        # Screen Function actions must not return the audio path.
 
 init 999 python:
     _lc_ctc = "gui/scrapbook/ctc.png"
@@ -352,15 +368,42 @@ screen lc_side_tab(label, action, index, y, accent=False, xpos=1686):
                 add "gui/scrapbook/icon_play.png" yalign 0.5
 
 
-screen lc_journal_tabs(xpos=1686):
+screen lc_glass_menu_backdrop():
+    # The master layer remains visible in-game; restore the title image on the menu context.
+    if main_menu:
+        add lc_title_bg_now()
+    add Solid("#101521b8")
+    frame:
+        xpos 32 ypos 38 xsize 290 ysize 990
+        background Frame("gui/glass/panel.png", 24, 24)
+    use lc_journal_tabs(48)
+
+screen lc_glass_heading(title, colour="honey"):
+    frame:
+        background Frame("gui/glass/pill_%s.png" % colour, 12, 12)
+        padding (14, 4)
+        text title size 26 color "#273143" font "fonts/Handjet-ExtraBold.ttf"
+
+screen lc_journal_tabs(xpos=48):
     $ tabs = lc_journal_tab_rows()
-    for i, row in enumerate(tabs):
-        use lc_side_tab(row[0], row[1], i, 72 + i * 72, row[2], xpos)
+    vbox:
+        xpos xpos
+        ypos 104
+        spacing 10
+        for i, row in enumerate(tabs):
+            button:
+                xsize 260 ysize 62
+                padding (20, 9)
+                background Frame("gui/glass/nav_active.png" if (row[2] and renpy.get_screen("main_menu")) or row[1].get_selected() else "gui/glass/nav_idle.png", 12, 12)
+                hover_background Frame("gui/glass/nav_active.png", 12, 12)
+                action row[1]
+                selected ((row[2] and renpy.get_screen("main_menu")) or row[1].get_selected())
+                text row[0] size 30 color "#fff1dc" font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
 
 screen lc_menu_footer(hints=None):
     hbox:
-        xpos 36
+        xpos 370
         ypos 1012
         spacing 12
         button:
@@ -375,7 +418,7 @@ screen lc_menu_footer(hints=None):
 
     if hints:
         hbox:
-            xpos 1180
+            xpos 1380
             ypos 1012
             spacing 18
             for key_label, caption in hints:
@@ -739,15 +782,15 @@ screen main_menu():
 screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, hints=None):
     on "show" action Function(lc_ui_play, "rustle")
 
-    add "gui/scrapbook/bg_game_menu.png"
+    use lc_glass_menu_backdrop()
 
     frame at lc_page_in:
-        background None
-        xpos 54
+        background Frame("gui/glass/panel.png", 24, 24)
+        xpos 354
         ypos 42
-        xsize 1620
+        xsize 1534
         ysize 930
-        padding (28, 16, 28, 24)
+        padding (24, 18, 24, 24)
 
         if scroll == "viewport":
             viewport:
@@ -779,7 +822,6 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, hints=None):
                 yfill True
                 transclude
 
-    use lc_journal_tabs(1686)
     use lc_menu_footer(hints)
 
     if main_menu:
@@ -809,9 +851,9 @@ screen file_slots(title):
                 ypos 0
                 hbox:
                     spacing 16
-                    text ("SAVE" if is_save else "LOAD") size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                    text "PAGE" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                text ("PICK A PAGE TO KEEP" if is_save else "PICK UP WHERE I LEFT OFF") size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
+                    text ("SAVE" if is_save else "LOAD") size 48 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                    text "PAGE" size 48 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                text ("PICK A PAGE TO KEEP" if is_save else "PICK UP WHERE I LEFT OFF") size 21 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
                 button:
                     action page_name_value.Toggle()
                     key_events True
@@ -820,11 +862,11 @@ screen file_slots(title):
                     input:
                         value page_name_value
                         size 28
-                        color "#5a4030"
+                        color "#f5c568"
                         font "fonts/Caveat[wght].ttf"
 
             hbox:
-                xpos 800
+                xpos 665
                 ypos 8
                 spacing 6
                 if config.has_autosave:
@@ -834,10 +876,10 @@ screen file_slots(title):
                 for page in range(1, 10):
                     use lc_keycap_button(str(page), FilePage(page))
 
-            text "A = AUTO    Q = QUICK" xpos 800 ypos 58 size 21 color "#3b2a30" font "fonts/Handjet-SemiBold.ttf"
+            text "A = AUTO    Q = QUICK" xpos 665 ypos 58 size 21 color "#fff0dc" font "fonts/Handjet-SemiBold.ttf"
 
             for slot_row, slot_y in enumerate((128, 448)):
-                for slot_col, slot_x in enumerate((20, 390, 800, 1170)):
+                for slot_col, slot_x in enumerate((0, 370, 740, 1110)):
                     $ slot = slot_row * 4 + slot_col + 1
                     $ filled = FileLoadable(slot)
                     button:
@@ -853,7 +895,7 @@ screen file_slots(title):
 
                         if filled:
                             frame:
-                                background Frame("gui/scrapbook/frame_polaroid.png", 12, 12)
+                                background Frame("gui/glass/panel.png", 12, 12)
                                 padding (12, 12, 12, 8)
                                 xfill True
                                 yfill True
@@ -863,11 +905,11 @@ screen file_slots(title):
                                     text FileSaveName(slot):
                                         font "fonts/Caveat[wght].ttf"
                                         size 32
-                                        color "#463460"
+                                        color "#ff8fc0"
                                         xalign 0.0
                                     text FileTime(slot, format=_("{#file_time}%b %d  %H:%M"), empty=""):
                                         size 18
-                                        color "#9b8a80"
+                                        color "#e3bcaa"
                                         font "fonts/Handjet-SemiBold.ttf"
                         else:
                             frame:
@@ -882,8 +924,8 @@ screen file_slots(title):
                                     vbox:
                                         align (0.5, 0.5)
                                         spacing 4
-                                        text "EMPTY" xalign 0.5 size 24 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                                        text "SLOT [slot]" xalign 0.5 size 21 color "#3b2a30" font "fonts/Handjet-SemiBold.ttf"
+                                        text "EMPTY" xalign 0.5 size 24 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                                        text "SLOT [slot]" xalign 0.5 size 21 color "#fff0dc" font "fonts/Handjet-SemiBold.ttf"
 
             key "save_page_prev" action FilePagePrevious()
             key "save_page_next" action FilePageNext()
@@ -901,59 +943,63 @@ screen preferences():
 
             vbox:
                 spacing 10
-                xsize 760
+                xsize 720
 
-                text "PREFS" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                text "HOW I PLAY" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
-                text "SETTINGS KEEP ACROSS SAVES" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
+                text "PREFS" size 48 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                text "HOW I PLAY" size 21 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
+                text "SETTINGS KEEP ACROSS SAVES" size 21 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
 
+                use lc_glass_heading("DISPLAY & COMFORT", "peach")
                 hbox:
-                    spacing 40
+                    spacing 24
                     vbox:
                         spacing 6
-                        text "DISPLAY" size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
+                        text "DISPLAY" size 21 color "#dbc8bd" font "fonts/Handjet-ExtraBold.ttf"
                         textbutton _("WINDOW") action Preference("display", "window") style "lc_radio_button" text_style "lc_radio_text"
                         textbutton _("FULLSCREEN") action Preference("display", "fullscreen") style "lc_radio_button" text_style "lc_radio_text"
                     vbox:
                         spacing 6
-                        text "SKIP" size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
+                        text "SKIP" size 21 color "#dbc8bd" font "fonts/Handjet-ExtraBold.ttf"
                         textbutton _("UNSEEN TEXT") action Preference("skip", "toggle") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("AFTER CHOICES") action Preference("after choices", "toggle") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("TRANSITIONS") action InvertSelected(Preference("transitions", "toggle")) style "lc_check_button" text_style "lc_check_text"
                     vbox:
                         spacing 6
-                        text "EFFECTS" size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
+                        text "EFFECTS" size 21 color "#dbc8bd" font "fonts/Handjet-ExtraBold.ttf"
                         textbutton _("SCREEN SHAKE") action ToggleField(persistent, "lc_screen_shake") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("CAMERA FLASH") action ToggleField(persistent, "lc_camera_flash") style "lc_check_button" text_style "lc_check_text"
 
                 null height 8
-                use lc_pref_slider("TEXT SPEED", Preference("text speed"), "gui/scrapbook/bar_pink.png", ("MAX" if preferences.text_cps == 0 else "%d" % preferences.text_cps))
-                use lc_pref_slider("AUTO-FORWARD", Preference("auto-forward time"), "gui/scrapbook/bar_teal.png", "%d" % preferences.afm_time)
+                use lc_glass_heading("READING & SOUND")
+                use lc_pref_slider("TEXT SPEED", Preference("text speed"), "gui/glass/bar_pink.png", ("MAX" if preferences.text_cps == 0 else "%d" % preferences.text_cps))
+                use lc_pref_slider("AUTO-FORWARD", Preference("auto-forward time"), "gui/glass/bar_peach.png", "%d" % preferences.afm_time)
+                text "The sun is setting over the villa." slow_cps (preferences.text_cps if preferences.text_cps else None) size 22 color "#ffe4cd" font "fonts/PatrickHand-Regular.ttf"
                 # Four volume groups (darryn): BGM, SFX (story sounds, ambience,
                 # UI), VOICE (Leia's breaths and every vocal clip) and LEWD
                 # (intimate foley, audio/lewd/).
                 if config.has_music:
-                    use lc_pref_slider("BGM", Preference("music volume"), "gui/scrapbook/bar_purple.png", "%d%%" % int(preferences.get_volume("music") * 100))
+                    use lc_pref_slider("BGM", Preference("music volume"), "gui/glass/bar_honey.png", "%d%%" % int(preferences.get_volume("music") * 100), "bgm")
                 if config.has_sound:
-                    use lc_pref_slider("SFX", Preference("sound volume"), "gui/scrapbook/bar_gold.png", "%d%%" % int(preferences.get_volume("sfx") * 100))
+                    use lc_pref_slider("SFX", Preference("sound volume"), "gui/glass/bar_amber.png", "%d%%" % int(preferences.get_volume("sfx") * 100), "sfx")
                 if config.has_voice:
-                    use lc_pref_slider("VOICE", Preference("voice volume"), "gui/scrapbook/bar_teal.png", "%d%%" % int(preferences.get_volume("voice") * 100))
+                    use lc_pref_slider("VOICE", Preference("voice volume"), "gui/glass/bar_peach.png", "%d%%" % int(preferences.get_volume("voice") * 100), "voice")
                 if config.has_sound:
-                    use lc_pref_slider("LEWD", Preference("mixer lewd volume"), "gui/scrapbook/bar_pink.png", "%d%%" % int(preferences.get_volume("lewd") * 100))
+                    use lc_pref_slider("LEWD", Preference("mixer lewd volume"), "gui/glass/bar_pink.png", "%d%%" % int(preferences.get_volume("lewd") * 100), "lewd")
                 textbutton _("MUTE ALL") action Preference("all mute", "toggle") style "lc_check_button" text_style "lc_check_text"
 
             vbox:
                 spacing 10
-                xsize 740
+                xsize 680
 
-                text "WHAT I SEE" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                text "INFORMATION SETTING" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
+                text "WHAT I SEE" size 48 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                text "INFORMATION SETTING" size 21 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
 
+                use lc_glass_heading("INFORMATION SETTING", "pink")
                 $ mode_now = current_choice_mode()
                 for mode_id in ("normal", "insight", "full"):
                     use lc_info_card(mode_id, mode_now)
 
-                text "changes what I see — never what happens." size 32 color "#463460" font "fonts/Caveat[wght].ttf"
+                text "changes what I see — never what happens." size 32 color "#ff8fc0" font "fonts/Caveat[wght].ttf"
 
                 hbox:
                     spacing 12
@@ -962,24 +1008,30 @@ screen preferences():
                         textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
 
                 if mode_now == "developer":
-                    text "Developer mode is on. Pick Immersive, Insight, or Full Transparency to leave it." size 28 color "#7a6266" font "fonts/Caveat[wght].ttf"
+                    text "Developer mode is on. Pick Immersive, Insight, or Full Transparency to leave it." size 28 color "#dbc8bd" font "fonts/Caveat[wght].ttf"
 
 
-screen lc_pref_slider(label, value, fill, readout):
+screen lc_pref_slider(label, value, fill, readout, sample=None):
     vbox:
         spacing 2
         xfill True
-        text label size 21 color "#3b2a30" font "fonts/Handjet-SemiBold.ttf"
+        text label size 21 color "#fff0dc" font "fonts/Handjet-SemiBold.ttf"
         hbox:
             spacing 12
             bar:
                 value value
-                xsize 560
+                xsize 450
                 ysize 24
                 left_bar Frame(fill, 6, 6)
-                right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
-                thumb "gui/scrapbook/slider_thumb.png"
-            text readout yalign 0.5 size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
+                right_bar Frame("gui/glass/bar_track.png", 6, 6)
+                thumb "gui/glass/slider_thumb.png"
+            text readout yalign 0.5 size 21 color "#F5C568" font "fonts/Handjet-SemiBold.ttf"
+            if sample:
+                imagebutton:
+                    idle "gui/glass/sound_test.png"
+                    hover "gui/glass/sound_test_hover.png"
+                    action Function(lc_glass_sound_test, sample)
+                    tooltip "Test this channel"
 
 
 screen lc_info_card(mode_id, mode_now):
@@ -988,9 +1040,9 @@ screen lc_info_card(mode_id, mode_now):
     button:
         action Function(set_player_transparency_mode, mode_id)
         xfill True
-        yminimum 132
-        background Frame(("gui/scrapbook/frame_card_on.png" if on else "gui/scrapbook/frame_card.png"), 9, 9)
-        hover_background Frame("gui/scrapbook/frame_card_on.png", 9, 9)
+        yminimum 126
+        background Frame(("gui/glass/nav_active.png" if on else "gui/glass/panel.png"), 12, 12)
+        hover_background Frame("gui/glass/nav_active.png", 12, 12)
         padding (16, 10)
 
         vbox:
@@ -999,12 +1051,12 @@ screen lc_info_card(mode_id, mode_now):
             hbox:
                 spacing 10
                 xfill True
-                text info["label"] size 24 color ("#3b2a30" if on else "#7a6266") font "fonts/Handjet-ExtraBold.ttf"
+                text info["label"] size 24 color ("#fff0dc" if on else "#dbc8bd") font "fonts/Handjet-ExtraBold.ttf"
                 if on:
                     text "SELECTED" size 18 color "#a83a5a" font "fonts/Handjet-SemiBold.ttf" xalign 1.0
-            text info["tagline"] size 30 color ("#781446" if on else "#463460") font "fonts/Caveat[wght].ttf"
+            text info["tagline"] size 30 color ("#ff8fc0" if on else "#ff8fc0") font "fonts/Caveat[wght].ttf"
             if mode_id == "normal":
-                text "NO STAT HINTS SHOWN" size 18 color "#a8988a" font "fonts/Handjet-SemiBold.ttf"
+                text "NO STAT HINTS SHOWN" size 18 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
             elif mode_id == "insight":
                 hbox:
                     spacing 6
@@ -1034,20 +1086,20 @@ screen history():
                     spacing 2
                     hbox:
                         spacing 14
-                        text "HISTORY" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                        text ("DAY %d" % lc_ui_logic.story_day_number(story_flags) if lc_ui_logic.story_day_number(story_flags) else "") size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
-                    text "WHAT WAS SAID" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
+                        text "HISTORY" size 48 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                        text ("DAY %d" % lc_ui_logic.story_day_number(story_flags) if lc_ui_logic.story_day_number(story_flags) else "") size 48 color "#fff0dc" font "fonts/Handjet-ExtraBold.ttf"
+                    text "WHAT WAS SAID" size 21 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
                 vbox:
                     xalign 1.0
                     spacing 2
-                    text "NEWEST AT THE BOTTOM" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf" xalign 1.0
+                    text "NEWEST AT THE BOTTOM" size 21 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf" xalign 1.0
 
         # Left page only. The gutter sits near the middle of the spread, so a
         # full-width line would run across the spine.
         viewport:
             xpos 8
             ypos 108
-            xsize 700
+            xsize 1390
             ysize 760
             mousewheel True
             draggable True
@@ -1057,15 +1109,15 @@ screen history():
 
             vbox:
                 spacing 10
-                xsize 680
+                xsize 1350
                 if not _history_list:
-                    text "The diary is still blank." size 34 color "#7a6266" font "fonts/Caveat[wght].ttf" text_align 0.0
+                    text "The diary is still blank." size 34 color "#dbc8bd" font "fonts/Caveat[wght].ttf" text_align 0.0
                 for h in _history_list:
                     $ said = (h.who == "I SAID")
                     $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
                     hbox:
                         spacing 10
-                        xsize 640
+                        xsize 1320
                         box_align 0.0
                         if said:
                             frame:
@@ -1091,12 +1143,12 @@ screen history():
                             substitute False
                             xalign 0.0
                             textalign 0.0
-                            xsize 500
-                            min_width 500
+                            xsize 1150
+                            min_width 1150
                             layout "tex"
                             font ("fonts/PatrickHand-Regular.ttf" if (h.who and not said) else "fonts/Caveat[wght].ttf")
                             size 32
-                            color ("#781446" if said else ("#6e6068" if not h.who else "#34242c"))
+                            color ("#ff8fc0" if said else ("#dbc8bd" if not h.who else "#fff0dc"))
 
 
 ## Confirm, skip, notify ######################################################
@@ -1716,27 +1768,27 @@ style lc_key_text is button_text:
     xalign 0.5
 
 style lc_radio_button is button:
-    background None
+    background Frame("gui/glass/toggle_off.png", 10, 10)
     hover_background Frame("gui/scrapbook/ink_loop.png", 54, 12, 54, 12)
-    selected_idle_background Frame("gui/scrapbook/ink_loop.png", 54, 12, 54, 12)
-    selected_hover_background Frame("gui/scrapbook/ink_loop.png", 54, 12, 54, 12)
+    selected_idle_background Frame("gui/glass/toggle_on.png", 10, 10)
+    selected_hover_background Frame("gui/glass/toggle_on.png", 10, 10)
     padding (16, 2)
     yminimum 36
 
 style lc_radio_text is button_text:
-    idle_color "#7a6266"
-    hover_color "#3b2a30"
-    selected_color "#3b2a30"
-    selected_idle_color "#3b2a30"
+    idle_color "#fff0dc"
+    hover_color "#fff0dc"
+    selected_color "#fff0dc"
+    selected_idle_color "#fff0dc"
     selected_hover_color "#a83a5a"
     xalign 0.5
     size 21
 
 style lc_check_button is button:
-    background None
+    background Frame("gui/glass/toggle_off.png", 10, 10)
     hover_background None
-    selected_idle_background None
-    selected_hover_background None
+    selected_idle_background Frame("gui/glass/toggle_on.png", 10, 10)
+    selected_hover_background Frame("gui/glass/toggle_on.png", 10, 10)
     insensitive_background None
     foreground "gui/scrapbook/check_off.png"
     hover_foreground "gui/scrapbook/check_off.png"
@@ -1746,10 +1798,10 @@ style lc_check_button is button:
     yminimum 36
 
 style lc_check_text is button_text:
-    idle_color "#7a6266"
+    idle_color "#fff0dc"
     hover_color "#cc0066"
-    selected_color "#3b2a30"
-    selected_idle_color "#3b2a30"
+    selected_color "#fff0dc"
+    selected_idle_color "#fff0dc"
     selected_hover_color "#cc0066"
     xalign 0.0
     size 21

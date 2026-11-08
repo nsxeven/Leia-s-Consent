@@ -3581,6 +3581,22 @@
     "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
    },
    "processing": "unmodified original file (level set in LC_AUDIO_GAIN, not in the file)"
+  },
+  {
+   "name": "music/glass_test",
+   "file": "music/glass_test.ogg",
+   "kind": "music",
+   "status": "derived",
+   "duration": 2.5,
+   "channels": 2,
+   "sample_rate": 44100,
+   "codec": "vorbis q3",
+   "loop": false,
+   "source": {
+    "file": "music/polaroid_summer.ogg",
+    "license": "same license as parent recording; see music/polaroid_summer entry"
+   },
+   "processing": "ffmpeg: extract 12.0–14.5 seconds of polaroid_summer, 0.5-second fade out; short preview for Music slider"
   }
  ],
  "secondary_sources": [

@@ -17,7 +17,7 @@ screen gallery_card(gallery_id):
     $ preview_background = Solid("#0d0b0f" if (unlocked and cover and not masked) else (entry["accent"] if unlocked else "#242026"))
 
     button:
-        xsize 480
+        xsize 430
         ysize 305
         padding (14, 14)
         background card_background
@@ -41,7 +41,7 @@ screen gallery_card(gallery_id):
 
                 fixed:
                     if unlocked and cover and not masked:
-                        add gallery_thumb(cover, 452, 205) xalign 0.5 yalign 0.5
+                        add gallery_thumb(cover, 402, 205) xalign 0.5 yalign 0.5
                     elif unlocked:
                         vbox:
                             xalign 0.5
@@ -100,16 +100,18 @@ screen gallery_screen():
     $ total_entries = gallery_total_count()
     $ tab_title = gallery_tab_label(gallery_selected_tab)
 
-    add "gui/scrapbook/bg_game_menu.png"
-    use lc_journal_tabs(1686)
+    use lc_glass_menu_backdrop()
+    frame:
+        xpos 354 ypos 42 xsize 1534 ysize 930
+        background Frame("gui/glass/panel.png", 24, 24)
 
     frame:
-        xpos 70
+        xpos 375
         ypos 48
-        xsize 1580
+        xsize 1475
         ysize 900
         background None
-        padding (28, 18)
+        padding (16, 18)
 
         vbox:
             spacing 18
@@ -121,20 +123,20 @@ screen gallery_screen():
 
                 vbox:
                     spacing 3
-                    text "GALLERY" size 46 color "#3b2a30"
-                    text "Scenes you discover in the story are collected here." size 19 color "#7a6266"
+                    text "GALLERY" size 46 color "#fff0dc"
+                    text "Scenes you discover in the story are collected here." size 19 color "#dbc8bd"
 
                 vbox:
                     xalign 1.0
                     spacing 7
-                    text "Unlocked: [total_unlocked] / [total_entries]" size 19 color "#7a6266" xalign 1.0
+                    text "Unlocked: [total_unlocked] / [total_entries]" size 19 color "#dbc8bd" xalign 1.0
                     textbutton "Close":
                         xalign 1.0
                         action Return()
 
             frame:
                 xfill True
-                background Frame("gui/scrapbook/frame_card.png", 9, 9)
+                background Frame("gui/glass/panel.png", 9, 9)
                 padding (18, 15)
 
                 hbox:
@@ -151,16 +153,16 @@ screen gallery_screen():
 
             hbox:
                 xfill True
-                text "[tab_title]" size 27 color "#3b2a30"
-                text "[tab_unlocked] of [tab_total] unlocked" size 17 color "#7a6266" xalign 1.0
+                text "[tab_title]" size 27 color "#fff0dc"
+                text "[tab_unlocked] of [tab_total] unlocked" size 17 color "#dbc8bd" xalign 1.0
 
             if not tab_ids:
                 frame:
                     xfill True
                     yfill True
-                    background Frame("gui/scrapbook/frame_card.png", 9, 9)
+                    background Frame("gui/glass/panel.png", 9, 9)
                     padding (30, 30)
-                    text "No gallery entries have been added for this section yet." size 22 color "#7a6266" xalign 0.5 yalign 0.5
+                    text "No gallery entries have been added for this section yet." size 22 color "#dbc8bd" xalign 0.5 yalign 0.5
 
             else:
                 use lc_scroll_body:
@@ -170,7 +172,7 @@ screen gallery_screen():
 
                         for row_ids in rows:
                             hbox:
-                                spacing 20
+                                spacing 14
                                 xfill True
 
                                 for gallery_id in row_ids:
@@ -178,11 +180,11 @@ screen gallery_screen():
 
                                 if len(row_ids) < 3:
                                     for missing_index in range(3 - len(row_ids)):
-                                        null width 480 height 1
+                                        null width 430 height 1
 
                         null height 8
 
-                text "Locked entries reveal only that a CG exists. Titles, descriptions, and previews appear after the story unlocks them. Mature scenes (18+) stay hidden in the grid until you open them." size 15 color "#7a6266"
+                text "Locked entries reveal only that a CG exists. Titles, descriptions, and previews appear after the story unlocks them. Mature scenes (18+) stay hidden in the grid until you open them." size 15 color "#dbc8bd"
 
 
 screen gallery_preview_screen(gallery_id):
@@ -216,7 +218,7 @@ screen gallery_preview_screen(gallery_id):
         yalign 0.5
         xsize 1500
         ysize 930
-        background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+        background Frame("gui/glass/panel.png", 24, 24)
         padding (34, 30)
 
         vbox:
@@ -229,8 +231,8 @@ screen gallery_preview_screen(gallery_id):
 
                 vbox:
                     spacing 3
-                    text "[title]" size 38 color "#3b2a30"
-                    text "[chapter_label]  /  [tab_label]" size 17 color "#cc0066"
+                    text "[title]" size 38 color "#fff0dc"
+                    text "[chapter_label]  /  [tab_label]" size 17 color "#ff8fc0"
 
                 textbutton "Close":
                     xalign 1.0
@@ -271,18 +273,18 @@ screen gallery_preview_screen(gallery_id):
                 vbox:
                     spacing 4
                     xsize 1050
-                    text "[page_label]  ([page_number] of [pages_total], [pages_have] seen)" size 19 color "#3b2a30"
-                    text "[description]" size 18 color "#3b2a30"
+                    text "[page_label]  ([page_number] of [pages_total], [pages_have] seen)" size 19 color "#fff0dc"
+                    text "[description]" size 18 color "#fff0dc"
                     if entry["mature"]:
-                        text "Mature scene (18+). Adults only." size 15 color "#cc0066"
+                        text "Mature scene (18+). Adults only." size 15 color "#ff8fc0"
                     if entry["dream"]:
-                        text "Dream sequence: a dream is not evidence of what happened." size 15 color "#7a6266"
-                    text "[route_text]" size 15 color "#7a6266"
+                        text "Dream sequence: a dream is not evidence of what happened." size 15 color "#dbc8bd"
+                    text "[route_text]" size 15 color "#dbc8bd"
                     if page_is_placeholder:
-                        text "Final CG art will replace this placeholder." size 15 color "#7a6266"
+                        text "Final CG art will replace this placeholder." size 15 color "#dbc8bd"
 
                 if gallery_has_replay(gallery_id):
                     textbutton "Replay Scene":
                         sensitive False
                 else:
-                    text "REPLAY NOT YET AVAILABLE" size 15 color "#7a6266" xalign 1.0 xsize 360 text_align 1.0
+                    text "REPLAY NOT YET AVAILABLE" size 15 color "#dbc8bd" xalign 1.0 xsize 360 text_align 1.0

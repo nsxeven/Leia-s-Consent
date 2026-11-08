@@ -16,11 +16,11 @@ screen lc_tag_button(who, tag, earned, equipped):
             yalign 0.5
             spacing 10
             if earned:
-                text tag size 24 color ("#cc0066" if equipped else "#3b2a30") yalign 0.5 substitute False
+                text tag size 24 color ("#ff8fc0" if equipped else "#fff0dc") yalign 0.5 substitute False
                 if equipped:
-                    text "EQUIPPED" size 16 color "#cc0066" font "fonts/Handjet-SemiBold.ttf" yalign 0.5
+                    text "EQUIPPED" size 16 color "#ff8fc0" font "fonts/Handjet-SemiBold.ttf" yalign 0.5
             else:
-                text "???" size 24 color "#a8979b" yalign 0.5
+                text "???" size 24 color "#bdb3ba" yalign 0.5
 
 
 screen lc_tag_column(who, name):
@@ -28,7 +28,7 @@ screen lc_tag_column(who, name):
     vbox:
         spacing 8
         xsize 500
-        text name.upper() size 30 color "#3b2a30" substitute False
+        text name.upper() size 30 color "#fff0dc" substitute False
         button:
             xsize 470
             ysize 54
@@ -40,15 +40,15 @@ screen lc_tag_column(who, name):
             hbox:
                 yalign 0.5
                 spacing 10
-                text "Automatic (from your choices)" size 22 color ("#cc0066" if current is None else "#3b2a30") yalign 0.5
+                text "Automatic (from your choices)" size 22 color ("#ff8fc0" if current is None else "#fff0dc") yalign 0.5
                 if current is None:
-                    text "EQUIPPED" size 16 color "#cc0066" font "fonts/Handjet-SemiBold.ttf" yalign 0.5
+                    text "EQUIPPED" size 16 color "#ff8fc0" font "fonts/Handjet-SemiBold.ttf" yalign 0.5
         for tag, earned in lc_tag_list(who):
             use lc_tag_button(who, tag, earned, earned and current == tag)
 
 
 screen lc_tags_screen():
-
+    tag menu
     modal True
     zorder 180
 
@@ -58,16 +58,18 @@ screen lc_tags_screen():
     $ earned_n = sum(1 for _t, e in lc_tag_list("ryan") + lc_tag_list("leia") if e)
     $ total_n = len(lc_tag_list("ryan")) + len(lc_tag_list("leia"))
 
-    add "gui/scrapbook/bg_game_menu.png"
-    use lc_journal_tabs(1686)
+    use lc_glass_menu_backdrop()
+    frame:
+        xpos 354 ypos 42 xsize 1534 ysize 930
+        background Frame("gui/glass/panel.png", 24, 24)
 
     frame:
-        xpos 70
+        xpos 375
         ypos 48
-        xsize 1580
+        xsize 1475
         ysize 900
         background None
-        padding (28, 18)
+        padding (16, 18)
 
         vbox:
             spacing 22
@@ -78,12 +80,12 @@ screen lc_tags_screen():
                 xfill True
                 vbox:
                     spacing 3
-                    text "TAGS" size 46 color "#3b2a30"
-                    text "Tags you have earned on any playthrough. Equip one for each of you; it shows on Status, the day review and title badges." size 19 color "#7a6266"
+                    text "TAGS" size 46 color "#fff0dc"
+                    text "Tags you have earned on any playthrough. Equip one for each of you; it shows on Status, the day review and title badges." size 19 color "#dbc8bd"
                 vbox:
                     xalign 1.0
                     spacing 8
-                    text ("Collected: {} / {}".format(earned_n, total_n)) size 20 color "#7a6266" xalign 1.0
+                    text ("Collected: {} / {}".format(earned_n, total_n)) size 20 color "#dbc8bd" xalign 1.0
                     textbutton "Close":
                         xalign 1.0
                         action Return()
@@ -99,13 +101,13 @@ screen lc_tags_screen():
 
                     vbox:
                         spacing 10
-                        text "MOMENT STICKERS" size 30 color "#3b2a30"
-                        text "Small moments from your days. Collect them; they can't be equipped." size 18 color "#7a6266"
+                        text "MOMENT STICKERS" size 30 color "#fff0dc"
+                        text "Small moments from your days. Collect them; they can't be equipped." size 18 color "#dbc8bd"
                         hbox:
                             box_wrap True
                             spacing 12
                             box_wrap_spacing 12
-                            xsize 1460
+                            xsize 1360
                             for sticker, earned in stickers:
                                 frame:
                                     background Solid("#f4dde3" if earned else "#e7dde0")
@@ -116,5 +118,5 @@ screen lc_tags_screen():
                                             add "images/ui/scrapbook/mark.png" yalign 0.5
                                             text sticker.upper() size 18 color "#8a3058" font "fonts/Handjet-SemiBold.ttf" yalign 0.5 substitute False
                                         else:
-                                            text "???" size 18 color "#a8979b" font "fonts/Handjet-SemiBold.ttf" yalign 0.5
+                                            text "???" size 18 color "#bdb3ba" font "fonts/Handjet-SemiBold.ttf" yalign 0.5
                     null height 20
