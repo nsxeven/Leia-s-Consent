@@ -235,6 +235,31 @@ init 999 python:
             _lc_ch.ctc_position = "nestled"
 
 
+# Quick-menu keycaps (darryn 2026-11-08): always fully opaque, also over CGs.
+# Only a key whose action can't run right now is dimmed: SKIP on text not
+# seen before (unless 'skip unseen' is on), Q.LOAD with no quick save, BACK
+# with nothing to roll back.
+transform lc_keycap_state:
+    alpha 1.0
+    on idle:
+        alpha 1.0
+        yoffset 0
+    on hover:
+        alpha 1.0
+        yoffset -3
+    on selected_idle:
+        alpha 1.0
+        yoffset 0
+    on selected_hover:
+        alpha 1.0
+        yoffset -3
+    on insensitive:
+        alpha 0.4
+        yoffset 0
+    on selected_insensitive:
+        alpha 0.4
+        yoffset 0
+
 transform lc_lift:
     on idle:
         yoffset 0
@@ -384,6 +409,7 @@ screen lc_chip(name, amount, exact=False):
 
 
 screen lc_keycap_button(label, action, icon=None, selected_on=False, width=None, ghost=False):
+    # `ghost` is kept so old callers still work; keys are no longer ghosted over CGs.
     button:
         if width:
             xsize width
@@ -394,7 +420,7 @@ screen lc_keycap_button(label, action, icon=None, selected_on=False, width=None,
         selected_idle_background Frame("gui/scrapbook/frame_keycap_on.png", 9, 9)
         selected_hover_background Frame("gui/scrapbook/frame_keycap_on.png", 9, 9)
         action action
-        at (lc_cg_key if ghost else lc_lift)
+        at lc_keycap_state
         hbox:
             spacing 6
             yalign 0.5
@@ -643,9 +669,9 @@ screen quick_menu():
     zorder 100
 
     if quick_menu and not lc_journal_menu_open() and not lc_phone_covers_scene():
-        # Same layout under the box for sprites and CGs; over a CG the keys
-        # are ghosted so the art stays clear.
-        $ ghost = lc_cg_on_screen()
+        # Same layout under the box for sprites and CGs. Keys stay opaque;
+        # only unavailable ones dim (lc_keycap_state).
+        $ ghost = False
         hbox:
             xpos 132
             ypos 1040
