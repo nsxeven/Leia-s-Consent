@@ -838,6 +838,13 @@ label ch01_day2_scene_09_photo_walk:
     "The first group photo took three attempts because [friend_name] blinked in two of them."
     friend "The sun is aggressive."
     maya "Your eyelids are aggressive."
+    maya "Wait—can I join the Trip Group? And can we use this one for the picture, or do you want another try?"
+    gf "Yes, add her! And use this one, because we're all in it and [friend_name] actually has his eyes open."
+    friend "I do, somehow. Hang on, I'll add Maya and change the picture before we forget which one it was."
+    $ phone_group_maya_member = True
+    $ phone_add_message("group", "julian", text=friend_name + " added Maya to the group.", message_id="ch01_trip_group_maya_added", mark_unread=False)
+    $ phone_group_avatar_stage = "four"
+    $ phone_add_message("group", "julian", text="Changed the group picture to the four of us.", message_id="ch01_trip_group_four_photo", mark_unread=False)
 
     "Then Maya started assigning pairs with the authority of somebody organising school photos."
 
