@@ -477,11 +477,12 @@ screen phone_screen():
                 ypos 104
                 xmaximum 300
             $ thread_yadj = thread_adjs.setdefault(phone_thread, lc_phone_thread_adjustment())
+            $ reply_prompt = phone_pending_reply(phone_thread)
             viewport:
                 ypos 198
                 xpos LC_PHONE_CONTENT_LEFT
                 xsize LC_PHONE_VIEWPORT_WIDTH
-                ysize 692
+                ysize (420 if reply_prompt else 692)
                 mousewheel True
                 draggable True
                 scrollbars None
@@ -548,25 +549,6 @@ screen phone_screen():
                                         xalign (1.0 if _out else 0.0)
                                         action Show("lc_phone_photo_viewer", photo_asset=_attachment)
                                         add lc_phone_rounded_photo(_attachment, min(320, _bubble_max), 180)
-                    $ reply_prompt = phone_pending_reply(phone_thread)
-                    if reply_prompt:
-                        text "Reply as [player_name]":
-                            style "lc_sw_hand"
-                            size 23
-                            color "#6E8399"
-                            xalign 1.0
-                        for reply_option in reply_prompt["options"]:
-                            textbutton reply_option["text"]:
-                                style "lc_sw_hit"
-                                xalign 1.0
-                                xmaximum 410
-                                padding (18, 12)
-                                background Frame("gui/phone/sprite_match/bubble_out.png", 18, 18)
-                                hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
-                                text_style "lc_sw_hand"
-                                text_size 27
-                                text_color "#293C53"
-                                action Function(phone_select_reply, phone_thread, reply_option["id"])
                     if thread_rows and thread_rows[-1]["outgoing"]:
                         text "Read [lc_phone_clock_text()]":
                             style "lc_sw_hand"
@@ -574,13 +556,51 @@ screen phone_screen():
                             color "#8B99AB"
                             xalign 1.0
                     null height 8
+            if reply_prompt:
+                frame:
+                    style "lc_sw_frame"
+                    xpos LC_PHONE_CONTENT_LEFT
+                    ypos 625
+                    xsize LC_PHONE_CONTENT_WIDTH
+                    ysize 266
+                    background Frame("gui/phone/sprite_match/card.png", 16, 16)
+                    padding (12, 9)
+                    vbox:
+                        xfill True
+                        spacing 5
+                        text "Reply as [player_name] · choose one":
+                            style "lc_sw_hand"
+                            size 25
+                            color "#425f80"
+                        for reply_option in reply_prompt["options"]:
+                            button:
+                                style "lc_sw_hit"
+                                xfill True
+                                ysize 58
+                                background Frame("gui/phone/sprite_match/reply_choice.png", 18, 18)
+                                hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
+                                action Function(phone_select_reply, phone_thread, reply_option["id"])
+                                text "↩":
+                                    font "DejaVuSans.ttf"
+                                    size 24
+                                    color "#557da7"
+                                    xpos 14
+                                    yalign 0.5
+                                text reply_option["text"]:
+                                    style "lc_sw_hand"
+                                    size 24
+                                    color "#293C53"
+                                    xpos 49
+                                    yalign 0.5
+                                    xmaximum 366
             text "+":
                 style "lc_sw_hand"
                 size 30
                 color "#6884A0"
                 xpos 42
                 ypos 920
-            $ _composer = "Message " + (phone_thread_label(phone_thread) if phone_thread else "") + "..."
+            $ _composer = ("Choose a reply…" if reply_prompt else
+                           "Message " + (phone_thread_label(phone_thread) if phone_thread else "") + "...")
             text _composer:
                 style "lc_sw_hand"
                 size 26

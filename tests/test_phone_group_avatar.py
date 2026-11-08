@@ -29,24 +29,27 @@ class TripGroupAvatarTest(unittest.TestCase):
         self.assertEqual(self.env["phone_group_avatar"](), self.env["PHONE_GROUP_EMPTY_ART"])
         self.assertEqual(self.env["phone_group_members"](), ("player", "leia", "julian"))
 
-    def test_trio_outfit_variants_and_circular_mask(self):
+    def test_trio_outfit_variants_use_prerendered_circular_photos(self):
+        from PIL import Image
         self.store.phone_group_avatar_stage = "trio"
-        for outfit, expected in (("pool_conservative", "White"), ("pool_bolder", "Blue")):
+        for outfit, suffix in (("pool_conservative", "white"), ("pool_bolder", "blue")):
             self.values["ch01_pool_outfit"] = outfit
-            photo, mask = self.env["phone_group_avatar"]()
-            self.assertTrue(photo[0].endswith("Trio_{}.webp".format(expected)))
-            self.assertEqual(photo[1], {"xysize": (128, 128), "fit": "cover"})
-            self.assertEqual(mask, self.env["PHONE_GROUP_MASK"])
+            path = self.env["phone_group_avatar"]()
+            self.assertEqual(path, "gui/phone/sprite_match/avatar_group_trio_{}.png".format(suffix))
+            with Image.open(ROOT / "game" / path) as image:
+                self.assertEqual(image.size, (128, 128))
+                self.assertEqual(image.convert("RGBA").getpixel((0, 0))[3], 0)
+                self.assertGreater(image.convert("RGBA").getpixel((64, 64))[3], 240)
 
-    def test_four_falls_back_to_outfit_trio_until_art_exists(self):
+    def test_four_falls_back_to_prebuilt_trio_until_four_asset_exists(self):
         self.store.phone_group_avatar_stage = "four"
-        self.store.phone_group_maya_member = True
         self.values["ch01_pool_outfit"] = "pool_bolder"
-        self.assertEqual(self.env["phone_group_avatar"]()[0][0], "phone_avatar_group_four")
-        self.assertTrue(self.env["phone_group_four_image"](0, 0)[0].endswith("Trio_Blue.webp"))
+        self.assertEqual(self.env["phone_group_avatar"](),
+                         "gui/phone/sprite_match/avatar_group_trio_blue.png")
+        self.store.phone_group_maya_member = True
         self.assertIn("maya", self.env["phone_group_members"]())
-        self.available.add(self.env["PHONE_GROUP_FOUR_ART"])
-        self.assertEqual(self.env["phone_group_four_image"](0, 0)[0], self.env["PHONE_GROUP_FOUR_ART"])
+        self.available.add(self.env["PHONE_GROUP_FOUR_AVATAR"])
+        self.assertEqual(self.env["phone_group_avatar"](), self.env["PHONE_GROUP_FOUR_AVATAR"])
 
     def test_old_saves_derive_stage_and_members_from_flags(self):
         self.flags.add("ch01_scene_05_complete")
@@ -56,6 +59,20 @@ class TripGroupAvatarTest(unittest.TestCase):
         self.assertIn("maya", self.env["phone_group_members"]())
         self.store.phone_group_avatar_stage = "trio"
         self.assertEqual(self.env["phone_group_stage"](), "trio")
+
+    def test_generator_outputs_reproduce_committed_avatars(self):
+        import importlib.util
+        import io
+        spec = importlib.util.spec_from_file_location(
+            "phone_avatar_generator", ROOT / "tools/gen_phone_group_avatars.py")
+        generator = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(generator)
+        for color in ("White", "Blue"):
+            source = ROOT / "game/images/cg/ch01" / "CH1D1_CG_PoolSelfie_Trio_{}.webp".format(color)
+            result = io.BytesIO()
+            generator.render_avatar(source).save(result, format="PNG")
+            committed = ROOT / "game/gui/phone/sprite_match" / "avatar_group_trio_{}.png".format(color.lower())
+            self.assertEqual(result.getvalue(), committed.read_bytes())
 
     def test_story_changes_and_both_effective_screen_locations(self):
         one = (ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")

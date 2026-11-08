@@ -6,11 +6,11 @@ init 998 python:
         # Ryan a turn; otherwise Leia's timed first response would auto-pick it.
         phone_offer_reply("group", "ch01_movie_photo_reply", [
             {"id": "nice", "text": "Okay, that one's good. Thanks for sending it.",
-             "followups": [("julian", "Glad I remembered. I nearly left it on my phone.")]},
+             "followups": [("julian", "Glad you like it. I almost forgot it was still on my phone.")]},
             {"id": "tease", "text": "You waited until after the movie to send this?",
-             "followups": [("julian", "Yeah, I got distracted. Better late than never, right?")]},
+             "followups": [("julian", "I know, I know. I only found it when I went to charge my phone.")]},
             {"id": "leia", "text": "I think [girlfriend_name] likes this one more than you do.",
-             "followups": [("leia", "I do! Wait, send me the full-size one too.")]},
+             "followups": [("leia", "I do! Okay, I keep opening it again, I think you might be right.")]},
         ], "nice")
 
 label ch01_scene_27_late_photo_drop_staged:

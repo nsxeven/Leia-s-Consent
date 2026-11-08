@@ -149,6 +149,16 @@ screen ch01_phone_sequence_overlay():
             # Closing the handset itself triggers Leia's follow-up notification.
             timer 0.05 action Function(ch01_late_photo_closed_early)
 
+    if _ch01_group_thread_open and not has_story_flag("ch01_late_photo_followup_pending"):
+        # Reuse the staged late-photo conversation's open-thread timer cadence.
+        # Leaving the chat pauses a pending send/reaction; reopening resumes it.
+        $ _ch01_reply_steps = getattr(renpy.store, "phone_reply_delivery", {}).get("group", ())
+        if _ch01_reply_steps:
+            if _ch01_reply_steps[0][0] == "player":
+                timer 0.55 action Function(phone_deliver_reply_step, "group")
+            else:
+                timer 0.90 action Function(phone_deliver_reply_step, "group")
+
     if has_story_flag("ch01_breakfast_reply_pending"):
         if _ch01_group_thread_open:
             if not has_story_flag("ch01_breakfast_phone_session_active"):
