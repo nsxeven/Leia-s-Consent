@@ -36,6 +36,10 @@ transform lc_popup_soft_fade_hide:
 
 # Override the original quick-access overlay. The Phone is absent before its
 # story introduction and can be hidden during full-screen cinematic CGs.
+# Badge rides up with the phone icon's hover, same easing as every button.
+transform lc_badge_lift(up):
+    easein (LC_HOVER_IN if up else LC_HOVER_OUT) yoffset (-3 if up else 0)
+
 screen phone_quick_access():
 
     zorder 110
@@ -68,7 +72,8 @@ screen phone_quick_access():
             $ _badge_w = 39 if len(_badge) <= 1 else (18 + 15 * len(_badge))
             fixed:
                 xpos (1893 - _badge_w)
-                ypos (861 if hud_hovered else 864)
+                ypos 864
+                at lc_badge_lift(hud_hovered)
                 xysize (_badge_w, 39)
                 add Transform("gui/phone/sweetheart/badge_%s.png" % _btn_theme, nearest=True, xysize=(_badge_w, 39))
                 text "[_badge]":

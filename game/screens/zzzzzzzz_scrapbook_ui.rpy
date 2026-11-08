@@ -258,70 +258,68 @@ init 999 python:
 transform lc_keycap_state:
     alpha 1.0
     on idle:
-        alpha 1.0
-        yoffset 0
+        easein LC_HOVER_OUT alpha 1.0 yoffset 0
     on hover:
-        alpha 1.0
-        yoffset -3
+        easein LC_HOVER_IN alpha 1.0 yoffset -3
     on selected_idle:
-        alpha 1.0
-        yoffset 0
+        easein LC_HOVER_OUT alpha 1.0 yoffset 0
     on selected_hover:
-        alpha 1.0
-        yoffset -3
+        easein LC_HOVER_IN alpha 1.0 yoffset -3
     on insensitive:
-        alpha 0.4
-        yoffset 0
+        easein LC_HOVER_OUT alpha 0.4 yoffset 0
     on selected_insensitive:
-        alpha 0.4
-        yoffset 0
+        easein LC_HOVER_OUT alpha 0.4 yoffset 0
 
+# Shared hover motion (darryn 2026-11-08: smooth, cohesive, no snaps). Every
+# lift/slide eases with LC_HOVER_IN on the way in and LC_HOVER_OUT on the way
+# out (systems/lc_hover_fade.rpy), matching the background cross-fade.
 transform lc_lift:
+    subpixel True
     on idle:
-        yoffset 0
+        easein LC_HOVER_OUT yoffset 0
     on hover:
-        yoffset -3
+        easein LC_HOVER_IN yoffset -3
     on selected_idle:
-        yoffset 0
+        easein LC_HOVER_OUT yoffset 0
     on selected_hover:
-        yoffset -3
+        easein LC_HOVER_IN yoffset -3
 
 transform lc_tab_slide:
+    subpixel True
     on idle:
-        xoffset 0
+        easein LC_HOVER_OUT xoffset 0
     on hover:
-        xoffset 18
+        easein LC_HOVER_IN xoffset 18
     on selected_idle:
-        xoffset 18
+        easein LC_HOVER_IN xoffset 18
     on selected_hover:
-        xoffset 18
+        easein LC_HOVER_IN xoffset 18
     on insensitive:
-        xoffset 0
+        easein LC_HOVER_OUT xoffset 0
 
 transform lc_tab_out:
+    subpixel True
     xoffset 18
     on hover:
-        yoffset -3
+        easein LC_HOVER_IN yoffset -3
     on idle:
-        yoffset 0
+        easein LC_HOVER_OUT yoffset 0
 
 transform lc_choice_slide:
+    subpixel True
     on idle:
-        xoffset 0
-        yoffset 0
+        easein LC_HOVER_OUT xoffset 0 yoffset 0
     on hover:
-        xoffset 24
-        yoffset -3
+        easein LC_HOVER_IN xoffset 24 yoffset -3
     on insensitive:
-        xoffset 0
-        yoffset 0
+        easein LC_HOVER_OUT xoffset 0 yoffset 0
 
 transform lc_only_hover:
     alpha 0.0
     on hover:
-        alpha 1.0
+        easein LC_HOVER_IN alpha 1.0
     on idle:
-        alpha 0.0
+        easein LC_HOVER_OUT alpha 0.0
 
 transform lc_page_in:
     alpha 0.0
@@ -331,17 +329,13 @@ transform lc_page_in:
 transform lc_cg_key:
     alpha 0.5
     on idle:
-        alpha 0.5
-        yoffset 0
+        easein LC_HOVER_OUT alpha 0.5 yoffset 0
     on hover:
-        alpha 1.0
-        yoffset -3
+        easein LC_HOVER_IN alpha 1.0 yoffset -3
     on selected_idle:
-        alpha 1.0
-        yoffset 0
+        easein LC_HOVER_OUT alpha 1.0 yoffset 0
     on selected_hover:
-        alpha 1.0
-        yoffset -3
+        easein LC_HOVER_IN alpha 1.0 yoffset -3
 
 
 screen lc_side_tab(label, action, index, y, accent=False, xpos=1686):
