@@ -245,65 +245,73 @@ def redraw_sliders():
     image.resize((width, height), Image.Resampling.NEAREST).save(GUI / "slider_thumb.png")
 
 
-def redraw_stat_icons():
-    colors = {
-        "heart": ("#F1A7C1", "#BC476F"),
-        "shield": ("#9BD8D4", "#487D94"),
-        "zzz": ("#C1B4DC", "#76699A"),
-        "face": ("#FFE3A2", "#C08E2C"),
-        "lock": ("#C9C4C5", "#7A6E66"),
-    }
-    for name, (top, bot) in colors.items():
-        w = h = 39
-        image = Image.new("RGBA", (w, h))
-        draw = ImageDraw.Draw(image)
-        for y in range(h):
-            vary = round(10 - 20 * y / h)
-            draw.line((1, y, w - 2, y), fill=(235 + vary, 222 + vary, 211 + vary, 255))
-        draw.rounded_rectangle((0, 0, w - 1, h - 1), 3, outline="#94818D")
-        draw.line((4, 1, w - 5, 1), fill="#FFF9E8")
-        draw.line((1, 4, 1, h - 5), fill="#FAECDD")
-        mask = Image.new("L", (w, h))
-        mask_draw = ImageDraw.Draw(mask)
-        if name == "heart":
-            mask_draw.ellipse((7, 8, 21, 22), fill=255)
-            mask_draw.ellipse((18, 8, 32, 22), fill=255)
-            mask_draw.polygon([(7, 16), (32, 16), (30, 23), (20, 32), (10, 23)], fill=255)
-        elif name == "shield":
-            mask_draw.polygon([(20, 6), (31, 11), (29, 25), (20, 33), (10, 25), (8, 11)], fill=255)
-        elif name == "zzz":
-            mask_draw.line((9, 11, 29, 11, 10, 29, 30, 29), fill=255, width=4)
-        elif name == "face":
-            mask_draw.ellipse((7, 7, 32, 32), fill=255)
-        else:
-            mask_draw.rounded_rectangle((9, 17, 31, 33), 2, fill=255)
-        a = bytes.fromhex(top[1:])
-        b = bytes.fromhex(bot[1:])
-        fill = Image.new("RGBA", (w, h))
-        fill_draw = ImageDraw.Draw(fill)
-        for y in range(h):
-            fill_draw.line((0, y, w, y), fill=tuple(round(x + (z - x) * y / h) for x, z in zip(a, b)) + (255,))
-        fill.putalpha(mask)
-        image.alpha_composite(fill)
-        draw = ImageDraw.Draw(image)
-        if name == "heart":
-            draw.line((11, 11, 15, 10, 17, 11), fill="#FFE5DF", width=2)
-        elif name == "shield":
-            draw.line((11, 12, 20, 9, 28, 12), fill="#DBF2E7")
-            draw.line((14, 20, 18, 24, 25, 15), fill="#DFF4E9", width=2)
-        elif name == "face":
-            draw.ellipse((13, 15, 15, 18), fill="#735146")
-            draw.ellipse((24, 15, 26, 18), fill="#735146")
-            draw.arc((13, 16, 27, 27), 15, 165, fill="#8F5E3C", width=2)
-            draw.arc((9, 9, 30, 30), 190, 270, fill="#FFF0C7", width=2)
-        elif name == "lock":
-            draw.arc((12, 5, 28, 25), 180, 360, fill="#746F80", width=4)
-            draw.arc((13, 5, 27, 24), 180, 360, fill="#D6D6DA", width=2)
-            draw.line((12, 18, 28, 18), fill="#E3DDD4")
-            draw.ellipse((18, 23, 22, 27), fill="#635D6A")
-            draw.line((20, 26, 20, 29), fill="#635D6A", width=2)
-        image.save(SCRAP / f"icon_{name}.png")
+# Cohesive 20-pixel silhouettes, 2x nearest-scaled; one dark outline.
+STAT_PALETTE = {
+    "love": ("#F4B6CD", "#C85B82"), "trust": ("#B2DDD9", "#5B9C9F"),
+    "boredom": ("#D2C5E3", "#9182AD"), "momentum": ("#B9D89A", "#71944F"),
+    "curiosity": ("#F7DCA8", "#BD9063"), "temptation": ("#EEB5C6", "#A65D87"),
+    "exhibitionism": ("#E7A9C5", "#AA5D88"),
+    "boundary_looseness": ("#D7CBB8", "#948572"),
+    "secrecy": ("#D8D2D0", "#90868B"), "jealousy": ("#F3B6A0", "#BD6A62"),
+    "acceptance": ("#F8DEAB", "#C4A160"), "sharing": ("#E2BCD3", "#AA7798"),
+    "distance": ("#C1D2DE", "#7992AC"),
+}
 
+def redraw_stat_icons():
+    for name, (top, bot) in STAT_PALETTE.items():
+        mask = Image.new("L", (20, 20))
+        d = ImageDraw.Draw(mask)
+        if name == "love":
+            d.ellipse((3, 4, 10, 11), fill=255); d.ellipse((9, 4, 16, 11), fill=255)
+            d.polygon([(3, 9), (16, 9), (15, 13), (10, 18), (4, 13)], fill=255)
+        elif name == "trust":
+            d.polygon([(10, 2), (17, 5), (16, 13), (10, 18), (4, 13), (3, 5)], fill=255)
+        elif name == "boredom":
+            d.line((4, 5, 15, 5, 4, 15, 15, 15), fill=255, width=3)
+        elif name == "momentum":
+            d.polygon([(3, 10), (10, 3), (17, 10), (13, 10), (13, 17), (7, 17), (7, 10)], fill=255)
+        elif name == "curiosity":
+            d.ellipse((5, 2, 14, 11), fill=255); d.rectangle((8, 11, 11, 14), fill=255)
+            d.rectangle((7, 15, 12, 16), fill=255)
+        elif name == "temptation":
+            d.polygon([(10, 2), (16, 11), (15, 15), (12, 18), (7, 18), (4, 14), (5, 10)], fill=255)
+        elif name == "exhibitionism":
+            d.polygon([(2, 10), (6, 5), (10, 3), (14, 5), (18, 10), (14, 15), (10, 17), (6, 15)], fill=255)
+        elif name == "boundary_looseness":
+            d.rectangle((3, 4, 5, 17), fill=255); d.rectangle((14, 4, 16, 17), fill=255)
+            d.rectangle((4, 4, 15, 6), fill=255); d.line((7, 8, 11, 13), fill=255, width=2)
+        elif name == "secrecy":
+            d.arc((5, 2, 14, 13), 180, 360, fill=255, width=3)
+            d.rounded_rectangle((4, 9, 16, 17), 1, fill=255)
+        elif name == "jealousy":
+            d.polygon([(10, 2), (13, 7), (16, 5), (17, 12), (14, 17), (6, 17), (3, 12), (6, 7), (7, 11)], fill=255)
+        elif name == "acceptance":
+            d.ellipse((3, 3, 17, 17), fill=255)
+        elif name == "sharing":
+            d.ellipse((2, 5, 11, 15), fill=255); d.ellipse((9, 5, 18, 15), fill=255)
+        elif name == "distance":
+            d.ellipse((2, 5, 8, 11), fill=255); d.ellipse((12, 9, 18, 15), fill=255)
+            d.rectangle((3, 12, 8, 17), fill=255); d.rectangle((12, 3, 17, 8), fill=255)
+        outer = mask.filter(ImageFilter.MaxFilter(3))
+        image = Image.new("RGBA", (20, 20))
+        ink = Image.new("RGBA", (20, 20), "#3B2A30")
+        ink.putalpha(outer); image.alpha_composite(ink)
+        fill = grad(20, 20, top, bot)
+        fill.putalpha(mask); image.alpha_composite(fill)
+        d = ImageDraw.Draw(image)
+        if name == "trust":
+            d.line((7, 10, 9, 12, 13, 7), fill="#FFF8E9", width=2)
+        elif name == "curiosity":
+            d.line((8, 17, 11, 17), fill="#3B2A30")
+        elif name == "exhibitionism":
+            d.ellipse((7, 7, 12, 12), fill="#3B2A30")
+            d.rectangle((9, 8, 10, 9), fill="#FFF8E9")
+        elif name == "secrecy":
+            d.rectangle((9, 12, 10, 15), fill="#3B2A30")
+        elif name == "acceptance":
+            d.point((7, 8), fill="#3B2A30"); d.point((13, 8), fill="#3B2A30")
+            d.arc((6, 7, 14, 14), 15, 165, fill="#3B2A30", width=1)
+        image.resize((40, 40), Image.Resampling.NEAREST).save(SCRAP / f"icon_{name}.png")
 
 def draw_app_icon(name, top, bot):
     image = grad(48, 48, top, bot)
