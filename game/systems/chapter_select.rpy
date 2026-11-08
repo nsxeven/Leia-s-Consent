@@ -17,7 +17,7 @@
 # persistent.ch01_chapter_select_unlocked is set by a wrapper around set_story_flag
 # when "ch01_day_02_complete" is set, so no story scene had to change.
 
-define CHAPTER_SELECT_RULE = "always"
+define CHAPTER_SELECT_RULE = "developer_or_unlocked" if LC_IS_RELEASE else "always"  # game/00_release_build.rpy
 
 init 10 python:
 

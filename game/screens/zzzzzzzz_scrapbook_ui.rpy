@@ -875,8 +875,9 @@ screen preferences():
 
                 hbox:
                     spacing 12
-                    textbutton "DEVELOPER" action Function(set_choice_display_mode, "developer")
-                    textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
+                    if config.developer or not LC_IS_RELEASE:
+                        textbutton "DEVELOPER" action Function(set_choice_display_mode, "developer")
+                        textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
 
                 if mode_now == "developer":
                     text "Developer mode is on. Pick Immersive, Insight, or Full Transparency to leave it." size 28 color "#7a6266" font "fonts/Caveat[wght].ttf"
