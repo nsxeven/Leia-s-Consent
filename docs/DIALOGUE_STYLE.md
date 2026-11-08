@@ -71,8 +71,10 @@ nearly absent. Sourced rules per situation: `docs/research/REAL_SPEECH_PATTERNS.
 smoke detectors, not targets: no percentage is a hard limit, and a scene that reads like
 real talk passes even if a number is off. The read-aloud test decides.
 
-## Automatic check (planned)
-A scan of each new day's dialogue. Only banned phrases **fail**. Everything else **flags** the
+## Automatic check (`tests/test_dialogue_tics.py`)
+Run `python tests/test_dialogue_tics.py` to see the flags. It covers Prologue + Day 1; add each new
+day's files to its `STORY` list. The 12 banned lines still in the game sit in its `KNOWN` list; rewrite
+pass A removes them (lower each count as you go). For each scan, only banned phrases **fail**. Everything else **flags** the
 scene for a read-aloud pass:
 - fail: a banned phrase appears, or a rationed one goes over its limit;
 - flag: a lot of very short lines (for reference, real talk runs about 36-52% at ≤ 4 words;
