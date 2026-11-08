@@ -57,20 +57,21 @@ init -50 python:
             return [d for d in (self.old, self.new) if d is not None]
 
 
-    # python_object: a plain class with __slots__ (no rollback tracking).
+    # Store code sees `object` and `list` as Ren'Py's rollback-tracked
+    # versions; anything touched every frame while rendering must use the plain
+    # python_object / python_list (a tracked object here crashed on launch).
     class _LCStyleProxy(python_object):
-        """Reads every style property from the real style except the two arts."""
-
-        __slots__ = ("_real", "background", "foreground", "child")
+        """Reads every style property from the real style except the three arts."""
 
         def __init__(self, real, background, foreground, child):
-            object.__setattr__(self, "_real", real)
-            object.__setattr__(self, "background", background)
-            object.__setattr__(self, "foreground", foreground)
-            object.__setattr__(self, "child", child)
+            self._real = real
+            self.background = background
+            self.foreground = foreground
+            self.child = child
 
         def __getattr__(self, name):
-            return getattr(object.__getattribute__(self, "_real"), name)
+            # Only called for names not set above.
+            return getattr(self.__dict__["_real"], name)
 
 
     def _lc_smooth(k):
@@ -102,8 +103,8 @@ init -50 python:
                 self._lc_fade = None
                 return rv
             gaining = prefix.endswith("hover_") or prefix.startswith("selected_")
-            self._lc_fade = [(old_bg, old_fg, old_ch), None, _lc_time.time(),
-                             (LC_HOVER_IN if gaining else LC_HOVER_OUT), old_bg, old_fg, old_ch]
+            self._lc_fade = python_list([(old_bg, old_fg, old_ch), None, _lc_time.time(),
+                                         (LC_HOVER_IN if gaining else LC_HOVER_OUT), old_bg, old_fg, old_ch])
             renpy.display.render.redraw(self, 0)
             return rv
 
@@ -119,14 +120,14 @@ init -50 python:
                 return orig_render(self, width, height, st, at)
             k = _lc_smooth(max(0.0, k))
             real = self.style
-            new_bg, new_fg, new_ch = real.background, real.foreground, real.child
-            bg = new_bg if old_bg is new_bg else LCHoverBlend(old_bg, new_bg, k)
-            fg = new_fg if old_fg is new_fg else LCHoverBlend(old_fg, new_fg, k)
-            ch = new_ch if (old_ch is new_ch or old_ch is None or new_ch is None) else LCHoverBlend(old_ch, new_ch, k, fit=True)
-            # What is drawn right now, so a reversal mid-fade starts from here.
-            fade[4], fade[5], fade[6] = bg, fg, ch
-            self.style = _LCStyleProxy(real, bg, fg, ch)
             try:
+                new_bg, new_fg, new_ch = real.background, real.foreground, real.child
+                bg = new_bg if old_bg is new_bg else LCHoverBlend(old_bg, new_bg, k)
+                fg = new_fg if old_fg is new_fg else LCHoverBlend(old_fg, new_fg, k)
+                ch = new_ch if (old_ch is new_ch or old_ch is None or new_ch is None) else LCHoverBlend(old_ch, new_ch, k, fit=True)
+                # What is drawn right now, so a reversal mid-fade starts from here.
+                fade[4], fade[5], fade[6] = bg, fg, ch
+                self.style = _LCStyleProxy(real, bg, fg, ch)
                 rv = orig_render(self, width, height, st, at)
             except Exception:
                 # Never let polish break a screen: drop this fade, draw normally.
