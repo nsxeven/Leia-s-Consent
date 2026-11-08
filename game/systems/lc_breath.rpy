@@ -24,6 +24,11 @@ init python:
 
     LC_BREATH_DIR = "audio/voice/leia/"
     LC_BREATH_GAIN = 1.0      # one knob for the whole system
+    # Pacing (darryn 2026-11-08: moans/inhales came too often). Every pause in a
+    # loop, including per-scene pause=(lo, hi) overrides, is stretched by
+    # LC_BREATH_PACE, and every moan chance is scaled by LC_BREATH_MOAN_SCALE.
+    LC_BREATH_PACE = 1.7
+    LC_BREATH_MOAN_SCALE = 0.75
     _lc_breath_files = None
 
     def _lc_breath_index():
@@ -59,7 +64,9 @@ init python:
                 moan_chance = 0.12
         elif not moans:
             moan_chance = 0.0
+        moan_chance *= LC_BREATH_MOAN_SCALE
         pause_lo, pause_hi = pause or {1: (1.2, 2.6), 2: (0.7, 1.8), 3: (0.35, 1.1)}.get(intensity, (0.2, 0.7))
+        pause_lo, pause_hi = pause_lo * LC_BREATH_PACE, pause_hi * LC_BREATH_PACE
         out, last, moans_in_row = [], None, 0
         for _ in range(length):
             if moans_in_row < 2 and renpy.random.random() < moan_chance:
@@ -128,6 +135,18 @@ init python:
             renpy.music.queue(loop, channel="lc_breath", loop=True, clear_queue=False,
                               relative_volume=LC_BREATH_GAIN * store.lc_breath_loop.get("volume", 1.0))
         return f
+
+    def lc_leia_voice_clip(path, volume=1.0):
+        """Leia's one-shot vocal clips (gasp, giggle, sigh... from lc_sfx) share her
+        breath channel, so a new cue always cuts the one still sounding (darryn
+        2026-11-08: clicking on fast stacked two Leias). A running breath loop
+        carries on right after the clip."""
+        loop = _lc_breath_loop_seq()
+        renpy.music.play(path, channel="lc_breath", loop=False, fadeout=0.12, relative_volume=volume)
+        if loop:
+            renpy.music.queue(loop, channel="lc_breath", loop=True, clear_queue=False,
+                              relative_volume=LC_BREATH_GAIN * store.lc_breath_loop.get("volume", 1.0))
+        return path
 
     def lc_moan_once(intensity=2, volume=1.0):
         """One random moan; inside a running loop it replaces the loop's next sound instead of layering."""
