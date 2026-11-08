@@ -452,7 +452,7 @@ screen phone_screen():
                 action [Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "messages")]
                 add "gui/phone/sprite_match/chevron.png" xalign 0.5 yalign 0.5
             if phone_thread == "group":
-                add "gui/phone/sprite_match/avatar_group.png":
+                add phone_group_avatar():
                     xpos 78
                     ypos 92
                     xysize (68, 68)
@@ -666,7 +666,7 @@ screen phone_screen():
                                         xpos 4
                                         ypos 38
                                 if thread_id == "group":
-                                    add "gui/phone/sprite_match/avatar_group.png":
+                                    add phone_group_avatar():
                                         xpos 18
                                         ypos 16
                                         xysize (58, 58)
