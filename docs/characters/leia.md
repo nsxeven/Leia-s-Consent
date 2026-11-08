@@ -61,14 +61,51 @@ to be revealed and she's not a doll things happen to: she chooses.
 - Never: deadpan one-word verdicts in a row ("Exactly." "Pervert." "Fine."),
   cool-girl lines with no feeling behind them, lines that explain her own subtext.
 
+## Personality profile (research-based, DRAFT)
+Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P10; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
+- **Big Five:** Openness high, Conscientiousness mid, Extraversion high, Agreeableness high,
+  Neuroticism mid. *Why:* she's warm and talkative and wants to try things (high E, A and O,
+  [P01, P02, P05]); her worry about being judged and about Ryan going cold is real but doesn't
+  run her life (mid N).
+- **Attachment:** anxious-leaning, with secure agency. *Why:* she checks Ryan's face after anything
+  bold and fears him going cold, which is attachment anxiety under uncertainty [P07, P08]. She still
+  makes her own choices, so she's never written as passive. If Ryan withdraws (NTR seed), her
+  reassurance bids get bigger, which is the pursue/withdraw loop [P09, P10, R17].
+- MBTI/Enneagram shorthand, if useful in conversation only: ENFP-ish. Not science.
+
+## Sentence length
+- Typical spoken line: **6-20 words**, average about 10-13. The longest lines in the couple.
+- Short lines (≤4 words): **about 20-30%**, mostly reactions ("Wait, what?", "Oh my God.").
+- Goes **longer and faster** when excited or nervous; goes **very short** only when hurt
+  ("it's fine") or in the middle of intimacy.
+
+## Real-speech habits (from the evidence)
+- **Runs thoughts together** with "and", "like" and "okay but", then adds one more thought
+  after she seems done [C02-C05 long turns are chains of 3-4-word pieces].
+- **Laughs at her own lines**, often mid-sentence, before the listener does [C12].
+- **Corrects herself out loud**: "It's not— okay, it's a little bit see-through." [C08].
+- **Hard things come out as a hedged question first**: "Is it weird if...?", "Can I say
+  something without you being weird about it?" [R08, R04].
+- **Jealousy comes out sideways**, as a loaded question that sounds casual ("So is she, like,
+  funny, or...?") before she admits the real feeling [R06].
+- **New-friend mode with Maya**: compliment first, then something they have in common, then
+  over-sharing, then "sorry, is that too much?" [R16].
+- **When she suggests something new**, she says her own fear first ("you'll think I'm being
+  weird") and leaves a clear way out ("we don't have to") [R04, R01].
+- **Running bits with Ryan**: keeps up one or two dumb jokes from home (e.g. a word she
+  pretends she can't pronounce) and groans at his [R10].
+
 ## Sample lines (DRAFT — darryn to rewrite)
-- "Why are you looking at me like that? I'm literally in a towel. My hair's a disaster."
-- "Okay, don't laugh, but... I kind of liked that they were looking. Is that weird?"
-- "Babe. Babe. Look at this view. No, put the phone down, actually look at it."
-- "I'm not jealous! I just want to know who she is. Normally. Like a normal person."
-- "Maya, if you make me try that on I will push you in the pool."
-- "Can you stop being nice to me for one second so I can be mad at you?"
-- "Tell me if it's too much. I mean it. I'll stop."
+1. "Wait, wait, I'm closing these first. I'm not giving the whole beach a free show."
+2. "These are, like, see-through. What's even the point of a curtain you can see through?"
+3. "Okay, don't laugh, but... I kind of liked that they were looking? Is that weird? You can say it's weird."
+4. "Can I say something without you being weird about it? Like, actually not weird."
+5. "I'm not jealous, I'm just asking. She seems really— she's funny. Is she funny? You laughed a lot."
+6. "Oh my God, Maya, your nails. Where did you— no, wait, we have the same ones. Okay, we're friends now."
+7. "Never have I ever... no, hang on, that one doesn't count, you can't drink for that, that was a kiss on the cheek."
+8. "Hey. Are we okay? You've been kind of quiet since lunch, and I don't— I just want to check."
+9. "I think I want to try it. Not like, tonight-tonight. But I want to. If you're into it. Are you?"
+10. "Can you stop being nice to me for one second so I can be mad at you? Thank you."
 
 ## Open questions for darryn
 - Her job / what she's into at home (hobbies, shows, music)?

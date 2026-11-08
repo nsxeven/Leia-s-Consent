@@ -58,15 +58,49 @@ charge), awkward in the small moments.
   sound like a movie trailer. Mean or contemptuous lines on purpose (unless the
   scene is about him regretting it).
 
+## Personality profile (research-based, DRAFT)
+Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P11; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
+- **Big Five:** Openness mid, Conscientiousness mid, Extraversion low-mid, Agreeableness high,
+  Neuroticism mid. *Why:* he's decent and unshowy and doesn't need the floor (high A, lower outward
+  E [P01, P02]); worrying about being boring or "the jealous guy" gives him situational nerves (mid N).
+- **Attachment:** avoidant-leaning under conflict, otherwise capable of security. *Why:* his
+  "I'm fine" followed by pulling away is a recognizable withdraw move [P08, P11]. Paired with
+  Leia's pursuit it becomes the demand/withdraw loop that predicts trouble [P10, R17]. The Love
+  route shows him pausing and *coming back* ("give me ten minutes, then let's talk"), which is the
+  healthy version [P11].
+- MBTI/Enneagram shorthand, conversation only: ISFJ-ish / type 9. Not science.
+
+## Sentence length
+- Typical spoken line: **4-12 words**, average about 6-8. Shorter than Leia and Julian,
+  **but never a deadpan one-word verdict** ("Exactly." "Noted.").
+- Short lines: **about 30-40%**, mostly plain reactions and questions ("Wait, what?", "You okay?").
+- Goes **long only when nervous or guilty**: then he over-explains in chained clauses (15-25 words).
+- His narration can stay sharper and funnier than his speech; that gap is part of him.
+
+## Real-speech habits (from the evidence)
+- **"I mean" before he corrects himself**: "I'm not— I mean, I was looking. Sorry." [C11, C08].
+- **Answers teases literally or with a groan** more than with a comeback [C13, R10]. Gets maybe
+  one good line per scene, if that [R12].
+- **Serious talk arrives sideways with Julian**, in the middle of doing something, and leaves
+  fast [R15].
+- **Short reassurance, not speeches**: "Yeah. We're good. Come here." [R08, R17].
+- **"I'm fine, just tired."** plus turning away is the NTR seed. He doesn't name the feeling [P11, R17].
+- **Running bits with Leia**: one long-running dumb joke from home (a deliberate
+  mispronunciation, a fake-wrong answer) that he keeps up all trip [R10].
+- **When asked about something new**, he asks practical questions before he answers ("Like,
+  who? Where? Would we— would you want me there?") [R01, M16].
+
 ## Sample lines (DRAFT — darryn to rewrite)
-- "I'm not staring. Okay, I'm staring a little. You look really good, that's all."
-- "Sorry. I've been weird all morning, I know. It's not you."
-- "Julian, I swear, if you make this a whole thing at dinner..."
-- "I don't know what I'm supposed to say here. I liked it? Is that bad?"
-- "You don't have to wear it. I just think you'd look amazing. But it's your call."
-- "Babe, you've been on that menu for ten minutes."
-- "Can we... can we just talk for a sec? Not about anything. Just us."
-- "I'm fine. I'm just tired." *(NTR-seed version: the reader should wince.)*
+1. "I'm not— okay, I was. Sorry. You just look really good, that's all."
+2. "I think they're more of a... I mean, decorative? For the vibe?"
+3. "Turning. I'm turning. Mostly."
+4. "Sorry. I've been weird all morning, I know. It's not you, it's... I don't know. It's not you."
+5. "Julian, I swear, if you make this a whole thing at dinner, I will tell Maya about the bee."
+6. "Wait, what? Like, watching us, or just... seeing us? Sorry, I'm not saying no. I'm asking."
+7. "You don't have to wear it. I just think you'd look amazing. But it's your call, seriously."
+8. "Yeah. We're good. Come here."
+9. "Can we... can we just talk for a sec? Not about anything. Just us."
+10. "I'm fine. Just tired." *(NTR-seed version: he turns back to his phone; the reader should wince.)*
 
 ## Open questions for darryn
 - What does Ryan do for work? What does he do at home on a weekend?

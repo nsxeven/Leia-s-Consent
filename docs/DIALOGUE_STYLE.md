@@ -59,6 +59,14 @@ After (draft):
 > **Ryan:** She's almost done. I think. She said "two minutes".
 > **Julian:** She said "two minutes" before I'd even found the shade.
 
+## Research basis (added 2026-11-08, DRAFT)
+Real recorded conversation (Santa Barbara Corpus sample) is 36-52% short turns too, so short
+lines aren't the problem on their own. What's missing is the long turns: 11-26% of real turns run
+15+ words, against 1.4% in our Prologue + Day 1. Fillers, self-corrections and laughter are also
+nearly absent. Sourced rules per situation: `docs/research/REAL_SPEECH_PATTERNS.md`. Evidence:
+`docs/research/REAL_DIALOGUE_LEDGER.md`. Worked example: `docs/research/SAMPLE_SCENE_TOWEL.md`.
+Proposed extra check: every scene has at least one 15+-word spoken line.
+
 ## Automatic check (planned)
 A unit test scans each new day's dialogue and fails when:
 - more than 35% of spoken lines are ≤ 4 words (currently 55%);

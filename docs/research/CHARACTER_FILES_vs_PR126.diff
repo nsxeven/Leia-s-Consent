@@ -1,0 +1,252 @@
+diff --git a/docs/DIALOGUE_STYLE.md b/docs/DIALOGUE_STYLE.md
+index ffd71da..1e988f4 100644
+--- a/docs/DIALOGUE_STYLE.md
++++ b/docs/DIALOGUE_STYLE.md
+@@ -59,6 +59,14 @@ After (draft):
+ > **Ryan:** She's almost done. I think. She said "two minutes".
+ > **Julian:** She said "two minutes" before I'd even found the shade.
+ 
++## Research basis (added 2026-11-08, DRAFT)
++Real recorded conversation (Santa Barbara Corpus sample) is 36-52% short turns too, so short
++lines aren't the problem on their own. What's missing is the long turns: 11-26% of real turns run
++15+ words, against 1.4% in our Prologue + Day 1. Fillers, self-corrections and laughter are also
++nearly absent. Sourced rules per situation: `docs/research/REAL_SPEECH_PATTERNS.md`. Evidence:
++`docs/research/REAL_DIALOGUE_LEDGER.md`. Worked example: `docs/research/SAMPLE_SCENE_TOWEL.md`.
++Proposed extra check: every scene has at least one 15+-word spoken line.
++
+ ## Automatic check (planned)
+ A unit test scans each new day's dialogue and fails when:
+ - more than 35% of spoken lines are ≤ 4 words (currently 55%);
+diff --git a/docs/characters/julian.md b/docs/characters/julian.md
+index 1b52dd1..34a2f03 100644
+--- a/docs/characters/julian.md
++++ b/docs/characters/julian.md
+@@ -51,13 +51,42 @@ is slow and earned *(canon: "should not become suddenly predatory")*.
+ - Says: "Okay, hear me out.", "I'm not saying I'm right, I'm saying I'm not wrong.", "Bee. BEE."
+ - Never: cool short verdict lines; predatory or smug lines about Leia; "There she is."
+ 
++## Personality profile (research-based, DRAFT)
++Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P08; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
++- **Big Five:** Openness mid, Conscientiousness mid, Extraversion high, Agreeableness mid,
++  Neuroticism mid. *Why:* hosting, a loud presence and theatrical rambling are high E [P01, P02].
++  He's loyal and warm, but his bluster crowds people out, so A sits at mid. He panics *talkatively*,
++  which is a state rather than a high-N trait [P03, P04].
++- **Attachment:** secure-leaning, approval-sensitive. *Why:* he wants to be liked and is a bit
++  lonely, but nothing in canon shows the persistent fear of abandonment that anxious attachment
++  needs [P07, P08]. This is a provisional writing choice.
++- MBTI/Enneagram shorthand, conversation only: ESFP-ish / type 7. Not science.
++
++## Sentence length
++- Typical spoken line: **10-30 words**, average about 14-18. The longest lines in the cast.
++- Short lines: **about 15-25%**, mostly comic panic ("Bee. BEE.") or the rare serious moment.
++- **Serious mode is the exception**: short, quiet, no jokes. It scares people because it's rare.
++
++## Real-speech habits (from the evidence)
++- **Long turns built from short pieces**: setup, detour, "anyway", and a big finish [C02-C05].
++- **Hosts out loud**: "we", "everyone", group plans, checking that people are having fun [P05].
++- **Roasts lean on shared history** ("remember the thing with the karaoke machine", invented example), not clever
++  wording, and he loses as often as he wins [R15, R11].
++- **Comic panic means more words, not fewer**, plus repetition [C08 repair, R12].
++- **Laughs at his own jokes first**, often before the punchline lands [C12].
++- **Keeps old arguments alive as running jokes** with Ryan [R11].
++
+ ## Sample lines (DRAFT — darryn to rewrite)
+-- "Is she still changing? Dude, I've been out here so long I've got a tan line from my sunglasses."
+-- "I paid for the villa, so technically I'm the boss of the pool. That's how money works."
+-- "No, I'm not looking, I'm looking at the... the water. Very nice water. Great water."
+-- "Dude. Dude. You have to tell her. Just say it. Use words. You're good at words."
+-- "Okay, hear me out: pizza, then pool, then we never speak of this again."
+-- "If either of you tells anyone I screamed, I'm cancelling the boat trip."
++1. "Is she still changing? Dude, I've been out here so long I've got a tan line from my sunglasses. Like an actual line."
++2. "I paid for the villa, so technically, legally, I'm the boss of the pool. That's how money works. I looked it up."
++3. "No, I'm not looking, I'm looking at the... the water. Very nice water. Great water. Who wants a drink?"
++4. "Okay, hear me out: pizza, then pool, then we never speak of this again, and nobody tells Maya."
++5. "Remember sophomore year when you said you'd 'just talk to her'? Three weeks, man. Three weeks of mirror practice."
++6. "That does not count. That does not count! A kiss on the cheek is not a kiss, that's, like, a greeting, that's France."
++7. "Bee. Bee. Is it on me? Ryan. Ryan, I'm serious, is it on me— don't laugh, why are you laughing?"
++8. "Everyone good? Leia, you good? Okay. Okay, good. I just— I want this to be a good trip, you know?"
++9. "Hey. Real talk for a sec. You've been weird since lunch. You don't have to tell me. But you've been weird."
++10. "If either of you tells anyone I screamed, I'm cancelling the boat trip. I'm not joking. I'm a little bit joking."
+ 
+ ## Open questions for darryn
+ - Where's his money from (family, job)?
+diff --git a/docs/characters/leia.md b/docs/characters/leia.md
+index 4b4032f..e2b2b5a 100644
+--- a/docs/characters/leia.md
++++ b/docs/characters/leia.md
+@@ -61,14 +61,51 @@ to be revealed and she's not a doll things happen to: she chooses.
+ - Never: deadpan one-word verdicts in a row ("Exactly." "Pervert." "Fine."),
+   cool-girl lines with no feeling behind them, lines that explain her own subtext.
+ 
++## Personality profile (research-based, DRAFT)
++Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P10; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
++- **Big Five:** Openness high, Conscientiousness mid, Extraversion high, Agreeableness high,
++  Neuroticism mid. *Why:* she's warm and talkative and wants to try things (high E, A and O,
++  [P01, P02, P05]); her worry about being judged and about Ryan going cold is real but doesn't
++  run her life (mid N).
++- **Attachment:** anxious-leaning, with secure agency. *Why:* she checks Ryan's face after anything
++  bold and fears him going cold, which is attachment anxiety under uncertainty [P07, P08]. She still
++  makes her own choices, so she's never written as passive. If Ryan withdraws (NTR seed), her
++  reassurance bids get bigger, which is the pursue/withdraw loop [P09, P10, R17].
++- MBTI/Enneagram shorthand, if useful in conversation only: ENFP-ish. Not science.
++
++## Sentence length
++- Typical spoken line: **6-20 words**, average about 10-13. The longest lines in the couple.
++- Short lines (≤4 words): **about 20-30%**, mostly reactions ("Wait, what?", "Oh my God.").
++- Goes **longer and faster** when excited or nervous; goes **very short** only when hurt
++  ("it's fine") or in the middle of intimacy.
++
++## Real-speech habits (from the evidence)
++- **Runs thoughts together** with "and", "like" and "okay but", then adds one more thought
++  after she seems done [C02-C05 long turns are chains of 3-4-word pieces].
++- **Laughs at her own lines**, often mid-sentence, before the listener does [C12].
++- **Corrects herself out loud**: "It's not— okay, it's a little bit see-through." [C08].
++- **Hard things come out as a hedged question first**: "Is it weird if...?", "Can I say
++  something without you being weird about it?" [R08, R04].
++- **Jealousy comes out sideways**, as a loaded question that sounds casual ("So is she, like,
++  funny, or...?") before she admits the real feeling [R06].
++- **New-friend mode with Maya**: compliment first, then something they have in common, then
++  over-sharing, then "sorry, is that too much?" [R16].
++- **When she suggests something new**, she says her own fear first ("you'll think I'm being
++  weird") and leaves a clear way out ("we don't have to") [R04, R01].
++- **Running bits with Ryan**: keeps up one or two dumb jokes from home (e.g. a word she
++  pretends she can't pronounce) and groans at his [R10].
++
+ ## Sample lines (DRAFT — darryn to rewrite)
+-- "Why are you looking at me like that? I'm literally in a towel. My hair's a disaster."
+-- "Okay, don't laugh, but... I kind of liked that they were looking. Is that weird?"
+-- "Babe. Babe. Look at this view. No, put the phone down, actually look at it."
+-- "I'm not jealous! I just want to know who she is. Normally. Like a normal person."
+-- "Maya, if you make me try that on I will push you in the pool."
+-- "Can you stop being nice to me for one second so I can be mad at you?"
+-- "Tell me if it's too much. I mean it. I'll stop."
++1. "Wait, wait, I'm closing these first. I'm not giving the whole beach a free show."
++2. "These are, like, see-through. What's even the point of a curtain you can see through?"
++3. "Okay, don't laugh, but... I kind of liked that they were looking? Is that weird? You can say it's weird."
++4. "Can I say something without you being weird about it? Like, actually not weird."
++5. "I'm not jealous, I'm just asking. She seems really— she's funny. Is she funny? You laughed a lot."
++6. "Oh my God, Maya, your nails. Where did you— no, wait, we have the same ones. Okay, we're friends now."
++7. "Never have I ever... no, hang on, that one doesn't count, you can't drink for that, that was a kiss on the cheek."
++8. "Hey. Are we okay? You've been kind of quiet since lunch, and I don't— I just want to check."
++9. "I think I want to try it. Not like, tonight-tonight. But I want to. If you're into it. Are you?"
++10. "Can you stop being nice to me for one second so I can be mad at you? Thank you."
+ 
+ ## Open questions for darryn
+ - Her job / what she's into at home (hobbies, shows, music)?
+diff --git a/docs/characters/maya.md b/docs/characters/maya.md
+index ea94010..d538bdc 100644
+--- a/docs/characters/maya.md
++++ b/docs/characters/maya.md
+@@ -50,13 +50,44 @@ She's a real friend, not a plot device: she can push, but Leia always chooses
+ - Says: "Okay, wait, back up.", "No because why would you...", "I'm asking for science."
+ - Never: cool short verdicts ("Skill." "Yet." "Drink." as a whole personality), cruel lines, manipulative lines.
+ 
++## Personality profile (research-based, DRAFT)
++Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P08; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
++- **Big Five:** Openness high, Conscientiousness mid, Extraversion high, Agreeableness high,
++  Neuroticism low. *Why:* quick questions, interrupting, hype and ease with new people are high E
++  and O [P01, P02]. She drops the bit when someone is hurting, so A is high even though she's
++  blunt; agreeable people still tease [P05]. She stays steady in hard moments (low N).
++- **Attachment:** secure-leaning. *Why:* she's comfortable being direct and close without
++  needing reassurance. Provisional, since canon doesn't settle it [P07, P08].
++- MBTI/Enneagram shorthand, conversation only: ENTP-ish / type 7w8. Not science.
++
++## Sentence length
++- Typical spoken line: **5-18 words**, average about 9-12, in fast bursts.
++- Short lines: **about 25-35%**, mostly interruptions and questions ("Wait, no—", "Why?").
++- Long turns come as stories and hype; **serious mode is one plain, specific question**.
++
++## Real-speech habits (from the evidence)
++- **Interrupts and finishes sentences**, mostly cooperatively (she's with you, not against you)
++  [C14, C06]. Cut-offs written as "—".
++- **Bonds by compliment, then something in common, then a confidence** (Leia) [R16].
++- **Asks the blunt practical question** nobody else will ("Okay but like, where would you even
++  do that?") [R01, M16].
++- **Calls out sideways jealousy** the way partners do in the evidence ("Okay, what are you actually
++  asking?") [R06].
++- **Hears the complaint first**: people rehearse their worries with her before saying them to
++  their partner [M01].
++- **In drinking games she's the rules lawyer** [R11].
++
+ ## Sample lines (DRAFT — darryn to rewrite)
+-- "Okay, wait, back up. You've been together four years and he still can't order food in under twenty minutes?"
+-- "No, because the sunglasses are doing so much work for you right now, Julian. So much work."
+-- "Leia. Leia. You have to try this one. Just try it. I won't even look. I'll look a little."
+-- "Ryan, come help me carry drinks. No, I don't need help. Just come."
+-- "I'm not drunk, I'm emotionally available. Different thing."
+-- "If he offers to share his room tonight, I'm not saying no. I'm just putting that out there."
++1. "Okay, wait, back up. Four years and he still can't order food in under twenty minutes? Leia. Babe. How."
++2. "No, because the sunglasses are doing so much work for you right now, Julian. So much work. Take them off. No, put them back."
++3. "Oh my God, your nails— wait, are those the same as mine? Shut up. Okay, we're friends now, that's the rule."
++4. "Leia. Leia. You have to try this one. Just try it. I won't even look. I'll look a little."
++5. "That counts. It counts! You said 'kissed', you didn't say 'on the mouth', drink."
++6. "Ryan, come help me carry drinks. No, I don't need help. Just come."
++7. "Okay, what are you actually asking? Because that sounded like a question but it wasn't one."
++8. "Hey. You okay? Not 'fine'. Actually okay."
++9. "I'm not drunk, I'm emotionally available. Different thing. Very different. Who took my cup?"
++10. "If he offers to share his room tonight, I'm not saying no. I'm just— I'm putting that out there. Into the universe."
+ 
+ ## Open questions for darryn
+ - Exact age, job, how she knows Ryan (school, work, neighbors)?
+diff --git a/docs/characters/ryan.md b/docs/characters/ryan.md
+index 1044c61..f903b12 100644
+--- a/docs/characters/ryan.md
++++ b/docs/characters/ryan.md
+@@ -58,15 +58,49 @@ charge), awkward in the small moments.
+   sound like a movie trailer. Mean or contemptuous lines on purpose (unless the
+   scene is about him regretting it).
+ 
++## Personality profile (research-based, DRAFT)
++Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P11; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
++- **Big Five:** Openness mid, Conscientiousness mid, Extraversion low-mid, Agreeableness high,
++  Neuroticism mid. *Why:* he's decent and unshowy and doesn't need the floor (high A, lower outward
++  E [P01, P02]); worrying about being boring or "the jealous guy" gives him situational nerves (mid N).
++- **Attachment:** avoidant-leaning under conflict, otherwise capable of security. *Why:* his
++  "I'm fine" followed by pulling away is a recognizable withdraw move [P08, P11]. Paired with
++  Leia's pursuit it becomes the demand/withdraw loop that predicts trouble [P10, R17]. The Love
++  route shows him pausing and *coming back* ("give me ten minutes, then let's talk"), which is the
++  healthy version [P11].
++- MBTI/Enneagram shorthand, conversation only: ISFJ-ish / type 9. Not science.
++
++## Sentence length
++- Typical spoken line: **4-12 words**, average about 6-8. Shorter than Leia and Julian,
++  **but never a deadpan one-word verdict** ("Exactly." "Noted.").
++- Short lines: **about 30-40%**, mostly plain reactions and questions ("Wait, what?", "You okay?").
++- Goes **long only when nervous or guilty**: then he over-explains in chained clauses (15-25 words).
++- His narration can stay sharper and funnier than his speech; that gap is part of him.
++
++## Real-speech habits (from the evidence)
++- **"I mean" before he corrects himself**: "I'm not— I mean, I was looking. Sorry." [C11, C08].
++- **Answers teases literally or with a groan** more than with a comeback [C13, R10]. Gets maybe
++  one good line per scene, if that [R12].
++- **Serious talk arrives sideways with Julian**, in the middle of doing something, and leaves
++  fast [R15].
++- **Short reassurance, not speeches**: "Yeah. We're good. Come here." [R08, R17].
++- **"I'm fine, just tired."** plus turning away is the NTR seed. He doesn't name the feeling [P11, R17].
++- **Running bits with Leia**: one long-running dumb joke from home (a deliberate
++  mispronunciation, a fake-wrong answer) that he keeps up all trip [R10].
++- **When asked about something new**, he asks practical questions before he answers ("Like,
++  who? Where? Would we— would you want me there?") [R01, M16].
++
+ ## Sample lines (DRAFT — darryn to rewrite)
+-- "I'm not staring. Okay, I'm staring a little. You look really good, that's all."
+-- "Sorry. I've been weird all morning, I know. It's not you."
+-- "Julian, I swear, if you make this a whole thing at dinner..."
+-- "I don't know what I'm supposed to say here. I liked it? Is that bad?"
+-- "You don't have to wear it. I just think you'd look amazing. But it's your call."
+-- "Babe, you've been on that menu for ten minutes."
+-- "Can we... can we just talk for a sec? Not about anything. Just us."
+-- "I'm fine. I'm just tired." *(NTR-seed version: the reader should wince.)*
++1. "I'm not— okay, I was. Sorry. You just look really good, that's all."
++2. "I think they're more of a... I mean, decorative? For the vibe?"
++3. "Turning. I'm turning. Mostly."
++4. "Sorry. I've been weird all morning, I know. It's not you, it's... I don't know. It's not you."
++5. "Julian, I swear, if you make this a whole thing at dinner, I will tell Maya about the bee."
++6. "Wait, what? Like, watching us, or just... seeing us? Sorry, I'm not saying no. I'm asking."
++7. "You don't have to wear it. I just think you'd look amazing. But it's your call, seriously."
++8. "Yeah. We're good. Come here."
++9. "Can we... can we just talk for a sec? Not about anything. Just us."
++10. "I'm fine. Just tired." *(NTR-seed version: he turns back to his phone; the reader should wince.)*
+ 
+ ## Open questions for darryn
+ - What does Ryan do for work? What does he do at home on a weekend?

@@ -1,0 +1,255 @@
+[
+  {
+    "id": "C01",
+    "source_type": "corpus",
+    "situations": [
+      "general"
+    ],
+    "title": "Santa Barbara Corpus of Spoken American English, parts 1–4",
+    "authors_year": "Du Bois et al.; UCSB corpus",
+    "url": "https://www.linguistics.ucsb.edu/research/santa-barbara-corpus-spoken-american-english",
+    "accessed": "2026-11-08",
+    "inspected": "UCSB corpus overview, access and contents/summaries sections (HTML downloaded).",
+    "finding": "The site offers free TRN transcripts and CHAT versions, audio and timestamps aligned at the intonation-unit level; it describes parts 1–4 as approximately 249,000 words.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Treat natural speech as timed, multi-unit interaction, not alternating polished one-liners.",
+    "limitations": "The entire corpus includes noncasual genres; the quantitative entries below use a selected four-file sample."
+  },
+  {
+    "id": "C02",
+    "source_type": "corpus",
+    "situations": [
+      "general",
+      "teasing"
+    ],
+    "title": "SBCSAE SBC002: Lambada",
+    "authors_year": "Du Bois et al.; UCSB corpus",
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC002.trn",
+    "accessed": "2026-11-08",
+    "inspected": "Full SBC002.trn downloaded and parsed with sbcsae/measure.py. Group conversation about dance and a movie. Speaker turns are contiguous timestamped units with same assigned speaker; counts exclude zero-word turns. Text only, no audio listening.",
+    "finding": "645 lexical turns: median 5 words; 48.8% <=4 words, 13.0% >=15 words. 1258 lexical intonation units: median 3.0 words (mean 4.02). Filler tokens/phrases uh 15, um 4, like 73, I mean 33, you know 23; 154 laughter-marked units, 616 overlap-opening marks, 173 cut-off marks.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let one character sustain a thought across several short intonation units and another answer briefly; vary long and short turns.",
+    "limitations": "Exploratory four-file convenience sample, not representative of all US talk. Continuation rows inherit most recent named speaker (can misassign amid overlap); fillers are literal matches, like includes lexical uses; bracket openings are notation marks, not interruptions; @/Hx indicates laughter-marked unit, not laughs; hyphens and double dashes are mechanical cut-off proxies."
+  },
+  {
+    "id": "C03",
+    "source_type": "corpus",
+    "situations": [
+      "general",
+      "new-friends"
+    ],
+    "title": "SBCSAE SBC003: Conceptual Pesticides",
+    "authors_year": "Du Bois et al.; UCSB corpus",
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC003.trn",
+    "accessed": "2026-11-08",
+    "inspected": "Full SBC003.trn downloaded and parsed with sbcsae/measure.py. Multiparty domestic talk about food and peppers. Speaker turns are contiguous timestamped units with same assigned speaker; counts exclude zero-word turns. Text only, no audio listening.",
+    "finding": "746 lexical turns: median 4.0 words; 51.9% <=4 words, 10.7% >=15 words. 1454 lexical intonation units: median 3.0 words (mean 3.39). Filler tokens/phrases uh 13, um 27, like 50, I mean 10, you know 49; 90 laughter-marked units, 557 overlap-opening marks, 138 cut-off marks.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let one character sustain a thought across several short intonation units and another answer briefly; vary long and short turns.",
+    "limitations": "Exploratory four-file convenience sample, not representative of all US talk. Continuation rows inherit most recent named speaker (can misassign amid overlap); fillers are literal matches, like includes lexical uses; bracket openings are notation marks, not interruptions; @/Hx indicates laughter-marked unit, not laughs; hyphens and double dashes are mechanical cut-off proxies."
+  },
+  {
+    "id": "C04",
+    "source_type": "corpus",
+    "situations": [
+      "general",
+      "are-we-okay"
+    ],
+    "title": "SBCSAE SBC006: Cuz",
+    "authors_year": "Du Bois et al.; UCSB corpus",
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC006.trn",
+    "accessed": "2026-11-08",
+    "inspected": "Full SBC006.trn downloaded and parsed with sbcsae/measure.py. Two speakers exchange family news and stories. Speaker turns are contiguous timestamped units with same assigned speaker; counts exclude zero-word turns. Text only, no audio listening.",
+    "finding": "392 lexical turns: median 7.0 words; 35.7% <=4 words, 25.8% >=15 words. 1504 lexical intonation units: median 4.0 words (mean 4.18). Filler tokens/phrases uh 18, um 16, like 51, I mean 7, you know 68; 226 laughter-marked units, 562 overlap-opening marks, 225 cut-off marks.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let one character sustain a thought across several short intonation units and another answer briefly; vary long and short turns.",
+    "limitations": "Exploratory four-file convenience sample, not representative of all US talk. Continuation rows inherit most recent named speaker (can misassign amid overlap); fillers are literal matches, like includes lexical uses; bracket openings are notation marks, not interruptions; @/Hx indicates laughter-marked unit, not laughs; hyphens and double dashes are mechanical cut-off proxies."
+  },
+  {
+    "id": "C05",
+    "source_type": "corpus",
+    "situations": [
+      "general",
+      "are-we-okay"
+    ],
+    "title": "SBCSAE SBC011: This Retirement Bit",
+    "authors_year": "Du Bois et al.; UCSB corpus",
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC011.trn",
+    "accessed": "2026-11-08",
+    "inspected": "Full SBC011.trn downloaded and parsed with sbcsae/measure.py. Talk about retirement and another person. Speaker turns are contiguous timestamped units with same assigned speaker; counts exclude zero-word turns. Text only, no audio listening.",
+    "finding": "381 lexical turns: median 6 words; 42.0% <=4 words, 14.2% >=15 words. 830 lexical intonation units: median 3.0 words (mean 3.85). Filler tokens/phrases uh 25, um 4, like 13, I mean 2, you know 22; 96 laughter-marked units, 356 overlap-opening marks, 168 cut-off marks.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let one character sustain a thought across several short intonation units and another answer briefly; vary long and short turns.",
+    "limitations": "Exploratory four-file convenience sample, not representative of all US talk. Continuation rows inherit most recent named speaker (can misassign amid overlap); fillers are literal matches, like includes lexical uses; bracket openings are notation marks, not interruptions; @/Hx indicates laughter-marked unit, not laughs; hyphens and double dashes are mechanical cut-off proxies."
+  },
+  {
+    "id": "C06",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "drinking/drunk"
+    ],
+    "title": "Universals and cultural variation in turn-taking in conversation",
+    "authors_year": "Stivers et al. (2009)",
+    "url": "https://cognitionandculture.net/wp-content/uploads/pnas.0903616106.pdf",
+    "accessed": "2026-11-08",
+    "inspected": "Full PNAS article PDF downloaded and text extracted; examined methods and response-time distribution/results.",
+    "finding": "Across 10 languages, measured responses to questions in informal conversations cluster around very short gaps; the highest frequency of transitions falls between 0 and 200 ms, although average offsets differ culturally.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let the reply often begin almost at completion, with occasional overlap or a meaningful delay rather than a mechanical pause every time.",
+    "limitations": "Measured question–answer transitions, not every turn; PDF font extraction mangles some minus signs and symbols, so no inferred median is quoted."
+  },
+  {
+    "id": "C07",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "confrontation"
+    ],
+    "title": "Timing in turn-taking and its implications for processing models of language",
+    "authors_year": "Levinson and Torreira (2015)",
+    "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2015.00731/full",
+    "accessed": "2026-11-08",
+    "inspected": "Full Frontiers HTML article downloaded and read, especially abstract and timing/planning discussion.",
+    "finding": "The article describes average interturn gaps around 200 ms, versus speech-production latencies above 600 ms; prospective responders therefore begin planning while they are still listening.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Write replies that latch onto a projected ending, including mistaken anticipation and late course correction.",
+    "limitations": "Timing generalization is across analyzed conversational datasets, not a prescription for every emotionally loaded pause."
+  },
+  {
+    "id": "C08",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "are-we-okay"
+    ],
+    "title": "The preference for self-correction in the organization of repair in conversation",
+    "authors_year": "Schegloff, Jefferson, and Sacks (1977)",
+    "url": "https://www.cambridge.org/core/journals/language/article/abs/preference-for-selfcorrection-in-the-organization-of-repair-in-conversation/5549B861FDE7180B75FA5C382821875E",
+    "accessed": "2026-11-08",
+    "inspected": "Cambridge article landing page and abstract downloaded; full paper was access-gated.",
+    "finding": "The abstract identifies a conversational organization addressing trouble in speaking, hearing and understanding, with a strong empirical skew toward self-repair rather than correction by others.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let a speaker fix their own phrasing before a listener supplies the polished version.",
+    "limitations": "Abstract only; no claim about exact repair rates or detailed sequential mechanisms."
+  },
+  {
+    "id": "C09",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "jealousy/awkward"
+    ],
+    "title": "Universal principles in the repair of communication problems",
+    "authors_year": "Dingemanse et al. (2015)",
+    "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0136100",
+    "accessed": "2026-11-08",
+    "inspected": "Full PLOS HTML article downloaded; read abstract and frequency/types sections.",
+    "finding": "Other-initiated repair appears on average about once per 1.4 minutes in the languages sampled; speakers use open, restricted and candidate-understanding requests and favor the most specific usable one.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "When something is missed, use a targeted check (the name? this Friday?) rather than a universal Huh? every time.",
+    "limitations": "Cross-linguistic conversation sample; 1.4 minutes is an aggregate, not an individual-scene quota."
+  },
+  {
+    "id": "C10",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "new-friends"
+    ],
+    "title": "Using uh and um in spontaneous speaking",
+    "authors_year": "Clark and Fox Tree (2002)",
+    "url": "https://www.columbia.edu/~rmk7/HC/HC_Readings/Clark_Fox.pdf",
+    "accessed": "2026-11-08",
+    "inspected": "Full Cognition article PDF downloaded and text extracted; read abstract, proposal and reported contrast in following delays.",
+    "finding": "Their proposal treats uh as announcing a relatively minor expected delay and um a more substantial one; their data show sharper differences in following than preceding delays.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Put a filler where a character is holding the floor while searching or deciding, not evenly across sentences.",
+    "limitations": "Interpretation of fillers is a proposed account, not an invariant meaning; PDF text extraction contains minor font/ligature artifacts."
+  },
+  {
+    "id": "C11",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "flirting",
+      "are-we-okay"
+    ],
+    "title": "Basic meanings of you know and I mean",
+    "authors_year": "Fox Tree and Schrock (2002)",
+    "url": "https://www.maryvillecollege.edu/wp-content/uploads/Faculty/BehavioralSciences/cschrock/Fox-Tree-and-Schrock-2002.pdf",
+    "accessed": "2026-11-08",
+    "inspected": "Full Journal of Pragmatics article PDF downloaded and text extracted; read abstract and opening discussion.",
+    "finding": "The article analyzes you know as inviting listener inference and I mean as warning of a coming adjustment; these phrases are not interchangeable filler.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Use you know to enlist shared understanding, and I mean when a speaker revises or qualifies what was just said.",
+    "limitations": "The basic-meaning analysis is the authors’ synthesis; individual tokens can have context-sensitive functions."
+  },
+  {
+    "id": "C12",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "teasing"
+    ],
+    "title": "Laughter",
+    "authors_year": "Provine (1996)",
+    "url": "http://cogweb.ucla.edu/Abstracts/Provine_96.html",
+    "accessed": "2026-11-08",
+    "inspected": "Full American Scientist article HTML downloaded; read field-observation, punctuation-effect and speaker-versus-audience passages.",
+    "finding": "In the reported field observations, fewer than 20% of sampled laughs responded to structured jokes or stories; speakers laughed about 46% more often than audiences, and laughter tended to punctuate speech rather than interrupt it mid-phrase.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Let the speaker laugh at their own ordinary remark and allow the listener to respond without a laugh.",
+    "limitations": "This is a 1996 popular-science account of fieldwork, not a directly analyzed full 1993 journal article; observation context and definitions matter."
+  },
+  {
+    "id": "C13",
+    "source_type": "CA research",
+    "situations": [
+      "teasing",
+      "roasting",
+      "confrontation"
+    ],
+    "title": "Jocular mockery, (dis)affiliation and face",
+    "authors_year": "Haugh (2010)",
+    "url": "https://research-repository.griffith.edu.au/items/63d55628-9950-5217-a906-b2c0299ba156",
+    "accessed": "2026-11-08",
+    "inspected": "Griffith repository record and full abstract downloaded; manuscript listed but not opened.",
+    "finding": "The abstract treats jocular mockery as an interactional move whose responses can align or disalign with earlier action and index affiliation or disaffiliation as relationships evolve.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "After a tease, write the target’s reaction as consequential: play along, resist, or answer seriously; do not guarantee a joke in return.",
+    "limitations": "Abstract only; no transcript examples or quantified frequency of reactions inspected."
+  },
+  {
+    "id": "C14",
+    "source_type": "CA research",
+    "situations": [
+      "general",
+      "confrontation"
+    ],
+    "title": "Overlapping talk and the organization of turn-taking for conversation",
+    "authors_year": "Schegloff (2000)",
+    "url": "https://www.cambridge.org/core/journals/language-in-society/article/overlapping-talk-and-the-organization-of-turntaking-for-conversation/D12AD4181BEEFB073869BE7C55B07660",
+    "accessed": "2026-11-08",
+    "inspected": "Cambridge article landing page and abstract downloaded; full PDF not inspected.",
+    "finding": "The abstract distinguishes overlapping talk as an interactional phenomenon participants sometimes treat as problematic and resolve through organized practices; simultaneous speech is not automatically equivalent to hostile interruption.",
+    "quote": "",
+    "label": "Evidence",
+    "writer_takeaway": "Make overlapping talk context-dependent, and show whether participants yield, persist, or repair the collision.",
+    "limitations": "Abstract only; no numerical overlap rate or detailed examples inspected."
+  }
+]
