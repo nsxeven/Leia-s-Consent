@@ -307,7 +307,6 @@ screen phone_screen():
 
     default phone_app = lc_phone_link_app()
     default phone_thread = lc_phone_link_thread()
-    default hovered_app = None
     default thread_adjs = {}
 
     on "show" action [SetVariable("lc_phone_deep_link", None), Function(lc_ui_play, "phone_open")]
@@ -365,11 +364,10 @@ screen phone_screen():
                 button:
                     style "lc_sw_hit"
                     xpos ix
-                    ypos (iy - 6 if hovered_app == app_id else iy)
+                    ypos iy
+                    at lc_lift
                     xysize (80, 118)
                     action [Function(lc_ui_play, "app_tap"), app_action]
-                    hovered SetScreenVariable("hovered_app", app_id)
-                    unhovered SetScreenVariable("hovered_app", None)
                     add Transform("gui/phone/sprite_match/" + app_id + ".png", nearest=True)
                     if badge:
                         fixed:
@@ -400,11 +398,10 @@ screen phone_screen():
                 button:
                     style "lc_sw_hit"
                     xpos ix
-                    ypos (iy - 6 if hovered_app == app_id else iy)
+                    ypos iy
+                    at lc_lift
                     xysize (80, 80)
                     action [Function(lc_ui_play, "app_tap"), SetScreenVariable("phone_app", app_id)]
-                    hovered SetScreenVariable("hovered_app", app_id)
-                    unhovered SetScreenVariable("hovered_app", None)
                     add Transform("gui/phone/sprite_match/" + app_id + ".png", nearest=True)
                     if badge:
                         fixed:
