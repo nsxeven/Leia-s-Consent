@@ -59,8 +59,8 @@ transform lc_title_arrive:
     pause 2.1
     linear 0.3 alpha 0.0
 
-define lc_font_pixel = "fonts/Silkscreen-Regular.ttf"
-define lc_font_pixel_bold = "fonts/Silkscreen-Bold.ttf"
+define lc_font_pixel = "fonts/PixelifySans-Regular.ttf"
+define lc_font_pixel_bold = "fonts/PixelifySans-Bold.ttf"
 define lc_font_hand = "fonts/Caveat-Medium.ttf"
 define lc_font_hand_bold = "fonts/Caveat-SemiBold.ttf"
 
@@ -68,8 +68,8 @@ style lc_pixel is default:
     font lc_font_pixel
     size 24
     color "#3b2a30"
-    hinting "none"
-    antialias False
+    hinting "bytecode"
+    antialias True
     adjust_spacing False
     kerning 0.0
 
@@ -236,8 +236,8 @@ init python:
                 font=lc_font_pixel,
                 size=24,
                 color=color,
-                antialias=False,
-                hinting="none",
+                antialias=True,
+                hinting="bytecode",
                 adjust_spacing=False,
             )
             rend = renpy.render(text, 120, 48, st, at)
