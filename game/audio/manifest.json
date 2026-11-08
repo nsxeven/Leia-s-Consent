@@ -3597,6 +3597,24 @@
     "license": "same license as parent recording; see music/polaroid_summer entry"
    },
    "processing": "ffmpeg: extract 12.0–14.5 seconds of polaroid_summer, 0.5-second fade out; short preview for Music slider"
+  },
+  {
+   "name": "sfx/cloth_change",
+   "file": "sfx/cloth_change.ogg",
+   "kind": "sfx",
+   "status": "ok",
+   "duration": 1.35,
+   "channels": 1,
+   "sample_rate": 44100,
+   "codec": "vorbis",
+   "loop": false,
+   "peak_dbfs": -9.5,
+   "source": {
+    "author": "Leia's Consent team",
+    "title": "Synthesised (tools/gen_sfx_cloth.py)",
+    "license": "Original (project-owned)"
+   },
+   "processing": "three band-passed noise swishes + fabric crackle, 80 ms fade out, peak -9 dBFS (soft foley)"
   }
  ],
  "secondary_sources": [

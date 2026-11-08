@@ -130,6 +130,8 @@ init python:
         store.lc_cast_held = False
         _lc_clear_slots()
 
+    LC_OUTFIT_CHANGE_SFX = "cloth_change"
+
     def cast_add(**members):
         """Add people or change outfits mid-scene (who=outfit; None removes)."""
         for who, outfit in members.items():
@@ -148,6 +150,9 @@ init python:
                     store.lc_stage["right"] = None
                     renpy.with_statement(sprite_enter_exit)
             elif changed:
+                # Someone already in the scene changes clothes: soft fabric
+                # rustle (darryn 2026-11-09). Joining in a new outfit is silent.
+                lc_sfx(LC_OUTFIT_CHANGE_SFX)
                 _lc_refresh(who)
 
     def cast_remove(*people):
