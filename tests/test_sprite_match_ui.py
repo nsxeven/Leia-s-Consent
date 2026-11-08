@@ -154,7 +154,11 @@ class ScrapbookAndPrefsTests(unittest.TestCase):
         after = hashlib.sha256((GAME / "images" / "ui" / "scrapbook" / "bar_fill_love.png").read_bytes()).hexdigest()
         home_again = hashlib.sha256((GAME / "gui" / "phone" / "sprite_match" / "phone_home.png").read_bytes()).hexdigest()
         self.assertEqual(before, after)
-        self.assertEqual(home, home_again)
+        # Compare two generations in this environment: committed PNG bytes can
+        # differ across Pillow versions while the generator remains deterministic.
+        runpy.run_path(str(ROOT / "tools" / "gen_sprite_match_ui.py"), run_name="__main__")
+        home_twice = hashlib.sha256((GAME / "gui" / "phone" / "sprite_match" / "phone_home.png").read_bytes()).hexdigest()
+        self.assertEqual(home_again, home_twice)
 
 
 if __name__ == "__main__":
