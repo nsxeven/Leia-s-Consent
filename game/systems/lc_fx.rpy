@@ -152,6 +152,9 @@ init -2 python:
 
     def lc_sfx(name, volume=1.0):
         path, kind, channel, _ = _lc_sfx_find(name)
+        if path and kind == "voice/leia":
+            # One Leia at a time: her clips replace whatever she is still voicing.
+            return lc_leia_voice_clip(path, lc_audio_gain(kind, name, volume))
         if path:
             renpy.music.play(path, channel=channel, relative_volume=lc_audio_gain(kind, name, volume))
         return path
