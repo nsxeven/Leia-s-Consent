@@ -28,7 +28,7 @@ class ReviewLayoutIcons(unittest.TestCase):
                 self.assertEqual(icon.mode, 'RGBA')
                 self.assertEqual(icon.getpixel((0, 0))[3], 0)
         self.assertIn('LC_STAT_ICON[row["stat"]]', screen)
-        self.assertIn('LC_STAT_ICON[row["stat"]]', status)
+        self.assertIn('LC_STAT_ICON.get(row["stat"])', status)
 
     def test_grid_has_clipped_bounded_choices_and_left_aligned_chips(self):
         screen = SCREEN.read_text()

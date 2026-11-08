@@ -85,6 +85,22 @@ init python:
 
 
     # Stat that drives each lean; its bar fills the "Current lean" row.
+    # Status colours by stat meaning (darryn 2026-11-09): glass bar art
+    # gui/glass/stat_<stat>.png (tools/gen_glass_menu_ui.py), number tint, and
+    # the softer phone bar tint. The stat icons use the same colours.
+    LC_STAT_COLOUR = {
+        "love": {"ink": "#FFAACD", "phone": "#EC689C"},
+        "trust": {"ink": "#FFDE8C", "phone": "#DEA034"},
+        "exhibitionism": {"ink": "#FFC4A0", "phone": "#E8766E"},
+        "temptation": {"ink": "#EC6E82", "phone": "#C03458"},
+        "sharing": {"ink": "#C8ACEC", "phone": "#926ECE"},
+    }
+
+    def lc_status_colour_stat(row):
+        """Which stat's colour a Status row uses (the lean row: its route's)."""
+        stat = row.get("bar_stat") or row.get("stat")
+        return stat if stat in LC_STAT_COLOUR else "love"
+
     LC_LEAN_DRIVER = {
         "love": "love", "strained": "love", "undecided": "love",
         "love_exhib": "exhibitionism", "nts": "sharing", "ntr": "temptation",
@@ -108,6 +124,7 @@ init python:
                 "detail": "{} {} / 100".format(STAT_LABELS[driver], value),
                 "internal_key": "lc_current_lean() = {}".format(lean) if mode == "developer" else "",
                 "stat": "lean",
+                "bar_stat": driver,   # the lean bar wears its route's colour
                 "tooltip": lc_stat_tooltip("lean", mode),
             },
         ]

@@ -18,38 +18,49 @@ screen status_stat_row(row):
                 xfill True
                 spacing 8
 
-                if row["stat"] in LC_STAT_ICON:
-                    add Transform("images/ui/scrapbook/icon_{}.png".format(LC_STAT_ICON[row["stat"]]), xysize=(28, 28)) yalign 0.5
-                text row["label"] size 21 color "#fff0dc" yalign 0.5
+                $ _cs = lc_status_colour_stat(row)
+                $ _icon = LC_STAT_ICON.get(row["stat"]) or LC_STAT_ICON.get(_cs)
+                if _icon:
+                    add Transform("images/ui/scrapbook/icon_{}.png".format(_icon), xysize=(30, 30)) yalign 0.5
+                text row["label"] size 23 color "#fff0dc" yalign 0.5
 
                 if row["detail"]:
-                    text row["detail"] size 18 color "#dbc8bd" xalign 1.0
+                    text row["detail"] size 20 color LC_STAT_COLOUR[_cs]["ink"] xalign 1.0 yalign 0.5
 
             # Immersive mode never exposes a numeric meter.
             if current_choice_mode() != "normal":
                 bar:
                     value StaticValue(row["value"], 100)
                     xfill True
-                    ysize 16
-                    left_bar Frame("gui/scrapbook/bar_love.png", 6, 6)
-                    right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
+                    ysize 24
+                    left_bar Frame("gui/glass/stat_{}.png".format(lc_status_colour_stat(row)), 10, 10)
+                    right_bar Frame("gui/glass/stat_track.png", 10, 10)
 
             if row["internal_key"]:
                 text row["internal_key"] size 15 color "#dbc8bd"
 
 
-screen status_section(title, rows):
+# Section header colours (Prefs glass look, darryn 2026-11-09).
+define LC_STATUS_SECTION_INK = {"relationship": "#F5C568", "route": "#FF8FC0", "leia": "#FF8FC0", "ryan": "#C8ACEC"}
+
+screen status_section(title, rows, ink="#F5C568"):
 
     frame:
         xfill True
-        background Frame("gui/glass/panel.png", 9, 9)
-        padding (24, 22)
+        background Frame("gui/glass/panel.png", 16, 16)
+        padding (24, 20)
 
         vbox:
             spacing 17
             xfill True
 
-            text title size 26 color "#fff0dc"
+            hbox:
+                spacing 12
+                frame:
+                    xysize (8, 30)
+                    yalign 0.5
+                    background Frame(Solid(ink), 0, 0)
+                text title size 30 color ink font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
             for row in rows:
                 use status_stat_row(row)
@@ -115,13 +126,20 @@ screen status_screen(return_to=None):
 
             if persistent.lc_title_style != "off":
                 $ lc_status_titles = lc_current_titles()
-                text (player_name + " · " + lc_status_titles[0]) size 21 color "#ff8fc0" substitute False
-                text (girlfriend_name + " · " + lc_status_titles[1]) size 21 color "#ff8fc0" substitute False
+                hbox:
+                    spacing 14
+                    box_wrap True
+                    box_wrap_spacing 10
+                    for (_who, _title, _ink) in ((player_name, lc_status_titles[0], "#ff8fc0"), (girlfriend_name, lc_status_titles[1], "#F5C568")):
+                        frame:
+                            background Frame("gui/glass/nav_active.png", 12, 12)
+                            padding (16, 4, 16, 6)
+                            text (_who + " · " + _title) size 26 color _ink font "fonts/Caveat-SemiBold.ttf" substitute False
 
-            use status_section("RELATIONSHIP", relationship_rows)
+            use status_section("RELATIONSHIP", relationship_rows, LC_STATUS_SECTION_INK["relationship"])
 
             if route_rows:
-                use status_section("ROUTE TENDENCIES", route_rows)
+                use status_section("ROUTE LEAN", route_rows, LC_STATUS_SECTION_INK["route"])
 
             if lc_review_latest():
                 textbutton "Review last completed day":
@@ -166,11 +184,11 @@ screen status_screen(return_to=None):
                     xfill True
                     spacing 9
                     text "[girlfriend_name] right now" size 27 color "#fff0dc"
-                    text "Current outfit: [current_outfit_name()]" size 18 color "#dbc8bd" xfill True
+                    text "Current outfit: [current_outfit_name()]" size 18 color "#F5C568" xfill True
                     text "[leia_overview_text()]" size 20 color "#fff0dc" line_spacing 4 xfill True
 
-            use status_section(girlfriend_name.upper(), leia_rows)
-            use status_section(player_name.upper(), ryan_rows)
+            use status_section(girlfriend_name.upper(), leia_rows, LC_STATUS_SECTION_INK["leia"])
+            use status_section(player_name.upper(), ryan_rows, LC_STATUS_SECTION_INK["ryan"])
             null height 12
 
     # Keep this at screen level: nearrect needs full-screen tooltip geometry.

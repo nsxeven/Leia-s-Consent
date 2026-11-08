@@ -1020,24 +1020,32 @@ screen lc_phone_status_row(row):
         vbox:
             spacing 4
             xfill True
+            $ _cs = lc_status_colour_stat(row)
+            $ _icon = LC_STAT_ICON.get(row["stat"]) or LC_STAT_ICON.get(_cs)
             hbox:
                 xfill True
+                spacing 8
+                if _icon:
+                    add Transform("images/ui/scrapbook/icon_{}.png".format(_icon), xysize=(28, 28)) yalign 0.5
                 text row["label"]:
                     style "lc_sw_hand"
                     size 24
                     color "#293C53"
+                    yalign 0.5
                 if row["detail"]:
                     text row["detail"]:
                         style "lc_sw_hand"
                         size 20
-                        color "#6E8399"
+                        color LC_STAT_COLOUR[_cs]["phone"]
                         xalign 1.0
+                        yalign 0.5
+            # Stat colours, softened for the white phone cards (darryn 2026-11-09).
             bar:
                 value StaticValue(row["value"], 100)
                 xfill True
-                ysize 12
-                left_bar Solid("#3D8FD4")
-                right_bar Solid("#D3DEEA")
+                ysize 10
+                left_bar Frame(Solid(LC_STAT_COLOUR[_cs]["phone"]), 0, 0)
+                right_bar Solid("#E2E7EF")
             if row["internal_key"]:
                 text row["internal_key"]:
                     style "lc_sw_hand"

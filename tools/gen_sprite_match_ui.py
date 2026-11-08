@@ -246,14 +246,16 @@ def redraw_sliders():
 
 
 # Cohesive 20-pixel silhouettes, 2x nearest-scaled; one dark outline.
+# The five live stats match their Status bar colours (darryn 2026-11-09,
+# STAT_BARS in gen_glass_menu_ui.py / LC_STAT_COLOUR in status_display.rpy).
 STAT_PALETTE = {
-    "love": ("#F4B6CD", "#C85B82"), "trust": ("#B2DDD9", "#5B9C9F"),
+    "love": ("#FFAACD", "#E86298"), "trust": ("#FFDE8C", "#E8AA46"),
     "boredom": ("#D2C5E3", "#9182AD"), "momentum": ("#B9D89A", "#71944F"),
-    "curiosity": ("#F7DCA8", "#BD9063"), "temptation": ("#EEB5C6", "#A65D87"),
-    "exhibitionism": ("#E7A9C5", "#AA5D88"),
+    "curiosity": ("#F7DCA8", "#BD9063"), "temptation": ("#EC6E82", "#B22850"),
+    "exhibitionism": ("#FFC4A0", "#E87678"),
     "boundary_looseness": ("#D7CBB8", "#948572"),
     "secrecy": ("#D8D2D0", "#90868B"), "jealousy": ("#F3B6A0", "#BD6A62"),
-    "acceptance": ("#F8DEAB", "#C4A160"), "sharing": ("#E2BCD3", "#AA7798"),
+    "acceptance": ("#F8DEAB", "#C4A160"), "sharing": ("#C8ACEC", "#8C68C8"),
     "distance": ("#C1D2DE", "#7992AC"),
 }
 
