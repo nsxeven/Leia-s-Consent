@@ -1100,20 +1100,29 @@ screen lc_phone_settings_mode(mode_id):
         vbox:
             spacing 4
             xfill True
-            hbox:
+            # Mode name on the left; the selected mode gets a bold "On" in a
+            # white pill, flush right (darryn 2026-11-08).
+            fixed:
                 xfill True
-                spacing 12
+                yfit True
                 text _info["label"]:
                     style "lc_sw_hand"
                     size 26
                     color ("#FFFFFF" if _selected else "#293C53")
+                    xalign 0.0
                     yalign 0.5
                 if _selected:
-                    text "On":
-                        style "lc_sw_hand"
-                        size 20
-                        color "#FFFFFF"
+                    frame:
+                        xalign 1.0
                         yalign 0.5
+                        background Frame("gui/phone/sprite_match/pill_white.png", 15, 15)
+                        padding (14, 1, 14, 3)
+                        text "On":
+                            style "lc_sw_hand"
+                            size 22
+                            bold True
+                            color "#2E74B0"
+                            yalign 0.5
             text _info["tagline"]:
                 style "lc_sw_hand"
                 size 22

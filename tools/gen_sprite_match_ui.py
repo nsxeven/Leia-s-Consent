@@ -543,6 +543,11 @@ def build_chrome():
     draw.line((16, 6, 54, 6), fill="#8EBEF0")
     key.save(PHONE / "key.png")
 
+    # White rounded pill for the selected setting's "On" badge (9-slice).
+    pill = Image.new("RGBA", (48, 32), (0, 0, 0, 0))
+    ImageDraw.Draw(pill).rounded_rectangle((0, 0, 47, 31), 15, fill="#FFFFFF")
+    pill.save(PHONE / "pill_white.png")
+
     badge = Image.new("RGBA", (36, 28), (0, 0, 0, 0))
     ImageDraw.Draw(badge).rounded_rectangle((0, 0, 35, 27), 12, fill="#E4466A")
     badge.save(PHONE / "badge.png")

@@ -48,7 +48,7 @@ screen lc_stat_tip(tip, look="scrapbook"):
                     ysize 360
                     background _tip_card
                     padding (22, 14)
-                    text _last_tip:
+                    text (_last_tip or ""):
                         style "lc_sw_hand"
                         size 28
                         color "#faf4e8"
@@ -63,4 +63,4 @@ screen lc_stat_tip(tip, look="scrapbook"):
                     ysize 360
                     background Frame("gui/scrapbook/frame_paper.png", 9, 9)
                     padding (20, 14)
-                    text _last_tip style "lc_stat_tip_text" substitute False
+                    text (_last_tip or "") style "lc_stat_tip_text" substitute False
