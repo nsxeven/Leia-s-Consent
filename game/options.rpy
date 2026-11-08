@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Leia's Consent")
+define config.name = LC_RELEASE_INFO["title"]  # game/00_release_build.rpy
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -23,13 +23,18 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "dev-main"
+define config.version = LC_RELEASE_VERSION  # game/00_release_build.rpy
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
-define gui.about = _p("""
+define gui.about = LC_RELEASE_INFO["about_title"].format(LC_RELEASE_VERSION) + "\n\n" + _p("""
+© 2026 NSX Studios. All rights reserved.
+
+Made with Ren'Py. Music and most sound effects are CC0 (public domain) from Freesound and OpenGameArt, plus sounds supplied by the developer. Lewd sounds by Shinlalala (Shinlalala's Lewd Sound Pack, CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/). Leia's breath and voice clips are from MoanBox by Selenyhr (Unlicense / public domain). Fonts: Handjet, Fredoka, Nunito, Caveat, Patrick Hand and Silkscreen (SIL Open Font License). The full audio credits ship with the game in game/audio/CREDITS.md.
+
+All characters are adults. This is a work of fiction.
 """)
 
 
@@ -37,7 +42,7 @@ define gui.about = _p("""
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "LeiasConsentDev"
+define build.name = LC_RELEASE_INFO["build_name"]  # game/00_release_build.rpy
 
 
 ## Sounds and music ############################################################
@@ -143,10 +148,10 @@ default preferences.afm_time = 15
 ##
 ## Linux: $HOME/.renpy/<config.save_directory>
 ##
-## This generally should not be changed, and if it is, should always be a
-## literal string, not an expression.
+## Never change an existing value: players would lose their saves. Each release
+## profile in game/00_release_build.rpy has its own folder (main: LeiasConsent-1789068362).
 
-define config.save_directory = "LeiasConsent-1789068362"
+define config.save_directory = LC_RELEASE_INFO["save_directory"]
 
 
 ## Icon ########################################################################
@@ -193,6 +198,23 @@ init python:
     ## Repository documentation (the player-facing docs are not these files).
     build.classify('README.md', None)
     build.classify('docs/**', None)
+    ## Repo-only folders and notes never ship (main and releases alike).
+    build.classify('.**', None)
+    build.classify('tests/**', None)
+    build.classify('tools/**', None)
+    build.classify('work/**', None)
+    build.classify('context_memo.rpy', None)
+    build.documentation('game/audio/CREDITS.md')
+    # Public releases (game/00_release_build.rpy) leave developer/QA tools out.
+    # These must stay BEFORE the joiplay rule below (first match wins).
+    if LC_IS_RELEASE:
+        for _lc_dev in ('game/chapters/dev_sandbox.rpy*', 'game/chapters/story_state_test.rpy*',
+                        'game/chapters/systems_vertical_slice.rpy*', 'game/dev_phone_shots.rpy*',
+                        'game/dev_scrapbook_preview.rpy*', 'game/screens/debug_screen.rpy*',
+                        'game/screens/dev_menu_shell.rpy*', 'game/screens/dev_systems_menu_screen.rpy*',
+                        'game/screens/dev_verify_screen.rpy*', 'game/screens/story_state_test_screen.rpy*',
+                        'game/systems/dev_notifications.rpy*'):
+            build.classify(_lc_dev, None)
 
     ## Exclude local caches, saves, and Python bytecode from distributions.
     build.classify('game/cache/**', None)

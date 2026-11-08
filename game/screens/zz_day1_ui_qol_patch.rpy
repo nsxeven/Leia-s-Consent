@@ -512,7 +512,7 @@ screen lc_phone_settings():
                         if config.developer:
                             use lc_phone_settings_mode("developer")
 
-                        if current_choice_mode() == "full":
+                        if current_choice_mode() == "full" and (config.developer or not LC_IS_RELEASE):
                             frame:
                                 xfill True
                                 background Frame("gui/phone/rounded_light.png", 24, 24)

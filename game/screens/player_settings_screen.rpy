@@ -106,7 +106,7 @@ screen player_settings_screen():
 
                     use lc_review_settings
 
-                    if current_mode == "full":
+                    if current_mode == "full" and (config.developer or not LC_IS_RELEASE):
                         frame:
                             xfill True
                             background Frame("gui/scrapbook/frame_kraft.png", 9, 9)
