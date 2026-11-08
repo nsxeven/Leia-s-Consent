@@ -7,14 +7,16 @@ init python:
     PHONE_NOTIFICATION_TITLE_MAX = 32
 
     PHONE_APP_ICON_PATHS = {
-        "Phone": "gui/phone/sweetheart/icon_messages.png",
-        "Messages": "gui/phone/sweetheart/icon_messages.png",
-        "Photos": "gui/phone/sweetheart/icon_photos.png",
-        "Shop": "gui/phone/sweetheart/icon_shop.png",
-        "Online Shop": "gui/phone/sweetheart/icon_shop.png",
-        "Delivery": "gui/phone/sweetheart/icon_delivery.png",
-        "Orders": "gui/phone/sweetheart/icon_delivery.png",
-        "Wallet": "gui/phone/sweetheart/icon_wallet.png",
+        "Phone": "gui/phone/sprite_match/messages.png",
+        "Messages": "gui/phone/sprite_match/messages.png",
+        "Photos": "gui/phone/sprite_match/photos.png",
+        "Shop": "gui/phone/sprite_match/shop.png",
+        "Online Shop": "gui/phone/sprite_match/shop.png",
+        "Delivery": "gui/phone/sprite_match/delivery.png",
+        "Orders": "gui/phone/sprite_match/delivery.png",
+        "Wallet": "gui/phone/sprite_match/wallet.png",
+        "Status": "gui/phone/sprite_match/status.png",
+        "Settings": "gui/phone/sprite_match/settings.png",
     }
 
     def phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX):
