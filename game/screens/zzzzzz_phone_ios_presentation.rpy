@@ -310,7 +310,7 @@ screen phone_screen():
     default thread_adjs = {}
 
     on "show" action [SetVariable("lc_phone_deep_link", None), Function(lc_ui_play, "phone_open")]
-    on "hide" action Function(lc_ui_play, "phone_close")
+    on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "phone_close")]
     on "replace" action SetVariable("lc_phone_deep_link", None)
 
     key "K_ESCAPE" action Hide("phone_screen")
@@ -453,7 +453,7 @@ screen phone_screen():
                 xpos 28
                 ypos 96
                 xysize (52, 56)
-                action [Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "messages")]
+                action [Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "messages")]
                 add "gui/phone/sprite_match/chevron.png" xalign 0.5 yalign 0.5
             if phone_thread == "group":
                 add phone_group_avatar():

@@ -232,6 +232,10 @@ init python:
         notification_app="Messages",
         notification_title=None,
     ):
+        # Landing in the chat the player is reading right now = already read
+        # (darryn 2026-11-08: no badge after reading a thread from a notification).
+        if mark_unread and lc_phone_thread_open(thread_id):
+            mark_unread = False
         # A new incoming message is the deadline; stable-ID replays are not.
         if sender_id != "player" and not (message_id and phone_has_message(message_id)):
             phone_default_reply(thread_id)
@@ -271,16 +275,26 @@ init python:
 
         return added
 
-    def lc_phone_message_pop(thread_id):
-        """UI pop when a message lands in the chat thread that is open right now."""
+    def lc_phone_thread_open(thread_id):
+        """True while the Phone shows this chat thread."""
         try:
             if not renpy.get_screen("phone_screen"):
-                return None
+                return False
             if renpy.get_screen_variable("phone_app", screen="phone_screen") != "thread":
-                return None
-            if renpy.get_screen_variable("phone_thread", screen="phone_screen") != thread_id:
-                return None
+                return False
+            return renpy.get_screen_variable("phone_thread", screen="phone_screen") == thread_id
         except Exception:
+            return False
+
+    def lc_phone_leave_thread(app, thread_id):
+        """Leaving a chat (back button or closing the Phone) marks it read."""
+        if app == "thread" and thread_id:
+            phone_mark_thread_read(thread_id)
+        return None
+
+    def lc_phone_message_pop(thread_id):
+        """UI pop when a message lands in the chat thread that is open right now."""
+        if not lc_phone_thread_open(thread_id):
             return None
         return lc_ui_sound("message_pop")
 
