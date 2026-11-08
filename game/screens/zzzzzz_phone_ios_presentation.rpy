@@ -1124,9 +1124,11 @@ screen lc_phone_settings_mode(mode_id):
             xfill True
             # Mode name on the left; the selected mode gets a bold "On" in a
             # white pill, flush right (darryn 2026-11-08).
+            # Fixed height: yfit with yalign-ed children takes the whole
+            # available height, which blew the card up (#160).
             fixed:
                 xfill True
-                yfit True
+                ysize 40
                 text _info["label"]:
                     style "lc_sw_hand"
                     size 26

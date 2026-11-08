@@ -18,6 +18,8 @@ class SmallUiFixTests(unittest.TestCase):
         self.assertIn("xalign 1.0", block)
         self.assertIn('Frame("gui/phone/sprite_match/pill_white.png"', block)
         self.assertIn("bold True", block)
+        self.assertIn("ysize 40", block)
+        self.assertNotIn("yfit True", block)
         self.assertTrue((ROOT / "game/gui/phone/sprite_match/pill_white.png").is_file())
 
 
