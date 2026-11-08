@@ -556,6 +556,13 @@ def build_chrome():
     draw.line((16, 6, 54, 6), fill="#8EBEF0")
     key.save(PHONE / "key.png")
 
+    # Stat explanation card on the phone: white card, phone-blue outline.
+    tip = Image.new("RGBA", (72, 72), (0, 0, 0, 0))
+    tdraw = ImageDraw.Draw(tip)
+    tdraw.rounded_rectangle((2, 4, 69, 69), 16, fill="#C9DCEB")
+    tdraw.rounded_rectangle((2, 2, 69, 66), 16, fill="#FFFFFF", outline="#3D8FD4", width=3)
+    tip.save(PHONE / "tip_card.png")
+
     # White rounded pill for the selected setting's "On" badge (9-slice).
     pill = Image.new("RGBA", (48, 32), (0, 0, 0, 0))
     ImageDraw.Draw(pill).rounded_rectangle((0, 0, 47, 31), 15, fill="#FFFFFF")

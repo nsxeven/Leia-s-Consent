@@ -1081,6 +1081,9 @@ screen lc_phone_status():
                     style "lc_sw_hit"
                     xfill True
                     ysize 52
+                    # Label centred inside the card, white on the blue hover key.
+                    text_xalign 0.5
+                    text_yalign 0.5
                     background Frame("gui/phone/sprite_match/card.png", 18, 18)
                     hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
                     text_style "lc_sw_hand"
