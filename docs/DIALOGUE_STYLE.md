@@ -19,7 +19,7 @@ the character files in `docs/characters/` before writing.
 | "There she is." / "There it is." | Banned. |
 | "Exactly." / "Noted." / "Fair." / "Touché." as a whole line | Banned. |
 | One-word verdict comebacks ("Pervert." "Skill." "Yet.") in a row | Max one per scene. |
-| Ping-pong of 6+ lines all ≤ 4 words | Banned; break it with a longer line, an action or a thought. |
+| Ping-pong of 6+ lines all ≤ 4 words | Avoid; usually break it with a longer line, an action or a thought (flagged, not failed). |
 | Everyone has a witty comeback | No. Someone fails to answer, laughs, misunderstands, changes the subject. |
 | "a beat too long", "a fraction too late", "for a beat" | Max once per day. |
 | "No X. No Y. No Z." narration fragments | Banned. |
@@ -65,15 +65,22 @@ lines aren't the problem on their own. What's missing is the long turns: 11-26% 
 15+ words, against 1.4% in our Prologue + Day 1. Fillers, self-corrections and laughter are also
 nearly absent. Sourced rules per situation: `docs/research/REAL_SPEECH_PATTERNS.md`. Evidence:
 `docs/research/REAL_DIALOGUE_LEDGER.md`. Worked example: `docs/research/SAMPLE_SCENE_TOWEL.md`.
-Proposed extra check: every scene has at least one 15+-word spoken line.
+
+## The real target (darryn, 2026-11-08)
+**It should feel like real people talking, not LLMs talking to each other.** The numbers are
+smoke detectors, not targets: no percentage is a hard limit, and a scene that reads like
+real talk passes even if a number is off. The read-aloud test decides.
 
 ## Automatic check (planned)
-A unit test scans each new day's dialogue and fails when:
-- more than 35% of spoken lines are ≤ 4 words (currently 55%);
-- any run of 6+ clipped lines appears;
-- a banned phrase appears, or a rationed one goes over its limit;
-- a character's average line length drifts outside their file's range
-  (Julian and Maya longest, Ryan in the middle).
+A scan of each new day's dialogue. Only banned phrases **fail**. Everything else **flags** the
+scene for a read-aloud pass:
+- fail: a banned phrase appears, or a rationed one goes over its limit;
+- flag: a lot of very short lines (for reference, real talk runs about 36-52% at ≤ 4 words;
+  Prologue + Day 1 is 55%);
+- flag: a run of 6+ clipped lines;
+- flag: no line of 15+ words in a scene (real talk has 11-26%; we have 1.4%);
+- flag: a character's average line length drifting far outside their file's range
+  (Julian longest, then Leia and Maya, Ryan shortest).
 
 ## Workflow for every new day
 1. darryn's day plan.

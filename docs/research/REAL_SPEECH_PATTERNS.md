@@ -40,7 +40,8 @@ Long turns are built from short pieces: intonation units have a median of 3-4 wo
 Hard conversations open with short, hedged bids [R08, R17, M12] and only then get to the
 long explanation [M06, R14].
 
-**Rule.** Targets per scene, as a share of spoken lines (Inference from the above, tuned for a VN,
+**Rule.** Rough ranges per scene, as a share of spoken lines. They describe what real talk tends
+to look like and are **not targets to hit** (Inference from the above, tuned for a VN,
 where scripts drop the "mhm"/"yeah" backchannels a recording keeps):
 
 | Situation | ≤4-word lines | 15+-word lines | Notes |
@@ -54,7 +55,7 @@ where scripts drop the "mhm"/"yeah" backchannels a recording keeps):
 | Suggesting something new / being watched | 20-30% | ≥20% | The asker over-explains; the listener asks questions [R01, R03, R04]. |
 | Bedroom | 40-55% | ≥5% | The one place where short is natural, but include a flubbed line or a request [R09, M09]. |
 | Confrontation / confession | 30-45% | ≥15% | Long justifications, short repeated denials [R14, M04, M05]. |
-| **Any scene (hard limits)** | **≤35% outside bedroom scenes** | **≥1 line** | No run of 6+ short lines (DIALOGUE_STYLE.md). |
+| **Any scene (smoke detectors, not limits)** | **a lot more than ~40% outside bedroom scenes → read it aloud** | **none at all → read it aloud** | A run of 6+ short lines is a flag too. darryn's call (2026-11-08): none of these numbers is a hard limit; the scene just has to sound like real people. |
 
 Write a long line as a chain of short pieces ("I mean, it was fine, and then he said the
 thing, and I just—") rather than one polished sentence [C02-C05, C10].

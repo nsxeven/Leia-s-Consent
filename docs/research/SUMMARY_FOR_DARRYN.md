@@ -32,14 +32,13 @@ The game is untouched: only `docs/` changed. `main` at research time: 6eda038.
    has at least one 15+-word spoken line.
 
 ## Open questions for you
-1. **Targets:** keep "≤35% short lines" as the hard limit (stricter than real talk, which is
-   36-52%, but scripts drop the "mhm"s)? Add "at least one 15+-word line per scene"?
+1. ~~Targets: keep "≤35% short lines" as the hard limit?~~ **Decided (darryn):** no hard limit.
+   It just has to feel like real people talking, not LLMs. The numbers only flag scenes for a read-aloud.
 2. **Profiles:** do the Big Five / attachment picks match how *you* see them? Especially Ryan as
    avoidant-leaning and Julian as secure (not anxious).
 3. **Running bits:** what's Ryan and Leia's real dumb joke from home? The research says that's
    how long-term couples tease, and only you can invent it.
-4. **Towel scene:** too forward for Day 1 morning ("it's not like you haven't seen it")?
-   Keep the "free show" foreshadowing?
+4. ~~Towel scene: too forward?~~ **Approved (darryn):** goes into rewrite pass A as written.
 5. Still open from PR #126: Leia's pet name for Ryan, jobs, Maya's age and how she knows Ryan.
 
 ## What still needs your human ear
