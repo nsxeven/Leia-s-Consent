@@ -40,5 +40,16 @@ class StatusColourTests(unittest.TestCase):
         self.assertIn('"bar_stat": driver', DISP)
 
 
+    def test_bar_art_is_opaque_inside(self):
+        try:
+            from PIL import Image
+        except ImportError:
+            self.skipTest("Pillow not installed")
+        for s in STATS:
+            im = Image.open(ROOT / ("game/gui/glass/stat_%s.png" % s)).convert("RGBA")
+            self.assertEqual(im.getpixel((12, 6))[3], 255, s)   # the shine band
+            self.assertEqual(im.getpixel((12, 12))[3], 255, s)
+
+
 if __name__ == "__main__":
     unittest.main()
