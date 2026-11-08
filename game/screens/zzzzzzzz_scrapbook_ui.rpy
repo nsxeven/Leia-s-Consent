@@ -468,7 +468,13 @@ screen lc_keycap_button(label, action, icon=None, selected_on=False, width=None,
 
 ## Say ########################################################################
 
-screen say(who, what):
+# Three looks in the text box (darryn 2026-11-08):
+#   spoken line (name tag)  -> ink colour
+#   narration / description -> soft warm tint (LC_NARRATION_INK)
+#   Ryan's inner voice      -> italic, ink colour: `think "..."` (characters.rpy)
+define LC_NARRATION_INK = {"day": "#6a5258", "night": "#f3e2c6"}
+
+screen say(who, what, think=False):
     # One box size for the whole game. A full-screen CG on screen (any `cg`
     # image on the master layer) switches to the see-through variant of the
     # same box; sprites/backgrounds use the opaque one. Day/night paper comes
@@ -479,6 +485,8 @@ screen say(who, what):
     $ box = ("lc_say_cg_%s" % theme) if cg else ("gui/scrapbook/say_%s.png" % theme)
     $ kind = lc_name_kind(who)
     $ ink = "#ece2f2" if theme == "night" else "#34242c"
+    # Plain narration (no speaker, not a thought) gets the softer tint.
+    $ text_ink = LC_NARRATION_INK[theme] if (who is None and not think) else ink
     $ halo = "#1e1628c0" if theme == "night" else "#efe4cdc0"
 
     window:
@@ -521,7 +529,8 @@ screen say(who, what):
             ysize 176
             font "fonts/PatrickHand-Regular.ttf"
             size 42
-            color ink
+            color text_ink
+            italic think
             line_spacing 8
             outlines ([(2, halo, 0, 0)] if cg else [])
 
