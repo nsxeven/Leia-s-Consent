@@ -18,7 +18,7 @@ screen lc_tag_button(who, tag, earned, equipped):
             if earned:
                 text tag size 24 color ("#cc0066" if equipped else "#3b2a30") yalign 0.5 substitute False
                 if equipped:
-                    text "EQUIPPED" size 16 color "#cc0066" font "fonts/Silkscreen-Regular.ttf" yalign 0.5
+                    text "EQUIPPED" size 16 color "#cc0066" font "fonts/PixelifySans-Regular.ttf" yalign 0.5
             else:
                 text "???" size 24 color "#a8979b" yalign 0.5
 
@@ -42,7 +42,7 @@ screen lc_tag_column(who, name):
                 spacing 10
                 text "Automatic (from your choices)" size 22 color ("#cc0066" if current is None else "#3b2a30") yalign 0.5
                 if current is None:
-                    text "EQUIPPED" size 16 color "#cc0066" font "fonts/Silkscreen-Regular.ttf" yalign 0.5
+                    text "EQUIPPED" size 16 color "#cc0066" font "fonts/PixelifySans-Regular.ttf" yalign 0.5
         for tag, earned in lc_tag_list(who):
             use lc_tag_button(who, tag, earned, earned and current == tag)
 
@@ -114,7 +114,7 @@ screen lc_tags_screen():
                                         spacing 8
                                         if earned:
                                             add "images/ui/scrapbook/mark.png" yalign 0.5
-                                            text sticker.upper() size 18 color "#8a3058" font "fonts/Silkscreen-Regular.ttf" yalign 0.5 substitute False
+                                            text sticker.upper() size 18 color "#8a3058" font "fonts/PixelifySans-Regular.ttf" yalign 0.5 substitute False
                                         else:
-                                            text "???" size 18 color "#a8979b" font "fonts/Silkscreen-Regular.ttf" yalign 0.5
+                                            text "???" size 18 color "#a8979b" font "fonts/PixelifySans-Regular.ttf" yalign 0.5
                     null height 20

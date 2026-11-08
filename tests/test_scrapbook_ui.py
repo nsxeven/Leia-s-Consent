@@ -93,10 +93,13 @@ class AssetTests(unittest.TestCase):
     def test_fonts_and_core_assets_exist(self):
         fonts = ROOT / "game" / "fonts"
         for name in (
-            "Silkscreen-Regular.ttf",
+            "PixelifySans-Regular.ttf",
+            "PixelifySans-Bold.ttf",
+            "Silkscreen-Regular.ttf",  # still used by tools/scrapbook_ui asset generator
             "Silkscreen-Bold.ttf",
             "PatrickHand-Regular.ttf",
             "Caveat[wght].ttf",
+            "OFL-PixelifySans.txt",
             "OFL-Silkscreen.txt",
             "OFL-PatrickHand.txt",
             "OFL-Caveat.txt",

@@ -56,22 +56,22 @@ define gui.interface_text_color = '#3b2a30'
 
 ## Fonts and Font Sizes ########################################################
 
-## Dialogue is Patrick Hand. Labels and UI chrome are Silkscreen.
+## Dialogue is Patrick Hand. Labels and UI chrome are Pixelify Sans.
 ## Notes and captions use Caveat directly. All three are SIL OFL 1.1.
 define gui.text_font = "fonts/PatrickHand-Regular.ttf"
-define gui.name_text_font = "fonts/Silkscreen-Bold.ttf"
-define gui.interface_text_font = "fonts/Silkscreen-Regular.ttf"
+define gui.name_text_font = "fonts/PixelifySans-Bold.ttf"
+define gui.interface_text_font = "fonts/PixelifySans-Regular.ttf"
 
 ## The size of normal dialogue text. 42px is the 1080p handwriting size.
 define gui.text_size = 42
 
-## The size of character names. Silkscreen is drawn at 8px logical * 3.
+## The size of character names (Pixelify Sans Bold).
 define gui.name_text_size = 24
 
 ## The size of text in the game's user interface.
 define gui.interface_text_size = 24
 
-## The size of labels in the game's user interface. Silkscreen 16px * 3.
+## The size of labels in the game's user interface (Pixelify Sans).
 define gui.label_text_size = 48
 
 ## The size of text on the notify screen.

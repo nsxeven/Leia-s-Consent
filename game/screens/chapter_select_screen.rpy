@@ -14,8 +14,8 @@ screen chapter_select():
             spacing 22
             xfill True
 
-            text "CHAPTERS" size 48 color "#3b2a30" font "fonts/Silkscreen-Bold.ttf"
-            text "DIARY DIVIDERS" size 24 color "#7a6266" font "fonts/Silkscreen-Regular.ttf"
+            text "CHAPTERS" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
+            text "DIARY DIVIDERS" size 24 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
             text _("Developer / QA shortcut. This starts a new game with a preset of the earlier story state; it does not play the skipped scenes.") size 28 color "#7a6266" font "fonts/Caveat[wght].ttf"
 
             text _("Day") size 30
