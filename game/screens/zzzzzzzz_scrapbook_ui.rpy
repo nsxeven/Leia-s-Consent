@@ -1146,7 +1146,7 @@ screen phone_notification_overlay():
             padding (16, 12)
             hbox:
                 spacing 12
-                add Transform("gui/phone/sweetheart/icon_messages.png", nearest=True) yalign 0.5
+                add Transform("gui/phone/sprite_match/messages.png", xysize=(48, 48)) yalign 0.5
                 vbox:
                     spacing 2
                     text _phone_toast.get("title", "Phone") size 24 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
@@ -1179,9 +1179,9 @@ screen phone_notification_banner():
                 background Transform(lc_phone_art("banner_" + _theme), nearest=True)
                 hover_background Transform(lc_phone_art("banner_" + _theme), nearest=True)
                 action Function(lc_phone_open_from_notification, _note)
-                add Transform(lc_phone_art("icon_messages"), nearest=True):
+                add Transform("gui/phone/sprite_match/messages.png", xysize=(64, 64)):
                     xpos 30
-                    ypos 33
+                    ypos 36
                 text (_note.get("app") or "Messages").upper():
                     style "lc_sw_pixel"
                     color _c["mut"]
