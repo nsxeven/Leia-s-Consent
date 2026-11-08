@@ -244,6 +244,52 @@ def choice_route_tag(choice_id, effects):
     return route_tag(effects, CHOICE_ROUTE_FLAGS.get(choice_id))
 
 
+# Full Transparency path stamp on the choice card: the derived tag above, written
+# small, plus the colour meaning it shares with the stat deltas (delta_kind):
+# good = Love family (green), bad = toward NTR (red), exhibitionism = pink,
+# sharing = purple. Neutral choices get no stamp. "->" is drawn as an arrow glyph
+# by the screen (in a font that has one).
+PATH_STAMPS = {
+    "Love": ("-> Love", "good"),
+    "Love+Exhib": ("-> Love+Exhib", "exhibitionism"),
+    "NTS": ("-> NTS", "sharing"),
+    "NTR": ("-> NTR", "bad"),
+    "May lead to NTR": ("may lead to NTR", "bad"),
+    "Locks NTR": ("locks NTR", "bad"),
+    "NTR stays open": ("NTR stays open", "bad"),
+    "Repair": ("Repair", "good"),
+    "Repair, NTR stays open": ("Repair, NTR stays open", "good"),
+    "Neutral": None,
+}
+
+# Tags that pull toward NTR. Gate formatters keep their warning diamond only for these.
+NTR_TAGS = frozenset(("NTR", "May lead to NTR", "Locks NTR", "NTR stays open"))
+
+
+def path_stamp(tag):
+    """(text, colour kind) for a route tag, or None (Neutral / no tag)."""
+    return PATH_STAMPS.get(tag)
+
+
+def choice_path_stamp(choice_id, effects):
+    return path_stamp(choice_route_tag(choice_id, effects))
+
+
+def effects_from_chips(chips):
+    """Rebuild (group, stat, amount) effects from exact stat-line chips.
+
+    Only for captions that carry no choice id (literal test captions); real story
+    captions carry the id and use the registered effects.
+    """
+    out = []
+    for name, amount, exact in chips:
+        stat = stat_id_for_label(name)
+        if not exact or stat not in STAT_GROUPS or not amount:
+            return None
+        out.append((STAT_GROUPS[stat], stat, int(amount)))
+    return out
+
+
 def scoring_violations(choice_id, effects):
     """Every way a choice breaks the scoring rule (empty list = OK).
 

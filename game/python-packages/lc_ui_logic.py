@@ -6,6 +6,8 @@ No Ren'Py dependency.
 
 from __future__ import annotations
 
+import re
+
 # Tokens that mean the current scene is night for the dialogue paper.
 # "dinner" is included because evening meals use night paper; the daytime
 # drive to dinner is listed in DAY_EXCEPTIONS.
@@ -148,20 +150,24 @@ def day_period_label(flags, theme):
     return "DAY {}  {}".format(day, period)
 
 
-def parse_choice_caption(caption):
-    """Split a formatted choice into (line, chips).
+CHOICE_MARK_RE = re.compile(r"\{#lcpath=(\w+)\}")
 
-    Chips are (name, amount, exact). Developer captions that include an ID
-    or tags stay as a single raw line with no chips. Immersive captions have
-    no bracket suffix.
-    """
+
+def choice_mark(choice_id):
+    """Invisible marker (a Ren'Py {#...} comment tag) carrying a choice id in its caption."""
+    return "{#lcpath=" + choice_id + "}"
+
+
+def split_choice_mark(caption):
+    """(choice_id or None, caption without the marker)."""
     text = caption or ""
-    if "\n[" not in text:
-        return text, []
-    head, tail = text.split("\n[", 1)
-    if "[ID:" in text or "Tags:" in tail:
-        return text, []
-    body = tail.split("]")[0]
+    found = CHOICE_MARK_RE.search(text)
+    if not found:
+        return None, text
+    return found.group(1), CHOICE_MARK_RE.sub("", text)
+
+
+def _chips_from_body(body):
     chips = []
     for part in body.split("•"):
         piece = " ".join(part.split())
@@ -184,6 +190,29 @@ def parse_choice_caption(caption):
             except ValueError:
                 continue
             chips.append((name, amount, True))
+    return chips
+
+
+def parse_choice_caption(caption):
+    """Split a formatted choice into (line, chips).
+
+    Chips are (name, amount, exact). Developer captions that include an ID
+    or tags stay as a single raw line with no chips. Immersive captions have
+    no bracket suffix. Gate captions put a label group before the stats
+    ("[MAJOR RELATIONSHIP CONSEQUENCE] [Love -1 • Temptation +3]"): the first
+    bracket group that holds stats is used. The {#lcpath=...} marker is dropped.
+    """
+    _choice_id, text = split_choice_mark(caption)
+    if "\n[" not in text:
+        return text, []
+    head, tail = text.split("\n[", 1)
+    if "[ID:" in text or "Tags:" in tail:
+        return text, []
+    chips = []
+    for body in re.findall(r"\[([^\[\]]*)\]", "[" + tail):
+        chips = _chips_from_body(body)
+        if chips:
+            break
     return head.strip(), chips
 
 
