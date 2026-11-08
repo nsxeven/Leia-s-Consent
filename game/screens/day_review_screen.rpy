@@ -59,8 +59,8 @@ transform lc_title_arrive:
     pause 2.1
     linear 0.3 alpha 0.0
 
-define lc_font_pixel = "fonts/PixelifySans-Regular.ttf"
-define lc_font_pixel_bold = "fonts/PixelifySans-Bold.ttf"
+define lc_font_pixel = "fonts/Handjet-SemiBold.ttf"
+define lc_font_pixel_bold = "fonts/Handjet-ExtraBold.ttf"
 define lc_font_hand = "fonts/Caveat-Medium.ttf"
 define lc_font_hand_bold = "fonts/Caveat-SemiBold.ttf"
 
@@ -575,8 +575,8 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                         xalign 1.0
                         yalign 0.5
                         background Frame("images/ui/scrapbook/stamp.png", 9, 9, 9, 9)
-                        padding (12, 4)
-                        text route_label.upper() style "lc_pixel_bold" size 18 color "#a83a5a"
+                        padding (12, 6)
+                        text route_label.upper() style "lc_pixel_bold" size 16 color "#a83a5a"
             add "images/ui/scrapbook/rule_dots.png" xsize text_w ysize 3
             text diary[0] style "lc_hand" size 32 xsize text_w
             add "images/ui/scrapbook/rule.png" xsize text_w ysize 3
@@ -613,7 +613,7 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                                         for chip in line:
                                             frame:
                                                 background Frame("images/ui/scrapbook/chip_up.png" if chip["value"] > 0 else "images/ui/scrapbook/chip_down.png", 6, 6, 6, 6)
-                                                padding (6, 0)
+                                                padding (6, 2)
                                                 hbox:
                                                     spacing 3
                                                     add ("images/ui/scrapbook/tick_up.png" if chip["value"] > 0 else "images/ui/scrapbook/tick_down.png") yalign 0.5

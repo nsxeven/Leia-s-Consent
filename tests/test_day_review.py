@@ -319,10 +319,10 @@ class DayReviewTests(unittest.TestCase):
         self.assertIn('call screen lc_review_night_screen', review)
         self.assertIn('def lc_review_sfx', review)
         fonts = ROOT / 'game' / 'fonts'
-        for name in ('PixelifySans-Regular.ttf', 'PixelifySans-Bold.ttf', 'Caveat[wght].ttf',
-                     'OFL-PixelifySans.txt', 'OFL-Caveat.txt'):
+        for name in ('Handjet-SemiBold.ttf', 'Handjet-ExtraBold.ttf', 'Caveat[wght].ttf',
+                     'OFL-Handjet.txt', 'OFL-Caveat.txt'):
             self.assertTrue((fonts / name).is_file(), name)
-        self.assertIn('SIL Open Font License', (fonts / 'OFL-PixelifySans.txt').read_text())
+        self.assertIn('SIL Open Font License', (fonts / 'OFL-Handjet.txt').read_text())
         self.assertIn('SIL Open Font License', (fonts / 'OFL-Caveat.txt').read_text())
         art = ROOT / 'game' / 'images' / 'ui' / 'scrapbook'
         for name in ('night.png', 'spread.png', 'polaroid.png', 'tape_top.png', 'bar_gain.png',

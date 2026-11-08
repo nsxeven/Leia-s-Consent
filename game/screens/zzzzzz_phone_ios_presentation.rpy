@@ -170,7 +170,7 @@ init 95 python:
 
 
 style lc_sw_pixel is default:
-    font "fonts/PixelifySans-Regular.ttf"
+    font "fonts/Handjet-SemiBold.ttf"
     size 24
     antialias True
     hinting "bytecode"
@@ -178,7 +178,7 @@ style lc_sw_pixel is default:
     color "#4a2633"
 
 style lc_sw_pixel_bold is lc_sw_pixel:
-    font "fonts/PixelifySans-Bold.ttf"
+    font "fonts/Handjet-ExtraBold.ttf"
 
 style lc_sw_hand is default:
     font "fonts/PatrickHand-Regular.ttf"
@@ -466,7 +466,7 @@ screen phone_screen():
                         textbutton "SEED":
                             style "lc_sw_hit"
                             background Frame(lc_phone_art("card_" + theme), 18, 18)
-                            text_font "fonts/PixelifySans-Regular.ttf"
+                            text_font "fonts/Handjet-SemiBold.ttf"
                             text_antialias True
                             text_hinting "bytecode"
                             text_color c["txt"]
@@ -477,7 +477,7 @@ screen phone_screen():
                         textbutton "CLEAR":
                             style "lc_sw_hit"
                             background Frame(lc_phone_art("card_" + theme), 18, 18)
-                            text_font "fonts/PixelifySans-Regular.ttf"
+                            text_font "fonts/Handjet-SemiBold.ttf"
                             text_antialias True
                             text_hinting "bytecode"
                             text_color c["txt"]
@@ -851,7 +851,7 @@ screen phone_screen():
                                                         padding (36, 18)
                                                         background Frame(lc_phone_art("key_berry"), 16, 16)
                                                         hover_background Frame(lc_phone_art("key_berry"), 16, 16)
-                                                        text_font "fonts/PixelifySans-Bold.ttf"
+                                                        text_font "fonts/Handjet-ExtraBold.ttf"
                                                         text_size 21
                                                         text_antialias True
                                                         text_hinting "bytecode"
@@ -1111,7 +1111,7 @@ screen lc_phone_status():
                                     padding (32, 16)
                                     background Frame(lc_phone_art("key_berry"), 16, 16)
                                     hover_background Frame(lc_phone_art("key_berry"), 16, 16)
-                                    text_font "fonts/PixelifySans-Bold.ttf"
+                                    text_font "fonts/Handjet-ExtraBold.ttf"
                                     text_size 24
                                     text_antialias True
                                     text_hinting "bytecode"
@@ -1145,7 +1145,7 @@ screen lc_phone_status():
                         ysize 54
                         background Frame(lc_phone_art("card_" + theme), 18, 18)
                         hover_background Frame(lc_phone_art("key_berry"), 18, 15)
-                        text_font "fonts/PixelifySans-Bold.ttf"
+                        text_font "fonts/Handjet-ExtraBold.ttf"
                         text_antialias True
                         text_hinting "bytecode"
                         text_idle_color c["acc"]
@@ -1272,7 +1272,7 @@ screen lc_phone_settings():
                             ysize 54
                             background Frame(lc_phone_art("card_" + theme), 18, 18)
                             hover_background Frame(lc_phone_art("key_berry"), 18, 15)
-                            text_font "fonts/PixelifySans-Bold.ttf"
+                            text_font "fonts/Handjet-ExtraBold.ttf"
                             text_antialias True
                             text_hinting "bytecode"
                             text_idle_color c["acc"]

@@ -56,22 +56,30 @@ define gui.interface_text_color = '#3b2a30'
 
 ## Fonts and Font Sizes ########################################################
 
-## Dialogue is Patrick Hand. Labels and UI chrome are Pixelify Sans.
+## Dialogue is Patrick Hand. Labels and UI chrome are Handjet (SemiBold / ExtraBold static instances).
 ## Notes and captions use Caveat directly. All three are SIL OFL 1.1.
 define gui.text_font = "fonts/PatrickHand-Regular.ttf"
-define gui.name_text_font = "fonts/PixelifySans-Bold.ttf"
-define gui.interface_text_font = "fonts/PixelifySans-Regular.ttf"
+define gui.name_text_font = "fonts/Handjet-ExtraBold.ttf"
+define gui.interface_text_font = "fonts/Handjet-SemiBold.ttf"
+
+## Handjet is tall and very condensed. Rather than retune every size value
+## (they were set for wider pixel fonts), Ren'Py scales all Handjet text by
+## LC_HANDJET_SCALE (line height follows, so frames grow to fit the text).
+define LC_HANDJET_SCALE = 1.3
+init 1 python:
+    for _lc_hj in ("fonts/Handjet-SemiBold.ttf", "fonts/Handjet-ExtraBold.ttf"):
+        config.ftfont_scale[_lc_hj] = LC_HANDJET_SCALE
 
 ## The size of normal dialogue text. 42px is the 1080p handwriting size.
 define gui.text_size = 42
 
-## The size of character names (Pixelify Sans Bold).
+## The size of character names (Handjet ExtraBold).
 define gui.name_text_size = 24
 
 ## The size of text in the game's user interface.
 define gui.interface_text_size = 24
 
-## The size of labels in the game's user interface (Pixelify Sans).
+## The size of labels in the game's user interface (Handjet).
 define gui.label_text_size = 48
 
 ## The size of text on the notify screen.
