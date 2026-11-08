@@ -573,9 +573,10 @@ screen phone_screen():
                 frame:
                     style "lc_sw_frame"
                     xpos LC_PHONE_CONTENT_LEFT
-                    ypos 625
+                    ypos 891
+                    yanchor 1.0
                     xsize LC_PHONE_CONTENT_WIDTH
-                    ysize 266
+                    yminimum 266
                     background Frame("gui/phone/sprite_match/card.png", 16, 16)
                     padding (12, 9)
                     vbox:
@@ -589,23 +590,26 @@ screen phone_screen():
                             button:
                                 style "lc_sw_hit"
                                 xfill True
-                                ysize 58
+                                yminimum 58
+                                padding (14, 9, 14, 9)
                                 background Frame("gui/phone/sprite_match/reply_choice.png", 18, 18)
                                 hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
                                 action Function(phone_select_reply, phone_thread, reply_option["id"])
-                                text "↩":
-                                    font "DejaVuSans.ttf"
-                                    size 24
-                                    color "#557da7"
-                                    xpos 14
+                                hbox:
+                                    spacing 11
                                     yalign 0.5
-                                text reply_option["text"]:
-                                    style "lc_sw_hand"
-                                    size 24
-                                    color "#293C53"
-                                    xpos 49
-                                    yalign 0.5
-                                    xmaximum 366
+                                    text "↩":
+                                        font "DejaVuSans.ttf"
+                                        size 24
+                                        color "#557da7"
+                                        yalign 0.5
+                                    text reply_option["text"]:
+                                        style "lc_sw_hand"
+                                        size 24
+                                        color "#293C53"
+                                        yalign 0.5
+                                        xmaximum 366
+                                        line_spacing -2
             text "+":
                 style "lc_sw_hand"
                 size 30
