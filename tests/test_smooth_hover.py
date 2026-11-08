@@ -39,5 +39,15 @@ class SmoothHoverTests(unittest.TestCase):
         self.assertIn("at lc_badge_lift(hud_hovered)", hud)
 
 
+    def test_no_rollback_tracked_objects_in_render_path(self):
+        # Store `object`/`list` are revertable; creating them per frame crashed (#168).
+        self.assertIn("class _LCStyleProxy(python_object):", HOOK)
+        self.assertNotIn("object.__setattr__", HOOK)
+        self.assertNotIn("__slots__", HOOK)
+        self.assertIn("self._lc_fade = python_list(", HOOK)
+        body = HOOK.split("        def render(self, width, height, st, at):\n            self._lc_rendered", 1)[1]
+        self.assertLess(body.index("try:"), body.index("_LCStyleProxy(real"))
+
+
 if __name__ == "__main__":
     unittest.main()
