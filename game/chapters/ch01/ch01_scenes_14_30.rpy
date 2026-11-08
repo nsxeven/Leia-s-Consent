@@ -19,28 +19,28 @@ label ch01_scene_13b_night_pool:
     "Nobody was ready for bed yet."
     "We carried the shop bags outside instead, where the pool lights turned the water blue against the dark and the ocean had become more sound than view."
 
-    gf "Okay. This was worth the ridiculous villa."
-    friend "Finally. Gratitude."
-    gf "I said the villa was worth it. I said nothing about you."
+    gf "Okay, this. This part was worth the whole ridiculous villa."
+    friend "It's really not— I mean, I'm glad you like it. The pool's the best part anyway."
+    gf "Relax, I was talking about the villa. I didn't say anything nice about you."
     mc "Holiday [girlfriend_name] is meaner. I warned you."
-    friend "You did."
+    friend "You did warn me. I didn't believe you."
 
     "We opened the snacks on the low table and let the first day of the trip finally slow down."
 
     friend "Tell her about your first driving lesson."
-    mc "No."
-    gf "Tell me immediately."
+    mc "No. Absolutely not."
+    gf "Wait, what happened? Tell me right now."
     mc "Why is every story suddenly about me?"
-    friend "Because I have material."
-    gf "I like material."
+    friend "Because I've got years of material, man, and she's never heard any of it."
+    gf "I love material. Give me all the material."
 
     "One story became three. [girlfriend_name] retaliated with things I'd done at home that [friend_name] had never heard, and within minutes both of them were comparing notes at my expense."
 
-    mc "This friendship was a mistake."
-    gf "He's your best friend."
+    mc "This whole friendship was a mistake."
+    gf "He's your best friend, babe."
     friend "Technically I'm the reason you two happened."
     gf "One dare. Four years ago. You don't get lifetime credit."
-    friend "I absolutely do."
+    friend "I think I do, though. A little bit of lifetime credit."
 
     $ lc_sfx("leia_laugh")
     "[girlfriend_name] laughed and moved to sit along the edge of the pool, bare feet just above the water."
@@ -54,7 +54,7 @@ label ch01_scene_13b_night_pool:
     $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "[friend_name]'s eyes drifted toward her for a moment."
-    "There was no towel slipping. No collision. Nothing to catch and nothing to explain."
+    "This time nothing had slipped and nobody had tripped. There was nothing to catch and nothing to explain."
     "He noticed her, realized I had noticed him noticing, and looked back toward the water."
 
     $ set_story_flag("ch01_night_pool_julian_glance")
@@ -83,10 +83,10 @@ label ch01_scene_13b_night_pool:
 
     "I reached for another handful of chips as the conversation moved on."
 
-    gf "Movie?"
-    friend "Only if I choose."
-    gf "Then no."
-    mc "Strong start."
+    gf "Should we watch a movie? Inside, on the big couch?"
+    friend "Yeah, okay, but I get to pick this time."
+    gf "Then no. Absolutely not."
+    mc "Great. This is going to go really well."
 
     $ set_story_flag("ch01_scene_13b_complete")
     jump ch01_scene_14_movie_setup
@@ -104,10 +104,10 @@ label ch01_scene_14_movie_setup:
     "[girlfriend_name] rubbed both hands over her face and stared down at the dinner dress as if she had only just remembered she was still wearing it."
 
     gf "I'm changing before I fall asleep in this again."
-    mc "Strong plan."
+    mc "Good idea. Me too, probably."
     friend "I support any plan that doesn't involve me carrying anybody else tonight."
-    gf "Nobody asked you to."
-    friend "History will remember the sacrifice."
+    gf "Nobody asked you to carry me in the first place!"
+    friend "You were asleep. Nobody asked anybody anything. It was a whole situation."
 
     "We scattered to our rooms for a few minutes. By the time I came back downstairs, the villa had shifted from 'night out' to 'we live here now.'"
 
@@ -130,7 +130,7 @@ label ch01_scene_14_movie_setup:
     with dissolve
 
     friend "You drove us everywhere tonight. You've earned this."
-    mc "First sensible thing you've said since we landed."
+    mc "Thanks, man. I've been thinking about this since the restaurant."
 
     "I finally had the drink I'd skipped all evening."
 
@@ -140,16 +140,16 @@ label ch01_scene_14_movie_setup:
     $ cast(ryan="casual", leia="lounge", julian="lounge")
     $ face("leia", "smile")
 
-    gf "Congratulations. You may now participate."
-    mc "I've been participating all day."
-    friend "Driving doesn't count."
+    gf "Look at you, finally drinking. Welcome to the holiday."
+    mc "I've been on the holiday all day!"
+    friend "Driving doesn't count, man, sorry. Driving's basically a job."
     mc "It counted when both of you needed a ride home."
 
     "[friend_name] found a terrible movie. [girlfriend_name] vetoed two better ones purely because he recommended them, then approved the terrible one because the trailer made her laugh."
 
-    friend "Democracy has failed."
+    friend "I'd just like everyone to know I suggested two good movies."
     $ lc_sfx("remote_click")
-    gf "Press play."
+    gf "Shh. Press play."
 
     $ enter_cinematic_mode()
     scene cg ch01_movie_blanket_hand
@@ -184,12 +184,12 @@ label ch01_scene_15_under_blanket:
 
     "She caught my wrist."
 
-    gf "Babe."
-    mc "Mm?"
+    gf "Babe. What are you doing?"
+    mc "Mm? Nothing."
 
     "Her eyes flicked toward [friend_name] without turning her head. He was still watching the movie."
 
-    gf "He's literally right there."
+    gf "He's literally right there. Like, right there."
 
     $ ch01_movie_stop_text = format_choice("ch01_movie_stop", "Okay, okay. I'll behave.")
     $ ch01_movie_subtle_text = format_choice("ch01_movie_subtle", "Then don't make it obvious.")
@@ -202,17 +202,17 @@ label ch01_scene_15_under_blanket:
             $ set_story_value("ch01_movie_first_response", "stopped")
             mc "Okay, okay. I'll behave."
             "I loosened my arm around her and left my hand where it could not be mistaken for anything except a cuddle."
-            gf "Thank you."
+            gf "Thank you. I just don't want him to see."
             mc "For the record, this movie owes me."
-            gf "Watch it."
+            gf "Watch the movie, then."
 
         "[ch01_movie_subtle_text]":
             $ apply_choice("ch01_movie_subtle")
             $ set_story_value("ch01_movie_first_response", "subtle")
             mc "Then don't make it obvious."
-            gf "[player_name]."
-            mc "What?"
-            gf "That is not what I said."
+            gf "[player_name], that's—"
+            mc "What? I'm just saying."
+            gf "That's not what I said. That's not even close to what I said."
             "She kept hold of my wrist for another second, then released it without moving away."
 
         "[ch01_movie_tease_presence_text]":
@@ -221,7 +221,7 @@ label ch01_scene_15_under_blanket:
             mc "You seemed fine until you remembered he was there."
             gf "Because I forgot for a second."
             mc "Yeah, that's kind of what I'm saying."
-            gf "You're annoying."
+            gf "You're so annoying, you know that?"
             $ lc_sfx("leia_giggle", 0.7)
             "She hid the lower half of her face behind the blanket but stayed tucked against me."
 
@@ -253,7 +253,7 @@ label ch01_scene_16_can_he_tell:
     else:
         gf "Do you think he can tell?"
 
-    mc "Can tell what?"
+    mc "Tell what? That we're cuddling?"
     gf "Don't make me say it."
 
     $ ch01_can_tell_behave_text = format_choice("ch01_can_tell_behave", "Probably not. And I'll behave.")
@@ -266,16 +266,16 @@ label ch01_scene_16_can_he_tell:
             $ apply_choice("ch01_can_tell_behave")
             $ set_story_value("ch01_can_tell_response", "reassured")
             mc "Probably not. And I'll behave."
-            gf "Good."
+            gf "Good. That's all I wanted."
             "She relaxed against me again."
 
         "[ch01_can_tell_tease_text]":
             $ apply_choice("ch01_can_tell_tease")
             $ set_story_value("ch01_can_tell_response", "teased")
             mc "Only if you keep making that face."
-            gf "What face?"
-            mc "That one."
-            gf "Shut up."
+            gf "What face? I don't have a face."
+            mc "That one. The one you're doing right now."
+            gf "Shut up. I'm not doing a face."
 
         "[ch01_can_tell_push_text]":
             $ apply_choice("ch01_can_tell_push")
@@ -283,18 +283,18 @@ label ch01_scene_16_can_he_tell:
             mc "Would it bother you if he could?"
             "[girlfriend_name] looked at me instead of answering immediately."
             if partner_stats["exhibitionism"] < 18:
-                gf "Yes. Obviously."
+                gf "Yes! Obviously. What kind of question is that?"
             elif partner_stats["exhibitionism"] < 26:
-                gf "...I don't know."
+                gf "...I don't know. I actually don't know."
             else:
                 gf "That's not an answer to my question."
-                mc "Neither was that."
+                mc "Yeah, well. Neither was mine."
 
         "[ch01_can_tell_dismiss_text]":
             $ apply_choice("ch01_can_tell_dismiss")
             $ set_story_value("ch01_can_tell_response", "dismissed")
             mc "Does it really matter?"
-            gf "To me, maybe."
+            gf "It does to me. A little."
             mc "Yeah. I guess I get that."
 
     $ lc_sfx("remote_click")
@@ -302,32 +302,32 @@ label ch01_scene_16_can_he_tell:
     "Before either of us could keep circling the question, [friend_name] paused the movie."
 
     friend "Okay. Do you need the bathroom or something?"
-    gf "What?"
-    friend "You've been moving around for five minutes."
+    gf "What? No. Why?"
+    friend "You've been wriggling around over there for like five minutes. It's fine, I can wait, it's not a problem."
 
     "[girlfriend_name] went completely still beside me." with lc_punch()
     "Her eyes met mine for one mortified second."
 
     if get_story_value("ch01_can_tell_response") == "reassured":
         mc "She's just trying to get comfortable."
-        gf "Exactly. Play the movie."
+        gf "Yes. I'm getting comfortable. Can you play the movie, please?"
     elif get_story_value("ch01_can_tell_response") in ("teased", "asked_if_bothered"):
-        mc "See? Subtle."
-        gf "I hate you."
-        friend "Am I missing something?"
-        gf "No."
+        mc "See, babe? Really subtle."
+        gf "I hate you so much right now."
+        friend "Am I missing something? I feel like I'm missing something."
+        gf "No! Nothing. Play the movie."
     else:
-        mc "She's fine."
+        mc "She's fine, man. Just play it."
         "[girlfriend_name] looked at me, then back at the screen."
-        gf "Movie."
+        gf "Yeah. Can we just watch the movie?"
 
     "[friend_name] stared between us, decided not to investigate, and stood to refill the drinks instead."
 
-    friend "Ice? Coke?"
-    gf "Both."
-    mc "Coke."
-    friend "Anything else, your majesties?"
-    gf "Less commentary."
+    friend "I'm getting drinks. Does anyone want anything? Ice, Coke?"
+    gf "Both, please. Lots of ice."
+    mc "Just a Coke, thanks."
+    friend "Anything else? I'm basically a waiter now."
+    gf "Less commentary would be nice."
 
     $ set_story_flag("ch01_scene_16_complete")
     $ set_story_flag("ch01_scene_17_complete")
@@ -357,9 +357,9 @@ label ch01_scene_18_private_under_blanket:
     else:
         gf "You were doing that on purpose."
         mc "Doing what?"
-        gf "Don't."
+        gf "Don't. Don't do the innocent thing."
         mc "I genuinely have no idea what you're talking about."
-        gf "Trying to make me react while he was sitting right there."
+        gf "Trying to make me react while he was sitting right there, like two feet away from us, with the lights on."
 
     $ ch01_private_apologize_text = format_choice("ch01_private_apologize", "I'm glad we could talk." if ch01_movie_respected_request else "Okay. I got carried away. Sorry.")
     $ ch01_private_playful_text = format_choice("ch01_private_playful", "I did manage to behave, didn't I?" if ch01_movie_respected_request else "You weren't exactly telling me to stop.")
@@ -372,21 +372,21 @@ label ch01_scene_18_private_under_blanket:
             $ set_story_value("ch01_private_movie_response", "apologized")
             if ch01_movie_respected_request:
                 mc "I'm glad we could talk."
-                gf "Me too."
-                mc "Always."
+                gf "Me too. I'm really glad."
+                mc "Anytime, babe. Seriously."
             else:
                 mc "Okay. I got carried away. Sorry."
                 "[girlfriend_name]'s expression softened."
                 gf "I know you were joking around. Just... ask me next time."
-                mc "Deal."
+                mc "I will. I promise."
 
         "[ch01_private_playful_text]":
             $ apply_choice("ch01_private_playful")
             $ set_story_value("ch01_private_movie_response", "playful")
             if ch01_movie_respected_request:
                 mc "I did manage to behave, didn't I?"
-                gf "For once."
-                mc "High praise."
+                gf "For once in your life, yes."
+                mc "I'll take it. That's basically a compliment."
                 $ lc_sfx("leia_giggle", 0.7)
                 "She was fighting a smile."
             else:
@@ -405,9 +405,9 @@ label ch01_scene_18_private_under_blanket:
             else:
                 mc "Did you actually want me to stop?"
             "[girlfriend_name] hesitated."
-            gf "...I don't know."
-            mc "That's okay."
-            gf "It was embarrassing."
+            gf "...I don't know. I really don't know."
+            mc "That's okay. You don't have to know."
+            gf "It was so embarrassing. Like, really embarrassing."
             "She glanced toward the kitchen."
             gf "But it was also kind of..."
             mc "Kind of what?"
@@ -432,9 +432,9 @@ label ch01_scene_18_private_under_blanket:
     with dissolve
 
     friend "Why do I feel like I interrupted something?"
-    gf "You didn't."
-    friend "That was suspiciously fast."
-    mc "Put the ice down, detective."
+    gf "You didn't! You didn't interrupt anything."
+    friend "That was a really fast answer."
+    mc "Just put the ice down, man."
     friend "Gladly. This is freezing my hand."
 
     if get_story_value("ch01_private_movie_response") == "curious_open":
@@ -451,11 +451,11 @@ label ch01_scene_19_too_hot:
     "The movie resumed. [friend_name] had barely settled back down before [girlfriend_name] started tugging at the blanket."
 
     gf "Okay, I'm actually dying under this thing."
-    friend "I'll lower the aircon."
+    friend "I can turn the aircon down if you want? It's no trouble."
     mc "Don't. It'll become a freezer in ten minutes."
-    friend "It is objectively warm."
+    friend "I don't know, man, it's pretty warm in here. I'm sweating a bit."
     mc "You're holding a glass full of ice."
-    gf "Fine. Then this is going."
+    gf "You know what? Then the blanket's going."
 
     "[girlfriend_name] pushed the blanket completely off both of us and dropped it over the arm of the sofa."
     $ set_story_value("ch01_movie_blanket_state", "off")
@@ -536,7 +536,7 @@ label ch01_scene_20_no_hiding_place:
             "[friend_name] reached for his drink without looking over. [girlfriend_name] didn't move away."
             "When she finally spoke, it was barely a whisper under the soundtrack."
             gf "Behave."
-            mc "I am."
+            mc "I am behaving. This is me behaving."
             gf "Barely."
             $ lc_sfx("leia_giggle", 0.6)
             "She caught my wrist and steered my hand back down to her thigh, biting back a smile the whole time."
@@ -587,18 +587,18 @@ label ch01_scene_21_watching_julian:
             $ set_story_value("ch01_watching_response", "claimed_attention")
             mc "Eyes on me."
             "[girlfriend_name] looked at me, startled, then understood exactly what I meant."
-            gf "Possessive."
-            mc "Complaining?"
+            gf "Wow. Someone's possessive tonight."
+            mc "Is that a complaint?"
             "Her foot nudged my side."
-            gf "Maybe not."
+            gf "I didn't say that. Maybe not."
 
         "[ch01_watch_tease_text]":
             $ apply_choice("ch01_watch_tease")
             $ set_story_value("ch01_watching_response", "called_out")
-            mc "You're watching him."
-            gf "I'm not."
+            mc "You're watching him. I saw that."
+            gf "I'm not! I was just— I'm not."
             mc "You literally just checked if he was looking."
-            gf "Because of you."
+            gf "Because of you! Because of the whole blanket thing!"
             "That answer did not actually settle anything."
 
         "[ch01_watch_check_text]":
@@ -607,7 +607,7 @@ label ch01_scene_21_watching_julian:
             mc "You okay?"
             gf "Yeah."
             "She looked at me for another second."
-            gf "Just very aware of everything now."
+            gf "I'm just really aware of everything now. Like where he is, where your hand is, all of it."
             mc "We can stop making it weird."
             gf "I didn't say it was weird."
 
@@ -653,13 +653,13 @@ label ch01_scene_22_first_micro_test:
         "[ch01_micro_warn_text]":
             $ apply_choice("ch01_micro_warn")
             $ set_story_value("ch01_micro_test_response", "warned")
-            mc "Your top."
+            mc "Hey. Your top."
             "[girlfriend_name] fixed it immediately."
             scene bg ch01_villa_living_evening
             with dissolve
             $ cast(ryan="casual", leia="lounge", julian="lounge")
-            gf "Thanks."
-            mc "Mm."
+            gf "Thanks. This top's useless."
+            mc "Sure. Anytime."
 
         "[ch01_micro_silent_text]":
             $ apply_choice("ch01_micro_silent")
@@ -685,7 +685,7 @@ label ch01_scene_22_first_micro_test:
             $ set_story_value("ch01_micro_test_response", "dismissed")
             mc "Doesn't matter."
             "[girlfriend_name] blinked."
-            gf "Okay."
+            gf "Oh. Okay."
             "She fixed the top herself and turned back to the screen."
             scene bg ch01_villa_living_evening
             with dissolve
@@ -710,18 +710,18 @@ label ch01_scene_23_relationship_philosophy:
     "By then none of us were pretending the movie was good."
     "On screen, one character discovered their partner flirting at a party and reacted like the world had ended."
 
-    friend "Imagine breaking up over that."
-    gf "Depends what you call flirting."
-    friend "Talking to somebody?"
-    gf "That's not flirting."
+    friend "Imagine breaking up with someone over that. He was just talking to her."
+    gf "Okay, but it depends what you call flirting."
+    friend "Talking to somebody at a party? That's just called being at a party."
+    gf "That's not flirting, that's talking. Flirting is different."
     mc "You interrogated me over one phone call earlier."
-    gf "I did not interrogate you."
-    friend "I witnessed an interrogation."
-    gf "Nobody asked you."
+    gf "I didn't interrogate you! I asked like three questions."
+    friend "It was more than three. I was there. I had to go look at a sign."
+    gf "Nobody asked you, sign guy."
 
     "[girlfriend_name] looked back at me."
 
-    gf "Okay then. Where's the line?"
+    gf "So then where's the line? Like, for real."
     gf "Like... someone looking at someone attractive doesn't count, right?"
 
     $ ch01_philosophy_couple_text = format_choice("ch01_philosophy_couple", "Some things should stay between the couple.")
@@ -735,9 +735,9 @@ label ch01_scene_23_relationship_philosophy:
             $ set_story_value("ch01_relationship_philosophy", "couple_boundary")
             $ set_story_value("ch01_looking_philosophy", "encouragement_boundary")
             mc "Some things should stay between the couple."
-            gf "Looking?"
+            gf "Even looking? Like if you just look at someone?"
             mc "Looking is looking. Encouraging it is different."
-            gf "Okay. That makes sense."
+            gf "Yeah. That actually makes sense."
 
         "[ch01_philosophy_trust_text]":
             $ apply_choice("ch01_philosophy_trust")
@@ -745,16 +745,16 @@ label ch01_scene_23_relationship_philosophy:
             $ set_story_value("ch01_looking_philosophy", "harmless")
             mc "Trust matters more than arbitrary rules."
             gf "So someone looking doesn't matter as long as nobody's hiding anything?"
-            mc "Pretty much."
+            mc "Yeah, pretty much. As long as we're honest."
             gf "I like that answer."
-            friend "Disturbingly mature."
+            friend "That's... really mature, actually. I was expecting a joke."
 
         "[ch01_philosophy_jealousy_fun_text]":
             $ apply_choice("ch01_philosophy_jealousy_fun")
             $ set_story_value("ch01_relationship_philosophy", "playful_jealousy")
             $ set_story_value("ch01_looking_philosophy", "enjoy_attention")
             mc "I think a little jealousy can actually be fun."
-            gf "Fun?"
+            gf "Fun? How is jealousy fun?"
             mc "Someone noticing you doesn't mean I'm losing you."
             gf "And if I noticed them noticing?"
             mc "Still depends what you do with it."
@@ -780,14 +780,14 @@ label ch01_scene_23_relationship_philosophy:
 
 label ch01_scene_25_julian_put_on_spot:
 
-    gf "What about you?"
-    friend "What about me?"
-    gf "You're single. Surely you look."
-    friend "At people? Occasionally. I possess eyes."
+    gf "What about you, [friend_name]?"
+    friend "What about me? I'm just sitting here."
+    gf "You're single. You must look at people, right?"
+    friend "At people? I mean, sometimes, yeah. I have eyes. I'm not, like, a monk."
     gf "Would you actually tell someone if you thought they were attractive?"
-    friend "Depends who."
+    friend "I don't know. Depends who it is, I guess."
     gf "That's such a non-answer."
-    friend "It's an excellent answer."
+    friend "It's a really safe answer, though. I'm kind of proud of it."
 
     $ ch01_julian_change_subject_text = format_choice("ch01_julian_change_subject", "Alright. Enough relationship court.")
     $ ch01_julian_let_play_text = format_choice("ch01_julian_let_play", "Say nothing and let them keep talking.")
@@ -799,9 +799,9 @@ label ch01_scene_25_julian_put_on_spot:
             $ apply_choice("ch01_julian_change_subject")
             $ set_story_value("ch01_julian_attraction_prompt", "changed_subject")
             mc "Alright. Enough relationship court."
-            friend "Thank you."
+            friend "Thank you. Thank you, man."
             gf "Cowards. Both of you."
-            mc "Correct."
+            mc "We are. Totally fine with it."
 
         "[ch01_julian_let_play_text]":
             $ apply_choice("ch01_julian_let_play")
@@ -826,7 +826,7 @@ label ch01_scene_25_julian_put_on_spot:
             mc "Just answer her. It's not like I care."
             "[girlfriend_name] looked at me before she looked back at [friend_name]."
             friend "That somehow makes this worse."
-            gf "Answer."
+            gf "Well? Answer the question."
 
     $ set_story_flag("ch01_scene_25_complete")
     jump ch01_scene_26_the_compliment
@@ -843,12 +843,12 @@ label ch01_scene_26_the_compliment:
         "[friend_name] looked between us, apparently deciding that there was no answer left that would make the conversation less awkward."
 
         $ lc_duck()
-        friend "Obviously you're attractive."
+        friend "Okay, I mean— obviously you're attractive."
         "[girlfriend_name] went quiet for half a second."
         friend "You're an attractive woman. I'm pretty sure [player_name] knows that."
         gf "That was very diplomatic."
         $ lc_unduck()
-        friend "I've had a difficult day."
+        friend "I've had a really long day. I carried a whole person into a house."
 
         $ set_story_value("ch01_julian_compliment_given", True)
 
@@ -863,15 +863,15 @@ label ch01_scene_26_the_compliment:
                 $ set_story_value("ch01_compliment_response", "affirmed")
                 mc "Of course she is."
                 "[girlfriend_name] looked at me and smiled before turning back to [friend_name]."
-                gf "Thank you."
-                friend "You're welcome."
+                gf "Thank you. Both of you."
+                friend "You're welcome. Can we please watch the movie now?"
 
             "[ch01_compliment_tease_text]":
                 $ apply_choice("ch01_compliment_tease")
                 $ set_story_value("ch01_compliment_response", "teased")
                 mc "Careful, mate."
-                friend "You put me here."
-                mc "I know."
+                friend "You put me here, man! You did this."
+                mc "I know. I know I did."
                 gf "You two are ridiculous."
 
             "[ch01_compliment_enjoy_text]":
@@ -879,7 +879,7 @@ label ch01_scene_26_the_compliment:
                 $ set_story_value("ch01_compliment_response", "enjoyed")
                 mc "See? Told you."
                 gf "You are enjoying this way too much."
-                mc "Maybe."
+                mc "Maybe a little bit."
                 "[girlfriend_name] shook her head, but she was smiling."
                 gf "Thank you, [friend_name]."
                 friend "You're welcome. Please never make me do that again."
@@ -888,10 +888,10 @@ label ch01_scene_26_the_compliment:
                 $ apply_choice("ch01_compliment_shrug")
                 $ set_story_value("ch01_compliment_response", "shrugged")
                 "I shrugged and checked my phone."
-                "[girlfriend_name]'s attention lingered on me for a beat, then returned to [friend_name]."
+                "[girlfriend_name]'s attention lingered on me for a second, then returned to [friend_name]."
                 gf "...Thank you."
                 friend "Yeah. Of course."
-                "The compliment landed more cleanly than my reaction to it did."
+                "He'd said something nice to her. I'd checked my phone."
 
     $ set_story_flag("ch01_scene_26_complete")
     jump ch01_scene_27_late_photo_drop
@@ -965,7 +965,7 @@ label ch01_scene_27_late_photo_drop:
     mc "That was his line."
     gf "You're both annoying."
 
-    "The attachment stayed in the Trip Group and was indexed into the Phone's Photos state for later viewing."
+    "The photo stayed in the group chat, waiting for whenever one of us scrolled back through the day."
 
     $ set_story_flag("ch01_scene_27_complete")
     jump ch01_scene_28_ryan_leia_alone
@@ -994,14 +994,14 @@ label ch01_scene_28_ryan_leia_alone:
 
     if not ch01_movie_pressed and not ch01_pressed_julian:
         gf "You were good about everything tonight."
-        mc "Is that a compliment?"
-        gf "You listened when I was embarrassed. I noticed."
+        mc "Wait, is that a compliment?"
+        gf "You listened when I got embarrassed, and you didn't make it a whole thing. I noticed that."
         mc "I wanted you to be comfortable."
     else:
         gf "You were weird tonight."
-        mc "Me?"
-        gf "Yes, you."
-        mc "Specific."
+        mc "Me? Weird how?"
+        gf "Yes, you. You know exactly how."
+        mc "That's not really an answer, babe."
         if ch01_pressed_julian and ch01_movie_pressed:
             gf "The blanket. The questions. Putting [friend_name] on the spot. All of it."
         elif ch01_pressed_julian:
@@ -1023,8 +1023,8 @@ label ch01_scene_28_ryan_leia_alone:
                 gf "You didn't. Thank you for checking on me."
             else:
                 mc "I think I pushed the joke too far."
-                gf "A little."
-                mc "Sorry."
+                gf "Yeah. A little."
+                mc "Sorry. I didn't really think about it."
                 gf "I know you weren't trying to make me uncomfortable."
             "She leaned against my shoulder."
 
@@ -1032,18 +1032,18 @@ label ch01_scene_28_ryan_leia_alone:
             $ apply_choice("ch01_alone_curiosity")
             $ set_story_value("ch01_alone_movie_response", "curious")
             mc "I was curious how you'd react."
-            gf "And?"
+            gf "And? How did I react?"
             mc "I'm still figuring that out."
-            gf "Helpful."
+            gf "Wow. Super helpful, thank you."
             mc "What about you?"
-            gf "Also still figuring it out."
+            gf "Honestly? I'm still figuring it out too."
 
         "[ch01_alone_open_text]":
             $ apply_choice("ch01_alone_open")
             $ set_story_value("ch01_alone_movie_response", "open")
             mc "I liked watching you get nervous."
-            gf "That's so mean."
-            mc "You liked it."
+            gf "That's so mean! You're so mean."
+            mc "You kind of liked it, though."
             "[girlfriend_name] opened her mouth to deny it, stopped, then looked down at her glass."
             gf "...A little."
             mc "Yeah?"
@@ -1073,15 +1073,15 @@ label ch01_scene_29_private_reflection:
             gf "It was a compliment. Obviously it was nice."
         elif relationship_stats["boredom"] >= 16 and get_story_value("ch01_compliment_response") == "shrugged":
             "[girlfriend_name] hesitated longer than I expected."
-            gf "Maybe."
+            gf "Maybe. I don't know."
             gf "He actually looked nervous saying it."
-            mc "And?"
+            mc "And that was... good?"
             gf "Nothing. It was just... nice."
         else:
             "[girlfriend_name] thought about it."
             gf "I think I liked that he was nervous saying it."
-            mc "Why?"
-            gf "I don't know. It made it feel... real, I guess."
+            mc "Why? Because it was awkward?"
+            gf "I don't know. He wasn't just saying it to be nice, he actually meant it. It felt real, I guess."
 
     else:
         mc "Did you actually enjoy any of that tonight?"
@@ -1089,11 +1089,11 @@ label ch01_scene_29_private_reflection:
         mc "Being aware he was there."
         "[girlfriend_name] considered the question."
         if get_story_value("ch01_micro_test_response") == "knowingly_left":
-            gf "I liked that it felt a little dangerous without anything actually happening."
+            gf "I think I liked that it felt a little dangerous? Like, without anything actually happening. Is that weird?"
         elif get_story_value("ch01_micro_test_response") in ("warned", "dismissed"):
             gf "Mostly I was embarrassed. You being there helped."
         else:
-            gf "Maybe a little. I liked knowing I could decide what to do."
+            gf "Maybe a little. I liked knowing it was up to me. Like, I got to decide what happened, nobody else."
 
     $ ch01_private_claim_text = format_choice("ch01_private_claim", "That's okay. I still like knowing you're mine.")
     $ ch01_private_open_text = format_choice("ch01_private_open", "I liked seeing you enjoy the attention.")
@@ -1106,16 +1106,16 @@ label ch01_scene_29_private_reflection:
             $ set_story_value("ch01_private_attention_response", "claimed")
             mc "That's okay. I still like knowing you're mine."
             "[girlfriend_name] looked up at me."
-            gf "Possessive."
-            mc "You're not complaining."
-            gf "Not yet."
+            gf "Yours, huh?"
+            mc "Yeah. Is that okay?"
+            gf "I'm not complaining. Not yet, anyway."
 
         "[ch01_private_open_text]":
             $ apply_choice("ch01_private_open")
             $ set_story_value("ch01_private_attention_response", "open")
             mc "I liked seeing you enjoy the attention."
-            gf "That's still weird."
-            mc "Probably."
+            gf "That's still weird, babe. You know that's weird, right?"
+            mc "Probably, yeah."
             gf "...Not necessarily bad weird."
 
         "[ch01_private_jealous_text]":
@@ -1123,11 +1123,11 @@ label ch01_scene_29_private_reflection:
             $ set_story_value("ch01_private_attention_response", "jealous")
             mc "I'd be lying if I said I wasn't a little jealous."
             "[girlfriend_name]'s expression softened."
-            gf "A little?"
-            mc "A little."
-            gf "Good."
-            mc "Good?"
-            gf "I don't want you feeling like you have to pretend."
+            gf "Only a little?"
+            mc "Okay, maybe more than a little."
+            gf "Good. I'm glad you said it."
+            mc "Wait, good?"
+            gf "Because I don't want you feeling like you have to pretend you're fine with everything all the time, you know?"
 
         "[ch01_private_indifferent_text]":
             $ apply_choice("ch01_private_indifferent")
@@ -1184,12 +1184,12 @@ label ch01_scene_30_end_day_one:
     $ lc_sfx("leia_giggle", 0.8)
     "[girlfriend_name] checked the same message on her phone and laughed quietly."
 
-    gf "He's dramatic."
-    mc "He's correct."
-    gf "Eleven-thirty."
+    gf "He's so dramatic. Breakfast isn't a crime."
+    mc "He's kind of right, though."
+    gf "Eleven-thirty. That's my final offer."
     mc "Eleven-fifteen."
     gf "Eleven-thirty."
-    mc "Fine."
+    mc "Fine. Eleven-thirty. You'll still need two more minutes."
 
     $ set_story_value("ch01_day1_nonchalant_count", chapter_nonchalant_count("ch01"))
 
@@ -1208,8 +1208,8 @@ label ch01_scene_30_end_day_one:
         and partner_stats["curiosity"] >= 24
     ):
         $ set_story_value("ch01_day1_route_pressure", "nts_seeded")
-        "Somewhere during the day, a private joke between [girlfriend_name] and me had started acquiring a third point of reference."
-        "Nothing had happened. The fact that nothing had happened was part of what made the possibility feel new."
+        "Somewhere during the day, the private jokes between [girlfriend_name] and me had started to include a third person."
+        "Nothing had actually happened. Somehow that made it harder to stop thinking about."
     else:
         $ set_story_value("ch01_day1_route_pressure", "mixed")
         "[friend_name] had been my best friend for longer than I'd known [girlfriend_name]. One day under the same roof had already shown me corners of that friendship I'd never had to think about."
@@ -1226,7 +1226,7 @@ label ch01_scene_30_end_day_one:
     )
     if ch01_day1_love_ending:
         "[girlfriend_name] settled against my shoulder before we fell asleep."
-        gf "Today was good."
+        gf "Today was good. Like, really good."
         mc "Even the part where you tripped?"
         gf "We don't talk about the path."
         "I kissed her forehead, and she reached for my hand beneath the covers."
@@ -1259,7 +1259,7 @@ label ch01_scene_30_end_day_one:
         "Same table. Same candles. The same low music I hadn't noticed the first time."
         "[girlfriend_name] stood beside our table in her dress, and he was standing next to her."
         "The man from dinner."
-        "There was no collision this time. No spilled drink. No apology. He was simply there, close enough that his arm touched hers."
+        "There was no collision this time, no spilled drink, no apology. He was simply there, close enough that his arm touched hers."
 
         stranger "Want me to take that photo for you?"
         gf "Would you?"
@@ -1305,7 +1305,7 @@ label ch01_scene_30_end_day_one:
         "That was the cruelest part. It was my own mind writing her that way, not her."
 
         $ lc_moan_once(4)
-        "I called her name again. Nothing."
+        "I tried to say her name again. Nothing came out."
         $ lc_moan_once(3)
         "He bent to say something against her ear, and she laughed—"
 

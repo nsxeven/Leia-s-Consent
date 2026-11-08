@@ -39,6 +39,7 @@ label ch01_scene_04_pool_arrival:
         mc "You look... wow. Okay. Incredible, you look incredible."
         "Some of the tension left her shoulders."
         $ face("leia", "smile")
+        $ lc_sfx("leia_sigh")  # darryn: relieved sigh with "Phew"
         gf "Good. Phew. I was kind of nervous about this one."
     else:
         $ cast_add(leia="white_ruffle")
@@ -47,13 +48,13 @@ label ch01_scene_04_pool_arrival:
         "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
         $ face("leia", "smile")
-        gf "I know. This one has already passed quality control."
+        gf "I know. This one's safe, it's been to like three beaches already."
 
     with dissolve
 
     friend "Are you two finished, or should I give you another minute?"
-    gf "Jealous?"
-    friend "Of the pool waiting while you flirt? Extremely."
+    gf "Why, are you jealous?"
+    friend "No, I just feel bad for the pool. It's been waiting for you two this whole time. It's a very patient pool."
 
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_sunscreen_blue
@@ -135,7 +136,7 @@ label ch01_scene_05_photography:
         $ cast_add(leia="white_ruffle")
         $ face("leia", "neutral")
 
-    friend "Give me the phone."
+    friend "Here, give me the phone. I'll prop it up somewhere."
 
     $ lc_sfx("timer_beeps")
     $ lc_photo()
@@ -154,7 +155,7 @@ label ch01_scene_05_photography:
     "She enlarged the picture, studied it, and looked at [friend_name]."
 
     gf "Can you take one of just me?"
-    friend "Sure."
+    friend "Sure, yeah. Of course."
 
     $ enter_cinematic_mode()
     if selected_pool_outfit == "pool_bolder":
@@ -362,14 +363,14 @@ label ch01_scene_05_photography:
 
     if get_story_value("ch01_photo_outcome") == "confident":
         gf "Did you get it?"
-        friend "I got it."
+        friend "I got it. I think you'll like it."
         gf "Good. You can show me later."
     elif get_story_value("ch01_photo_outcome") in ("relaxed", "chose_to_continue"):
         gf "Those better not all be terrible."
-        friend "You'll find out later."
+        friend "You'll find out later. They're good, I promise."
     else:
         gf "At least tell me the group one was decent."
-        friend "You'll survive."
+        friend "It was decent! Everyone had their eyes open. Mostly."
 
     if get_story_value("ch01_photo_outcome") == "stopped":
         "The solo photos were gone, just as he'd promised. Our first group selfie stayed on [friend_name]'s phone for now."
@@ -385,7 +386,7 @@ label ch01_scene_05_photography:
         $ cast_add(leia="white_ruffle")
         $ face("leia", "smile")
     gf "Can I ask you something?"
-    mc "Dangerous opening."
+    mc "That's never a good way to start."
     gf "Was [friend_name] this ridiculous before I knew him?"
     friend "I'm standing right here."
     mc "Define 'ridiculous.'"
@@ -401,7 +402,7 @@ label ch01_scene_05_photography:
     "She looked at [friend_name], amused."
 
     gf "Four years, and I still can't decide if you're charming or a problem."
-    friend "Careful. That's almost nice."
+    friend "That's... almost nice? I'm going to take that as nice."
     gf "Don't get used to it."
     mc "Give it a day. She gets meaner on holiday."
     if selected_pool_outfit == "pool_bolder":
