@@ -349,18 +349,14 @@ init 20 python:
         ("partner", "secrecy"),
         ("partner", "boundary_looseness"),
     )
-    LC_REVIEW_BAR_STYLE = {
-        "love": {"icon": "heart", "ink": "#cc0066"},
-        "trust": {"icon": "shield", "ink": "#3f6470"},
-        "boredom": {"icon": "zzz", "ink": "#5a4f72"},
-        "curiosity": {"icon": "spark", "ink": "#8a4e28"},
-        "exhibitionism": {"icon": "eye", "ink": "#8a3058"},
-        "jealousy": {"icon": "flame", "ink": "#8a3828"},
-        "acceptance": {"icon": "face", "ink": "#8a6420"},
-        "momentum": {"icon": "chevron", "ink": "#3e5a28"},
-        "temptation": {"icon": "drop", "ink": "#6a3050"},
-        "secrecy": {"icon": "lock", "ink": "#5a504a"},
-        "boundary_looseness": {"icon": "gate", "ink": "#5a5348"},
+    # Shared by the review and Status; future consolidated stats are ready too.
+    LC_STAT_ICON = {
+        "love": "love", "trust": "trust", "boredom": "boredom",
+        "momentum": "momentum", "curiosity": "curiosity",
+        "temptation": "temptation", "exhibitionism": "exhibitionism",
+        "boundary_looseness": "boundary_looseness", "secrecy": "secrecy",
+        "jealousy": "jealousy", "acceptance": "acceptance",
+        "sharing": "sharing", "distance": "distance",
     }
     LC_REVIEW_NIGHT = {
         "ch01_d1": ("DAY 1", "ARRIVAL", "night falls over the villa…"),

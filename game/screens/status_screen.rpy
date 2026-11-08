@@ -16,8 +16,11 @@ screen status_stat_row(row):
 
             hbox:
                 xfill True
+                spacing 8
 
-                text row["label"] size 21 color "#3b2a30"
+                if row["stat"] in LC_STAT_ICON:
+                    add Transform("images/ui/scrapbook/icon_{}.png".format(LC_STAT_ICON[row["stat"]]), xysize=(28, 28)) yalign 0.5
+                text row["label"] size 21 color "#3b2a30" yalign 0.5
 
                 if row["detail"]:
                     text row["detail"] size 18 color "#7a6266" xalign 1.0
