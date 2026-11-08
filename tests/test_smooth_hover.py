@@ -20,7 +20,7 @@ class SmoothHoverTests(unittest.TestCase):
         self.assertIn("_lc_hover_fade_installed", HOOK)   # reload-safe
         self.assertIn("_lc_rendered", HOOK)               # no fade on first show
         for name in ("background", "foreground", "child"):
-            self.assertIn('"%s"' % name, HOOK)
+            self.assertIn("self.style.%s" % name, HOOK)
         self.assertRegex(HOOK, r"define LC_HOVER_IN = 0\.1\d")
         self.assertRegex(HOOK, r"define LC_HOVER_OUT = 0\.2\d")
 
