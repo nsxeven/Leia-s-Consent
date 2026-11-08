@@ -23,31 +23,44 @@ style lc_stat_tip_text is default:
     adjust_spacing False
 
 
+# showif keeps its child alive through the hide ATL; the previous tooltip text
+# stays available after GetTooltip becomes None on loss of focus.
+transform lc_stat_tip_fade:
+    on show:
+        alpha 0.0
+        ease 0.18 alpha 1.0
+    on hide:
+        ease 0.18 alpha 0.0
+
 screen lc_stat_tip(tip, look="scrapbook"):
-    if tip and look == "phone":
-        # Berry key art (the phone's button colour) so the card stands out
-        # from the cream stat cards underneath.
-        $ _tip_card = Frame(lc_phone_art("key_berry"), 16, 16)
-        nearrect:
-            focus "tooltip"
-            prefer_top True
-            frame:
-                xalign 0.5
-                xmaximum 580
-                background _tip_card
-                padding (22, 14)
-                text tip:
-                    style "lc_sw_hand"
-                    size 28
-                    color "#faf4e8"
-                    substitute False
-    elif tip:
-        nearrect:
-            focus "tooltip"
-            prefer_top True
-            frame:
-                xalign 0.5
-                xmaximum 540
-                background Frame("gui/scrapbook/frame_paper.png", 9, 9)
-                padding (20, 14)
-                text tip style "lc_stat_tip_text" substitute False
+    default _last_tip = None
+    $ _last_tip = tip or _last_tip
+    showif tip:
+        if look == "phone":
+            # Berry key art, kept at a constant size for every explanation.
+            $ _tip_card = Frame(lc_phone_art("key_berry"), 16, 16)
+            nearrect:
+                focus "tooltip"
+                prefer_top True
+                frame at lc_stat_tip_fade:
+                    xalign 0.5
+                    xsize 560
+                    ysize 360
+                    background _tip_card
+                    padding (22, 14)
+                    text _last_tip:
+                        style "lc_sw_hand"
+                        size 28
+                        color "#faf4e8"
+                        substitute False
+        else:
+            nearrect:
+                focus "tooltip"
+                prefer_top True
+                frame at lc_stat_tip_fade:
+                    xalign 0.5
+                    xsize 540
+                    ysize 360
+                    background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+                    padding (20, 14)
+                    text _last_tip style "lc_stat_tip_text" substitute False

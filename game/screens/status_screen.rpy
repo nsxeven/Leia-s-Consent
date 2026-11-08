@@ -50,12 +50,15 @@ screen status_section(title, rows):
                 use status_stat_row(row)
 
 
-screen status_screen():
-
+screen status_screen(return_to=None):
+    tag menu
     modal (not lc_ui_shooting)
     zorder 180
 
-    key "K_ESCAPE" action Return()
+    # A menu tab replaces its previous menu page; a call screen still returns.
+    $ _status_close = ShowMenu(return_to) if return_to else Return()
+    key "K_ESCAPE" action _status_close
+    key "game_menu" action _status_close
 
     $ mode = current_choice_mode()
     $ relationship_rows = status_relationship_rows(mode)
@@ -95,7 +98,7 @@ screen status_screen():
 
                     textbutton "Close":
                         xalign 1.0
-                        action Return()
+                        action _status_close
 
             use lc_scroll_body:
 

@@ -111,6 +111,22 @@ class StatTooltipWiringTests(unittest.TestCase):
         self.assertIn("use lc_stat_tip(GetTooltip(",
                       self._screen("screens/day_review_screen.rpy", "lc_day_review_screen"))
 
+    def test_card_has_fixed_dimensions_and_retains_text_during_exit(self):
+        card = self._screen("screens/stat_tooltip_screen.rpy", "lc_stat_tip")
+        self.assertIn("showif tip:", card)
+        self.assertIn("_last_tip = tip or _last_tip", card)
+        self.assertEqual(card.count("text _last_tip"), 2)
+        self.assertEqual(card.count("at lc_stat_tip_fade"), 2)
+        self.assertIn("xsize 560", card)
+        self.assertIn("xsize 540", card)
+        self.assertEqual(card.count("ysize 360"), 2)
+        self.assertNotIn("xmaximum", card)
+        transform = (GAME / "screens" / "stat_tooltip_screen.rpy").read_text(encoding="utf-8")
+        self.assertIn("on show:", transform)
+        self.assertIn("on hide:", transform)
+        self.assertIn("ease 0.18 alpha 1.0", transform)
+        self.assertIn("ease 0.18 alpha 0.0", transform)
+
     def test_card_uses_focus_not_hover_variables(self):
         card = (GAME / "screens" / "stat_tooltip_screen.rpy").read_text(encoding="utf-8")
         self.assertIn('focus "tooltip"', card)

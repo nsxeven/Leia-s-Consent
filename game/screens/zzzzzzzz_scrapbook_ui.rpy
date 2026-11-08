@@ -191,6 +191,13 @@ init python:
         return False
 
 
+    def lc_journal_status_origin():
+        """Remember the journal page replaced by the Status menu."""
+        for name in JOURNAL_MENU_SCREENS:
+            if name not in ("status_screen", "main_menu") and renpy.get_screen(name) is not None:
+                return name
+        return None
+
     def lc_journal_tab_rows():
         rows = []
         if store.main_menu:
@@ -209,7 +216,7 @@ init python:
             rows.append(("LOAD", ShowMenu("load"), False))
             rows.append(("PREFS", ShowMenu("preferences"), False))
             rows.append(("GALLERY", ShowMenu("gallery_screen"), False))
-            rows.append(("STATUS", Show("status_screen"), False))
+            rows.append(("STATUS", NullAction() if renpy.get_screen("status_screen") else ShowMenu("status_screen", return_to=lc_journal_status_origin()), False))
             rows.append(("TAGS", Show("lc_tags_screen"), False))
             if store._in_replay:
                 rows.append(("END REPLAY", EndReplay(confirm=True), False))
