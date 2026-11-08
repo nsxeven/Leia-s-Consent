@@ -591,8 +591,8 @@ screen about():
 
         vbox:
 
-            text "ABOUT" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-            text "INSIDE COVER" size 24 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+            text "ABOUT" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+            text "INSIDE COVER" size 24 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
             label "[config.name!t]"
             text _("Version [config.version!t]\n")
 
@@ -1026,8 +1026,8 @@ screen help():
         vbox:
             spacing 23
 
-            text "HELP" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-            text "TAPED INSIDE THE COVER" size 24 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+            text "HELP" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+            text "TAPED INSIDE THE COVER" size 24 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
 
             hbox:
 

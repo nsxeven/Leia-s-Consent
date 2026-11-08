@@ -640,7 +640,7 @@ init 20 python:
         width = 0
         for chip in chips:
             shown = "{} {:+d}".format(chip["label"], chip["value"])
-            # Pixelify Sans at the chip size is under 12px a glyph; keep the old
+            # Handjet (scaled, see gui.rpy) is under 12px a glyph; keep the old
             # Silkscreen-width estimate so chips never overflow. Plus tick and padding.
             chip_width = 40 + 12 * len(shown)
             if current and width + chip_width > limit:

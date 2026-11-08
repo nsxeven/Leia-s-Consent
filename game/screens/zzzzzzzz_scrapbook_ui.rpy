@@ -339,7 +339,7 @@ screen lc_menu_footer(hints=None):
             action Return()
             at lc_lift
             text "ESC" style "lc_key_text" yalign 0.5
-        text "RETURN" yalign 0.5 size 24 color "#cdb9a8" font "fonts/PixelifySans-Regular.ttf"
+        text "RETURN" yalign 0.5 size 24 color "#cdb9a8" font "fonts/Handjet-SemiBold.ttf"
 
     if hints:
         hbox:
@@ -355,7 +355,7 @@ screen lc_menu_footer(hints=None):
                         ysize 42
                         action NullAction()
                         text key_label style "lc_key_text"
-                    text caption yalign 0.5 size 24 color "#cdb9a8" font "fonts/PixelifySans-Regular.ttf"
+                    text caption yalign 0.5 size 24 color "#cdb9a8" font "fonts/Handjet-SemiBold.ttf"
 
 
 screen lc_chip(name, amount, exact=False):
@@ -370,7 +370,7 @@ screen lc_chip(name, amount, exact=False):
             yalign 0.5
             add ("gui/scrapbook/icon_up.png" if up else "gui/scrapbook/icon_down.png") yalign 0.5
             text lc_ui_logic.chip_label(name, amount, exact):
-                font "fonts/PixelifySans-Regular.ttf"
+                font "fonts/Handjet-SemiBold.ttf"
                 size 21
                 color col
                 yalign 0.5
@@ -438,7 +438,7 @@ screen say(who, what):
                     if kind == "leia":
                         add "gui/scrapbook/icon_heart.png" yalign 0.5
                     text who id "who":
-                        font "fonts/PixelifySans-Bold.ttf"
+                        font "fonts/Handjet-ExtraBold.ttf"
                         size 24
                         color lc_name_color(kind)
                         yalign 0.5
@@ -497,11 +497,11 @@ screen input(prompt):
         vbox:
             spacing 12
             if prompt and "your name" in prompt.lower():
-                text "PROPERTY OF" size 24 color "#5a4030" font "fonts/PixelifySans-Bold.ttf"
+                text "PROPERTY OF" size 24 color "#5a4030" font "fonts/Handjet-ExtraBold.ttf"
             elif prompt and "girlfriend" in prompt.lower():
-                text "HER NAME" size 24 color "#5a4030" font "fonts/PixelifySans-Bold.ttf"
+                text "HER NAME" size 24 color "#5a4030" font "fonts/Handjet-ExtraBold.ttf"
             elif prompt and "friend" in prompt.lower():
-                text "HIS NAME" size 24 color "#5a4030" font "fonts/PixelifySans-Bold.ttf"
+                text "HIS NAME" size 24 color "#5a4030" font "fonts/Handjet-ExtraBold.ttf"
             text prompt size 36 color "#3b2a30" font "fonts/PatrickHand-Regular.ttf"
             frame:
                 background Frame("gui/scrapbook/frame_paper.png", 9, 9)
@@ -525,7 +525,7 @@ screen choice(items):
             background Frame("gui/scrapbook/frame_kraft.png", 9, 9)
             padding (28, 6, 16, 6)
             ysize 48
-            text "WHAT DO I SAY?" size 24 color "#5a4030" font "fonts/PixelifySans-Bold.ttf" yalign 0.5
+            text "WHAT DO I SAY?" size 24 color "#5a4030" font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
     # Starts 24px higher with 24px of top padding inside, so the hover tape on
     # the first option is not clipped. Options grow to fit: minimum height is
@@ -568,7 +568,7 @@ screen choice(items):
                                 frame:
                                     xysize (42, 42)
                                     background Frame("gui/scrapbook/frame_paper.png", 9, 9)
-                                    text str(i + 1) xalign 0.5 yalign 0.5 size 24 color "#7a6266" font "fonts/PixelifySans-Bold.ttf"
+                                    text str(i + 1) xalign 0.5 yalign 0.5 size 24 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
                                 vbox:
                                     spacing 6
                                     xsize (1360 if dev else 700)
@@ -727,9 +727,9 @@ screen file_slots(title):
                 ypos 0
                 hbox:
                     spacing 16
-                    text ("SAVE" if is_save else "LOAD") size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                    text "PAGE" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                text ("PICK A PAGE TO KEEP" if is_save else "PICK UP WHERE I LEFT OFF") size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+                    text ("SAVE" if is_save else "LOAD") size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                    text "PAGE" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                text ("PICK A PAGE TO KEEP" if is_save else "PICK UP WHERE I LEFT OFF") size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
                 button:
                     action page_name_value.Toggle()
                     key_events True
@@ -752,7 +752,7 @@ screen file_slots(title):
                 for page in range(1, 10):
                     use lc_keycap_button(str(page), FilePage(page))
 
-            text "A = AUTO    Q = QUICK" xpos 800 ypos 58 size 21 color "#3b2a30" font "fonts/PixelifySans-Regular.ttf"
+            text "A = AUTO    Q = QUICK" xpos 800 ypos 58 size 21 color "#3b2a30" font "fonts/Handjet-SemiBold.ttf"
 
             for slot_row, slot_y in enumerate((128, 448)):
                 for slot_col, slot_x in enumerate((20, 390, 800, 1170)):
@@ -786,7 +786,7 @@ screen file_slots(title):
                                     text FileTime(slot, format=_("{#file_time}%b %d  %H:%M"), empty=""):
                                         size 18
                                         color "#9b8a80"
-                                        font "fonts/PixelifySans-Regular.ttf"
+                                        font "fonts/Handjet-SemiBold.ttf"
                         else:
                             frame:
                                 background None
@@ -800,8 +800,8 @@ screen file_slots(title):
                                     vbox:
                                         align (0.5, 0.5)
                                         spacing 4
-                                        text "EMPTY" xalign 0.5 size 24 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                                        text "SLOT [slot]" xalign 0.5 size 21 color "#3b2a30" font "fonts/PixelifySans-Regular.ttf"
+                                        text "EMPTY" xalign 0.5 size 24 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                                        text "SLOT [slot]" xalign 0.5 size 21 color "#3b2a30" font "fonts/Handjet-SemiBold.ttf"
 
             key "save_page_prev" action FilePagePrevious()
             key "save_page_next" action FilePageNext()
@@ -821,26 +821,26 @@ screen preferences():
                 spacing 10
                 xsize 760
 
-                text "PREFS" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                text "HOW I PLAY" size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
-                text "SETTINGS KEEP ACROSS SAVES" size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+                text "PREFS" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                text "HOW I PLAY" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
+                text "SETTINGS KEEP ACROSS SAVES" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
 
                 hbox:
                     spacing 40
                     vbox:
                         spacing 6
-                        text "DISPLAY" size 21 color "#7a6266" font "fonts/PixelifySans-Bold.ttf"
+                        text "DISPLAY" size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
                         textbutton _("WINDOW") action Preference("display", "window") style "lc_radio_button" text_style "lc_radio_text"
                         textbutton _("FULLSCREEN") action Preference("display", "fullscreen") style "lc_radio_button" text_style "lc_radio_text"
                     vbox:
                         spacing 6
-                        text "SKIP" size 21 color "#7a6266" font "fonts/PixelifySans-Bold.ttf"
+                        text "SKIP" size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
                         textbutton _("UNSEEN TEXT") action Preference("skip", "toggle") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("AFTER CHOICES") action Preference("after choices", "toggle") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("TRANSITIONS") action InvertSelected(Preference("transitions", "toggle")) style "lc_check_button" text_style "lc_check_text"
                     vbox:
                         spacing 6
-                        text "EFFECTS" size 21 color "#7a6266" font "fonts/PixelifySans-Bold.ttf"
+                        text "EFFECTS" size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
                         textbutton _("SCREEN SHAKE") action ToggleField(persistent, "lc_screen_shake") style "lc_check_button" text_style "lc_check_text"
                         textbutton _("CAMERA FLASH") action ToggleField(persistent, "lc_camera_flash") style "lc_check_button" text_style "lc_check_text"
 
@@ -864,8 +864,8 @@ screen preferences():
                 spacing 10
                 xsize 740
 
-                text "WHAT I SEE" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                text "INFORMATION SETTING" size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+                text "WHAT I SEE" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                text "INFORMATION SETTING" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
 
                 $ mode_now = current_choice_mode()
                 for mode_id in ("normal", "insight", "full"):
@@ -886,7 +886,7 @@ screen lc_pref_slider(label, value, fill, readout):
     vbox:
         spacing 2
         xfill True
-        text label size 21 color "#3b2a30" font "fonts/PixelifySans-Regular.ttf"
+        text label size 21 color "#3b2a30" font "fonts/Handjet-SemiBold.ttf"
         hbox:
             spacing 12
             bar:
@@ -896,7 +896,7 @@ screen lc_pref_slider(label, value, fill, readout):
                 left_bar Frame(fill, 6, 6)
                 right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
                 thumb "gui/scrapbook/slider_thumb.png"
-            text readout yalign 0.5 size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+            text readout yalign 0.5 size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
 
 
 screen lc_info_card(mode_id, mode_now):
@@ -916,12 +916,12 @@ screen lc_info_card(mode_id, mode_now):
             hbox:
                 spacing 10
                 xfill True
-                text info["label"] size 24 color ("#3b2a30" if on else "#7a6266") font "fonts/PixelifySans-Bold.ttf"
+                text info["label"] size 24 color ("#3b2a30" if on else "#7a6266") font "fonts/Handjet-ExtraBold.ttf"
                 if on:
-                    text "SELECTED" size 18 color "#a83a5a" font "fonts/PixelifySans-Regular.ttf" xalign 1.0
+                    text "SELECTED" size 18 color "#a83a5a" font "fonts/Handjet-SemiBold.ttf" xalign 1.0
             text info["tagline"] size 30 color ("#781446" if on else "#463460") font "fonts/Caveat[wght].ttf"
             if mode_id == "normal":
-                text "NO STAT HINTS SHOWN" size 18 color "#a8988a" font "fonts/PixelifySans-Regular.ttf"
+                text "NO STAT HINTS SHOWN" size 18 color "#a8988a" font "fonts/Handjet-SemiBold.ttf"
             elif mode_id == "insight":
                 hbox:
                     spacing 6
@@ -951,13 +951,13 @@ screen history():
                     spacing 2
                     hbox:
                         spacing 14
-                        text "HISTORY" size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                        text ("DAY %d" % lc_ui_logic.story_day_number(story_flags) if lc_ui_logic.story_day_number(story_flags) else "") size 48 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
-                    text "WHAT WAS SAID" size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf"
+                        text "HISTORY" size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                        text ("DAY %d" % lc_ui_logic.story_day_number(story_flags) if lc_ui_logic.story_day_number(story_flags) else "") size 48 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
+                    text "WHAT WAS SAID" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
                 vbox:
                     xalign 1.0
                     spacing 2
-                    text "NEWEST AT THE BOTTOM" size 21 color "#7a6266" font "fonts/PixelifySans-Regular.ttf" xalign 1.0
+                    text "NEWEST AT THE BOTTOM" size 21 color "#7a6266" font "fonts/Handjet-SemiBold.ttf" xalign 1.0
 
         # Left page only. The gutter sits near the middle of the spread, so a
         # full-width line would run across the spine.
@@ -990,13 +990,13 @@ screen history():
                                 padding (8, 2)
                                 xsize 120
                                 yminimum 32
-                                text "I SAID" size 18 color "#fff3f7" font "fonts/PixelifySans-Regular.ttf" xalign 0.5 yalign 0.5
+                                text "I SAID" size 18 color "#fff3f7" font "fonts/Handjet-SemiBold.ttf" xalign 0.5 yalign 0.5
                         elif h.who:
                             text h.who:
                                 xsize 120
                                 min_width 120
                                 yalign 0.0
-                                font "fonts/PixelifySans-Bold.ttf"
+                                font "fonts/Handjet-ExtraBold.ttf"
                                 size 21
                                 color lc_speaker_color(h.who)
                                 textalign 0.0
@@ -1037,7 +1037,7 @@ screen confirm(message, yes_action, no_action):
 
         vbox:
             spacing 12
-            text "ARE YOU SURE?" size 24 color "#6a5a1a" font "fonts/PixelifySans-Bold.ttf"
+            text "ARE YOU SURE?" size 24 color "#6a5a1a" font "fonts/Handjet-ExtraBold.ttf"
             text message size 40 color "#34242c" font "fonts/PatrickHand-Regular.ttf" xalign 0.0
             hbox:
                 spacing 24
@@ -1048,7 +1048,7 @@ screen confirm(message, yes_action, no_action):
                     hover_background Frame("gui/scrapbook/frame_pink_hover.png", 9, 9)
                     text_idle_color "#fff3f7"
                     text_hover_color "#fff3f7"
-                    text_font "fonts/PixelifySans-Bold.ttf"
+                    text_font "fonts/Handjet-ExtraBold.ttf"
                     text_size 24
                     padding (18, 8)
                     at lc_lift
@@ -1059,7 +1059,7 @@ screen confirm(message, yes_action, no_action):
                     text_idle_color "#3b2a30"
                     text_hover_color "#3b2a30"
                     text_selected_color "#3b2a30"
-                    text_font "fonts/PixelifySans-Bold.ttf"
+                    text_font "fonts/Handjet-ExtraBold.ttf"
                     text_size 24
                     padding (28, 8)
                     at lc_lift
@@ -1077,7 +1077,7 @@ screen skip_indicator():
         xsize 294
         ysize 45
         add "gui/scrapbook/skip_tape.png"
-        text "SKIPPING" align (0.32, 0.5) size 24 color "#5a0030" font "fonts/PixelifySans-Bold.ttf"
+        text "SKIPPING" align (0.32, 0.5) size 24 color "#5a0030" font "fonts/Handjet-ExtraBold.ttf"
 
 
 screen notify(message):
@@ -1091,7 +1091,7 @@ screen notify(message):
         hbox:
             spacing 10
             add "gui/scrapbook/icon_qsave.png" yalign 0.5
-            text "[message!tq]" yalign 0.5 size 24 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
+            text "[message!tq]" yalign 0.5 size 24 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
     add "gui/scrapbook/tape_h.png" xpos 1680 ypos 24
     timer 3.25 action Hide("notify")
 
@@ -1119,7 +1119,7 @@ screen choice_feedback_overlay():
 
             vbox:
                 spacing 6
-                text ("NOTED" if _noted else _choice_toast_title) size 21 color "#7a6266" font "fonts/PixelifySans-Bold.ttf"
+                text ("NOTED" if _noted else _choice_toast_title) size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
                 if _chips and _choice_toast_title != "DEBUG CHOICE":
                     hbox:
                         spacing 6
@@ -1148,7 +1148,7 @@ screen phone_notification_overlay():
                 add Transform("gui/phone/sweetheart/icon_messages.png", nearest=True) yalign 0.5
                 vbox:
                     spacing 2
-                    text _phone_toast.get("title", "Phone") size 24 color "#3b2a30" font "fonts/PixelifySans-Bold.ttf"
+                    text _phone_toast.get("title", "Phone") size 24 color "#3b2a30" font "fonts/Handjet-ExtraBold.ttf"
                     text _phone_toast.get("body", "") size 28 color "#7a6266" font "fonts/Caveat[wght].ttf"
         timer 3.60 action Function(clear_phone_notification, _phone_toast_serial)
 
@@ -1225,7 +1225,7 @@ screen status_choice_tutorial():
         padding (32, 26)
         vbox:
             spacing 12
-            text "YOUR CHOICES CHANGE THE RELATIONSHIP" size 21 color "#cc0066" font "fonts/PixelifySans-Bold.ttf" xalign 0.5 text_align 0.5
+            text "YOUR CHOICES CHANGE THE RELATIONSHIP" size 21 color "#cc0066" font "fonts/Handjet-ExtraBold.ttf" xalign 0.5 text_align 0.5
             text "That choice changed one or more underlying stats." size 36 color "#3b2a30" font "fonts/PatrickHand-Regular.ttf" xalign 0.5 text_align 0.5
             text "Open your Phone and tap STATUS to see how [player_name], [girlfriend_name], and the relationship are developing. SETTINGS lets you choose how much of the hidden system the game reveals." size 28 color "#7a6266" font "fonts/Caveat[wght].ttf" xalign 0.5 text_align 0.5
             hbox:
@@ -1264,8 +1264,8 @@ screen lc_adult_notice_screen():
         vbox:
             spacing 16
             xfill True
-            text "MATURE CONTENT" xalign 0.5 size 48 color "#a83a5a" font "fonts/PixelifySans-Bold.ttf"
-            text "ADULTS ONLY  -  18+" xalign 0.5 size 24 color "#8a4a5c" font "fonts/PixelifySans-Regular.ttf"
+            text "MATURE CONTENT" xalign 0.5 size 48 color "#a83a5a" font "fonts/Handjet-ExtraBold.ttf"
+            text "ADULTS ONLY  -  18+" xalign 0.5 size 24 color "#8a4a5c" font "fonts/Handjet-SemiBold.ttf"
             text "This fictional visual novel is intended only for adults." xalign 0.5 text_align 0.5 size 36 color "#34242c" font "fonts/Caveat[wght].ttf"
             null height 12
             hbox:
@@ -1277,7 +1277,7 @@ screen lc_adult_notice_screen():
                     hover_background Frame("gui/scrapbook/frame_pink_hover.png", 9, 9)
                     text_idle_color "#fff3f7"
                     text_hover_color "#fff3f7"
-                    text_font "fonts/PixelifySans-Bold.ttf"
+                    text_font "fonts/Handjet-ExtraBold.ttf"
                     text_size 24
                     padding (20, 10)
                     at lc_lift
@@ -1287,11 +1287,11 @@ screen lc_adult_notice_screen():
                     hover_background Frame("gui/scrapbook/frame_paper_hi.png", 9, 9)
                     text_idle_color "#7a6266"
                     text_hover_color "#3b2a30"
-                    text_font "fonts/PixelifySans-Regular.ttf"
+                    text_font "fonts/Handjet-SemiBold.ttf"
                     text_size 24
                     padding (20, 10)
 
-    text "SHOWN ONCE  -  REMEMBERED ON THIS DEVICE" xalign 0.5 ypos 900 size 21 color "#9b8a80" font "fonts/PixelifySans-Regular.ttf"
+    text "SHOWN ONCE  -  REMEMBERED ON THIS DEVICE" xalign 0.5 ypos 900 size 21 color "#9b8a80" font "fonts/Handjet-SemiBold.ttf"
     key "game_menu" action Return(False)
 
 
@@ -1337,7 +1337,7 @@ screen lc_demo_release_row(title, note, badge, delay):
             xysize (170, 40)
             yalign 0.5
             add Solid("#ff8fc0" if badge == "NEXT UP" else "#ffffff40") xysize (170, 40)
-            text badge font "fonts/PixelifySans-Bold.ttf" size 18 color ("#3b1028" if badge == "NEXT UP" else "#ffffff") xalign 0.5 yalign 0.5
+            text badge font "fonts/Handjet-ExtraBold.ttf" size 18 color ("#3b1028" if badge == "NEXT UP" else "#ffffff") xalign 0.5 yalign 0.5
             if badge == "NEXT UP":
                 add Solid("#ffffff40") xysize (170, 40) at lc_demo_glow
         vbox:
@@ -1377,7 +1377,7 @@ screen lc_demo_end_screen():
         text "You've finished the Prologue and Chapter One, Day One. Your tags, stickers and gallery unlocks are saved for the full game." style "lc_title_small_text" size 25 color "#ffffffd0" xmaximum 860 at lc_demo_in(1.2)
 
         null height 18
-        text "UPCOMING RELEASES" font "fonts/PixelifySans-Bold.ttf" size 26 color "#ff9fc8" at lc_demo_in(1.6)
+        text "UPCOMING RELEASES" font "fonts/Handjet-ExtraBold.ttf" size 26 color "#ff9fc8" at lc_demo_in(1.6)
         use lc_demo_release_row("Day 2", "The next update", "NEXT UP", 1.9)
         use lc_demo_release_row("Days 3–5", "In development", "SOON", 2.2)
 
@@ -1598,7 +1598,7 @@ style button:
     yminimum 42
 
 style button_text:
-    font "fonts/PixelifySans-Regular.ttf"
+    font "fonts/Handjet-SemiBold.ttf"
     size 24
     idle_color "#cdb9a8"
     hover_color "#fff3f7"
@@ -1673,11 +1673,11 @@ style lc_check_text is button_text:
 
 style label_text:
     color "#3b2a30"
-    font "fonts/PixelifySans-Bold.ttf"
+    font "fonts/Handjet-ExtraBold.ttf"
 
 style gui_text:
     color "#3b2a30"
-    font "fonts/PixelifySans-Regular.ttf"
+    font "fonts/Handjet-SemiBold.ttf"
 
 style window:
     xalign None
@@ -1722,7 +1722,7 @@ style lc_history_what is default:
     layout "tex"
 
 style say_label:
-    font "fonts/PixelifySans-Bold.ttf"
+    font "fonts/Handjet-ExtraBold.ttf"
     size 24
     color "#6a2338"
     xalign 0.0
