@@ -136,8 +136,8 @@ class StatTooltipWiringTests(unittest.TestCase):
         self.assertEqual(card.count('text (_last_tip or "")'), 2)
         self.assertEqual(card.count("at lc_stat_tip_fade"), 2)
         self.assertIn("xsize LC_PHONE_CONTENT_WIDTH", card)
-        self.assertIn("xsize 540", card)
-        self.assertEqual(card.count("ysize 360"), 2)
+        self.assertIn('xsize LC_STAT_TIP_SIZE["scrapbook"][0]', card)
+        self.assertEqual(card.count("ysize LC_STAT_TIP_SIZE["), 2)
         self.assertNotIn("xmaximum", card)
         transform = (GAME / "screens" / "stat_tooltip_screen.rpy").read_text(encoding="utf-8")
         self.assertIn("on show:", transform)
@@ -147,7 +147,8 @@ class StatTooltipWiringTests(unittest.TestCase):
 
     def test_card_uses_focus_not_hover_variables(self):
         card = (GAME / "screens" / "stat_tooltip_screen.rpy").read_text(encoding="utf-8")
-        self.assertIn('focus "tooltip"', card)
+        # Placed at the tooltip focus rect (kept after focus leaves so the fade-out plays).
+        self.assertIn('GetFocusRect("tooltip")', card)
         self.assertIn("substitute False", card)
         code = "\n".join(line for line in card.splitlines() if not line.lstrip().startswith("#"))
         self.assertNotIn("hovered", code)

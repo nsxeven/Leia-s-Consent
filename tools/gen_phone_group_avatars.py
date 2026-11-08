@@ -2,8 +2,8 @@
 
 darryn 2026-11-08: zoom in on the three faces, no blurred fill. Each selfie uses a
 square crop (uniform scale, no stretch) chosen so all faces sit inside the circle:
-trio selfies: faces span x 400-1260, y 0-630 of 1920x1080, so the square is
-(310, 0, 1350, 1040). A selfie without an entry falls back to a centred
+trio selfies (shifted toward Julian, darryn): faces span x 400-1260, y 0-630 of 1920x1080, so the square is
+(430, 0, 1470, 1040). A selfie without an entry falls back to a centred
 full-height square.
 Run: python tools/gen_phone_group_avatars.py
 """
@@ -18,8 +18,8 @@ SCALE = 4
 
 # Square crop boxes (left, top, right, bottom) per source file name.
 CROPS = {
-    "CH1D1_CG_PoolSelfie_Trio_White.webp": (310, 0, 1350, 1040),
-    "CH1D1_CG_PoolSelfie_Trio_Blue.webp": (310, 0, 1350, 1040),
+    "CH1D1_CG_PoolSelfie_Trio_White.webp": (430, 0, 1470, 1040),
+    "CH1D1_CG_PoolSelfie_Trio_Blue.webp": (430, 0, 1470, 1040),
 }
 
 

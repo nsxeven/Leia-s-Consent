@@ -23,44 +23,49 @@ style lc_stat_tip_text is default:
     adjust_spacing False
 
 
-# showif keeps its child alive through the hide ATL; the previous tooltip text
-# stays available after GetTooltip becomes None on loss of focus.
+# The card sits next to the focused stat row. darryn 2026-11-08: one compact size
+# per look, fades in AND out. The tooltip focus rect disappears the moment focus
+# leaves, so the card keeps the last rect + text and is placed with
+# `nearrect rect`, letting the hide fade play where the card was.
 transform lc_stat_tip_fade:
     on show:
-        alpha 0.0
-        ease 0.18 alpha 1.0
+        alpha 0.0 yoffset 6
+        ease 0.18 alpha 1.0 yoffset 0
     on hide:
-        ease 0.18 alpha 0.0
+        ease 0.18 alpha 0.0 yoffset 6
+
+define LC_STAT_TIP_SIZE = {"phone": (None, 176), "scrapbook": (540, 196)}
 
 screen lc_stat_tip(tip, look="scrapbook"):
     default _last_tip = None
+    default _last_rect = None
+    $ _rect = GetFocusRect("tooltip") if tip else None
     $ _last_tip = tip or _last_tip
-    showif tip:
-        if look == "phone":
-            # Berry key art, kept at a constant size for every explanation.
-            $ _tip_card = Frame(lc_phone_art("key_berry"), 16, 16)
-            nearrect:
-                focus "tooltip"
-                prefer_top True
-                frame at lc_stat_tip_fade:
-                    xalign 0.5
-                    xsize LC_PHONE_CONTENT_WIDTH
-                    ysize 360
-                    background _tip_card
-                    padding (22, 14)
-                    text (_last_tip or ""):
-                        style "lc_sw_hand"
-                        size 28
-                        color "#faf4e8"
-                        substitute False
-        else:
-            nearrect:
-                focus "tooltip"
-                prefer_top True
-                frame at lc_stat_tip_fade:
-                    xalign 0.5
-                    xsize 540
-                    ysize 360
-                    background Frame("gui/scrapbook/frame_paper.png", 9, 9)
-                    padding (20, 14)
-                    text (_last_tip or "") style "lc_stat_tip_text" substitute False
+    $ _last_rect = _rect or _last_rect
+    if _last_rect:
+        nearrect:
+            rect _last_rect
+            prefer_top True
+            showif tip:
+                if look == "phone":
+                    # Same white card + blue outline as the phone's own cards.
+                    frame at lc_stat_tip_fade:
+                        xalign 0.5
+                        xsize LC_PHONE_CONTENT_WIDTH
+                        ysize LC_STAT_TIP_SIZE["phone"][1]
+                        background Frame("gui/phone/sprite_match/tip_card.png", 18, 18)
+                        padding (20, 12)
+                        text (_last_tip or ""):
+                            style "lc_sw_hand"
+                            size 24
+                            color "#293C53"
+                            yalign 0.5
+                            substitute False
+                else:
+                    frame at lc_stat_tip_fade:
+                        xalign 0.5
+                        xsize LC_STAT_TIP_SIZE["scrapbook"][0]
+                        ysize LC_STAT_TIP_SIZE["scrapbook"][1]
+                        background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+                        padding (20, 12)
+                        text (_last_tip or "") style "lc_stat_tip_text" yalign 0.5 substitute False
