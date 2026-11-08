@@ -433,9 +433,9 @@ screen lc_menu_footer(hints=None):
                     text caption yalign 0.5 size 24 color "#cdb9a8" font "fonts/Handjet-SemiBold.ttf"
 
 
-screen lc_chip(name, amount, exact=False):
+screen lc_chip(name, amount, exact=False, ink=None):
     $ up = amount > 0
-    $ col = "#5f8a32" if amount > 0 else ("#7a6266" if amount == 0 else "#a8453f")
+    $ col = ink or ("#5f8a32" if amount > 0 else ("#7a6266" if amount == 0 else "#a8453f"))
     frame:
         background Frame(("gui/scrapbook/chip_up.png" if up else "gui/scrapbook/chip_down.png"), 9, 9)
         padding (8, 1, 8, 1)
@@ -1034,7 +1034,35 @@ screen lc_pref_slider(label, value, fill, readout, sample=None):
                     tooltip "Test this channel"
 
 
+# Example choices shown on the Insight / Full mode cards, rotating every
+# LC_MODE_EXAMPLE_SECONDS: (caption, [(stat, amount)], path tag, camera text or "").
+define LC_MODE_EXAMPLE_SECONDS = 3.0
+define LC_MODE_CARD_EXAMPLES = (
+    ("a sweet answer", [("love", 1), ("trust", 1)], "Love", ""),
+    ("a small slip", [("love", -1), ("temptation", 1)], "May lead to NTR", ""),
+    ("a playful photo moment", [("exhibitionism", 2)], "Love+Exhib", "3"),
+)
+
+init python:
+    import time as _lc_time
+    import lc_stat_model
+
+    def lc_mode_example_index():
+        return int(_lc_time.time() // LC_MODE_EXAMPLE_SECONDS)
+
+    def lc_mode_example_alpha(trans, st, at):
+        # Wall clock, so a screen rebuild never restarts it: fade in over
+        # 0.35 s after each switch, fade out over the last 0.3 s.
+        phase = _lc_time.time() % LC_MODE_EXAMPLE_SECONDS
+        trans.alpha = max(0.0, min(1.0, phase / 0.35, (LC_MODE_EXAMPLE_SECONDS - phase) / 0.3))
+        return 0
+
+transform lc_mode_example_fade:
+    function lc_mode_example_alpha
+
 screen lc_info_card(mode_id, mode_now):
+    # Redraw when the example changes (lc_mode_example_fade fades in/out around it).
+    timer LC_MODE_EXAMPLE_SECONDS repeat True action renpy.restart_interaction
     $ info = transparency_mode_info(mode_id)
     $ on = mode_now == mode_id
     button:
@@ -1057,18 +1085,44 @@ screen lc_info_card(mode_id, mode_now):
             text info["tagline"] size 30 color ("#ff8fc0" if on else "#ff8fc0") font "fonts/Caveat[wght].ttf"
             if mode_id == "normal":
                 text "NO STAT HINTS SHOWN" size 18 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
-            elif mode_id == "insight":
-                hbox:
-                    spacing 6
-                    use lc_chip("LOVE", 1, False)
-                    use lc_chip("TRUST", 1, False)
-                    use lc_chip("SECRECY", -1, False)
             else:
-                hbox:
-                    spacing 6
-                    use lc_chip("LOVE", 2, True)
-                    use lc_chip("TRUST", 2, True)
-                    use lc_chip("SECRECY", -1, True)
+                # Rotating examples (darryn 2026-11-08) so players can picture what each
+                # mode shows, including the NTR heads-up and the photo stamp in Full.
+                if True:
+                    $ ex = LC_MODE_CARD_EXAMPLES[lc_mode_example_index() % len(LC_MODE_CARD_EXAMPLES)]
+                    vbox at lc_mode_example_fade:
+                        spacing 4
+                        text ("e.g. " + ex[0]) size 17 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
+                        hbox:
+                            spacing 6
+                            box_wrap True
+                            box_wrap_spacing 4
+                            for (_stat, _amount) in ex[1]:
+                                use lc_chip(STAT_LABELS.get(_stat, _stat), _amount, mode_id != "insight", lc_delta_colour(_stat, _amount, "review"))
+                            if mode_id != "insight":
+                                $ _stamp = lc_stat_model.path_stamp(ex[2])
+                                if _stamp:
+                                    $ _ink = LC_REVIEW_DELTA_INK[_stamp[1]]
+                                    frame at lc_path_stamp_tilt:
+                                        yalign 0.5
+                                        background Solid(_ink)
+                                        padding (2, 2, 2, 2)
+                                        frame:
+                                            background Solid(LC_PATH_STAMP_PAPER)
+                                            padding (7, 0, 7, 1)
+                                            text _stamp[0].upper().replace("->", LC_PATH_STAMP_ARROW) size 19 color _ink font "fonts/Handjet-ExtraBold.ttf" substitute False
+                                if ex[3]:
+                                    frame at lc_path_stamp_tilt:
+                                        yalign 0.5
+                                        background Solid(LC_CG_STAMP_INK)
+                                        padding (2, 2, 2, 2)
+                                        frame:
+                                            background Solid(LC_PATH_STAMP_PAPER)
+                                            padding (6, 1, 8, 1)
+                                            hbox:
+                                                spacing 5
+                                                add "images/ui/scrapbook/icon_camera.png" yalign 0.5
+                                                text ex[3] size 19 color LC_CG_STAMP_INK font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
 
 ## History ####################################################################

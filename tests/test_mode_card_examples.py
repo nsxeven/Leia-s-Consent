@@ -1,0 +1,36 @@
+"""Mode cards rotate example choices; Full shows path + camera stamps (darryn 2026-11-08)."""
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+UI = (ROOT / "game/screens/zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+
+
+class ModeCardExampleTests(unittest.TestCase):
+
+    def card(self):
+        return UI.split("screen lc_info_card(mode_id, mode_now):", 1)[1].split("\n## History", 1)[0]
+
+    def test_examples_use_current_stats_only(self):
+        block = UI.split("define LC_MODE_CARD_EXAMPLES = (", 1)[1].split("\n)\n", 1)[0]
+        for old in ("secrecy", "boredom", "momentum", "jealousy", "curiosity", "acceptance"):
+            self.assertNotIn(old, block.lower())
+        self.assertNotIn('"SECRECY"', UI)
+        self.assertIn('"May lead to NTR"', block)
+        self.assertIn('"Love+Exhib", "3"', block)
+
+    def test_card_rotates_and_colours_by_meaning(self):
+        card = self.card()
+        self.assertIn("timer LC_MODE_EXAMPLE_SECONDS repeat True", card)
+        self.assertIn("at lc_mode_example_fade", card)
+        self.assertIn('lc_delta_colour(_stat, _amount, "review")', card)
+
+    def test_stamps_full_only(self):
+        card = self.card()
+        self.assertIn('if mode_id != "insight":', card)
+        self.assertIn("lc_stat_model.path_stamp(ex[2])", card)
+        self.assertIn('icon_camera.png', card)
+
+
+if __name__ == "__main__":
+    unittest.main()
