@@ -84,6 +84,13 @@ scene for a read-aloud pass:
 - flag: a character's average line length drifting far outside their file's range
   (Julian longest, then Leia and Maya, Ryan shortest).
 
+## Writer note: scoring choices
+Every answer in a menu leads down one path (Love, Love+Exhib, NTS, NTR, or Repair), and Full
+Transparency shows that path as a small stamp on the card. Before writing a menu, decide which path
+each answer is for; if a line feels like two paths, split it into two answers. Scoring steps and
+the allowed stat shapes: `docs/STAT_MODEL.md`, "How to score a new choice". `tests/test_choice_path_tags.py`
+fails on a new choice that mixes paths.
+
 ## Workflow for every new day
 1. darryn's day plan.
 2. Scriptwriter drafts with the character files open.

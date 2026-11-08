@@ -588,8 +588,12 @@ init python:
             return "{}\n[{}]".format(base_text, effects) if effects else base_text
 
         if mode == "full":
+            # {#lcpath=<id>} is an invisible comment tag: the choice card reads it to
+            # draw the path stamp (systems/choice_path_tags.rpy).
+            import lc_ui_logic
             effects = _choice_effect_text(choice_id, exact=True)
-            return "{}\n[{}]".format(base_text, effects) if effects else base_text
+            text = "{}\n[{}]".format(base_text, effects) if effects else base_text
+            return lc_ui_logic.choice_mark(choice_id) + text
 
         tags = get_choice_tags(choice_id)
         tag_text = " • Tags: {}".format(", ".join(tags)) if tags else ""

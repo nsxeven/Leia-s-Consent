@@ -34,7 +34,68 @@ Old stats: `curiosity` and `acceptance` folded into Exhibitionism; `boredom`, th
 6. The Full route tag is derived, never typed: `lc_choice_route_tag(choice_id)` gives Love,
    Love+Exhib, NTS, NTR, Repair, May lead to NTR, Locks NTR, NTR stays open, "Repair, NTR stays
    open" or Neutral, from the effects plus `CHOICE_ROUTE_FLAGS` (the route value the branch writes).
-   The Full-mode tag line on choice cards is a later task (LC-F); Developer mode already shows it.
+   Full Transparency shows it as a small stamp on each choice card (below); Developer mode shows it
+   as `[Route: ...]`.
+7. One clear path per choice (`tests/test_choice_path_tags.py`, scans every story menu): every
+   `format_choice` / gate formatter / `apply_choice` id has registered effects that pass this rule;
+   the caption shows the same choice the branch applies; a choice with effects never sits behind a
+   plain caption; and two options in one menu with the same stat line never lead to different paths.
+
+## Full Transparency path stamp (`systems/choice_path_tags.rpy`)
+
+Full Transparency only (Immersive, Insight and Developer cards are unchanged). After the stat line
+each card gets a small tilted ink stamp in Handjet, the font of the "WHAT DO I SAY?" label. It wraps
+under the stat line on a narrow card.
+
+| Tag (`choice_route_tag`) | Stamp | Ink (`LC_REVIEW_DELTA_INK`) |
+|---|---|---|
+| Love | `→ LOVE` | green (`good`) |
+| Love+Exhib | `→ LOVE+EXHIB` | pink (`exhibitionism`) |
+| NTS | `→ NTS` | purple (`sharing`) |
+| NTR | `→ NTR` | red (`bad`) |
+| May lead to NTR (soft gates, `mixed_unresolved`) | `MAY LEAD TO NTR` | red |
+| Locks NTR (`ntr_confirmed`) | `LOCKS NTR` | red |
+| NTR stays open (`ntr_unresolved`) | `NTR STAYS OPEN` | red |
+| Repair | `REPAIR` | green |
+| Repair, NTR stays open | `REPAIR, NTR STAYS OPEN` | green |
+| Neutral (no stats) | no stamp | |
+
+The colours are the stat-delta meanings, in the darker inks the review page uses so they read on the
+cream cards. The arrow is drawn in DejaVuSans, like the Insight arrows (Patrick Hand and Caveat have none).
+How the card knows the choice: in Full mode `format_choice()` and the gate formatters prefix the
+caption with an invisible Ren'Py comment tag `{#lcpath=<choice id>}`; the card reads it after
+substituting the `"[var]"` caption (`lc_choice_caption`). A caption without one (literal test
+captions) is scored from its stat line by the same `route_tag()`.
+
+Gate formatters (`format_day2_risk_choice`, `format_day4_gate_choice`, `format_day5_gate_choice`) are
+wrapped there too: a gate option that does not lean toward NTR (the reconnect / ask-gently / go-to-her
+answers) is formatted like a normal choice in Insight and Full, so it no longer carries the same red
+◆ warning as the NTR options beside it; the ◆ itself is drawn in DejaVuSans (Patrick Hand has no
+glyph for it); Full gate cards now show their stat line (the parser skips the
+`[MAJOR RELATIONSHIP CONSEQUENCE]` label group). A new `format_dayN_*choice` helper must be added to
+the wrapper list (the test checks).
+
+## How to score a new choice
+
+1. Give it a stable id (`ch01_d6_<beat>_<answer>`) and register effects: Day 1 in
+   `systems/choice_engine.rpy`, Day 2 in `ch01_day2_scenes_01_15.rpy`, Day 3+ in the day's
+   registration file or `systems/stat_model_v2_later_days.rpy` (Day 3-5 files are Scriptwriter-owned).
+2. Decide the ONE path the answer pushes, then pick the matching shape:
+   - Love: Love and/or Trust up (`+1` ordinary, `+2` strong, `+3` key beat).
+   - Love+Exhib: Exhibitionism up, optionally Love or Trust up. Never Temptation or Sharing with it.
+   - NTS: Sharing up, optionally Trust up (never Love).
+   - NTR: Temptation up, optionally Love or Trust down. Nothing else goes up.
+   - Repair (repair beats only; add the id to `REPAIR_CHOICES`): Temptation down + Love or Trust up.
+   - Neutral: no stats (no stamp).
+   If an answer seems to need two paths, split it into two answers or pick the stronger pull.
+3. If the branch writes a route value (`ntr_confirmed`, `ntr_unresolved`, `mixed_unresolved`, a soft
+   NTR gate), add the id to `CHOICE_ROUTE_FLAGS` (and `CHOICE_GATES` for a gate) so the stamp says
+   `LOCKS NTR` / `NTR STAYS OPEN` / `MAY LEAD TO NTR`.
+4. In the script: `$ x_text = format_choice("<id>", "Line.")`, caption `"[x_text]"`, and
+   `$ apply_choice("<id>")` as the first line of the same branch. Never apply stats with a plain caption.
+5. Give answers in one menu different stat lines unless they really lead to the same path.
+6. Run `python -m unittest tests.test_choice_scoring tests.test_choice_path_tags` (with
+   `PYTHONPATH=game/python-packages`); a failure names the choice and the reason.
 
 Day 1 effects live in `systems/choice_engine.rpy`, Day 2 in `ch01_day2_scenes_01_15.rpy`. The Day 3-5
 registration files are Scriptwriter-owned, so their effects are re-scored in
