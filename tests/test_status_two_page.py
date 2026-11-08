@@ -34,14 +34,14 @@ class StatusTwoPageTests(unittest.TestCase):
     def test_cards_and_scrolls_live_on_the_intended_pages(self):
         screen = SOURCE.split("screen status_screen(return_to=None):", 1)[1]
         left, right = screen.split("    # Right page: mode and close", 1)
-        self.assertIn('use status_section("RELATIONSHIP", relationship_rows)', left)
+        self.assertIn('use status_section("RELATIONSHIP", relationship_rows,', left)
         self.assertIn('if route_rows:', left)
-        self.assertIn('use status_section("ROUTE TENDENCIES", route_rows)', left)
+        self.assertIn('use status_section("ROUTE LEAN", route_rows,', left)
         self.assertNotIn('use status_section(girlfriend_name.upper()', left)
         self.assertNotIn('use status_section(player_name.upper()', left)
         self.assertIn('text "[girlfriend_name] right now"', right)
-        self.assertIn('use status_section(girlfriend_name.upper(), leia_rows)', right)
-        self.assertIn('use status_section(player_name.upper(), ryan_rows)', right)
+        self.assertIn('use status_section(girlfriend_name.upper(), leia_rows,', right)
+        self.assertIn('use status_section(player_name.upper(), ryan_rows,', right)
         self.assertEqual(screen.count('scrollbars "vertical"'), 2)
         self.assertEqual(screen.count('ysize LC_STATUS_BODY_H'), 2)
         self.assertIn('if current_choice_mode() != "normal":', SOURCE)

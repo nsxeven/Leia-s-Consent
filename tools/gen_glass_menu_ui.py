@@ -55,4 +55,28 @@ for name, bg, muted in [('mute_off','#36465b',False), ('mute_off_hover','#ff8fc0
     else:
         d.arc((14,10,24,24), -60, 60, fill=ink, width=2); d.arc((15,6,29,28), -60, 60, fill=ink, width=2)
     im.save(OUT/(name+'.png'))
+# Status bars (darryn 2026-11-09): one gradient bar per stat, coloured by meaning
+# (same colours as the stat icons and the phone Status tints), on a 24px track.
+STAT_BARS = {
+    "love": ("#FFAACD", "#E86298"),
+    "trust": ("#FFDE8C", "#E8AA46"),
+    "exhibitionism": ("#FFC4A0", "#E87678"),
+    "temptation": ("#EC6E82", "#B22850"),
+    "sharing": ("#C8ACEC", "#8C68C8"),
+}
+def stat_bar(name, top, bot):
+    w, h = 24, 24
+    t = tuple(int(top[i:i+2], 16) for i in (1, 3, 5)); b = tuple(int(bot[i:i+2], 16) for i in (1, 3, 5))
+    g = Image.new('RGBA', (w, h))
+    gd = ImageDraw.Draw(g)
+    for y in range(h):
+        k = y / (h - 1)
+        gd.line((0, y, w, y), fill=tuple(int(t[i] + (b[i] - t[i]) * k) for i in range(3)) + (255,))
+    m = Image.new('L', (w, h)); ImageDraw.Draw(m).rounded_rectangle((1, 1, w - 2, h - 2), radius=8, fill=255)
+    out = Image.new('RGBA', (w, h)); out.paste(g, (0, 0), m)
+    ImageDraw.Draw(out).rounded_rectangle((4, 3, w - 5, 9), radius=3, fill=(255, 255, 255, 60))
+    out.save(OUT / ('stat_' + name + '.png'))
+for _n, (_t, _b) in STAT_BARS.items():
+    stat_bar(_n, _t, _b)
+rounded('stat_track', '#101d30e0', size=(24, 24), radius=8, border='#c6a98288')
 print('generated', len(list(OUT.glob('*.png'))), 'Golden Hour glass assets')
