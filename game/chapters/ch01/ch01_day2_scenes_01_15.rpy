@@ -787,9 +787,9 @@ label ch01_day2_scene_09_photo_walk:
     gf "Yes, add her! And use this one, because we're all in it and [friend_name] actually has his eyes open."
     friend "I do, somehow. Hang on, I'll add Maya and change the picture before we forget which one it was."
     $ phone_group_maya_member = True
-    $ phone_add_message("group", "julian", text=friend_name + " added Maya to the group.", message_id="ch01_trip_group_maya_added", mark_unread=False)
+    $ phone_add_message("group", "system", text=friend_name + " added Maya to the group.", message_id="ch01_trip_group_maya_added", mark_unread=False)
     $ phone_group_avatar_stage = "four"
-    $ phone_add_message("group", "julian", text="Changed the group picture to the four of us.", message_id="ch01_trip_group_four_photo", mark_unread=False)
+    $ phone_add_message("group", "system", text=friend_name + " changed the group picture.", message_id="ch01_trip_group_four_photo", mark_unread=False)
 
     "Then Maya started assigning pairs with the authority of somebody organising school photos."
 

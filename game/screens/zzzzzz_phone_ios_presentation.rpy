@@ -508,44 +508,60 @@ screen phone_screen():
                         $ _attachment = _message.get("attachment_id")
                         $ _group = phone_thread == "group"
                         $ _bubble_max = 360 if _group else 410
-                        hbox:
-                            xfill True
-                            spacing 8
-                            box_align (1.0 if _out else 0.0)
-                            if _group and not _out:
-                                fixed:
-                                    xysize (40, 40)
-                                    yalign 1.0
-                                    if row["tail"]:
-                                        add lc_phone_avatar(_sender) xysize (40, 40)
-                            vbox:
-                                spacing 4
-                                xmaximum _bubble_max
-                                xalign (1.0 if _out else 0.0)
-                                if _group and row["show_name"] and not _out:
-                                    text phone_sender_label(_sender):
-                                        style "lc_sw_hand"
-                                        size 22
-                                        color "#6E8399"
-                                if _body:
-                                    frame:
-                                        style "lc_sw_frame"
-                                        background Frame("gui/phone/sprite_match/bubble_out.png" if _out else "gui/phone/sprite_match/bubble_in.png", 18, 18)
-                                        padding (16, 12)
-                                        xmaximum _bubble_max
-                                        text _body:
+                        if _sender == "system":
+                            # Group events (picture changed, member added): a centred
+                            # blue pill, no avatar or name (darryn 2026-11-08).
+                            frame:
+                                style "lc_sw_frame"
+                                xalign 0.5
+                                xmaximum 400
+                                background Frame("gui/phone/sprite_match/key.png", 18, 18)
+                                padding (18, 8)
+                                text _body:
+                                    style "lc_sw_hand"
+                                    size 22
+                                    color "#FFFFFF"
+                                    text_align 0.5
+                                    xalign 0.5
+                        else:
+                            hbox:
+                                xfill True
+                                spacing 8
+                                box_align (1.0 if _out else 0.0)
+                                if _group and not _out:
+                                    fixed:
+                                        xysize (40, 40)
+                                        yalign 1.0
+                                        if row["tail"]:
+                                            add lc_phone_avatar(_sender) xysize (40, 40)
+                                vbox:
+                                    spacing 4
+                                    xmaximum _bubble_max
+                                    xalign (1.0 if _out else 0.0)
+                                    if _group and row["show_name"] and not _out:
+                                        text phone_sender_label(_sender):
                                             style "lc_sw_hand"
-                                            size 32
-                                            color "#293C53"
-                                            xmaximum (_bubble_max - 36)
-                                            line_spacing 2
-                                if _attachment and renpy.has_image(_attachment):
-                                    button:
-                                        style "lc_sw_hit"
-                                        xysize (min(320, _bubble_max), 180)
-                                        xalign (1.0 if _out else 0.0)
-                                        action Show("lc_phone_photo_viewer", photo_asset=_attachment)
-                                        add lc_phone_rounded_photo(_attachment, min(320, _bubble_max), 180)
+                                            size 22
+                                            color "#6E8399"
+                                    if _body:
+                                        frame:
+                                            style "lc_sw_frame"
+                                            background Frame("gui/phone/sprite_match/bubble_out.png" if _out else "gui/phone/sprite_match/bubble_in.png", 18, 18)
+                                            padding (16, 12)
+                                            xmaximum _bubble_max
+                                            text _body:
+                                                style "lc_sw_hand"
+                                                size 32
+                                                color "#293C53"
+                                                xmaximum (_bubble_max - 36)
+                                                line_spacing 2
+                                    if _attachment and renpy.has_image(_attachment):
+                                        button:
+                                            style "lc_sw_hit"
+                                            xysize (min(320, _bubble_max), 180)
+                                            xalign (1.0 if _out else 0.0)
+                                            action Show("lc_phone_photo_viewer", photo_asset=_attachment)
+                                            add lc_phone_rounded_photo(_attachment, min(320, _bubble_max), 180)
                     if thread_rows and thread_rows[-1]["outgoing"]:
                         text "Read [lc_phone_clock_text()]":
                             style "lc_sw_hand"
