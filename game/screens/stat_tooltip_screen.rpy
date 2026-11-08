@@ -44,7 +44,7 @@ screen lc_stat_tip(tip, look="scrapbook"):
                 prefer_top True
                 frame at lc_stat_tip_fade:
                     xalign 0.5
-                    xsize 560
+                    xsize LC_PHONE_CONTENT_WIDTH
                     ysize 360
                     background _tip_card
                     padding (22, 14)

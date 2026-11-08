@@ -145,6 +145,13 @@ init 95 python:
     # Chat threads stick to the newest message (darryn, 2026-11-04): a thread
     # opens at the bottom, and when a staged reply lands while it is open the
     # view slides down to it, like a real messaging app. Used by every thread.
+    # Handset art has a 540px canvas; the flat inner screen is x=17..523.
+    # Keep every list, avatar, attachment and card inside this centered lane.
+    LC_PHONE_SCREEN_LEFT = 17
+    LC_PHONE_SCREEN_RIGHT = 523
+    LC_PHONE_CONTENT_LEFT = 42
+    LC_PHONE_CONTENT_WIDTH = 456
+    LC_PHONE_VIEWPORT_WIDTH = 456
     LC_PHONE_SCROLL_SECONDS = 0.35
 
     def lc_phone_thread_ranged(adj):
@@ -332,7 +339,7 @@ screen phone_screen():
                 color "#FFFFFF"
                 xalign 0.5
                 ypos 96
-                xmaximum 460
+                xmaximum 440
                 outlines [(2, "#102033", 0, 1)]
             text "[lc_phone_clock_text()]":
                 style "lc_sw_pixel_bold"
@@ -346,7 +353,7 @@ screen phone_screen():
                 $ app_id = row[0]
                 $ label = row[1]
                 $ kind = row[2]
-                $ ix = 47 + (i % 4) * 122
+                $ ix = 56 + (i % 4) * 114
                 $ iy = 280 + (i // 4) * 150
                 $ badge = lc_sm_app_badge(app_id)
                 if kind == "status":
@@ -446,7 +453,7 @@ screen phone_screen():
                 ypos 16
             button:
                 style "lc_sw_hit"
-                xpos 18
+                xpos 28
                 ypos 96
                 xysize (52, 56)
                 action [Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "messages")]
@@ -472,14 +479,15 @@ screen phone_screen():
             $ thread_yadj = thread_adjs.setdefault(phone_thread, lc_phone_thread_adjustment())
             viewport:
                 ypos 198
-                xysize (540, 692)
+                xpos LC_PHONE_CONTENT_LEFT
+                xsize LC_PHONE_VIEWPORT_WIDTH
+                ysize 692
                 mousewheel True
                 draggable True
                 scrollbars None
                 yadjustment thread_yadj
                 vbox:
-                    xpos 24
-                    xsize 492
+                    xsize LC_PHONE_CONTENT_WIDTH
                     spacing 14
                     text "Today · [lc_phone_clock_text()]":
                         style "lc_sw_hand"
@@ -501,7 +509,7 @@ screen phone_screen():
                         $ _body = (_message.get("text") or "").strip()
                         $ _attachment = _message.get("attachment_id")
                         $ _group = phone_thread == "group"
-                        $ _bubble_max = 360 if _group else 420
+                        $ _bubble_max = 360 if _group else 410
                         hbox:
                             xfill True
                             spacing 8
@@ -551,10 +559,10 @@ screen phone_screen():
                             textbutton reply_option["text"]:
                                 style "lc_sw_hit"
                                 xalign 1.0
-                                xmaximum 430
+                                xmaximum 410
                                 padding (18, 12)
                                 background Frame("gui/phone/sprite_match/bubble_out.png", 18, 18)
-                                hover_background Solid("#D9EAF9")
+                                hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
                                 text_style "lc_sw_hand"
                                 text_size 27
                                 text_color "#293C53"
@@ -591,7 +599,7 @@ screen phone_screen():
                 ypos 16
             button:
                 style "lc_sw_hit"
-                xpos 16
+                xpos 28
                 ypos 92
                 xysize (56, 56)
                 action [Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "home"), SetScreenVariable("phone_thread", None)]
@@ -641,13 +649,14 @@ screen phone_screen():
 
             viewport:
                 ypos 164
-                xysize (540, 820)
+                xpos LC_PHONE_CONTENT_LEFT
+                xsize LC_PHONE_VIEWPORT_WIDTH
+                ysize 820
                 mousewheel True
                 draggable True
                 scrollbars None
                 vbox:
-                    xpos 32
-                    xsize 476
+                    xsize LC_PHONE_CONTENT_WIDTH
                     spacing 14
 
                     if phone_app == "messages":
@@ -659,7 +668,7 @@ screen phone_screen():
                                 style "lc_sw_hit"
                                 xfill True
                                 ysize 100
-                                hover_background Solid("#E7EDF4")
+                                hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
                                 action [Function(phone_mark_thread_read, thread_id), SetScreenVariable("phone_thread", thread_id), SetScreenVariable("phone_app", "thread")]
                                 if unread_count > 0:
                                     add "gui/phone/sprite_match/dot.png":
@@ -687,7 +696,7 @@ screen phone_screen():
                                         style "lc_sw_hand"
                                         size 22
                                         color "#3D8FD4"
-                                        xpos 400
+                                        xpos 374
                                         ypos 16
                                 text thread_preview:
                                     style "lc_sw_hand"
@@ -695,15 +704,15 @@ screen phone_screen():
                                     color ("#293C53" if unread_count else "#6E8399")
                                     xpos 88
                                     ypos 50
-                                    xmaximum 340
+                                    xmaximum 320
                                 add "gui/phone/sprite_match/chevron.png":
-                                    xpos 448
+                                    xpos 420
                                     ypos 32
                                     xysize (22, 22)
                                 add Solid("#E1E7EF"):
                                     xpos 88
                                     ypos 97
-                                    xysize (380, 2)
+                                    xysize (340, 2)
 
                     elif phone_app == "shop" and not LC_SHOP_ENABLED:
                         # Shop under development (LC_SHOP_ENABLED in shop_screen.rpy).
@@ -715,20 +724,20 @@ screen phone_screen():
                             style "lc_sw_hand"
                             size 28
                             color "#6E8399"
-                            xmaximum 460
+                            xmaximum 440
 
                     elif phone_app == "shop":
                         text "Purchases add outfits to [girlfriend_name]'s wardrobe. Whether she wears them is tracked separately.":
                             style "lc_sw_hand"
                             size 26
                             color "#6E8399"
-                            xmaximum 460
+                            xmaximum 440
                         if last_shop_message:
                             text "[last_shop_message]":
                                 style "lc_sw_hand"
                                 size 26
                                 color "#293C53"
-                                xmaximum 460
+                                xmaximum 440
                         for outfit_id in shop_outfit_ids():
                             $ phone_outfit = get_outfit(outfit_id)
                             $ phone_outfit_name = phone_outfit["name"]
@@ -752,7 +761,7 @@ screen phone_screen():
                                         style "lc_sw_hand"
                                         size 24
                                         color "#6E8399"
-                                        xmaximum 430
+                                        xmaximum 410
                                     text phone_outfit_status:
                                         style "lc_sw_hand"
                                         size 22
@@ -797,7 +806,7 @@ screen phone_screen():
                                             xfill True
                                             ysize 240
                                             action Show("lc_phone_photo_viewer", photo_asset=photo_asset)
-                                            add lc_phone_rounded_photo(photo_asset, 492, 240)
+                                            add lc_phone_rounded_photo(photo_asset, LC_PHONE_CONTENT_WIDTH, 240)
                                     else:
                                         frame:
                                             style "lc_sw_frame"
@@ -896,7 +905,7 @@ screen lc_phone_status_row(row):
         style "lc_sw_hit"
         xfill True
         padding (4, 4)
-        hover_background Solid("#E7EDF4")
+        hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
         tooltip row.get("tooltip")
         action NullAction()
         vbox:
@@ -971,7 +980,7 @@ screen lc_phone_status():
             ypos 16
         button:
             style "lc_sw_hit"
-            xpos 16
+            xpos 28
             ypos 88
             xysize (56, 56)
             action [Function(lc_ui_play, "back"), Hide("lc_phone_status")]
@@ -991,14 +1000,15 @@ screen lc_phone_status():
             xmaximum 420
         viewport:
             ypos 176
-            xysize (540, 800)
+            xpos LC_PHONE_CONTENT_LEFT
+            xsize LC_PHONE_VIEWPORT_WIDTH
+            ysize 800
             mousewheel True
             draggable True
             scrollbars None
             vbox:
                 spacing 12
-                xpos 32
-                xsize 476
+                xsize LC_PHONE_CONTENT_WIDTH
                 if not getattr(persistent, "status_page_intro_seen", False):
                     frame:
                         style "lc_sw_frame"
@@ -1085,7 +1095,7 @@ screen lc_phone_settings_mode(mode_id):
         yminimum 96
         padding (16, 12)
         background Frame("gui/phone/sprite_match/key.png" if _selected else "gui/phone/sprite_match/card.png", 18, 18)
-        hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
+        hover_background Frame("gui/phone/sprite_match/key.png" if _selected else "gui/phone/sprite_match/row_hover.png", 18, 18)
         action Function(lc_phone_set_information_mode, mode_id)
         vbox:
             spacing 4
@@ -1136,7 +1146,7 @@ screen lc_phone_settings():
             ypos 16
         button:
             style "lc_sw_hit"
-            xpos 16
+            xpos 28
             ypos 92
             xysize (56, 56)
             action [Function(lc_ui_play, "back"), Hide("lc_phone_settings")]
@@ -1149,21 +1159,22 @@ screen lc_phone_settings():
             ypos 98
         viewport:
             ypos 168
-            xysize (540, 810)
+            xpos LC_PHONE_CONTENT_LEFT
+            xsize LC_PHONE_VIEWPORT_WIDTH
+            ysize 810
             mousewheel True
             draggable True
             scrollbars None
             vbox:
                 spacing 12
-                xpos 32
-                xsize 476
+                xsize LC_PHONE_CONTENT_WIDTH
                 text "These settings only change what the interface reveals. They never alter stats, story outcomes, or difficulty.":
                     style "lc_sw_hand"
                     size 24
                     color "#6E8399"
                     text_align 0.5
                     xalign 0.5
-                    xmaximum 460
+                    xmaximum 440
                 use lc_phone_settings_mode("normal")
                 use lc_phone_settings_mode("insight")
                 use lc_phone_settings_mode("full")
@@ -1185,5 +1196,5 @@ screen lc_phone_settings():
                         style "lc_sw_hand"
                         size 22
                         color "#6E8399"
-                        xmaximum 460
+                        xmaximum 440
                 null height 16

@@ -117,7 +117,7 @@ class StatTooltipWiringTests(unittest.TestCase):
         self.assertIn("_last_tip = tip or _last_tip", card)
         self.assertEqual(card.count("text _last_tip"), 2)
         self.assertEqual(card.count("at lc_stat_tip_fade"), 2)
-        self.assertIn("xsize 560", card)
+        self.assertIn("xsize LC_PHONE_CONTENT_WIDTH", card)
         self.assertIn("xsize 540", card)
         self.assertEqual(card.count("ysize 360"), 2)
         self.assertNotIn("xmaximum", card)
