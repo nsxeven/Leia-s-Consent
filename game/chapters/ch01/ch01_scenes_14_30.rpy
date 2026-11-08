@@ -157,8 +157,9 @@ label ch01_scene_14a_upstairs_change:
     "She took the top and a pair of shorts into the bathroom and pushed the door mostly shut."
     $ cast_remove("leia")
 
-    # Ryan's inner voice: the day lands while he changes (5 lines on every path).
-    "I swapped the dinner shirt for a T-shirt, and the restaurant came back first: the guy soaked through his white trousers, and how long [girlfriend_name]'s eyes had stayed there. Then the second look."
+    # Ryan's inner voice: the day lands while he changes (6 lines on every path).
+    "I swapped my dinner shirt for a T-shirt, and my head went straight back to the restaurant."
+    "The guy with a drink spilled all down his white trousers. How long [girlfriend_name]'s eyes had stayed on him. Then the second look, when she thought I wasn't watching."
 
     if get_story_value("ch01_stranger_response") == "proud":
         "The man in the corridor. I'd agreed with him out loud, and she'd still been half-smiling about him at the table."
