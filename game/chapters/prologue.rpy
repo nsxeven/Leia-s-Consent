@@ -48,14 +48,14 @@ label prologue_start:
     "That wasn't difficult. Half the room probably had."
     "She was standing with people I vaguely knew, looking like the kind of girl who already had better things to do than talk to me."
 
-    mc "She's terrifying."
-    friend "Who?"
-    mc "Nobody."
-    friend "You are literally looking at her."
-    mc "I'm observing the room."
-    friend "You can't make it any more obvious."
+    mc "I mean... she's kind of terrifying."
+    friend "Who is? Wait, who are we talking about?"
+    mc "Nobody. No one. Forget I said anything."
+    friend "Dude, you're literally looking right at her. You haven't stopped looking at her since we walked in."
+    mc "I'm not— I'm just looking at the room. In general."
+    friend "Well, the room can see you looking, man. You couldn't make it more obvious if you waved."
 
-    "The groups merged eventually. Not because of fate. Not because [friend_name] had a plan."
+    "The groups merged eventually, and it wasn't fate, and it definitely wasn't one of [friend_name]'s plans."
     "Mostly because somebody dragged two chairs over and suddenly everyone was talking over everyone else."
 
     scene cg prologue_party_couch
@@ -67,15 +67,15 @@ label prologue_start:
     with dissolve
     $ cast(leia="prologue_party")
 
-    gf "Technically, you're both wrong."
+    gf "Um, technically... I think you're both kind of wrong?"
     "She said it quietly enough that the conversation almost rolled straight over her."
     $ face("leia", "shy")
     gf "...Never mind."
     $ cast_add(ryan="prologue_party")
-    mc "No, no. You can't say that and then retreat."
+    mc "No, wait— you can't say that and then just retreat."
     $ face("leia", "smile")
-    gf "I can absolutely retreat."
-    mc "Too late. Explain."
+    gf "I can, actually. Retreating is, like, my main skill."
+    mc "Too late. Come on, I want to know why we're wrong."
     "She did."
     "Not for ten seconds, either."
     "There were examples. There was context. At one point she used her drink to demonstrate something nobody had asked to see demonstrated."
@@ -83,8 +83,8 @@ label prologue_start:
 
     mc "Oh."
     $ face("leia", "neutral")
-    gf "What?"
-    mc "Nothing. Keep going."
+    gf "What? Did I lose you? I lost you. Sorry, I do this."
+    mc "No, nothing. You didn't lose me. Keep going."
     $ face("leia", "skeptical")
     "She narrowed her eyes at me and continued anyway."
 
@@ -95,17 +95,17 @@ label prologue_start:
             $ set_story_value("prologue_ryan_first_impression", "dork")
             mc "You're a complete dork, aren't you?"
             $ face("leia", "pout")
-            gf "You made me explain it!"
-            mc "And I'm glad I did."
+            gf "Hey! You made me explain it! You literally asked!"
+            mc "I know. I mean it in a good way. Mostly."
 
         "She's way easier to talk to than I expected.":
             $ set_story_value("prologue_ryan_first_impression", "comfortable")
-            mc "You're not what I expected."
+            mc "You're, um... not really what I expected."
             $ face("leia", "skeptical")
-            gf "That sounded dangerously close to an insult."
-            mc "It wasn't."
+            gf "That sounded kind of like an insult? Like, dangerously close to one."
+            mc "No, it's not— I mean, it's a good thing. You're easy to talk to."
             $ face("leia", "smile")
-            gf "Good recovery."
+            gf "Hm. Okay. That's a pretty good recovery, I'll give you that."
 
         "I am definitely in trouble.":
             $ set_story_value("prologue_ryan_first_impression", "smitten")
@@ -136,41 +136,41 @@ label prologue_start:
     "A while later I escaped to the kitchen in search of another drink."
     "She was already there, studying the bottles on the counter like one of them had personally offended her."
 
-    mc "Hiding?"
+    mc "Hey. Are you... hiding in here?"
     gf "Recharging."
-    mc "Different word for hiding."
+    mc "Isn't that just another word for hiding?"
     $ face("leia", "skeptical")
-    gf "I came to get a drink."
+    gf "No, I came in here to get a drink. Like a normal person."
     mc "You've been holding the same one for twenty minutes."
     $ face("leia", "shy")
     gf "...You noticed that?"
-    mc "I notice things."
+    mc "I mean... yeah. I noticed. Sorry, that sounds kind of creepy."
 
     "Without the rest of the room talking over us, the silence between sentences felt easy instead of awkward."
 
-    gf "I nearly didn't come tonight."
-    mc "Seriously?"
-    gf "Big groups are exhausting. Everyone's waiting for their turn to talk."
-    mc "You were doing fine."
-    gf "I spent the first hour pretending to check my phone."
-    mc "Very convincing. I thought you were terrifying."
+    gf "Honestly? I almost didn't come tonight. I was this close to staying in."
+    mc "Wait, seriously? Why?"
+    gf "Big groups are just... exhausting? Like, everyone's waiting for their turn to talk, and I never know when it's my turn."
+    mc "You seemed fine, though. Out there, I mean."
+    gf "I spent the first hour pretending to check my phone. I read the same text, like, nine times."
+    mc "Well, it worked. I actually thought you were terrifying."
     $ face("leia", "skeptical")
-    gf "Terrifying?"
-    mc "Absolutely."
-    gf "I was standing there holding a red cup."
+    gf "Wait, terrifying? Me?"
+    mc "Yeah. A little. In a good way?"
+    gf "I was literally just standing there holding a red cup. What about that is scary?"
     mc "Menacingly."
     $ face("leia", "smile")
-    gf "You're an idiot."
+    gf "Oh my God. You're such an idiot."
 
-    "She said it while smiling."
+    "She was laughing when she said it, though."
     "Someone shouted our names from the other room."
 
-    gf "Apparently we've been missed."
-    mc "We could stay hidden."
-    gf "Recharging."
+    gf "Oh no. I think that means we've been missed."
+    mc "We could just... stay in here. Hide a bit longer."
+    gf "Recharging. It's called recharging."
     mc "Right. Sorry."
     $ face("leia", "smile")
-    gf "Come on."
+    gf "Come on. If I have to go back out there, so do you."
 
     # Both leave with the location change itself (one dissolve), then Leia enters.
     scene bg prologue_truthordare
@@ -186,12 +186,12 @@ label prologue_start:
 
     $ face("leia", "neutral")
     gf "Truth."
-    friend "Again?"
+    friend "Again? That's, what, four in a row? You know you're allowed to pick the other one, right?"
     $ face("leia", "skeptical")
-    gf "Yes. Again."
-    friend "Coward."
+    gf "Yes, again. It's a perfectly good option."
+    friend "It's a coward's option and you know it."
     $ face("leia", "smile")
-    gf "Alive coward."
+    gf "Yeah, but I'm a coward who's still alive, so..."
 
     "The next question came from somewhere across the circle."
     "Who in this room do you like the most?"
@@ -204,20 +204,20 @@ label prologue_start:
     gf "You asked."
     "Nobody had asked me."
     "That did not seem important at the time."
-    friend "Okay. Next round, you are not choosing Truth again."
+    friend "No. Nope. Next round you're not allowed to pick Truth again. I'm making that a rule."
     $ face("leia", "skeptical")
-    gf "Watch me."
-    friend "Chicken."
+    gf "You can't just make up rules. Watch me."
+    friend "Chicken. You're a total chicken, and everyone here knows it."
     $ face("leia", "pout")
-    gf "I'm not a chicken."
-    friend "Then pick Dare."
+    gf "I'm not a chicken! I just like knowing what's going to happen."
+    friend "Then prove it. Pick Dare, just once."
 
     $ lc_sfx("cheer_small")
     "Three people immediately joined in."
     $ lc_sfx("leia_sigh")
     "[girlfriend_name] looked around the circle, realized the room had turned against her, and sighed."
     $ face("leia", "skeptical")
-    gf "Fine. Dare."
+    gf "Fine. Fine! Dare. Ugh."
     # Dare lands: small screen shake (lc_shake respects the SCREEN SHAKE setting).
     $ lc_duck()
     $ lc_bgm_cut()  # comic beat: music stops dead on the scratch
@@ -228,7 +228,7 @@ label prologue_start:
     "Or maybe that was just me."
     "She looked at [friend_name]. Then at me."
 
-    mc "You don't actually have to."
+    mc "Hey, you don't actually have to. Seriously."
     $ face("leia", "shy")
     gf "I know."
     "And then she moved closer anyway."
@@ -243,7 +243,7 @@ label prologue_start:
 
     "It was not smooth."
     "Our noses nearly collided. Somebody laughed before we'd even figured out the angle." with lc_shake("s")
-    friend "Oh my God, just kiss already."
+    friend "You guys, it's not that complicated. Just kiss already."
     $ lc_sfx("leia_laugh")
     "[girlfriend_name] laughed."
 
@@ -264,9 +264,9 @@ label prologue_start:
     $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
     $ face("leia", "smile")
 
-    mc "...Does that mean I win Truth or Dare?"
-    gf "No."
-    mc "Worth asking."
+    mc "So, um... does that mean I win Truth or Dare?"
+    gf "No. That's— no. That's not how it works."
+    mc "Worth asking, though."
     scene black
     with fade
     $ lc_amb_stop()
@@ -282,10 +282,10 @@ label prologue_start:
     $ lc_bgm("cozy_home")
 
     gf "[player_name]?"
-    gf "You're staring again."
-    mc "It never gets old."
-    gf "Four years and you still haven't learned to be subtle."
-    mc "Wasn't trying to be."
+    gf "You're staring again. You're doing the thing."
+    mc "Sorry. I mean... not really sorry. It never gets old."
+    gf "Four years, and you still haven't learned how to be subtle about it. Like, at all."
+    mc "I wasn't really trying to be."
     "She tried not to smile and failed."
     $ lc_sfx("suitcase_zip")
     "She reached for my hand, gave it a quick squeeze, and went back to packing as though it were the most ordinary thing in the world."
@@ -298,12 +298,12 @@ label prologue_start:
     "College. Exams. Money. Work. The usual collection of reasons that always sounded temporary until another year disappeared."
     "Now there were two open suitcases on the floor and enough clothes on the bed to suggest [girlfriend_name] had misunderstood the length of the holiday."
 
-    mc "You packed fourteen outfits."
-    gf "Options."
+    mc "You know you packed fourteen outfits, right? I counted."
+    gf "They're options. You need options on holiday, it's like, a whole thing."
     mc "That's two [girlfriend_name]s a day."
-    gf "Exactly."
-    mc "That did not explain anything."
-    gf "It explained everything."
+    gf "Yeah, that's— yes. Beach me and dinner me. That's the plan."
+    mc "That doesn't really explain anything."
+    gf "It explains everything, you're just not listening."
 
     "The trip wasn't just ours."
     "[friend_name] was coming too."
@@ -338,10 +338,13 @@ label prologue_start:
     $ set_phone_hud_enabled(True)
 
     $ lc_sfx("car_horn")
-    gf "He's been downstairs for two minutes."
-    mc "He's rich. His time is worth more."
-    gf "You say that every time he rushes you."
-    mc "Because it's true."
+    gf "He's been downstairs for two minutes. Two! Why is he already honking?"
+    mc "He's rich, though. His minutes cost more than ours."
+    gf "You say that every time he rushes you. He hates it when you say that."
+    mc "Yeah, that's kind of why I say it."
+    gf "Tell him we'll be down in two minutes."
+    mc "You said two minutes before he even got here. So that's four. Five, probably."
+    "She didn't even look up."
 
     scene bg prologue_packing
     with dissolve
@@ -349,14 +352,14 @@ label prologue_start:
     $ cast(ryan="casual", leia="casual")
     $ face("leia", "smile")
 
-    gf "Ready?"
+    gf "Okay! Ready? Do you have everything?"
 
     menu:
         "Been ready.":
             $ set_story_value("prologue_departure_reply", "ready")
             mc "Been ready."
             $ face("leia", "skeptical")
-            gf "You were still packing ten minutes ago."
+            gf "You were literally still packing ten minutes ago. I watched you."
             mc "Emotionally ready."
             $ face("leia", "smile")
 
@@ -364,15 +367,15 @@ label prologue_start:
             $ set_story_value("prologue_departure_reply", "forgetting")
             mc "I still think we're forgetting something."
             $ face("leia", "neutral")
-            gf "If we are, we're buying it there."
-            mc "That is an expensive philosophy."
+            gf "If we are, we'll just buy it there. That's what shops are for."
+            mc "That's... kind of an expensive way to live."
             $ face("leia", "smile")
 
         "Ask me when [friend_name] starts snoring on the plane.":
             $ set_story_value("prologue_departure_reply", "snoring")
             mc "Ask me when [friend_name] starts snoring on the plane."
             $ face("leia", "smile")
-            gf "I'm recording it this time."
+            gf "Oh my God, yes. I'm recording it this time, he can't keep saying he doesn't snore."
 
 
     $ enter_cinematic_mode()

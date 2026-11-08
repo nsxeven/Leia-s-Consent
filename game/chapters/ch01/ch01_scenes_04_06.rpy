@@ -12,16 +12,16 @@ label ch01_scene_04_pool_arrival:
 
     "[friend_name] had already claimed the shaded end of the pool by the time I came downstairs."
 
-    friend "She changed her mind and unpacked another suitcase, didn't she?"
-    mc "Give her a minute."
-    friend "I've given her twelve."
+    friend "Is she still changing? Dude, I've been out here so long I've got a tan line from my sunglasses."
+    mc "She's almost done. I think. She said \"two minutes\"."
+    friend "She said \"two minutes\" before I'd even found the shade."
 
     gf "No comments until I'm all the way outside."
 
     with dissolve
 
     mc "That sounds like you're expecting comments."
-    gf "I know you."
+    gf "I know you. You've already got one ready, I can see it. You're doing the thing with your mouth."
 
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
 
@@ -34,12 +34,12 @@ label ch01_scene_04_pool_arrival:
         "The new swimsuit was not outrageous. It was simply cut higher at the hips and showed more of her than [friend_name] had ever seen."
         "[girlfriend_name] stopped just beyond the doorway, pretending not to wait for my reaction."
         gf "Well?"
-        mc "You already know."
-        gf "I want to hear you say it."
-        mc "You look incredible."
+        mc "Do I have to? I mean, you already know."
+        gf "Yes, you have to. I want to hear it out loud. With your mouth."
+        mc "You look... wow. Okay. Incredible, you look incredible."
         "Some of the tension left her shoulders."
         $ face("leia", "smile")
-        gf "Better."
+        gf "Good. Phew. I was kind of nervous about this one."
     else:
         $ cast_add(leia="white_ruffle")
         $ face("leia", "neutral")
@@ -63,9 +63,9 @@ label ch01_scene_04_pool_arrival:
 
     "[girlfriend_name] dropped a bottle of sunscreen into my hand and turned her back to me."
 
-    gf "Back."
-    mc "Please?"
-    gf "We've been together four years. 'Please' has expired."
+    gf "Can you do my back? I always miss the part right in the middle and then I look like a zebra."
+    mc "Is there a magic word?"
+    gf "We've been together four years, I'm not saying please. Just do it before I melt."
 
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_sunscreen_apply_blue
@@ -78,9 +78,9 @@ label ch01_scene_04_pool_arrival:
     "I worked the sunscreen across her shoulders and down the center of her back."
     "When my hands slowed near her waist, she looked back at me."
 
-    gf "You are taking suspiciously long."
-    mc "Thorough application prevents sun damage."
-    gf "Very responsible."
+    gf "You're taking a really long time. It's just my back, you know."
+    mc "I'm being thorough. Sun damage is, like, a real thing."
+    gf "Mm-hm. Very responsible of you."
 
     if selected_pool_outfit == "pool_bolder":
         scene cg ch01_pool_hand_pull_blue
@@ -94,9 +94,9 @@ label ch01_scene_04_pool_arrival:
     $ lc_sfx("splash_big")
     "She caught my wrist, stepped backward—and pulled me into the pool with her." with lc_shake("m")
 
-    mc "Traitor."
-    gf "You were taking too long."
-    friend "For legal purposes, I saw nothing."
+    mc "Seriously? I was just— okay. Traitor."
+    gf "You were taking forever! And it's so hot, I was basically doing you a favor."
+    friend "I saw nothing. I'd like that on the record. I was looking at my drink the whole time."
 
     $ lc_sfx("splash_small")
     "The next several minutes dissolved into splashing, bad attempts to push one another underwater, and [friend_name] protecting his drink with more commitment than he had shown anything else all day."
@@ -149,7 +149,7 @@ label ch01_scene_05_photography:
         $ face("leia", "shy")
     gf "Wait. Why do I actually look good?"
     mc "You say that like it's unusual."
-    gf "When you take the photo, it is."
+    gf "Rude, but also yes. Every photo you've ever taken of me, I've got a double chin or my eyes are shut."
 
     "She enlarged the picture, studied it, and looked at [friend_name]."
 
@@ -180,10 +180,10 @@ label ch01_scene_05_photography:
     $ set_story_value("ch01_pool_capture_count", 1)
 
     friend "Relax your shoulders."
-    gf "They are relaxed."
+    gf "They are relaxed! This is how I relax, this is my relaxed."
     mc "They're almost touching your ears."
-    gf "I don't know what to do with my hands."
-    mc "You normally have hands. What changed?"
+    gf "Okay, but what do I do with my hands? I never know what to do with my hands, it's so weird."
+    mc "I don't know. They've been there the whole time, though."
 
     $ lc_sfx("leia_laugh")
     "She laughed despite herself."
@@ -217,9 +217,9 @@ label ch01_scene_05_photography:
             $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
 
             mc "That one looks really good."
-            gf "Actually good, or boyfriend good?"
-            mc "Both."
-            gf "Okay. One more."
+            gf "Actually good, or boyfriend good? Be honest. No, don't be honest. Okay, be a little honest."
+            mc "Both. Actually good. Boyfriend good too."
+            gf "One more, then I'm done. Probably."
 
             $ enter_cinematic_mode()
 
@@ -244,7 +244,7 @@ label ch01_scene_05_photography:
             # Without this, the branch exits cinematic mode immediately and the
             # photo is visible for only the transition frame.
             "The second shot was different. She looked relaxed this time—caught mid-smile instead of trying to pose."
-            gf "Okay. I actually like that one."
+            gf "Oh, wait, I actually like that one. Look, my arms aren't even weird!"
 
             $ exit_cinematic_mode()
 
@@ -255,10 +255,10 @@ label ch01_scene_05_photography:
             $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_03_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
 
             mc "Try one sitting by the edge."
-            gf "Since when are you the photographer?"
-            mc "Creative director."
-            friend "Unpaid assistant."
-            gf "Both of you are getting very confident."
+            gf "Since when are you the photographer? I thought that was [friend_name]'s job."
+            mc "I'm more like... the creative director. I have opinions."
+            friend "So I'm the assistant, then. Great. Does that come with a lanyard?"
+            gf "You're both getting way too into this."
 
             $ enter_cinematic_mode()
 
@@ -282,7 +282,7 @@ label ch01_scene_05_photography:
             gf "Wait. Take another one."
             friend "Your creative director approves?"
             mc "She doesn't need my approval."
-            gf "Correct answer."
+            gf "Good answer. Slightly lucky answer, but good."
 
             "This time she chose the pose herself, stretching out across one of the loungers and settling into it with a confidence she had not had five minutes ago."
 
@@ -308,8 +308,8 @@ label ch01_scene_05_photography:
             $ set_story_value("ch01_photo_stance", "protective")
 
             mc "You look uncomfortable. We can stop."
-            gf "Do I look that awkward?"
-            mc "Only because you're thinking about it too much."
+            gf "Do I look that awkward? Be honest. I feel like I look like I'm waiting for a bus."
+            mc "No, you don't. I just think you're thinking about it a lot. It's easier when you stop."
 
             $ ch01_photo_confidence = partner_stats["curiosity"] + player_stats["acceptance"] + (5 if selected_pool_outfit == "pool_bolder" else 0)
             $ ch01_photo_continues = ch01_photo_confidence >= 38
@@ -319,7 +319,7 @@ label ch01_scene_05_photography:
                 $ set_story_value("ch01_selected_photo_asset", "ch01_photo_capture_02_" + ("b" if selected_pool_outfit == "pool_bolder" else "a"))
                 gf "No. I want one good one."
                 mc "All right. One more, then."
-                gf "Exactly."
+                gf "Thank you! One, and then I'll stop complaining. I promise."
 
                 $ enter_cinematic_mode()
 
@@ -343,8 +343,8 @@ label ch01_scene_05_photography:
                 # delivered to Messages / Photos. Group selfies still exist.
                 $ set_story_value("ch01_pool_capture_count", 0)
                 $ set_story_value("ch01_selected_photo_asset", "ch01_photo_group_" + ("blue" if selected_pool_outfit == "pool_bolder" else "white"))
-                gf "Okay. Save me."
-                friend "Your passport photo has been safely deleted."
+                gf "Yeah, please delete that first one. I look like I'm getting arrested."
+                friend "Done. The passport photo is gone, I promise."
                 "She slid back into the water beside me, visibly relieved that nobody tried to change her mind."
 
     scene bg ch01_pool_day
@@ -390,13 +390,13 @@ label ch01_scene_05_photography:
     friend "I'm standing right here."
     mc "Define 'ridiculous.'"
     gf "The villa. The photos. Acting like all of this is completely normal."
-    mc "Oh. Worse."
+    mc "Before you knew him? Oh, so much worse."
     friend "That sounded judgmental."
     mc "He once booked a private room for six people because the normal table was 'too loud.'"
-    friend "It was too loud."
+    friend "It really was loud, okay? There was a birthday."
     gf "Of course you did."
-    friend "You enjoyed the villa."
-    gf "I can enjoy it and still make fun of you."
+    friend "It's honestly not a big deal. It was one dinner. Can we, like, not?"
+    gf "You're blushing! I'm just teasing. I love the villa. I'm just going to keep making fun of you anyway."
 
     "She looked at [friend_name], amused."
 
@@ -411,9 +411,9 @@ label ch01_scene_05_photography:
         $ cast_add(leia="white_ruffle")
         $ face("leia", "pout")
     gf "Excuse me?"
-    friend "Good. Means the trip's working."
+    friend "Good. It means the trip's working."
 
-    gf "I'm showering before dinner. Try not to drown while I'm gone."
+    gf "I'm going to go shower before dinner. Try not to drown while I'm gone."
 
     if selected_pool_outfit == "pool_bolder":
         $ cast_remove("leia")
@@ -438,22 +438,22 @@ label ch01_scene_06_friendship_and_towel:
     "With [girlfriend_name] upstairs, the villa became unexpectedly quiet."
     "[friend_name] passed me a cold drink and sank back into the lounger."
 
-    mc "This place is ridiculous."
-    friend "You've mentioned that."
-    mc "You gave us the master bedroom."
-    friend "I've heard the two of you pack. You need the additional floor space."
+    mc "Seriously, though, this place is ridiculous. I keep walking into rooms I didn't know existed."
+    friend "Ha, yeah. You've said that, like, four times."
+    mc "And you gave us the master bedroom. You really didn't have to do that."
+    friend "Have you seen how much [girlfriend_name] packed? You needed the floor space. I'm just being practical."
 
-    mc "Still. Thanks."
+    mc "Still. Thanks. I mean it."
 
     "The joke left his face for a moment."
 
-    friend "We've been trying to make this trip happen for four years. I wanted it to be worth waiting for."
-    mc "You succeeded."
-    friend "Besides, without me, neither of you would be here."
-    mc "You issued one terrible dare."
-    friend "A historically successful terrible dare."
-    mc "You've taken too much credit for that kiss."
-    friend "Not enough, actually."
+    friend "Honestly? We've been talking about doing a trip for like four years. I just wanted it to be good. For you guys."
+    mc "It is. It's really good."
+    friend "Plus, you know, you two wouldn't even be together if I hadn't—"
+    mc "If you hadn't dared me. One terrible dare."
+    friend "A terrible dare that worked, though. Four years!"
+    mc "You take way too much credit for that kiss."
+    friend "Maybe. But I'd like a plaque. A small one."
 
     "I laughed. This was [friend_name]—the same person who had been there before [girlfriend_name] and me, and who had helped make us possible without ever asking for anything in return."
 
@@ -474,8 +474,8 @@ label ch01_scene_06_friendship_and_towel:
     mc "What time is it?"
     friend "Six twenty-three."
     gf "Why are both of you still sitting there?"
-    mc "Because dinner isn't for another thirty-seven minutes."
-    gf "Exactly. You haven't even changed."
+    mc "Because it's six twenty-three. Dinner's not for like thirty-seven minutes."
+    gf "Thirty-seven minutes is nothing! You haven't even changed, and you know how long you take."
 
     "She stepped farther out, still far more interested in hurrying us along than in how the towel looked from below."
 
@@ -487,10 +487,10 @@ label ch01_scene_06_friendship_and_towel:
 
     gf "I'm serious. Go shower."
     mc "I already showered."
-    gf "Pool water doesn't count."
-    friend "She's got you there."
+    gf "Pool water doesn't count! You smell like chlorine."
+    friend "She's got a point, man."
     mc "Whose side are you on?"
-    friend "The side that gets to dinner on time."
+    friend "The side that eats soon. I'm starving."
 
     "She lifted an arm as if that settled the argument."
 
@@ -523,14 +523,14 @@ label ch01_scene_06_friendship_and_towel:
     with dissolve
     $ lc_bgm_resume(1.5)
 
-    friend "I'm looking at the water."
+    friend "I'm looking at the water. I'm so interested in this water."
     $ lc_sfx("leia_angry_laugh")
     gf "You weren't two seconds ago!"
     friend "I didn't know there was going to be a test!"
     mc "Just go inside."
     gf "I was trying to tell you to get ready!"
-    mc "Message received."
-    gf "Shut up."
+    mc "Yeah, we got the message. Loud and clear."
+    gf "Oh my God, shut up. Shut up, both of you."
 
     $ lc_sfx("sliding_door")
     $ lc_sfx("curtain")
@@ -563,12 +563,12 @@ label ch01_scene_06_friendship_and_towel:
         "[ch01_towel_boundary_text]":
             $ apply_choice("ch01_towel_boundary")
             mc "Eyes on the pool, mate."
-            friend "Already done."
+            friend "Yeah, I'm— yep. Looking at the pool. It's a good pool."
 
         "[ch01_towel_forget_text]":
             $ apply_choice("ch01_towel_forget")
             mc "Let's pretend that didn't happen."
-            friend "Agreed."
+            friend "Yeah. Yes. Agreed. What towel?"
 
     $ set_story_flag("ch01_scene_06_complete")
 

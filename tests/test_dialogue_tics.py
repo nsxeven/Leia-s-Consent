@@ -4,8 +4,8 @@ darryn's rule: dialogue should feel like real people talking, not LLMs. Numbers 
 limits. Only BANNED phrases fail; length/ping-pong/no-long-line stats are printed as flags
 for a read-aloud pass (run this file directly to see them).
 
-Ratchet: KNOWN lists the banned lines still in Prologue + Day 1 at f97c318. Rewrite pass A
-removes them; delete each entry here as it goes. Any NEW banned line fails.
+KNOWN was a ratchet for the 12 banned lines at f97c318; rewrite pass A removed them all.
+Any banned line now fails.
 """
 import collections
 import re
@@ -22,15 +22,7 @@ BANNED = {
     "'No X. No Y.' narration fragments": re.compile(r"\bno \w+\. no \w+\.", re.I),
 }
 # (file, banned kind) -> count still allowed. Shrink to zero during rewrite pass A.
-KNOWN = {
-    ("chapters/prologue.rpy", "lone Exactly./Noted./Fair./Touche."): 1,
-    ("chapters/ch01/ch01_main.rpy", "lone Exactly./Noted./Fair./Touche."): 1,
-    ("chapters/ch01/ch01_scenes_04_06.rpy", "lone Exactly./Noted./Fair./Touche."): 1,
-    ("chapters/ch01/ch01_scenes_07_13.rpy", "lone Exactly./Noted./Fair./Touche."): 3,
-    ("chapters/ch01/ch01_scenes_07_13.rpy", "There she is / There it is"): 1,
-    ("chapters/ch01/ch01_scenes_07_13.rpy", "'No X. No Y.' narration fragments"): 1,
-    ("chapters/ch01/ch01_scenes_14_30.rpy", "lone Exactly./Noted./Fair./Touche."): 4,
-}
+KNOWN = {}  # rewrite pass A removed all 12 (2026-11-08); keep it empty
 
 
 def spoken_lines(rel):

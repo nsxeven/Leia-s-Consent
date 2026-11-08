@@ -220,7 +220,7 @@ label ch01_scene_15_under_blanket:
             $ set_story_value("ch01_movie_first_response", "teased_presence")
             mc "You seemed fine until you remembered he was there."
             gf "Because I forgot for a second."
-            mc "Exactly."
+            mc "Yeah, that's kind of what I'm saying."
             gf "You're annoying."
             $ lc_sfx("leia_giggle", 0.7)
             "She hid the lower half of her face behind the blanket but stayed tucked against me."
@@ -295,7 +295,7 @@ label ch01_scene_16_can_he_tell:
             $ set_story_value("ch01_can_tell_response", "dismissed")
             mc "Does it really matter?"
             gf "To me, maybe."
-            mc "Fair."
+            mc "Yeah. I guess I get that."
 
     $ lc_sfx("remote_click")
     $ lc_duck()
@@ -547,7 +547,7 @@ label ch01_scene_20_no_hiding_place:
             mc "Problem?"
             gf "You know exactly what the problem is."
             mc "There's no blanket anymore."
-            gf "Exactly."
+            gf "Yes, I noticed. Believe me."
             "She still did not move my hand."
 
         "[ch01_noblanket_phone_text]":
@@ -817,7 +817,7 @@ label ch01_scene_25_julian_put_on_spot:
             "[girlfriend_name] immediately looked at [friend_name]."
             friend "Thank you, [player_name]. Very helpful."
             gf "Why would you get killed?"
-            mc "Exactly."
+            mc "Because you just asked him if he'd tell someone they're attractive. In front of me. Come on."
             friend "I hate both of you."
 
         "[ch01_julian_dont_care_text]":
