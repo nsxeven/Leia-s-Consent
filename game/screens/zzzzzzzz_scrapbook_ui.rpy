@@ -1056,14 +1056,18 @@ screen lc_pref_slider(label, value, fill, readout, sample=None, mixer=None):
                     thumb_offset 15
                     left_gutter 0
                     right_gutter 0
-            text ("MUTED" if _muted else _shown):
-                xsize 64
-                text_align 1.0
-                xalign 1.0
+            # A fixed box holds the readout: a bare text sizes to its own width
+            # inside an hbox, so "100%" pushed the buttons right of "50%".
+            fixed:
+                xsize 72
+                ysize 30
                 yalign 0.5
-                size 21
-                color ("#d4636e" if _muted else "#F5C568")
-                font "fonts/Handjet-SemiBold.ttf"
+                text ("MUTED" if _muted else _shown):
+                    xalign 1.0
+                    yalign 0.5
+                    size 21
+                    color ("#d4636e" if _muted else "#F5C568")
+                    font "fonts/Handjet-SemiBold.ttf"
             if mixer:
                 imagebutton:
                     yalign 0.5

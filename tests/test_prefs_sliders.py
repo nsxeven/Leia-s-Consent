@@ -30,7 +30,7 @@ class PrefsSliderTests(unittest.TestCase):
         row = screen("lc_pref_slider")
         self.assertIn("preferences.get_mixer(mixer)", row)
         self.assertNotIn('get_volume("', screen("preferences"))
-        self.assertIn("xsize 64", row)
+        self.assertIn("fixed:\n                xsize 72\n                ysize 30", row)
 
     def test_mute_and_test_buttons_per_channel(self):
         row = screen("lc_pref_slider")
