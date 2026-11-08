@@ -158,6 +158,8 @@ label ch01_scene_14a_upstairs_change:
     $ cast_remove("leia")
 
     # Ryan's inner voice: the day lands while he changes (6 lines on every path).
+    # Ryan changes into his home clothes here; he wears them to the end of Day 1.
+    $ cast_add(ryan="home")
     "I swapped my dinner shirt for a T-shirt, and my head went straight back to the restaurant."
     "The guy with a drink spilled all down his white trousers. How long [girlfriend_name]'s eyes had stayed on him. Then the second look, when she thought I wasn't watching."
 
@@ -295,7 +297,7 @@ label ch01_scene_14b_back_downstairs:
 
     scene bg ch01_villa_living_evening
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ cast(ryan="home", leia="lounge", julian="lounge")
 
     # She was already seen changing upstairs (scene 14a); the mood follows that talk.
     if get_story_value("ch01_upstairs_response") == "honest":
@@ -325,7 +327,7 @@ label ch01_scene_14b_back_downstairs:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_evening
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ cast(ryan="home", leia="lounge", julian="lounge")
     $ face("leia", "smile")
 
     gf "Look at you, finally drinking. Welcome to the holiday."
@@ -534,7 +536,7 @@ label ch01_scene_18_private_under_blanket:
     $ exit_cinematic_mode()
     scene bg ch01_villa_living_evening
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ cast(ryan="home", leia="lounge", julian="lounge")
 
     $ ch01_movie_respected_request = (
         get_story_value("ch01_movie_first_response") == "stopped"
@@ -668,7 +670,7 @@ label ch01_scene_19_too_hot:
     # only marks the blanket coming off. Staging follows the cast.
     scene bg ch01_villa_living_evening
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ cast(ryan="home", leia="lounge", julian="lounge")
 
     $ set_story_flag("ch01_scene_19_complete")
     jump ch01_scene_20_no_hiding_place
@@ -759,7 +761,7 @@ label ch01_scene_20_no_hiding_place:
     $ lc_bgm_resume(3.0)
     scene bg ch01_villa_living_evening
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ cast(ryan="home", leia="lounge", julian="lounge")
 
     $ set_story_flag("ch01_scene_20_complete")
     jump ch01_scene_21_watching_julian
@@ -854,7 +856,7 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] fixed it immediately."
             scene bg ch01_villa_living_evening
             with dissolve
-            $ cast(ryan="casual", leia="lounge", julian="lounge")
+            $ cast(ryan="home", leia="lounge", julian="lounge")
             gf "Thanks. This top's useless."
             mc "Sure. Anytime."
 
@@ -865,7 +867,7 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name] held my gaze for a second, then eventually adjusted the neckline herself."
             scene bg ch01_villa_living_evening
             with dissolve
-            $ cast(ryan="casual", leia="lounge", julian="lounge")
+            $ cast(ryan="home", leia="lounge", julian="lounge")
             "The pause before she did it was the part I remembered."
 
         "[ch01_micro_open_text]":
@@ -888,7 +890,7 @@ label ch01_scene_22_first_micro_test:
                 "It did matter. I'd just decided upstairs that I wasn't having that conversation tonight."
             scene bg ch01_villa_living_evening
             with dissolve
-            $ cast(ryan="casual", leia="lounge", julian="lounge")
+            $ cast(ryan="home", leia="lounge", julian="lounge")
 
     $ lc_unduck()
     # The deliberate-open branch settles back to a normal seated image after
@@ -896,7 +898,7 @@ label ch01_scene_22_first_micro_test:
     if get_story_value("ch01_micro_test_response") == "knowingly_left":
         scene bg ch01_villa_living_evening
         with dissolve
-        $ cast(ryan="casual", leia="lounge", julian="lounge")
+        $ cast(ryan="home", leia="lounge", julian="lounge")
 
     $ set_story_flag("ch01_scene_22_complete")
     jump ch01_scene_23_relationship_philosophy
@@ -1183,7 +1185,7 @@ label ch01_scene_28_ryan_leia_alone:
     $ lc_bgm("quiet_thoughts", fadein=3.0)
     with dissolve
     $ lc_sfx("door_close", 0.5)
-    $ cast(ryan="casual", leia="lounge", julian="lounge")
+    $ cast(ryan="home", leia="lounge", julian="lounge")
 
     "The villa became noticeably quieter once [friend_name]'s door closed upstairs."
     "[girlfriend_name] stayed beside me, turning her empty glass slowly between both hands."
