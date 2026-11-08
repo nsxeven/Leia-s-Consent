@@ -74,7 +74,9 @@ def stat_bar(name, top, bot):
         gd.line((0, y, w, y), fill=tuple(int(t[i] + (b[i] - t[i]) * k) for i in range(3)) + (255,))
     m = Image.new('L', (w, h)); ImageDraw.Draw(m).rounded_rectangle((1, 1, w - 2, h - 2), radius=8, fill=255)
     out = Image.new('RGBA', (w, h)); out.paste(g, (0, 0), m)
-    ImageDraw.Draw(out).rounded_rectangle((4, 3, w - 5, 9), radius=3, fill=(255, 255, 255, 60))
+    # Shine composited on top (drawing RGBA directly would punch a see-through hole).
+    shine = Image.new('RGBA', (w, h)); ImageDraw.Draw(shine).rounded_rectangle((4, 3, w - 5, 9), radius=3, fill=(255, 255, 255, 60))
+    out.alpha_composite(shine)
     out.save(OUT / ('stat_' + name + '.png'))
 for _n, (_t, _b) in STAT_BARS.items():
     stat_bar(_n, _t, _b)
