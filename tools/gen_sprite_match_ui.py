@@ -313,6 +313,19 @@ def redraw_stat_icons():
             d.arc((6, 7, 14, 14), 15, 165, fill="#3B2A30", width=1)
         image.resize((40, 40), Image.Resampling.NEAREST).save(SCRAP / f"icon_{name}.png")
 
+def build_camera_icon():
+    """Pixel camera for the Full Transparency CG stamp on choice cards."""
+    image = Image.new("RGBA", (14, 11), (0, 0, 0, 0))
+    d = ImageDraw.Draw(image)
+    d.rectangle((4, 0, 8, 2), fill="#3B2A30")
+    d.rectangle((0, 2, 13, 10), fill="#3B2A30")
+    d.rectangle((1, 3, 12, 9), fill="#FFF8E9")
+    d.ellipse((4, 4, 9, 9), fill="#3B2A30")
+    d.rectangle((6, 6, 7, 7), fill="#FFF8E9")
+    d.point((11, 4), fill="#CC0066")
+    image.resize((28, 22), Image.Resampling.NEAREST).save(SCRAP / "icon_camera.png")
+
+
 def draw_app_icon(name, top, bot):
     image = grad(48, 48, top, bot)
     mask = Image.new("L", (48, 48))
@@ -563,6 +576,7 @@ def build_chrome():
 
     build_avatars()
     build_hud()
+    build_camera_icon()
 
 
 def main():

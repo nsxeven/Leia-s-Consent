@@ -619,14 +619,16 @@ screen choice(items):
                                         # Full Transparency only: a small ink stamp naming the path
                                         # (systems/choice_path_tags.rpy). None in every other mode.
                                         $ stamp = lc_choice_path_stamp(item.caption)
+                                        # Full only: camera stamp with how many CGs the option shows.
+                                        $ cg_stamp = lc_choice_cg_stamp(item.caption)
                                         text line:
                                             size 40
                                             color "#34242c"
                                             font "fonts/PatrickHand-Regular.ttf"
                                             xalign 0.0
                                             substitute False
-                                        if stamp:
-                                            # Stamp after the stat line; wraps under it when the row is full.
+                                        if stamp or cg_stamp:
+                                            # Stamps after the stat line; wrap under it when the row is full.
                                             hbox:
                                                 box_wrap True
                                                 box_wrap_spacing 6
@@ -639,18 +641,36 @@ screen choice(items):
                                                         font "fonts/PatrickHand-Regular.ttf"
                                                         yalign 0.5
                                                         substitute False
-                                                frame at lc_path_stamp_tilt:
-                                                    yalign 0.5
-                                                    background Solid(stamp[1])
-                                                    padding (2, 2, 2, 2)
-                                                    frame:
-                                                        background Solid(LC_PATH_STAMP_PAPER)
-                                                        padding (8, 0, 8, 1)
-                                                        text stamp[0]:
-                                                            size 22
-                                                            color stamp[1]
-                                                            font "fonts/Handjet-ExtraBold.ttf"
-                                                            substitute False
+                                                if stamp:
+                                                    frame at lc_path_stamp_tilt:
+                                                        yalign 0.5
+                                                        background Solid(stamp[1])
+                                                        padding (2, 2, 2, 2)
+                                                        frame:
+                                                            background Solid(LC_PATH_STAMP_PAPER)
+                                                            padding (8, 0, 8, 1)
+                                                            text stamp[0]:
+                                                                size 22
+                                                                color stamp[1]
+                                                                font "fonts/Handjet-ExtraBold.ttf"
+                                                                substitute False
+                                                if cg_stamp:
+                                                    frame at lc_path_stamp_tilt:
+                                                        yalign 0.5
+                                                        background Solid(LC_CG_STAMP_INK)
+                                                        padding (2, 2, 2, 2)
+                                                        frame:
+                                                            background Solid(LC_PATH_STAMP_PAPER)
+                                                            padding (7, 2, 9, 2)
+                                                            hbox:
+                                                                spacing 6
+                                                                add "images/ui/scrapbook/icon_camera.png" yalign 0.5
+                                                                text cg_stamp:
+                                                                    size 22
+                                                                    color LC_CG_STAMP_INK
+                                                                    font "fonts/Handjet-ExtraBold.ttf"
+                                                                    yalign 0.5
+                                                                    substitute False
                                         elif chips:
                                             text lc_choice_effect_markup(chips):
                                                 size 36

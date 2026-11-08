@@ -23,9 +23,35 @@ transform lc_path_stamp_tilt:
     rotate_pad False
     transform_anchor True
 
+# CGs a choice shows (darryn 2026-11-08): Full Transparency only, a small camera
+# stamp next to the path stamp. (min, max) = total CGs of that sequence the
+# player sees by picking this option; min != max shows a range because the
+# outcome depends on stats. Add an entry whenever options unlock different CGs.
+define LC_CHOICE_CG_COUNT = {
+    # Day 1 pool photos (ch01_scenes_04_06.rpy): capture 01 is already shown.
+    "ch01_photo_support": (2, 2),   # + capture 02
+    "ch01_photo_more": (3, 3),      # + captures 02 and 03
+    "ch01_photo_exit": (1, 2),      # capture 02 only if her Exhibitionism carries her on
+}
+define LC_CG_STAMP_INK = "#3b2a30"
+
 init 6 python:
     import lc_stat_model
     import lc_ui_logic
+
+    def lc_choice_cg_stamp(caption):
+        """Text for a choice card's camera stamp ('2', '1-2'), or None.
+
+        Full Transparency only; None for choices with no LC_CHOICE_CG_COUNT entry.
+        """
+        if current_choice_mode() != "full":
+            return None
+        choice_id, _text = lc_ui_logic.split_choice_mark(lc_choice_caption(caption))
+        counts = LC_CHOICE_CG_COUNT.get(choice_id) if choice_id else None
+        if not counts:
+            return None
+        low, high = counts
+        return str(low) if low == high else "{}-{}".format(low, high)
 
     def lc_choice_path_stamp(caption):
         """(label markup, ink) for a choice card's Full Transparency stamp, or None.
