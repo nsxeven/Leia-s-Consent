@@ -157,6 +157,7 @@ init -2 python:
             return lc_leia_voice_clip(path, lc_audio_gain(kind, name, volume))
         if path:
             renpy.music.play(path, channel=channel, relative_volume=lc_audio_gain(kind, name, volume))
+            lc_audio_mark(channel)   # belongs to this scene (lc_audio_scene_lock.rpy)
         return path
 
     def lc_amb(name, volume=1.0, fadein=1.5, fadeout=1.5):
