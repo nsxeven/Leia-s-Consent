@@ -540,6 +540,25 @@ screen phone_screen():
                                         xalign (1.0 if _out else 0.0)
                                         action Show("lc_phone_photo_viewer", photo_asset=_attachment)
                                         add lc_phone_rounded_photo(_attachment, min(320, _bubble_max), 180)
+                    $ reply_prompt = phone_pending_reply(phone_thread)
+                    if reply_prompt:
+                        text "Reply as [player_name]":
+                            style "lc_sw_hand"
+                            size 23
+                            color "#6E8399"
+                            xalign 1.0
+                        for reply_option in reply_prompt["options"]:
+                            textbutton reply_option["text"]:
+                                style "lc_sw_hit"
+                                xalign 1.0
+                                xmaximum 430
+                                padding (18, 12)
+                                background Frame("gui/phone/sprite_match/bubble_out.png", 18, 18)
+                                hover_background Solid("#D9EAF9")
+                                text_style "lc_sw_hand"
+                                text_size 27
+                                text_color "#293C53"
+                                action Function(phone_select_reply, phone_thread, reply_option["id"])
                     if thread_rows and thread_rows[-1]["outgoing"]:
                         text "Read [lc_phone_clock_text()]":
                             style "lc_sw_hand"

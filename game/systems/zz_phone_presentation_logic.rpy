@@ -142,6 +142,56 @@ init python:
             phone_show_next_notification()
         return None
 
+    def phone_pending_reply(thread_id):
+        return getattr(renpy.store, "phone_reply_prompts", {}).get(thread_id)
+
+    def phone_offer_reply(thread_id, prompt_id, options, default_id):
+        """Queue a save-safe, stat-free reply card for one thread.
+
+        Options are dicts with id, text and optional followups: (sender, text)
+        pairs. Stable prompt IDs become story-value keys and message-ID prefixes.
+        """
+        if thread_id not in PHONE_THREAD_ORDER or not prompt_id:
+            raise ValueError("Unknown thread or missing reply prompt ID")
+        ids = [option["id"] for option in options]
+        if not 2 <= len(ids) <= 3 or len(set(ids)) != len(ids) or default_id not in ids:
+            raise ValueError("Reply prompts need 2-3 unique choices and a valid default")
+        if has_story_value(prompt_id) or phone_pending_reply(thread_id):
+            return False
+        renpy.store.phone_reply_prompts[thread_id] = {
+            "id": prompt_id, "options": options, "default": default_id,
+        }
+        return True
+
+    def phone_choose_reply(thread_id, option_id):
+        """Post Ryan's pick and scripted followups; return False if stale."""
+        prompt = phone_pending_reply(thread_id)
+        if not prompt:
+            return False
+        option = next((item for item in prompt["options"] if item["id"] == option_id), None)
+        if option is None:
+            return False
+        # Remove first so the writer's deadline hook cannot resolve twice.
+        del renpy.store.phone_reply_prompts[thread_id]
+        set_story_value(prompt["id"], option_id)
+        phone_send_player_message(thread_id, option["text"], message_id=prompt["id"] + "_ryan")
+        for index, (sender, text) in enumerate(option.get("followups", ())):
+            phone_add_message(
+                thread_id, sender, text=text,
+                message_id="{}_followup_{:02d}".format(prompt["id"], index + 1),
+                mark_unread=False, notify=False,
+            )
+        return True
+
+    def phone_default_reply(thread_id):
+        prompt = phone_pending_reply(thread_id)
+        return phone_choose_reply(thread_id, prompt["default"]) if prompt else False
+
+    def phone_select_reply(thread_id, option_id):
+        # Ren'Py Function actions must return None or the Phone closes.
+        phone_choose_reply(thread_id, option_id)
+        return None
+
     _phone_add_message_base = phone_add_message
 
     def phone_add_message(
@@ -156,6 +206,9 @@ init python:
         notification_app="Messages",
         notification_title=None,
     ):
+        # A new incoming message is the deadline; stable-ID replays are not.
+        if sender_id != "player" and not (message_id and phone_has_message(message_id)):
+            phone_default_reply(thread_id)
         added = _phone_add_message_base(
             thread_id,
             sender_id,

@@ -1,6 +1,18 @@
 init 998 python:
     config.label_overrides["ch01_scene_27_late_photo_drop"] = "ch01_scene_27_late_photo_drop_staged"
 
+    def ch01_offer_movie_photo_reply():
+        # Wait for the existing staged group exchange to finish before offering
+        # Ryan a turn; otherwise Leia's timed first response would auto-pick it.
+        phone_offer_reply("group", "ch01_movie_photo_reply", [
+            {"id": "nice", "text": "Okay, that one's good. Thanks for sending it.",
+             "followups": [("julian", "Glad I remembered. I nearly left it on my phone.")]},
+            {"id": "tease", "text": "You waited until after the movie to send this?",
+             "followups": [("julian", "Yeah, I got distracted. Better late than never, right?")]},
+            {"id": "leia", "text": "I think [girlfriend_name] likes this one more than you do.",
+             "followups": [("leia", "I do! Wait, send me the full-size one too.")]},
+        ], "nice")
+
 label ch01_scene_27_late_photo_drop_staged:
     "The movie had been over for several minutes before any of us bothered to stand."
     friend "I'm done. If I stay here another ten minutes I'm sleeping on this sofa."

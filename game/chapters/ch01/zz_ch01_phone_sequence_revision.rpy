@@ -66,6 +66,7 @@ init 998 python:
             clear_story_flag("ch01_late_photo_followup_pending")
             clear_story_flag("ch01_late_photo_phone_session_active")
             set_story_value("ch01_late_photo_force_complete_on_open", False)
+            ch01_offer_movie_photo_reply()
 
         renpy.restart_interaction()
         return None
