@@ -31,3 +31,12 @@ layeredimage ryan_pool_layers:
     always "images/sprites/ryan/Chest_Nude.png" at leia_chest_breathe
 
 image ryan_pool = Fixed(lc_sprite_silhouette("ryan_pool_layers"), xysize=(941, 1672))
+
+
+# Home clothes (darryn 2026-11-09): what Ryan changes into upstairs after the
+# restaurant on Day 1 (scene 14a) and wears for movie night to the end of the day.
+layeredimage ryan_home_layers:
+    always "images/sprites/ryan/Base_HomeClothes.png"
+    always "images/sprites/ryan/Chest_HomeClothes.png" at leia_chest_breathe
+
+image ryan_home = Fixed(lc_sprite_silhouette("ryan_home_layers"), xysize=(941, 1672))
