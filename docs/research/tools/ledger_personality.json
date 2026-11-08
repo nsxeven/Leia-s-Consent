@@ -1,0 +1,320 @@
+{
+  "entries": [
+    {
+      "id": "P01",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "new-friends"
+      ],
+      "title": "Big Five Personality Traits: The 5-Factor Model of Personality",
+      "authors_year": "Lim 2026 (reviewed by McLeod and Guy-Evans)",
+      "url": "https://www.simplypsychology.org/big-five-personality.html",
+      "accessed": "2026-11-08",
+      "inspected": "Browser-rendered overview and trait definitions",
+      "finding": "O describes openness to novelty; C organization and self-discipline; E sociability and talkativeness; A compassion and cooperation; N negative emotional reactivity. Traits are continua, not four-letter types.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Use high/mid/low as drafting contrasts rather than diagnoses or fixed dialogue rules.",
+      "limitations": "Educational synthesis, not a primary experiment."
+    },
+    {
+      "id": "P02",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "new-friends",
+        "drinking/drunk"
+      ],
+      "title": "Personality in its natural habitat: Manifestations and implicit folk theories of personality in daily life",
+      "authors_year": "Mehl, Gosling, and Pennebaker 2006",
+      "url": "https://experts.arizona.edu/en/publications/personality-in-its-natural-habitat-manifestations-and-implicit-fo/",
+      "accessed": "2026-11-08",
+      "inspected": "University of Arizona publication page and abstract",
+      "finding": "An EAR sampled ambient sounds from 96 people across two days; Big Five scores related to everyday social interaction, moods, activities, and language, and listeners judged extraversion especially well from the audio. Many manifestations were gender-specific.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Make extraversion audible through social initiative and interactive energy, but do not assert an exact words-per-line effect from this abstract.",
+      "limitations": "Abstract does not report individual word-category coefficients or a universal verbosity threshold; short observation window."
+    },
+    {
+      "id": "P03",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "teasing",
+        "new-friends"
+      ],
+      "title": "Using Linguistic Cues for the Automatic Recognition of Personality in Conversation and Text",
+      "authors_year": "Mairesse, Walker, Mehl, and Moore 2007",
+      "url": "https://www.jair.org/index.php/jair/article/view/10520",
+      "accessed": "2026-11-08",
+      "inspected": "JAIR article landing page and full abstract; PDF link itself was not text-extractable",
+      "finding": "Big Five prediction from conversational and written linguistic features exceeded baseline for some traits; ranking models performed best overall, observer ratings were easier to model than self-reports, and optimal features varied by trait.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Differentiate several cues together (turn length, social focus, stance) rather than assigning a single signature word.",
+      "limitations": "Abstract gives no robust trait-specific words or effect sizes; prediction is imperfect and context-sensitive."
+    },
+    {
+      "id": "P04",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "are-we-okay"
+      ],
+      "title": "Linguistic styles: language use as an individual difference",
+      "authors_year": "Pennebaker and King 1999",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10626371/",
+      "accessed": "2026-11-08",
+      "inspected": "PubMed abstract",
+      "finding": "Word-use dimensions showed consistency across multiple writing samples and corresponded modestly with personality measures; linguistic style supplies information beyond story content.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Keep recurring stylistic tendencies across situations, with stress-driven changes rather than a catchphrase per person.",
+      "limitations": "Written diaries and assignments, not direct dialogue; authors explicitly describe modest effect sizes."
+    },
+    {
+      "id": "P05",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "roasting",
+        "flirting",
+        "new-friends"
+      ],
+      "title": "The links between bloggers’ personalities and their use of words",
+      "authors_year": "Jarrett 2010 summarizing Yarkoni 2010",
+      "url": "https://www.bps.org.uk/research-digest/links-between-bloggers-personalities-and-their-use-words",
+      "accessed": "2026-11-08",
+      "inspected": "British Psychological Society Research Digest article body",
+      "finding": "In 694 bloggers, higher neuroticism tracked more negative-emotion words, extraversion more positive-emotion words, agreeableness fewer swear words and more communality words, and conscientiousness more achievement words. Openness associated with more prepositions and formal, longer words rather than the expected intellectual/sensory categories.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Use group/social and positive words for sociable voices; negative appraisal when threatened; allow an agreeable roaster to soften insults.",
+      "limitations": "Secondary summary of long-form blog writing; correlations do not dictate single lines, and the sample was predominantly female."
+    },
+    {
+      "id": "P06",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "new-friends",
+        "roasting"
+      ],
+      "title": "Bloggers’ reveal personalities with word choice",
+      "authors_year": "Larsen 2010 reporting Yarkoni research",
+      "url": "https://www.colorado.edu/asmagazine/2010/12/01/bloggers-reveal-personalities-word-choice",
+      "accessed": "2026-11-08",
+      "inspected": "University of Colorado article body",
+      "finding": "The university report describes specific-word associations in bloggers; neuroticism accompanied negative adjectives such as terrible/worse, while extraversion accompanied social-outing terms.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Give worried characters occasional negative appraisal, not a rote trait-word checklist; let extroverts frame events as shared experiences.",
+      "limitations": "University news coverage, not the paper; written blog correlations and particular keywords are poor prescriptions for spoken fiction."
+    },
+    {
+      "id": "P07",
+      "source_type": "personality research",
+      "situations": [
+        "general",
+        "flirting",
+        "jealousy/awkward",
+        "are-we-okay"
+      ],
+      "title": "Romantic love conceptualized as an attachment process",
+      "authors_year": "Hazan and Shaver 1987",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3572722/",
+      "accessed": "2026-11-08",
+      "inspected": "PubMed abstract",
+      "finding": "Two questionnaire studies extended secure, avoidant, and anxious/ambivalent attachment ideas to adult romantic love; groups differed in romantic experience and relationship models.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Treat attachment as a relational stress tendency, not a complete personality or a predetermined outcome.",
+      "limitations": "Original categorical model and self-report design; not evidence that any one line proves an attachment style."
+    },
+    {
+      "id": "P08",
+      "source_type": "personality research",
+      "situations": [
+        "flirting",
+        "jealousy/awkward",
+        "consent/new-things",
+        "are-we-okay",
+        "bedroom"
+      ],
+      "title": "A Brief Overview of Adult Attachment Theory and Research",
+      "authors_year": "R. Chris Fraley, undated",
+      "url": "https://labs.psychology.illinois.edu/~rcfraley/attachment.htm",
+      "accessed": "2026-11-08",
+      "inspected": "Researcher-authored overview, including adult individual differences and anxiety/avoidance sections",
+      "finding": "Adult attachment is commonly described on anxiety and avoidance dimensions; anxious people may worry they are not fully loved and react when needs go unmet, while avoidant people may downplay dependence. Responsive partners support exploration.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Distinguish Leia’s reassurance check from her agency in choosing; Ryan’s minimization can coexist with real concern.",
+      "limitations": "Overview synthesizes studies; orientations are dimensions and context-dependent, not diagnoses or gender rules."
+    },
+    {
+      "id": "P09",
+      "source_type": "personality research",
+      "situations": [
+        "jealousy/awkward",
+        "are-we-okay",
+        "confrontation"
+      ],
+      "title": "Conflict in Close Relationships: An Attachment Perspective",
+      "authors_year": "Simpson, Rholes, and Phillips 1996",
+      "url": "https://experts.umn.edu/en/publications/conflict-in-close-relationships-an-attachment-perspective/",
+      "accessed": "2026-11-08",
+      "inspected": "University of Minnesota publication abstract",
+      "finding": "In videotaped dating-couple problem discussions, more ambivalent participants evaluated the partner/relationship less positively after a major issue; ambivalent women in this sample showed stronger stress and more negative behavior, while more avoidant men appeared less warm and supportive on major issues.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "In the bad route, let Leia seek clarity while Ryan’s visible warmth drops; do not transplant sample-specific gender effects into every scene.",
+      "limitations": "Abstract only; conditional effects in a particular sample, not proof of exact phrasing."
+    },
+    {
+      "id": "P10",
+      "source_type": "personality research",
+      "situations": [
+        "jealousy/awkward",
+        "are-we-okay",
+        "confrontation"
+      ],
+      "title": "The longitudinal impact of demand and withdrawal during marital conflict",
+      "authors_year": "Heavey, Christensen, and Malamuth 1995",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/7593873/",
+      "accessed": "2026-11-08",
+      "inspected": "PubMed abstract",
+      "finding": "Forty-eight couples completed recorded problem-solving discussions; demandingness and, to a lesser extent, withdrawal correlated with satisfaction, and withdrawal by men plus woman-demand/man-withdraw around woman-identified issues predicted wives’ satisfaction decline over follow-up.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Show the escalating loop rather than treating either person as the sole villain: more questions, then clipped replies and retreat, then further pursuit.",
+      "limitations": "Observational associations in married couples; this does not establish causation or universal sex roles."
+    },
+    {
+      "id": "P11",
+      "source_type": "personality research",
+      "situations": [
+        "are-we-okay",
+        "confrontation",
+        "consent/new-things"
+      ],
+      "title": "The Four Horsemen: Stonewalling",
+      "authors_year": "The Gottman Institute, undated",
+      "url": "https://www.gottman.com/blog/the-four-horsemen-stonewalling/",
+      "accessed": "2026-11-08",
+      "inspected": "Gottman Institute article body and suggested antidote",
+      "finding": "Stonewalling is disengagement during a difficult exchange, often attributed to feeling overwhelmed; the article describes tuning out, turning away, and appearing busy, and recommends a time-out with return to conversation.",
+      "quote": "",
+      "label": "Evidence",
+      "writer_takeaway": "Stage Ryan’s “I’m fine” as one avoidant move followed by observable withdrawal; a healthier branch explicitly pauses and comes back.",
+      "limitations": "Practitioner explanation, not a standalone experimental estimate; a single brief pause is not necessarily stonewalling."
+    }
+  ],
+  "profiles": {
+    "leia": {
+      "big_five": {
+        "O": "high",
+        "C": "mid",
+        "E": "high",
+        "A": "high",
+        "N": "mid"
+      },
+      "attachment": "anxious-leaning, with secure agency",
+      "reason": "Her affectionate play and excited run-on turns suggest high social energy and warmth, while curiosity about new experiences supports high O (P01, P02). Checking Ryan’s face after a bold choice and fearing judgment suggests attachment anxiety under uncertainty (P07, P08), but her explicit choices and willingness to explore rule out treating her as passive. In a bad-route conflict, reassurance bids can intensify if Ryan withdraws (P09, P10); this is a fiction-writing inference, not a diagnosis.",
+      "predicted_habits": [
+        "Give her longer, linked turns when excited; she circles back to add one more thought rather than always speaking in fragments (P01, P02; inference).",
+        "Favor affectionate we/us and shared-experience language over sharp insults; her teasing lands warmly (P05; extrapolated to speech).",
+        "After a bold flirtation or consensual new choice, insert a brief direct check of Ryan’s reaction, not a request for permission (P08; inference).",
+        "When she senses distance, move from a joking probe to a plain “Are we okay?” rather than repetitive pleading (P08, P09; inference)."
+      ],
+      "ledger_ids": [
+        "P01",
+        "P02",
+        "P05",
+        "P07",
+        "P08",
+        "P09",
+        "P10"
+      ]
+    },
+    "ryan": {
+      "big_five": {
+        "O": "mid",
+        "C": "mid",
+        "E": "low",
+        "A": "high",
+        "N": "mid"
+      },
+      "attachment": "avoidant-leaning under conflict; otherwise capable of security",
+      "reason": "His decent, unshowy manner and plain narration suggest high A and lower outward E, not a global lack of social skill (P01, P02). Fear of seeming boring or jealous adds situational negative reactivity, while guilt makes him over-explain. His “I’m fine” followed by disengagement is a plausible avoidant-leaning stress move (P08, P09); repeated demand-withdraw can damage the relationship (P10, P11). This describes a route-specific behavior, not a clinical classification.",
+      "predicted_habits": [
+        "Use plain concrete clauses and dry self-directed jokes; keep his ordinary turns shorter than Leia’s and Julian’s (P01, P02; stylistic inference).",
+        "When jealous, shorten responses and omit the actual feeling; do not claim that the phrase “I’m fine” is itself a validated marker (P08, P11).",
+        "When caught in a mistake, switch to overly precise, chained explanations and qualifiers (character-note inference; P04 cautions that style is not deterministic).",
+        "In the healthy route, name the need for a break and explicitly return to the conversation instead of silently disappearing (P11)."
+      ],
+      "ledger_ids": [
+        "P01",
+        "P02",
+        "P04",
+        "P08",
+        "P09",
+        "P10",
+        "P11"
+      ]
+    },
+    "julian": {
+      "big_five": {
+        "O": "mid",
+        "C": "mid",
+        "E": "high",
+        "A": "mid",
+        "N": "mid"
+      },
+      "attachment": "secure-leaning, with approval sensitivity",
+      "reason": "Hosting, booming presence, and theatrical rambling put him high on outward E (P01, P02); loyal warmth and a craving to be liked coexist with a mid A profile because his bluster can crowd others out. Panic may temporarily increase his talk rather than prove a stable trait, so N stays mid (P03, P04). Secure-leaning is a provisional narrative choice: loneliness and wanting approval are not enough to infer anxious attachment without persistent fear of abandonment (P07, P08).",
+      "predicted_habits": [
+        "Let him own the longest turns: elaborate setup, comic detour, and extravagant conclusion (P01, P02; inference, not a measured word count).",
+        "Use socially inclusive invitations, praise, and shared-party framing when hosting (P05; extrapolated from writing).",
+        "When scared or awkward, talk more and escalate absurd specificity, then offer a sincere repair when someone is hurt (character-note inference).",
+        "Occasionally end a boast with a quick, quiet check that people are actually enjoying themselves (P08; narrative inference)."
+      ],
+      "ledger_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P07",
+        "P08"
+      ]
+    },
+    "maya": {
+      "big_five": {
+        "O": "high",
+        "C": "mid",
+        "E": "high",
+        "A": "high",
+        "N": "low"
+      },
+      "attachment": "secure-leaning",
+      "reason": "Her quick questions, interruption, hype, and willingness to engage new people imply high E and O (P01, P02). She notices harm and drops the bit to support someone, which makes A high despite bluntness and roast humor; agreeableness does not require never teasing (P05). Her steadiness in emotionally difficult moments supports a secure-leaning writing choice, though attachment cannot be established from the notes alone (P07, P08).",
+      "predicted_habits": [
+        "Write fast turn-taking with interruptions, pointed questions, and short-to-medium bursts, contrasting Julian’s long monologues (P02, P03; narrative inference).",
+        "In group scenes, amplify other people with direct positive and communal language; keep roasts affectionate rather than sustained contempt (P05; extrapolated).",
+        "When she sees someone hurting, drop the joke and ask one specific, unembellished question (P08; narrative inference).",
+        "Around Julian, use teasing as a conversational cover for attention, then briefly become direct when stakes rise (character-note inference)."
+      ],
+      "ledger_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P05",
+        "P07",
+        "P08"
+      ]
+    }
+  }
+}
