@@ -228,6 +228,8 @@ init 20 python:
         "ch01_julian_reassure": "supportive", "ch01_julian_honest": "honest", "ch01_julian_joke": "playful",
         "ch01_carry_lookaway": "protective", "ch01_carry_fix": "protective", "ch01_carry_brush": "supportive",
         "ch01_carry_joke": "playful",
+        "ch01_upstairs_honest": "honest", "ch01_upstairs_liked": "showoff", "ch01_upstairs_swallow": "detached",
+        "ch01_upstairs_snap": "detached",
         "ch01_movie_stop": "protective", "ch01_movie_subtle": "showoff", "ch01_movie_tease_presence": "playful",
         "ch01_movie_dismiss_concern": "detached",
         "ch01_can_tell_behave": "protective", "ch01_can_tell_tease": "playful", "ch01_can_tell_push": "showoff",
