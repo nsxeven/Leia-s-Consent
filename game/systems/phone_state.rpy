@@ -13,6 +13,8 @@ default phone_messages = {
 default phone_last_open_thread = None
 # Per-thread pending reply cards. Old saves get an empty mapping via default.
 default phone_reply_prompts = {}
+# Save-safe staged reply steps; advances only while its thread is open.
+default phone_reply_delivery = {}
 
 # Photos are lightweight metadata entries. Story attachments are auto-indexed
 # here so the Photos app can become a persistent camera roll rather than a stub.

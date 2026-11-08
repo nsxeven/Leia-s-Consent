@@ -163,8 +163,8 @@ init python:
         }
         return True
 
-    def phone_choose_reply(thread_id, option_id):
-        """Post Ryan's pick and scripted followups; return False if stale."""
+    def phone_choose_reply(thread_id, option_id, staged=False):
+        """Queue a picked reply, or post it in order at a story deadline."""
         prompt = phone_pending_reply(thread_id)
         if not prompt:
             return False
@@ -174,14 +174,40 @@ init python:
         # Remove first so the writer's deadline hook cannot resolve twice.
         del renpy.store.phone_reply_prompts[thread_id]
         set_story_value(prompt["id"], option_id)
-        phone_send_player_message(thread_id, option["text"], message_id=prompt["id"] + "_ryan")
-        for index, (sender, text) in enumerate(option.get("followups", ())):
-            phone_add_message(
-                thread_id, sender, text=text,
-                message_id="{}_followup_{:02d}".format(prompt["id"], index + 1),
-                mark_unread=False, notify=False,
-            )
+        steps = [("player", option["text"], prompt["id"] + "_ryan")]
+        steps.extend((sender, text, "{}_followup_{:02d}".format(prompt["id"], index + 1))
+                     for index, (sender, text) in enumerate(option.get("followups", ())))
+        if staged:
+            # Save state contains plain strings, not callables or displayables.
+            if not hasattr(renpy.store, "phone_reply_delivery"):
+                renpy.store.phone_reply_delivery = {}
+            renpy.store.phone_reply_delivery[thread_id] = steps
+        else:
+            for sender, text, message_id in steps:
+                phone_add_message(thread_id, sender, text=text, message_id=message_id,
+                                  mark_unread=False, notify=False)
         return True
+
+    def phone_deliver_reply_step(thread_id):
+        """One timed beat in the existing open-thread sequence overlay."""
+        pending = getattr(renpy.store, "phone_reply_delivery", {}).get(thread_id)
+        if not pending:
+            return None
+        sender, text, message_id = pending.pop(0)
+        if not pending:
+            del renpy.store.phone_reply_delivery[thread_id]
+        added = _phone_add_message_base(thread_id, sender, text=text, message_id=message_id,
+                                        mark_unread=False, notify=False)
+        if added and sender != "player":
+            lc_phone_message_pop(thread_id)
+        renpy.restart_interaction()
+        return None
+
+    def phone_flush_reply_delivery(thread_id):
+        """A subsequent story message catches up the pending reply in order."""
+        while getattr(renpy.store, "phone_reply_delivery", {}).get(thread_id):
+            phone_deliver_reply_step(thread_id)
+        return None
 
     def phone_default_reply(thread_id):
         prompt = phone_pending_reply(thread_id)
@@ -189,7 +215,7 @@ init python:
 
     def phone_select_reply(thread_id, option_id):
         # Ren'Py Function actions must return None or the Phone closes.
-        phone_choose_reply(thread_id, option_id)
+        phone_choose_reply(thread_id, option_id, staged=True)
         return None
 
     _phone_add_message_base = phone_add_message
@@ -209,6 +235,7 @@ init python:
         # A new incoming message is the deadline; stable-ID replays are not.
         if sender_id != "player" and not (message_id and phone_has_message(message_id)):
             phone_default_reply(thread_id)
+            phone_flush_reply_delivery(thread_id)
         added = _phone_add_message_base(
             thread_id,
             sender_id,

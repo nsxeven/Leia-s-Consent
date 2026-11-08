@@ -19,8 +19,8 @@ class PhoneLayoutTests(unittest.TestCase):
         self.assertEqual(values["LC_PHONE_VIEWPORT_WIDTH"], width)
         self.assertGreaterEqual(left, 17)
         self.assertLessEqual(right, 523)
-        self.assertEqual(PHONE.count('xpos LC_PHONE_CONTENT_LEFT'), 4)
-        self.assertEqual(PHONE.count('xsize LC_PHONE_CONTENT_WIDTH'), 4)
+        self.assertEqual(PHONE.count('xpos LC_PHONE_CONTENT_LEFT'), 5)
+        self.assertEqual(PHONE.count('xsize LC_PHONE_CONTENT_WIDTH'), 5)
         self.assertEqual(PHONE.count('xsize LC_PHONE_VIEWPORT_WIDTH'), 4)
         self.assertNotRegex(PHONE, r'(?m)^\s+xoffset\s+-\d+')
 

@@ -42,11 +42,11 @@ init 50 python:
         if len(assets) == 3:
             phone_offer_reply("group", "ch01_pool_photo_reply", [
                 {"id": "good", "text": "Yeah bro, these are good.",
-                 "followups": [("julian", "Glad you like them. I had to sort through a few blurry ones first.")]},
+                 "followups": [("julian", "Glad you like them. I had about four more with my thumb over the lens.")]},
                 {"id": "wedding", "text": "Wow, you're my wedding photographer now?",
-                 "followups": [("julian", "Ha, let's see if I can keep my hands steady first.")]},
+                 "followups": [("julian", "Please don't book me yet. Half the shots before these were blurry.")]},
                 {"id": "last", "text": "Wait, that last one is my favorite.",
-                 "followups": [("leia", "Okay, I like that one too. Can you send it to me?")]},
+                 "followups": [("leia", "Oh, that's your favorite? I thought you'd pick the first one, wait, now I'm looking again.")]},
             ], "good")
 
         set_story_value("ch01_pool_phone_solo_photo_count", len(assets))
