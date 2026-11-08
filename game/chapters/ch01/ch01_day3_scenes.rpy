@@ -55,12 +55,22 @@ label ch01_day3_start:
     centered "{size=50}CHAPTER ONE — DAY THREE{/size}"
 
     $ d3_end = get_story_value("ch01_d2_end_route", "love")
-    $ d3_lane = "ntr" if d3_end in ("ntr_confirmed", "mixed_unresolved") else ("exhibitionism" if d3_end == "exhibitionism" else "love")
+    # mixed_unresolved (darryn, 2026-11-08): Day Three starts as a strained Love
+    # track with one more chance, not NTR. At the club the strained couple gets
+    # the same three answers as the NTR night; walking away there moves the rest
+    # of Day Three onto the NTR lane. ch01_d2_end_route itself is never changed.
+    $ d3_strained = d3_end == "mixed_unresolved"
+    $ d3_lane = "ntr" if d3_end == "ntr_confirmed" else ("exhibitionism" if d3_end == "exhibitionism" else "love")
     $ set_story_value("ch01_d3_lane", d3_lane)
+    $ set_story_value("ch01_d3_strained_love", d3_strained)
     $ set_story_value("ch01_d3_ntr_repair_effort", "none")
     scene bg ch01_villa_bedroom_evening
     with fade
-    if d3_lane == "love":
+    if d3_strained:
+        "[girlfriend_name] was already awake, lying on her side of the bed and facing the window."
+        "We'd gone to sleep without settling anything about the pool. That wasn't the same as it being over."
+        "Today I was going to try again, properly."
+    elif d3_lane == "love":
         "[girlfriend_name] woke beside me, still curled against my shoulder."
         gf "Morning. You're not getting up yet, are you?"
         mc "Wasn't planning to."
@@ -294,7 +304,8 @@ label ch01_day3_club:
     # BG TODO: nightclub dance floor.
     "Music filled the nightclub. We found a place near the dance floor."
     "Maya dragged [friend_name] toward the music, laughing at his protests."
-    if d3_lane == "ntr":
+    # Read the stored flag (not a local), so a save made before this scene still loads.
+    if d3_lane == "ntr" or get_story_value("ch01_d3_strained_love", False):
         gf "Can we just enjoy tonight?"
         $ d3_enjoy = format_choice("ch01_d3_ntr_enjoy", "You're right. Let's just enjoy tonight.")
         $ d3_talk = format_choice("ch01_d3_ntr_talk", "Can we talk somewhere quieter?")
@@ -320,6 +331,10 @@ label ch01_day3_club:
                 $ set_story_value("ch01_d3_ntr_repair_effort", "withdraw")
                 mc "You can enjoy yourself. I'll get a drink."
                 "[girlfriend_name] watched me leave, frustrated."
+        if get_story_value("ch01_d3_strained_love", False) and get_story_value("ch01_d3_ntr_repair_effort") == "withdraw":
+            # The strained Love track's one more chance is spent: NTR lane from here.
+            $ d3_lane = "ntr"
+            $ set_story_value("ch01_d3_lane", "ntr")
     else:
         "[girlfriend_name] and I danced until she noticed the VIP seating nearby."
     jump ch01_day3_hairclip

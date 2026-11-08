@@ -8,14 +8,18 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'game' / 'python-packages'))
+import lc_stat_model  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 
 class DayReviewTests(unittest.TestCase):
     def setUp(self):
         self.store = SimpleNamespace(
-            relationship_stats=dict(love=50, trust=50, boredom=10, momentum=0),
-            partner_stats=dict(curiosity=20, temptation=10, exhibitionism=10, boundary_looseness=10, secrecy=5),
-            player_stats=dict(jealousy=20, acceptance=10), lc_review_active=None,
+            relationship_stats=dict(love=50, trust=50, sharing=0, temptation=10),
+            partner_stats=dict(exhibitionism=10),
+            player_stats=dict(), lc_review_active=None,
             lc_review_days={}, lc_title_facts={}, modified_save=False,
             persistent=SimpleNamespace(lc_title_style='story', lc_title_badges=False))
         self.values = {}
@@ -31,6 +35,7 @@ class DayReviewTests(unittest.TestCase):
             renpy=SimpleNamespace(showing=lambda tag: False, show_screen=lambda *a, **kw: None),
             get_stat_group=lambda group: getattr(self.store, group+'_stats'),
             get_story_value=lambda key, default=None: self.values.get(key, default),
+            lc_delta_colour=lambda stat, amount, palette='card': lc_stat_model.delta_kind(stat, amount),
             GALLERY_ENTRIES=self.gallery, STAT_LABELS={})
         source = (ROOT/'game/systems/day_review.rpy').read_text()
         init = source.split('init 20 python:\n', 1)[1].split('\nlabel lc_day_review', 1)[0]
@@ -77,10 +82,10 @@ class DayReviewTests(unittest.TestCase):
         self.assertEqual(self.call('lc_review_delta_rows','ch01_d1','full'), [])
 
     def test_modes_hide_numbers_and_internal_traits(self):
-        self.begin(); self.store.relationship_stats['love']+=4; self.store.partner_stats['secrecy']+=7; self.finish()
+        self.begin(); self.store.relationship_stats['love']+=4; self.store.relationship_stats['temptation']+=7; self.finish()
         self.assertEqual(self.call('lc_review_delta_rows','ch01_d1','normal'), [])
-        self.assertEqual(self.call('lc_review_delta_rows','ch01_d1','insight'), [('love','Increased')])
-        self.assertIn(('secrecy','5 → 12 (+7)'), self.call('lc_review_delta_rows','ch01_d1','full'))
+        self.assertEqual(self.call('lc_review_delta_rows','ch01_d1','insight'), [('love','Increased'), ('temptation','Increased')])
+        self.assertIn(('temptation','10 → 17 (+7)'), self.call('lc_review_delta_rows','ch01_d1','full'))
 
     def test_choice_deltas_are_actual_not_nominal(self):
         self.store.relationship_stats['trust']=99; self.begin(); before=self.call('lc_review_stats')
@@ -89,9 +94,9 @@ class DayReviewTests(unittest.TestCase):
         self.assertEqual(self.store.lc_review_days['ch01_d1']['choices'][0]['deltas'], [('relationship','trust',1)])
 
     def test_direct_changes_in_day_total_not_fabricated_as_choice(self):
-        self.begin(); self.store.player_stats['acceptance']=60; self.finish()
+        self.begin(); self.store.partner_stats['exhibitionism']=60; self.finish()
         self.assertEqual(self.call('lc_review_choice_rows','ch01_d1'), [])
-        self.assertIn(('acceptance','10 → 60 (+50)'), self.call('lc_review_delta_rows','ch01_d1','full'))
+        self.assertIn(('exhibitionism','10 → 60 (+50)'), self.call('lc_review_delta_rows','ch01_d1','full'))
 
     def test_route_label_never_proves_betrayal(self):
         for route in ('ntr_confirmed','ntr','ntr_seeded','ntr_unresolved','ntr_talked','ntr_withdrew'):
@@ -178,20 +183,22 @@ class DayReviewTests(unittest.TestCase):
     def test_scrapbook_bars_use_the_day_start_snapshot(self):
         self.begin()
         self.store.relationship_stats['love'] += 4
-        self.store.partner_stats['secrecy'] += 7
-        self.store.player_stats['acceptance'] += 1
+        self.store.relationship_stats['temptation'] += 7
+        self.store.partner_stats['exhibitionism'] += 1
         self.finish()
         self.store.relationship_stats['love'] = 0
         insight = self.call('lc_review_bar_rows', 'ch01_d1', 'insight')
         full = self.call('lc_review_bar_rows', 'ch01_d1', 'full')
         self.assertEqual(self.call('lc_review_bar_rows', 'ch01_d1', 'normal'), [])
-        self.assertEqual([row['stat'] for row in insight], ['love', 'acceptance'])
+        # Stat model v2: the same five stats in Insight and Full, in model order.
+        self.assertEqual([row['stat'] for row in insight], ['love', 'exhibitionism', 'temptation'])
+        self.assertEqual([row['stat'] for row in full], ['love', 'exhibitionism', 'temptation'])
         self.assertEqual(insight[0]['yesterday'], 50)
         self.assertEqual(insight[0]['today'], 54)
-        self.assertNotIn('secrecy', [row['stat'] for row in insight])
-        self.assertIn('secrecy', [row['stat'] for row in full])
-        self.assertEqual(self.call('lc_review_unchanged_count', 'ch01_d1', 'insight'), 5)
-        self.assertEqual(self.call('lc_review_unchanged_count', 'ch01_d1', 'full'), 8)
+        # Colour by meaning: Temptation up is a warning, Exhibitionism keeps its route colour.
+        self.assertEqual([row['ink'] for row in full], ['good', 'exhibitionism', 'bad'])
+        self.assertEqual(self.call('lc_review_unchanged_count', 'ch01_d1', 'insight'), 2)
+        self.assertEqual(self.call('lc_review_unchanged_count', 'ch01_d1', 'full'), 2)
         self.assertEqual(self.call('lc_review_yesterday', 'ch01_d1')['relationship']['love'], 50)
 
     def test_partial_day_has_no_bars(self):

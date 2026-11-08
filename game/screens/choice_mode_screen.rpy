@@ -51,7 +51,7 @@ screen choice_mode_screen():
                             spacing 8
                             textbutton "Insight":
                                 action Function(set_choice_display_mode, "insight")
-                            text "Shows direction only, such as Curiosity ↑." size 19
+                            text "Shows direction only, such as Trust ↑." size 19
 
                         vbox:
                             spacing 8

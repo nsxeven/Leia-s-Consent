@@ -16,11 +16,10 @@ init 1 python:
             ("relationship", "trust", 1),
         ],
         "ch01_dream_curiosity": [
-            ("partner", "curiosity", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_dream_withdraw": [
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_morning_reassure": [
             ("relationship", "love", 1),
@@ -28,25 +27,23 @@ init 1 python:
         ],
         "ch01_d2_morning_tease": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_d2_morning_dismiss": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_postshop_sleep": [
             ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_d2_postshop_head": [
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_d2_postshop_shut_down": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_maya_reassure": [
             ("relationship", "love", 1),
@@ -61,100 +58,72 @@ init 1 python:
         "ch01_d2_maya_include": [
             ("relationship", "love", 1),
             ("relationship", "trust", 2),
-            ("relationship", "boredom", -1),
         ],
         "ch01_d2_maya_catchup": [
             ("relationship", "trust", 1),
         ],
         "ch01_d2_maya_dismiss_leia": [
             ("relationship", "love", -2),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_d2_photo_pair_encourage": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_d2_photo_pair_redirect": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", 1),
         ],
         "ch01_d2_photo_pair_shrug": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d2_pool_reassure": [
-            ("relationship", "trust", 2),
             ("relationship", "love", 1),
-            ("relationship", "boredom", -1),
+            ("relationship", "trust", 2),
         ],
         "ch01_d2_pool_honest_jealous": [
             ("relationship", "trust", 1),
-            ("player", "jealousy", 2),
         ],
         "ch01_d2_pool_accuse": [
             ("relationship", "trust", -2),
-            ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_d2_sunset_connect": [
             ("relationship", "love", 2),
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -2),
         ],
         "ch01_d2_sunset_partial": [
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_d2_sunset_ignore_gate": [
             ("relationship", "love", -3),
-            ("relationship", "trust", -2),
-            ("relationship", "boredom", 4),
-            ("partner", "temptation", 2),
-            ("partner", "secrecy", 1),
+            ("relationship", "temptation", 5),
         ],
         "ch01_d2_bed_pool_love": [
             ("relationship", "love", 3),
-            ("relationship", "trust", 3),
-            ("relationship", "boredom", -3),
-            ("partner", "boundary_looseness", -1),
+            ("relationship", "temptation", -3),
         ],
         "ch01_d2_bed_pool_exhibition": [
             ("relationship", "love", 2),
-            ("relationship", "trust", 2),
-            ("relationship", "boredom", -2),
-            ("partner", "curiosity", 2),
             ("partner", "exhibitionism", 3),
-            ("player", "acceptance", 2),
         ],
         "ch01_d2_bed_pool_accuse": [
             ("relationship", "trust", -2),
-            ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
+            ("relationship", "temptation", 2),
         ],
         "ch01_d2_wink_repair": [
             ("relationship", "love", 3),
-            ("relationship", "trust", 3),
-            ("relationship", "boredom", -3),
-            ("partner", "secrecy", -1),
+            ("relationship", "temptation", -3),
         ],
         "ch01_d2_wink_accuse_hard": [
             ("relationship", "love", -4),
             ("relationship", "trust", -5),
-            ("relationship", "boredom", 4),
-            ("player", "jealousy", 3),
-            ("partner", "temptation", 3),
-            ("partner", "secrecy", 2),
+            ("relationship", "temptation", 5),
         ],
         "ch01_d2_wink_reject_hard": [
             ("relationship", "love", -5),
             ("relationship", "trust", -4),
-            ("relationship", "boredom", 5),
-            ("partner", "temptation", 3),
-            ("partner", "secrecy", 3),
-            ("partner", "boundary_looseness", 2),
+            ("relationship", "temptation", 5),
         ],
     })
 
@@ -197,45 +166,23 @@ init 1 python:
 
 
     def ch01_d2_route_lane():
-        """Resolve the active Day Two lane from accumulated behavior and stats.
+        """Resolve the active Day Two lane (stat model v2: lc_stat_model.d2_route_lane).
 
-        Protection by itself never creates NTR pressure. Risk requires boredom /
-        emotional disengagement. Consensual openness instead resolves toward the
-        exhibitionism lane.
+        NTR risk needs Temptation, with a Day One NTR seed or high enough on its
+        own. The Love + Exhibitionism lane needs Exhibitionism plus some gained
+        today. Protection and closeness never create NTR pressure. A save that
+        was converted mid-Day-Two keeps its old lane until the day ends.
         """
-        focus = lc_route_explorer_for_lane()
-        if focus is not None:
-            return focus
-
-        day1_pressure = get_story_value("ch01_day1_route_pressure", "mixed")
-        d2_nonchalant = choice_tag_count("nonchalant", ch01_d2_choice_ids())
-        d2_open = choice_tag_count("open", ch01_d2_choice_ids())
-        d2_attentive = choice_tag_count("attentive", ch01_d2_choice_ids())
-
-        risk_seed = (
-            day1_pressure == "ntr_seeded"
-            or chapter_nonchalant_count("ch01") >= 4
-            or relationship_stats["boredom"] >= 17
+        migrated = None
+        if not has_story_flag("ch01_day_02_complete"):
+            migrated = get_story_value("ch01_d2_lane_migrated", None)
+        return lc_stat_model.d2_route_lane(
+            lc_stats_flat(),
+            get_story_value("ch01_day1_route_pressure", "mixed"),
+            lc_exhib_gained("ch01_d2_"),
+            focus=lc_route_explorer_for_lane(),
+            migrated_lane=migrated,
         )
-        risk_now = (
-            risk_seed
-            and relationship_stats["boredom"] >= 15
-            and (d2_nonchalant >= 1 or relationship_stats["love"] <= 48)
-            and d2_attentive <= d2_nonchalant + 2
-        )
-        if risk_now:
-            return "ntr_risk"
-
-        exhibition_now = (
-            partner_stats["exhibitionism"] >= 22
-            and partner_stats["curiosity"] >= 24
-            and player_stats["acceptance"] >= 15
-            and d2_open >= 1
-        )
-        if exhibition_now:
-            return "exhibitionism"
-
-        return "love"
 
 
     def format_day2_risk_choice(choice_id, base_text, severity="soft"):
@@ -386,9 +333,9 @@ label ch01_day2_scene_01_morning_after:
     gf "I'm serious."
     mc "You were the one checking if he was looking."
 
-    if partner_stats["exhibitionism"] < 18:
+    if lc_stat("exhibitionism") < LC_T["d2_morning_unsure"]:
         gf "I was checking that he wasn't."
-    elif partner_stats["exhibitionism"] < 26:
+    elif lc_stat("exhibitionism") < LC_T["d2_morning_bold"]:
         gf "That is not the same thing."
         mc "Sure."
         gf "It isn't."
@@ -1420,7 +1367,7 @@ label ch01_day2_scene_13_girls_upstairs:
 
     "Yesterday [girlfriend_name] had asked me that question. Today she had to answer it herself."
 
-    if partner_stats["exhibitionism"] >= 22 or partner_stats["curiosity"] >= 27:
+    if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
         gf "The new one."
         maya "Oh."

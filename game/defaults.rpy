@@ -26,25 +26,25 @@ default story_values = {}
 default dev_wardrobe_reward_claimed = False
 default dev_vertical_slice_reward_claimed = False
 
+# Stat model v2 (python-packages/lc_stat_model.py): Love, Trust, Sharing and
+# Temptation live in relationship_stats, Exhibitionism in partner_stats.
+# player_stats stays as an empty group so old code paths and saves keep loading.
+# Older saves are converted once on load (lc_migrate_stats_v2 in systems/stats.rpy).
 default relationship_stats = {
     "love": 50,
     "trust": 50,
-    "boredom": 10,
-    "momentum": 0,
+    "sharing": 0,
+    "temptation": 10,
 }
 
 default partner_stats = {
-    "curiosity": 20,
-    "temptation": 10,
     "exhibitionism": 10,
-    "boundary_looseness": 10,
-    "secrecy": 5,
 }
 
-default player_stats = {
-    "jealousy": 20,
-    "acceptance": 10,
-}
+default player_stats = {}
+
+default lc_stat_model_version = 2
+default lc_legacy_stats = None
 
 default modified_save = False
 

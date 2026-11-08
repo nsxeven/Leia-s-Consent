@@ -46,7 +46,10 @@ init python:
 
 
     def _requirement_value(group_name, stat_name):
-        return get_stat_group(group_name)[stat_name]
+        group = get_stat_group(group_name)
+        if stat_name not in group and stat_name in lc_stat_model.STAT_GROUPS:
+            group = get_stat_group(lc_stat_model.STAT_GROUPS[stat_name])
+        return group.get(stat_name, 0)
 
 
     def _requirements_met(requirements):
@@ -183,20 +186,8 @@ init python:
 
 
     def _wardrobe_stat_label(stat_name):
-        labels = {
-            "love": "Love",
-            "trust": "Trust",
-            "boredom": "Boredom",
-            "momentum": "Momentum",
-            "curiosity": "Curiosity",
-            "temptation": "Temptation",
-            "exhibitionism": "Exhibitionism",
-            "boundary_looseness": "Boundary Looseness",
-            "secrecy": "Secrecy",
-            "jealousy": "Jealousy",
-            "acceptance": "Acceptance",
-        }
-        return labels.get(stat_name, stat_name.replace("_", " ").title())
+        # One table for every screen: STAT_LABELS (lc_stat_model.STAT_LABELS).
+        return STAT_LABELS.get(stat_name, stat_name.replace("_", " ").title())
 
 
     def outfit_requirement_text(outfit_id, mode=None):

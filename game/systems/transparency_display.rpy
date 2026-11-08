@@ -19,7 +19,7 @@ init python:
             "label": "Insight",
             "tagline": "Gentle guidance",
             "description": "See broad signals about how choices and relationship dynamics are shifting without exact numbers.",
-            "choices": "Directional effects such as Curiosity ↑ or Trust ↓.",
+            "choices": "Directional effects such as Exhibitionism ↑ or Trust ↓.",
             "status": "Broad descriptions such as Low, Moderate, or High.",
             "wardrobe": "General comfort-path hints without exact thresholds.",
             "routes": "Subtle progression signals where appropriate.",
@@ -29,7 +29,7 @@ init python:
             "tagline": "Exact mechanics",
             "description": "See exact mechanics and optionally switch route direction through the Route Explorer.",
             "choices": "Exact numerical stat changes before choosing.",
-            "status": "Exact values, hidden traits, and route tendencies.",
+            "status": "Exact values plus the route the story currently leans toward.",
             "wardrobe": "Exact stat thresholds and wear requirements.",
             "routes": "Exact eligibility plus an optional route switch for upcoming early-chapter branches.",
         },
@@ -104,16 +104,17 @@ init python:
 
     def transparency_status_preview(mode=None):
         mode = mode or current_choice_mode()
-        curiosity = renpy.store.partner_stats["curiosity"]
+        label = STAT_LABELS["exhibitionism"]
+        value = lc_stat("exhibitionism")
 
         if mode == "normal":
-            return "Curiosity — approximate bar only"
+            return "{} — approximate bar only".format(label)
         if mode == "insight":
-            return "Curiosity — {}".format(status_band(curiosity))
+            return "{} — {}".format(label, status_band(value))
         if mode == "full":
-            return "Curiosity — {} / 100".format(curiosity)
+            return "{} — {} / 100\nCurrent lean: {}".format(label, value, lc_current_lean_label())
 
-        return "Curiosity — {} / 100  [partner.curiosity]".format(curiosity)
+        return "{} — {} / 100  [partner.exhibitionism]\nCurrent lean: {}  [lc_current_lean()]".format(label, value, lc_current_lean_label())
 
 
     def transparency_wardrobe_preview(mode=None):

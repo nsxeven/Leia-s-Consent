@@ -10,28 +10,29 @@ init 200 python:
 
     LC_ROUTE_EXPLORER_OPTIONS = (
         ("auto", "Story-driven", "Let choices determine the route."),
-        ("love", "Love", "Favor affection, trust, and privacy."),
-        ("exhibitionism", "Exhibitionism", "Favor shared curiosity and attention."),
-        ("ntr_risk", "NTR risk", "Favor the strained-relationship trajectory."),
+        ("love", "Love", "Favor Love and Trust; keep it between the two of you."),
+        ("exhibitionism", "Love+Exhib", "Favor Exhibitionism, with both of you in on it."),
+        ("ntr_risk", "NTR", "Favor rising Temptation and a strained relationship."),
     )
 
+    # Stat model v2 baselines (Love / Trust / Exhibitionism / Temptation).
     LC_ROUTE_EXPLORER_BASELINES = {
         "love": {
-            "relationship": {"love": 72, "trust": 72, "boredom": 5},
-            "partner": {"curiosity": 20, "exhibitionism": 12, "secrecy": 5},
-            "player": {"acceptance": 12, "jealousy": 12},
+            "relationship": {"love": 72, "trust": 72, "temptation": 5},
+            "partner": {"exhibitionism": 12},
+            "player": {},
             "pressure": "mixed",
         },
         "exhibitionism": {
-            "relationship": {"love": 68, "trust": 65, "boredom": 5},
-            "partner": {"curiosity": 42, "exhibitionism": 44, "secrecy": 5},
-            "player": {"acceptance": 42, "jealousy": 12},
+            "relationship": {"love": 68, "trust": 65, "temptation": 5},
+            "partner": {"exhibitionism": 71},
+            "player": {},
             "pressure": "nts_seeded",
         },
         "ntr_risk": {
-            "relationship": {"love": 38, "trust": 36, "boredom": 30},
-            "partner": {"curiosity": 23, "exhibitionism": 12, "secrecy": 18},
-            "player": {"acceptance": 10, "jealousy": 28},
+            "relationship": {"love": 38, "trust": 36, "temptation": 43},
+            "partner": {"exhibitionism": 12},
+            "player": {},
             "pressure": "ntr_seeded",
         },
     }

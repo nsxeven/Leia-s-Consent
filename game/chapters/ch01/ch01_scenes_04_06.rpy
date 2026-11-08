@@ -316,8 +316,8 @@ label ch01_scene_05_photography:
             gf "Do I look that awkward? Be honest. I feel like I look like I'm waiting for a bus."
             mc "No, you don't. I just think you're thinking about it a lot. It's easier when you stop."
 
-            $ ch01_photo_confidence = partner_stats["curiosity"] + player_stats["acceptance"] + (5 if selected_pool_outfit == "pool_bolder" else 0)
-            $ ch01_photo_continues = ch01_photo_confidence >= 38
+            $ ch01_photo_confidence = lc_stat("exhibitionism") + (LC_T["d1_photo_bolder_bonus"] if selected_pool_outfit == "pool_bolder" else 0)
+            $ ch01_photo_continues = ch01_photo_confidence >= LC_T["d1_photo_confidence"]
 
             if ch01_photo_continues:
                 $ set_story_value("ch01_photo_outcome", "chose_to_continue")

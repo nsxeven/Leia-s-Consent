@@ -20,6 +20,13 @@ This file records what is true in the repository **now**. When code and any olde
 | Gallery | Implemented: 47 entries (31 Prologue/Day 1-3 scene sequences + 5 Day 4 + 11 Day 5), unlocks derived from seen CGs, reachable from the main menu and game menu. Day Six entries not added yet (see Gallery below) |
 | `zz...` cleanup | Paused except where a late override directly conflicts with runtime |
 
+## Stat model
+
+Five stats (Love, Trust, Exhibitionism, Sharing, Temptation) since stat model v2 (2026-11-08). Rules,
+thresholds, the scoring rule for new choices, colours and the save migration: `docs/STAT_MODEL.md`;
+code: `game/python-packages/lc_stat_model.py`. Day 3-5 choice effects are re-scored in
+`game/systems/stat_model_v2_later_days.rpy`.
+
 ## Day Two end states
 
 `ch01_d2_end_route` stores one of: `love`, `exhibitionism`, `love_repaired`, `mixed_unresolved`, `ntr_confirmed`.
@@ -29,7 +36,7 @@ This file records what is true in the repository **now**. When code and any olde
 | `love` | Love lane bedroom (curtains drawn), or a Love lane with enough shared openness that gets the open-curtain bedroom variant but stays `love` |
 | `exhibitionism` | Exhibitionism lane bedroom (curtains open, consensual roleplay), or the NTR-lane pool-suspicion bed choice "It bothered me... and I haven't stopped thinking about it" |
 | `love_repaired` | NTR soft gate ("I'm fine." at sunset) plus the dinner wink, then honesty at the final hard gate |
-| `mixed_unresolved` | NTR lane with pool suspicion but no soft gate, and the accusatory bed choice |
+| `mixed_unresolved` | NTR lane with pool suspicion but no soft gate, and the accusatory bed choice. Day Three starts it as a strained Love track with one more chance (walking away at the club moves it to NTR) |
 | `ntr_confirmed` | NTR soft gate plus dinner wink, then accusation or a second "I'm fine." at the hard gate |
 
 Day Three is written to start from the stored `ch01_d2_end_route`.

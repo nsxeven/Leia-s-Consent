@@ -1,10 +1,10 @@
 # Leia's Consent — Chapter One: Something Different
 # Playable continuation: Scenes 14–30 / end of Day One.
 #
-# Route rule introduced here:
-# - Open/NTS choices can raise Curiosity/Exhibitionism while still reinforcing Love/Trust.
-# - Dismissive/nonchalant choices make Leia feel less wanted, raising Boredom and lowering Love/Trust.
-#   That pressure can later feed Temptation/Secrecy and the NTR route without treating openness itself as betrayal.
+# Route rule introduced here (stat model v2, python-packages/lc_stat_model.py):
+# - Open, playful choices raise Exhibitionism while still reinforcing Love/Trust.
+# - Dismissive/nonchalant choices make Leia feel less wanted, raising Temptation and lowering Love/Trust.
+#   That pressure can later feed the NTR route without treating openness itself as betrayal.
 
 label ch01_scene_13b_night_pool:
 
@@ -71,7 +71,7 @@ label ch01_scene_13b_night_pool:
         "My attention had already drifted elsewhere."
         "When I looked back, she was listening to [friend_name] again."
         $ set_story_value("ch01_night_pool_attention", "ryan_missed_check")
-    elif partner_stats["exhibitionism"] >= 14 or player_stats["acceptance"] >= 14:
+    elif lc_stat("exhibitionism") >= LC_T["d1_pool_shared_glance"]:
         "Her eyes flicked briefly from [friend_name] back to me."
         "She didn't say anything, but the tiny question in her expression was difficult to miss."
         "I held her gaze long enough for the corner of her mouth to lift."
@@ -282,9 +282,9 @@ label ch01_scene_16_can_he_tell:
             $ set_story_value("ch01_can_tell_response", "asked_if_bothered")
             mc "Would it bother you if he could?"
             "[girlfriend_name] looked at me instead of answering immediately."
-            if partner_stats["exhibitionism"] < 18:
+            if lc_stat("exhibitionism") < LC_T["d1_can_tell_unsure"]:
                 gf "Yes! Obviously. What kind of question is that?"
-            elif partner_stats["exhibitionism"] < 26:
+            elif lc_stat("exhibitionism") < LC_T["d1_can_tell_bold"]:
                 gf "...I don't know. I actually don't know."
             else:
                 gf "That's not an answer to my question."
@@ -1069,9 +1069,9 @@ label ch01_scene_29_private_reflection:
         gf "What about it?"
         mc "Did you like hearing it?"
 
-        if partner_stats["curiosity"] < 25:
+        if lc_stat("exhibitionism") < LC_T["d1_compliment_liked"]:
             gf "It was a compliment. Obviously it was nice."
-        elif relationship_stats["boredom"] >= 16 and get_story_value("ch01_compliment_response") == "shrugged":
+        elif lc_stat("temptation") >= LC_T["d1_compliment_restless_temptation"] and get_story_value("ch01_compliment_response") == "shrugged":
             "[girlfriend_name] hesitated longer than I expected."
             gf "Maybe. I don't know."
             gf "He actually looked nervous saying it."
@@ -1193,20 +1193,16 @@ label ch01_scene_30_end_day_one:
 
     $ set_story_value("ch01_day1_nonchalant_count", chapter_nonchalant_count("ch01"))
 
+    # Day 1 end state (lc_d1_route_pressure, stat model v2): Temptation high enough
+    # seeds NTR; otherwise Exhibitionism high enough seeds the exhibition family;
+    # otherwise mixed. The Full "Current lean" line calls the same function.
     $ lc_day1_route_focus = lc_route_explorer_for_lane()
-    if lc_day1_route_focus == "ntr_risk" or (
-        lc_day1_route_focus is None
-        and chapter_nonchalant_count("ch01") >= 3
-        and (relationship_stats["boredom"] >= 15 or relationship_stats["love"] <= 48)
-    ):
+    $ lc_day1_pressure = lc_d1_route_pressure()
+    if lc_day1_pressure == "ntr_seeded":
         $ set_story_value("ch01_day1_route_pressure", "ntr_seeded")
         "[girlfriend_name] put her phone down, but the small distance between us felt more noticeable than it had that morning."
         "[friend_name] had not done anything wrong. If anything changed from here, it would begin with the spaces I kept leaving open."
-    elif lc_day1_route_focus == "exhibitionism" or (
-        lc_day1_route_focus is None
-        and nts_score() >= ntr_score() + 5
-        and partner_stats["curiosity"] >= 24
-    ):
+    elif lc_day1_pressure == "nts_seeded":
         $ set_story_value("ch01_day1_route_pressure", "nts_seeded")
         "Somewhere during the day, the private jokes between [girlfriend_name] and me had started to include a third person."
         "Nothing had actually happened. Somehow that made it harder to stop thinking about."
@@ -1218,12 +1214,7 @@ label ch01_scene_30_end_day_one:
     # Ryan falls asleep with the day's towel incident still somewhere in the back of his mind.
     # This is a dream, not a route lock: it combines the real accident with the
     # earlier discovery that the bedroom's only curtains are sheer.
-    $ ch01_day1_love_ending = (
-        get_story_value("ch01_day1_route_pressure") == "mixed"
-        and relationship_stats["love"] >= 54
-        and relationship_stats["trust"] >= 54
-        and chapter_nonchalant_count("ch01") < 2
-    )
+    $ ch01_day1_love_ending = lc_d1_love_bedtime(get_story_value("ch01_day1_route_pressure"))
     if ch01_day1_love_ending:
         "[girlfriend_name] settled against my shoulder before we fell asleep."
         gf "Today was good. Like, really good."

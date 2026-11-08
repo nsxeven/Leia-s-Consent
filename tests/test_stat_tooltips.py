@@ -1,9 +1,12 @@
 """Stat rows explain themselves on hover/focus, per display mode, with no numbers.
 
-Owner decision (darryn): the stat values don't map to anything fixed yet, so
-the tooltips must not quote numbers, thresholds or exact effects. Numbers get
-retrofitted later through LC_STAT_TOOLTIP_NUMBERS in stat_tooltips.rpy; update
-the "no numbers yet" test below when that happens.
+Owner decision (darryn): the tooltips must not quote numbers, thresholds or
+exact effects. Numbers get retrofitted later through LC_STAT_TOOLTIP_NUMBERS in
+stat_tooltips.rpy; update the "no numbers yet" test below when that happens.
+
+Stat model v2 (2026-11-08): five stats, short breakdowns: Immersive <= 12
+words, Insight <= 20, Full <= 30, and Full says whether to keep the stat high
+or low to lean toward or avoid a route.
 """
 import ast
 import re
@@ -53,10 +56,24 @@ class StatTooltipTextTests(unittest.TestCase):
 
     def test_shown_stats_are_found(self):
         ids = _shown_stat_ids()
-        for stat in ("boredom", "momentum", "temptation", "boundary_looseness", "secrecy",
-                     "love", "trust", "curiosity", "exhibitionism", "jealousy", "acceptance",
-                     "nts_score", "ntr_score"):
-            self.assertIn(stat, ids)
+        self.assertEqual(ids, {"love", "trust", "exhibitionism", "sharing", "temptation", "lean"})
+
+    def test_only_the_five_stats_and_lean_have_text(self):
+        self.assertEqual(set(self.tips), {"love", "trust", "exhibitionism", "sharing", "temptation", "lean"})
+
+    def test_breakdowns_are_short(self):
+        limits = self.values["LC_STAT_TOOLTIP_WORD_LIMITS"]
+        self.assertEqual(limits, {"normal": 12, "insight": 20, "full": 30})
+        for stat, modes in self.tips.items():
+            for mode, text in modes.items():
+                words = len(text.split())
+                self.assertLessEqual(words, limits[mode], "{} / {} has {} words: {}".format(stat, mode, words, text))
+
+    def test_full_text_says_which_way_to_steer(self):
+        for stat in ("love", "trust", "exhibitionism", "sharing", "temptation"):
+            text = self.tips[stat]["full"]
+            self.assertRegex(text, r"\b(high|low)\b", stat)
+            self.assertRegex(text, r"\b(Love|Love\+Exhib|NTS|NTR)\b", stat)
 
     def test_every_stat_and_mode_has_text(self):
         for stat in sorted(_shown_stat_ids()):

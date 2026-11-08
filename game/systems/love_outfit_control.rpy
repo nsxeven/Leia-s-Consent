@@ -13,7 +13,9 @@
 init 10 python:
 
     LOVE_OUTFIT_END_STATES = ("love", "love_repaired")
-    LOVE_SWIMWEAR_EXHIBITIONISM_MIN = 50
+    # Stat model v2: the old 50 sat above anything Day 1-5 choices reached; 63 keeps it
+    # at the top "her own call" bar (Day 5 comfortable step) on the faster v2 scale.
+    LOVE_SWIMWEAR_EXHIBITIONISM_MIN = 63
 
     # Day Two needs a distinct narrative outfit even though final art is still
     # pending. Until final layers are generated it reuses the current bold

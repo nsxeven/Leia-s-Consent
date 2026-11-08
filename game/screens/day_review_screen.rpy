@@ -208,9 +208,10 @@ init python:
     class LcReviewTick(renpy.Displayable):
         """Today's number, counting from yesterday in step with the bar."""
 
-        def __init__(self, old, new, delay, key=None, **kwargs):
+        def __init__(self, old, new, delay, key=None, ink=None, **kwargs):
             super(LcReviewTick, self).__init__(**kwargs)
             self.key = key
+            self.ink = ink
             self.old = int(old)
             self.new = int(new)
             self.delay = float(delay)
@@ -230,7 +231,7 @@ init python:
                 frac = min(1.0, max(0.0, elapsed / self.delay))
                 frac = 1.0 - (1.0 - frac) ** 2
             value = int(round(self.old + (self.new - self.old) * frac))
-            color = "#5f8a32" if self.new > self.old else "#a8453f"
+            color = self.ink or ("#5f8a32" if self.new > self.old else "#a8453f")
             text = Text(
                 str(value),
                 font=lc_font_pixel,
@@ -343,9 +344,9 @@ screen lc_review_bar_row(row, index, skipped, exact, pitch=56, col_w=730, seq_i=
                 text str(row["yesterday"]) style "lc_pixel_dim" size label_size
                 add "images/ui/scrapbook/arrow_mid.png" yalign 0.5
                 if show_run or show_flash:
-                    add LcReviewTick(row["yesterday"], row["today"], duration, key=row["stat"]) yalign 0.5
+                    add LcReviewTick(row["yesterday"], row["today"], duration, key=row["stat"], ink=row.get("ink")) yalign 0.5
                 elif show_final:
-                    text str(row["today"]) style "lc_pixel" size label_size color ("#5f8a32" if row["delta"] > 0 else "#a8453f")
+                    text str(row["today"]) style "lc_pixel" size label_size color (row.get("ink") or ("#5f8a32" if row["delta"] > 0 else "#a8453f"))
                 else:
                     text str(row["yesterday"]) style "lc_pixel_dim" size label_size
                 if show_flash:
@@ -630,12 +631,12 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                                         xsize (text_w - 20)
                                         for chip in row["chips"]:
                                             frame:
-                                                background Frame("images/ui/scrapbook/chip_up.png" if chip["value"] > 0 else "images/ui/scrapbook/chip_down.png", 6, 6, 6, 6)
+                                                background Frame("images/ui/scrapbook/chip_up.png" if chip.get("good", chip["value"] > 0) else "images/ui/scrapbook/chip_down.png", 6, 6, 6, 6)
                                                 padding (6, 2)
                                                 hbox:
                                                     spacing 3
                                                     add ("images/ui/scrapbook/tick_up.png" if chip["value"] > 0 else "images/ui/scrapbook/tick_down.png") yalign 0.5
-                                                    text "{} {:+d}".format(chip["label"], chip["value"]) style "lc_pixel" size 16 color ("#5f8a32" if chip["value"] > 0 else "#a8453f") yalign 0.5
+                                                    text "{} {:+d}".format(chip["label"], chip["value"]) style "lc_pixel" size 16 color (chip.get("ink") or ("#5f8a32" if chip["value"] > 0 else "#a8453f")) yalign 0.5
                         if exact:
                             textbutton ("HIDE CHOICE DETAILS" if show_choices else "SHOW CHOICE DETAILS"):
                                 action ToggleScreenVariable("show_choices")

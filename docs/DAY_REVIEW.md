@@ -11,7 +11,7 @@ The recap is a scrapbook. The scene fades to a night window, then the journal op
 The existing Information Transparency setting controls detail:
 
 - Immersive: two-line diary, photographs and optional character titles; no numbers, bars, or route stamp.
-- Insight: direction arrows for the seven player-facing stats that changed, and the lines the player chose, without numbers.
+- Insight: direction arrows for the five stats (Love, Trust, Exhibitionism, Sharing, Temptation) that changed, and the lines the player chose, without numbers. Chip and number colours follow meaning, not sign (see `docs/STAT_MODEL.md`).
 - Full / Developer: exact yesterday-to-today numbers for every stat that changed, plus the choice lines and their clamped deltas. "Show choice details" hides or shows those deltas. Choice lines are the menu text, never internal ids. Direct story/debug adjustments contribute to totals but are not fabricated as choices.
 
 Optional stings, if a later pass adds them: `audio/sfx/review_paper.ogg` when a photo lands and `audio/sfx/review_tick.ogg` when a bar settles. Missing files stay silent.
@@ -53,8 +53,8 @@ $ lc_title_fact("sharing_happened")
 Supported facts: `sharing_agreed`, `sharing_happened`, `betrayal_known`, `humiliation_agreed`, `married`, `repair_chosen`, `separated`. A fact can be cleared with `lc_title_fact("repair_chosen", False)` when the story changes. Separation and repair take priority; clear obsolete facts deliberately.
 
 - Love: Devoted Boyfriend / Affectionate Partner.
-- Shared attention: Knowing Accomplice / Enjoying the Attention.
-- Shared curiosity: Curious Partner / Testing the Waters.
+- Love + Exhibitionism: Knowing Accomplice / Enjoying the Attention.
+- Exhibition seeded: Curious Partner / Testing the Waters.
 - Unresolved pressure: Uneasy Observer / Growing Distant.
 - Confirmed sharing plus agreement: Sharing Partner / Adventurous Partner; Genre: Stag / Shared Girlfriend (Hotwife requires marriage).
 - Known betrayal: Betrayed Boyfriend / Unfaithful Lover; Genre: Cuckold / Cheating Girlfriend. Beta Cuck additionally requires the explicit humiliation-agreement milestone.

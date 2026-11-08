@@ -9,6 +9,7 @@ default persistent.lc_day1_dream = "ask"
 
 init 20 python:
     import os
+    import lc_stat_model
 
     LC_REVIEW_GROUPS = ("relationship", "partner", "player")
     LC_REVIEW_DAYS = {
@@ -22,8 +23,9 @@ init 20 python:
         "mixed": ("Mixed / undecided", "The direction is still taking shape."),
         "love": ("Love", "Your time together ended on a close, private note."),
         "love_repaired": ("Repair", "You made room for a difficult conversation and another chance."),
-        "exhibitionism": ("Shared attention", "Attention from others became part of an experience you shared."),
-        "nts_seeded": ("Shared curiosity", "You noticed a new possibility together. Nothing is settled yet."),
+        "exhibitionism": ("Love + Exhibitionism", "Attention from others became part of an experience you shared."),
+        # Day One's "nts_seeded" id is kept for saves; it means the exhibition family was seeded.
+        "nts_seeded": ("Exhibition seeded", "You noticed a new possibility together. Nothing is settled yet."),
         "ntr_seeded": ("NTR pressure", "Some distance between you remained at the end of the day."),
         "ntr": ("NTR pressure", "There are questions you have not resolved together."),
         "ntr_confirmed": ("NTR direction", "There are questions you have not resolved together."),
@@ -34,8 +36,8 @@ init 20 python:
         "ntr_talked": ("NTR pressure", "You tried to talk it through. The night still ended with questions between you."),
         "ntr_withdrew": ("NTR pressure", "You stepped away, and the distance was still there at the end of the night."),
     }
-    # Internal trait changes are deliberately hidden in Insight; Full exposes them.
-    LC_REVIEW_INSIGHT_STATS = {"love", "trust", "boredom", "curiosity", "exhibitionism", "jealousy", "acceptance"}
+    # Stat model v2: all five stats show in Insight (direction only) and Full (numbers).
+    LC_REVIEW_INSIGHT_STATS = {"love", "trust", "exhibitionism", "sharing", "temptation"}
 
     def lc_review_stats():
         return {group: dict(get_stat_group(group)) for group in LC_REVIEW_GROUPS}
@@ -102,6 +104,10 @@ init 20 python:
                 return "ntr_talked"
             if effort == "withdraw":
                 return "ntr_withdrew"
+        # mixed_unresolved starts Day Three as strained Love; talking it out at the club is a repair.
+        if (day_id == "ch01_d3" and value == "love" and get_story_value("ch01_d3_strained_love", False)
+                and get_story_value("ch01_d3_ntr_repair_effort", "none") == "talk"):
+            return "love_repaired"
         return value if value in LC_REVIEW_ROUTES else "mixed"
 
     def lc_review_finish(day_id):
@@ -339,15 +345,9 @@ init 20 python:
     LC_REVIEW_STAT_ORDER = (
         ("relationship", "love"),
         ("relationship", "trust"),
-        ("relationship", "boredom"),
-        ("partner", "curiosity"),
         ("partner", "exhibitionism"),
-        ("player", "jealousy"),
-        ("player", "acceptance"),
-        ("relationship", "momentum"),
-        ("partner", "temptation"),
-        ("partner", "secrecy"),
-        ("partner", "boundary_looseness"),
+        ("relationship", "sharing"),
+        ("relationship", "temptation"),
     )
     # Shared by the review and Status; future consolidated stats are ready too.
     LC_STAT_ICON = {
@@ -456,9 +456,10 @@ init 20 python:
     def lc_review_bar_rows(day_id, mode):
         """Changed stats the scrapbook animates, yesterday then today.
 
-        Insight is the seven player-facing stats, direction only.
-        Full and Developer are all eleven, with exact numbers.
-        Immersive and partial saves contribute nothing.
+        Insight is the five stats, direction only; Full and Developer the same
+        five with exact numbers. Immersive and partial saves contribute nothing.
+        Number colours follow the change's meaning ("ink", lc_delta_colour).
+        A stat without bar art yet (Sharing, until its first story beat) is skipped.
         """
         if not lc_review_show_stats(day_id, mode):
             return []
@@ -466,9 +467,11 @@ init 20 python:
         start, end = record["start"], record["end"]
         rows = []
         for group, stat in lc_review_tracked_stats(mode):
-            before = start[group][stat]
-            after = end[group][stat]
-            if before == after:
+            before = start.get(group, {}).get(stat)
+            after = end.get(group, {}).get(stat)
+            if before is None or after is None or before == after:
+                continue
+            if not lc_review_bar_art_ready(stat):
                 continue
             name = STAT_LABELS.get(stat, stat.replace("_", " ").title())
             rows.append({
@@ -478,8 +481,15 @@ init 20 python:
                 "yesterday": before,
                 "today": after,
                 "delta": after - before,
+                "ink": lc_delta_colour(stat, after - before, "review"),
             })
         return rows
+
+    def lc_review_bar_art_ready(stat):
+        try:
+            return bool(renpy.loadable("images/ui/scrapbook/bar_fill_{}.png".format(stat)))
+        except Exception:
+            return True
 
     def lc_review_unchanged_count(day_id, mode):
         if not lc_review_show_stats(day_id, mode):
@@ -806,7 +816,11 @@ init 20 python:
                 if not value:
                     continue
                 name = STAT_LABELS.get(key, key.replace("_", " ").title())
-                chips.append({"stat": key, "name": name, "label": name.upper(), "value": value})
+                kind = lc_stat_model.delta_kind(key, value)
+                chips.append({"stat": key, "name": name, "label": name.upper(), "value": value,
+                              # Colour by meaning: Temptation up is a warning, Exhibitionism/Sharing a route colour.
+                              "ink": lc_delta_colour(key, value, "review"),
+                              "good": kind == "good" or (kind in ("exhibitionism", "sharing") and value > 0)})
             if not chips:
                 continue
             rows.append({

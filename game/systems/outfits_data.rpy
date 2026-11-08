@@ -162,8 +162,7 @@ init python:
                     "id": "confident_exhibitionist",
                     "label": "Confidence / exhibitionism",
                     "requirements": [
-                        ("partner", "curiosity", 30),
-                        ("partner", "exhibitionism", 22),
+                        ("partner", "exhibitionism", 36),
                     ],
                 },
                 {
@@ -172,17 +171,14 @@ init python:
                     "requirements": [
                         ("relationship", "love", 58),
                         ("relationship", "trust", 58),
-                        ("player", "acceptance", 18),
-                        ("partner", "curiosity", 24),
+                        ("partner", "exhibitionism", 19),
                     ],
                 },
                 {
                     "id": "autonomous_experimentation",
                     "label": "Independent experimentation",
                     "requirements": [
-                        ("relationship", "boredom", 18),
-                        ("partner", "curiosity", 24),
-                        ("partner", "boundary_looseness", 14),
+                        ("relationship", "temptation", 20),
                     ],
                 },
             ],
@@ -234,8 +230,7 @@ init python:
                     "id": "confident_exhibitionist",
                     "label": "Confidence / exhibitionism",
                     "requirements": [
-                        ("partner", "curiosity", 30),
-                        ("partner", "exhibitionism", 20),
+                        ("partner", "exhibitionism", 32),
                     ],
                 },
                 {
@@ -244,17 +239,14 @@ init python:
                     "requirements": [
                         ("relationship", "love", 60),
                         ("relationship", "trust", 60),
-                        ("player", "acceptance", 20),
-                        ("partner", "curiosity", 25),
+                        ("partner", "exhibitionism", 23),
                     ],
                 },
                 {
                     "id": "risky_temptation",
                     "label": "Risk / temptation",
                     "requirements": [
-                        ("relationship", "boredom", 25),
-                        ("partner", "temptation", 25),
-                        ("partner", "boundary_looseness", 20),
+                        ("relationship", "temptation", 30),
                     ],
                 },
             ],

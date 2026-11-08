@@ -181,7 +181,7 @@ label dev_wardrobe_lab:
     elif wardrobe_action == "gated_help":
         "First buy After Hours Dress, then ask [girlfriend_name] to wear it at the default stats. It should be refused."
         "Use Player Transparency Settings to compare Immersive, Insight, and Full Transparency. For the internal PASS/FAIL view, use Developer mode from the Choice Engine test."
-        "For the quickest successful path, raise Curiosity to at least 30 and Exhibitionism to at least 20 in the Developer Panel, then ask her to wear it again."
+        "For the quickest successful path, raise Exhibitionism to at least 32 in the Developer Panel, then ask her to wear it again."
         jump dev_wardrobe_lab
 
     elif wardrobe_action == "verify":
