@@ -68,10 +68,10 @@ class GoldenHourMenuTests(unittest.TestCase):
         self.assertIn('action Function(lc_glass_sound_test, sample)',screen(UI,'lc_pref_slider'))
 
     def test_day_review_and_phone_not_restyled(self):
-        # Git-based regression below catches edits in either neighbor automatically.
+        # Phone navigation is intentionally edited independently of glass menus;
+        # tests/test_phone_back_navigation.py guards its behavior.
         import subprocess
-        changed=subprocess.check_output(['git','status','--short','--','game/screens/day_review_screen.rpy',
-                                         'game/screens/zzzzzz_phone_ios_presentation.rpy'],cwd=ROOT,text=True)
+        changed=subprocess.check_output(['git','status','--short','--','game/screens/day_review_screen.rpy'],cwd=ROOT,text=True)
         self.assertEqual(changed.strip(),'')
         for name in ('panel','nav_idle','nav_active','bar_honey','bar_peach','bar_amber','bar_pink',
                      'slider_thumb','toggle_off','toggle_on','pill_honey','pill_peach','pill_pink',

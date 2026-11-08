@@ -5,9 +5,47 @@
 
 default lc_phone_hearts = True
 
+# Share the SAME displayable between idle and hover; the global hover-fade
+# hook compares identity, so two separately constructed Solids still flicker.
+define LC_PHONE_BACKDROP = Solid("#071225c4")
+
 
 init 95 python:
     import datetime
+
+    def lc_phone_close():
+        """Dismiss every phone layer; the phone's hide action plays the close cue."""
+        for name in ("lc_phone_photo_viewer", "lc_phone_status", "lc_phone_settings", "phone_screen"):
+            if renpy.get_screen(name):
+                renpy.hide_screen(name)
+        renpy.restart_interaction()
+        return None
+
+    def lc_phone_back():
+        """One tier per press, including overlays and photo previews."""
+        if renpy.get_screen("lc_phone_photo_viewer"):
+            renpy.hide_screen("lc_phone_photo_viewer")
+        elif renpy.get_screen("lc_phone_status"):
+            renpy.hide_screen("lc_phone_status")
+        elif renpy.get_screen("lc_phone_settings"):
+            renpy.hide_screen("lc_phone_settings")
+        elif renpy.get_screen("phone_screen"):
+            app = renpy.get_screen_variable("phone_app", screen="phone_screen")
+            if app == "thread":
+                thread = renpy.get_screen_variable("phone_thread", screen="phone_screen")
+                lc_phone_leave_thread(app, thread)
+                renpy.set_screen_variable("phone_app", "messages", screen="phone_screen")
+            elif app != "home":
+                renpy.set_screen_variable("phone_app", "home", screen="phone_screen")
+                renpy.set_screen_variable("phone_thread", None, screen="phone_screen")
+            else:
+                lc_phone_close()
+                return None
+        else:
+            return None
+        lc_ui_play("back")
+        renpy.restart_interaction()
+        return None
 
     def lc_phone_clock_text():
         return datetime.datetime.now().strftime("%H:%M")
@@ -276,8 +314,9 @@ screen lc_phone_photo_viewer(photo_asset):
     modal True
     zorder 380
 
-    key "K_ESCAPE" action Hide("lc_phone_photo_viewer")
-    key "mouseup_3" action Hide("lc_phone_photo_viewer")
+    key "K_ESCAPE" action Function(lc_phone_back)
+    key "game_menu" action Function(lc_phone_back)
+    key "mouseup_3" action Function(lc_phone_back)
 
     add Solid("#12080e")
 
@@ -292,7 +331,7 @@ screen lc_phone_photo_viewer(photo_asset):
         style "lc_sw_hit"
         xfill True
         yfill True
-        action Hide("lc_phone_photo_viewer")
+        action Function(lc_phone_close)
 
     button:
         style "lc_sw_hit"
@@ -302,7 +341,7 @@ screen lc_phone_photo_viewer(photo_asset):
         ysize 54
         background Frame("gui/phone/sprite_match/key.png", 18, 18)
         hover_background Frame("gui/phone/sprite_match/key.png", 18, 18)
-        action Hide("lc_phone_photo_viewer")
+        action Function(lc_phone_back)
         text "Done":
             style "lc_sw_hand"
             size 28
@@ -317,8 +356,8 @@ screen lc_phone_backdrop(close_action):
         xfill True
         yfill True
         keyboard_focus False
-        background Solid("#071225c4")
-        hover_background Solid("#071225c4")
+        background LC_PHONE_BACKDROP
+        hover_background LC_PHONE_BACKDROP
         action close_action
 
 
@@ -342,9 +381,10 @@ screen phone_screen():
     on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "phone_close")]
     on "replace" action SetVariable("lc_phone_deep_link", None)
 
-    key "K_ESCAPE" action Hide("phone_screen")
+    key "K_ESCAPE" action Function(lc_phone_back)
+    key "game_menu" action Function(lc_phone_back)
 
-    use lc_phone_backdrop(Hide("phone_screen"))
+    use lc_phone_backdrop(Function(lc_phone_close))
 
     fixed:
         xalign 0.5
@@ -474,7 +514,7 @@ screen phone_screen():
                 xpos 28
                 ypos 96
                 xysize (52, 56)
-                action [Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "messages")]
+                action Function(lc_phone_back)
                 add "gui/phone/sprite_match/chevron.png" xalign 0.5 yalign 0.5
             if phone_thread == "group":
                 add phone_group_avatar():
@@ -660,7 +700,7 @@ screen phone_screen():
                 xpos 28
                 ypos 92
                 xysize (56, 56)
-                action [Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "home"), SetScreenVariable("phone_thread", None)]
+                action Function(lc_phone_back)
                 add "gui/phone/sprite_match/chevron.png" xalign 0.5 yalign 0.5
             if phone_app == "messages":
                 text "Messages":
@@ -1009,8 +1049,8 @@ screen lc_phone_status_section(title, rows):
 screen lc_phone_status():
     modal True
     zorder 340
-    key "K_ESCAPE" action Hide("lc_phone_status")
-    key "game_menu" action Hide("lc_phone_status")
+    key "K_ESCAPE" action Function(lc_phone_back)
+    key "game_menu" action Function(lc_phone_back)
 
     $ _mode = current_choice_mode()
     $ _relationship_rows = status_relationship_rows(_mode)
@@ -1018,7 +1058,7 @@ screen lc_phone_status():
     $ _ryan_rows = status_ryan_rows(_mode)
     $ _route_rows = status_route_rows(_mode)
 
-    use lc_phone_backdrop([Hide("lc_phone_status"), Hide("phone_screen")])
+    use lc_phone_backdrop(Function(lc_phone_close))
     fixed:
         xalign 0.5
         yalign 0.5
@@ -1036,7 +1076,7 @@ screen lc_phone_status():
             xpos 28
             ypos 88
             xysize (56, 56)
-            action [Function(lc_ui_play, "back"), Hide("lc_phone_status")]
+            action Function(lc_phone_back)
             add "gui/phone/sprite_match/chevron.png" xalign 0.5 yalign 0.5
         text "Status":
             style "lc_sw_hand"
@@ -1180,9 +1220,10 @@ screen lc_phone_settings_mode(mode_id):
 screen lc_phone_settings():
     modal True
     zorder 340
-    key "K_ESCAPE" action Hide("lc_phone_settings")
+    key "K_ESCAPE" action Function(lc_phone_back)
+    key "game_menu" action Function(lc_phone_back)
 
-    use lc_phone_backdrop([Hide("lc_phone_settings"), Hide("phone_screen")])
+    use lc_phone_backdrop(Function(lc_phone_close))
     fixed:
         xalign 0.5
         yalign 0.5
@@ -1200,7 +1241,7 @@ screen lc_phone_settings():
             xpos 28
             ypos 92
             xysize (56, 56)
-            action [Function(lc_ui_play, "back"), Hide("lc_phone_settings")]
+            action Function(lc_phone_back)
             add "gui/phone/sprite_match/chevron.png" xalign 0.5 yalign 0.5
         text "Settings":
             style "lc_sw_hand"
