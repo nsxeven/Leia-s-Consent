@@ -23,7 +23,10 @@ init 95 python:
 
     def lc_phone_back():
         """One tier per press, including overlays and photo previews."""
-        if renpy.get_screen("lc_phone_photo_viewer"):
+        if renpy.get_screen("lc_phone_wallpaper_editor"):
+            # Wallpaper crop editor -> back to the photo it was opened from.
+            renpy.hide_screen("lc_phone_wallpaper_editor")
+        elif renpy.get_screen("lc_phone_photo_viewer"):
             renpy.hide_screen("lc_phone_photo_viewer")
         elif renpy.get_screen("lc_phone_status"):
             renpy.hide_screen("lc_phone_status")
@@ -349,6 +352,15 @@ screen lc_phone_photo_viewer(photo_asset):
             xalign 0.5
             yalign 0.5
 
+    if photo_asset and renpy.has_image(photo_asset):
+        textbutton "Set as wallpaper":
+            style "lc_phone_btn"
+            xfill False
+            xsize 250
+            xpos 1414
+            ypos 37
+            action [Function(lc_ui_play, "app_tap"), Show("lc_phone_wallpaper_editor", photo_asset=photo_asset)]
+
 
 screen lc_phone_backdrop(close_action):
     button:
@@ -393,7 +405,11 @@ screen phone_screen():
         use lc_phone_body_blocker
 
         if phone_app == "home":
-            add "gui/phone/sprite_match/phone_home.png"
+            $ _wallpaper = lc_phone_wallpaper()
+            if _wallpaper:
+                use lc_phone_wallpaper_layers(_wallpaper)
+            else:
+                add "gui/phone/sprite_match/phone_home.png"
             text "[lc_phone_clock_text()]":
                 style "lc_sw_pixel_bold"
                 size 22
@@ -1275,6 +1291,16 @@ screen lc_phone_settings():
                 textbutton "Open status":
                     style "lc_phone_btn"
                     action [Hide("lc_phone_settings"), Show("lc_phone_status")]
+                text "Wallpaper: open any photo and tap Set as wallpaper.":
+                    style "lc_sw_hand"
+                    size 22
+                    color "#6E8399"
+                    text_align 0.5
+                    xalign 0.5
+                    xmaximum 440
+                textbutton "Reset wallpaper":
+                    style "lc_phone_btn"
+                    action (Function(lc_phone_wallpaper_reset) if lc_phone_wallpaper_active() else None)
                 if current_choice_mode() == "developer":
                     text "Developer exposes internal IDs, stat keys, route tendencies, and debug information.":
                         style "lc_sw_hand"

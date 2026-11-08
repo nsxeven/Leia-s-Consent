@@ -422,6 +422,9 @@ def build_handset(kind, wall):
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, 304, 509), 22, fill=255)
     screen.putalpha(mask)
     image.alpha_composite(screen, (10, 5))
+    if kind == "frame":
+        # Player wallpaper: the flat screen is a hole the wallpaper shows through.
+        image.paste(Image.new("RGBA", screen.size, (0, 0, 0, 0)), (10, 5), mask)
     draw = ImageDraw.Draw(image)
     if kind == "home":
         draw.rounded_rectangle((24, 445, 300, 497), 16, fill="#C3D0DC", outline="#D7E3E8")
@@ -429,9 +432,9 @@ def build_handset(kind, wall):
     draw.rounded_rectangle((137, 13, 187, 25), 6, fill="#080E19")
     draw.ellipse((178, 16, 184, 22), fill="#1E2D46")
     draw.ellipse((180, 17, 182, 19), fill="#42566F")
-    ink = "#F4F8FD" if kind == "home" else "#303B51"
+    ink = "#F4F8FD" if kind in ("home", "frame") else "#303B51"
     status_glyphs(draw, ink)
-    draw.rounded_rectangle((121, 504, 204, 506), 1, fill="#EEF2F6" if kind == "home" else "#202F46")
+    draw.rounded_rectangle((121, 504, 204, 506), 1, fill="#EEF2F6" if kind in ("home", "frame") else "#202F46")
     final = image.resize((650, 1040), Image.Resampling.NEAREST).resize((540, 1040), Image.Resampling.NEAREST)
     if kind == "thread":
         draw = ImageDraw.Draw(final)
@@ -441,6 +444,47 @@ def build_handset(kind, wall):
         draw.ellipse((460, 916, 504, 960), fill="#428FD0")
         draw.polygon([(468, 940), (492, 930), (484, 950), (480, 940)], fill="#FFFFFF")
     return final
+
+
+# Flat screen of the 540x1040 handset after the nearest-neighbour resize.
+WALL_SCREEN_BOX = (17, 10, 523, 1030)
+
+
+def _handset_scale(image):
+    return image.resize((650, 1040), Image.Resampling.NEAREST).resize((540, 1040), Image.Resampling.NEAREST)
+
+
+def build_wallpaper_layers():
+    """Layers for a player-chosen phone wallpaper (screens/zzzzzz_phone_wallpaper.rpy).
+
+    phone_wall_frame.png  handset with a transparent screen (notch, status, home bar)
+    phone_wall_dock.png   the home dock alone, full 540x1040 canvas
+    phone_wall_mask.png   506x1020 rounded screen shape (AlphaMask for the photo)
+    phone_wall_shade.png  506x1020 soft top/bottom shade so white labels stay readable
+    """
+    build_handset("frame", None).save(PHONE / "phone_wall_frame.png")
+
+    dock = Image.new("RGBA", (325, 520), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(dock)
+    draw.rounded_rectangle((24, 445, 300, 497), 16, fill="#C3D0DC", outline="#D7E3E8")
+    draw.line((40, 446, 284, 446), fill="#EAF0EE")
+    _handset_scale(dock).save(PHONE / "phone_wall_dock.png")
+
+    shape = Image.new("L", (325, 520), 0)
+    ImageDraw.Draw(shape).rounded_rectangle((10, 5, 314, 514), 22, fill=255)
+    shape = _handset_scale(shape).crop(WALL_SCREEN_BOX)
+    mask = Image.new("RGBA", shape.size, (255, 255, 255, 0))
+    mask.putalpha(shape)
+    mask.save(PHONE / "phone_wall_mask.png")
+
+    w, h = shape.size
+    shade = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    shade_draw = ImageDraw.Draw(shade)
+    for y in range(h):
+        shade_draw.line((0, y, w, y), fill=(15, 25, 48, round(80 - 55 * math.sin(y / h * math.pi))))
+    alpha = Image.composite(shade.getchannel("A"), Image.new("L", (w, h), 0), shape)
+    shade.putalpha(alpha)
+    shade.save(PHONE / "phone_wall_shade.png")
 
 
 def circle_crop(image, box, size=128):
@@ -522,6 +566,7 @@ def build_chrome():
     wall = wallpaper()
     for kind in ("home", "thread", "app"):
         build_handset(kind, wall).save(PHONE / f"phone_{kind}.png")
+    build_wallpaper_layers()
 
     incoming = Image.new("RGBA", (72, 72), (0, 0, 0, 0))
     draw = ImageDraw.Draw(incoming)
