@@ -51,5 +51,12 @@ class StatusColourTests(unittest.TestCase):
             self.assertEqual(im.getpixel((12, 12))[3], 255, s)
 
 
+    def test_line_icons_own_the_live_stats(self):
+        gen = (ROOT / "tools/gen_stat_icons.py").read_text(encoding="utf-8")
+        for s in STATS:
+            self.assertIn('"%s": ' % s, gen)
+        self.assertIn("if name in LINE_ICON_STATS:", ICONS)
+
+
 if __name__ == "__main__":
     unittest.main()

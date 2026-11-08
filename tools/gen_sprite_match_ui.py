@@ -259,8 +259,13 @@ STAT_PALETTE = {
     "distance": ("#C1D2DE", "#7992AC"),
 }
 
+# The five live stats use line icons from tools/gen_stat_icons.py (darryn 2026-11-09).
+LINE_ICON_STATS = ("love", "trust", "exhibitionism", "temptation", "sharing")
+
 def redraw_stat_icons():
     for name, (top, bot) in STAT_PALETTE.items():
+        if name in LINE_ICON_STATS:
+            continue
         mask = Image.new("L", (20, 20))
         d = ImageDraw.Draw(mask)
         if name == "love":
