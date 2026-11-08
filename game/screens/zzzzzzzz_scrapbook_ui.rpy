@@ -838,6 +838,8 @@ screen load():
     use file_slots(_("Load"))
 
 
+define LC_SLOT_ROW_Y = (164, 484)
+
 screen file_slots(title):
     default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
     $ is_save = title == _("Save")
@@ -878,7 +880,9 @@ screen file_slots(title):
 
             text "A = AUTO    Q = QUICK" xpos 665 ypos 58 size 21 color "#fff0dc" font "fonts/Handjet-SemiBold.ttf"
 
-            for slot_row, slot_y in enumerate((128, 448)):
+            # Slots start below the header + page name ("Page 1", ~150 px tall)
+            # so the page name is never covered (darryn 2026-11-08).
+            for slot_row, slot_y in enumerate((LC_SLOT_ROW_Y)):
                 for slot_col, slot_x in enumerate((0, 370, 740, 1110)):
                     $ slot = slot_row * 4 + slot_col + 1
                     $ filled = FileLoadable(slot)
