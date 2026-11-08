@@ -21,7 +21,7 @@ class ModeCardExampleTests(unittest.TestCase):
 
     def test_card_rotates_and_colours_by_meaning(self):
         card = self.card()
-        self.assertIn("timer LC_MODE_EXAMPLE_SECONDS repeat True", card)
+        self.assertIn("lc_mode_example_fade(_ex_slot)", card)  # one wall clock, no timer (#180)
         self.assertIn("at lc_mode_example_fade", card)
         self.assertIn('lc_delta_colour(_stat, _amount, "review")', card)
 
@@ -37,6 +37,13 @@ class ModeCardExampleTests(unittest.TestCase):
         self.assertIn("ysize LC_MODE_EXAMPLE_HEIGHT", card)
         self.assertIn("ysize (LC_MODE_CARD_HEIGHT_PLAIN if", card)
         self.assertNotIn("yminimum", card)
+
+
+    def test_examples_stacked_on_one_clock(self):
+        card = self.card()
+        self.assertIn("for _ex_slot, ex in enumerate(LC_MODE_CARD_EXAMPLES):", card)
+        self.assertIn("vbox at lc_mode_example_fade(_ex_slot):", card)
+        self.assertNotIn("timer LC_MODE_EXAMPLE_SECONDS", card)
 
 
 if __name__ == "__main__":

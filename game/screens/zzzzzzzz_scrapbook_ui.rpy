@@ -1107,19 +1107,24 @@ init python:
     def lc_mode_example_index():
         return int(_lc_time.time() // LC_MODE_EXAMPLE_SECONDS)
 
-    def lc_mode_example_alpha(trans, st, at):
-        # Wall clock, so a screen rebuild never restarts it: fade in over
-        # 0.35 s after each switch, fade out over the last 0.3 s.
-        phase = _lc_time.time() % LC_MODE_EXAMPLE_SECONDS
-        trans.alpha = max(0.0, min(1.0, phase / 0.35, (LC_MODE_EXAMPLE_SECONDS - phase) / 0.3))
+    def lc_mode_example_alpha(slot, trans, st, at):
+        # Every example is always in the screen, stacked; each one's alpha is
+        # driven by the SAME wall clock that picks the current example, so the
+        # text can never switch out of step with the fade (darryn 2026-11-09:
+        # it used to snap, fade out, fade in, then snap). Fade in 0.35 s after
+        # the switch, fade out over the last 0.3 s.
+        now = _lc_time.time()
+        if int(now // LC_MODE_EXAMPLE_SECONDS) % len(LC_MODE_CARD_EXAMPLES) != slot:
+            trans.alpha = 0.0
+        else:
+            phase = now % LC_MODE_EXAMPLE_SECONDS
+            trans.alpha = max(0.0, min(1.0, phase / 0.35, (LC_MODE_EXAMPLE_SECONDS - phase) / 0.3))
         return 0
 
-transform lc_mode_example_fade:
-    function lc_mode_example_alpha
+transform lc_mode_example_fade(slot):
+    function renpy.curry(lc_mode_example_alpha)(slot)
 
 screen lc_info_card(mode_id, mode_now):
-    # Redraw when the example changes (lc_mode_example_fade fades in/out around it).
-    timer LC_MODE_EXAMPLE_SECONDS repeat True action renpy.restart_interaction
     $ info = transparency_mode_info(mode_id)
     $ on = mode_now == mode_id
     button:
@@ -1146,45 +1151,45 @@ screen lc_info_card(mode_id, mode_now):
                 # Rotating examples (darryn 2026-11-08) so players can picture what each
                 # mode shows, including the NTR heads-up and the photo stamp in Full.
                 if True:
-                    $ ex = LC_MODE_CARD_EXAMPLES[lc_mode_example_index() % len(LC_MODE_CARD_EXAMPLES)]
                     # Fixed-height slot (darryn 2026-11-08): examples of different
                     # heights (chips vs tilted stamps) no longer nudge the card.
                     fixed:
                         xfill True
                         ysize LC_MODE_EXAMPLE_HEIGHT
-                        vbox at lc_mode_example_fade:
-                            spacing 4
-                            text ("e.g. " + ex[0]) size 17 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
-                            hbox:
-                                spacing 6
-                                box_wrap True
-                                box_wrap_spacing 4
-                                for (_stat, _amount) in ex[1]:
-                                    use lc_chip(STAT_LABELS.get(_stat, _stat), _amount, mode_id != "insight", lc_delta_colour(_stat, _amount, "review"))
-                                if mode_id != "insight":
-                                    $ _stamp = lc_stat_model.path_stamp(ex[2])
-                                    if _stamp:
-                                        $ _ink = LC_REVIEW_DELTA_INK[_stamp[1]]
-                                        frame at lc_path_stamp_tilt:
-                                            yalign 0.5
-                                            background Solid(_ink)
-                                            padding (2, 2, 2, 2)
-                                            frame:
-                                                background Solid(LC_PATH_STAMP_PAPER)
-                                                padding (7, 0, 7, 1)
-                                                text _stamp[0].upper().replace("->", LC_PATH_STAMP_ARROW) size 19 color _ink font "fonts/Handjet-ExtraBold.ttf" substitute False
-                                    if ex[3]:
-                                        frame at lc_path_stamp_tilt:
-                                            yalign 0.5
-                                            background Solid(LC_CG_STAMP_INK)
-                                            padding (2, 2, 2, 2)
-                                            frame:
-                                                background Solid(LC_PATH_STAMP_PAPER)
-                                                padding (6, 1, 8, 1)
-                                                hbox:
-                                                    spacing 5
-                                                    add "images/ui/scrapbook/icon_camera.png" yalign 0.5
-                                                    text ex[3] size 19 color LC_CG_STAMP_INK font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
+                        for _ex_slot, ex in enumerate(LC_MODE_CARD_EXAMPLES):
+                            vbox at lc_mode_example_fade(_ex_slot):
+                                spacing 4
+                                text ("e.g. " + ex[0]) size 17 color "#dbc8bd" font "fonts/Handjet-SemiBold.ttf"
+                                hbox:
+                                    spacing 6
+                                    box_wrap True
+                                    box_wrap_spacing 4
+                                    for (_stat, _amount) in ex[1]:
+                                        use lc_chip(STAT_LABELS.get(_stat, _stat), _amount, mode_id != "insight", lc_delta_colour(_stat, _amount, "review"))
+                                    if mode_id != "insight":
+                                        $ _stamp = lc_stat_model.path_stamp(ex[2])
+                                        if _stamp:
+                                            $ _ink = LC_REVIEW_DELTA_INK[_stamp[1]]
+                                            frame at lc_path_stamp_tilt:
+                                                yalign 0.5
+                                                background Solid(_ink)
+                                                padding (2, 2, 2, 2)
+                                                frame:
+                                                    background Solid(LC_PATH_STAMP_PAPER)
+                                                    padding (7, 0, 7, 1)
+                                                    text _stamp[0].upper().replace("->", LC_PATH_STAMP_ARROW) size 19 color _ink font "fonts/Handjet-ExtraBold.ttf" substitute False
+                                        if ex[3]:
+                                            frame at lc_path_stamp_tilt:
+                                                yalign 0.5
+                                                background Solid(LC_CG_STAMP_INK)
+                                                padding (2, 2, 2, 2)
+                                                frame:
+                                                    background Solid(LC_PATH_STAMP_PAPER)
+                                                    padding (6, 1, 8, 1)
+                                                    hbox:
+                                                        spacing 5
+                                                        add "images/ui/scrapbook/icon_camera.png" yalign 0.5
+                                                        text ex[3] size 19 color LC_CG_STAMP_INK font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
 
 ## History ####################################################################
