@@ -34,6 +34,7 @@ Old stats: `curiosity` and `acceptance` folded into Exhibitionism; `boredom`, th
 6. The Full route tag is derived, never typed: `lc_choice_route_tag(choice_id)` gives Love,
    Love+Exhib, NTS, NTR, Repair, May lead to NTR, Locks NTR, NTR stays open, "Repair, NTR stays
    open" or Neutral, from the effects plus `CHOICE_ROUTE_FLAGS` (the route value the branch writes).
+   A one-step slip (Temptation +1, no route flag) is "May lead to NTR"; Temptation +2 or more is NTR.
    Full Transparency shows it as a small stamp on each choice card (below); Developer mode shows it
    as `[Route: ...]`.
 7. One clear path per choice (`tests/test_choice_path_tags.py`, scans every story menu): every
@@ -75,6 +76,22 @@ glyph for it); Full gate cards now show their stat line (the parser skips the
 `[MAJOR RELATIONSHIP CONSEQUENCE]` label group). A new `format_dayN_*choice` helper must be added to
 the wrapper list (the test checks).
 
+## Choice sense (darryn, 2026-11-08)
+
+Score each answer by how it lands with Leia, read together with its branch (what Ryan actually
+says, how she reacts), not by what Ryan meant.
+
+- Defensive, dismissive or distracted answers are **slips**: Temptation +1 with Love -1 or Trust -1
+  (Trust for jealous/defensive, Love for distracted/brushing off). They stamp `MAY LEAD TO NTR`.
+  An accusation may cost Trust -2. Only gates move more.
+- No jerk options: NTR grows from honest, sympathetic mistakes (tired, distracted, jealous, "I'm
+  fine"). Leia's reaction shows a small sting, not a blow-up.
+- Exhibitionism builds in small, agreed steps she visibly enjoys; an option that ignores her stated
+  worry is rewritten as a check-in.
+- Every scored Prologue-Day 2 menu offers a believable slip (tests/test_route_simulation.py).
+- Temptation thresholds count slips from the default 10: Day 1 NTR seed at 13 (three slips; one or
+  two never seed), Love bedtime needs Temptation <= 11, Day 2 NTR risk at 15 with a seed or 16 without.
+
 ## How to score a new choice
 
 1. Give it a stable id (`ch01_d6_<beat>_<answer>`) and register effects: Day 1 in
@@ -110,13 +127,13 @@ Days 1-2 were scaled from the old numbers (Exhibitionism climbs about 2.2x faste
 
 | Check | Old | v2 |
 |---|---|---|
-| Day 1 `ntr_seeded` | 3+ nonchalant tags and (boredom >= 15 or love <= 48) | Temptation >= 17 |
+| Day 1 `ntr_seeded` | 3+ nonchalant tags and (boredom >= 15 or love <= 48) | Temptation >= 13 (three slips; was 17) |
 | Day 1 `nts_seeded` (shown as "Exhibition seeded") | nts_score >= ntr_score + 5 and curiosity >= 24 | Exhibitionism >= 30 (and not NTR-seeded) |
-| Day 1 Love bedtime | mixed, love >= 54, trust >= 54, nonchalant < 2 | mixed, Love >= 54, Trust >= 54, Temptation <= 12 |
-| Day 2 lane `ntr_risk` | seed + boredom >= 15 + (Day 2 nonchalant or love <= 48) + attentive <= nonchalant + 2 | Temptation >= 18 with a Day 1 NTR seed, or >= 20 without |
+| Day 1 Love bedtime | mixed, love >= 54, trust >= 54, nonchalant < 2 | mixed, Love >= 54, Trust >= 54, Temptation <= 11 (was 12) |
+| Day 2 lane `ntr_risk` | seed + boredom >= 15 + (Day 2 nonchalant or love <= 48) + attentive <= nonchalant + 2 | Temptation >= 15 with a Day 1 NTR seed, or >= 16 without (was 18 / 20) |
 | Day 2 lane `exhibitionism` | exh >= 22, curiosity >= 24, acceptance >= 15, Day 2 `open` tag | Exhibitionism >= 36, gained some today, Temptation < 18 |
 | Day 2 Love+Exhib bedroom blend | love lane, exh >= 20, acceptance >= 15, `open` tag | love lane, Exhibitionism >= 28, gained some today |
-| Her own call, Day 1 | 14; 18 / 26; curiosity 25; boredom 16 | 19; 28 / 45; Exhibitionism 21; Temptation 17 |
+| Her own call, Day 1 | 14; 18 / 26; curiosity 25; boredom 16 | 19; 28 / 45; Exhibitionism 21; Temptation 13 (was 17) |
 | Photo confidence (Day 1) | curiosity + acceptance (+5 bolder) >= 38 | Exhibitionism (+3 bolder) >= 14 |
 | Her own call, Day 2 | 18 / 26; 18; pool outfit exh 22 or curiosity 27 | 28 / 45; 28; Exhibitionism 36 |
 | Day 4 brief reveal / Day 5 bolder swim, comfortable, comfortable after brief | 26 / 24, 34, 30 | 45 / 41, 63, 54 |

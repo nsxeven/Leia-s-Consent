@@ -68,7 +68,10 @@ class ChoiceScoringRuleTests(unittest.TestCase):
         tag = lambda cid: m.choice_route_tag(cid, self.effects[cid])
         self.assertEqual(tag("ch01_d2_morning_reassure"), "Love")
         self.assertEqual(tag("ch01_photo_more"), "Love+Exhib")
-        self.assertEqual(tag("ch01_compliment_shrug"), "NTR")
+        # A one-step slip (Temptation +1) only "may lead to NTR"; bigger ones lead there.
+        self.assertEqual(tag("ch01_compliment_shrug"), "May lead to NTR")
+        self.assertEqual(tag("ch01_friend_boundary"), "May lead to NTR")
+        self.assertEqual(tag("ch01_d3_ntr_withdraw"), "NTR")
         self.assertEqual(tag("ch01_d2_wink_repair"), "Repair")
         self.assertEqual(tag("ch01_d2_sunset_ignore_gate"), "May lead to NTR")
         self.assertEqual(tag("ch01_d2_wink_reject_hard"), "Locks NTR")

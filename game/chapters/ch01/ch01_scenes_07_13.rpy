@@ -26,6 +26,7 @@ label ch01_scene_07_did_he_see:
     $ ch01_towel_reassure_text = format_choice("ch01_towel_reassure", "He looked away pretty much immediately.")
     $ ch01_towel_honest_text = format_choice("ch01_towel_honest", "Maybe a little. You asked me to be honest.")
     $ ch01_towel_tease_text = format_choice("ch01_towel_tease", "Enough to know we should start using the curtains.")
+    $ ch01_towel_shrug_text = format_choice("ch01_towel_shrug", "It was like a second. It's not a big deal.")
 
     menu:
         "[ch01_towel_reassure_text]":
@@ -51,6 +52,14 @@ label ch01_scene_07_did_he_see:
             gf "Fuck you. That's not— okay, it's a little funny. It's not funny."
             mc "Sorry. That sounded better in my head."
             gf "You're enjoying this way too much, and I'm having a crisis here."
+
+        "[ch01_towel_shrug_text]":
+            $ apply_choice("ch01_towel_shrug")
+            $ set_story_value("ch01_towel_followup", "brushed_off")
+            mc "It was like a second, babe. It's not a big deal."
+            gf "It's a big deal to me. Kind of. A little bit."
+            mc "Yeah. No, I know. Sorry."
+            "She went back to watching my reflection instead of me."
 
     gf "I was standing in front of a giant glass door in a towel, yelling about dinner. Who does that?"
     mc "It was an accident, though. You were just trying to hurry us up."
@@ -383,6 +392,7 @@ label ch01_scene_09_dinner:
     $ ch01_bra_reassure_text = format_choice("ch01_bra_reassure", "Do whatever makes you comfortable. You'll be fine.")
     $ ch01_bra_playful_text = format_choice("ch01_bra_playful", "If you're comfortable with it... that's kind of hot.")
     $ ch01_bra_cover_text = format_choice("ch01_bra_cover", "Take it off if you need to. I'll keep an eye out.")
+    $ ch01_bra_distracted_text = format_choice("ch01_bra_distracted", "Hm? Yeah, go for it.")
 
     menu:
         "[ch01_bra_reassure_text]":
@@ -409,6 +419,15 @@ label ch01_scene_09_dinner:
             mc "Take it off if you need to. I'll keep an eye out."
             $ face("leia", "neutral")
             gf "Thank you. Let me go fix this before it falls off on its own."
+
+        "[ch01_bra_distracted_text]":
+            $ apply_choice("ch01_bra_distracted")
+            $ set_story_value("ch01_bra_response", "distracted")
+            mc "Hm? Yeah, go for it."
+            "I said it to the menu. I was still trying to work out what half the dishes were."
+            $ face("leia", "skeptical")
+            gf "Wow. Thanks for the support."
+            mc "Sorry. No, yeah, go. You'll be fine."
 
     gf "I'm going to the bathroom. If [friend_name] asks, I spilled a drink. That's all he needs to know."
     mc "Spilled a drink. Got it."
@@ -715,7 +734,7 @@ label ch01_scene_11b_female_friend:
 
     $ ch01_friend_reassure_text = format_choice("ch01_friend_reassure", "She's just a friend. You've got nothing to worry about.")
     $ ch01_friend_tease_text = format_choice("ch01_friend_tease", "Wait. Are you jealous?")
-    $ ch01_friend_boundary_text = format_choice("ch01_friend_boundary", "She's my friend. I don't want us policing who the other can see.")
+    $ ch01_friend_boundary_text = format_choice("ch01_friend_boundary", "She's my friend. I don't want us checking up on each other.")
 
     menu:
         "[ch01_friend_reassure_text]":
@@ -743,11 +762,12 @@ label ch01_scene_11b_female_friend:
         "[ch01_friend_boundary_text]":
             $ apply_choice("ch01_friend_boundary")
             $ set_story_value("ch01_female_friend_response", "asserted_boundary")
-            mc "She's my friend. I don't want us policing who the other can see."
-            gf "I'm not saying you can't see her."
+            mc "I mean... she's my friend. I don't want us turning into the couple that checks up on each other."
+            gf "I wasn't checking up on you. I was just asking."
             mc "I know. I'm just saying I want us to trust each other about this stuff."
-            "[girlfriend_name] held my gaze for a moment, then nodded."
-            gf "Okay. That's fair."
+            "[girlfriend_name] looked at me for a second, then down at the path."
+            gf "Yeah, no, that's... fair. I guess."
+            "She said it lightly, but she let go of my hand to fix her strap and didn't take it back right away."
 
     $ set_story_flag("ch01_female_friend_meetup_seeded")
     $ set_story_flag("ch01_scene_11b_complete")
@@ -852,6 +872,7 @@ label ch01_scene_12_shop_and_drive_back:
     $ ch01_julian_reassure_text = format_choice("ch01_julian_reassure", "I know. Don't worry about it.")
     $ ch01_julian_honest_text = format_choice("ch01_julian_honest", "It bothered me for a second, but I know it was an accident.")
     $ ch01_julian_joke_text = format_choice("ch01_julian_joke", "Next time, catch her with less enthusiasm.")
+    $ ch01_julian_fine_text = format_choice("ch01_julian_fine", "Yeah. It's fine.")
 
     menu:
         "[ch01_julian_reassure_text]":
@@ -879,6 +900,15 @@ label ch01_scene_12_shop_and_drive_back:
             friend "Next time I'm letting gravity deal with her."
             mc "Please don't drop my girlfriend on a sidewalk."
             friend "Fine. I'll still catch her, but really professionally. Like a fireman."
+
+        "[ch01_julian_fine_text]":
+            $ apply_choice("ch01_julian_fine")
+            $ set_story_value("ch01_julian_apology_response", "said_fine")
+            mc "Yeah. It's fine."
+            friend "You sure? Because that's your 'it's fine' voice, and I've known that voice since college."
+            mc "It's fine, man. Honestly."
+            "It wasn't, really. I just didn't want to be the guy who made it a thing."
+            friend "Okay. If you say so."
 
     "For a moment it was just the two of us again—the same easy friendship we'd had long before this trip."
     "Behind us, [girlfriend_name] shifted in her sleep and pulled her arms closer around herself."
@@ -958,7 +988,7 @@ label ch01_scene_13_back_at_villa:
     $ cast(ryan="casual", julian="evening")
 
     $ ch01_carry_brush_text = format_choice("ch01_carry_brush", "We're almost inside. Just keep going.")
-    $ ch01_carry_lookaway_text = format_choice("ch01_carry_lookaway", "Then keep your eyes off her and bring her inside.")
+    $ ch01_carry_lookaway_text = format_choice("ch01_carry_lookaway", "Just— don't look. Get her inside.")
     $ ch01_carry_fix_text = format_choice("ch01_carry_fix", "Wait. Hold on—I'll fix it.")
     $ ch01_carry_joke_text = format_choice("ch01_carry_joke", "Careful. Don't enjoy the view too much.")
 
@@ -977,9 +1007,9 @@ label ch01_scene_13_back_at_villa:
             $ set_story_value("ch01_carry_response", "look_away")
             $ set_story_value("ch01_ryan_julian_trust", get_story_value("ch01_ryan_julian_trust", 0) - 1)
             $ set_story_value("ch01_leia_wake_reason", "voices_at_door")
-            mc "Then keep your eyes off her and bring her inside."
+            mc "Just— don't look. Get her inside."
             friend "I'm not trying to look, I swear. That's why I told you."
-            mc "I know. I know. I'm just saying."
+            mc "I know. Sorry. I know."
             friend "Yeah, no, I get it. Door. I'm looking at the door."
 
         "[ch01_carry_fix_text]":

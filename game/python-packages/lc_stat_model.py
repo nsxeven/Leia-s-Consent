@@ -59,18 +59,20 @@ LEGACY_FOLD = {
 RETIRED_STATS = ("boredom", "curiosity", "acceptance", "secrecy", "boundary_looseness", "momentum", "jealousy")
 
 # Route thresholds. Day 1-2 are scaled from the old numbers (Exhibitionism climbs
-# about 2.2x faster, Temptation about 1.25x) and tuned with
-# tests/test_route_simulation.py. Day 3+ lanes still come from stored values.
+# about 2.2x faster) and tuned with tests/test_route_simulation.py. Temptation
+# thresholds count slips (choice-sense pass, darryn 2026-11-08): an ordinary slip
+# is Temptation +1 from the default 10, so one slip never seeds NTR and three do.
+# Day 3+ lanes still come from stored values.
 THRESHOLDS = {
     # Day 1 end (ch01_scenes_14_30.rpy)
-    "d1_ntr_seed_temptation": 17,      # >= : ntr_seeded
+    "d1_ntr_seed_temptation": 13,      # >= : ntr_seeded (three +1 slips; one never does)
     "d1_exhib_seed": 30,               # >= (and below the NTR seed): nts_seeded ("Exhibition seeded")
     "d1_love_bedtime_love": 54,
     "d1_love_bedtime_trust": 54,
-    "d1_love_bedtime_temptation_max": 12,
+    "d1_love_bedtime_temptation_max": 11,  # one slip still gets the Love bedtime
     # Day 2 lanes (ch01_d2_route_lane)
-    "d2_risk_temptation": 18,          # >= with a Day 1 NTR seed ...
-    "d2_risk_temptation_unseeded": 20, # ... or >= this without one
+    "d2_risk_temptation": 15,          # >= with a Day 1 NTR seed (two more slips) ...
+    "d2_risk_temptation_unseeded": 16, # ... or >= this without one (six slips in all)
     "d2_exhib_lane": 36,               # >= and gained Exhibitionism today
     "d2_love_exhib_blend": 28,         # love lane bedroom with an open-curtains edge
     # Her own call (Exhibitionism) in Day 1-2 dialogue
@@ -78,7 +80,7 @@ THRESHOLDS = {
     "d1_can_tell_unsure": 28,          # was 18
     "d1_can_tell_bold": 45,            # was 26
     "d1_compliment_liked": 21,         # was curiosity 25
-    "d1_compliment_restless_temptation": 17,  # was boredom 16
+    "d1_compliment_restless_temptation": 13,  # was boredom 16; = the Day 1 NTR seed
     "d1_photo_confidence": 14,         # Exhibitionism (+3 bolder outfit), was curiosity+acceptance 38
     "d1_photo_bolder_bonus": 3,
     "d2_morning_unsure": 28,           # was 18
@@ -236,6 +238,10 @@ def route_tag(effects, route_flag=None):
     if route_flag == "stays_open":
         return "NTR stays open" if lean == "NTR" else "Repair, NTR stays open"
     if route_flag == "may_lead":
+        return "May lead to NTR"
+    if lean == "NTR" and effect_deltas(effects).get("temptation", 0) == 1:
+        # A one-step slip (Temptation +1) only leans toward NTR; several of them
+        # are what open it (darryn's slow burn, choice-sense pass).
         return "May lead to NTR"
     return lean
 

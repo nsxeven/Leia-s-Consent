@@ -32,6 +32,7 @@ define LC_CHOICE_CG_COUNT = {
     "ch01_photo_support": (2, 2),   # + capture 02
     "ch01_photo_more": (3, 3),      # + captures 02 and 03
     "ch01_photo_exit": (1, 2),      # capture 02 only if her Exhibitionism carries her on
+    "ch01_photo_rush": (1, 1),      # rushed: she stops after capture 01 (choice-sense pass)
 }
 define LC_CG_STAMP_INK = "#3b2a30"
 

@@ -161,6 +161,7 @@ label ch01_scene_03_outfit_choice:
     $ ch01_outfit_bolder_text = format_choice("ch01_outfit_bolder", "Not at all. You'd look amazing in it.")
     $ ch01_outfit_comfort_text = format_choice("ch01_outfit_comfort", "Wear whichever one makes you comfortable.")
     $ ch01_outfit_conservative_text = format_choice("ch01_outfit_conservative", "I kinda like the other one on you more.")
+    $ ch01_outfit_rush_text = format_choice("ch01_outfit_rush", ("They both look fine. " + friend_name + "'s waiting."))
 
     menu:
         "[ch01_outfit_bolder_text]":
@@ -204,6 +205,17 @@ label ch01_scene_03_outfit_choice:
             gf "Aw. That's kind of sweet, actually. I did ask."
             "She folded the new swimsuit back into the suitcase without making it feel like a defeat."
             gf "I'll go with the usual one today."
+
+        "[ch01_outfit_rush_text]":
+            $ apply_choice("ch01_outfit_rush")
+            $ set_story_value("ch01_pool_outfit", "pool_conservative")
+            $ set_story_value("ch01_outfit_stance", "rushed")
+
+            mc "They both look fine, babe. Honestly. [friend_name]'s already at the pool."
+            gf "Wow. Okay. 'Fine.'"
+            mc "Good! I meant good. They both look good."
+            "She looked at the new one for another second, then put it back in the suitcase."
+            gf "Usual one, then. It's quicker."
 
     $ selected_pool_outfit = get_story_value("ch01_pool_outfit", "pool_conservative")
     $ grant_story_outfit(selected_pool_outfit, equip=True)
