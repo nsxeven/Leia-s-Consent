@@ -921,7 +921,9 @@ screen lc_phone_status_row(row):
     button:
         style "lc_sw_hit"
         xfill True
-        padding (4, 4)
+        # Padding clears the hover art's rounded 18px border so the bar sits
+        # fully inside the highlight (darryn 2026-11-08).
+        padding (14, 8, 14, 12)
         hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
         tooltip row.get("tooltip")
         action NullAction()
@@ -945,7 +947,7 @@ screen lc_phone_status_row(row):
                 xfill True
                 ysize 12
                 left_bar Solid("#3D8FD4")
-                right_bar Solid("#E1E7EF")
+                right_bar Solid("#D3DEEA")
             if row["internal_key"]:
                 text row["internal_key"]:
                     style "lc_sw_hand"
