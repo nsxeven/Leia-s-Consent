@@ -312,9 +312,8 @@ label ch01_scene_14b_back_downstairs:
     "[friend_name] had changed too, into a T-shirt and shorts, and was already at the kitchen counter with two glasses of whisky."
 
     $ enter_cinematic_mode()
-    # Julian hands Ryan the whisky: ice into the glass, then the pour (darryn).
+    # Julian hands Ryan the whisky: ice clink only, no pour (darryn 2026-11-08).
     $ lc_sfx("ice_glass")
-    $ lc_sfx("whisky_pour")
     scene cg ch01_villa_night_julian_drink
     with dissolve
 
