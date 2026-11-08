@@ -20,10 +20,10 @@ screen status_stat_row(row):
 
                 if row["stat"] in LC_STAT_ICON:
                     add Transform("images/ui/scrapbook/icon_{}.png".format(LC_STAT_ICON[row["stat"]]), xysize=(28, 28)) yalign 0.5
-                text row["label"] size 21 color "#3b2a30" yalign 0.5
+                text row["label"] size 21 color "#fff0dc" yalign 0.5
 
                 if row["detail"]:
-                    text row["detail"] size 18 color "#7a6266" xalign 1.0
+                    text row["detail"] size 18 color "#dbc8bd" xalign 1.0
 
             # Immersive mode never exposes a numeric meter.
             if current_choice_mode() != "normal":
@@ -35,21 +35,21 @@ screen status_stat_row(row):
                     right_bar Frame("gui/scrapbook/bar_track.png", 6, 6)
 
             if row["internal_key"]:
-                text row["internal_key"] size 15 color "#7a6266"
+                text row["internal_key"] size 15 color "#dbc8bd"
 
 
 screen status_section(title, rows):
 
     frame:
         xfill True
-        background Frame("gui/scrapbook/frame_card.png", 9, 9)
+        background Frame("gui/glass/panel.png", 9, 9)
         padding (24, 22)
 
         vbox:
             spacing 17
             xfill True
 
-            text title size 26 color "#3b2a30"
+            text title size 26 color "#fff0dc"
 
             for row in rows:
                 use status_stat_row(row)
@@ -57,10 +57,10 @@ screen status_section(title, rows):
 
 # The journal art is 1920x1080: the binding occupies x=850..885.
 # Keep both content lanes clear of the binding and the outer page edges.
-define LC_STATUS_LEFT_X = 112
-define LC_STATUS_LEFT_W = 704   # right edge 816, 34 px before binding
-define LC_STATUS_RIGHT_X = 920  # 35 px after binding
-define LC_STATUS_RIGHT_W = 684  # right edge 1604
+define LC_STATUS_LEFT_X = 395
+define LC_STATUS_LEFT_W = 690   # right edge 816, 34 px before binding
+define LC_STATUS_RIGHT_X = 1110  # 35 px after binding
+define LC_STATUS_RIGHT_W = 710  # right edge 1604
 
 define LC_STATUS_BODY_Y = 200
 define LC_STATUS_BODY_H = 740   # ends at 940, inside the paper
@@ -81,8 +81,10 @@ screen status_screen(return_to=None):
     $ ryan_rows = status_ryan_rows(mode)
     $ route_rows = status_route_rows(mode)
 
-    add "gui/scrapbook/bg_game_menu.png"
-    use lc_journal_tabs(1686)
+    use lc_glass_menu_backdrop()
+    frame:
+        xpos 354 ypos 42 xsize 1534 ysize 930
+        background Frame("gui/glass/panel.png", 24, 24)
 
     # Left page: title, relationship, and the Full/Developer-only route lean.
     vbox:
@@ -90,10 +92,10 @@ screen status_screen(return_to=None):
         ypos 80
         xsize LC_STATUS_LEFT_W
         spacing 3
-        text "STATUS" size 46 color "#3b2a30"
+        text "STATUS" size 46 color "#fff0dc"
         text "A snapshot of your relationship and where things currently stand.":
             size 19
-            color "#7a6266"
+            color "#dbc8bd"
             xsize LC_STATUS_LEFT_W
 
     viewport:
@@ -113,8 +115,8 @@ screen status_screen(return_to=None):
 
             if persistent.lc_title_style != "off":
                 $ lc_status_titles = lc_current_titles()
-                text (player_name + " · " + lc_status_titles[0]) size 21 color "#cc0066" substitute False
-                text (girlfriend_name + " · " + lc_status_titles[1]) size 21 color "#cc0066" substitute False
+                text (player_name + " · " + lc_status_titles[0]) size 21 color "#ff8fc0" substitute False
+                text (girlfriend_name + " · " + lc_status_titles[1]) size 21 color "#ff8fc0" substitute False
 
             use status_section("RELATIONSHIP", relationship_rows)
 
@@ -125,8 +127,8 @@ screen status_screen(return_to=None):
                 textbutton "Review last completed day":
                     action Show("lc_review_history_screen", day_id=lc_review_latest())
 
-            text "[status_mode_note()]" size 17 color "#7a6266"
-            text "Hover over a stat to see what it means." size 17 color "#7a6266"
+            text "[status_mode_note()]" size 17 color "#dbc8bd"
+            text "Hover over a stat to see what it means." size 17 color "#dbc8bd"
             null height 12
 
     # Right page: mode and close remain fixed while the summary/cards scroll.
@@ -134,7 +136,7 @@ screen status_screen(return_to=None):
         xpos LC_STATUS_RIGHT_X
         ypos 92
         xsize LC_STATUS_RIGHT_W
-        text "Display: [transparency_mode_label()]" size 20 color "#7a6266" yalign 0.5
+        text "Display: [transparency_mode_label()]" size 20 color "#dbc8bd" yalign 0.5
         null width 1 xfill True
         textbutton "Close":
             xalign 1.0
@@ -157,15 +159,15 @@ screen status_screen(return_to=None):
 
             frame:
                 xfill True
-                background Frame("gui/scrapbook/frame_card.png", 9, 9)
+                background Frame("gui/glass/panel.png", 9, 9)
                 padding (24, 20)
 
                 vbox:
                     xfill True
                     spacing 9
-                    text "[girlfriend_name] right now" size 27 color "#3b2a30"
-                    text "Current outfit: [current_outfit_name()]" size 18 color "#7a6266" xfill True
-                    text "[leia_overview_text()]" size 20 color "#3b2a30" line_spacing 4 xfill True
+                    text "[girlfriend_name] right now" size 27 color "#fff0dc"
+                    text "Current outfit: [current_outfit_name()]" size 18 color "#dbc8bd" xfill True
+                    text "[leia_overview_text()]" size 20 color "#fff0dc" line_spacing 4 xfill True
 
             use status_section(girlfriend_name.upper(), leia_rows)
             use status_section(player_name.upper(), ryan_rows)

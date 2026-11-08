@@ -1,4 +1,4 @@
-"""Journal page bounds and Status content placement (static screen contract)."""
+"""Golden Hour glass Status content lanes (static screen contract)."""
 import re
 import unittest
 from pathlib import Path
@@ -6,7 +6,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = (ROOT / "game/screens/status_screen.rpy").read_text(encoding="utf-8")
-ART = ROOT / "game/gui/scrapbook/bg_game_menu.png"
+ART = ROOT / "game/gui/glass/panel.png"
 
 
 def constant(name):
@@ -18,15 +18,15 @@ def constant(name):
 class StatusTwoPageTests(unittest.TestCase):
     def test_content_lanes_stay_inside_their_pages(self):
         with Image.open(ART) as art:
-            self.assertEqual(art.size, (1920, 1080))
+            self.assertEqual(art.size, (96, 96))
         left = constant("LC_STATUS_LEFT_X")
         left_end = left + constant("LC_STATUS_LEFT_W")
         right = constant("LC_STATUS_RIGHT_X")
         right_end = right + constant("LC_STATUS_RIGHT_W")
-        self.assertGreaterEqual(left, 100)
-        self.assertLessEqual(left_end, 850)  # binding starts here
-        self.assertGreaterEqual(right, 885)   # binding ends here
-        self.assertLessEqual(right_end, 1640)  # outer paper margin
+        self.assertGreaterEqual(left, 375)
+        self.assertLessEqual(left_end, 1090)  # glass content left lane
+        self.assertGreaterEqual(right, 1100)
+        self.assertLessEqual(right_end, 1850)  # glass content right edge
         self.assertLessEqual(constant("LC_STATUS_BODY_Y") + constant("LC_STATUS_BODY_H"), 950)
         self.assertIn("xsize (LC_STATUS_LEFT_W - 28)", SOURCE)
         self.assertIn("xsize (LC_STATUS_RIGHT_W - 28)", SOURCE)

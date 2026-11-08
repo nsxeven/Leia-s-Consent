@@ -76,7 +76,7 @@ class TagCollectionTests(unittest.TestCase):
     def test_menu_has_tags_next_to_status(self):
         ui = (ROOT / 'game/screens/zzzzzzzz_scrapbook_ui.rpy').read_text(encoding='utf-8')
         self.assertIn('ShowMenu("status_screen", return_to=lc_journal_status_origin())', ui)
-        self.assertIn('rows.append(("TAGS", Show("lc_tags_screen"), False))', ui)
+        self.assertIn('rows.append(("TAGS", ShowMenu("lc_tags_screen"), False))', ui)
         self.assertIn('screen lc_tags_screen():', (ROOT / 'game/screens/tag_collection_screen.rpy').read_text(encoding='utf-8'))
 
 
