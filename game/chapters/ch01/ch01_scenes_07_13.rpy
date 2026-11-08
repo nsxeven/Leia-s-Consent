@@ -115,7 +115,7 @@ label ch01_scene_07_did_he_see:
     gf "Yeah."
     friend "Cool."
 
-    "No grin. No comment. No attempt to make the situation funny."
+    "He didn't make a single joke, which from him was somehow louder than any joke would have been."
     "[girlfriend_name] glanced at me. I gave her the smallest look I could manage: see?"
 
     gf "[friend_name]?"
@@ -140,7 +140,7 @@ label ch01_scene_07_did_he_see:
 
     friend "Now can we go before we lose this reservation I've been hearing about all day?"
     gf "We are not losing it."
-    mc "There she is."
+    mc "We're only late because somebody said \"two minutes\" about an hour ago."
     gf "Both of you. Shoes. Now."
 
     $ set_story_flag("ch01_scene_07_complete")
@@ -723,7 +723,7 @@ label ch01_scene_11b_female_friend:
             mc "You asked five questions in ten seconds."
             gf "I was gathering information."
             mc "Very calmly."
-            gf "Exactly."
+            gf "Yes. Calm and thorough. Thank you for noticing."
 
         "[ch01_friend_tease_text]":
             $ apply_choice("ch01_friend_tease")
@@ -976,7 +976,7 @@ label ch01_scene_13_back_at_villa:
             mc "Then keep your eyes off her and bring her inside."
             friend "I'm not trying to look."
             mc "I know. Just saying."
-            friend "Fair."
+            friend "Yeah, no, I get it. Door. I'm looking at the door."
 
         "[ch01_carry_fix_text]":
             $ apply_choice("ch01_carry_fix")
@@ -991,7 +991,7 @@ label ch01_scene_13_back_at_villa:
             friend "Long story."
             mc "You refused to wake up."
             gf "I was sleeping."
-            mc "Exactly."
+            mc "That's kind of my point."
             friend "Can we finish this conversation inside?"
             gf "...Why are you carrying me?"
             friend "Because your boyfriend needed the keys."
