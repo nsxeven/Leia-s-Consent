@@ -78,6 +78,7 @@ class TagCollectionTests(unittest.TestCase):
         self.assertIn('ShowMenu("status_screen", return_to=lc_journal_status_origin())', ui)
         self.assertIn('rows.append(("TAGS", ShowMenu("lc_tags_screen"), False))', ui)
         self.assertIn('screen lc_tags_screen():', (ROOT / 'game/screens/tag_collection_screen.rpy').read_text(encoding='utf-8'))
+        self.assertIn('tag menu', (ROOT / 'game/screens/tag_collection_screen.rpy').read_text(encoding='utf-8').split('screen lc_tags_screen():', 1)[1])
 
 
 if __name__ == '__main__':

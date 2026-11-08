@@ -48,7 +48,7 @@ screen lc_tag_column(who, name):
 
 
 screen lc_tags_screen():
-
+    tag menu
     modal True
     zorder 180
 
