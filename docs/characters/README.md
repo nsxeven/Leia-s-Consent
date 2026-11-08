@@ -12,10 +12,10 @@ average 4.2-4.8 words a line. Four different people currently sound like one.
 
 | File | Character | Status |
 |---|---|---|
-| `ryan.md` | Ryan (player, default name; script: `mc`, `[player_name]`) | Draft |
-| `leia.md` | Leia (default name; script: `gf`, `[girlfriend_name]`) | Draft |
-| `julian.md` | Julian (default name; script: `friend`, `[friend_name]`) | Draft |
-| `maya.md` | Maya (`maya`) | Draft |
+| `ryan.md` | Ryan (player, default name; script: `mc`, `[player_name]`) | Profile approved by darryn 2026-11-08; sample lines still DRAFT |
+| `leia.md` | Leia (default name; script: `gf`, `[girlfriend_name]`) | Profile approved by darryn 2026-11-08; sample lines still DRAFT |
+| `julian.md` | Julian (default name; script: `friend`, `[friend_name]`) | Profile revised per darryn 2026-11-08 (humble, shy when teased); awaiting final OK |
+| `maya.md` | Maya (`maya`) | Profile revised per darryn 2026-11-08 (flirty catalyst); awaiting final OK |
 
 Names are player-customizable: in game files always write `[player_name]`,
 `[girlfriend_name]`, `[friend_name]` (a test enforces it). These docs use the

@@ -1,8 +1,17 @@
 diff --git a/docs/DIALOGUE_STYLE.md b/docs/DIALOGUE_STYLE.md
-index ffd71da..1e988f4 100644
+index ffd71da..65e35f1 100644
 --- a/docs/DIALOGUE_STYLE.md
 +++ b/docs/DIALOGUE_STYLE.md
-@@ -59,6 +59,14 @@ After (draft):
+@@ -19,7 +19,7 @@ the character files in `docs/characters/` before writing.
+ | "There she is." / "There it is." | Banned. |
+ | "Exactly." / "Noted." / "Fair." / "Touché." as a whole line | Banned. |
+ | One-word verdict comebacks ("Pervert." "Skill." "Yet.") in a row | Max one per scene. |
+-| Ping-pong of 6+ lines all ≤ 4 words | Banned; break it with a longer line, an action or a thought. |
++| Ping-pong of 6+ lines all ≤ 4 words | Avoid; usually break it with a longer line, an action or a thought (flagged, not failed). |
+ | Everyone has a witty comeback | No. Someone fails to answer, laughs, misunderstands, changes the subject. |
+ | "a beat too long", "a fraction too late", "for a beat" | Max once per day. |
+ | "No X. No Y. No Z." narration fragments | Banned. |
+@@ -59,13 +59,28 @@ After (draft):
  > **Ryan:** She's almost done. I think. She said "two minutes".
  > **Julian:** She said "two minutes" before I'd even found the shade.
  
@@ -12,44 +21,174 @@ index ffd71da..1e988f4 100644
 +15+ words, against 1.4% in our Prologue + Day 1. Fillers, self-corrections and laughter are also
 +nearly absent. Sourced rules per situation: `docs/research/REAL_SPEECH_PATTERNS.md`. Evidence:
 +`docs/research/REAL_DIALOGUE_LEDGER.md`. Worked example: `docs/research/SAMPLE_SCENE_TOWEL.md`.
-+Proposed extra check: every scene has at least one 15+-word spoken line.
++
++## The real target (darryn, 2026-11-08)
++**It should feel like real people talking, not LLMs talking to each other.** The numbers are
++smoke detectors, not targets: no percentage is a hard limit, and a scene that reads like
++real talk passes even if a number is off. The read-aloud test decides.
 +
  ## Automatic check (planned)
- A unit test scans each new day's dialogue and fails when:
- - more than 35% of spoken lines are ≤ 4 words (currently 55%);
+-A unit test scans each new day's dialogue and fails when:
+-- more than 35% of spoken lines are ≤ 4 words (currently 55%);
+-- any run of 6+ clipped lines appears;
+-- a banned phrase appears, or a rationed one goes over its limit;
+-- a character's average line length drifts outside their file's range
+-  (Julian and Maya longest, Ryan in the middle).
++A scan of each new day's dialogue. Only banned phrases **fail**. Everything else **flags** the
++scene for a read-aloud pass:
++- fail: a banned phrase appears, or a rationed one goes over its limit;
++- flag: a lot of very short lines (for reference, real talk runs about 36-52% at ≤ 4 words;
++  Prologue + Day 1 is 55%);
++- flag: a run of 6+ clipped lines;
++- flag: no line of 15+ words in a scene (real talk has 11-26%; we have 1.4%);
++- flag: a character's average line length drifting far outside their file's range
++  (Julian longest, then Leia and Maya, Ryan shortest).
+ 
+ ## Workflow for every new day
+ 1. darryn's day plan.
+diff --git a/docs/characters/README.md b/docs/characters/README.md
+index 6869914..a47c57f 100644
+--- a/docs/characters/README.md
++++ b/docs/characters/README.md
+@@ -12,10 +12,10 @@ average 4.2-4.8 words a line. Four different people currently sound like one.
+ 
+ | File | Character | Status |
+ |---|---|---|
+-| `ryan.md` | Ryan (player, default name; script: `mc`, `[player_name]`) | Draft |
+-| `leia.md` | Leia (default name; script: `gf`, `[girlfriend_name]`) | Draft |
+-| `julian.md` | Julian (default name; script: `friend`, `[friend_name]`) | Draft |
+-| `maya.md` | Maya (`maya`) | Draft |
++| `ryan.md` | Ryan (player, default name; script: `mc`, `[player_name]`) | Profile approved by darryn 2026-11-08; sample lines still DRAFT |
++| `leia.md` | Leia (default name; script: `gf`, `[girlfriend_name]`) | Profile approved by darryn 2026-11-08; sample lines still DRAFT |
++| `julian.md` | Julian (default name; script: `friend`, `[friend_name]`) | Profile revised per darryn 2026-11-08 (humble, shy when teased); awaiting final OK |
++| `maya.md` | Maya (`maya`) | Profile revised per darryn 2026-11-08 (flirty catalyst); awaiting final OK |
+ 
+ Names are player-customizable: in game files always write `[player_name]`,
+ `[girlfriend_name]`, `[friend_name]` (a test enforces it). These docs use the
 diff --git a/docs/characters/julian.md b/docs/characters/julian.md
-index 1b52dd1..34a2f03 100644
+index 1b52dd1..8b9b680 100644
 --- a/docs/characters/julian.md
 +++ b/docs/characters/julian.md
-@@ -51,13 +51,42 @@ is slow and earned *(canon: "should not become suddenly predatory")*.
- - Says: "Okay, hear me out.", "I'm not saying I'm right, I'm saying I'm not wrong.", "Bee. BEE."
- - Never: cool short verdict lines; predatory or smug lines about Leia; "There she is."
+@@ -1,64 +1,111 @@
+-# Julian — DRAFT
++# Julian — DRAFT (revised per darryn, 2026-11-08)
  
-+## Personality profile (research-based, DRAFT)
+ ## Snapshot
+ 27. Ryan's longtime friend; wealthy, socially confident, heavyset/chubby
+-*(canon)*. Paid for the villa and won't let anyone forget it, as a joke *(in game)*.
+-Wingman who got Ryan and Leia together *(in game)*. Terrified of bees *(canon)*.
+-Sunglasses are "his personality" according to Maya *(in game)*.
++*(canon)*. Paid for the villa *(in game)*. Wingman whose dare got Ryan and Leia
++together *(in game)*. Terrified of bees *(canon)*. Sunglasses are "his
++personality" according to Maya *(in game)*.
++
++**darryn (2026-11-08): not loud, not egotistical.** He knows he's rich but is humble
++and lowkey about it: he never brings the money up himself, and he plays it down when
++others do. He gets **shy when teased about his money or about being well endowed**.
++
++> **Canon conflict to fix in rewrite pass A:** `ch01_main.rpy:49` (main @ 6eda038) has
++> him say *"I paid for the villa. I am contractually delighted."*, which is him bringing
++> up the money himself. The old note "won't let anyone forget it" is withdrawn. Rewrite
++> that line so someone else mentions the villa and he deflects.
+ 
+ Respectful and loyal to Ryan early on; any change in how he behaves around Leia
+ is slow and earned *(canon: "should not become suddenly predatory")*.
+ 
+ ## Wants / fears
+-- Wants: everybody to have a good time on *his* trip; to be the host; to be liked.
+-- Fears: being the third wheel; being seen as just "the rich friend"; bees.
+-- Under the bluster: a bit lonely, which Maya picks up on.
++- Wants: everybody to have a good time; to be liked for himself, not his money.
++- Fears: being seen as just "the rich friend"; being the third wheel; bees.
++- Quietly a bit lonely, which Maya picks up on.
+ 
+ ## How he talks
+-- **The loud one.** Longest sentences in the cast. Rambles, exaggerates,
+-  narrates his own plans, over-explains a joke.
+-- Big-brother energy with Ryan. Bro-ish but not dumb.
+-- Comic panic: when scared or caught out he talks *more*, not less. ("No. No no
+-  no. Is it on me? Ryan. RYAN. Is it on me?")
+-- Defensive honesty when it matters: "Look, I'm just saying, I didn't see
+-  anything, and if I did see anything, which I didn't..."
+-- He is the opposite of "man of few words". Give his scenes a different rhythm.
++- **Long, easygoing turns, not loud ones.** The longest lines in the cast, but they come
++  from explaining, telling a story or over-explaining when embarrassed, never from
++  showing off. Warm, mid-volume, self-deprecating.
++- **Plays the money down:** "It's honestly not a big deal", "my dad's thing, not mine",
++  then changes the subject to someone else.
++- **Shy mode** (teased about money or his size): his lines go short and quiet, he goes red,
++  looks away, says "Can we not?", or hands the topic to someone else. It's the one time
++  he's at a loss for words.
++- Big-brother energy with Ryan, bro-ish but not dumb.
++- **Bee panic is the exception** where he does get loud ("No. No no no. Is it on me?").
++  It's funny *because* he's usually so mellow.
++- Defensive honesty when it matters: "Look, I didn't see anything, and if I did see
++  anything, which I didn't..."
+ 
+ ## Under pressure
+ | Situation | How he sounds |
+ |---|---|
+-| Nervous | Babbles, jokes too much, overcorrects. |
+-| Flirting (Maya) | Tries smooth, fails, recovers with self-mockery. |
++| Teased about money | Deflects, plays it down, changes the subject: "It's really not like that." |
++| Teased about his size | Shy: goes red, short answers, "Okay, we're not doing this," then a weak laugh. |
++| Nervous | Over-explains, quietly. |
++| Flirting (Maya) | Tries, gets flustered when she's direct, recovers with self-mockery. |
+ | Caught looking at Leia | Over-apologizes, rambles, looks anywhere else. |
+ | Drunk | Philosophical, then sentimental, then asleep. |
+ | Aroused (later routes) | Surprised at himself first; checks with Ryan and Leia. |
+ | Angry | Rare; goes quiet and serious, which scares everyone. |
++| Bees | The one time he's loud. |
+ 
+ ## With each person
+-- **Ryan**: oldest friend; roasting plus genuine loyalty. Tells Ryan hard truths when sober.
++- **Ryan**: oldest friend; easy roasting plus genuine loyalty. Tells Ryan hard truths when sober.
+ - **Leia**: friendly, gentlemanly, careful; becomes aware of her over the trip.
+-- **Maya**: sparring partner; she out-talks him and he likes it.
++- **Maya**: she teases him about money and size more than anyone; he gets flustered and secretly likes it.
+ 
+ ## By route
+-- **Love**: comic relief and good friend.
++- **Love**: good friend, low-key comic relief.
+ - **Love + Exhibitionism**: flustered bystander who very much doesn't know where to look.
+ - **NTS**: "roped in" later. Asks permission twice, can't believe his luck,
+-  ends up part of it. Never pushes.
++  ends up part of it. Never pushes. His shyness about his size is a natural beat here.
+ - **NTR**: does not chase Leia; the affair partner is someone else (Adrian Vale
+   or another island character). Julian's loyalty can be a painful contrast.
+ 
+ ## Says / never says
+-- Says: "Okay, hear me out.", "I'm not saying I'm right, I'm saying I'm not wrong.", "Bee. BEE."
+-- Never: cool short verdict lines; predatory or smug lines about Leia; "There she is."
++- Says: "Okay, hear me out.", "It's honestly not a big deal.", "Can we not?", "Bee. BEE."
++- Never: brags about money or size; smug or loud host lines; cool short verdict lines;
++  predatory lines about Leia; "There she is."
++
++## Personality profile (research-based, DRAFT, revised)
 +Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P08; rules in `docs/research/REAL_SPEECH_PATTERNS.md`.
-+- **Big Five:** Openness mid, Conscientiousness mid, Extraversion high, Agreeableness mid,
-+  Neuroticism mid. *Why:* hosting, a loud presence and theatrical rambling are high E [P01, P02].
-+  He's loyal and warm, but his bluster crowds people out, so A sits at mid. He panics *talkatively*,
-+  which is a state rather than a high-N trait [P03, P04].
-+- **Attachment:** secure-leaning, approval-sensitive. *Why:* he wants to be liked and is a bit
-+  lonely, but nothing in canon shows the persistent fear of abandonment that anxious attachment
-+  needs [P07, P08]. This is a provisional writing choice.
-+- MBTI/Enneagram shorthand, conversation only: ESFP-ish / type 7. Not science.
++- **Big Five:** Openness mid, Conscientiousness mid, Extraversion mid-high, Agreeableness high,
++  Neuroticism mid. *Why:* he's social and likes people around him, but warmly rather than
++  loudly (mid-high E [P01, P02]). His humility and loyalty are high A [P05]. Shyness when
++  he's teased is a situational sensitivity (mid N), not anxiety in general [P03, P04].
++- **Attachment:** secure-leaning, approval-sensitive. *Why:* he wants to be liked for himself,
++  but nothing in canon shows the persistent fear of abandonment that anxious attachment
++  needs [P07, P08]. Provisional.
++- MBTI/Enneagram shorthand, conversation only: ISFP/ESFP-ish / type 9w2. Not science.
 +
 +## Sentence length
-+- Typical spoken line: **10-30 words**, average about 14-18. The longest lines in the cast.
-+- Short lines: **about 15-25%**, mostly comic panic ("Bee. BEE.") or the rare serious moment.
-+- **Serious mode is the exception**: short, quiet, no jokes. It scares people because it's rare.
++- Typical spoken line: **10-30 words**, average about 13-17. The longest in the cast, said easily, not loudly.
++- Short lines: **about 15-25%**, almost all from **shy mode** (money/size teasing), bee panic,
++  or the rare serious moment.
 +
 +## Real-speech habits (from the evidence)
-+- **Long turns built from short pieces**: setup, detour, "anyway", and a big finish [C02-C05].
-+- **Hosts out loud**: "we", "everyone", group plans, checking that people are having fun [P05].
-+- **Roasts lean on shared history** ("remember the thing with the karaoke machine", invented example), not clever
-+  wording, and he loses as often as he wins [R15, R11].
-+- **Comic panic means more words, not fewer**, plus repetition [C08 repair, R12].
-+- **Laughs at his own jokes first**, often before the punchline lands [C12].
-+- **Keeps old arguments alive as running jokes** with Ryan [R11].
-+
++- **Long turns built from short pieces**: a story, a side detail, "anyway", then back to
++  the point [C02-C05].
++- **Inclusive talk**: "we", "everyone", checking people are okay, without making himself the host [P05].
++- **Answers teases seriously or shyly** rather than firing back, which is common in real teasing [C13, R10].
++- **Roasts lean on shared history** with Ryan, and he loses as often as he wins [R15, R11].
++- **Laughs at himself**, often before anyone else does [C12].
++- **Self-repair when embarrassed**: starts, stops, rephrases [C08].
+ 
  ## Sample lines (DRAFT — darryn to rewrite)
 -- "Is she still changing? Dude, I've been out here so long I've got a tan line from my sunglasses."
 -- "I paid for the villa, so technically I'm the boss of the pool. That's how money works."
@@ -58,23 +197,25 @@ index 1b52dd1..34a2f03 100644
 -- "Okay, hear me out: pizza, then pool, then we never speak of this again."
 -- "If either of you tells anyone I screamed, I'm cancelling the boat trip."
 +1. "Is she still changing? Dude, I've been out here so long I've got a tan line from my sunglasses. Like an actual line."
-+2. "I paid for the villa, so technically, legally, I'm the boss of the pool. That's how money works. I looked it up."
++2. "It's honestly not a big deal, it's a family thing, my dad knows the guy. Can we talk about literally anything else? The pool. Look at the pool."
 +3. "No, I'm not looking, I'm looking at the... the water. Very nice water. Great water. Who wants a drink?"
-+4. "Okay, hear me out: pizza, then pool, then we never speak of this again, and nobody tells Maya."
-+5. "Remember sophomore year when you said you'd 'just talk to her'? Three weeks, man. Three weeks of mirror practice."
-+6. "That does not count. That does not count! A kiss on the cheek is not a kiss, that's, like, a greeting, that's France."
++4. "Okay, we're not— Maya. Maya, we're not doing this at dinner. Please."
++5. "Remember when you said you'd 'just talk to her'? And then you didn't, for like a month, and I had to dare you? I'm just saying."
++6. "That doesn't count. A kiss on the cheek isn't a kiss, that's, like, a greeting, that's France. I'm not drinking for France."
 +7. "Bee. Bee. Is it on me? Ryan. Ryan, I'm serious, is it on me— don't laugh, why are you laughing?"
-+8. "Everyone good? Leia, you good? Okay. Okay, good. I just— I want this to be a good trip, you know?"
++8. "Everyone okay? Leia, you good? Okay. Good. I just— I want this to be a good trip for you guys, you know?"
 +9. "Hey. Real talk for a sec. You've been weird since lunch. You don't have to tell me. But you've been weird."
-+10. "If either of you tells anyone I screamed, I'm cancelling the boat trip. I'm not joking. I'm a little bit joking."
++10. "I don't— okay, can we not talk about my— yeah. No. Thank you. Moving on. Who's hungry?"
  
  ## Open questions for darryn
- - Where's his money from (family, job)?
+-- Where's his money from (family, job)?
++- Where's his money from (family, job)? Sample line 2 guesses "family"; change it freely.
+ - Does he have a "type"? Has he ever been serious with anyone?
 diff --git a/docs/characters/leia.md b/docs/characters/leia.md
-index 4b4032f..e2b2b5a 100644
+index 4b4032f..5eb815b 100644
 --- a/docs/characters/leia.md
 +++ b/docs/characters/leia.md
-@@ -61,14 +61,51 @@ to be revealed and she's not a doll things happen to: she chooses.
+@@ -61,14 +61,52 @@ to be revealed and she's not a doll things happen to: she chooses.
  - Never: deadpan one-word verdicts in a row ("Exactly." "Pervert." "Fine."),
    cool-girl lines with no feeling behind them, lines that explain her own subtext.
  
@@ -109,8 +250,9 @@ index 4b4032f..e2b2b5a 100644
 +  over-sharing, then "sorry, is that too much?" [R16].
 +- **When she suggests something new**, she says her own fear first ("you'll think I'm being
 +  weird") and leaves a clear way out ("we don't have to") [R04, R01].
-+- **Running bits with Ryan**: keeps up one or two dumb jokes from home (e.g. a word she
-+  pretends she can't pronounce) and groans at his [R10].
++- **Running bit with Ryan (darryn's pick): "two minutes".** She's always "two minutes" from
++  ready; he counts them out loud ("That's four minutes. Five.") and she pretends not to hear.
++  It comes back all trip, and the payoff is her groan, not a comeback [R10].
 +
  ## Sample lines (DRAFT — darryn to rewrite)
 -- "Why are you looking at me like that? I'm literally in a towel. My hair's a disaster."
@@ -134,10 +276,23 @@ index 4b4032f..e2b2b5a 100644
  ## Open questions for darryn
  - Her job / what she's into at home (hobbies, shows, music)?
 diff --git a/docs/characters/maya.md b/docs/characters/maya.md
-index ea94010..d538bdc 100644
+index ea94010..3c71cad 100644
 --- a/docs/characters/maya.md
 +++ b/docs/characters/maya.md
-@@ -50,13 +50,44 @@ She's a real friend, not a plot device: she can push, but Leia always chooses
+@@ -11,6 +11,12 @@ and tries to protect the relationship *(canon)*. Into Julian, and says so
+ She's a real friend, not a plot device: she can push, but Leia always chooses
+ *(canon)*.
+ 
++**darryn (2026-11-08): very flirty and slightly sexual. She's the catalyst for Leia and Ryan
++to explore more.** She flirts with everyone a little (Julian most), says the
++sexual thing out loud that the couple have only thought, and makes trying something feel
++normal and fun. The consent rule still holds: she opens the door and makes it easy to say
++yes, but she always checks Leia (and Ryan) really want it, and drops it instantly at a no.
++
+ ## Wants / fears
+ - Wants: fun, honesty, people to stop being so careful; Julian (more than she
+   admits).
+@@ -50,13 +56,50 @@ She's a real friend, not a plot device: she can push, but Leia always chooses
  - Says: "Okay, wait, back up.", "No because why would you...", "I'm asking for science."
  - Never: cool short verdicts ("Skill." "Yet." "Drink." as a whole personality), cruel lines, manipulative lines.
  
@@ -166,7 +321,13 @@ index ea94010..d538bdc 100644
 +  asking?") [R06].
 +- **Hears the complaint first**: people rehearse their worries with her before saying them to
 +  their partner [M01].
-+- **In drinking games she's the rules lawyer** [R11].
++- **In drinking games she's the rules lawyer** [R11], and the one who picks the spicy prompts.
++- **Flirty and a little sexual (darryn)**: compliments bodies and outfits directly, flirts by
++  teasing (Julian's money and size, Leia's swimsuit), and says the sexual "what if" out loud as a
++  joke first, then checks whether it was really a joke. She's the asker in the evidence: question first,
++  easy way out, and she watches the reaction [R01, R03, R16].
++- **Catalyst, not pusher**: she makes the idea normal ("half the people here would kill for that
++  body, you know that?"), then hands the choice back: "Only if you want to. I'm serious." [R02 anti-pattern, R05].
 +
  ## Sample lines (DRAFT — darryn to rewrite)
 -- "Okay, wait, back up. You've been together four years and he still can't order food in under twenty minutes?"
@@ -180,19 +341,19 @@ index ea94010..d538bdc 100644
 +3. "Oh my God, your nails— wait, are those the same as mine? Shut up. Okay, we're friends now, that's the rule."
 +4. "Leia. Leia. You have to try this one. Just try it. I won't even look. I'll look a little."
 +5. "That counts. It counts! You said 'kissed', you didn't say 'on the mouth', drink."
-+6. "Ryan, come help me carry drinks. No, I don't need help. Just come."
++6. "Leia, honestly? You should wear that one tonight. Half this bar would lose their minds. Ryan would lose his mind. Only if you want to, though."
 +7. "Okay, what are you actually asking? Because that sounded like a question but it wasn't one."
 +8. "Hey. You okay? Not 'fine'. Actually okay."
-+9. "I'm not drunk, I'm emotionally available. Different thing. Very different. Who took my cup?"
-+10. "If he offers to share his room tonight, I'm not saying no. I'm just— I'm putting that out there. Into the universe."
++9. "Never have I ever been watched. Oh, come on, nobody? Not even a little? ...Leia, you hesitated. I saw that."
++10. "If Julian offers to share his room tonight, I'm not saying no. Don't go red, Julian, I'm just— I'm putting that out there. Into the universe."
  
  ## Open questions for darryn
  - Exact age, job, how she knows Ryan (school, work, neighbors)?
 diff --git a/docs/characters/ryan.md b/docs/characters/ryan.md
-index 1044c61..f903b12 100644
+index 1044c61..a640ee5 100644
 --- a/docs/characters/ryan.md
 +++ b/docs/characters/ryan.md
-@@ -58,15 +58,49 @@ charge), awkward in the small moments.
+@@ -58,15 +58,50 @@ charge), awkward in the small moments.
    sound like a movie trailer. Mean or contemptuous lines on purpose (unless the
    scene is about him regretting it).
  
@@ -223,8 +384,9 @@ index 1044c61..f903b12 100644
 +  fast [R15].
 +- **Short reassurance, not speeches**: "Yeah. We're good. Come here." [R08, R17].
 +- **"I'm fine, just tired."** plus turning away is the NTR seed. He doesn't name the feeling [P11, R17].
-+- **Running bits with Leia**: one long-running dumb joke from home (a deliberate
-+  mispronunciation, a fake-wrong answer) that he keeps up all trip [R10].
++- **Running bit with Leia (darryn's pick): "two minutes".** When she says she'll be "two
++  minutes", he counts out loud ("That's four. Five. We're at five, babe.") and she ignores him.
++  Use it all trip, sometimes sweetly reversed (he's the one running late, she starts counting) [R10].
 +- **When asked about something new**, he asks practical questions before he answers ("Like,
 +  who? Where? Would we— would you want me there?") [R01, M16].
 +

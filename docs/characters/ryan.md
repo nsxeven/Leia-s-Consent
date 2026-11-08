@@ -85,8 +85,9 @@ Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P11; rules in `docs/researc
   fast [R15].
 - **Short reassurance, not speeches**: "Yeah. We're good. Come here." [R08, R17].
 - **"I'm fine, just tired."** plus turning away is the NTR seed. He doesn't name the feeling [P11, R17].
-- **Running bits with Leia**: one long-running dumb joke from home (a deliberate
-  mispronunciation, a fake-wrong answer) that he keeps up all trip [R10].
+- **Running bit with Leia (darryn's pick): "two minutes".** When she says she'll be "two
+  minutes", he counts out loud ("That's four. Five. We're at five, babe.") and she ignores him.
+  Use it all trip, sometimes sweetly reversed (he's the one running late, she starts counting) [R10].
 - **When asked about something new**, he asks practical questions before he answers ("Like,
   who? Where? Would we— would you want me there?") [R01, M16].
 

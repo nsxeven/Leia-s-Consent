@@ -11,6 +11,12 @@ and tries to protect the relationship *(canon)*. Into Julian, and says so
 She's a real friend, not a plot device: she can push, but Leia always chooses
 *(canon)*.
 
+**darryn (2026-11-08): very flirty and slightly sexual. She's the catalyst for Leia and Ryan
+to explore more.** She flirts with everyone a little (Julian most), says the
+sexual thing out loud that the couple have only thought, and makes trying something feel
+normal and fun. The consent rule still holds: she opens the door and makes it easy to say
+yes, but she always checks Leia (and Ryan) really want it, and drops it instantly at a no.
+
 ## Wants / fears
 - Wants: fun, honesty, people to stop being so careful; Julian (more than she
   admits).
@@ -75,7 +81,13 @@ Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P08; rules in `docs/researc
   asking?") [R06].
 - **Hears the complaint first**: people rehearse their worries with her before saying them to
   their partner [M01].
-- **In drinking games she's the rules lawyer** [R11].
+- **In drinking games she's the rules lawyer** [R11], and the one who picks the spicy prompts.
+- **Flirty and a little sexual (darryn)**: compliments bodies and outfits directly, flirts by
+  teasing (Julian's money and size, Leia's swimsuit), and says the sexual "what if" out loud as a
+  joke first, then checks whether it was really a joke. She's the asker in the evidence: question first,
+  easy way out, and she watches the reaction [R01, R03, R16].
+- **Catalyst, not pusher**: she makes the idea normal ("half the people here would kill for that
+  body, you know that?"), then hands the choice back: "Only if you want to. I'm serious." [R02 anti-pattern, R05].
 
 ## Sample lines (DRAFT — darryn to rewrite)
 1. "Okay, wait, back up. Four years and he still can't order food in under twenty minutes? Leia. Babe. How."
@@ -83,11 +95,11 @@ Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P08; rules in `docs/researc
 3. "Oh my God, your nails— wait, are those the same as mine? Shut up. Okay, we're friends now, that's the rule."
 4. "Leia. Leia. You have to try this one. Just try it. I won't even look. I'll look a little."
 5. "That counts. It counts! You said 'kissed', you didn't say 'on the mouth', drink."
-6. "Ryan, come help me carry drinks. No, I don't need help. Just come."
+6. "Leia, honestly? You should wear that one tonight. Half this bar would lose their minds. Ryan would lose his mind. Only if you want to, though."
 7. "Okay, what are you actually asking? Because that sounded like a question but it wasn't one."
 8. "Hey. You okay? Not 'fine'. Actually okay."
-9. "I'm not drunk, I'm emotionally available. Different thing. Very different. Who took my cup?"
-10. "If he offers to share his room tonight, I'm not saying no. I'm just— I'm putting that out there. Into the universe."
+9. "Never have I ever been watched. Oh, come on, nobody? Not even a little? ...Leia, you hesitated. I saw that."
+10. "If Julian offers to share his room tonight, I'm not saying no. Don't go red, Julian, I'm just— I'm putting that out there. Into the universe."
 
 ## Open questions for darryn
 - Exact age, job, how she knows Ryan (school, work, neighbors)?

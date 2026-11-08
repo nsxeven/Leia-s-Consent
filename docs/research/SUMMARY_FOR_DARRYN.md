@@ -34,10 +34,11 @@ The game is untouched: only `docs/` changed. `main` at research time: 6eda038.
 ## Open questions for you
 1. ~~Targets: keep "≤35% short lines" as the hard limit?~~ **Decided (darryn):** no hard limit.
    It just has to feel like real people talking, not LLMs. The numbers only flag scenes for a read-aloud.
-2. **Profiles:** do the Big Five / attachment picks match how *you* see them? Especially Ryan as
-   avoidant-leaning and Julian as secure (not anxious).
-3. **Running bits:** what's Ryan and Leia's real dumb joke from home? The research says that's
-   how long-term couples tease, and only you can invent it.
+2. ~~Profiles?~~ **Decided (darryn):** Leia and Ryan approved. Julian revised: humble, lowkey
+   about money, not loud or egotistical, shy when teased about money or his size. Maya revised:
+   very flirty and a little sexual, the catalyst for Leia and Ryan to explore (consent checks kept).
+3. ~~Running bits?~~ **Decided (darryn):** "two minutes": she's always two minutes from ready and
+   Ryan counts out loud.
 4. ~~Towel scene: too forward?~~ **Approved (darryn):** goes into rewrite pass A as written.
 5. Still open from PR #126: Leia's pet name for Ryan, jobs, Maya's age and how she knows Ryan.
 

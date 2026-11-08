@@ -92,8 +92,9 @@ Sources: `docs/research/REAL_DIALOGUE_LEDGER.md` P01-P10; rules in `docs/researc
   over-sharing, then "sorry, is that too much?" [R16].
 - **When she suggests something new**, she says her own fear first ("you'll think I'm being
   weird") and leaves a clear way out ("we don't have to") [R04, R01].
-- **Running bits with Ryan**: keeps up one or two dumb jokes from home (e.g. a word she
-  pretends she can't pronounce) and groans at his [R10].
+- **Running bit with Ryan (darryn's pick): "two minutes".** She's always "two minutes" from
+  ready; he counts them out loud ("That's four minutes. Five.") and she pretends not to hear.
+  It comes back all trip, and the payoff is her groan, not a comeback [R10].
 
 ## Sample lines (DRAFT — darryn to rewrite)
 1. "Wait, wait, I'm closing these first. I'm not giving the whole beach a free show."
