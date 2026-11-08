@@ -1905,17 +1905,22 @@ style lc_radio_text is button_text:
     xalign 0.5
     size 21
 
+define LC_CHECK_KNOB_OFF = Transform("gui/scrapbook/check_off.png", xpos=5, yalign=0.5)
+define LC_CHECK_KNOB_ON = Transform("gui/scrapbook/check_on.png", xpos=5, yalign=0.5)
+
 style lc_check_button is button:
     background Frame("gui/glass/toggle_off.png", 10, 10)
     hover_background None
     selected_idle_background Frame("gui/glass/toggle_on.png", 10, 10)
     selected_hover_background Frame("gui/glass/toggle_on.png", 10, 10)
     insensitive_background None
-    foreground "gui/scrapbook/check_off.png"
-    hover_foreground "gui/scrapbook/check_off.png"
-    selected_idle_foreground "gui/scrapbook/check_on.png"
-    selected_hover_foreground "gui/scrapbook/check_on.png"
-    padding (40, 2, 8, 2)
+    # Knob sits inside the honey outline (it used to cover the outline's left
+    # edge, darryn 2026-11-09). Same displayable for idle/hover = no fade flicker.
+    foreground LC_CHECK_KNOB_OFF
+    hover_foreground LC_CHECK_KNOB_OFF
+    selected_idle_foreground LC_CHECK_KNOB_ON
+    selected_hover_foreground LC_CHECK_KNOB_ON
+    padding (46, 2, 10, 2)
     yminimum 36
 
 style lc_check_text is button_text:
