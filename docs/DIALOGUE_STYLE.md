@@ -102,3 +102,17 @@ fails on a new choice that mixes paths.
 After darryn signs off these files: rewrite the worst 60-80 exchanges in the
 Prologue and the first hour of Day 1, ship as v0.1.1. The NTR choice rework in
 Day 1 (honest mistakes instead of jerk behavior) goes out together with Day 2.
+
+## Text styles: dialogue, narration, thoughts (darryn, 2026-11-09)
+Three looks in the text box, applied game-wide by the say screen:
+
+| Line | How to write it | Look |
+|---|---|---|
+| Spoken | `gf "..."`, `mc "..."` | name tag, ink colour |
+| Narration / description (past-tense storytelling, incl. reflective lines) | `"..."` | no name, soft warm tint |
+| Ryan's direct inner voice: the words in his head, usually present tense, questions/commands to himself | `think "..."` | italic, ink colour |
+
+- Never hand-write `{i}...{/i}` around a whole narration line; use `think`.
+- A line that is half thought, half narration becomes two lines: `think "Babe, are you okay?"` then `"The words never made it past my throat."`
+- When unsure, it's narration. Italics stay rare so they keep their weight.
+- New scenes should use `think` for genuine inner voice where it helps (a reaction he can't say out loud), not as a replacement for narration.
