@@ -158,37 +158,38 @@ label ch01_scene_14a_upstairs_change:
     $ cast_remove("leia")
 
     # Ryan's inner voice: the day lands while he changes (6 lines on every path).
+    # The replay of the day is his thought process: italic `think` (darryn 2026-11-09).
     # Ryan changes into his home clothes here; he wears them to the end of Day 1.
     $ cast_add(ryan="home")
     "I swapped my dinner shirt for a T-shirt, and my head went straight back to the restaurant."
-    "The guy with a drink spilled all down his white trousers. How long [girlfriend_name]'s eyes had stayed on him. Then the second look, when she thought I wasn't watching."
+    think "The guy with a drink spilled all down his white trousers. How long [girlfriend_name]'s eyes had stayed on him. Then the second look, when she thought I wasn't watching."
 
     if get_story_value("ch01_stranger_response") == "proud":
-        "The man in the corridor. I'd agreed with him out loud, and she'd still been half-smiling about him at the table."
+        think "The man in the corridor. I'd agreed with him out loud, and she'd still been half-smiling about him at the table."
     elif get_story_value("ch01_stranger_response") == "territorial":
-        "The man in the corridor, and me telling him we had it from here, like a guy in a movie I'd make fun of."
+        think "The man in the corridor, and me telling him we had it from here, like a guy in a movie I'd make fun of."
     elif get_story_value("ch01_stranger_response") == "encouraged_risk":
-        "The man in the corridor, and me telling her she had nothing to worry about while she was still half-smiling about him."
+        think "The man in the corridor, and me telling her she had nothing to worry about while she was still half-smiling about him."
     else:
-        "The man in the corridor, and how she'd still been half-smiling about him when she sat back down."
+        think "The man in the corridor, and how she'd still been half-smiling about him when she sat back down."
 
     if get_story_value("ch01_catch_response") == "joked":
-        "[friend_name]'s hand on the path, one second in the wrong place, and me making a joke about it because that was easier."
+        think "[friend_name]'s hand on the path, one second in the wrong place, and me making a joke about it because that was easier."
     elif get_story_value("ch01_catch_response") == "boundary":
-        "[friend_name]'s hand on the path, one second in the wrong place, and me saying 'careful, mate' like he'd planned it."
+        think "[friend_name]'s hand on the path, one second in the wrong place, and me saying 'careful, mate' like he'd planned it."
     else:
-        "[friend_name]'s hand on the path, one second in the wrong place, while I was standing back there on the phone."
+        think "[friend_name]'s hand on the path, one second in the wrong place, while I was standing back there on the phone."
 
     if get_story_value("ch01_carry_response") == "ryan_fixed":
-        "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. At least she knew about that one. She'd woken up to me fixing it."
+        think "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. At least she knew about that one. She'd woken up to me fixing it."
     elif get_story_value("ch01_carry_response") == "look_away":
-        "Then the walk to the door, me with the keys and him with her, and me snapping at him to keep his eyes off her when he was the one who'd told me. That one already had an edge."
+        think "Then the walk to the door, me with the keys and him with her, and me snapping at him to keep his eyes off her when he was the one who'd told me. That one already had an edge."
     elif get_story_value("ch01_carry_response") == "joked_about_view":
-        "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. I'd made a joke about the view. She'd slept through all of it, and I hadn't told her."
+        think "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. I'd made a joke about the view. She'd slept through all of it, and I hadn't told her."
     else:
-        "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. I'd said keep going. She'd slept through all of it, and I hadn't told her."
+        think "Then the walk to the door, me with the keys and him with her, telling me her dress was slipping. I'd said keep going. She'd slept through all of it, and I hadn't told her."
 
-    "Nobody had done anything wrong. I knew that, and I could've listed every reason it was fine. It still sat wrong."
+    think "Nobody had done anything wrong. I knew that, and I could've listed every reason it was fine. It still sat wrong."
 
     $ lc_sfx("door_open", 0.5)
     $ cast_add(leia="lounge")

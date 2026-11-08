@@ -1,8 +1,8 @@
 """Synthesise a soft clothing-rustle SFX (CC0, made here) for outfit changes.
 
-Writes game/audio/sfx/cloth_change.ogg: ~1.3 s, three fabric "swishes"
+Writes game/audio/sfx/cloth_change.ogg: ~0.7 s, two quick fabric "swishes"
 (band-passed noise with slow swells + fine crackle), as when someone pulls a
-T-shirt over their head. Mono 44.1 kHz, peak about -9 dBFS.
+T-shirt over their head. Mono 44.1 kHz, peak about -15 dBFS.
 
 Run: uv run --with numpy --with soundfile python tools/gen_sfx_cloth.py
 """
@@ -39,16 +39,16 @@ def swish(dur, lo, hi, rng, crackle=0.25):
 
 def main():
     rng = np.random.default_rng(1109)
-    total = np.zeros(int(1.35 * SR))
-    for start, dur, lo, hi, gain in ((0.00, 0.45, 700, 5500, 0.9),
-                                     (0.33, 0.55, 500, 4200, 1.0),
-                                     (0.80, 0.50, 900, 6500, 0.7)):
+    # darryn 2026-11-09: shorter and quieter (was 1.35 s, -9 dBFS).
+    total = np.zeros(int(0.7 * SR))
+    for start, dur, lo, hi, gain in ((0.00, 0.35, 600, 4800, 1.0),
+                                     (0.25, 0.42, 800, 6000, 0.75)):
         s = swish(dur, lo, hi, rng) * gain
         a = int(start * SR)
         total[a:a + len(s)] += s[: len(total) - a]
     fade = int(0.08 * SR)
     total[-fade:] *= np.linspace(1, 0, fade)
-    total = total / np.abs(total).max() * 10 ** (-9 / 20)
+    total = total / np.abs(total).max() * 10 ** (-15 / 20)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(OUT), total.astype(np.float32), SR, format="OGG", subtype="VORBIS")
     print("wrote", OUT, round(len(total) / SR, 2), "s")

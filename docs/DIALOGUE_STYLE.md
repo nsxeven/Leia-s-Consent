@@ -115,4 +115,5 @@ Three looks in the text box, applied game-wide by the say screen:
 - Never hand-write `{i}...{/i}` around a whole narration line; use `think`.
 - A line that is half thought, half narration becomes two lines: `think "Babe, are you okay?"` then `"The words never made it past my throat."`
 - When unsure, it's narration. Italics stay rare so they keep their weight.
+- A passage where Ryan replays or turns things over in his head in the moment (e.g. Day 1 upstairs, replaying the restaurant, corridor, catch and carry) is his thought process: `think`, even in past tense. Describing what he does while thinking stays narration ("I swapped my dinner shirt for a T-shirt...").
 - New scenes should use `think` for genuine inner voice where it helps (a reaction he can't say out loud), not as a replacement for narration.
