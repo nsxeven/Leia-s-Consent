@@ -23,18 +23,18 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "0.1.0"
+define config.version = "0.1.1"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
-Leia's Consent — Day One Demo, version 0.1.0.
+Leia's Consent — Day One Demo, version 0.1.1.
 
 © 2026 NSX Studios. All rights reserved.
 
-Made with Ren'Py. Music and sound effects are CC0 (public domain) from Freesound and OpenGameArt, plus sounds supplied by the developer. Leia's breath and voice clips are from MoanBox by Selenyhr (Unlicense / public domain). Fonts: Fredoka, Nunito, Caveat, Patrick Hand and Silkscreen (SIL Open Font License). The full audio credits ship with the game in game/audio/CREDITS.md.
+Made with Ren'Py. Music and most sound effects are CC0 (public domain) from Freesound and OpenGameArt, plus sounds supplied by the developer. Lewd sounds by Shinlalala (Shinlalala's Lewd Sound Pack, CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/). Leia's breath and voice clips are from MoanBox by Selenyhr (Unlicense / public domain). Fonts: Handjet, Fredoka, Nunito, Caveat, Patrick Hand and Silkscreen (SIL Open Font License). The full audio credits ship with the game in game/audio/CREDITS.md.
 
 All characters are adults. This is a work of fiction.
 """)
@@ -206,9 +206,9 @@ init python:
     build.classify('tools/**', None)
     build.classify('work/**', None)
     build.classify('context_memo.rpy', None)
-    # Public demo (darryn): ship compiled scripts only, and leave developer/QA
-    # tools, personal saves and caches out of the build.
-    build.classify('game/**.rpy', None)
+    # Public demo (darryn): PC/Mac ship compiled scripts only (the joiplay rule
+    # below keeps .rpy for the JoiPlay zip alone); developer/QA tools, personal
+    # saves and caches stay out of every build.
     build.classify('game/saves/**', None)
     build.classify('game/cache/**', None)
     for _lc_dev in ('game/chapters/dev_sandbox.rpy*', 'game/chapters/story_state_test.rpy*',
