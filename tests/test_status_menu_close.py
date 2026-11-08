@@ -35,9 +35,9 @@ class StatusMenuCloseTests(unittest.TestCase):
     def test_phone_status_right_click_goes_back_to_phone(self):
         source = (ROOT / "zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
         screen = source.split("screen lc_phone_status():", 1)[1].split("\nscreen ", 1)[0]
-        self.assertIn('key "game_menu" action Hide("lc_phone_status")', screen)
-        self.assertIn('key "K_ESCAPE" action Hide("lc_phone_status")', screen)
-        self.assertIn('Hide("lc_phone_status")', screen)
+        self.assertIn('key "game_menu" action Function(lc_phone_back)', screen)
+        self.assertIn('key "K_ESCAPE" action Function(lc_phone_back)', screen)
+        self.assertIn('action Function(lc_phone_back)', screen)
 
     def test_status_has_menu_tag_and_origin_aware_closing_actions(self):
         source = (ROOT / "status_screen.rpy").read_text(encoding="utf-8")

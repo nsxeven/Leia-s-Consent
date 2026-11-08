@@ -16,7 +16,8 @@ class PhoneReadStateTests(unittest.TestCase):
 
     def test_leaving_thread_marks_read(self):
         self.assertIn('on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread)', PHONE)
-        self.assertIn('Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "back"), SetScreenVariable("phone_app", "messages")', PHONE)
+        self.assertIn('lc_phone_leave_thread(app, thread)', PHONE.split('    def lc_phone_back():', 1)[1].split('    def lc_phone_clock_text():', 1)[0])
+        self.assertIn('action Function(lc_phone_back)', PHONE.split('screen phone_screen():', 1)[1])
 
 
 if __name__ == "__main__":
