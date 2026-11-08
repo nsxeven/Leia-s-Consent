@@ -1356,36 +1356,41 @@ screen notify(message):
 
 screen choice_feedback_overlay():
     zorder 295
+    # The card keeps the last payload while it fades out: `showif` runs the
+    # transform's hide event; a plain `if` removed it in one frame (darryn 2026-11-09).
+    default _last_choice_toast = None
     $ _runtime = _lc_choice_toast_runtime
+    $ _last_choice_toast = _runtime.payload or _last_choice_toast
     if _runtime.payload:
-        $ _choice_toast = _runtime.payload
+        timer 3.20 action Function(clear_choice_feedback, _runtime.payload.get("serial", 0))
+    if _last_choice_toast:
+        $ _choice_toast = _last_choice_toast
         $ _choice_toast_serial = _choice_toast.get("serial", 0)
         $ _choice_toast_title = _choice_toast.get("title", "CHOICE")
         $ _choice_toast_body = _choice_toast.get("body", "")
         $ _noted = _choice_toast_title == "CHOICE IMPACT"
         $ _chips = lc_effect_chips(_choice_toast_body)
 
-        frame at gameplay_toast_appear:
-            xpos 1880
-            xanchor 1.0
-            ypos 36
-            xmaximum 520
-            background Frame("gui/scrapbook/frame_paper.png", 9, 9)
-            padding (16, 10)
+        showif _runtime.payload:
+            frame at gameplay_toast_appear:
+                xpos 1880
+                xanchor 1.0
+                ypos 36
+                xmaximum 520
+                background Frame("gui/scrapbook/frame_paper.png", 9, 9)
+                padding (16, 10)
 
-            vbox:
-                spacing 6
-                text ("NOTED" if _noted else _choice_toast_title) size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
-                if _chips and _choice_toast_title != "DEBUG CHOICE":
-                    hbox:
-                        spacing 6
-                        box_wrap True
-                        for chip_name, chip_amount, chip_exact in _chips:
-                            use lc_chip(chip_name, chip_amount, chip_exact)
-                else:
-                    text _choice_toast_body size 30 color "#34242c" font "fonts/Caveat[wght].ttf"
-
-        timer 3.20 action Function(clear_choice_feedback, _choice_toast_serial)
+                vbox:
+                    spacing 6
+                    text ("NOTED" if _noted else _choice_toast_title) size 21 color "#7a6266" font "fonts/Handjet-ExtraBold.ttf"
+                    if _chips and _choice_toast_title != "DEBUG CHOICE":
+                        hbox:
+                            spacing 6
+                            box_wrap True
+                            for chip_name, chip_amount, chip_exact in _chips:
+                                use lc_chip(chip_name, chip_amount, chip_exact)
+                    else:
+                        text _choice_toast_body size 30 color "#34242c" font "fonts/Caveat[wght].ttf"
 
 
 screen phone_notification_overlay():
