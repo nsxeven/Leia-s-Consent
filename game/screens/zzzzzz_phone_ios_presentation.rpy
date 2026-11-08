@@ -929,6 +929,7 @@ screen lc_phone_status():
     modal True
     zorder 340
     key "K_ESCAPE" action Hide("lc_phone_status")
+    key "game_menu" action Hide("lc_phone_status")
 
     $ _mode = current_choice_mode()
     $ _relationship_rows = status_relationship_rows(_mode)
