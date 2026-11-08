@@ -116,6 +116,7 @@ init python:
         if f:
             store.lc_breath_loop = None
             renpy.music.play(f, channel="lc_breath", loop=False, relative_volume=LC_BREATH_GAIN * volume)
+            lc_audio_mark("lc_breath")
         return f
 
     def _lc_breath_single(kind, intensity, volume):
@@ -131,6 +132,7 @@ init python:
         loop = _lc_breath_loop_seq()
         renpy.music.play(f, channel="lc_breath", loop=False, fadeout=0.15,
                          relative_volume=LC_BREATH_GAIN * volume)
+        lc_audio_mark("lc_breath")
         if loop:
             renpy.music.queue(loop, channel="lc_breath", loop=True, clear_queue=False,
                               relative_volume=LC_BREATH_GAIN * store.lc_breath_loop.get("volume", 1.0))
@@ -143,6 +145,7 @@ init python:
         carries on right after the clip."""
         loop = _lc_breath_loop_seq()
         renpy.music.play(path, channel="lc_breath", loop=False, fadeout=0.12, relative_volume=volume)
+        lc_audio_mark("lc_breath")
         if loop:
             renpy.music.queue(loop, channel="lc_breath", loop=True, clear_queue=False,
                               relative_volume=LC_BREATH_GAIN * store.lc_breath_loop.get("volume", 1.0))
