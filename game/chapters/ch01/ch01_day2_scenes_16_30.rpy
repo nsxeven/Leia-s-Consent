@@ -1640,7 +1640,7 @@ label ch01_day2_scene_30_ntr_nightmare:
 
     $ exit_cinematic_mode()
     scene black
-    with hpunch
+    with lc_shake("m")
     pause 0.3
 
     scene bg ch01_villa_bedroom_night  # woken in the night: night art (darryn)
