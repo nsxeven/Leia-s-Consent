@@ -18,24 +18,24 @@ label ch01_day2_scene_19b_leia_asks_maya:
     "Maya had her bag on one shoulder and her hand on the door when [girlfriend_name] spoke."
 
     gf "Wait. Can I ask you something?"
-    maya "That is a terrifying way to start a sentence."
+    maya "Oh no. That's the scariest way anyone's ever started a sentence."
     gf "It's not bad. I promise."
     maya "That is what people say right before it's bad."
     gf "Maya."
-    maya "Fine. Ask."
+    maya "Fine. Fine, ask. I'm braced."
 
     gf "Are you into [friend_name]?"
 
     "Maya did not answer right away."
 
-    maya "Wow. You just walked up and asked."
+    maya "Wow. You just walked right up and asked."
     gf "You insulted his sunglasses within thirty seconds of meeting him."
     maya "That is basic politeness."
     gf "You also remembered the bee thing."
     maya "That is practical safety information."
     gf "And you keep looking over when he isn't looking back."
     maya "I do not."
-    gf "Maya."
+    gf "Maya. You do. I've seen you do it, like, four times."
     maya "I might. Occasionally. Scientifically."
     gf "So that's a yes."
     maya "That's a 'you're annoying.'"
@@ -44,7 +44,7 @@ label ch01_day2_scene_19b_leia_asks_maya:
 
     maya "Okay. Fine. Yes."
     maya "I'm interested. I have been since he moved six inches away from a bee and pretended it never happened."
-    gf "I knew it."
+    gf "I knew it! I called it."
     maya "Don't gloat."
     gf "I'm gloating a little."
     maya "And if he offers to share his room tonight, I'd happily end up in there."
@@ -75,11 +75,11 @@ label ch01_day2_scene_19c_back_outside:
 
     "When [girlfriend_name] came back outside, [friend_name] checked the time and stood."
 
-    friend "I'm going up to get ready."
-    mc "Already?"
-    friend "Unlike you, I respect reservations."
-    gf "That's not what you said this afternoon."
-    friend "That was pool time. Different jurisdiction."
+    friend "I'm going to go up and get ready."
+    mc "Already? We've got ages."
+    friend "Unlike some people, I like being on time for a reservation. I've been late with you before. Many, many times."
+    gf "Since when do you care about being on time?"
+    friend "Since he made us forty minutes late to my own birthday dinner in college. I still think about it."
 
     "He headed upstairs, leaving [girlfriend_name] and me alone beside the water."
 
