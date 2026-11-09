@@ -562,6 +562,12 @@ label ch01_day2_scene_20_dinner_outfit:
         gf "Because every time I look at you today, you're, like, somewhere else. You're here, but you're not here."
         gf "And if something's bothering you, you can just tell me. Even if it's dumb. Especially if it's dumb."
 
+        # Café incident payoff (scene 11b): Maya's "out loud" advice only exists in the worried talk.
+        if get_story_value("ch01_d2_overheard_response") == "pretended" and get_story_value("ch01_d2_overheard_talk") == "worried":
+            think "Out loud. Tonight. I'd stood behind a plant and heard Maya tell her to ask me exactly this. It should have made answering easier. It made it feel like a script."
+        elif get_story_value("ch01_d2_overheard_response") == "owned":
+            think "I'd told her at the café I'd explain later. This was later."
+
         $ d2_sunset_connect_text = format_choice("ch01_d2_sunset_connect", "Tell her the truth.")
         $ d2_sunset_partial_text = format_choice("ch01_d2_sunset_partial", "I've just been in my own head.")
         $ d2_sunset_ignore_text = format_day2_risk_choice("ch01_d2_sunset_ignore_gate", "I'm fine.", severity="soft")

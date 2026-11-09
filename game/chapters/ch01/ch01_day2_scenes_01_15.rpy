@@ -295,7 +295,7 @@ label ch01_day2_scene_01_morning_after:
     # Day One echo: the upstairs talk before movie night (ch01_upstairs_response).
     # honest/liked = the loving path, so Ryan thanks her (out loud and in his head).
     if get_story_value("ch01_upstairs_response") == "honest":
-        "She caught me looking back and smiled into the pillow."
+        "She caught me watching her and smiled into the pillow."
         gf "You know you carried me up those stairs like a sack of laundry last night, right? I had a whole step digging into my hip."
         mc "You said badly was fine. I did exactly what I was told."
         gf "You did. Worst carry of my entire life. I loved it, I want that on record."
