@@ -179,6 +179,13 @@ init -2 python:
     gallery_row("d2_photo_leia_maya", "ch01_d2", "Leia and Maya",
         "A photo of Leia and Maya.",
         ["ch01_d2_photo_leia_maya"])
+    gallery_row("d2_breakfast", "ch01_d2", "Breakfast",
+        "A morning table, a message, and one very suspicious glance.",
+        [("ch01_d2_breakfast_01", "Easy rhythm"), ("ch01_d2_breakfast_02", "Maya's message"),
+         ("ch01_d2_breakfast_03", "Pout softening"), ("ch01_d2_breakfast_04", "Caught")])
+    gallery_row("d2_breakfast_pov", "ch01_d2", "Julian's view",
+        "A glance that should probably have stayed a glance.",
+        [("ch01_d2_breakfast_julian_pov", "Julian's POV")], mature=True)
     gallery_row("d2_boutique", "ch01_d2", "Boutique",
         "Maya pushes Leia to try on the cutout mini. Pages depend on who is there.",
         [("ch01_d2_boutique_changing_room", "Changing room"), ("ch01_d2_boutique_reveal_ryan", "Reveal (Ryan)"),
