@@ -724,7 +724,8 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
         background None
         hover_background None
         padding (0, 0)
-        action If(animating, NullAction(), leave)
+        # Too early: a soft "wait" tock so the click doesn't feel dead (still no skip; hold SPACE skips).
+        action If(animating, Function(lc_ui_play, "tock"), leave)
 
     # Stat explanation card for the focused bar row. The history replay
     # embeds this screen with `use`, so focus belongs to that screen there.

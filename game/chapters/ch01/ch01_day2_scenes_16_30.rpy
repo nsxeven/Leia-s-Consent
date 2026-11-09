@@ -950,7 +950,22 @@ label ch01_day2_scene_25_maya_stays:
     gf "Never have I ever had a holiday romance."
     "Maya drank."
     friend "That actually explains a lot."
-    maya "It explains nothing. You know nothing about it. It was Lisbon, and it was beautiful."
+    maya "It explains nothing. You know nothing about it. His name was Jake, and it was beautiful."
+    gf "Jake. Oh my god, of course it was a Jake."
+    maya "Excuse me? What's wrong with Jake?"
+    gf "Guys with J names are red flags. Everybody knows that. Jake, Josh, Jason, Jordan, every single one of them has a story where you go, wait, he did what?"
+    if friend_name[:1].upper() == "J":
+        "There was a pause, and then every head at the table turned to [friend_name] at exactly the same time."
+        friend "I'm literally sitting right here. I can hear all of this."
+        maya "Huh. [friend_name]. With a J."
+        friend "It's a coincidence. It's a really common letter. Half the alphabet is basically J if you think about it."
+        mc "For the record, he's been a red flag since college. Mostly about parking."
+        friend "One ticket. One. And you were in the car, so technically you're a red flag too."
+        maya "Jake would never have dragged his friend down with him like that."
+    else:
+        maya "Jake was a perfectly nice red flag, thank you. He made me breakfast twice."
+        gf "Twice. In a whole holiday."
+        maya "It was a short holiday!"
 
     $ set_story_flag("ch01_d2_maya_stays_for_drinks")
     $ set_story_flag("ch01_d2_scene_25_complete")
