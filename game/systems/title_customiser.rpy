@@ -226,14 +226,16 @@ init python:
     def lc_title_leia_rig(o, expression):
         """Animated Leia for the title screen (slower, in-sync body/chest/hair breathing)."""
         face = expression[2]
+        # Touch reactions (systems/lc_title_touch.rpy) swap the face, bounce the
+        # chest and nudge the body without rebuilding the rig, so breathing never restarts.
         rig = Fixed(
             o["base"],
-            At(o["chest"], lc_title_chest_breathe),
-            face,
+            lc_title_touch_chest(At(o["chest"], lc_title_chest_breathe)),
+            lc_title_face_disp(face),
             At(o["hair"], lc_title_hair_idle),
             xysize=(941, 1672),
         )
-        return Fixed(lc_sprite_silhouette(rig), xysize=(941, 1672))
+        return lc_title_touch_body(Fixed(lc_sprite_silhouette(rig), xysize=(941, 1672)))
 
     def lc_title_outfit_thumb(o, locked=False):
         still = Fixed(o["base"], o["chest"], LC_LEIA_SPRITE_DIR + "expressions/Smile.png", o["hair"], xysize=(941, 1672))
