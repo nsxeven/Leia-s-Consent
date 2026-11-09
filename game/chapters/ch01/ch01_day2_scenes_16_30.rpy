@@ -1465,7 +1465,7 @@ label ch01_day2_scene_30_bedroom:
         if d2_upstairs == "honest":
             think "Last night, in this same room, I'd told her the carrying thing bothered me, and she'd just wrapped her arms around me for it."
         else:
-            think "Last night, in this same room, I'd told her I didn't hate people noticing her, and she'd made me promise we'd actually talk about it."
+            think "Last night, in this same room, I'd told her I didn't hate people noticing her, and she'd made me promise we'd actually talk about it. We had, too, on the couch after [friend_name] went up."
         think "Tonight I couldn't even find the start of the sentence."
     elif d2_upstairs == "honest":
         "[girlfriend_name] came out of the bathroom with her hair half tied up, and for a second it was last night again: me standing in the middle of this room, her asking what was going on."
@@ -1477,12 +1477,12 @@ label ch01_day2_scene_30_bedroom:
         gf "...You're the best part too, babe. Even the weird parts. Come here."
     elif d2_upstairs == "liked":
         "[girlfriend_name] caught me watching her from the bathroom doorway and gave me the same look she'd given me last night, right here, when I'd admitted I didn't hate people noticing her."
-        think "She could've laughed at me. Or gone quiet and wondered what kind of guy says that. Instead she'd checked my face to make sure I meant it, and made me promise we'd talk properly."
+        think "She could've laughed at me. Or gone quiet and wondered what kind of guy says that. Instead she'd checked my face to make sure I meant it, and then actually sat me down and made me talk about it once [friend_name] had gone to bed."
         think "She'd made it something we were in on together, instead of something I had to keep to myself. I still didn't know how to tell her how much that mattered."
         mc "We should do that more. Say the stuff out loud, I mean. Instead of me being all mysterious."
         gf "Oh my god. Are you quoting me to me?"
         "She laughed at herself before I could."
-        gf "Yes. Obviously yes. I'm still holding you to the proper talk, though. Daylight didn't cancel it, and neither does bedtime."
+        gf "Yes. Obviously yes. Last night was a good start, but that was, like, the first episode. I want the rest of it, and you don't get to go all mysterious on me again."
         mc "I wouldn't dare."
         "She dropped onto the bed next to me and bumped her knee against mine, like we were still in on something."
     elif d2_upstairs == "swallowed":
