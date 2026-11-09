@@ -298,6 +298,9 @@ screen lc_title_screen():
     add lc_title_leia_now() at lc_title_leia
     add "gui/title/vignette.png"
     add "gui/title/shade_bottom.png" yalign 1.0
+    # Click Leia: sounds, a little motion and a brief expression (systems/lc_title_touch.rpy).
+    # Kept under the menus and the customiser, which are added after it.
+    use lc_title_touch_area()
 
     $ credit = lc_title_current_outfit()["credit"]
     if credit:
