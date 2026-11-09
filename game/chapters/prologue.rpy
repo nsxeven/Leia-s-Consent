@@ -404,7 +404,7 @@ label prologue_start:
 
     scene black
     with fade
-    centered "{size=58}CHAPTER ONE{/size}\n{size=40}SOMETHING DIFFERENT{/size}"
+    centered "[lc_chapter_card_day1]"
 
     $ exit_cinematic_mode()
 

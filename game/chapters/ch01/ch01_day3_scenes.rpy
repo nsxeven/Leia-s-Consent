@@ -52,7 +52,7 @@ label ch01_day3_start:
     $ set_story_flag("ch01_day_03_started")
     scene black
     with fade
-    centered "{size=50}CHAPTER ONE — DAY THREE{/size}"
+    centered "[lc_chapter_card_day3]"
 
     $ d3_end = get_story_value("ch01_d2_end_route", "love")
     # mixed_unresolved (darryn, 2026-11-08): Day Three starts as a strained Love

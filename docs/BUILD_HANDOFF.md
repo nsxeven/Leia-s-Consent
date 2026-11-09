@@ -11,11 +11,12 @@ This file records what is true in the repository **now**. When code and any olde
 | Area | State |
 |---|---|
 | Prologue | Implemented |
-| Chapter 1 Day One | Implemented |
-| Chapter 1 Day Two | Implemented end to end; five end states reachable |
-| Chapter 1 Day Three | First-pass script, **linked** from Day Two; headless-tested for every lane |
-| Chapter 1 Day Four | First-pass script "Recalibration" (`ch01_day4_scenes_01_08.rpy`, `ch01_day4_scenes_09_16.rpy`), **linked** from Day Three; five end routes reachable; all CGs/backgrounds are placeholders |
-| Chapter 1 Day Five | First-pass script "The Water" (`ch01_day5_scenes_01_08.rpy`, `ch01_day5_scenes_09_16.rpy`), **linked** from Day Four; five end routes reachable; all CGs/backgrounds are placeholders |
+| Chapter 1 (Day One) | Implemented |
+| Chapter 2 (Day Two) | Implemented end to end; five end states reachable |
+| Chapter 3 (Day Three) | First-pass script, **linked** from Day Two; headless-tested for every lane |
+| Chapter 4 (Day Four) | First-pass script "Recalibration" (`ch01_day4_scenes_01_08.rpy`, `ch01_day4_scenes_09_16.rpy`), **linked** from Day Three; five end routes reachable; all CGs/backgrounds are placeholders |
+| Chapter 5 (Day Five) | First-pass script "The Water" (`ch01_day5_scenes_01_08.rpy`, `ch01_day5_scenes_09_16.rpy`), **linked** from Day Four; five end routes reachable; all CGs/backgrounds are placeholders |
+| Chapter Naming | One chapter per in-game day (display only): Prologue, then Chapter N = Day N. Every title lives in `game/python-packages/lc_chapters.py` (`CHAPTERS`, all **placeholder** until darryn names them); title cards show the neutral title, the end-of-day review reveals the route-flavoured one (`ROUTE_FAMILY`). Internal ids (`ch01_*` labels, story keys, review day ids) are unchanged |
 | Day Six | **Not built.** Day Five ends on a temporary end card until `ch01_day6_start` exists |
 | Gallery | Implemented: 47 entries (31 Prologue/Day 1-3 scene sequences + 5 Day 4 + 11 Day 5), unlocks derived from seen CGs, reachable from the main menu and game menu. Day Six entries not added yet (see Gallery below) |
 | `zz...` cleanup | Paused except where a late override directly conflicts with runtime |
@@ -43,7 +44,7 @@ Day Three is written to start from the stored `ch01_d2_end_route`.
 
 ## Day Two -> Day Three -> Day Four
 
-Flow: `ch01_day2_scene_30_finish` (card "CHAPTER ONE — DAY TWO COMPLETE") -> `jump ch01_day3_start` -> Day Three -> `ch01_day3_bedroom` (card "CHAPTER ONE — DAY THREE COMPLETE") -> `jump ch01_day4_start` -> Day Four (title card, `ch01_day_04_started`) -> `ch01_day4_scene_16_finish` -> temporary end card -> `return` (ends the game / back to the main menu). This mirrors the Day One -> Day Two pattern (completion card, `jump`, new day sets its `_started` flag and shows its own title card). There is no day counter or save-point logic in the project; progress is tracked only by story flags (`ch01_day_0N_started` / `ch01_day_0N_complete`; Day Three now sets both, plus the older `ch01_d3_complete`; Day Four sets `ch01_day_04_started` and `ch01_day_04_complete`).
+Flow: `ch01_day2_scene_30_finish` (end-of-day review) -> `jump ch01_day3_start` -> Day Three -> `ch01_day3_bedroom` (end-of-day review) -> `jump ch01_day4_start` -> Day Four (title card, `ch01_day_04_started`) -> `ch01_day4_scene_16_finish` -> temporary end card -> `return` (ends the game / back to the main menu). This mirrors the Day One -> Day Two pattern (completion card, `jump`, new day sets its `_started` flag and shows its own title card). There is no day counter or save-point logic in the project; progress is tracked only by story flags (`ch01_day_0N_started` / `ch01_day_0N_complete`; Day Three now sets both, plus the older `ch01_d3_complete`; Day Four sets `ch01_day_04_started` and `ch01_day_04_complete`).
 
 - Day Three keys off the stored `ch01_d2_end_route` and Day Two state, which the link does not touch. The Black Cutout Mini is owned by this point in a normal playthrough (Ryan or Leia bought it in the boutique).
 - Day Three file: `game/chapters/ch01/ch01_day3_scenes.rpy` (owned by the Scriptwriter). The link only added the title/completion cards, the `ch01_day_03_*` flags and the final `jump`; story text is unchanged.

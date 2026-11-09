@@ -84,6 +84,15 @@ init python:
     def gallery_chapter_label(chapter_id):
         return GALLERY_CHAPTER_LABELS.get(chapter_id, str(chapter_id).upper())
 
+    def gallery_entry_chapter_label(entry):
+        """One chapter per day: 'Chapter 2' for a ch01_d2 entry (chapter registry)."""
+        chapter_id = lc_chapter_for_review_day(entry["tab"])
+        if entry["tab"] == "prologue":
+            chapter_id = "prologue"
+        if chapter_id:
+            return lc_chapters.chapter_short(chapter_id)
+        return gallery_chapter_label(entry["chapter"])
+
     def gallery_tab_label(tab_id):
         for t in GALLERY_TABS:
             if t[0] == tab_id:

@@ -202,7 +202,7 @@ screen gallery_preview_screen(gallery_id):
     $ title = gallery_display_title(gallery_id)
     $ description = gallery_display_description(gallery_id)
     $ tab_label = gallery_tab_label(entry["tab"])
-    $ chapter_label = gallery_chapter_label(entry["chapter"])
+    $ chapter_label = gallery_entry_chapter_label(entry)
     $ page_info = entry["pages"][gp_page]
     $ page_image = page_info["image"]
     $ page_label = gallery_customize_names(page_info["label"])

@@ -21,11 +21,12 @@ define CHAPTER_SELECT_RULE = "developer_or_unlocked" if LC_IS_RELEASE else "alwa
 
 init 10 python:
 
+    # Button labels come from the chapter registry (one chapter per day).
     CH01_SELECT_DAYS = (
-        ("day2", "Day Two", "Starts at the Day Two title card; the Day Two lane still depends on your choices."),
-        ("day3", "Day Three", "Starts at Day Three with the chosen Day Two ending stored."),
-        ("day4", "Day Four", "Starts at Day Four with Day Two and Day Three marked complete and their end state stored."),
-        ("day5", "Day Five", "Starts at Day Five with Days Two to Four marked complete and a typical Day Four end state stored."),
+        ("day2", lc_chapters.select_label("day2"), "Starts at the Day Two title card; the Day Two lane still depends on your choices."),
+        ("day3", lc_chapters.select_label("day3"), "Starts at Day Three with the chosen Day Two ending stored."),
+        ("day4", lc_chapters.select_label("day4"), "Starts at Day Four with Day Two and Day Three marked complete and their end state stored."),
+        ("day5", lc_chapters.select_label("day5"), "Starts at Day Five with Days Two to Four marked complete and a typical Day Four end state stored."),
     )
 
     # Day Two entry presets: seeds only. The real end state is decided by play.

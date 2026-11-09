@@ -1025,6 +1025,6 @@ label ch01_day4_scene_16_finish:
         jump expression "ch01_day5_start"
 
     # TEMPORARY END CARD, only reached while Day Five is missing.
-    centered "{size=46}CHAPTER ONE - DAY FOUR COMPLETE{/size}\n\n{size=25}Current development build ends here{/size}"
+    centered "[lc_chapter_complete_card_day4]\n\n{size=25}Current development build ends here{/size}"
     return
 
