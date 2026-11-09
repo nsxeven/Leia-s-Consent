@@ -1,7 +1,7 @@
 # Chapter registry bridge: one chapter per in-game day (display only).
 #
 # The titles live in ONE place: game/python-packages/lc_chapters.py (CHAPTERS,
-# all PLACEHOLDER until darryn names them). This file only exposes them to
+# chosen by darryn 2026-11-09). This file only exposes them to
 # Ren'Py script and screens. Internal ids (ch01_* labels, story keys, review
 # day ids) are unchanged.
 #

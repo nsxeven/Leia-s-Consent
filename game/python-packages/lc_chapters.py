@@ -9,12 +9,9 @@ change: this module only decides what the player reads.
       just played (route family from ROUTE_FAMILY below). Mixed, undecided and
       unresolved endings keep the neutral title.
 
-=========================================================================
-PLACEHOLDER TITLES: darryn has not named the chapters yet. Every title in
-CHAPTERS below ("title" and the four "routes" entries) is a placeholder.
-Replace them HERE ONLY; every title card, the day review, Chapter Select,
-save names and the gallery read from this table.
-=========================================================================
+Titles chosen by darryn 2026-11-09 (options doc: chapter_title_options.md).
+Edit them HERE ONLY: every title card, the day review, Chapter Select, save
+names and the gallery read from this table.
 
 Pure Python (no Ren'Py import) so tests/ can load it directly.
 """
@@ -22,14 +19,20 @@ Pure Python (no Ren'Py import) so tests/ can load it directly.
 # The four route families (see leias-consent-flow-review route-model.md).
 FAMILIES = ("love", "love_exhib", "nts", "ntr")
 
+# Repair endings (made up after a rough day) get their own fifth title on the
+# days that have one (darryn 2026-11-09); other days fall back to the Love title.
+REPAIR = "repair"
+TITLE_FAMILIES = FAMILIES + (REPAIR,)
+
 FAMILY_LABELS = {
     "love": "Love",
     "love_exhib": "Love + Exhibitionism",
     "nts": "NTS",
     "ntr": "NTR",
+    "repair": "Repair",
 }
 
-PLACEHOLDER_TITLES = True  # flip to False once darryn's real titles are in
+PLACEHOLDER_TITLES = False  # darryn picked the titles 2026-11-09
 
 CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
 
@@ -39,70 +42,75 @@ CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
 # day          : in-game day this chapter covers (None for the Prologue)
 # day_word     : "One", "Two"... used in "Day Two"
 # review_day   : the internal end-of-day review id (LC_REVIEW_DAYS key)
-# title        : NEUTRAL title (title cards, undecided reviews)       PLACEHOLDER
-# routes       : route-flavoured titles revealed by the day review      PLACEHOLDER
+# title        : NEUTRAL title (title cards, undecided reviews)
+# routes       : route-flavoured titles revealed by the day review (+ repair)
 #                (None = no route variant; the neutral title is used)
 CHAPTERS = {
     "prologue": {
         "number": 0, "number_word": "", "day": None, "day_word": "",
         "review_day": None,
-        "title": "Every Boundary Starts Somewhere",  # PLACEHOLDER (current Prologue tagline)
+        "title": 'Truth or Dare',
         # The Prologue happens before any route exists.
-        "routes": {"love": None, "love_exhib": None, "nts": None, "ntr": None},
+        "routes": {"love": None, "love_exhib": None, "nts": None, "ntr": None, "repair": None},
     },
     "day1": {
         "number": 1, "number_word": "One", "day": 1, "day_word": "One",
         "review_day": "ch01_d1",
-        "title": "Arrival",  # PLACEHOLDER (current day-review name)
+        "title": 'Sheer Curtains',
         "routes": {
-            "love": "Arrival (Love)",              # PLACEHOLDER
-            "love_exhib": "Arrival (Love+Exhib)",  # PLACEHOLDER
-            "nts": "Arrival (NTS)",                # PLACEHOLDER
-            "ntr": "Arrival (NTR)",                # PLACEHOLDER
+            "love": 'Today Was Good',
+            "love_exhib": 'Can He Tell?',
+            "nts": 'A Third Person',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
+            "ntr": 'Spaces Left Open',
+            "repair": None,  # no repair ending this day; falls back to the Love title
         },
     },
     "day2": {
         "number": 2, "number_word": "Two", "day": 2, "day_word": "Two",
         "review_day": "ch01_d2",
-        "title": "The Shore",  # PLACEHOLDER (current day-review name)
+        "title": 'Plus One',
         "routes": {
-            "love": "The Shore (Love)",              # PLACEHOLDER
-            "love_exhib": "The Shore (Love+Exhib)",  # PLACEHOLDER
-            "nts": "The Shore (NTS)",                # PLACEHOLDER
-            "ntr": "The Shore (NTR)",                # PLACEHOLDER
+            "love": 'They Hide Enough',
+            "love_exhib": 'Leave Them Open',
+            "nts": 'Terrible Influence',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
+            "ntr": 'Are We Okay?',
+            "repair": 'Tell Her the Truth',
         },
     },
     "day3": {
         "number": 3, "number_word": "Three", "day": 3, "day_word": "Three",
         "review_day": "ch01_d3",
-        "title": "The Club",  # PLACEHOLDER (current day-review name)
+        "title": 'The Glass Wall',
         "routes": {
-            "love": "The Club (Love)",              # PLACEHOLDER
-            "love_exhib": "The Club (Love+Exhib)",  # PLACEHOLDER
-            "nts": "The Club (NTS)",                # PLACEHOLDER
-            "ntr": "The Club (NTR)",                # PLACEHOLDER
+            "love": 'Curtains Drawn',
+            "love_exhib": 'Getting Braver',
+            "nts": 'Causing a Scene',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
+            "ntr": 'Typing…',
+            "repair": None,  # no repair ending this day; falls back to the Love title
         },
     },
     "day4": {
         "number": 4, "number_word": "Four", "day": 4, "day_word": "Four",
         "review_day": "ch01_d4",
-        "title": "The Market",  # PLACEHOLDER (current day-review name; script calls Day Four "Recalibration")
+        "title": 'Blue Hour',
         "routes": {
-            "love": "The Market (Love)",              # PLACEHOLDER
-            "love_exhib": "The Market (Love+Exhib)",  # PLACEHOLDER
-            "nts": "The Market (NTS)",                # PLACEHOLDER
-            "ntr": "The Market (NTR)",                # PLACEHOLDER
+            "love": 'Badly, Slowly',
+            "love_exhib": 'One Slow Heartbeat',
+            "nts": 'Watching Her Decide',
+            "ntr": 'The Hairclip',
+            "repair": 'Back in Her Hair',
         },
     },
     "day5": {
         "number": 5, "number_word": "Five", "day": 5, "day_word": "Five",
         "review_day": "ch01_d5",
-        "title": "The Water",  # PLACEHOLDER (current day-review name)
+        "title": 'The Water',
         "routes": {
-            "love": "The Water (Love)",              # PLACEHOLDER
-            "love_exhib": "The Water (Love+Exhib)",  # PLACEHOLDER
-            "nts": "The Water (NTS)",                # PLACEHOLDER
-            "ntr": "The Water (NTR)",                # PLACEHOLDER
+            "love": "Nobody's Cove",
+            "love_exhib": 'Still Me',
+            "nts": 'Her Biggest Fan',
+            "ntr": 'Reasonable Doubt',
+            "repair": 'The Second Try',
         },
     },
 }
@@ -124,26 +132,30 @@ ROUTE_FAMILY = {
     "mixed": None,                    # undecided
     "mixed_unresolved": None,         # unresolved
     "love": "love",
-    "love_repaired": "love",          # route model: "Love repaired = way back from NTR to Love"
-    # UNSURE: Days 2-4 'exhibitionism' is the shared Love+Exhib / NTS family
-    # (NTS only splits from Love+Exhib at Day 5's Maya moment, and no NTS key
-    # exists yet). Review already labels it "Love + Exhibitionism".
+    "love_repaired": REPAIR,          # own title where the day has one, else Love (darryn)
+    # Exhibition lane. Shows NTS instead when Ryan chose "likes watching"
+    # that day (review_family / NTS_VARIANT_KEYS, darryn 2026-11-09).
     "exhibitionism": "love_exhib",
-    # UNSURE: Day One "nts_seeded" means the exhibition family was SEEDED
-    # (comment in day_review.rpy); could equally stay neutral ("Nothing is
-    # settled yet") or count as NTS.
+    # Day One "nts_seeded" = the exhibition family was seeded (day_review.rpy).
     "nts_seeded": "love_exhib",
-    # UNSURE: Day One "ntr_seeded" is only pressure/distance, could stay neutral.
     "ntr_seeded": "ntr",
     "ntr": "ntr",
     "ntr_confirmed": "ntr",
     "ntr_talked": "ntr",              # Day 3 NTR lane, recap wording only; lane stays NTR
     "ntr_withdrew": "ntr",            # Day 3 NTR lane, recap wording only; lane stays NTR
-    # UNSURE: "unresolved" -> neutral per the rule, though it sits in the NTR lane.
-    "ntr_unresolved": None,
+    "ntr_unresolved": "ntr",          # on the NTR lane, so the NTR title (darryn)
 }
 
-UNSURE_ROUTE_KEYS = ("exhibitionism", "nts_seeded", "ntr_seeded", "ntr_unresolved")
+UNSURE_ROUTE_KEYS = ()  # all settled by darryn 2026-11-09
+
+# NTS vs Love + Exhibitionism (darryn 2026-11-09): an exhibition ending shows
+# the NTS title when Ryan chose "likes watching" that day. Only Days 4 and 5
+# have that beat so far, so Days 1-3 always show the Love + Exhib title.
+NTS_VARIANT_KEYS = {
+    "day4": "ch01_d4_exhib_variant",
+    "day5": "ch01_d5_exhib_variant",
+}
+NTS_VARIANT = "ryan_likes_watching"
 
 _REVIEW_DAY_CHAPTER = dict((c["review_day"], cid) for cid, c in CHAPTERS.items() if c["review_day"])
 
@@ -185,11 +197,25 @@ def day_label(chapter_id):
     return ("Day " + c["day_word"]) if c["day"] else ""
 
 
+def review_family(chapter_id, route_key, get_value=None):
+    """Title family for a finished day: route_family(), plus the NTS rule.
+
+    get_value(key, default) reads story values (get_story_value in game)."""
+    family = route_family(route_key)
+    key = NTS_VARIANT_KEYS.get(chapter_id)
+    if family == "love_exhib" and key and get_value and get_value(key, None) == NTS_VARIANT:
+        return "nts"
+    return family
+
+
 def chapter_title(chapter_id, family=None):
-    """Display title: route-flavoured for a known family, otherwise neutral."""
+    """Display title: route-flavoured for a known family, otherwise neutral.
+    A repair ending without its own title shows the Love title."""
     c = CHAPTERS[chapter_id]
     if family:
         variant = c["routes"].get(family)
+        if not variant and family == REPAIR:
+            variant = c["routes"].get("love")
         if variant:
             return variant
     return c["title"]

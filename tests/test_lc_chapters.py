@@ -35,7 +35,7 @@ class ChapterRegistryTests(unittest.TestCase):
             c = lc_chapters.CHAPTERS[cid]
             self.assertEqual(c["number"], n, cid)
             self.assertTrue(c["title"].strip(), cid)
-            self.assertEqual(set(c["routes"]), set(lc_chapters.FAMILIES), cid)
+            self.assertEqual(set(c["routes"]), set(lc_chapters.TITLE_FAMILIES), cid)
             if cid == "prologue":
                 self.assertIsNone(c["day"])
                 continue
@@ -66,7 +66,7 @@ class ChapterRegistryTests(unittest.TestCase):
         missing = keys - set(lc_chapters.ROUTE_FAMILY)
         self.assertFalse(missing, "map these LC_REVIEW_ROUTES keys in lc_chapters.ROUTE_FAMILY: %s" % sorted(missing))
         for key, fam in lc_chapters.ROUTE_FAMILY.items():
-            self.assertIn(fam, lc_chapters.FAMILIES + (None,), key)
+            self.assertIn(fam, lc_chapters.TITLE_FAMILIES + (None,), key)
         for key in ("mixed", "mixed_unresolved"):
             self.assertIsNone(lc_chapters.route_family(key))
         self.assertIsNone(lc_chapters.route_family("unknown_future_key"))
@@ -135,12 +135,42 @@ class ChapterRegistryTests(unittest.TestCase):
         night = env["lc_review_night_copy"]("ch01_d2")
         self.assertEqual(night["title"], lc_chapters.CHAPTERS["day2"]["routes"]["ntr"].upper())
         self.assertEqual(night["chapter"], "CHAPTER TWO")
-        # Mixed / unresolved endings keep the neutral title.
+        # NTR / unresolved is on the NTR lane: NTR title (darryn 2026-11-09).
         env["lc_review_begin"]("ch01_d4")
         harness.values["ch01_d4_end_route"] = "ntr_unresolved"
         env["lc_review_finish"]("ch01_d4")
-        self.assertEqual(env["lc_review_night_copy"]("ch01_d4")["title"],
-                         lc_chapters.CHAPTERS["day4"]["title"].upper())
+        self.assertEqual(env["lc_review_night_copy"]("ch01_d4")["title"], "THE HAIRCLIP")
+        # Exhibition + "likes watching" that day shows the NTS title.
+        env["lc_review_begin"]("ch01_d5")
+        harness.values["ch01_d5_end_route"] = "exhibitionism"
+        harness.values["ch01_d5_exhib_variant"] = "ryan_likes_watching"
+        env["lc_review_finish"]("ch01_d5")
+        self.assertEqual(env["lc_review_night_copy"]("ch01_d5")["title"], "HER BIGGEST FAN")
+
+    def test_darryn_titles_and_rules(self):
+        self.assertFalse(lc_chapters.PLACEHOLDER_TITLES)
+        c = lc_chapters.CHAPTERS
+        self.assertEqual([c[k]["title"] for k in lc_chapters.CHAPTER_ORDER],
+                         ["Truth or Dare", "Sheer Curtains", "Plus One", "The Glass Wall", "Blue Hour", "The Water"])
+        t = lc_chapters.chapter_title
+        self.assertEqual(t("day1", "love"), "Today Was Good")
+        self.assertEqual(t("day2", "ntr"), "Are We Okay?")
+        self.assertEqual(t("day4", "love_exhib"), "One Slow Heartbeat")
+        # Repair: own title on Days 2/4/5, Love title otherwise.
+        self.assertEqual(t("day2", "repair"), "Tell Her the Truth")
+        self.assertEqual(t("day4", "repair"), "Back in Her Hair")
+        self.assertEqual(t("day5", "repair"), "The Second Try")
+        self.assertEqual(t("day3", "repair"), "Curtains Drawn")
+        self.assertEqual(lc_chapters.route_family("love_repaired"), "repair")
+        self.assertEqual(lc_chapters.route_family("ntr_unresolved"), "ntr")
+        # NTS only with the "likes watching" variant, and only where that beat exists.
+        vals = {"ch01_d4_exhib_variant": "ryan_likes_watching", "ch01_d2_exhib_variant": "ryan_likes_watching"}
+        get = lambda k, d=None: vals.get(k, d)
+        self.assertEqual(lc_chapters.review_family("day4", "exhibitionism", get), "nts")
+        self.assertEqual(lc_chapters.review_family("day5", "exhibitionism", get), "love_exhib")
+        self.assertEqual(lc_chapters.review_family("day2", "exhibitionism", get), "love_exhib")
+        self.assertEqual(lc_chapters.review_family("day4", "love", get), "love")
+        self.assertIsNone(lc_chapters.review_family("day4", "mixed", get))
 
     def test_registry_module_is_pure_python(self):
         tree = ast.parse((GAME / "python-packages" / "lc_chapters.py").read_text(encoding="utf-8"))

@@ -419,7 +419,8 @@ init 20 python:
         if not chapter_id:
             return None
         record = store.lc_review_days.get(day_id) or {}
-        family = lc_chapters.route_family(record.get("route")) if record.get("end") is not None else None
+        family = (lc_chapters.review_family(chapter_id, record.get("route"), get_story_value)
+                  if record.get("end") is not None else None)
         return lc_chapters.chapter_title(chapter_id, family).upper()
 
     def lc_review_night_copy(day_id):
