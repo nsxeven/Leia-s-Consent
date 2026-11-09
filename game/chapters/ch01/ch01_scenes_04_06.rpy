@@ -48,7 +48,11 @@ label ch01_scene_04_pool_arrival:
         "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
         $ face("leia", "smile")
-        gf "I know. This one's safe, it's been to like three beaches already."
+        # Day One echo E9: the rushed swimsuit answer ("They both look fine").
+        if get_story_value("ch01_outfit_stance") == "rushed":
+            gf "'Good.' Okay. That's up from 'fine,' I'll take it."
+        else:
+            gf "I know. This one's safe, it's been to like three beaches already."
 
     with dissolve
 

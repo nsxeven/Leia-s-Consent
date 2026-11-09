@@ -484,9 +484,18 @@ label ch01_scene_09_dinner:
     "She caught me looking."
 
     $ face("leia", "skeptical")
-    gf "Don't. I can see you thinking it."
-    mc "I didn't say anything."
-    gf "You didn't have to. Your face is saying it really loudly."
+    # Day One echo E7: the bra answer (scene 8).
+    if get_story_value("ch01_bra_response") == "distracted":
+        gf "Oh, now you're paying attention."
+        mc "I was paying attention before."
+        gf "You told the menu to go for it, babe. I watched you."
+    else:
+        if get_story_value("ch01_bra_response") == "playful_open":
+            gf "Don't. You already said 'kind of hot' once tonight, you don't get another one."
+        else:
+            gf "Don't. I can see you thinking it."
+        mc "I didn't say anything."
+        gf "You didn't have to. Your face is saying it really loudly."
 
     "[friend_name] looked between us, clearly aware that he had missed part of a conversation, and wisely chose not to ask."
 
@@ -686,7 +695,7 @@ label ch01_scene_11_walk_and_catch:
             $ set_story_value("ch01_catch_response", "checked_leia")
             mc "You okay, babe?"
             gf "I'm fine. The path just came out of nowhere."
-            mc "Paths do that. Especially at night."
+            mc "You were walking backwards, babe."
 
         "[ch01_catch_joke_text]":
             $ apply_choice("ch01_catch_joke")
@@ -694,8 +703,8 @@ label ch01_scene_11_walk_and_catch:
             mc "Subtle, [friend_name]. Very subtle."
             friend "Dude. Come on, that's not— fuck off."
             gf "[player_name]!"
-            mc "Too soon?"
-            gf "Yes! Way too soon. He just saved my life."
+            mc "What? I— okay. Yeah. Not the time."
+            gf "Not the time! He literally just saved my life."
 
         "[ch01_catch_boundary_text]":
             $ apply_choice("ch01_catch_boundary")
@@ -749,7 +758,7 @@ label ch01_scene_11b_female_friend:
             $ lc_sfx("leia_grunt")
             gf "I wasn't worried. Who said I was worried?"
             mc "You asked five questions in ten seconds."
-            gf "I was gathering information."
+            gf "I was gathering information! That's different. You'd have, like, eleven questions if some guy from back home called me."
             mc "Very calmly."
             gf "Yes. Calm and thorough. Thank you for noticing."
 
@@ -887,7 +896,7 @@ label ch01_scene_12_shop_and_drive_back:
             mc "I know. Don't worry about it."
             friend "Good. Thanks, man. I've been weird about it this whole drive."
             mc "You looked more traumatized than she did."
-            friend "Because I like being alive, and she hits harder than you'd think."
+            friend "Because she yelled 'watch your hands' at me in the middle of the path, man. I'm going to hear that in my sleep."
 
         "[ch01_julian_honest_text]":
             $ apply_choice("ch01_julian_honest")
@@ -1061,7 +1070,7 @@ label ch01_scene_13_back_at_villa:
         gf "That's not how bodies work."
         friend "I don't know, you weren't there. It was pretty bad."
         gf "I was literally there."
-        mc "Not spiritually."
+        mc "You were drooling on his shoulder, babe."
 
     $ enter_cinematic_mode()
     scene cg ch01_sofa_half_asleep_night

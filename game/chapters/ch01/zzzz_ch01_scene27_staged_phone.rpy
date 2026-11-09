@@ -16,7 +16,7 @@ init 998 python:
 label ch01_scene_27_late_photo_drop_staged:
     "The movie had been over for several minutes before any of us bothered to stand."
     friend "I'm done. If I stay here another ten minutes I'm sleeping on this sofa."
-    gf "Weak."
+    gf "Weak. It's not even midnight, you're so weak."
     friend "You fell asleep in a car."
     gf "That was tactical."
     "[friend_name] gathered his empty glass and headed toward the hallway."
