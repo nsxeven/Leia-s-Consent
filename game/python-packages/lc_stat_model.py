@@ -140,7 +140,7 @@ CHOICE_ROUTE_FLAGS = {
 
 # Repair beats: the only choices allowed to pair Temptation down with Love/Trust up.
 REPAIR_CHOICES = frozenset((
-    "ch01_d2_bed_pool_love", "ch01_d2_postshop_head", "ch01_d2_postshop_sleep",
+    "ch01_d2_bed_pool_love", "ch01_d2_overheard_own",
     "ch01_d2_sunset_partial", "ch01_d2_wink_repair", "ch01_d3_ntr_enjoy", "ch01_d3_ntr_talk",
     "ch01_d4_ntr_ask_gently", "ch01_d4_ntr_compliment", "ch01_d4_ntr_gate_reconnect",
     "ch01_d4_ntr_react_boundary", "ch01_d4_ntr_text_join", "ch01_d5_invite_read_aloud",

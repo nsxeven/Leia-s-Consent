@@ -51,7 +51,8 @@ DREAM = ["ch01_dream_ground", "ch01_dream_curiosity", "ch01_dream_withdraw"]
 # menu (ch01_d2_maya_reassure/...) sits in a label overridden by
 # zzzz_ch01_day2_polish_revision.rpy, so it never plays and is left out. The
 # boutique go/leave menu only shows on the NTR-risk lane, and the reveal menu
-# only when Ryan went over (both handled in play()).
+# only when Ryan went over (both handled in play()). The post-shop "I'm fine."
+# menu is flavor since v0.2.0; the cafe overheard incident is scored in its place.
 D2_PRE = [
     ["ch01_d2_morning_reassure", "ch01_d2_morning_tease", "ch01_d2_morning_dismiss"],
     ["ch01_d2_maya_include", "ch01_d2_maya_catchup", "ch01_d2_maya_dismiss_leia"],
@@ -59,7 +60,7 @@ D2_PRE = [
     ["ch01_d2_mall_go_to_leia", "ch01_d2_mall_leave_to_maya"],
     ["ch01_d2_mall_reveal_affection", "ch01_d2_mall_reveal_open", "ch01_d2_mall_reveal_tease",
      "ch01_d2_mall_reveal_flat"],
-    ["ch01_d2_postshop_sleep", "ch01_d2_postshop_head", "ch01_d2_postshop_shut_down"],
+    ["ch01_d2_overheard_own", "ch01_d2_overheard_joke", "ch01_d2_overheard_pretend"],
 ]
 MALL_GO, MALL_REVEAL = 3, 4
 POOL = ["ch01_d2_pool_reassure", "ch01_d2_pool_honest_jealous", "ch01_d2_pool_accuse"]

@@ -83,6 +83,11 @@ label ch01_day2_scene_19c_back_outside:
 
     "He headed upstairs, leaving [girlfriend_name] and me alone beside the water."
 
+    # v0.2.0 flavor: pays off the scene 15 "very boring sunscreen stuff" whisper.
+    gf "Finally. That was the very boring sunscreen stuff, by the way."
+    mc "[friend_name] going to get ready was the secret?"
+    gf "Getting you on your own before dinner was the secret. I asked Maya how you get one person alone in a house full of people, and she said just wait, everybody leaves eventually. I was ready to be really disappointed in that advice, and then it worked. Don't tell her it worked."
+
     $ set_story_flag("ch01_d2_julian_upstairs_before_sunset")
     $ set_story_flag("ch01_d2_scene_19_complete")
     jump ch01_day2_scene_20_dinner_outfit

@@ -33,15 +33,19 @@ init 1 python:
             ("relationship", "love", -1),
             ("relationship", "temptation", 1),
         ],
-        "ch01_d2_postshop_sleep": [
-            ("relationship", "love", 1),
-            ("relationship", "temptation", -1),
-        ],
-        "ch01_d2_postshop_head": [
+        # Post-shop "You've been kind of quiet" menu: flavor since v0.2.0 (darryn).
+        # Its question is now scored 25 lines later by the cafe incident below. The
+        # repair tags stay, so these still pick which cafe talk Ryan overhears.
+        "ch01_d2_postshop_sleep": [],  # Flavor: no stats
+        "ch01_d2_postshop_head": [],  # Flavor: no stats
+        "ch01_d2_postshop_shut_down": [],  # Flavor: no stats
+        # Day Two incident (v0.2.0): Ryan overhears Leia and Maya at the cafe.
+        "ch01_d2_overheard_own": [
             ("relationship", "trust", 1),
             ("relationship", "temptation", -1),
         ],
-        "ch01_d2_postshop_shut_down": [
+        "ch01_d2_overheard_joke": [],  # Flavor: no stats
+        "ch01_d2_overheard_pretend": [
             ("relationship", "love", -1),
             ("relationship", "temptation", 1),
         ],
@@ -135,6 +139,9 @@ init 1 python:
         "ch01_d2_postshop_sleep": ("supportive", "attentive", "honest", "repair"),
         "ch01_d2_postshop_head": ("attentive", "honest", "repair"),
         "ch01_d2_postshop_shut_down": ("neutral", "nonchalant", "dismissive"),
+        "ch01_d2_overheard_own": ("attentive", "honest", "repair"),
+        "ch01_d2_overheard_joke": ("neutral", "playful"),
+        "ch01_d2_overheard_pretend": ("nonchalant", "withdrawal"),
         "ch01_d2_maya_reassure": ("supportive", "attentive", "reassuring"),
         "ch01_d2_maya_tease_jealousy": ("playful", "attentive"),
         "ch01_d2_maya_open_honest": ("open", "honest", "trusting"),
@@ -288,20 +295,20 @@ label ch01_day2_scene_01_morning_after:
     # Day One echo: the upstairs talk before movie night (ch01_upstairs_response).
     # honest/liked = the loving path, so Ryan thanks her (out loud and in his head).
     if get_story_value("ch01_upstairs_response") == "honest":
-        "She caught me looking back and smiled into the pillow."
-        gf "You never had to carry me last night, by the way. I made it up the stairs all by myself. So you still owe me one bad carry."
-        mc "I can do it now if you want. I'll do it really badly."
-        gf "Not before coffee. I'm saving it."
+        "She caught me watching her and smiled into the pillow."
+        gf "You know you carried me up those stairs like a sack of laundry last night, right? I had a whole step digging into my hip."
+        mc "You said badly was fine. I did exactly what I was told."
+        gf "You did. Worst carry of my entire life. I loved it, I want that on record."
         mc "Hey. Thanks for last night. Upstairs. I said a pretty weird thing, and you just... hugged me."
         gf "It wasn't weird. You told me a thing. I like it when you tell me things."
         think "Four years, and she still made the hard stuff easier to say than it had any right to be."
     elif get_story_value("ch01_upstairs_response") == "liked":
-        gf "We still haven't had our talk, by the way. The proper one. Daylight doesn't cancel it."
-        mc "I know. I'm not trying to get out of it."
-        gf "You're a little bit trying to get out of it."
-        mc "Maybe a little. But thank you. For last night. I told you I didn't hate people noticing you, and you didn't look at me like I was a freak."
+        gf "I've been lying here thinking about our talk last night. The proper one."
+        mc "Good thinking or bad thinking?"
+        gf "Good. Mostly good. I keep replaying the bit where you actually said stuff, in real sentences, without me having to drag every word out of you."
+        mc "You did drag a few out. But thank you. For making me do it, and for upstairs before that. I told you I didn't hate people noticing you, and you didn't look at me like I was a freak."
         gf "Oh, I freaked out. Internally. Very quietly. And then I decided I didn't hate it either, so."
-        think "I'd half expected her to go looking for the catch. She'd checked my face, decided I meant it, and asked for a proper talk instead. I didn't know what I'd done to get that lucky."
+        think "I'd half expected her to go looking for the catch. She'd checked my face, decided I meant it, and then held me to the talk instead of letting it slide. I didn't know what I'd done to get that lucky."
     elif get_story_value("ch01_upstairs_response") == "swallowed":
         "She was on her side of the bed, close enough to touch and not quite touching."
         gf "Are you still tired? Last night you said you were just tired."
@@ -317,8 +324,8 @@ label ch01_day2_scene_01_morning_after:
             mc "Hey. What I said upstairs last night. The 'stay awake next time' thing. That was a crap thing to say."
             gf "It was kind of a crap thing to say."
             mc "Yeah. You were tired. You're allowed to be tired. I was just being— I don't know. Sorry."
-            gf "Okay. Thank you. I wasn't trying to fall asleep on you, you know."
-            mc "I know."
+            gf "Okay. Thank you. That's a lot better than the half a sentence you gave me in the dark."
+            mc "Yeah. That one didn't really count."
             "She shifted half an inch closer, which for [girlfriend_name], after a fight, was practically a hug."
 
     # Day One continuity: Julian already sent every earned solo pool Capture to
@@ -804,6 +811,12 @@ label ch01_day2_scene_07_leia_maya_click:
     maya "See? This one's really good. Who took this one?"
     gf "[friend_name] did."
     maya "Ugh. Annoying. I was really hoping I could insult his photography too."
+    maya "Seriously, though. [player_name], you've had four years. Where's your version of this?"
+    gf "He has about four hundred photos of me squinting at a menu."
+    friend "In my defense, she'd stopped posing by then. She was mostly looking past me at [player_name]. I just pressed the button."
+    gf "Well, it's going on my lock screen. Don't look at me like that, it's the best one of me on the whole trip."
+    "She did it right there at the table, then turned the phone around to show me."
+    think "Yesterday I'd been the photographer in this relationship. Apparently that had a shelf life. At least I was the one she'd been looking at."
 
     "[friend_name] looked at me over his drink."
 
@@ -1418,29 +1431,82 @@ label ch01_day2_scene_11b_boutique:
     mc "Yeah, I'll come."
 
     "We left [girlfriend_name] and Maya at the table for a minute."
+    "[friend_name] was still losing an argument with the card machine when the first two drinks came up, so I carried them back on my own."
+    "There was a big potted palm between the counter and our table. I was a couple of steps behind it when Maya lowered her voice."
 
     maya "Hey. Everything okay?"
     gf "With the dress? I mean, I bought it, so."
     maya "No. With [player_name]."
 
+    "I stopped walking."
+
+    # Day Two incident (v0.2.0): Ryan overhears the talk. The milder version plays
+    # when he has already been present today (a repair pick, or he went to her at the mall).
     if choice_tag_count("repair", ch01_d2_choice_ids()) >= 1 or get_story_value("ch01_d2_mall_ryan_response") in ("reconnected", "came_over"):
+        $ set_story_value("ch01_d2_overheard_talk", "mild")
         gf "Yeah. I think so. He's just in his head today, he gets like that sometimes."
         maya "People are allowed weird days. He's always been a bit like that. He goes quiet, and then he comes back."
         gf "That's very insightful, actually."
         maya "I know. I'm extremely emotionally intelligent. It's my best feature after my legs."
         gf "Obviously. The legs are good."
+        think "It was kind, and it was about me, and I was hearing it from behind a plant."
     else:
+        $ set_story_value("ch01_d2_overheard_talk", "worried")
         gf "I don't know. Honestly, I don't know."
-        "[girlfriend_name] looked toward the counter, where [player_name] and [friend_name] were waiting."
+        "She glanced toward the counter, where she thought I still was."
         gf "He's been somewhere else all morning."
         maya "Did something happen?"
-        gf "Not that I know of. He says he's fine."
-        maya "Then maybe give him a little time. And if he's still doing it tonight, tell him. Out loud."
+        # Leia's line follows Day One's upstairs talk (the anchor key, read again here).
+        if get_story_value("ch01_upstairs_response") == "honest":
+            gf "Not today. Last night he actually told me stuff, real stuff, and today it's like that never happened."
+        elif get_story_value("ch01_upstairs_response") == "liked":
+            gf "No, that's the thing. We had a really good talk last night, a proper one, and today he's gone quiet again and I don't know why."
+        elif get_story_value("ch01_upstairs_response") == "swallowed":
+            gf "Not that I know of. I ask, and he says he's fine. He said that last night too."
+        elif get_story_value("ch01_upstairs_response") == "snapped":
+            if get_story_value("ch01_dream_response") == "withdrew":
+                gf "Last night he said something kind of mean. Then in the dark he said he didn't mean it, and that's all I've got. Today he just says he's fine."
+            else:
+                gf "He apologized this morning, which, good. I just still don't know what it was actually about."
+        else:
+            gf "Not that I know of. He says he's fine."
+        maya "Then maybe give him a little time. And if he's still doing it tonight, tell him. Out loud. He's always been better once somebody makes him say it."
         gf "Yeah. Okay."
         "For once, [girlfriend_name] let the problem sit instead of immediately trying to solve it."
+        "Maya, who I'd known for years, was explaining me to my girlfriend, who'd met her that morning."
+        think "Neither of them had said one unfair thing. Somehow that was the part that stung."
 
+    $ d2_overheard_own_text = format_choice("ch01_d2_overheard_own", "Put the drinks down and own it.")
+    $ d2_overheard_joke_text = format_choice("ch01_d2_overheard_joke", "Walk in loud: 'Is this the support group? Do I get a badge?'")
+    $ d2_overheard_pretend_text = format_choice("ch01_d2_overheard_pretend", "Step back, count to five, and come in like you heard nothing.")
 
-    "By the time we returned, Maya had deliberately moved the conversation back to clothes."
+    menu:
+        "[d2_overheard_own_text]":
+            $ apply_choice("ch01_d2_overheard_own")
+            $ set_story_value("ch01_d2_overheard_response", "owned")
+            "I put the drinks down in front of them."
+            mc "So, I heard that. You're both right, which is annoying. I've been weird today. Can I tell you about it later? Just us."
+            gf "Oh my God. How much did you hear?"
+            mc "Enough. It's fair."
+            "Maya picked up her drink and became extremely interested in the menu board."
+            gf "...Later. Just us. I'm holding you to it."
+
+        "[d2_overheard_joke_text]":
+            $ apply_choice("ch01_d2_overheard_joke")
+            $ set_story_value("ch01_d2_overheard_response", "joked")
+            mc "Is this the [player_name] support group? Do I get a badge?"
+            maya "You get a drink. Sit down."
+            "[girlfriend_name] went red and laughed into her hands. I sat down, and nobody said anything real after that."
+
+        "[d2_overheard_pretend_text]":
+            $ apply_choice("ch01_d2_overheard_pretend")
+            $ set_story_value("ch01_d2_overheard_response", "pretended")
+            "I stepped back behind the palm, counted to five, and walked up like I'd come straight from the counter."
+            mc "Drinks. [friend_name]'s still fighting the card machine."
+            "[girlfriend_name] smiled up at me like nothing had happened."
+            think "If she had something to say, she could say it to me. Apparently Maya got to hear it first."
+
+    "By the time [friend_name] got back with the rest, Maya had deliberately moved the conversation back to clothes."
     maya "For the record, I'm still saying the black one."
     gf "And I'm still saying fitting room only. Fitting room and suitcase."
     maya "For now. Fitting room for now."
@@ -1465,6 +1531,8 @@ label ch01_day2_scene_12_villa_pool_plan:
     elif ch01_d2_route_lane() == "ntr_risk":
         "[girlfriend_name] looked back once."
         "I was half a step behind, somewhere else again."
+        if get_story_value("ch01_d2_overheard_response") == "pretended" and get_story_value("ch01_d2_overheard_talk") == "worried":
+            think "I kept hearing it. 'Tell him. Out loud.' Like I was something that needed handling."
         "She turned back to Maya."
         "She didn't look back a second time."
 
@@ -1578,6 +1646,16 @@ label ch01_day2_scene_15_pool_group:
     gf "Most of the afternoon. Before the whole dinner thing."
     friend "They bullied me yesterday too, for the record. This is a pattern. I want that noted somewhere."
     mc "You survived a bee today. You'll survive a splash."
+
+    "Then [friend_name] sent me inside for towels. When I came back out, Maya and [girlfriend_name] had their heads together on one lounger."
+    maya "—so he has no idea? None at all?"
+    gf "None. And you are not allowed to—"
+    "They both saw me at the same time and stopped."
+    gf "Hi! Towels. Amazing. Thank you."
+    maya "We were talking about sunscreen."
+    gf "Very boring sunscreen stuff."
+    "She was grinning at me over the towels, the way she does when she's planning something and is terrible at hiding it."
+    think "Nobody in history has said 'very boring sunscreen stuff' about actual sunscreen."
 
     "The mood was easy. Whatever happened next would come from the choices already accumulating beneath it."
 
