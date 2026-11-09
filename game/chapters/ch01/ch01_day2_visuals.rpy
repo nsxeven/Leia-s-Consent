@@ -64,6 +64,10 @@ image bg ch01_d2_game_night = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — VILLA DRINKS / NEVER HAVE I EVER", size=46, color="#ffffff"),
 )
 
+# Day Two morning: Leia asleep (unglamorous sprawl), then waking up (darryn 2026-11-09).
+image cg ch01_d2_leia_sleeping = At("images/cg/ch02/CH2D2_CG_LeiaSleeping_01.webp", prologue_fullscreen)
+image cg ch01_d2_leia_waking = At("images/cg/ch02/CH2D2_CG_LeiaSleeping_02.webp", prologue_fullscreen)
+
 image cg ch01_d2_photo_leia_maya = Composite(
     (1920, 1080),
     (0, 0), Solid("#6b8fa0"),

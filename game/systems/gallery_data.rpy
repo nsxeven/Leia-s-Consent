@@ -173,6 +173,9 @@ init -2 python:
         ["ch01_dream_wake_night"])
 
     # --------------------------------------------------------------------- Day 2
+    gallery_row("d2_morning", "ch01_d2", "Sleeping beauty",
+        "Day Two, 11:00. Julian's alarm text goes off; Leia does not.",
+        [("ch01_d2_leia_sleeping", "Asleep"), ("ch01_d2_leia_waking", "Waking up")])
     gallery_row("d2_photo_leia_maya", "ch01_d2", "Leia and Maya",
         "A photo of Leia and Maya.",
         ["ch01_d2_photo_leia_maya"])

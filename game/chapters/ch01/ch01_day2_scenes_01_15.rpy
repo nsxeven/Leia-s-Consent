@@ -237,7 +237,46 @@ label ch01_day2_scene_01_morning_after:
     with fade
 
     "Morning arrived slowly through the useless decorative curtains."
-    "[girlfriend_name] was already awake, buried under half the duvet and looking at me like she'd just remembered something and hadn't decided yet whether to bring it up."
+
+    # 11:00 = the time Julian set last night ("Breakfast after 11 or I'm calling the police").
+    $ lc_sfx("phone_notify")
+    "My phone buzzed against the nightstand until I gave up and looked at it. 11:00, on the dot."
+    python:
+        phone_add_message(
+            "group",
+            "julian",
+            text="Bro wake up",
+            message_id="ch01_d2_julian_wake_up",
+            mark_unread=True,
+            notify=True,
+            notification_title="Trip Group",
+        )
+    think "Of course. He said eleven, so he'd set an alarm for eleven just to text us at eleven."
+
+    "I eased out of bed as quietly as I could and looked back."
+
+    scene cg ch01_d2_leia_sleeping
+    with dissolve
+
+    "[girlfriend_name] had claimed about three-quarters of the bed at some point in the night. One arm was flung over her head, the other was hanging off the edge, and her mouth was wide open like she was halfway through arguing with someone in her dream."
+    "The duvet had lost the fight completely and was bunched somewhere around her knees."
+    think "Four years, and she still sleeps like she fell out of a plane and landed here."
+    mc "Hey. [friend_name]'s awake. Which means we're officially late."
+    gf "Mmhh... five more... hours."
+    mc "He sent 'Bro wake up.' That's the whole message. He's escalating."
+
+    scene cg ch01_d2_leia_waking
+    with dissolve
+
+    "She dragged a fist across her face and blinked up at me, eyes not quite on duty yet."
+    gf "Why are you standing? Why are you already standing, that's so aggressive."
+    gf "And it's eleven-thirty. I negotiated eleven-thirty. He was there. You were there."
+    mc "I'll tell him you said that."
+
+    scene bg ch01_master_bedroom_curtains
+    with dissolve
+
+    "I sat back down on the edge of the bed. She pulled half the duvet back over herself and looked at me like she'd just remembered something and hadn't decided yet whether to bring it up."
 
     if get_story_value("ch01_dream_response") == "grounded":
         "The dream still existed somewhere at the back of my mind, but daylight had put it back where it belonged."
