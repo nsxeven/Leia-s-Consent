@@ -67,7 +67,7 @@ label ch01_day5_start:
 
     scene black
     with fade
-    centered "{size=50}CHAPTER ONE - DAY FIVE{/size}"
+    centered "[lc_chapter_card_day5]"
 
     jump ch01_day5_scene_01_boarding
 

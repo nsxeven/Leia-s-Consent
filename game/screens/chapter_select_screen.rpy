@@ -18,9 +18,10 @@ screen chapter_select():
             text "DIARY DIVIDERS" size 24 color "#7a6266" font "fonts/Handjet-SemiBold.ttf"
             text _("Developer / QA shortcut. This starts a new game with a preset of the earlier story state; it does not play the skipped scenes.") size 28 color "#7a6266" font "fonts/Caveat[wght].ttf"
 
-            text _("Day") size 30
+            text _("Chapter") size 30
             hbox:
                 spacing 16
+                box_wrap True
                 for day_id, day_label, day_note in CH01_SELECT_DAYS:
                     textbutton day_label:
                         action [SetScreenVariable("cs_day", day_id), SetScreenVariable("cs_route", "love")]

@@ -10,14 +10,17 @@ default persistent.lc_day1_dream = "ask"
 init 20 python:
     import os
     import lc_stat_model
+    import lc_chapters  # chapter registry (python-packages/lc_chapters.py)
 
     LC_REVIEW_GROUPS = ("relationship", "partner", "player")
+    # One chapter per day: labels and titles come from the chapter registry
+    # (lc_chapters.py). "chapter" is the registry id; day ids stay ch01_dN.
     LC_REVIEW_DAYS = {
-        "ch01_d1": {"label": "Chapter One · Day One", "route_key": "ch01_day1_route_pressure"},
-        "ch01_d2": {"label": "Chapter One · Day Two", "route_key": "ch01_d2_end_route"},
-        "ch01_d3": {"label": "Chapter One · Day Three", "route_key": "ch01_d3_lane"},
-        "ch01_d4": {"label": "Chapter One · Day Four", "route_key": "ch01_d4_end_route"},
-        "ch01_d5": {"label": "Chapter One · Day Five", "route_key": "ch01_d5_end_route"},
+        "ch01_d1": {"label": lc_chapters.review_label("day1"), "chapter": "day1", "route_key": "ch01_day1_route_pressure"},
+        "ch01_d2": {"label": lc_chapters.review_label("day2"), "chapter": "day2", "route_key": "ch01_d2_end_route"},
+        "ch01_d3": {"label": lc_chapters.review_label("day3"), "chapter": "day3", "route_key": "ch01_d3_lane"},
+        "ch01_d4": {"label": lc_chapters.review_label("day4"), "chapter": "day4", "route_key": "ch01_d4_end_route"},
+        "ch01_d5": {"label": lc_chapters.review_label("day5"), "chapter": "day5", "route_key": "ch01_d5_end_route"},
     }
     LC_REVIEW_ROUTES = {
         "mixed": ("Mixed / undecided", "The direction is still taking shape."),
@@ -45,6 +48,10 @@ init 20 python:
     def lc_review_begin(day_id):
         if day_id not in LC_REVIEW_DAYS:
             raise ValueError("Register the day in LC_REVIEW_DAYS first: " + day_id)
+        chapter_id = LC_REVIEW_DAYS[day_id].get("chapter")
+        if chapter_id:
+            # Save slots / Continue card name the chapter being played.
+            store.save_name = lc_chapters.save_name(chapter_id)
         old = store.lc_review_days.get(day_id)
         if store.lc_review_active == day_id and old and old.get("end") is None:
             return  # Do not reset a day's baseline on repeated entry.
@@ -364,11 +371,13 @@ init 20 python:
         "sharing": "sharing", "distance": "distance",
     }
     LC_REVIEW_NIGHT = {
-        "ch01_d1": ("DAY 1", "ARRIVAL", "night falls over the villa…"),
-        "ch01_d2": ("DAY 2", "THE SHORE", "the lights along the water go low…"),
-        "ch01_d3": ("DAY 3", "THE CLUB", "night falls over the villa…"),
-        "ch01_d4": ("DAY 4", "THE MARKET", "the town folds up its awnings…"),
-        "ch01_d5": ("DAY 5", "THE WATER", "the water keeps the last of the light…"),
+        # The middle field is the NEUTRAL chapter title from the registry;
+        # lc_review_chapter_title() swaps in the route-flavoured one.
+        "ch01_d1": ("DAY 1", lc_chapters.chapter_title("day1").upper(), "night falls over the villa…"),
+        "ch01_d2": ("DAY 2", lc_chapters.chapter_title("day2").upper(), "the lights along the water go low…"),
+        "ch01_d3": ("DAY 3", lc_chapters.chapter_title("day3").upper(), "night falls over the villa…"),
+        "ch01_d4": ("DAY 4", lc_chapters.chapter_title("day4").upper(), "the town folds up its awnings…"),
+        "ch01_d5": ("DAY 5", lc_chapters.chapter_title("day5").upper(), "the water keeps the last of the light…"),
     }
     LC_REVIEW_TICKET = {
         "ch01_d1": ("VILLA NIGHT", "QUIET HOURS"),
@@ -402,11 +411,23 @@ init 20 python:
         head = label.split("·")[0].strip()
         return head.upper() if head else ""
 
+    def lc_review_chapter_title(day_id):
+        """The chapter title the review reveals: route-flavoured once the day has
+        ended on a decided route family, neutral for mixed / undecided /
+        unresolved routes (lc_chapters.ROUTE_FAMILY). None for unregistered days."""
+        chapter_id = LC_REVIEW_DAYS.get(day_id, {}).get("chapter")
+        if not chapter_id:
+            return None
+        record = store.lc_review_days.get(day_id) or {}
+        family = lc_chapters.route_family(record.get("route")) if record.get("end") is not None else None
+        return lc_chapters.chapter_title(chapter_id, family).upper()
+
     def lc_review_night_copy(day_id):
         chapter = lc_review_chapter_line(day_id)
         preset = LC_REVIEW_NIGHT.get(day_id)
         if preset:
-            return {"kicker": preset[0], "title": preset[1], "line": preset[2], "chapter": chapter}
+            title = lc_review_chapter_title(day_id) or preset[1]
+            return {"kicker": preset[0], "title": title, "line": preset[2], "chapter": chapter}
         label = LC_REVIEW_DAYS.get(day_id, {}).get("label", "The day")
         bits = [part.strip() for part in label.split("·")]
         kicker = bits[-1].upper() if bits else "THE DAY"

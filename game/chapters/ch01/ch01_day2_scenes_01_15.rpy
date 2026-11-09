@@ -226,7 +226,7 @@ label ch01_day2_start:
 
     scene black
     with fade
-    centered "{size=50}CHAPTER ONE — DAY TWO{/size}"
+    centered "[lc_chapter_card_day2]"
 
     jump ch01_day2_scene_01_morning_after
 

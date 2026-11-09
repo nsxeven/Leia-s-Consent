@@ -1667,7 +1667,7 @@ screen lc_demo_end_screen():
         spacing 14
 
         text "Thank you for playing the demo!" font "fonts/Fredoka-SemiBold.ttf" size 54 color "#ffffff" at lc_demo_in(0.9)
-        text "You've finished the Prologue and Chapter One, Day One. Your tags, stickers and gallery unlocks are saved for the full game." style "lc_title_small_text" size 25 color "#ffffffd0" xmaximum 860 at lc_demo_in(1.2)
+        text "You've finished the Prologue and Chapter One (Day One). Your tags, stickers and gallery unlocks are saved for the full game." style "lc_title_small_text" size 25 color "#ffffffd0" xmaximum 860 at lc_demo_in(1.2)
 
         null height 18
         text "UPCOMING RELEASES" font "fonts/Handjet-ExtraBold.ttf" size 26 color "#ff9fc8" at lc_demo_in(1.6)
