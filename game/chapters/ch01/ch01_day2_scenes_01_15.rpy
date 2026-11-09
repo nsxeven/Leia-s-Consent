@@ -1400,27 +1400,6 @@ label ch01_day2_scene_11b_boutique:
         gf "Yeah. Okay."
         "For once, [girlfriend_name] let the problem sit instead of immediately trying to solve it."
 
-    # Day One echo: Julian's apology in the car (ch01_julian_apology_response).
-    if get_story_value("ch01_julian_apology_response") == "said_fine":
-        "At the counter, [friend_name] waited until the barista had turned away."
-        friend "Hey, so. The car last night. You said it was fine, and I let it go, but you've had the voice on a bit today. If it's me, just say it, man. I'd honestly rather you yell at me."
-        mc "It's not you. I mean it this time."
-        friend "'This time.' Okay. I heard that, but okay."
-    elif get_story_value("ch01_julian_apology_response") == "honest_discomfort":
-        "At the counter, [friend_name] studied the drinks menu like it might be on a test."
-        friend "I've been careful today, by the way. Like you said in the car. I don't know if you noticed, but I've been giving her a good three feet at all times. Minimum."
-        mc "I noticed. You're being very polite. It's a little weird."
-        friend "Weird's fine. I'll take weird. And thanks for being straight with me last night. I'd rather know than spend the whole trip guessing."
-    elif get_story_value("ch01_julian_apology_response") == "trusted":
-        "At the counter, [friend_name] bumped my shoulder with his."
-        friend "Thanks for last night, by the way. In the car. I was all set to lie awake writing you an apology text, and then you said don't worry about it, and I actually didn't."
-        mc "There was nothing to worry about."
-        friend "Yeah, well. You know me. I'd have had a draft ready by three a.m."
-    elif get_story_value("ch01_julian_apology_response") == "joked":
-        "At the counter, [friend_name] handed me two of the drinks."
-        friend "For the record, if anybody trips today, I'm doing the fireman thing. Very professional. I've been going over it in my head."
-        mc "You've been practicing catching my girlfriend in your head."
-        friend "Okay, when you say it like that it sounds— no. I'm going to stop talking and carry these."
 
     "By the time we returned, Maya had deliberately moved the conversation back to clothes."
     maya "For the record, I'm still saying the black one."

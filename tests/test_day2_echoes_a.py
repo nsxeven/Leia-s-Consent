@@ -21,7 +21,6 @@ ECHOES = {
     "ch01_private_attention_response": ("ch01_day2_scene_05_meet_maya", {"claimed", "open", "jealous", "indifferent"}),
     "ch01_bra_response": ("ch01_day2_scene_11b_boutique", {"reassuring", "playful_open", "cautious", "distracted"}),
     "ch01_towel_followup": ("ch01_day2_scene_11b_boutique", {"reassured", "honest", "teased", "brushed_off"}),
-    "ch01_julian_apology_response": ("ch01_day2_scene_11b_boutique", {"trusted", "honest_discomfort", "joked", "said_fine"}),
 }
 OVERRIDDEN = {"ch01_day2_scene_03_maya_message", "ch01_day2_scene_08_maya_julian",
               "ch01_day2_scene_13_girls_upstairs", "ch01_day2_scene_14_tie_foreshadow"}
