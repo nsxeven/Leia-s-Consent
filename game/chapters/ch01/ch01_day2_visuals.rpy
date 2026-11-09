@@ -65,6 +65,11 @@ image bg ch01_d2_game_night = Composite(
 )
 
 # Day Two morning: Leia asleep (unglamorous sprawl), then waking up (darryn 2026-11-09).
+image cg ch01_d2_breakfast_01 = At("images/cg/ch02/CH2D2_CG_Breakfast_01.webp", prologue_fullscreen)
+image cg ch01_d2_breakfast_02 = At("images/cg/ch02/CH2D2_CG_Breakfast_02.webp", prologue_fullscreen)
+image cg ch01_d2_breakfast_03 = At("images/cg/ch02/CH2D2_CG_Breakfast_03.webp", prologue_fullscreen)
+image cg ch01_d2_breakfast_04 = At("images/cg/ch02/CH2D2_CG_Breakfast_04.webp", prologue_fullscreen)
+image cg ch01_d2_breakfast_julian_pov = At("images/cg/ch02/CH2D2_CG_BreakfastCloseup_01.webp", prologue_fullscreen)
 image cg ch01_d2_leia_sleeping = At("images/cg/ch02/CH2D2_CG_LeiaSleeping_01.webp", prologue_fullscreen)
 image cg ch01_d2_leia_waking = At("images/cg/ch02/CH2D2_CG_LeiaSleeping_02.webp", prologue_fullscreen)
 

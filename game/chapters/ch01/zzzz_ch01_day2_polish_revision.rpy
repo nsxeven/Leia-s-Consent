@@ -29,6 +29,14 @@ label ch01_day2_scene_03_maya_message_v2:
             notification_title="Maya",
         )
 
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_breakfast_02
+    with dissolve
+    call screen lc_breakfast_julian_pov
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_breakfast
+    with dissolve
+
     "Maya's name appeared in the notification."
     "[girlfriend_name] saw it before I put the phone down."
 
@@ -36,6 +44,16 @@ label ch01_day2_scene_03_maya_message_v2:
     mc "What? What's that face?"
     gf "Nothing! No face. That's just my face. It's a nice name."
     friend "That was the loudest 'nothing' I've ever heard, and I've known you two for four years."
+
+    python:
+        phone_offer_reply("maya", "ch01_d2_maya_lunch_reply", [
+            {"id": "alive", "text": "Alive. Barely. Lunch works, I'll send you where we are.",
+             "followups": [("maya", "Look at you, being organised 👍")]},
+            {"id": "leia", "text": "[girlfriend_name] says hi.",
+             "followups": [("maya", "Hi [girlfriend_name]! 👋")]},
+            {"id": "buying", "text": "Depends. Are you buying?",
+             "followups": [("maya", "In your dreams. See you at lunch.")]},
+        ], "alive")
 
     $ set_story_flag("ch01_d2_maya_meetup_confirmed")
     jump ch01_day2_scene_04_jealousy_callback

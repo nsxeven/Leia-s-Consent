@@ -504,7 +504,13 @@ label ch01_day2_scene_01_morning_after:
 
 label ch01_day2_scene_02_breakfast:
 
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_breakfast_01
+    with fade
+    "Breakfast started with the kind of easy rhythm we'd found by the end of yesterday."
+    $ exit_cinematic_mode()
     scene bg ch01_d2_breakfast
+    with dissolve
     with dissolve
 
     friend "Oh, look who's alive. I was about to send a search party. I had a whole message drafted and everything."
@@ -641,6 +647,20 @@ label ch01_day2_scene_04_jealousy_callback:
         gf "Oh, so now I'm being reviewed. Great. No pressure."
 
     "Whatever tiny tension had been there stayed small enough to joke about."
+
+    # If Ryan answered Maya while the phone prompt was available, the next two
+    # breakfast stills show Leia softening and Julian realizing he was staring.
+    if get_story_value("ch01_d2_maya_lunch_reply"):
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_breakfast_03
+        with dissolve
+        "[girlfriend_name]'s pout softened despite herself."
+        scene cg ch01_d2_breakfast_04
+        with dissolve
+        "[friend_name] suddenly became very interested in his mug."
+        $ exit_cinematic_mode()
+        scene bg ch01_d2_breakfast
+        with dissolve
 
     $ set_story_flag("ch01_d2_scene_04_complete")
     jump ch01_day2_scene_05_meet_maya
