@@ -1455,22 +1455,20 @@ label ch01_day2_scene_30_bedroom:
     elif d2_upstairs == "honest":
         "[girlfriend_name] came out of the bathroom with her hair half tied up, and for a second it was last night again: me standing in the middle of this room, her asking what was going on."
         think "I'd told her the carrying thing bothered me. She hadn't laughed, or made it a thing. She'd just put her arms around me and said she liked it when I told her stuff."
-        think "Thirty seconds of that, and I'd been grateful for it all day without saying so."
-        mc "Hey. Thanks for last night. Up here, I mean. When I was being weird about the carrying thing."
-        gf "You weren't being weird, you were being honest. Those are, like, different things."
-        gf "And you don't have to thank me for that, babe. You tell me something, I hug you. That's kind of the whole deal."
-        mc "I know. I'm still saying thanks."
+        think "I'd thanked her for it this morning. All day it had felt like the kind of thing you should say more than once."
+        mc "You know you're kind of the best part of this trip, right?"
+        gf "Kind of? Wow. Okay."
         "She stopped fussing with her hair and looked at me properly, the way she does when she's deciding not to tease me."
-        gf "...Okay. You're welcome. Come here."
+        gf "...You're the best part too, babe. Even the weird parts. Come here."
     elif d2_upstairs == "liked":
         "[girlfriend_name] caught me watching her from the bathroom doorway and gave me the same look she'd given me last night, right here, when I'd admitted I didn't hate people noticing her."
         think "She could've laughed at me. Or gone quiet and wondered what kind of guy says that. Instead she'd checked my face to make sure I meant it, and made me promise we'd talk properly."
         think "She'd made it something we were in on together, instead of something I had to keep to myself. I still didn't know how to tell her how much that mattered."
-        mc "Hey. Thank you. For last night. For not thinking I was a weirdo."
-        gf "Oh, I definitely thought you were a weirdo."
-        "She laughed at her own line before I could."
-        gf "Good weird, though. I told you. I'm just really glad you said it, instead of being all mysterious and making me guess."
-        mc "Me too."
+        mc "We should do that more. Say the stuff out loud, I mean. Instead of me being all mysterious."
+        gf "Oh my god. Are you quoting me to me?"
+        "She laughed at herself before I could."
+        gf "Yes. Obviously yes. I'm still holding you to the proper talk, though. Daylight didn't cancel it, and neither does bedtime."
+        mc "I wouldn't dare."
         "She dropped onto the bed next to me and bumped her knee against mine, like we were still in on something."
     elif d2_upstairs == "swallowed":
         "[girlfriend_name] brushed her teeth with the bathroom door open, in the same doorway she'd stood in last night asking me what was going on."
@@ -1480,7 +1478,12 @@ label ch01_day2_scene_30_bedroom:
     elif d2_upstairs == "snapped":
         "[girlfriend_name] picked her clothes up off the chair and folded them, carefully, without really looking at them."
         think "She'd folded the dinner dress like that last night too. Right after I told her to stay awake next time."
-        if d2_bed_strained:
+        # Scene 1 has Ryan apologize in the morning unless he pushed the dream away.
+        if get_story_value("ch01_dream_response") != "withdrew":
+            think "I'd apologized this morning, and she'd let it go. Mostly. Watching her fold that dress, I wasn't sure mostly was the same as all the way."
+            if not d2_bed_strained:
+                "When she was done, she sat down next to me, close enough that our knees touched. That part, at least, was all the way."
+        elif d2_bed_strained:
             think "I hadn't apologized for that either."
         else:
             mc "Hey. What I said last night, up here. The staying awake thing. That was a crappy thing to say."

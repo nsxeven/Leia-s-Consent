@@ -124,16 +124,20 @@ class LookingRuleEcho(unittest.TestCase):
 
 
 class UpstairsBedtimeEcho(unittest.TestCase):
-    def play(self, v, soft=False, pool=False, lane="love"):
+    def play(self, v, soft=False, pool=False, lane="love", dream=None):
         vals = {"ch01_upstairs_response": v} if v else {}
+        if dream:
+            vals["ch01_dream_response"] = dream
         return play(block(*UPSTAIRS), vals, d2_soft_gate=soft, d2_pool_suspicion=pool, d2_lane=lane)
 
-    def test_loving_values_say_thank_you(self):
+    def test_loving_values_show_gratitude_without_repeating_the_morning(self):
+        # Scene 1 (pass A) has the spoken thank-you; bedtime builds on it instead of repeating it.
         for v in ("honest", "liked"):
             out = self.play(v)
             mc = [t for w, t in out if w == "mc"]
-            self.assertTrue(any("Thank" in t for t in mc), v)
-            self.assertTrue(any(w == "think" for w, _ in out), v)  # gratitude in his head too
+            self.assertTrue(mc, v)
+            self.assertFalse(any("Thank" in t for t in mc), v)
+            self.assertTrue(any(w == "think" for w, _ in out), v)  # gratitude in his head
             self.assertTrue(any(w == "gf" for w, _ in out), v)
         self.assertNotEqual(text(self.play("honest")), text(self.play("liked")))
         self.assertIn("carrying thing", text(self.play("honest")))
@@ -152,9 +156,13 @@ class UpstairsBedtimeEcho(unittest.TestCase):
         self.assertNotIn("mc", [w for w, _ in out])
 
     def test_snapped_owns_it_or_does_not(self):
-        warm = self.play("snapped")
+        # Morning apology already happened (pass A) unless he pushed the dream away.
+        after = self.play("snapped")
+        self.assertIn("I'd apologized this morning", text(after))
+        self.assertNotIn("mc", [w for w, _ in after])
+        warm = self.play("snapped", dream="withdrew")
         self.assertTrue(any(w == "mc" and "crappy thing to say" in t for w, t in warm))
-        cold = self.play("snapped", soft=True)
+        cold = self.play("snapped", soft=True, dream="withdrew")
         self.assertIn("I hadn't apologized", text(cold))
         self.assertNotIn("mc", [w for w, _ in cold])
 
