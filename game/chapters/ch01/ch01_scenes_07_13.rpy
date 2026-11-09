@@ -336,8 +336,13 @@ label ch01_scene_09_dinner:
     "The front of her dress was soaked through."
 
     gf "Oh no. Shit. This is going to stain."
-    stranger "Seriously, I'm sorry. Can I get you another drink? Or—"
-    gf "No, no. It's okay. I walked into you."
+    stranger "Seriously, I'm sorry. Can I get you another drink? Or— you were looking for someone to take a photo, right? I could do it. Least I can do."
+    "[girlfriend_name]'s phone was still in her hand. She looked down at it, then up at him, and for a second she didn't answer."
+    $ lc_duck(0.5)
+    think "It's a photo. It's literally just a photo. Why is she taking so long?"
+    "Her thumb was already on the screen when she glanced down at the front of her dress, still dripping onto the terrace."
+    $ lc_unduck()
+    gf "No, no, it's okay. I'm literally dripping, I'm not taking a photo like this. And I walked into you, so that one's on me."
     stranger "Then we're both terrible at walking."
 
     $ lc_sfx("leia_laugh")
