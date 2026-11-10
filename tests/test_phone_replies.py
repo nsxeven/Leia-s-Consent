@@ -64,11 +64,31 @@ class PhoneRepliesTest(unittest.TestCase):
 
     def test_reply_choices_live_in_a_distinct_tray_not_outgoing_bubbles(self):
         source = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
-        tray = source.split('            if reply_prompt:\n                frame:', 1)[1].split('            text "+":', 1)[0]
+        tray = source.split('            if reply_view_prompt and _reply_level > 0.0:\n                frame:', 1)[1].split('            text "+":', 1)[0]
         self.assertIn('reply_choice.png', tray)
         self.assertIn('row_hover.png', tray)
         self.assertNotIn('bubble_out.png', tray)
+        self.assertIn('sensitive (reply_prompt is not None', tray)
         self.assertIn('Choose a reply', source)
+
+    def test_reply_reveal_waits_then_moves_both_viewport_and_tray(self):
+        source = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+        block = source.split('    LC_PHONE_REPLY_DELAY = ', 1)[1].split('    def lc_phone_close():', 1)[0]
+        namespace = {}
+        exec(textwrap.dedent('    LC_PHONE_REPLY_DELAY = ' + block), namespace)
+        level = namespace['lc_phone_reply_level']
+        delay = namespace['LC_PHONE_REPLY_DELAY']
+        duration = namespace['LC_PHONE_REPLY_SECONDS']
+        opened = 100.0
+        self.assertEqual(level(opened + delay - 0.01, opened, 0.0), 0.0)
+        self.assertGreater(level(opened + delay + duration / 2, opened, 0.0), 0.0)
+        self.assertEqual(level(opened + delay + duration, opened, 0.0), 1.0)
+        closed = opened + 2.0
+        self.assertGreater(level(closed + duration / 2, opened, closed), 0.0)
+        self.assertEqual(level(closed + duration, opened, closed), 0.0)
+        self.assertIn('ysize int(692 - (692 - LC_PHONE_REPLY_CLEARANCE) * _reply_level)', source)
+        self.assertIn('at Transform(alpha=_reply_level, yoffset=', source)
+        self.assertIn('thread_yadj._lc_reply_transition = bool(_reply_animating)', source)
 
     def test_reply_delivery_is_timed_only_while_thread_open(self):
         source = (ROOT / "game/chapters/ch01/zz_ch01_phone_sequence_revision.rpy").read_text(encoding="utf-8")
