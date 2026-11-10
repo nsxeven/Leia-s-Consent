@@ -12,6 +12,19 @@ define LC_PHONE_BACKDROP = Solid("#071225c4")
 
 init 95 python:
     import datetime
+    import time
+
+    LC_PHONE_REPLY_DELAY = 0.24
+    LC_PHONE_REPLY_SECONDS = 0.32
+    LC_PHONE_REPLY_CLEARANCE = 318
+
+    def lc_phone_reply_level(now, opened_at, closed_at, close_from=1.0):
+        """Ease a reply tray in after the last message, and out on selection."""
+        if closed_at:
+            t = min(1.0, max(0.0, (now - closed_at) / LC_PHONE_REPLY_SECONDS))
+            return close_from * (1.0 - t * t * (3.0 - 2.0 * t))
+        t = min(1.0, max(0.0, (now - opened_at - LC_PHONE_REPLY_DELAY) / LC_PHONE_REPLY_SECONDS))
+        return t * t * (3.0 - 2.0 * t)
 
     def lc_phone_close():
         """Dismiss every phone layer; the phone's hide action plays the close cue."""
@@ -203,7 +216,10 @@ init 95 python:
             adj.change(target)
             return
         amount = target - adj.value
-        if amount > 0:
+        if getattr(adj, "_lc_reply_transition", False):
+            # The viewport itself eases: follow its moving bottom each frame.
+            adj.change(target)
+        elif amount > 0:
             adj.animate(amount, LC_PHONE_SCROLL_SECONDS, renpy.atl.warpers["easeout"])
         else:
             adj.change(target)
@@ -388,6 +404,12 @@ screen phone_screen():
     default phone_app = lc_phone_link_app()
     default phone_thread = lc_phone_link_thread()
     default thread_adjs = {}
+    default reply_view_key = None
+    default reply_view_prompt = None
+    default reply_opened_at = 0.0
+    default reply_closed_at = 0.0
+    default reply_close_from = 0.0
+    default reply_tick = 0
 
     on "show" action [SetVariable("lc_phone_deep_link", None), Function(lc_ui_play, "phone_open")]
     on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "phone_close")]
@@ -552,11 +574,28 @@ screen phone_screen():
                 xmaximum 300
             $ thread_yadj = thread_adjs.setdefault(phone_thread, lc_phone_thread_adjustment())
             $ reply_prompt = phone_pending_reply(phone_thread)
+            $ _reply_key = (phone_thread, reply_prompt["id"]) if reply_prompt else None
+            $ _reply_now = time.time()
+            if _reply_key != reply_view_key:
+                if _reply_key:
+                    $ reply_view_key = _reply_key
+                    $ reply_view_prompt = reply_prompt
+                    $ reply_opened_at = _reply_now
+                    $ reply_closed_at = 0.0
+                else:
+                    $ reply_close_from = lc_phone_reply_level(_reply_now, reply_opened_at, reply_closed_at, reply_close_from)
+                    $ reply_closed_at = _reply_now
+                    $ reply_view_key = None
+            $ _reply_level = lc_phone_reply_level(_reply_now, reply_opened_at, reply_closed_at, reply_close_from) if reply_view_prompt else 0.0
+            $ _reply_animating = (reply_prompt and _reply_level < 1.0) or (not reply_prompt and _reply_level > 0.0)
+            if _reply_animating:
+                timer 0.025 repeat True action SetScreenVariable("reply_tick", reply_tick + 1)
+            $ thread_yadj._lc_reply_transition = bool(_reply_animating)
             viewport:
                 ypos 198
                 xpos LC_PHONE_CONTENT_LEFT
                 xsize LC_PHONE_VIEWPORT_WIDTH
-                ysize (420 if reply_prompt else 692)
+                ysize int(692 - (692 - LC_PHONE_REPLY_CLEARANCE) * _reply_level)
                 mousewheel True
                 draggable True
                 scrollbars None
@@ -646,7 +685,7 @@ screen phone_screen():
                             color "#8B99AB"
                             xalign 1.0
                     null height 8
-            if reply_prompt:
+            if reply_view_prompt and _reply_level > 0.0:
                 frame:
                     style "lc_sw_frame"
                     xpos LC_PHONE_CONTENT_LEFT
@@ -654,6 +693,7 @@ screen phone_screen():
                     yanchor 1.0
                     xsize LC_PHONE_CONTENT_WIDTH
                     yminimum 266
+                    at Transform(alpha=_reply_level, yoffset=int((1.0 - _reply_level) * 26))
                     background Frame("gui/phone/sprite_match/card.png", 16, 16)
                     padding (12, 9)
                     vbox:
@@ -663,9 +703,10 @@ screen phone_screen():
                             style "lc_sw_hand"
                             size 25
                             color "#425f80"
-                        for reply_option in reply_prompt["options"]:
+                        for reply_option in reply_view_prompt["options"]:
                             button:
                                 style "lc_sw_hit"
+                                sensitive (reply_prompt is not None and _reply_level >= 0.95)
                                 xfill True
                                 yminimum 58
                                 padding (14, 9, 14, 9)
