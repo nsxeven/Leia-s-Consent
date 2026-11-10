@@ -8,7 +8,7 @@ PHONE = (Path(__file__).resolve().parents[1] / "game/screens/zzzzzz_phone_ios_pr
 class PhoneReplyWrapTests(unittest.TestCase):
 
     def test_reply_buttons_not_fixed_height(self):
-        tray = PHONE.split('for reply_option in reply_prompt["options"]:', 1)[1].split("text \"+\"", 1)[0]
+        tray = PHONE.split('for reply_option in reply_view_prompt["options"]:', 1)[1].split("text \"+\"", 1)[0]
         self.assertIn("yminimum 58", tray)
         self.assertNotIn("ysize 58", tray)
 
