@@ -33,9 +33,9 @@ label ch01_day2_scene_03_maya_message_v2:
     scene cg ch01_d2_breakfast_02
     with dissolve
     call screen lc_breakfast_julian_pov
+    # Restore the phone HUD for the optional reply, but keep Breakfast_02
+    # behind the conversation instead of cutting to the placeholder card.
     $ exit_cinematic_mode()
-    scene bg ch01_d2_breakfast
-    with dissolve
 
     "Maya's name appeared in the notification."
     "[girlfriend_name] saw it before I put the phone down."
