@@ -285,7 +285,7 @@ label ch01_day2_scene_01_morning_after:
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
-    $ cast(ryan="home", leia="lounge")
+    $ cast(ryan="home", leia="camisole_panty")
 
     "I sat back down on the edge of the bed. She pulled half the duvet back over herself and looked at me like she'd just remembered something and hadn't decided yet whether to bring it up."
 
@@ -412,6 +412,7 @@ label ch01_day2_scene_01_morning_after:
     scene bg ch01_master_bedroom_curtains  # Day 2 morning: day art (darryn)
     with dissolve
     $ lc_phone_clear_story_time()
+    $ cast(ryan="home", leia="camisole_panty")
 
     gf "You were a menace last night, by the way. During the movie. Don't think I forgot."
     mc "Good morning to you too."
@@ -1055,14 +1056,17 @@ label ch01_day2_scene_11_missing_pair:
 
 label ch01_day2_scene_11b_boutique:
 
-    scene bg ch01_d2_boutique
-    with dissolve
-
     friend "Before we head back, can we stop for a second? I need a shirt. The one I brought got sunscreen all down the front."
     maya "You're wearing a shirt. You own, like, twelve versions of that exact shirt, I can tell."
     friend "So this one would be the thirteenth. That's not the argument you think it is."
 
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_mall_arrival
+    with dissolve
     "The mall stop was supposed to take five minutes."
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
     "[friend_name] disappeared toward a menswear rack. Maya made it approximately three storefronts before stopping dead outside a boutique."
 
     maya "Oh. Oh, no."

@@ -27,7 +27,7 @@ class DayTwoWakeUp(unittest.TestCase):
     def test_wake_scene_stages_and_clears_cast_and_story_time(self):
         scene = (GAME / "chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
         body = scene.split("label ch01_day2_scene_01_morning_after:", 1)[1]
-        self.assertIn('$ cast(ryan="home", leia="lounge")', body)
+        self.assertIn('$ cast(ryan="home", leia="camisole_panty")', body)
         self.assertIn('$ cast_remove("leia")', body)
         self.assertIn('$ lc_phone_clear_story_time()', body)
         self.assertIn('$ cast()', body)
