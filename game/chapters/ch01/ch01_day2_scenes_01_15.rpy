@@ -670,12 +670,22 @@ label ch01_day2_scene_05_meet_maya:
 
     scene bg ch01_d2_cafe
     with fade
+    # Café outfits only: Maya's green tube top and Leia's white camisole.
+    # Maya has no neutral/blink art yet; her green-top rig defaults to Smile.
+    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
 
     "Maya spotted us before I spotted her."
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_maya_reveal
+    with dissolve
     "A small day bag hung from one shoulder, looking more prepared for an island afternoon than the rest of us were."
 
     maya "[player_name]! Wait, you're tan? Since when do you tan?"
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     "She hugged me the way people do when they've known you too long to bother being polite about it."
     "[girlfriend_name] watched the greeting carefully."
 
@@ -716,20 +726,29 @@ label ch01_day2_scene_05_meet_maya:
     maya "He went red. That's a yes."
 
     "We ordered drinks and found a table near the open side of the café."
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_maya_cafe_01
+    with dissolve
     maya "So. Four years. Tell me everything. No, wait, tell me the bad stuff first, he already told me the good stuff."
     gf "Bad stuff. There's a lot of bad stuff, where do I even start?"
     maya "Start here. I need to know one thing."
     gf "That sounds threatening. Okay. Go."
     maya "Has he always taken twenty minutes to decide what to eat?"
     gf "Oh my God. Yes. Every single time."
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     mc "This is character assassination. I'd like that on the record."
     gf "He reads the entire menu, picks something, changes his mind, asks the waiter what's good, and then orders the first thing anyway."
+    $ face("maya", "skeptical")
     maya "He used to do that at lunch! With a sandwich menu. Six sandwiches."
     gf "He still does it at dinner. He did it last night."
 
     "They looked at each other like two people who'd been studying the same flaw from opposite ends for years."
     mc "I regret this meeting already. Can we go back to before you two met?"
 
+    $ face("maya", "smile")
     maya "Good. That means it's going well. That's how you know."
 
     $ set_story_flag("ch01_d2_scene_05_complete")
@@ -803,9 +822,17 @@ label ch01_day2_scene_07_leia_maya_click:
     maya "No, you have anxiety with luggage. That's different from instincts."
 
     "[girlfriend_name] laughed hard enough to cover her mouth."
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_maya_cafe_02
+    with dissolve
     "Whatever caution she'd brought into meeting Maya was disappearing quickly."
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     maya "What about you? Holiday person or itinerary person?"
+    $ face("leia", "smile")
     gf "I like having a plan. Like, a loose plan. A loose plan with times on it."
     mc "She has a spreadsheet. With tabs."
     gf "One tab! And a spreadsheet is just a plan that respects you."
@@ -895,6 +922,8 @@ label ch01_day2_scene_09_photo_walk:
 
     scene bg ch01_d2_island_day
     with dissolve
+    # No walk/pool/boutique outfits for Maya yet: avoid carrying the café cast.
+    $ cast()
 
     "After brunch, Maya turned a walk through the island shops into a photography project."
 
