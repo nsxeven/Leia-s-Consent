@@ -516,10 +516,6 @@ label ch01_day2_scene_02_breakfast:
     scene cg ch01_d2_breakfast_01
     with fade
     "Breakfast started with the kind of easy rhythm we'd found by the end of yesterday."
-    $ exit_cinematic_mode()
-    scene bg ch01_d2_breakfast
-    with dissolve
-    with dissolve
 
     friend "Oh, look who's alive. I was about to send a search party. I had a whole message drafted and everything."
     gf "Barely. Your couch ate my back."
@@ -532,7 +528,7 @@ label ch01_day2_scene_02_breakfast:
     gf "Your movie had a shark driving a speedboat, [friend_name]. Like, at the wheel."
     friend "And did anyone look away? No. Because it was art."
 
-    "Breakfast settled into the easy rhythm we'd found by the end of yesterday."
+    "[friend_name] grinned over his mug while [girlfriend_name] lifted hers at him. The movie argument wasn't going to survive breakfast."
 
     friend "So what does everyone want to do today? I'm open to anything, honestly. Within reason."
     gf "Something that doesn't involve me wearing dinner again, ideally."
@@ -637,8 +633,6 @@ label ch01_day2_scene_03_maya_message:
 
 label ch01_day2_scene_04_jealousy_callback:
 
-    with dissolve
-
     "The subject should have ended there, but [girlfriend_name]'s curiosity survived breakfast."
 
     if get_story_value("ch01_female_friend_response") == "teased_jealousy":
@@ -656,19 +650,16 @@ label ch01_day2_scene_04_jealousy_callback:
 
     "Whatever tiny tension had been there stayed small enough to joke about."
 
-    # If Ryan answered Maya while the phone prompt was available, the next two
-    # breakfast stills show Leia softening and Julian realizing he was staring.
-    if get_story_value("ch01_d2_maya_lunch_reply"):
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_breakfast_03
-        with dissolve
-        "[girlfriend_name]'s pout softened despite herself."
-        scene cg ch01_d2_breakfast_04
-        with dissolve
-        "[friend_name] suddenly became very interested in his mug."
-        $ exit_cinematic_mode()
-        scene bg ch01_d2_breakfast
-        with dissolve
+    # These are reactions to the conversation, not a reward for using the
+    # optional phone reply. No line assumes Ryan sent a message.
+    $ lc_phone_hud_on_cg = False
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_breakfast_03
+    with dissolve
+    "[girlfriend_name]'s expression eased as the conversation moved on."
+    scene cg ch01_d2_breakfast_04
+    with dissolve
+    "She glanced back at me. [friend_name], caught watching our faces, looked away."
 
     $ set_story_flag("ch01_d2_scene_04_complete")
     jump ch01_day2_scene_05_meet_maya
@@ -676,23 +667,18 @@ label ch01_day2_scene_04_jealousy_callback:
 
 label ch01_day2_scene_05_meet_maya:
 
-    scene bg ch01_d2_cafe
-    with fade
-    # Café outfits only: Maya's green tube top and Leia's white camisole.
-    # Maya's base includes her neutral face; her separate expression PNGs overlay it.
-    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
-
-    "Maya spotted us before I spotted her."
     $ enter_cinematic_mode()
     scene cg ch01_d2_maya_reveal
-    with dissolve
-    "A small day bag hung from one shoulder, looking more prepared for an island afternoon than the rest of us were."
+    with fade
+    "By the time we reached the café, Maya was already waiting at the open doorway. A small day bag hung from one shoulder, looking more prepared for an island afternoon than the rest of us were."
 
     maya "[player_name]! Wait, you're tan? Since when do you tan?"
+    mc "Since yesterday, apparently. Hey, Maya."
 
     $ exit_cinematic_mode()
     scene bg ch01_d2_cafe
     with dissolve
+    # Café outfits only; keep Maya off-screen until after her doorway reveal.
     $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     "She hugged me the way people do when they've known you too long to bother being polite about it."
     "[girlfriend_name] watched the greeting carefully."
@@ -743,19 +729,18 @@ label ch01_day2_scene_05_meet_maya:
     gf "That sounds threatening. Okay. Go."
     maya "Has he always taken twenty minutes to decide what to eat?"
     gf "Oh my God. Yes. Every single time."
-    $ exit_cinematic_mode()
-    scene bg ch01_d2_cafe
-    with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     mc "This is character assassination. I'd like that on the record."
     gf "He reads the entire menu, picks something, changes his mind, asks the waiter what's good, and then orders the first thing anyway."
-    $ face("maya", "skeptical")
     maya "He used to do that at lunch! With a sandwich menu. Six sandwiches."
     gf "He still does it at dinner. He did it last night."
 
     "They looked at each other like two people who'd been studying the same flaw from opposite ends for years."
     mc "I regret this meeting already. Can we go back to before you two met?"
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     $ face("maya", "smile")
     maya "Good. That means it's going well. That's how you know."
 
@@ -835,12 +820,7 @@ label ch01_day2_scene_07_leia_maya_click:
     with dissolve
     "Whatever caution she'd brought into meeting Maya was disappearing quickly."
 
-    $ exit_cinematic_mode()
-    scene bg ch01_d2_cafe
-    with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     maya "What about you? Holiday person or itinerary person?"
-    $ face("leia", "smile")
     gf "I like having a plan. Like, a loose plan. A loose plan with times on it."
     mc "She has a spreadsheet. With tabs."
     gf "One tab! And a spreadsheet is just a plan that respects you."
@@ -861,6 +841,10 @@ label ch01_day2_scene_07_leia_maya_click:
     gf "That's exactly what I do! I manually operate my face!"
     maya "So next time, don't pose. Just talk to whoever's holding the phone."
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
     "[girlfriend_name] scrolled back to one of yesterday's pool photos."
     gf "I did get better eventually, though. Look, by the end I wasn't even posing."
     maya "See? This one's really good. Who took this one?"
@@ -1065,21 +1049,28 @@ label ch01_day2_scene_11b_boutique:
     with dissolve
     "The mall stop was supposed to take five minutes."
     $ exit_cinematic_mode()
-    scene bg ch01_d2_boutique
+    scene bg ch01_d2_mall
     with dissolve
-    "[friend_name] disappeared toward a menswear rack. Maya made it approximately three storefronts before stopping dead outside a boutique."
+    "[friend_name] disappeared toward menswear. Maya made it approximately three storefronts before stopping at a boutique window."
 
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_mall_boutique_window
+    with dissolve
+    "A red dress and a black one stood in the display. Maya pointed at the red one; [girlfriend_name]'s eyes kept drifting toward the black."
     maya "Oh. Oh, no."
     gf "Why did you say that like that?"
-    maya "Come with me. Just come look, that's all."
+    maya "Look at these. Just look, that's all."
     gf "No. I know that voice."
-    maya "You haven't even seen what I'm looking at."
+    maya "I'm only looking at the dresses. You're allowed to look."
     gf "I've known you for, like, four hours, and I already know that voice."
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
     "[girlfriend_name] still followed her inside."
 
     "Maya chose a red asymmetric cutout mini almost immediately. [girlfriend_name] was slower."
-    "She stopped in front of a rack and stared at one outfit long enough for Maya to notice."
+    "She had watched the black dress through the window. Inside, she stopped at a rack and stared at something less daunting long enough for Maya to notice."
 
     maya "That one. You want that one."
     gf "What? I'm just looking."

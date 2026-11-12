@@ -79,6 +79,7 @@ image cg ch01_d2_maya_reveal = At("images/cg/ch02/CH2D2_CG_MayaReveal_01.webp", 
 image cg ch01_d2_maya_cafe_01 = At("images/cg/ch02/CH2D2_CG_MayaCafe_01.webp", prologue_fullscreen)
 image cg ch01_d2_maya_cafe_02 = At("images/cg/ch02/CH2D2_CG_MayaCafe_02.webp", prologue_fullscreen)
 image cg ch01_d2_mall_arrival = At("images/cg/ch02/CH2D2_CG_Mall_01.webp", prologue_fullscreen)
+image cg ch01_d2_mall_boutique_window = At("images/cg/ch02/CH2D2_CG_Mall_02.webp", prologue_fullscreen)
 
 image cg ch01_d2_photo_leia_maya = Composite(
     (1920, 1080),
@@ -181,14 +182,8 @@ image cg ch01_d2_ntr_dream_wrong_room = Composite(
 
 
 
-image bg ch01_d2_boutique = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#d9c9cf"),
-    (0, 700), Transform(Solid("#8b6d73"), xysize=(1920, 380)),
-    (180, 160), Transform(Solid("#eee4e7"), xysize=(520, 500)),
-    (860, 130), Transform(Solid("#c9a8b3"), xysize=(760, 530)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — FASHION BOUTIQUE / CHANGING ROOMS", size=46, color="#352f33"),
-)
+image bg ch01_d2_mall = At("images/backgrounds/chapter 2/ch02_mall.png", prologue_bg_blur)
+image bg ch01_d2_boutique = At("images/backgrounds/chapter 2/ch02_clothingstore.png", prologue_bg_blur)
 
 image cg ch01_d2_boutique_changing_room = Composite(
     (1920, 1080),
