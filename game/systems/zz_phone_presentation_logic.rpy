@@ -231,6 +231,7 @@ init python:
         notify=False,
         notification_app="Messages",
         notification_title=None,
+        display_time=None,
     ):
         # Landing in the chat the player is reading right now = already read
         # (darryn 2026-11-08: no badge after reading a thread from a notification).
@@ -248,6 +249,7 @@ init python:
             attachment_id=attachment_id,
             attachment_label=attachment_label,
             mark_unread=mark_unread,
+            display_time=display_time,
         )
 
         if added and sender_id != "player":

@@ -64,7 +64,16 @@ init 95 python:
         return None
 
     def lc_phone_clock_text():
-        return datetime.datetime.now().strftime("%H:%M")
+        story_time = getattr(renpy.store, "lc_phone_story_time", None)
+        return story_time or datetime.datetime.now().strftime("%H:%M")
+
+    def lc_phone_thread_clock_text(thread_id):
+        """Use the latest stored message time when a thread is revisited."""
+        messages = phone_messages_for_thread(thread_id) if thread_id else []
+        for message in reversed(messages):
+            if message.get("display_time"):
+                return message["display_time"]
+        return lc_phone_clock_text()
 
     def lc_phone_theme():
         theme = getattr(store, "lc_dialogue_theme", "day")
@@ -541,7 +550,7 @@ screen phone_screen():
 
         elif phone_app == "thread":
             add "gui/phone/sprite_match/phone_thread.png"
-            text "[lc_phone_clock_text()]":
+            text "[lc_phone_thread_clock_text(phone_thread)]":
                 style "lc_sw_pixel_bold"
                 size 22
                 color "#303B51"
@@ -603,7 +612,7 @@ screen phone_screen():
                 vbox:
                     xsize LC_PHONE_CONTENT_WIDTH
                     spacing 14
-                    text "Today · [lc_phone_clock_text()]":
+                    text "Today · [lc_phone_thread_clock_text(phone_thread)]":
                         style "lc_sw_hand"
                         size 24
                         color "#8692A6"
@@ -679,7 +688,7 @@ screen phone_screen():
                                             action Show("lc_phone_photo_viewer", photo_asset=_attachment)
                                             add lc_phone_rounded_photo(_attachment, min(320, _bubble_max), 180)
                     if thread_rows and thread_rows[-1]["outgoing"]:
-                        text "Read [lc_phone_clock_text()]":
+                        text "Read [lc_phone_thread_clock_text(phone_thread)]":
                             style "lc_sw_hand"
                             size 22
                             color "#8B99AB"

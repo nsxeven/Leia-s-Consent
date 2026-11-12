@@ -246,6 +246,9 @@ label ch01_day2_scene_01_morning_after:
     "Morning arrived slowly through the useless decorative curtains."
 
     # 11:00 = the time Julian set last night ("Breakfast after 11 or I'm calling the police").
+    # Keep this diegetic time local to the wake beat; it is rollback-safe and
+    # each delivered message keeps its own time when the thread is revisited.
+    $ lc_phone_set_story_time("11:00")
     $ lc_sfx("phone_notify")
     "My phone buzzed against the nightstand until I gave up and looked at it. 11:00, on the dot."
     python:
@@ -282,6 +285,7 @@ label ch01_day2_scene_01_morning_after:
 
     scene bg ch01_master_bedroom_curtains
     with dissolve
+    $ cast(ryan="home", leia="lounge")
 
     "I sat back down on the edge of the bed. She pulled half the duvet back over herself and looked at me like she'd just remembered something and hadn't decided yet whether to bring it up."
 
@@ -407,6 +411,7 @@ label ch01_day2_scene_01_morning_after:
 
     scene bg ch01_master_bedroom_curtains  # Day 2 morning: day art (darryn)
     with dissolve
+    $ lc_phone_clear_story_time()
 
     gf "You were a menace last night, by the way. During the movie. Don't think I forgot."
     mc "Good morning to you too."
@@ -489,6 +494,7 @@ label ch01_day2_scene_01_morning_after:
     gf "He's always awake when there's food. It's like a sixth sense with him."
 
     "She disappeared toward the bathroom, leaving me with a quiet room and far too much time inside my own head."
+    $ cast_remove("leia")
 
     if get_story_value("ch01_dream_response") == "withdrew":
         "I picked up my phone mostly so I would have something else to look at."
@@ -498,6 +504,7 @@ label ch01_day2_scene_01_morning_after:
     else:
         "By the time I checked my phone, the dream had already started to feel like something that belonged to the night before."
 
+    $ cast()
     $ set_story_flag("ch01_d2_scene_01_complete")
     jump ch01_day2_scene_02_breakfast
 

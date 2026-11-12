@@ -15,6 +15,8 @@ default phone_last_open_thread = None
 default phone_reply_prompts = {}
 # Save-safe staged reply steps; advances only while its thread is open.
 default phone_reply_delivery = {}
+# Story-local diegetic time. None falls back to the player's OS clock.
+default lc_phone_story_time = None
 
 # Photos are lightweight metadata entries. Story attachments are auto-indexed
 # here so the Photos app can become a persistent camera roll rather than a stub.
@@ -97,6 +99,18 @@ init python:
         return list(renpy.store.phone_photos)
 
 
+    def lc_phone_set_story_time(value):
+        """Set a rollback-safe diegetic time for the current narrative beat."""
+        renpy.store.lc_phone_story_time = value or None
+        return None
+
+
+    def lc_phone_clear_story_time():
+        """Return phone chrome to the OS clock at a narrative transition."""
+        renpy.store.lc_phone_story_time = None
+        return None
+
+
     def phone_add_message(
         thread_id,
         sender_id,
@@ -108,6 +122,7 @@ init python:
         notify=False,
         notification_title=None,
         save_attachment=True,
+        display_time=None,
     ):
         """Add one story message, optionally with an image attachment.
 
@@ -134,6 +149,9 @@ init python:
             "attachment_id": attachment_id,
             "attachment_label": resolved_attachment_label,
             "incoming": incoming,
+            # Stable per-message time survives later thread views and old saves
+            # simply omit this optional field.
+            "display_time": display_time or getattr(renpy.store, "lc_phone_story_time", None),
             "read": not (incoming and mark_unread),
         })
 
