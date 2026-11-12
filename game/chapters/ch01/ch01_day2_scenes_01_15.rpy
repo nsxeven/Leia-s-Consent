@@ -1049,21 +1049,28 @@ label ch01_day2_scene_11b_boutique:
     with dissolve
     "The mall stop was supposed to take five minutes."
     $ exit_cinematic_mode()
-    scene bg ch01_d2_boutique
+    scene bg ch01_d2_mall
     with dissolve
-    "[friend_name] disappeared toward a menswear rack. Maya made it approximately three storefronts before stopping dead outside a boutique."
+    "[friend_name] disappeared toward menswear. Maya made it approximately three storefronts before stopping at a boutique window."
 
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_mall_boutique_window
+    with dissolve
+    "A red dress and a black one stood in the display. Maya pointed at the red one; [girlfriend_name]'s eyes kept drifting toward the black."
     maya "Oh. Oh, no."
     gf "Why did you say that like that?"
-    maya "Come with me. Just come look, that's all."
+    maya "Look at these. Just look, that's all."
     gf "No. I know that voice."
-    maya "You haven't even seen what I'm looking at."
+    maya "I'm only looking at the dresses. You're allowed to look."
     gf "I've known you for, like, four hours, and I already know that voice."
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
     "[girlfriend_name] still followed her inside."
 
     "Maya chose a red asymmetric cutout mini almost immediately. [girlfriend_name] was slower."
-    "She stopped in front of a rack and stared at one outfit long enough for Maya to notice."
+    "She had watched the black dress through the window. Inside, she stopped at a rack and stared at something less daunting long enough for Maya to notice."
 
     maya "That one. You want that one."
     gf "What? I'm just looking."

@@ -184,8 +184,8 @@ init -2 python:
         "A photo of Leia and Maya.",
         ["ch01_d2_photo_leia_maya"])
     gallery_row("d2_mall_arrival", "ch01_d2", "Island mall",
-        "Julian's quick shirt stop with Leia and Maya.",
-        ["ch01_d2_mall_arrival"])
+        "Julian's quick shirt stop leads Leia and Maya past a boutique window.",
+        [("ch01_d2_mall_arrival", "Arriving"), ("ch01_d2_mall_boutique_window", "At the window")])
     gallery_row("d2_breakfast", "ch01_d2", "Breakfast",
         "A morning table, a message, and one very suspicious glance.",
         [("ch01_d2_breakfast_01", "Easy rhythm"), ("ch01_d2_breakfast_02", "Maya's message"),
