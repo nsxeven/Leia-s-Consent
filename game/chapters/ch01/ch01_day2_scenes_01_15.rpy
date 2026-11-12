@@ -671,7 +671,7 @@ label ch01_day2_scene_05_meet_maya:
     scene bg ch01_d2_cafe
     with fade
     # Café outfits only: Maya's green tube top and Leia's white camisole.
-    # Maya has no neutral/blink art yet; her green-top rig defaults to Smile.
+    # Maya's base includes her neutral face; her separate expression PNGs overlay it.
     $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
 
     "Maya spotted us before I spotted her."
