@@ -83,9 +83,14 @@ class MayaCafeTests(unittest.TestCase):
     def test_maya_rig_uses_only_own_green_top_and_four_faces(self):
         self.assertIn('always "images/sprites/maya/CH2/Chest_GreenTubeTop.png" at leia_chest_breathe', RIG)
         self.assertIn('image maya_green_tube_top = Fixed(lc_sprite_silhouette(', RIG)
+        self.assertIn('attribute neutral null default', RIG)
+        self.assertIn('image maya_green_tube_top neutral = Fixed(lc_sprite_silhouette("maya_green_tube_top_layers neutral")', RIG)
+        self.assertIn('image maya_green_tube_top = Fixed(lc_sprite_silhouette("maya_green_tube_top_layers neutral")', RIG)
         for face in ("smile", "shy", "skeptical", "angry"):
             self.assertIn("image maya_green_tube_top %s = Fixed(" % face, RIG)
-        self.assertNotIn("image maya_green_tube_top neutral", RIG)
+        # Neutral is already painted on the Base; it must have no expression PNG.
+        self.assertNotIn('images/sprites/maya/expressions/Neutral', RIG)
+        self.assertNotIn('attribute smile default', RIG)
         self.assertNotIn('"images/sprites/leia/', RIG)
         self.assertNotIn('always "images/sprites/maya/Base_Nude', RIG)
 
