@@ -36,6 +36,7 @@ label ch01_day2_scene_03_maya_message_v2:
     # Restore the phone HUD for the optional reply, but keep Breakfast_02
     # behind the conversation instead of cutting to the placeholder card.
     $ exit_cinematic_mode()
+    $ lc_phone_hud_on_cg = True
 
     "Maya's name appeared in the notification."
     "[girlfriend_name] saw it before I put the phone down."

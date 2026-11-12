@@ -36,6 +36,9 @@ transform lc_popup_soft_fade_hide:
 
 # Override the original quick-access overlay. The Phone is absent before its
 # story introduction and can be hidden during full-screen cinematic CGs.
+# Breakfast_02 is a deliberate exception: Maya's optional reply is offered
+# while that illustration remains on-screen.
+default lc_phone_hud_on_cg = False
 # Badge rides up with the phone icon's hover, same easing as every button.
 transform lc_badge_lift(up):
     easein (LC_HOVER_IN if up else LC_HOVER_OUT) yoffset (-3 if up else 0)
@@ -44,9 +47,9 @@ screen phone_quick_access():
 
     zorder 110
     default hud_hovered = False
-    # Hidden on every full-screen CG (same detection as the see-through text box),
-    # so CGs never show the button whether or not a scene called enter_cinematic_mode().
-    $ _hud_on = phone_unlocked and phone_hud_enabled and quick_menu and not lc_cg_on_screen() and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen") and not renpy.get_screen("lc_phone_status") and not renpy.get_screen("lc_phone_settings") and not renpy.get_screen("lc_phone_photo_viewer")
+    # Hidden on CGs except where a scene explicitly offers a phone reply
+    # against the held image (the Day Two breakfast conversation).
+    $ _hud_on = phone_unlocked and phone_hud_enabled and quick_menu and (not lc_cg_on_screen() or lc_phone_hud_on_cg) and not renpy.get_screen("main_menu") and not renpy.get_screen("phone_screen") and not renpy.get_screen("lc_phone_status") and not renpy.get_screen("lc_phone_settings") and not renpy.get_screen("lc_phone_photo_viewer")
 
     # Pixel iPhone, centred on the old 108x108 slot (centre 1839, 939).
     # The art is 114x150 with padding; the drawn phone is 84x126. The hit

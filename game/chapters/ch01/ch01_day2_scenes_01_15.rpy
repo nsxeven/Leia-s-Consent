@@ -652,6 +652,7 @@ label ch01_day2_scene_04_jealousy_callback:
 
     # These are reactions to the conversation, not a reward for using the
     # optional phone reply. No line assumes Ryan sent a message.
+    $ lc_phone_hud_on_cg = False
     $ enter_cinematic_mode()
     scene cg ch01_d2_breakfast_03
     with dissolve
