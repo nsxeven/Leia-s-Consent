@@ -440,3 +440,38 @@ image leia_lounge flustered = Fixed(lc_sprite_silhouette("leia_lounge_layers flu
 image leia_lounge skeptical = Fixed(lc_sprite_silhouette("leia_lounge_layers skeptical"), xysize=(941, 1672))
 image leia_lounge angry = Fixed(lc_sprite_silhouette("leia_lounge_layers angry"), xysize=(941, 1672))
 image leia_lounge ahegao = Fixed(lc_sprite_silhouette("leia_lounge_layers ahegao"), xysize=(941, 1672))
+
+# Day Two bedroom after the waking CG: the supplied white camisole and panties.
+# Keep the established Leia blink, expression, hair and breathing mechanics.
+layeredimage leia_camisole_panty_layers:
+    always "images/sprites/leia/CH2/Base_CamisolePanty.png"
+    always "images/sprites/leia/CH2/Chest_CamisolePanty.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_camisole_panty neutral = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers neutral"), xysize=(941, 1672))
+image leia_camisole_panty smile = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers smile"), xysize=(941, 1672))
+image leia_camisole_panty shy = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers shy"), xysize=(941, 1672))
+image leia_camisole_panty pout = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers pout"), xysize=(941, 1672))
+image leia_camisole_panty flustered = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers flustered"), xysize=(941, 1672))
+image leia_camisole_panty skeptical = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers skeptical"), xysize=(941, 1672))
+image leia_camisole_panty angry = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers angry"), xysize=(941, 1672))
+image leia_camisole_panty ahegao = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers ahegao"), xysize=(941, 1672))

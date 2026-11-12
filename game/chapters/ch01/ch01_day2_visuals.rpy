@@ -78,6 +78,7 @@ image cg ch01_d2_leia_waking = At("images/cg/ch02/CH2D2_CG_LeiaSleeping_02.webp"
 image cg ch01_d2_maya_reveal = At("images/cg/ch02/CH2D2_CG_MayaReveal_01.webp", prologue_fullscreen)
 image cg ch01_d2_maya_cafe_01 = At("images/cg/ch02/CH2D2_CG_MayaCafe_01.webp", prologue_fullscreen)
 image cg ch01_d2_maya_cafe_02 = At("images/cg/ch02/CH2D2_CG_MayaCafe_02.webp", prologue_fullscreen)
+image cg ch01_d2_mall_arrival = At("images/cg/ch02/CH2D2_CG_Mall_01.webp", prologue_fullscreen)
 
 image cg ch01_d2_photo_leia_maya = Composite(
     (1920, 1080),
