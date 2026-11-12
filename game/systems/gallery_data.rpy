@@ -176,6 +176,10 @@ init -2 python:
     gallery_row("d2_morning", "ch01_d2", "Sleeping beauty",
         "Day Two, 11:00. Julian's alarm text goes off; Leia does not.",
         [("ch01_d2_leia_sleeping", "Asleep"), ("ch01_d2_leia_waking", "Waking up")])
+    gallery_row("d2_meet_maya", "ch01_d2", "Meeting Maya",
+        "Maya arrives at the café; the first conversation turns into a new friendship.",
+        [("ch01_d2_maya_reveal", "At the door"), ("ch01_d2_maya_cafe_01", "At the table"),
+         ("ch01_d2_maya_cafe_02", "Getting along")])
     gallery_row("d2_photo_leia_maya", "ch01_d2", "Leia and Maya",
         "A photo of Leia and Maya.",
         ["ch01_d2_photo_leia_maya"])
