@@ -182,8 +182,8 @@ image cg ch01_d2_ntr_dream_wrong_room = Composite(
 
 
 
-image bg ch01_d2_mall = At("images/backgrounds/chapter 2/ch02_mall.png", prologue_bg_blur)
-image bg ch01_d2_boutique = At("images/backgrounds/chapter 2/ch02_clothingstore.png", prologue_bg_blur)
+image bg ch01_d2_mall = At("images/backgrounds/chapter 2/ch02_mall.webp", prologue_bg_blur)
+image bg ch01_d2_boutique = At("images/backgrounds/chapter 2/ch02_clothingstore.webp", prologue_bg_blur)
 
 image cg ch01_d2_boutique_changing_room = Composite(
     (1920, 1080),
