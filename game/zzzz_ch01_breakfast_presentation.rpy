@@ -1,15 +1,11 @@
-# A clearly labelled opt-in to the mature Julian angle. The caller shows the
-# CG as a story image when chosen so its separate gallery page can unlock.
-screen lc_breakfast_julian_pov():
-    modal True
-    zorder 100
-
-    textbutton "View Julian's POV (18+)":
-        xalign 0.50
-        yalign 0.88
-        text_size 32
-        action Return("pov")
-    textbutton "Continue breakfast":
-        xalign 0.92
-        yalign 0.94
-        action Return("continue")
+# Day Two breakfast: the same stable CG id remains mapped to the mature
+# Gallery page. The registry owns only the opt-in cue and image scope.
+init 1 python:
+    lc_pov_register(
+        "d2_breakfast_julian",
+        image="cg ch01_d2_breakfast_julian_pov",
+        source="cg ch01_d2_breakfast_02",
+        position=(1660, 240),
+        title="Julian's POV",
+        mature=True,
+    )

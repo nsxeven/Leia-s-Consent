@@ -32,13 +32,7 @@ label ch01_day2_scene_03_maya_message_v2:
     $ enter_cinematic_mode()
     scene cg ch01_d2_breakfast_02
     with dissolve
-    call screen lc_breakfast_julian_pov
-    if _return == "pov":
-        scene cg ch01_d2_breakfast_julian_pov
-        with dissolve
-        "[girlfriend_name] leaned over the breakfast counter. [friend_name]'s phone stayed in his hand while he glanced up, then he looked away without saying anything."
-        scene cg ch01_d2_breakfast_02
-        with dissolve
+    $ lc_pov_begin("d2_breakfast_julian")
     # Restore the phone HUD for the optional reply, but keep Breakfast_02
     # behind the conversation instead of cutting to the placeholder card.
     $ exit_cinematic_mode()
@@ -63,6 +57,7 @@ label ch01_day2_scene_03_maya_message_v2:
         ], "alive")
 
     $ set_story_flag("ch01_d2_maya_meetup_confirmed")
+    $ lc_pov_end()
     jump ch01_day2_scene_04_jealousy_callback
 
 
