@@ -33,6 +33,12 @@ label ch01_day2_scene_03_maya_message_v2:
     scene cg ch01_d2_breakfast_02
     with dissolve
     call screen lc_breakfast_julian_pov
+    if _return == "pov":
+        scene cg ch01_d2_breakfast_julian_pov
+        with dissolve
+        "[girlfriend_name] leaned over the breakfast counter. [friend_name]'s phone stayed in his hand while he glanced up, then he looked away without saying anything."
+        scene cg ch01_d2_breakfast_02
+        with dissolve
     # Restore the phone HUD for the optional reply, but keep Breakfast_02
     # behind the conversation instead of cutting to the placeholder card.
     $ exit_cinematic_mode()
