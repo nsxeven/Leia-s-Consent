@@ -1325,7 +1325,7 @@ label ch01_day2_scene_11b_boutique:
     if d2_mall_ryan_present:
         $ set_story_flag("ch01_d2_boutique_shop_open")
         if LC_SHOP_ENABLED:
-            "The boutique's catalogue was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe; whether she actually agreed to wear it later was a separate question."
+            "The boutique's catalog was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe; whether she actually agreed to wear it later was a separate question."
             $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
             call screen shop_screen
         else:
