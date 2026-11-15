@@ -264,10 +264,16 @@ transform lc_pov_hover_pop:
         ease 0.7 zoom 1.12
         repeat
 
-transform lc_pov_static(a=1.0, z=1.0):
-    alpha a zoom z
-
 init python:
+    def lc_pov_static(a=1.0, z=1.0):
+        """Fixed alpha/zoom wrapper with the same call shape as the ATL cue
+        transforms: lc_pov_static(a, z)(child). A plain function, because a
+        parameterised ATL transform would bind `child` to its next positional
+        parameter (z) and crash with "must be real number, not str"."""
+        def apply(child):
+            return Transform(child, alpha=a, zoom=z)
+        return apply
+
     _lc_pov_art_cache = {}
 
     def lc_pov_cue_art(size, hover=False, still=False, bang=False):

@@ -63,6 +63,26 @@ class HiddenPovHardeningTests(unittest.TestCase):
         # Breakfast keeps its old sparkle centre: 64x64 slot at (1660, 240) + 32.
         self.assertIn("center=(1692, 272)", self.registry)
 
+    def test_static_cue_path_never_binds_child_to_zoom(self):
+        # Regression: an ATL `transform lc_pov_static(a, z)` called as
+        # lc_pov_static(a)(child) bound the image path to z and crashed the
+        # Full/Developer cue and reduced motion.
+        self.assertNotIn("transform lc_pov_static", self.system)
+        self.assertIn("def lc_pov_static(a=1.0, z=1.0):", self.system)
+        self.assertIn("return Transform(child, alpha=a, zoom=z)", self.system)
+        # Execute the real helper with a stand-in Transform.
+        start = self.system.index("    def lc_pov_static(")
+        end = self.system.index("        return apply", start) + len("        return apply")
+        source = "\n".join(line[4:] for line in self.system[start:end].splitlines())
+        calls = []
+        scope = {"Transform": lambda child, **kw: calls.append((child, kw)) or kw}
+        exec(source, scope)
+        for a, z in ((0.5, 1.0), (0.75, 1.0), (1.0, 1.1)):
+            kw = scope["lc_pov_static"](a, z)("gui/pov/glow_idle.svg")
+            self.assertIsInstance(kw["zoom"], float)
+            self.assertIsInstance(kw["alpha"], float)
+        self.assertTrue(all(child == "gui/pov/glow_idle.svg" for child, _ in calls))
+
     def test_registration_is_validated_after_init(self):
         self.assertIn("init 999 python:", self.system)
         self.assertIn("renpy.has_image(entry[key], exact=True)", self.system)
