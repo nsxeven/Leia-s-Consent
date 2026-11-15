@@ -203,8 +203,15 @@ init python:
             return "Locked CG"
         return gallery_customize_names(entry["title"])
 
+    def gallery_is_hidden_pov(gallery_id):
+        """True when a Hidden POV registration unlocks this row (systems/hidden_pov.rpy)."""
+        registry = getattr(store, "LC_POV_OPPORTUNITIES", None) or {}
+        return any(e.get("gallery_id") == gallery_id for e in registry.values())
+
     def gallery_display_description(gallery_id):
         entry = get_gallery_entry(gallery_id)
+        if entry is not None and not is_gallery_unlocked(gallery_id) and gallery_is_hidden_pov(gallery_id):
+            return "A hidden moment. Look for the sparkle during the story."
         if entry is None or not is_gallery_unlocked(gallery_id):
             return "Discover this scene in the story to unlock it here."
         return gallery_customize_names(entry["description"])

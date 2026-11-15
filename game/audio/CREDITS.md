@@ -64,6 +64,8 @@ Processing: trimmed, faded, loudness-balanced and encoded to OGG Vorbis 44.1 kHz
 
 Name-card typing sounds `ui/key_1`..`ui/key_6`, `ui/key_back`, `ui/key_enter`: cut from [Keyboard single key presses.wav](https://freesound.org/people/5ro4/sounds/609534/) (#609534) by 5ro4, CC0 1.0.
 
+Hidden POV sparkle chime (`LC_POV_CUE_AUDIO`, embedded in `systems/hidden_pov_chime.rpy`): synthesised in-house with numpy by `tools/gen_pov_cue_assets.py` (original work, no third-party source).
+
 Polaroid hover sound `ui/tock`: synthesised in-house (original work, no third-party source).
 
 Drink splash `sfx/drink_spill`: supplied by the project developer (replaces the earlier Freesound spill).

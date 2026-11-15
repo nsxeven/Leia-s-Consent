@@ -26,7 +26,7 @@ screen gallery_card(gallery_id):
         if unlocked:
             action Show("gallery_preview_screen", gallery_id=gallery_id)
         else:
-            action Function(renpy.notify, "This gallery entry is still locked.")
+            action Function(renpy.notify, ("A hidden moment: look for the sparkle during the story." if gallery_is_hidden_pov(gallery_id) else "This gallery entry is still locked."))
 
         vbox:
             spacing 11
@@ -49,6 +49,15 @@ screen gallery_card(gallery_id):
                             spacing 6
                             text "MATURE" size 34 color "#f3c9cf" xalign 0.5
                             text "18+  /  open to view" size 17 color "#eadde7" xalign 0.5
+                    elif gallery_is_hidden_pov(gallery_id):
+                        # Missed optional POV: a spoiler-free nudge, no title or art.
+                        vbox:
+                            xalign 0.5
+                            yalign 0.5
+                            spacing 6
+                            add "gui/cursor/sparkle_idle.png" xalign 0.5
+                            text "HIDDEN MOMENT" size 30 color "#f3dcae" xalign 0.5
+                            text "look for the sparkle" size 19 color "#d6c8e0" xalign 0.5
                     else:
                         vbox:
                             xalign 0.5
