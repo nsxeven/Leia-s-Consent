@@ -280,7 +280,7 @@ label ch01_day2_scene_01_morning_after:
 
     "She dragged a fist across her face and blinked up at me, eyes not quite on duty yet."
     gf "Why are you standing? Why are you already standing, that's so aggressive."
-    gf "And it's eleven-thirty. I negotiated eleven-thirty. He was there. You were there."
+    gf "It's supposed to be eleven-thirty. I negotiated eleven-thirty. He was there. You were there."
     mc "I'll tell him you said that."
 
     scene bg ch01_master_bedroom_curtains
@@ -338,76 +338,97 @@ label ch01_day2_scene_01_morning_after:
     $ d2_morning_pool_photos = ch01_pool_capture_assets()
     $ d2_morning_withdrew = get_story_value("ch01_dream_response") == "withdrew"
 
-    "[girlfriend_name] reached for her phone and opened the photos [friend_name] had sent the night before."
-    gf "I still think he was way too pleased with himself, sending these at midnight like a proud dad, but..."
-    gf "This one's actually not bad. Like, I'd let my mom see this one."
+    if d2_morning_pool_photos:
+        "[girlfriend_name] reached for her phone and opened the photos [friend_name] had sent the night before."
+        gf "I still think he was way too pleased with himself, sending these at midnight like a proud dad, but..."
+        gf "This one's actually not bad. Like, I'd let my mom see this one."
 
-    $ renpy.scene()
-    $ renpy.show("cg " + d2_morning_pool_photos[0])
-    with dissolve
+        $ renpy.scene()
+        $ renpy.show("cg " + d2_morning_pool_photos[0])
+        with dissolve
 
-    gf "What do you think? Be honest. Actually, no, be nice first, then honest."
+        gf "What do you think? Be honest. Actually, no, be nice first, then honest."
 
-    if d2_morning_withdrew:
-        "I looked at the photo. For a second, yesterday and the dream tried to occupy the same space in my head."
-        mc "Yeah. It's nice."
-        gf "...That's it?"
-        mc "What? It is nice."
-        gf "No, it's— yeah. Nothing. It is nice."
-        "Her eyes returned to the phone before mine did."
-    elif get_story_value("ch01_dream_response") == "curious":
-        "She looked more comfortable in the photo than she had while [friend_name] was taking it."
-        mc "You look really good. Comfortable, even."
-        gf "Comfortable? I was dying. I was holding my stomach in the entire time."
-        mc "Well, it doesn't look like it. You look confident."
-        gf "I was trying so hard to look confident. That's the face of a woman trying very hard."
-        mc "It worked, then."
+        if d2_morning_withdrew:
+            "I looked at the photo. For a second, yesterday and the dream tried to occupy the same space in my head."
+            mc "Yeah. It's nice."
+            gf "...That's it?"
+            mc "What? It is nice."
+            gf "No, it's— yeah. Nothing. It is nice."
+            "Her eyes returned to the phone before mine did."
+        elif get_story_value("ch01_dream_response") == "curious":
+            "She looked more comfortable in the photo than she had while [friend_name] was taking it."
+            mc "You look really good. Comfortable, even."
+            gf "Comfortable? I was dying. I was holding my stomach in the entire time."
+            mc "Well, it doesn't look like it. You look confident."
+            gf "I was trying so hard to look confident. That's the face of a woman trying very hard."
+            mc "It worked, then."
+        else:
+            mc "I like it. You look happy in it."
+            gf "That sounded suspiciously easy. You didn't even zoom in."
+            mc "I don't need to zoom in. You're asking me if I like a photo of my girlfriend, babe. It's not a hard question."
+            gf "That's actually a good answer. Annoyingly."
+
+        if len(d2_morning_pool_photos) >= 2:
+            "[girlfriend_name] swiped to the next photo."
+            $ renpy.scene()
+            $ renpy.show("cg " + d2_morning_pool_photos[1])
+            with dissolve
+
+            if d2_morning_withdrew:
+                "She studied it quietly this time, no longer asking me to judge it."
+            elif get_story_value("ch01_dream_response") == "curious":
+                gf "Wait, I actually like this one more. My arm's doing a weird thing, but my face is better."
+                mc "You look more relaxed in this one."
+                gf "Maybe I was getting used to it? By then I'd kind of stopped thinking about the camera."
+                "The admission seemed to surprise her slightly less than it surprised me."
+            else:
+                gf "Wait, no, this one might be better. Is this one better?"
+                mc "You're going to make me rank them, aren't you?"
+                gf "Obviously. Top three, with reasons."
+
+        if len(d2_morning_pool_photos) >= 3:
+            "Her thumb moved again."
+            $ renpy.scene()
+            $ renpy.show("cg " + d2_morning_pool_photos[2])
+            with dissolve
+
+            if d2_morning_withdrew:
+                "Another good photo. Another moment where she seemed more interested in sharing it with me than I was capable of being."
+                "[girlfriend_name] lingered on it for a second, then locked the phone without asking."
+            elif get_story_value("ch01_dream_response") == "curious":
+                gf "I definitely wasn't this comfortable at the start. Not even close."
+                mc "No. You really weren't."
+                gf "Is that a bad thing?"
+                "There was no accusation in the question. She genuinely wanted to know."
+                mc "I don't know yet. I mean, I don't think so. I just don't know what it is yet."
+                gf "That's honest, at least. I'll take honest."
+            else:
+                gf "That one. That's my favorite, final answer."
+                mc "I thought the last one was your favorite."
+                gf "I'm allowed to change my mind, it's my face."
+                mc "In the last four seconds?"
+                gf "That's called growth, babe."
     else:
-        mc "I like it. You look happy in it."
-        gf "That sounded suspiciously easy. You didn't even zoom in."
-        mc "I don't need to zoom in. You're asking me if I like a photo of my girlfriend, babe. It's not a hard question."
-        gf "That's actually a good answer. Annoyingly."
-
-    if len(d2_morning_pool_photos) >= 2:
-        "[girlfriend_name] swiped to the next photo."
+        # No solo captures: the Day 1 photoshoot was stopped or rushed, and
+        # Julian deleted them. The group selfie still exists.
+        "[girlfriend_name] reached for her phone and scrolled back to yesterday's group selfie."
+        $ d2_morning_group_selfie = ("ch01_photo_group_blue" if get_story_value("ch01_pool_outfit", "pool_conservative") == "pool_bolder" else "ch01_photo_group_white")
         $ renpy.scene()
-        $ renpy.show("cg " + d2_morning_pool_photos[1])
+        $ renpy.show("cg " + d2_morning_group_selfie)
         with dissolve
 
+        gf "At least we still have this one. I'm the only person in it who looks like they knew a camera was happening."
         if d2_morning_withdrew:
-            "She studied it quietly this time, no longer asking me to judge it."
-        elif get_story_value("ch01_dream_response") == "curious":
-            gf "Wait, I actually like this one more. My arm's doing a weird thing, but my face is better."
-            mc "You look more relaxed in this one."
-            gf "Maybe I was getting used to it? By then I'd kind of stopped thinking about the camera."
-            "The admission seemed to surprise her slightly less than it surprised me."
+            mc "Yeah. It's a good one."
+            gf "You barely looked."
+            mc "I looked. It's a good one."
+            "She locked the phone after a second and didn't ask again."
         else:
-            gf "Wait, no, this one might be better. Is this one better?"
-            mc "You're going to make me rank them, aren't you?"
-            gf "Obviously. Top three, with reasons."
-
-    if len(d2_morning_pool_photos) >= 3:
-        "Her thumb moved again."
-        $ renpy.scene()
-        $ renpy.show("cg " + d2_morning_pool_photos[2])
-        with dissolve
-
-        if d2_morning_withdrew:
-            "Another good photo. Another moment where she seemed more interested in sharing it with me than I was capable of being."
-            "[girlfriend_name] lingered on it for a second, then locked the phone without asking."
-        elif get_story_value("ch01_dream_response") == "curious":
-            gf "I definitely wasn't this comfortable at the start. Not even close."
-            mc "No. You really weren't."
-            gf "Is that a bad thing?"
-            "There was no accusation in the question. She genuinely wanted to know."
-            mc "I don't know yet. I mean, I don't think so. I just don't know what it is yet."
-            gf "That's honest, at least. I'll take honest."
-        else:
-            gf "That one. That's my favorite, final answer."
-            mc "I thought the last one was your favorite."
-            gf "I'm allowed to change my mind, it's my face."
-            mc "In the last four seconds?"
-            gf "That's called growth, babe."
+            mc "You look happy in it."
+            gf "I was trying not to drop my phone in the pool. That's concentration, not happiness."
+            mc "Still looks happy."
+            gf "I'll take it. It's the only decent one that survived yesterday."
 
     scene bg ch01_master_bedroom_curtains  # Day 2 morning: day art (darryn)
     with dissolve
@@ -679,7 +700,10 @@ label ch01_day2_scene_05_meet_maya:
     scene bg ch01_d2_cafe
     with dissolve
     # Café outfits only; keep Maya off-screen until after her doorway reveal.
-    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
+    # Julian's café/mall CGs show the black button-up (evening / BASE_BlackShirt).
+    # TODO: Leia's café/mall CGs show a white off-shoulder top and denim shorts;
+    # no sprite exists for that outfit yet, so she stays on "lounge" until it lands.
+    $ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")
     "She hugged me the way people do when they've known you too long to bother being polite about it."
     "[girlfriend_name] watched the greeting carefully."
 
@@ -740,7 +764,7 @@ label ch01_day2_scene_05_meet_maya:
     $ exit_cinematic_mode()
     scene bg ch01_d2_cafe
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
+    $ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")
     $ face("maya", "smile")
     maya "Good. That means it's going well. That's how you know."
 
@@ -844,7 +868,7 @@ label ch01_day2_scene_07_leia_maya_click:
     $ exit_cinematic_mode()
     scene bg ch01_d2_cafe
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")
+    $ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")
     "[girlfriend_name] scrolled back to one of yesterday's pool photos."
     gf "I did get better eventually, though. Look, by the end I wasn't even posing."
     maya "See? This one's really good. Who took this one?"
@@ -917,7 +941,7 @@ label ch01_day2_scene_09_photo_walk:
     # No walk/pool/boutique outfits for Maya yet: avoid carrying the café cast.
     $ cast()
 
-    "After brunch, Maya turned a walk through the island shops into a photography project."
+    "After lunch, Maya turned a walk through the island shops into a photography project."
 
     "There was no urgency to it. We drifted between shaded storefronts, stopped whenever somebody saw something interesting, and argued about whether [friend_name] needed another pair of sunglasses."
 
@@ -1062,7 +1086,7 @@ label ch01_day2_scene_11b_boutique:
     maya "Look at these. Just look, that's all."
     gf "No. I know that voice."
     maya "I'm only looking at the dresses. You're allowed to look."
-    gf "I've known you for, like, four hours, and I already know that voice."
+    gf "I've known you for, like, a couple of hours, and I already know that voice."
 
     $ exit_cinematic_mode()
     scene bg ch01_d2_boutique
@@ -1301,7 +1325,7 @@ label ch01_day2_scene_11b_boutique:
     if d2_mall_ryan_present:
         $ set_story_flag("ch01_d2_boutique_shop_open")
         if LC_SHOP_ENABLED:
-            "The boutique's catalogue was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe; whether she actually agreed to wear it later was a separate question."
+            "The boutique's catalog was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe; whether she actually agreed to wear it later was a separate question."
             $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
             call screen shop_screen
         else:
@@ -1524,7 +1548,7 @@ label ch01_day2_scene_11b_boutique:
         maya "Then maybe give him a little time. And if he's still doing it tonight, tell him. Out loud. He's always been better once somebody makes him say it."
         gf "Yeah. Okay."
         "For once, [girlfriend_name] let the problem sit instead of immediately trying to solve it."
-        "Maya, who I'd known for years, was explaining me to my girlfriend, who'd met her that morning."
+        "Maya, who I'd known for years, was explaining me to my girlfriend, who'd met her at lunch."
         think "Neither of them had said one unfair thing. Somehow that was the part that stung."
 
     $ d2_overheard_own_text = format_choice("ch01_d2_overheard_own", "Put the drinks down and own it.")
@@ -1678,7 +1702,7 @@ label ch01_day2_scene_14_tie_foreshadow:
     else:
         "[girlfriend_name] changed into the swimsuit she already trusted while Maya borrowed the mirror and most of the counter space."
         maya "You know what I like about you?"
-        gf "We've known each other four hours."
+        gf "We've known each other a couple of hours."
         maya "Exactly. Low sample size. No pressure."
 
     $ set_story_flag("ch01_d2_scene_14_complete")
