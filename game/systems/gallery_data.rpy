@@ -176,6 +176,13 @@ init -2 python:
     gallery_row("d2_morning", "ch01_d2", "Sleeping beauty",
         "Day Two, 11:00. Julian's alarm text goes off; Leia does not.",
         [("ch01_d2_leia_sleeping", "Asleep"), ("ch01_d2_leia_waking", "Waking up")])
+    gallery_row("d2_breakfast", "ch01_d2", "Breakfast",
+        "A morning table, a message, and one very suspicious glance.",
+        [("ch01_d2_breakfast_01", "Easy rhythm"), ("ch01_d2_breakfast_02", "Maya's message"),
+         ("ch01_d2_breakfast_03", "Pout softening"), ("ch01_d2_breakfast_04", "Caught")])
+    gallery_row("d2_breakfast_pov", "ch01_d2", "Julian's view",
+        "A glance that should probably have stayed a glance.",
+        [("ch01_d2_breakfast_julian_pov", "Julian's POV")], mature=True)
     gallery_row("d2_meet_maya", "ch01_d2", "Meeting Maya",
         "Maya arrives at the café; the first conversation turns into a new friendship.",
         [("ch01_d2_maya_reveal", "At the door"), ("ch01_d2_maya_cafe_01", "At the table"),
@@ -186,13 +193,6 @@ init -2 python:
     gallery_row("d2_mall_arrival", "ch01_d2", "Island mall",
         "Julian's quick shirt stop leads Leia and Maya past a boutique window.",
         [("ch01_d2_mall_arrival", "Arriving"), ("ch01_d2_mall_boutique_window", "At the window")])
-    gallery_row("d2_breakfast", "ch01_d2", "Breakfast",
-        "A morning table, a message, and one very suspicious glance.",
-        [("ch01_d2_breakfast_01", "Easy rhythm"), ("ch01_d2_breakfast_02", "Maya's message"),
-         ("ch01_d2_breakfast_03", "Pout softening"), ("ch01_d2_breakfast_04", "Caught")])
-    gallery_row("d2_breakfast_pov", "ch01_d2", "Julian's view",
-        "A glance that should probably have stayed a glance.",
-        [("ch01_d2_breakfast_julian_pov", "Julian's POV")], mature=True)
     gallery_row("d2_boutique", "ch01_d2", "Boutique",
         "Maya pushes Leia to try on the cutout mini. Pages depend on who is there.",
         [("ch01_d2_boutique_changing_room", "Changing room"), ("ch01_d2_boutique_reveal_ryan", "Reveal (Ryan)"),

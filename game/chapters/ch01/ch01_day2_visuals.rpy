@@ -24,13 +24,7 @@ image bg ch01_d2_breakfast = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — VILLA BREAKFAST", size=46, color="#352f2b"),
 )
 
-image bg ch01_d2_cafe = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#d8c2a1"),
-    (0, 720), Transform(Solid("#8d6c50"), xysize=(1920, 360)),
-    (1080, 120), Transform(Solid("#8fcbd7"), xysize=(650, 470)),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — ISLAND CAFE / BRUNCH", size=46, color="#ffffff"),
-)
+image bg ch01_d2_cafe = At("images/backgrounds/chapter 2/ch02_cafe.webp", prologue_bg_blur)
 
 image bg ch01_d2_island_day = Composite(
     (1920, 1080),

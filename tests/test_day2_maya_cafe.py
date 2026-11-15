@@ -44,8 +44,8 @@ class MayaCafeTests(unittest.TestCase):
             segment = source.split("scene cg ch01_d2_maya_%s" % cg, 1)[1].split(next_action, 1)[0]
             self.assertEqual(segment.count("$ exit_cinematic_mode()"), 1)
             self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", segment)
-            self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', segment)
-        self.assertIn('cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', source)
+            self.assertIn('$ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', segment)
+        self.assertIn('cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', source)
 
     def test_all_three_scene_06_choices_rejoin_before_friendship_cg(self):
         choices = scene("ch01_day2_scene_06_jealousy_test")
@@ -62,7 +62,7 @@ class MayaCafeTests(unittest.TestCase):
         segment = source.split("scene cg ch01_d2_maya_cafe_02", 1)[1].split('maya "What about you?', 1)[0]
         self.assertEqual(segment.count("$ exit_cinematic_mode()"), 1)
         self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", segment)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', segment)
+        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', segment)
 
     def test_walk_photo_is_separate_and_cafe_cast_ends(self):
         self.assertIn('image cg ch01_d2_photo_leia_maya = Composite(', VISUALS)
