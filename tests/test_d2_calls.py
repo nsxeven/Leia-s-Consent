@@ -113,7 +113,7 @@ class HiddenPovCueVisibilityTests(unittest.TestCase):
     def test_hovering_the_cue_does_not_advance_dialogue(self):
         self.assertIn("hovered Function(lc_pov_hover_sound)", POV)
         self.assertNotIn("hovered Function(lc_ui_sound", POV)
-        body = POV.split("def lc_pov_hover_sound():", 1)[1].split("\n    def ", 1)[0]
+        body = POV.split("def lc_pov_hover_sound():", 1)[1].split("\n\n", 1)[0]
         self.assertTrue(body.rstrip().endswith("return None"))
 
 
