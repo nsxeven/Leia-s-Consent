@@ -62,17 +62,21 @@ class TripGroupAvatarTest(unittest.TestCase):
 
     def test_generator_outputs_reproduce_committed_avatars(self):
         import importlib.util
-        import io
+        from PIL import Image
         spec = importlib.util.spec_from_file_location(
             "phone_avatar_generator", ROOT / "tools/gen_phone_group_avatars.py")
         generator = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(generator)
         for color in ("White", "Blue"):
             source = ROOT / "game/images/cg/ch01" / "CH1D1_CG_PoolSelfie_Trio_{}.webp".format(color)
-            result = io.BytesIO()
-            generator.render_avatar(source).save(result, format="PNG")
+            generated = generator.render_avatar(source)
             committed = ROOT / "game/gui/phone/sprite_match" / "avatar_group_trio_{}.png".format(color.lower())
-            self.assertEqual(result.getvalue(), committed.read_bytes())
+            # Compare pixels, not raw PNG bytes: Pillow versions encode ICC
+            # profiles and ancillary chunks differently even when the image is identical.
+            with Image.open(committed) as committed_image:
+                self.assertEqual(generated.size, committed_image.size)
+                self.assertEqual(generated.convert("RGBA").tobytes(),
+                                 committed_image.convert("RGBA").tobytes())
 
     def test_story_changes_and_both_effective_screen_locations(self):
         one = (ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
