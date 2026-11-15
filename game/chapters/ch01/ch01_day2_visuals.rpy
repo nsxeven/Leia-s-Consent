@@ -75,7 +75,7 @@ image cg ch01_d2_maya_cafe_02 = At("images/cg/ch02/CH2D2_CG_MayaCafe_02.webp", p
 image cg ch01_d2_mall_arrival = At("images/cg/ch02/CH2D2_CG_Mall_01.webp", prologue_fullscreen)
 image cg ch01_d2_mall_boutique_window = At("images/cg/ch02/CH2D2_CG_Mall_02.webp", prologue_fullscreen)
 # Maya holds up a red and a black dress to compare; Leia weighs in.
-image cg ch01_d2_shop_dresses = At("images/cg/ch02/CH2D2_Shop_01.webp", prologue_fullscreen)
+image cg ch01_d2_shop_dresses = At("images/cg/ch02/CH2D2_CG_Shop_01.webp", prologue_fullscreen)
 
 image cg ch01_d2_photo_leia_maya = Composite(
     (1920, 1080),

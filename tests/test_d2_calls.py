@@ -26,7 +26,7 @@ def block(source, label):
 
 class ShopDressesTests(unittest.TestCase):
     def test_shop_01_is_declared_and_in_the_gallery(self):
-        path = "images/cg/ch02/CH2D2_Shop_01.webp"
+        path = "images/cg/ch02/CH2D2_CG_Shop_01.webp"
         self.assertTrue((GAME / path).is_file())
         self.assertIn('image cg ch01_d2_shop_dresses = At("%s", prologue_fullscreen)' % path, VISUALS)
         self.assertIn('("ch01_d2_shop_dresses", "Red or black?")', GALLERY)
