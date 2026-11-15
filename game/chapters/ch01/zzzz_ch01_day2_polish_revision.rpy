@@ -49,7 +49,7 @@ label ch01_day2_scene_03_maya_message_v2:
     python:
         phone_offer_reply("maya", "ch01_d2_maya_lunch_reply", [
             {"id": "alive", "text": "Alive. Barely. Lunch works, I'll send you where we are.",
-             "followups": [("maya", "Look at you, being organised 👍")]},
+             "followups": [("maya", "Look at you, being organized 👍")]},
             {"id": "leia", "text": "[girlfriend_name] says hi.",
              "followups": [("maya", "Hi [girlfriend_name]! 👋")]},
             {"id": "buying", "text": "Depends. Are you buying?",

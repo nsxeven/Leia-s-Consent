@@ -65,7 +65,7 @@ label ch01_scene_02_villa:
     $ lc_amb("villa_day")
     $ cast(ryan="casual", leia="casual", julian="travel")
 
-    "The cart followed a narrow path through palms and stopped in front of a two-storey villa facing the ocean."
+    "The cart followed a narrow path through palms and stopped in front of a two-story villa facing the ocean."
 
     $ face("leia", "skeptical")
     gf "[friend_name]."
