@@ -83,6 +83,23 @@ class HiddenPovHardeningTests(unittest.TestCase):
             self.assertIsInstance(kw["alpha"], float)
         self.assertTrue(all(child == "gui/pov/glow_idle.svg" for child, _ in calls))
 
+    def test_full_transparency_cue_is_a_red_circular_button(self):
+        for name in ("bang_idle", "bang_hover", "bang_ring"):
+            svg = (ROOT / "game/gui/pov" / (name + ".svg")).read_text(encoding="utf-8")
+            self.assertIn("<circle", svg)
+        idle = (ROOT / "game/gui/pov/bang_idle.svg").read_text(encoding="utf-8")
+        hover = (ROOT / "game/gui/pov/bang_hover.svg").read_text(encoding="utf-8")
+        self.assertIn('fill="#d6334a"', idle)
+        self.assertIn('stroke="#ffffff"', hover)   # white ring highlight on hover
+        self.assertNotIn('stroke="#ffffff"', idle)
+        art = self.system[self.system.index("def lc_pov_cue_art"):self.system.index("screen lc_pov_hotspot():")]
+        bang = art[art.index("if bang:"):]
+        self.assertIn("gui/pov/bang_idle.svg", bang)
+        self.assertIn("gui/pov/bang_hover.svg", bang)
+        self.assertIn("lc_pov_bang_ring", bang)
+        self.assertNotIn("DejaVu", bang)
+        self.assertNotIn('Text("!"', bang)
+
     def test_registration_is_validated_after_init(self):
         self.assertIn("init 999 python:", self.system)
         self.assertIn("renpy.has_image(entry[key], exact=True)", self.system)

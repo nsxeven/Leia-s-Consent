@@ -255,6 +255,27 @@ transform lc_pov_glow_breathe:
     ease 1.4 alpha 0.55 zoom 0.92
     repeat
 
+# Full/Developer red button: an expanding, fading ring behind it while idle,
+# a springy scale-up on hover.
+transform lc_pov_bang_ring:
+    subpixel True
+    zoom 1.0 alpha 0.55
+    linear 1.3 zoom 1.45 alpha 0.0
+    pause 0.5
+    repeat
+
+transform lc_pov_bang_breathe:
+    subpixel True
+    zoom 1.0
+    ease 0.9 zoom 1.03
+    ease 0.9 zoom 1.0
+    repeat
+
+transform lc_pov_bang_hover:
+    subpixel True
+    zoom 0.94
+    easein_back 0.2 zoom 1.1
+
 transform lc_pov_hover_pop:
     subpixel True
     zoom 0.9 alpha 0.85
@@ -283,7 +304,7 @@ init python:
         Idle: warm glow + twinkling gold sparkle. Hover: brighter pink glow,
         the pink hover sparkle and a small springy pulse. still=True replaces
         every animation with a fixed glow (reduced motion). bang=True draws the
-        Full/Developer red "!" instead of the sparkle."""
+        Full/Developer red circular "!" button instead of the sparkle."""
         key = (size, bool(hover), bool(still), bool(bang))
         if key in _lc_pov_art_cache:
             return _lc_pov_art_cache[key]
@@ -298,10 +319,18 @@ init python:
             glow_t = lc_pov_static(0.75) if still else lc_pov_glow_breathe
             star_t = lc_pov_static(1.0) if still else lc_pov_twinkle
         if bang:
-            star = Text("!", font="DejaVuSans.ttf", size=(50 if hover else 46),
-                        color=("#ff5a60" if hover else "#d93238"), outlines=[(2, "#35121a", 0, 0)])
-            star_t = lc_pov_static(1.0)
-            glow_t = lc_pov_static(0.9 if hover else 0.5)
+            # Red circular "!" button (gui/pov/bang_*.svg, tools/gen_pov_cue_assets.py).
+            layers = []
+            if not hover and not still:
+                layers.append(Transform(lc_pov_bang_ring("gui/pov/bang_ring.svg"), xalign=0.5, yalign=0.5))
+            if hover:
+                face = lc_pov_static(1.0, 1.08)("gui/pov/bang_hover.svg") if still else lc_pov_bang_hover("gui/pov/bang_hover.svg")
+            else:
+                face = lc_pov_static(1.0)("gui/pov/bang_idle.svg") if still else lc_pov_bang_breathe("gui/pov/bang_idle.svg")
+            layers.append(Transform(face, xalign=0.5, yalign=0.5))
+            art = Fixed(*layers, xysize=(size, size))
+            _lc_pov_art_cache[key] = art
+            return art
         art = Fixed(
             Transform(glow_t(glow), xalign=0.5, yalign=0.5),
             Transform(star_t(star), xalign=0.5, yalign=0.5),
