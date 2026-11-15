@@ -30,8 +30,8 @@ class MayaCafeTests(unittest.TestCase):
     def test_scene_05_doorway_before_hug_then_table(self):
         source = scene("ch01_day2_scene_05_meet_maya")
         locations = [source.index(part) for part in (
+            '"Maya spotted us before I spotted her."',
             'scene cg ch01_d2_maya_reveal',
-            '"By the time we reached the café, Maya was already waiting at the open doorway.',
             'maya "[player_name]! Wait, you\'re tan?',
             '"She hugged me',
             '"We ordered drinks and found a table',
@@ -39,19 +39,12 @@ class MayaCafeTests(unittest.TestCase):
             'mc "This is character assassination.',
         )]
         self.assertEqual(locations, sorted(locations))
-        # Doorway reveal still cuts back to cafe sprites before the hug.
-        reveal = source.split("scene cg ch01_d2_maya_reveal", 1)[1].split('"She hugged me', 1)[0]
-        self.assertEqual(reveal.count("$ exit_cinematic_mode()"), 1)
-        self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", reveal)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', reveal)
-        # cafe_01 is held through the character-assassination beat, then returns to sprites.
-        cafe_01 = source.split("scene cg ch01_d2_maya_cafe_01", 1)[1]
-        self.assertLess(cafe_01.index('mc "This is character assassination.'),
-                        cafe_01.index("$ exit_cinematic_mode()"))
-        after_cafe_01 = cafe_01.split('mc "I regret this meeting already.', 1)[1]
-        self.assertEqual(after_cafe_01.count("$ exit_cinematic_mode()"), 1)
-        self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", after_cafe_01)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', after_cafe_01)
+        for cg, next_action in (("reveal", '"She hugged me'),
+                                ("cafe_01", 'mc "This is character assassination.')):
+            segment = source.split("scene cg ch01_d2_maya_%s" % cg, 1)[1].split(next_action, 1)[0]
+            self.assertEqual(segment.count("$ exit_cinematic_mode()"), 1)
+            self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", segment)
+            self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', segment)
         self.assertIn('cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', source)
 
     def test_all_three_scene_06_choices_rejoin_before_friendship_cg(self):
@@ -66,14 +59,10 @@ class MayaCafeTests(unittest.TestCase):
                         source.index("scene cg ch01_d2_maya_cafe_02"))
         self.assertLess(source.index("scene cg ch01_d2_maya_cafe_02"),
                         source.index('maya "What about you?'))
-        # cafe_02 is held through the "What about you?" beat, then returns to sprites.
-        cafe_02 = source.split("scene cg ch01_d2_maya_cafe_02", 1)[1]
-        self.assertLess(cafe_02.index('maya "What about you?'),
-                        cafe_02.index("$ exit_cinematic_mode()"))
-        after_cafe_02 = cafe_02.split('maya "So next time, don\'t pose.', 1)[1]
-        self.assertEqual(after_cafe_02.count("$ exit_cinematic_mode()"), 1)
-        self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", after_cafe_02)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', after_cafe_02)
+        segment = source.split("scene cg ch01_d2_maya_cafe_02", 1)[1].split('maya "What about you?', 1)[0]
+        self.assertEqual(segment.count("$ exit_cinematic_mode()"), 1)
+        self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", segment)
+        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="travel", maya="green_tube_top")', segment)
 
     def test_walk_photo_is_separate_and_cafe_cast_ends(self):
         self.assertIn('image cg ch01_d2_photo_leia_maya = Composite(', VISUALS)
