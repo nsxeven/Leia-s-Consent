@@ -60,8 +60,8 @@ class HiddenPovHardeningTests(unittest.TestCase):
         self.assertIn("transform lc_pov_hover_pop:", self.system)
         self.assertTrue((ROOT / "game/gui/pov/glow_idle.svg").is_file())
         self.assertTrue((ROOT / "game/gui/pov/glow_hover.svg").is_file())
-        # Breakfast keeps its old sparkle centre: 64x64 slot at (1660, 240) + 32.
-        self.assertIn("center=(1692, 272)", self.registry)
+        # Breakfast cue sits at Julian's temple, beside and above his eye.
+        self.assertIn("center=(1785, 255)", self.registry)
 
     def test_static_cue_path_never_binds_child_to_zoom(self):
         # Regression: an ATL `transform lc_pov_static(a, z)` called as

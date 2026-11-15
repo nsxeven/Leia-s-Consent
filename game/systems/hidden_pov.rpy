@@ -376,7 +376,13 @@ screen lc_pov_hotspot_body(size):
                     xpos (size // 2 + 8)
                     ypos (size // 2 - 34)
         if mode == "developer":
-            text "[moment_id]" xpos (px + size + 4) ypos (py + size // 2 - 12) size 20 color "#ffdb82" outlines [(2, "#231019", 0, 0)]
+            # Id label beside the hit area; flips to the left near the right edge.
+            $ label_right = px + size + 4 + 240 <= config.screen_width
+            text "[moment_id]":
+                xpos ((px + size + 4) if label_right else (px - 4))
+                xanchor (0.0 if label_right else 1.0)
+                ypos (py + size // 2 - 12)
+                size 20 color "#ffdb82" outlines [(2, "#231019", 0, 0)]
 
 screen lc_pov_viewer(moment_id):
     modal True

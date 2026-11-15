@@ -5,8 +5,8 @@ init 1 python:
         "d2_breakfast_julian",
         image="cg ch01_d2_breakfast_julian_pov",
         source="cg ch01_d2_breakfast_02",
-        # Sparkle centre; same spot as the old 64x64 slot at (1660, 240).
-        center=(1692, 272),
+        # Sparkle centre: beside and just above Julian's eye, at his temple (darryn 2026-11-15).
+        center=(1785, 255),
         title="Julian's POV",
         mature=True,
     )
