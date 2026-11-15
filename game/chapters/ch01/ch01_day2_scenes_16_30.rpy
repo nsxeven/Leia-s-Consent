@@ -1483,7 +1483,8 @@ label ch01_day2_scene_30_bedroom:
         gf "...You're the best part too, babe. Even the weird parts. Come here."
     elif d2_upstairs == "liked":
         "[girlfriend_name] caught me watching her from the bathroom doorway and gave me the same look she'd given me last night, right here, when I'd admitted I didn't hate people noticing her."
-        think "She could've laughed at me. Or gone quiet and wondered what kind of guy says that. Instead she'd checked my face to make sure I meant it, and then actually sat me down and made me talk about it once [friend_name] had gone to bed."
+        think "She could've laughed at me. Or gone quiet and wondered what kind of guy says that."
+        think "Instead she'd checked my face to make sure I meant it, and then actually sat me down and made me talk about it once [friend_name] had gone to bed."
         think "She'd made it something we were in on together, instead of something I had to keep to myself. I still didn't know how to tell her how much that mattered."
         mc "We should do that more. Say the stuff out loud, I mean. Instead of me being all mysterious."
         gf "Oh my god. Are you quoting me to me?"

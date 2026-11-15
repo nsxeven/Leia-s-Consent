@@ -303,7 +303,7 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_spill_02
     with dissolve
 
-    "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more than he probably intended—hard to miss."
+    "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more of him than he probably intended—hard to miss."
     "[girlfriend_name] followed his glance downward."
     "For a second, she forgot to look away."
 
