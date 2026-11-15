@@ -143,6 +143,13 @@ init python:
         renpy.show_screen("lc_pov_viewer", moment_id=moment_id)
         return None
 
+    def lc_pov_hover_sound():
+        # Must return None: a `hovered` action that returns a value ends the
+        # interaction, and lc_ui_sound returns the sound path, so hovering the
+        # cue used to advance the dialogue line.
+        lc_ui_sound("tick", hover=True)
+        return None
+
     def lc_pov_close():
         renpy.hide_screen("lc_pov_viewer")
         return None
@@ -241,18 +248,21 @@ init 999 python:
 # Idle: a gentle twinkle with a warm glow. Hover/focus: the pink hover sparkle,
 # a brighter glow and a small scale pulse. The art is centred in the hit area,
 # so scaling never moves the button or reflows dialogue.
+# Immersive idle is kept clearly visible on bright CGs (playtest: the old
+# 0.72-alpha, 0.85-zoom sparkle was easy to miss): a larger star whose alpha
+# never drops below 0.88 and a fuller glow.
 transform lc_pov_twinkle:
     subpixel True
-    alpha 0.72
+    alpha 0.88
     ease 1.4 alpha 1.0
-    ease 1.4 alpha 0.72
+    ease 1.4 alpha 0.88
     repeat
 
 transform lc_pov_glow_breathe:
     subpixel True
-    alpha 0.55 zoom 0.92
-    ease 1.4 alpha 0.85 zoom 1.0
-    ease 1.4 alpha 0.55 zoom 0.92
+    alpha 0.8 zoom 1.0
+    ease 1.4 alpha 1.0 zoom 1.12
+    ease 1.4 alpha 0.8 zoom 1.0
     repeat
 
 # Full/Developer red button: an expanding, fading ring behind it while idle,
@@ -296,6 +306,9 @@ init python:
         return apply
 
     _lc_pov_art_cache = {}
+    # Sparkle sizes (the 44px cursor art). Hover stays larger than idle.
+    LC_POV_STAR_ZOOM_IDLE = 1.6
+    LC_POV_STAR_ZOOM_HOVER = 1.8
 
     def lc_pov_cue_art(size, hover=False, still=False, bang=False):
         """Centred cue art filling a size x size hit area (cached per state, so a
@@ -310,13 +323,13 @@ init python:
             return _lc_pov_art_cache[key]
         if hover:
             glow = "gui/pov/glow_hover.svg"
-            star = Transform("gui/cursor/sparkle_hover.png", zoom=1.0)
+            star = Transform("gui/cursor/sparkle_hover.png", zoom=LC_POV_STAR_ZOOM_HOVER)
             glow_t = lc_pov_static(1.0, 1.08) if still else lc_pov_hover_pop
             star_t = lc_pov_static(1.0, 1.1) if still else lc_pov_hover_pop
         else:
             glow = "gui/pov/glow_idle.svg"
-            star = Transform("gui/cursor/sparkle_idle.png", zoom=0.85)
-            glow_t = lc_pov_static(0.75) if still else lc_pov_glow_breathe
+            star = Transform("gui/cursor/sparkle_idle.png", zoom=LC_POV_STAR_ZOOM_IDLE)
+            glow_t = lc_pov_static(0.95, 1.06) if still else lc_pov_glow_breathe
             star_t = lc_pov_static(1.0) if still else lc_pov_twinkle
         if bang:
             # Red circular "!" button (gui/pov/bang_*.svg, tools/gen_pov_cue_assets.py).
@@ -331,10 +344,12 @@ init python:
             art = Fixed(*layers, xysize=(size, size))
             _lc_pov_art_cache[key] = art
             return art
-        art = Fixed(
-            Transform(glow_t(glow), xalign=0.5, yalign=0.5),
-            Transform(star_t(star), xalign=0.5, yalign=0.5),
-            xysize=(size, size))
+        layers = [Transform(glow_t(glow), xalign=0.5, yalign=0.5)]
+        if not hover:
+            # Brighter warm core so the idle (Immersive) sparkle reads on dark hair.
+            layers.append(Transform(glow_t(glow), zoom=0.55, xalign=0.5, yalign=0.5))
+        layers.append(Transform(star_t(star), xalign=0.5, yalign=0.5))
+        art = Fixed(*layers, xysize=(size, size))
         _lc_pov_art_cache[key] = art
         return art
 
@@ -366,15 +381,19 @@ screen lc_pov_hotspot_body(size):
             focus_mask None
             alt "Hidden moment: [cue_title]"
             action Function(lc_pov_open, moment_id)
-            hovered Function(lc_ui_sound, "tick", hover=True)
+            hovered Function(lc_pov_hover_sound)
             if mode == "insight":
+                # Gold "!" beside the sparkle; on hover/focus it turns white
+                # with the pink hover rim so it reads as part of the button.
                 text "!":
-                    font "DejaVuSans.ttf"
-                    size 27
-                    color "#efbd55"
-                    outlines [(2, "#432823", 0, 0)]
-                    xpos (size // 2 + 8)
-                    ypos (size // 2 - 34)
+                    font "DejaVuSans-Bold.ttf"
+                    size 32
+                    color "#f4c65c"
+                    hover_color "#ffffff"
+                    outlines [(3, "#432823", 0, 0)]
+                    hover_outlines [(3, "#c2185b", 0, 0), (5, "#43282399", 0, 0)]
+                    xpos (size // 2 + 14)
+                    ypos (size // 2 - 44)
         if mode == "developer":
             # Id label beside the hit area; flips to the left near the right edge.
             $ label_right = px + size + 4 + 240 <= config.screen_width

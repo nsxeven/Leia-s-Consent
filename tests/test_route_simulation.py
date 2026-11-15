@@ -47,14 +47,14 @@ D1 = [
     ["ch01_private_claim", "ch01_private_open", "ch01_private_jealous", "ch01_private_indifferent"],
 ]
 DREAM = ["ch01_dream_ground", "ch01_dream_curiosity", "ch01_dream_withdraw"]
-# Day 2 menus before the pre-split lane snapshot, as they play. The scene 3 Maya
-# menu (ch01_d2_maya_reassure/...) sits in a label overridden by
-# zzzz_ch01_day2_polish_revision.rpy, so it never plays and is left out. The
+# Day 2 menus before the pre-split lane snapshot, as they play. The scene 3
+# "Is she pretty?" menu plays inside ch01_day2_scene_03_maya_message_v2. The
 # boutique go/leave menu only shows on the NTR-risk lane, and the reveal menu
 # only when Ryan went over (both handled in play()). The post-shop "I'm fine."
 # menu is flavor since v0.2.0; the cafe overheard incident is scored in its place.
 D2_PRE = [
     ["ch01_d2_morning_reassure", "ch01_d2_morning_tease", "ch01_d2_morning_dismiss"],
+    ["ch01_d2_maya_reassure", "ch01_d2_maya_tease_jealousy", "ch01_d2_maya_open_honest"],
     ["ch01_d2_maya_include", "ch01_d2_maya_catchup", "ch01_d2_maya_dismiss_leia"],
     ["ch01_d2_photo_pair_encourage", "ch01_d2_photo_pair_redirect", "ch01_d2_photo_pair_shrug"],
     ["ch01_d2_mall_go_to_leia", "ch01_d2_mall_leave_to_maya"],
@@ -62,7 +62,7 @@ D2_PRE = [
      "ch01_d2_mall_reveal_flat"],
     ["ch01_d2_overheard_own", "ch01_d2_overheard_joke", "ch01_d2_overheard_pretend"],
 ]
-MALL_GO, MALL_REVEAL = 3, 4
+MALL_GO, MALL_REVEAL = 4, 5
 POOL = ["ch01_d2_pool_reassure", "ch01_d2_pool_honest_jealous", "ch01_d2_pool_accuse"]
 SUNSET = ["ch01_d2_sunset_connect", "ch01_d2_sunset_partial", "ch01_d2_sunset_ignore_gate"]
 BED = {"ch01_d2_bed_pool_love": "love", "ch01_d2_bed_pool_exhibition": "exhibitionism",
@@ -161,12 +161,12 @@ THREE_SLIPS[13] = NTR                        # + private talk
 PERSONAS = [
     ("pure Love", LOVE, LOVE, {}, ("mixed", True, "love", False)),
     ("Love + Exhibitionism", LE, LE, {}, ("nts_seeded", False, "exhibitionism", False)),
-    ("Love with a playful edge", MIXED_D1, [("Love",)] + [LE] * 6, {}, ("mixed", None, "love", True)),
+    ("Love with a playful edge", MIXED_D1, [("Love",)] + [LE] * 7, {}, ("mixed", None, "love", True)),
     ("Love, two slips on Day 1", TWO_SLIPS, LOVE, {}, ("mixed", False, "love", False)),
     ("three slips on Day 1, then Love", THREE_SLIPS, LOVE, {}, ("ntr_seeded", False, "love", False)),
     # Slow burn both ways: a loving Day 1 doesn't make Day 2 immune. Slipping on every
     # Day 2 answer (six slips) opens the NTR-risk lane; the sunset talk still repairs it.
-    ("Love on Day 1, slips on half of Day 2", LOVE, [LOVE, NTR, LOVE, NTR, LOVE, NTR, LOVE], {},
+    ("Love on Day 1, slips on half of Day 2", LOVE, [LOVE, NTR, LOVE, LOVE, NTR, LOVE, NTR, LOVE], {},
      ("mixed", True, "love", False)),
     ("Love on Day 1, slips all through Day 2", LOVE, NTR, {}, ("mixed", True, "ntr_confirmed", False)),
     ("Love on Day 1, slips all through Day 2, opens up at sunset", LOVE, NTR,
@@ -235,8 +235,9 @@ class RouteSimulationTests(unittest.TestCase):
 
     def test_every_day1_and_day2_menu_offers_a_slip(self):
         # Principle 5: each scored menu has a believable slip, so stamps show a real spread.
-        # Menus without one on purpose: the towel aside with Julian (Leia is off-screen).
-        skip = {"ch01_towel_laugh"}
+        # Menus without one on purpose: the towel aside with Julian (Leia is off-screen),
+        # and the restored scene 3 "Is she pretty?" breakfast menu (original effects kept).
+        skip = {"ch01_towel_laugh", "ch01_d2_maya_reassure"}
         for menu in D1 + [DREAM] + D2_PRE:
             if menu[0] in skip or menu[0] == "ch01_d2_mall_go_to_leia":
                 continue
