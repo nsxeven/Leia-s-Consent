@@ -24,6 +24,7 @@ init -1 python:
     LC_POV_CUE_VOLUME = 0.7
 
 init python:
+    import time as _lc_pov_time
     # Registry is init-time data; each new moment needs only a row and begin/end.
     LC_POV_OPPORTUNITIES = {}
 
@@ -150,8 +151,24 @@ init python:
         lc_ui_sound("tick", hover=True)
         return None
 
+    # Auto-forward grace after the viewer closes. The say line's Auto timer keeps
+    # running while the viewer is up (only lc_pov_afm_callback holds it), so
+    # without this the line advanced the instant the player closed the view.
+    # Closing restarts the line's Auto countdown instead. Plain list, not
+    # rollback-tracked store state.
+    _lc_pov_afm_hold = python_list([0.0])
+
+    def lc_pov_afm_grace():
+        """Seconds of Auto-forward the current line would normally get."""
+        try:
+            what = renpy.filter_text_tags(getattr(renpy.store, "_last_say_what", "") or "", allow=[])
+            return (1.0 * (config.afm_bonus + max(len(what), 1)) / config.afm_characters) * _preferences.afm_time
+        except Exception:
+            return 2.0
+
     def lc_pov_close():
         renpy.hide_screen("lc_pov_viewer")
+        _lc_pov_afm_hold[0] = _lc_pov_time.time() + lc_pov_afm_grace()
         return None
 
     # The say behavior's auto-forward timer consults config.afm_callback before
@@ -160,6 +177,8 @@ init python:
     _lc_pov_prior_afm_callback = config.afm_callback
     def lc_pov_afm_callback():
         if renpy.get_screen("lc_pov_viewer"):
+            return False
+        if _lc_pov_time.time() < _lc_pov_afm_hold[0]:
             return False
         if _lc_pov_prior_afm_callback is not None:
             return _lc_pov_prior_afm_callback()

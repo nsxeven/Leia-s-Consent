@@ -138,5 +138,38 @@ class HiddenPovHardeningTests(unittest.TestCase):
         self.assertIn('"look for the sparkle"', gallery)
 
 
+class HiddenPovNoAdvanceTests(unittest.TestCase):
+    """Hovering or viewing the cue must never advance dialogue (darryn 2026-11-16)."""
+
+    def setUp(self):
+        self.system = SYSTEM.read_text(encoding="utf-8")
+
+    def _func(self, name):
+        return self.system.split("def %s(" % name, 1)[1].split("\n    def ", 1)[0].split("\n\n", 1)[0]
+
+    def test_hover_actions_return_none(self):
+        # A `hovered`/`unhovered` action that returns a value ends the say interaction.
+        for line in self.system.splitlines():
+            stripped = line.strip()
+            if stripped.startswith(("hovered ", "unhovered ")):
+                self.assertIn("lc_pov_hover_sound", stripped, stripped)
+        self.assertTrue(self._func("lc_pov_hover_sound").rstrip().endswith("return None"))
+        for name in ("lc_pov_announce_cue", "lc_pov_open", "lc_pov_close"):
+            body = self._func(name)
+            returns = [l.strip() for l in body.splitlines() if l.strip().startswith("return")]
+            self.assertTrue(returns and all(r == "return None" for r in returns), (name, returns))
+
+    def test_auto_forward_is_held_while_viewing_and_restarts_after_close(self):
+        callback = self._func("lc_pov_afm_callback")
+        self.assertIn('if renpy.get_screen("lc_pov_viewer"):\n            return False', callback)
+        self.assertIn("if _lc_pov_time.time() < _lc_pov_afm_hold[0]:\n            return False", callback)
+        close = self._func("lc_pov_close")
+        self.assertIn("_lc_pov_afm_hold[0] = _lc_pov_time.time() + lc_pov_afm_grace()", close)
+        grace = self._func("lc_pov_afm_grace")
+        self.assertIn("config.afm_bonus", grace)
+        self.assertIn("config.afm_characters", grace)
+        self.assertIn("_preferences.afm_time", grace)
+
+
 if __name__ == "__main__":
     unittest.main()
