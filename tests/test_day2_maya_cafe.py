@@ -43,7 +43,7 @@ class MayaCafeTests(unittest.TestCase):
         reveal = source.split("scene cg ch01_d2_maya_reveal", 1)[1].split('"She hugged me', 1)[0]
         self.assertEqual(reveal.count("$ exit_cinematic_mode()"), 1)
         self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", reveal)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', reveal)
+        self.assertIn('$ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', reveal)
         # cafe_01 is held through the character-assassination beat, then returns to sprites.
         cafe_01 = source.split("scene cg ch01_d2_maya_cafe_01", 1)[1]
         self.assertLess(cafe_01.index('mc "This is character assassination.'),
@@ -51,8 +51,8 @@ class MayaCafeTests(unittest.TestCase):
         after_cafe_01 = cafe_01.split('mc "I regret this meeting already.', 1)[1]
         self.assertEqual(after_cafe_01.count("$ exit_cinematic_mode()"), 1)
         self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", after_cafe_01)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', after_cafe_01)
-        self.assertIn('cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', source)
+        self.assertIn('$ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', after_cafe_01)
+        self.assertIn('cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', source)
 
     def test_all_three_scene_06_choices_rejoin_before_friendship_cg(self):
         choices = scene("ch01_day2_scene_06_jealousy_test")
@@ -73,7 +73,7 @@ class MayaCafeTests(unittest.TestCase):
         after_cafe_02 = cafe_02.split('maya "So next time, don\'t pose.', 1)[1]
         self.assertEqual(after_cafe_02.count("$ exit_cinematic_mode()"), 1)
         self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", after_cafe_02)
-        self.assertIn('$ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")', after_cafe_02)
+        self.assertIn('$ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', after_cafe_02)
 
     def test_walk_photo_is_separate_and_cafe_cast_ends(self):
         self.assertIn('image cg ch01_d2_photo_leia_maya = Composite(', VISUALS)
