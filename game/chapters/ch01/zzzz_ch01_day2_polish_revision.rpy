@@ -56,6 +56,51 @@ label ch01_day2_scene_03_maya_message_v2:
              "followups": [("maya", "In your dreams. See you at lunch.")]},
         ], "alive")
 
+    # Leia's "Is she pretty?" beat (restored from the original scene 3). The
+    # loudest-'nothing' joke already landed above, so the lead-in goes straight
+    # to her question instead of repeating it.
+    "[girlfriend_name] waited until I'd set the phone face-down again."
+
+    gf "So that's the Maya I've heard about."
+    mc "You've heard about her."
+    gf "Mm."
+    "She turned her cup a slow quarter-turn, trying and failing to make the next question sound casual."
+    gf "Is she pretty?"
+
+    $ d2_maya_reassure_text = format_choice("ch01_d2_maya_reassure", "You're the one I'm here with.")
+    $ d2_maya_tease_jealousy_text = format_choice("ch01_d2_maya_tease_jealousy", "Are you jealous?")
+    $ d2_maya_honest_text = format_choice("ch01_d2_maya_open_honest", "Yeah. She's attractive. She's also just my friend.")
+
+    menu:
+        "[d2_maya_reassure_text]":
+            $ apply_choice("ch01_d2_maya_reassure")
+            mc "You're the one I'm here with."
+            gf "That wasn't technically the question."
+            mc "It was the question underneath the question."
+            "The corner of her mouth gave her away."
+            gf "Acceptable answer."
+
+        "[d2_maya_tease_jealousy_text]":
+            $ apply_choice("ch01_d2_maya_tease_jealousy")
+            mc "Are you jealous?"
+            gf "No."
+            mc "That was fast."
+            gf "Because the answer is no."
+            friend "Very convincing."
+            gf "Nobody asked you."
+
+        "[d2_maya_honest_text]":
+            $ apply_choice("ch01_d2_maya_open_honest")
+            mc "Yeah. She's attractive. She's also just my friend."
+            "[girlfriend_name] considered that for a second."
+            gf "Okay."
+            mc "Okay?"
+            gf "I asked. You answered."
+            "There was something almost deliberate about how easily she accepted it."
+
+    if get_story_value("ch01_dream_response") == "withdrew":
+        "Her answer should have reassured me. Instead, I found myself wondering whether I had been offering her the same honesty since I woke up."
+
     $ set_story_flag("ch01_d2_maya_meetup_confirmed")
     $ lc_pov_end()
     jump ch01_day2_scene_04_jealousy_callback

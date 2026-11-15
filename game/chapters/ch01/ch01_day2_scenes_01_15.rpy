@@ -268,7 +268,8 @@ label ch01_day2_scene_01_morning_after:
     scene cg ch01_d2_leia_sleeping
     with dissolve
 
-    "[girlfriend_name] had claimed about three-quarters of the bed at some point in the night. One arm was flung over her head, the other was hanging off the edge, and her mouth was wide open like she was halfway through arguing with someone in her dream."
+    "[girlfriend_name] had claimed about three-quarters of the bed at some point in the night."
+    "One arm was flung over her head, the other was hanging off the edge, and her mouth was wide open like she was halfway through arguing with someone in her dream."
     "The duvet had lost the fight completely and was bunched somewhere around her knees."
     think "Four years, and she still sleeps like she fell out of a plane and landed here."
     mc "Hey. [friend_name]'s awake. Which means we're officially late."
@@ -701,9 +702,9 @@ label ch01_day2_scene_05_meet_maya:
     with dissolve
     # Café outfits only; keep Maya off-screen until after her doorway reveal.
     # Julian's café/mall CGs show the black button-up (evening / BASE_BlackShirt).
-    # TODO: Leia's café/mall CGs show a white off-shoulder top and denim shorts;
-    # no sprite exists for that outfit yet, so she stays on "lounge" until it lands.
-    $ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")
+    # Leia's café/mall CGs show the white off-shoulder top and denim shorts
+    # (casual / PRO/Base_Casual.png).
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
     "She hugged me the way people do when they've known you too long to bother being polite about it."
     "[girlfriend_name] watched the greeting carefully."
 
@@ -764,7 +765,7 @@ label ch01_day2_scene_05_meet_maya:
     $ exit_cinematic_mode()
     scene bg ch01_d2_cafe
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
     $ face("maya", "smile")
     maya "Good. That means it's going well. That's how you know."
 
@@ -868,7 +869,7 @@ label ch01_day2_scene_07_leia_maya_click:
     $ exit_cinematic_mode()
     scene bg ch01_d2_cafe
     with dissolve
-    $ cast(ryan="casual", leia="lounge", julian="evening", maya="green_tube_top")
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
     "[girlfriend_name] scrolled back to one of yesterday's pool photos."
     gf "I did get better eventually, though. Look, by the end I wasn't even posing."
     maya "See? This one's really good. Who took this one?"
@@ -1093,7 +1094,27 @@ label ch01_day2_scene_11b_boutique:
     with dissolve
     "[girlfriend_name] still followed her inside."
 
-    "Maya chose a red asymmetric cutout mini almost immediately. [girlfriend_name] was slower."
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_shop_dresses
+    with dissolve
+    "Maya came back from the nearest rack with a dress on each hand: a long red slip with a lace neckline, and a black one just as long, cut clean and simple."
+    maya "Okay. Be honest. Red or black?"
+    gf "For you?"
+    maya "For me. I'm not buying either. I just need to know."
+    "She held them up against herself one at a time, then both at once, as if the answer might be hiding somewhere between them."
+    gf "The red one's gorgeous. Look at the lace."
+    maya "Right? But the black one. Look how simple it is. It's so elegant."
+    "[girlfriend_name] rested a knuckle against her chin and actually studied them, which only made Maya happier."
+    gf "Red. The black one's what you'd pick to play it safe."
+    maya "Two hours, and you already know me. That's rude. Red it is."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
+    # The mall CGs show the café outfits (Leia casual, Maya green tube top).
+    # Julian is off in menswear.
+    $ cast(ryan="casual", leia="casual", maya="green_tube_top")
+    "Maya kept the red dress over her arm. [girlfriend_name] drifted on to another rack, slower."
     "She had watched the black dress through the window. Inside, she stopped at a rack and stared at something less daunting long enough for Maya to notice."
 
     maya "That one. You want that one."
@@ -1137,7 +1158,7 @@ label ch01_day2_scene_11b_boutique:
 
     "Maya moved behind her, took over the tension in the straps and carefully pulled the top into place."
 
-    gf "How is yours more revealing and somehow more secure?"
+    gf "How is yours cut just as low and somehow more secure?"
     maya "Years of practice. And tape. Mostly tape."
     gf "That's not how clothes work. That can't be how clothes work."
     maya "It's exactly how clothes work. Breathe in."
@@ -1153,6 +1174,9 @@ label ch01_day2_scene_11b_boutique:
     $ exit_cinematic_mode()
     scene bg ch01_d2_boutique
     with dissolve
+    # She is calling from the changing room in the try-on dress (no sprite for
+    # it), so keep her casual sprite off stage for the rest of the boutique.
+    $ cast_remove("leia")
 
     gf "[player_name]? Are you still out there?"
     mc "Yeah, I'm here. What's up?"
@@ -1592,6 +1616,9 @@ label ch01_day2_scene_11b_boutique:
 
 
 label ch01_day2_scene_12_villa_pool_plan:
+
+    # Leaving the mall: no walk/villa outfits for Maya yet, so drop the mall cast.
+    $ cast()
 
     "We headed back toward [friend_name]'s place with Maya and [girlfriend_name] a few steps ahead of us."
 

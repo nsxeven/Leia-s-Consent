@@ -74,6 +74,8 @@ image cg ch01_d2_maya_cafe_01 = At("images/cg/ch02/CH2D2_CG_MayaCafe_01.webp", p
 image cg ch01_d2_maya_cafe_02 = At("images/cg/ch02/CH2D2_CG_MayaCafe_02.webp", prologue_fullscreen)
 image cg ch01_d2_mall_arrival = At("images/cg/ch02/CH2D2_CG_Mall_01.webp", prologue_fullscreen)
 image cg ch01_d2_mall_boutique_window = At("images/cg/ch02/CH2D2_CG_Mall_02.webp", prologue_fullscreen)
+# Maya holds up a red and a black dress to compare; Leia weighs in.
+image cg ch01_d2_shop_dresses = At("images/cg/ch02/CH2D2_Shop_01.webp", prologue_fullscreen)
 
 image cg ch01_d2_photo_leia_maya = Composite(
     (1920, 1080),
@@ -182,7 +184,7 @@ image bg ch01_d2_boutique = At("images/backgrounds/chapter 2/ch02_clothingstore.
 image cg ch01_d2_boutique_changing_room = Composite(
     (1920, 1080),
     (0, 0), Solid("#765e69"),
-    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO BOUTIQUE — MAYA + {gf} CHANGING ROOM\nMAYA RED CUTOUT MINI / {gf} BLACK CUTOUT MINI", size=48, color="#ffffff"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO BOUTIQUE — MAYA + {gf} CHANGING ROOM\nMAYA RED SLIP DRESS / {gf} BLACK CUTOUT MINI", size=48, color="#ffffff"),
 )
 
 image cg ch01_d2_boutique_reveal_ryan = Composite(
