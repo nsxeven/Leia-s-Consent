@@ -1,7 +1,63 @@
-# Phone presentation logic: the story-facing phone_add_message, built on the raw
-# writer phone_store_message in phone_state.rpy, plus reply cards and notifications.
-# Load-order contract: init 0, every name defined once; it calls phone_state.rpy
-# only at run time, so loading before that file is fine (was zz_phone_presentation_logic.rpy).
+# Phone messages and notifications - the story-facing phone API
+#
+# Purpose: phone_add_message is how scenes deliver texts: it stores through phone_store_message
+#   (systems/phone_state.rpy), flushes pending reply steps first, marks messages read in the chat
+#   that is open, and queues the banner. Also: stat-free reply cards, notification queue and deep
+#   links, phone unlock/HUD switches, cinematic mode. Screens live in screens/phone_sweetheart.rpy
+#   and screens/phone_hud.rpy.
+#
+# Public API (call these from scenes/screens):
+#   phone_add_message(thread_id, sender_id, text="", message_id=None, attachment_id=None, attachment_label=None, mark_unread=True, notify=False, notification_app="Messages", notification_title=None, display_time=None)
+#       deliver one message (stable message_id; optional photo/notification)
+#   phone_offer_reply(thread_id, prompt_id, options, default_id) -> bool
+#       queue a save-safe, stat-free reply card for a thread
+#   phone_choose_reply(thread_id, option_id, staged=False) -> bool
+#       queue a picked reply (or post it at a story deadline)
+#   phone_select_reply(thread_id, option_id) -> None
+#       screen action for a reply option
+#   phone_default_reply(thread_id)            pick the default reply
+#   phone_pending_reply(thread_id)            the open reply prompt of a thread, or None
+#   phone_deliver_reply_step(thread_id) -> None
+#       one timed beat of a queued reply sequence
+#   phone_flush_reply_delivery(thread_id) -> None
+#       post every pending step now
+#   phone_queue_notification(app, title, body, kind="message", thread_id=None, sender=None) -> None
+#       queue a banner
+#   phone_show_next_notification() -> None    show the next queued banner
+#   phone_finish_notification() -> None       banner finished
+#   lc_phone_open_from_notification(item) -> None
+#       open the phone on the banner's app/thread
+#   lc_phone_link_app()                       deep-link app for the handset (default 'home')
+#   lc_phone_link_thread()                    deep-link thread or None
+#   lc_phone_thread_open(thread_id)           True while the phone shows this chat
+#   lc_phone_leave_thread(app, thread_id) -> None
+#       leaving a chat marks it read
+#   lc_phone_message_pop(thread_id)           UI pop for a message landing in the open chat
+#   set_phone_unlocked(value=True) -> None    phone available or not
+#   set_phone_hud_enabled(value=True) -> None
+#       show/hide the HUD icon
+#   phone_unlock_with_tutorial() -> None      unlock the phone and show the first-use tutorial
+#   enter_cinematic_mode() -> None            full-screen CG: hide the phone, CG dialogue box
+#   exit_cinematic_mode() -> None             back to normal
+#   phone_notification_preview(text, max_chars=PHONE_NOTIFICATION_BODY_MAX)
+#       one-line banner preview
+#   phone_app_icon_path(app)                  icon for an app
+#   phone_unread_badge_label(count=None)      badge text ('99+' cap)
+#   debug_reset_phone_tutorial() -> None      dev: show the tutorial again
+#
+# Example:
+#   $ phone_add_message(
+#       "group", "julian", text="I'm downstairs.", message_id="prologue_julian_downstairs_01",
+#       mark_unread=True, notify=True, notification_title="Trip Group",
+#   )
+#
+# Depends on: systems/phone_state.rpy, systems/story_state.rpy, systems/lc_fx.rpy,
+#   screens/gameplay_toasts.rpy, screens/phone_hud.rpy (defaults), screens/scrapbook_ui.rpy (banner
+#   screen)
+# Hooks: none
+# Load order: default (init 0); it calls systems/phone_state.rpy only at run time
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_replies.py, tests/test_phone_read_state.py,
+#   tests/test_behaviour_freeze.py
 
 init python:
 
@@ -315,22 +371,4 @@ init python:
             renpy.show_screen("phone_first_use_tutorial")
         else:
             renpy.notify("Phone unlocked.")
-        return None
-
-
-# lc_phone_hovered_app(): the phone_screen scope's hovered app id, or None. No
-# caller today; kept so no function disappears in a behaviour-frozen clean-up.
-# Kept out of screens/phone_sweetheart.rpy, which must not use a shared hover
-# variable (tests/test_phone_icon_hover.py).
-# load order: init 95, kept from the retired screens/zzzz_phone_app_icons_patch.rpy
-# so the init sequence keeps the same priorities.
-init 95 python:
-
-    def lc_phone_hovered_app():
-        phone = renpy.get_screen("phone_screen")
-        if phone is None:
-            return None
-        scope = getattr(phone, "scope", None)
-        if isinstance(scope, dict):
-            return scope.get("hovered_app")
         return None

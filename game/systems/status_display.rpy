@@ -1,5 +1,32 @@
-# Player-facing status presentation helpers.
-# These helpers decide what information is visible at each transparency level.
+# Status display - what the Status screens reveal in each transparency mode
+#
+# Purpose: Builds the rows of the Status screen and the phone Status app: bands in Insight, numbers
+#   in Full, the 'Current lean' row in Full/Developer, and the stat colours (LC_STAT_COLOUR, kept in
+#   sync with tools/gen_glass_menu_ui.py and tools/gen_stat_icons.py). Game rules never change here,
+#   only what is shown.
+#
+# Public API (call these from scenes/screens):
+#   status_relationship_rows(mode=None)       Love and Trust rows
+#   status_leia_rows(mode=None)               Exhibitionism and Temptation rows
+#   status_ryan_rows(mode=None)               Sharing row
+#   status_route_rows(mode=None)              Full/Developer 'Current lean' row
+#   status_mode_note()                        short note about the active mode
+#   status_band(value) -> str                 'Very Low' .. 'Very High' band for a value
+#   lc_status_colour_stat(row)                which stat colour a row uses
+#   leia_overview_text()                      short non-spoilery summary of Leia
+#   LC_STAT_COLOUR                            {stat: (ink, phone tint)}
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _status_value,
+#   _status_row
+#
+# Example:
+#   $ _relationship_rows = status_relationship_rows(_mode)   (screens/phone_sweetheart.rpy)
+#
+# Depends on: systems/stats.rpy, systems/choice_engine.rpy, systems/stat_tooltips.rpy,
+#   systems/gallery.rpy (names)
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_status_colours.py, tests/test_stat_tooltips.py
 
 init python:
 

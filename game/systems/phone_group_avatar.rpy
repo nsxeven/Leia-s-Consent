@@ -1,6 +1,31 @@
-# The Trip Group starts without a photograph. The four-person asset is pending:
-# images/cg/ch01/CH1D2_CG_GroupSelfie_Four.webp
-# Generate its circular PNG with tools/gen_phone_group_avatars.py once it lands.
+# Trip Group avatar - which picture the phone's group chat shows
+#
+# Purpose: The Trip Group starts without a photograph; the story sets the stage ('trio' after the
+#   Day 1 selfie, Maya joins on Day 2). Portraits are pre-rendered circular PNGs from
+#   tools/gen_phone_group_avatars.py. The four-person art is pending
+#   (images/cg/ch01/CH1D2_CG_GroupSelfie_Four.webp); until then it falls back to the trio.
+#
+# Public API (call these from scenes/screens):
+#   phone_group_avatar()                      the circular portrait (or the neutral disc) for header
+#       and list
+#   phone_group_stage()                       None / 'trio' / 'four', recovered from progress for
+#       old saves
+#   phone_group_members()                     member ids in the group
+#   default phone_group_avatar_stage          save state the story sets ('trio', ...)
+#   default phone_group_maya_member           save state: True once Maya joined
+#
+# Internal (helpers for this file and its screens; do not call from scenes): phone_group_trio_avatar,
+#   phone_group_four_image
+#
+# Example:
+#   $ phone_group_avatar_stage = "trio"
+#   $ phone_add_message("group", "system", text=girlfriend_name + " changed the group picture.", message_id="ch01_trip_group_trio_photo", mark_unread=False)
+#
+# Depends on: systems/story_state.rpy, screens/phone_sweetheart.rpy (draws it)
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_group_avatar.py
+
 default phone_group_avatar_stage = None
 # A separate save field records membership; old saves derive it from the photo flag.
 default phone_group_maya_member = False

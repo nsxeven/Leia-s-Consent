@@ -1,20 +1,22 @@
-# Hover / focus explanations for every stat row (Status screen, phone Status
-# app, end-of-day review bars). Stat model v2 (darryn, 2026-11-08): five stats,
-# one name each in every mode, and SHORT breakdowns.
+# Stat tooltips - hover/focus explanations for every stat row
 #
-# Owner decision (darryn): no numbers. Keep digits, thresholds and exact
-# effects OUT of LC_STAT_TOOLTIPS (tests/test_stat_tooltips.py enforces this,
-# and the word limits below).
+# Purpose: Short per-mode explanations for the five stats (Status screen, phone Status app, review
+#   bars). No numbers (tests enforce it and the word limits): Immersive <= 12 words, Insight <= 20,
+#   Full <= 30. Write [girlfriend_name]/[player_name]/[friend_name], never the default names. Shown
+#   by screens/stat_tooltip_screen.rpy.
 #
-# Wording per display mode (internal keys from CHOICE_MODES):
-#   "normal"  = Immersive: how it feels, in-world. 12 words or fewer.
-#   "insight" = Insight: what the stat means and what moves it. 20 or fewer.
-#   "full"    = Full Transparency: meaning plus whether to keep it high or low
-#               to lean toward or avoid Love / Love+Exhib / NTS / NTR. 30 or
-#               fewer. Developer mode reuses this text.
+# Public API (call these from scenes/screens):
+#   lc_stat_tooltip(stat_id, mode=None)       explanation for one stat row in a mode, or None
+#   LC_STAT_TOOLTIPS                          {stat: {mode: text}}
+#   LC_STAT_TOOLTIP_WORD_LIMITS               {mode: max words}
 #
-# Names: write [girlfriend_name], [player_name], [friend_name], never the
-# default names. lc_stat_tooltip() swaps them for the player's typed names.
+# Example:
+#   tooltip (lc_stat_tooltip(row["stat"]) if show_final else None)   (screens/day_review_screen.rpy)
+#
+# Depends on: systems/choice_engine.rpy (current_choice_mode)
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_tooltips.py
 
 init python:
 

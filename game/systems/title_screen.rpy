@@ -1,11 +1,30 @@
-# Title screen ("Golden Hour + Memory Reel", darryn 2026-11-06).
-# Logic for screens/title_screen.rpy: the Continue card and the scrolling
-# polaroid reel of unlocked gallery memories.
+# Title screen logic - Continue card and the memory reel
 #
-# Content rule: by default the reel only shows entries listed in
-# LC_TITLE_SAFE_GALLERY (non-explicit moments). Players can switch to every
-# unlocked memory with the chip above the reel (persistent.lc_title_all_memories).
-# New gallery entries stay OFF the default reel until they are added here.
+# Purpose: Logic for screens/title_screen.rpy: the newest-save Continue card and the scrolling
+#   polaroid reel of unlocked gallery memories. By default the reel only shows LC_TITLE_SAFE_GALLERY
+#   entries; the chip above it switches to every unlocked memory. New gallery entries stay off the
+#   default reel until listed here.
+#
+# Public API (call these from scenes/screens):
+#   lc_title_reel_cards(show_all=False)       cards for the reel (one per unlocked entry, padded
+#       with locked ones)
+#   lc_title_reel_seconds(count)              reel scroll duration for a card count
+#   lc_title_photo(image_name)                a CG fitted to a polaroid
+#   lc_title_continue_slot()                  newest real save slot, or None
+#   lc_title_continue_label(slot)             Continue card caption
+#   lc_title_version()                        version text
+#   LC_TITLE_SAFE_GALLERY                     entry ids allowed on the default reel
+#   default persistent.lc_title_all_memories  True: reel and title options include 18+
+#
+# Internal (helpers for this file and its screens; do not call from scenes): lc_title_ago
+#
+# Example:
+#   $ cards = lc_title_reel_cards(persistent.lc_title_all_memories)   (screens/title_screen.rpy)
+#
+# Depends on: systems/gallery.rpy
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/TITLE_SCREEN.md   Tests: tests/test_title_screen.py
 
 default persistent.lc_title_all_memories = False
 

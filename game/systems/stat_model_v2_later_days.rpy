@@ -1,15 +1,26 @@
-# Stat model v2 for Days Three to Five (darryn, 2026-11-08).
+# Stat model v2 for Days 3-5 - v2 effects and thresholds for the Scriptwriter-owned days
 #
-# The Day Three/Four/Five registration files are Scriptwriter-owned, so their
-# CHOICE_EFFECTS entries are re-scored here instead (init 5 runs after their
-# init 1/2 blocks, so these are the effective definitions). Same scoring rule
-# as systems/choice_engine.rpy; tests/test_choice_scoring.py checks the
-# effective table. When the Scriptwriter adds a Day 3-5 choice, add its v2
-# effects here (or switch that file to v2 stats) or the test fails.
+# Purpose: The Day 3/4/5 registration files are Scriptwriter-owned, so their CHOICE_EFFECTS entries
+#   are re-scored here with the same rule as systems/choice_engine.rpy. Also the Day 4/5
+#   Exhibitionism thresholds rescaled for v2 and the track-card headings renamed to route names. A
+#   new Day 3-5 choice needs its v2 effects here, or the scoring test fails.
 #
-# Also here: the Day Four/Five "her own call" Exhibitionism thresholds, rescaled
-# for v2 (Exhibitionism climbs about 2.2x faster than the old stat), and the
-# Day Four/Five track-card headings renamed to the route names.
+# Public API (call these from scenes/screens):
+#   ch01_d4_track_text()                      Day 4 track card text with v2 headings
+#   ch01_d5_track_text()                      Day 5 track card text with v2 headings
+#   lc_track_text_v2(text)                    rename old track headings to route names
+#   D4_EXHIBITION_BRIEF_REVEAL_MIN            Day 4 threshold (v2 scale)
+#   D5_BOLDER_SWIM_MIN                        Day 5 threshold (v2 scale)
+#   D5_COMFORTABLE_MIN                        Day 5 threshold (v2 scale)
+#
+# Example:
+#   $ ch01_d4_track_text()      (Day 4 files call it; the v2 version wins by init order)
+#
+# Depends on: systems/choice_engine.rpy, the Day 3-5 registration files (init 1-2)
+# Hooks: none
+# Load order: init 5: after the Day 3-5 registration blocks (init 1-2), so these are the effective
+#   definitions (the two track-text functions are allow-listed duplicates in tests)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_choice_scoring.py, tests/test_stat_model.py
 
 init 5 python:
 

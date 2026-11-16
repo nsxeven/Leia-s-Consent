@@ -1,5 +1,20 @@
-# Static outfit definitions.
-# These are game rules/content metadata, not save-state values.
+# Outfit data - static outfit definitions
+#
+# Purpose: Game rules/content metadata for every outfit (name, category, cost, shop and wear
+#   requirements, contexts). Not save state: saves store outfit ids only. Day files may adjust
+#   entries at init 998 (e.g. Day One renames the pool bikinis).
+#
+# Public API (call these from scenes/screens):
+#   OUTFIT_DEFINITIONS                        {outfit_id: definition dict}
+#   OUTFIT_SHOP_ORDER                         display order in the Shop
+#
+# Example:
+#   get_outfit("boutique_cutout_mini")["cost"]     (via systems/wardrobe_logic.rpy)
+#
+# Depends on: nothing
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: none directly (tests/test_shop_coming_soon.py reads the Shop list)
 
 init python:
 

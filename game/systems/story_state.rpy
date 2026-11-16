@@ -1,5 +1,32 @@
-# Reusable story-state helpers.
-# These bridge choices/stats and later story reactions without hard-coding chapter logic.
+# Story state - flags and values that carry choices into later scenes
+#
+# Purpose: Save-specific story flags (booleans) and values (anything) by stable key; later days read
+#   them instead of recomputing (e.g. ch01_d2_end_route). Keys are save data: never rename one.
+#   set_story_flag emits the story_flag_set hook.
+#
+# Public API (call these from scenes/screens):
+#   set_story_flag(flag_id, value=True)       set a flag (default True); returns the value
+#   has_story_flag(flag_id) -> bool           True when a flag is set
+#   get_story_flag(flag_id)                   same as has_story_flag (older name, still used)
+#   clear_story_flag(flag_id) -> None         remove a flag
+#   set_story_value(key, value)               store a value; returns it
+#   get_story_value(key, default=None)        read a value (default if missing, never creates it)
+#   has_story_value(key) -> bool              True when a key exists
+#   clear_story_value(key) -> None            remove a value
+#   resolve_story_outcome(key, options, weights=None)
+#       pick a weighted outcome once, then always return it
+#   story_state_summary()                     dev: compact text snapshot
+#   debug_reset_story_state() -> None         dev: clear flags and values
+#
+# Example:
+#   $ set_story_flag("prologue_started")
+#   $ d3_end = get_story_value("ch01_d2_end_route", "love")
+#
+# Depends on: game/defaults.rpy (story_flags, story_values), systems/lc_hooks.rpy
+# Hooks: emits story_flag_set (flag_id, value)
+# Load order: init 0; get_story_flag at init 998, kept from the retired load-order file (nothing
+#   reads it during init)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_behaviour_freeze.py, tests/test_save_names.py
 
 init python:
 

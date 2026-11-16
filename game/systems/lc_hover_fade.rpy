@@ -1,16 +1,29 @@
-## Smooth hover backgrounds, game-wide (darryn 2026-11-08: "no instant snaps").
-##
-## Ren'Py swaps a button's idle/hover/selected background and foreground art in
-## one frame. This hook makes EVERY button cross-fade between its old and new
-## background/foreground over LC_HOVER_IN (gaining hover/selection) or
-## LC_HOVER_OUT (losing it); imagebuttons cross-fade their idle/hover images
-## the same way. So choices, menu tabs, keycaps, phone rows, glass
-## cards and title chips all ease the same way. Movement (lift, slide) is done by
-## the shared ATL transforms in scrapbook_ui.rpy with the same timings.
-##
-## Only real state changes between the four interactive states fade; a button's
-## first style set-up (screen shown) never does. Set LC_HOVER_FADE = False to
-## turn the hook off without touching screens.
+# Hover fade - every button cross-fades between idle and hover art
+#
+# Purpose: Patches Ren'Py's button style handling once at init so a button's background/foreground
+#   (and an imagebutton's images) dissolve over LC_HOVER_IN when gaining hover/selection and
+#   LC_HOVER_OUT when losing it, instead of snapping. The first style set-up never fades. Movement
+#   (lift, slide) is done by ATL transforms in screens/scrapbook_ui.rpy with the same timings.
+#
+# Public API (call these from scenes/screens):
+#   define LC_HOVER_FADE                      False turns the cross-fade off game-wide
+#   define LC_HOVER_IN                        seconds to fade in (also used by cursor and hover
+#       transforms)
+#   define LC_HOVER_OUT                       seconds to fade out
+#   class LCHoverBlend(renpy.Displayable)     the true-dissolve displayable between two arts
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _LCStyleProxy,
+#   _lc_smooth, _lc_install_hover_fade
+#
+# Example:
+#   transform my_hover:
+#       on hover:
+#           easein LC_HOVER_IN yoffset -4
+#
+# Depends on: Ren'Py internals (renpy.display.behavior.Button)
+# Hooks: none
+# Load order: init -50: installed before any screen or style is built
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_smooth_hover.py
 
 define LC_HOVER_FADE = True
 define LC_HOVER_IN = 0.18

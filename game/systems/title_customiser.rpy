@@ -1,17 +1,51 @@
-# Title-screen customiser (PR 2, darryn 2026-11-06): background, Leia's outfit and
-# expression for the main menu, plus the slower title-only breathing rig.
+# Title customiser data - title-screen background, Leia outfit and expression
 #
-# Unlock rule: an option unlocks forever once it has been SEEN in any playthrough
-# (Ren'Py's persistent seen-image record), so no story-script changes are needed.
-# The default background/outfit are always available.
+# Purpose: Registry and unlock rules for the title-screen picks plus the title-only breathing rig.
+#   An option unlocks forever once it was SEEN in any playthrough (Ren'Py's seen record); mature
+#   options only show when 18+ title options are on (persistent.lc_title_all_memories). Panel:
+#   screens/title_customiser.rpy.
 #
-# Content rule: options with mature=True only appear when the player has switched
-# the title screen to "all unlocked" (persistent.lc_title_all_memories).
+# Public API (call these from scenes/screens):
+#   lc_title_register_outfit(outfit_id, label, base, chest, seen_tag=None, mature=False, default=False, always_unlocked=False, credit=None, hair=None, seen_cgs=()) -> None
+#       add/replace a title outfit (from an `init 1 python:` block)
+#   lc_title_register_background(bg_id, label, path, seen_tags=(), mature=False, default=False) -> None
+#       add/replace a title background
+#   lc_title_note_sprite(tag) -> None         cast system: note a shown sprite (unlocks outfits)
+#   lc_title_pick(kind, option_id) -> None    screen action: choose an option
+#   lc_title_reset() -> None                  screen action: back to defaults
+#   lc_title_bg_now()                         current background displayable
+#   lc_title_leia_now()                       current Leia rig displayable
+#   lc_title_logo()                           the logo with its sheen
+#   lc_title_leia_rig(o, expression)          animated Leia for an outfit/expression
+#   lc_title_show_mature() -> bool            True when 18+ options are shown
+#   lc_title_current_outfit()                 current outfit record
+#   lc_title_current_expression()             current expression
+#   lc_title_current_background()             current background record
+#   lc_title_outfit_options()                 outfits the panel lists
+#   lc_title_expression_options()             expressions the panel lists
+#   lc_title_background_options()             backgrounds the panel lists
+#   lc_title_outfit_unlocked(o)               True when an outfit is unlocked
+#   lc_title_background_unlocked(b)           True when a background is unlocked
+#   lc_title_outfit_thumb(o, locked=False)    outfit thumbnail
+#   lc_title_face_thumb(o, expression)        face thumbnail
+#   lc_title_bg_thumb(b, w=196, h=110)        background thumbnail
+#   lc_title_cached(key, make)                cache a displayable by key
+#   default persistent.lc_title_bg            chosen background
+#   default persistent.lc_title_outfit        chosen outfit
+#   default persistent.lc_title_expression    chosen expression
 #
-# Adding outfits later (new story outfits, shop outfits or a patron's custom
-# outfit pack): call lc_title_register_outfit(...) from an `init 1 python:` block.
-# Base/chest paths follow the existing Leia rig (941 x 1672 canvas; Hair.png and
-# the expression faces are shared). See docs/TITLE_SCREEN.md.
+# Internal (helpers for this file and its screens; do not call from scenes): lc_title_seen_tags,
+#   lc_title_outfit, lc_title_background, lc_title_bg_image
+#
+# Example:
+#   init 1 python:
+#       lc_title_register_outfit("my_outfit", "My Outfit", "<base.png>", "<chest.png>", seen_tag="leia_my_outfit")
+#
+# Depends on: systems/lc_title_touch.rpy, systems/title_screen.rpy
+#   (persistent.lc_title_all_memories), systems/cast_staging.rpy (calls lc_title_note_sprite)
+# Hooks: none
+# Load order: init -1 registry (so `init 1` blocks can register); the rest init 0
+# Docs: docs/TITLE_SCREEN.md   Tests: tests/test_title_customiser.py
 
 default persistent.lc_title_bg = "pool_evening"
 default persistent.lc_title_outfit = "purple_dress"

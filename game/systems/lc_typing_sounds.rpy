@@ -1,12 +1,22 @@
-## Typing sounds for the name cards (and any other renpy.input() prompt).
-##
-## The `input` screen's Input gets `changed lc_input_typed`: a longer text
-## plays one of four soft key clicks, a shorter one plays key_back. In Ren'Py an
-## Input with a `changed` callback no longer returns its text on Enter by
-## itself, so the screen also gives it `action Function(lc_input_submit)`,
-## which returns the typed text (plus any IME text still being composed),
-## exactly what renpy.input() returned before.
-## Sounds are real key presses (Freesound #609534, CC0; game/audio/ui/key_*.ogg) and follow the UI volume slider.
+# Typing sounds - key clicks while typing a name
+#
+# Purpose: The `input` screen's Input gets `changed lc_input_typed`: longer text plays one of four
+#   soft key clicks, shorter text plays key_back. A `changed` Input no longer returns on Enter by
+#   itself, so the screen also uses action Function(lc_input_submit), which returns exactly what
+#   renpy.input() returned before. Sounds: Freesound #609534 (CC0).
+#
+# Public API (call these from scenes/screens):
+#   lc_input_typed(new_text) -> None          Input `changed` callback: play a click
+#   lc_input_submit()                         Input action: return the typed text (plus IME text)
+#   lc_input_reset() -> None                  forget the previous text (screen shown)
+#
+# Example:
+#   $ entered_player_name = renpy.input("Your name", default=player_name, exclude="{}[]", length=20).strip()
+#
+# Depends on: systems/lc_fx.rpy (lc_ui_sound), screens/scrapbook_ui.rpy (screen input)
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_typing_sounds.py
 
 init python:
     LC_TYPING_KEYS = ("key_1", "key_2", "key_3", "key_4", "key_5", "key_6")

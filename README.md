@@ -26,7 +26,7 @@ Route design in one sentence: **Love** = engaged; **Exhibitionism** = outside at
    ```
 4. **Start a fresh save** after changing labels or choice logic; old development saves can hold stale story state.
 
-`lint` currently reports only known, non-blocking items (unused legacy phone-photo aliases, `scene white` in Day One scenes 04-06, and init-priority notes on the late `zz...` patch files).
+`lint` currently reports one known, expected note: the `init -1500` priority of the start-up guard in `game/systems/dev_source_checks.rpy`, which must run before everything else.
 
 ## Project structure
 
@@ -60,12 +60,12 @@ game/
       ch01_day5_choice_registration.rpy  Day Five choice ids/effects/tags and helpers
       ch01_day5_visuals.rpy         Day Five placeholder bg/cg images
       *_visuals.rpy                 stable image names (placeholders or real art)
-      zz*/zzzz* ...                 late override patches (see below)
-  systems/              choice_engine, stats, story_state, economy, outfits_data,
-                        wardrobe_logic, love_outfit_control, dialogue_staging,
-                        phone_state, gallery (+ gallery_data: the entry table),
-                        status/transparency display ...
-  screens/              UI and phone screens (several late zz* presentation overlays)
+  systems/              one file per game system (choice_engine, stats, story_state, hooks,
+                        day review, Hidden POV, phone, gallery, wardrobe, effects ...);
+                        each file opens with a header listing its API
+  screens/              feature screens (scrapbook UI skin, phone, day review, gallery,
+                        status, title screen ...)
+  python-packages/      pure-Python logic with unit tests (stat model, chapter registry ...)
   dev/                  developer/QA-only labels and screens (dev_sandbox, story_state_test,
                         systems_vertical_slice, debug/dev menus, screenshot tours); left out
                         of release builds by game/options.rpy
@@ -73,6 +73,9 @@ game/
   images/               backgrounds/, cg/, sprites/ (production art)
 docs/
   BUILD_HANDOFF.md      current build truth (read this before coding)
+  ARCHITECTURE.md       folder layout, load order, rules, how to add a Day or a system
+tools/                  asset generators, clean_orphan_rpyc (run after pulls)
+tests/                  unittest suite (run by CI on every PR)
 ```
 
 ## Implemented content
@@ -93,7 +96,8 @@ All Day Two story CGs and all Day Four and Day Five CGs/backgrounds are still pl
 ## Contributing
 
 - **Branch from `main`** for every change (for example `feature/<short-topic>`), keep commits small with clear messages, and open a pull request. Do not push directly to `main`.
-- **Late-override files.** Ren'Py loads files in alphabetical order and a later `label` with the same name replaces an earlier one. The `zz_`, `zzzz_`, `zzzzz_` ... prefixed files are deliberate late patches. Before editing a label or screen, search for another definition of it and edit the **effective** (last-loaded) owner. Do not do broad `zz` cleanup unless it was explicitly requested.
+- **One definition per name.** Every label, screen and function is defined once, in the file that owns it. Change behaviour there; never add a `zz*` / `*_patch.rpy` file or a `config.label_overrides` entry (the structure tests reject them). Layout, load order, save-safety rules and how to add a Day or a system: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+- **After pulling** a change that moves or deletes scripts, close the game and run `tools/clean_orphan_rpyc.bat` (or `python tools/clean_orphan_rpyc.py`) so stale compiled files are moved or removed.
 - **Stable image names.** Story code refers to stable names (for example `cg ch01_d2_love_bedroom_01`). Placeholders are `Composite` images; when real art arrives, point the same name at the file instead of renaming it in the script.
 - **Art ownership.** Do not add or replace CG art as part of a code change; art is delivered separately.
 - **Day Three script.** `ch01_day3_scenes.rpy` is owned by the Scriptwriter. Do not edit it without coordination. The Day 2 -> Day 3 -> Day 4 link is in place. Day Four (`ch01_day4_*`) and Day Five (`ch01_day5_*`) are also Scriptwriter-owned; coordinate before editing them.

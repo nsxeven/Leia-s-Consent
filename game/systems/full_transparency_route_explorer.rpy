@@ -1,7 +1,28 @@
-# Optional player-facing route exploration for Full Transparency.
-# Applies to future route checks; already-played scenes remain unchanged.
-# The release demo supports Day 1 steering and the Day 2 lane resolver.
-# Later day/state-specific route gates require explicit adaptation before release.
+# Route explorer - Full Transparency players can steer the Day 1/Day 2 lane
+#
+# Purpose: Optional player-facing route focus (Story-driven / Love / Exhibitionism / NTR) that story
+#   resolvers consult through lc_route_explorer_for_lane(). It only affects future route checks;
+#   already-played scenes stay unchanged. Later-day gates need their own adaptation. Screen:
+#   screens/route_explorer_screen.rpy.
+#
+# Public API (call these from scenes/screens):
+#   lc_route_explorer_for_lane()              the focused route, or None when 'auto' (story decides)
+#   lc_route_explorer_allowed()               True when the explorer may be shown (Full / developer)
+#   lc_route_explorer_current()               current focus id
+#   lc_route_explorer_current_label()         current focus label
+#   lc_route_explorer_set_focus(route) -> None
+#       screen action: change the focus
+#   default lc_route_explorer_focus           save state: focus id
+#   default lc_route_explorer_used            save state: True once the player changed it
+#
+# Example:
+#   $ lc_day1_route_focus = lc_route_explorer_for_lane()
+#
+# Depends on: systems/choice_engine.rpy (current_choice_mode), systems/story_state.rpy,
+#   systems/stats.rpy
+# Hooks: none
+# Load order: init 200, kept from the retired load-order file so the init sequence is unchanged
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_model.py, tests/test_stat_runtime.py
 
 default lc_route_explorer_focus = "auto"
 default lc_route_explorer_used = False

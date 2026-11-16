@@ -1,4 +1,70 @@
-# Reusable, save-local daily journal. No persistent gallery unlocks are consulted.
+# End-of-day review - the save-local daily journal shown when a day ends
+#
+# Purpose: Records each day's start/end stats, choices and shown images, decides the day's route and
+#   character titles, and drives the scrapbook review (screens/day_review_screen.rpy). No persistent
+#   gallery unlocks are read. Tags/stickers collection lives in systems/lc_tag_collection.rpy and
+#   plugs in through hooks.
+#
+# Public API (call these from scenes/screens):
+#   lc_review_begin(day_id)                   start a day's record (once; repeated entry keeps the
+#       baseline)
+#   label lc_day_review(day_id)               label: finish the day and show the review; `call` it
+#       at day end
+#   lc_review_finish(day_id)                  close a day's record (lc_day_review calls it)
+#   lc_title_fact(fact, value=True) -> None   record a confirmed story event that titles may use
+#   lc_review_titles(day_id)                  (ryan, leia) titles a finished day shows (after the
+#       review_titles filter)
+#   lc_review_auto_titles(day_id)             titles before any equipped tag
+#   lc_character_titles(route=None, facts=None, style=None)
+#       titles for a route/facts/style
+#   lc_review_stickers(day_id, limit=2)       moment stickers a day earned
+#   lc_review_latest()                        id of the newest finished day, or None
+#   lc_review_reset() -> None                 clear every day record (Chapter Select)
+#   lc_review_route(day_id)                   route key a day ends on
+#   lc_review_stats()                         snapshot of the three stat groups
+#   lc_review_note_choice(choice_id, before) -> None
+#       record a choice (apply_choice calls it)
+#   lc_review_record_image(name) -> None      record a shown image (the config.show hook calls it)
+#   lc_review_choice_text(choice_id)          readable line for a recorded choice, never the id
+#   lc_review_sfx(name) -> None               play audio/sfx/review_<name> if it exists, else the UI
+#       sound kit (lc_ui_sound, LC_REVIEW_UI_FALLBACK)
+#   LC_REVIEW_DAYS                            {day_id: label/chapter/route_key}: one row per day
+#   LC_REVIEW_ROUTES                          {route key: (title, line)}
+#   LC_MOMENT_STICKERS                        [(name, test(day_id, ids))] sticker rules
+#   default lc_review_days                    save state: {day_id: record}
+#   default persistent.lc_recap_animation     review animation on/off
+#   default persistent.lc_title_style         'story' / 'genre' / 'off' title style
+#   default persistent.lc_title_badges        brief sprite title badges on/off
+#   default persistent.lc_day1_dream          Day 1 dream presentation preference
+#
+# Internal (helpers for this file and its screens; do not call from scenes): lc_review_replace,
+#   lc_review_cards, lc_review_delta_rows, lc_review_choice_rows, lc_current_review_route,
+#   lc_review_choice_ids, lc_review_style, lc_review_fact_override, lc_px, lc_review_chapter_line,
+#   lc_review_chapter_title, lc_review_night_copy, lc_review_day_number, lc_review_ticket,
+#   lc_review_diary, lc_review_yesterday, lc_review_show_stats, lc_review_tracked_stats,
+#   lc_review_bar_rows, lc_review_bar_art_ready, lc_review_unchanged_count,
+#   lc_review_polaroid_slots, lc_review_photo_delay, lc_review_photo_land, lc_review_bars_lead,
+#   lc_review_hold_reset, lc_review_hold_skipped, lc_review_hold_down, lc_review_hold_up,
+#   lc_review_hold_progress, lc_review_hold_tick, lc_review_hold_arm, lc_review_hold_armed,
+#   lc_review_bar_timing, lc_review_anim_start, lc_review_anim_begin, lc_review_anim_reset,
+#   lc_review_row_phase, lc_review_quote, lc_review_pack_chips, _lc_review_content_root,
+#   _lc_read_expr, _lc_eval_choice_expr, _lc_review_scan_choices, lc_review_choice_catalog,
+#   _lc_review_fill_names, _lc_review_humanize, lc_review_choice_details, lc_review_show
+#
+# Example:
+#   $ lc_review_begin("ch01_d2")                                   (day start label)
+#   call lc_day_review("ch01_d2") from lc_review_return_ch01_d2   (day finish label)
+#
+# Depends on: systems/lc_hooks.rpy, systems/stats.rpy, systems/story_state.rpy, systems/lc_fx.rpy,
+#   systems/gallery.rpy (GALLERY_ENTRIES, read by lc_review_record_image),
+#   python-packages/lc_chapters.py, python-packages/lc_stat_model.py, screens/day_review_screen.rpy
+# Hooks: emits review_finished (lc_hook_run) and review_titles (lc_hook_filter); wraps config.show
+#   once at init
+# Load order: init 20: after the choice engine tables and hooks; systems/lc_tag_collection.rpy (init
+#   21) reads its tables
+# Docs: docs/DAY_REVIEW.md   Tests: tests/test_day_review.py, tests/test_review_tags.py,
+#   tests/test_review_sfx.py
+
 default lc_review_active = None
 default lc_review_days = {}
 default lc_title_facts = {}

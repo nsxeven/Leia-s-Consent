@@ -1,15 +1,27 @@
-# Title screen layout. `screen main_menu` (screens/scrapbook_ui.rpy)
-# just does `use lc_title_screen`. Logic and the menu-safe list live in
-# systems/title_screen.rpy.
+# Title screen - layout of the main menu ('Golden Hour + Memory Reel')
 #
-# Layers, back to front: villa evening (slow push-in) > light leak > left shade >
-# bokeh > Leia > vignette > bottom shade > logo, Continue card, menu > memory reel.
+# Purpose: screen main_menu (screens/scrapbook_ui.rpy) just uses lc_title_screen. Layers back to
+#   front: background, light leak, shades, bokeh, Leia, vignette, logo, Continue card, menu, memory
+#   reel. Hover effects only move things inside fixed-size boxes, so nothing shifts layout. Logic:
+#   systems/title_screen.rpy; picks: systems/title_customiser.rpy.
 #
-# Hover rule: hover effects only move things with offsets/zoom inside a
-# fixed-size box, so nothing hovering ever changes layout (no menu or reel shift).
-
-# Background, outfit and expression come from the customiser
-# (systems/title_customiser.rpy; defaults: pool evening, lilac dress, smile).
+# Public API (call these from scenes/screens):
+#   screen lc_title_screen()                  the whole title screen
+#   screen lc_title_item(label, action, sound="tap")
+#       one menu item
+#   screen lc_title_reel()                    memory reel
+#   screen lc_title_continue(slot)            Continue card
+#   transform lc_title_bg_drift               background drift transform
+#   transform lc_title_leia                   Leia placement transform
+#
+# Example:
+#   use lc_title_screen()      (screen main_menu)
+#
+# Depends on: systems/title_screen.rpy, systems/title_customiser.rpy, systems/lc_title_touch.rpy,
+#   screens/title_customiser.rpy, screens/scrapbook_ui.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/TITLE_SCREEN.md   Tests: tests/test_title_screen.py, tests/test_title_customiser.py
 
 transform lc_title_bg_drift:
     subpixel True

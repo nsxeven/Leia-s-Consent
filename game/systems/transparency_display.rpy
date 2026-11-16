@@ -1,5 +1,30 @@
-# Player-facing transparency / gameplay information helpers.
-# The underlying game rules never change; only the amount of information shown does.
+# Transparency display - information-mode labels, previews and switching
+#
+# Purpose: Player-facing text for the transparency modes (Immersive / Insight / Full / Developer)
+#   and the menu-safe way to switch them. The game rules never change; only how much is shown.
+#
+# Public API (call these from scenes/screens):
+#   set_player_transparency_mode(mode) -> None
+#       switch the mode without resolving an open menu
+#   lc_phone_set_information_mode(mode) -> None
+#       phone Settings wrapper, safe while choices are visible
+#   transparency_mode_info(mode=None)         info dict for a mode
+#   transparency_mode_label(mode=None)        label for a mode
+#   transparency_visibility_rows(mode=None)   what each mode shows
+#   transparency_choice_preview(mode=None)    sample choice caption
+#   transparency_status_preview(mode=None)    sample status line
+#   transparency_wardrobe_preview(mode=None)  sample wardrobe text
+#   PLAYER_TRANSPARENCY_MODES                 mode ids in order
+#
+# Example:
+#   action Function(set_player_transparency_mode, mode_id)   (screens/player_settings_screen.rpy)
+#
+# Depends on: systems/choice_engine.rpy, systems/status_display.rpy, systems/stats.rpy,
+#   systems/wardrobe_logic.rpy
+# Hooks: none
+# Load order: init 0 tables; init 200 switch helpers, kept from the retired load-order file so the
+#   init sequence is unchanged
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_glass_menu.py, tests/test_stat_model.py
 
 init python:
 

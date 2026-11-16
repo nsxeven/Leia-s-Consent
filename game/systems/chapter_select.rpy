@@ -1,21 +1,34 @@
-# Chapter Select (developer / QA / unlockable skip-to-day).
+# Chapter Select - start a new game at Day 2-5 with a consistent preset
 #
-# Starts a NEW game at Chapter 1 Day 2, Day 3, Day 4 or Day 5 with a consistent
-# preset of the state those days read. It never edits story scenes: it seeds the
-# same story values/flags/stats/outfits the real script would have produced and
-# then jumps to the normal day entry label (ch01_day2_start / ch01_day3_start /
-# ch01_day4_start / ch01_day5_start).
+# Purpose: Seeds the story values, flags, stats and outfits a day reads, then jumps to that day's
+#   normal entry label; it never edits story scenes. CHAPTER_SELECT_RULE decides when the main-menu
+#   entry shows. The screen is screens/chapter_select_screen.rpy.
 #
-# UNLOCK RULE (one line to flip):
-#   CHAPTER_SELECT_RULE = "always"                # MAIN development default
-#     "always"                -> always shown on the main menu
-#     "developer"             -> only when config.developer is true
-#     "unlocked"              -> only after persistent.ch01_chapter_select_unlocked
-#                                (set automatically the first time Day 2 is finished)
-#     "developer_or_unlocked" -> either of the above
-#     "never"                 -> hidden
-# persistent.ch01_chapter_select_unlocked is set by a "story_flag_set" hook
-# (systems/lc_hooks.rpy) when "ch01_day_02_complete" is set, so no story scene had to change.
+# Public API (call these from scenes/screens):
+#   define CHAPTER_SELECT_RULE                'always' | 'developer' | 'unlocked' |
+#       'developer_or_unlocked' | 'never'
+#   chapter_select_unlocked()                 True when the main-menu Chapter Select entry should
+#       show
+#   chapter_select_apply(day, route)          seed a new game for (day, route preset); returns the
+#       entry label
+#   chapter_select_unlock_after_day_two(flag_id, value=True) -> None
+#       story_flag_set hook: first finished Day 2 unlocks it
+#   label ch01_chapter_select_entry           label the screen starts the new game through
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _chapter_select_reset
+#
+# Example:
+#   textbutton "Chapters" action ShowMenu("chapter_select")   (screens/title_screen.rpy; the journal
+#   tab row in screens/scrapbook_ui.rpy adds a ("CHAPTERS", ShowMenu("chapter_select"), False) row)
+#
+# Depends on: systems/lc_hooks.rpy, systems/story_state.rpy, systems/stats.rpy,
+#   systems/wardrobe_logic.rpy, systems/day_review.rpy (lc_review_reset),
+#   python-packages/lc_chapters.py, game/00_release_build.rpy
+# Hooks: listens to story_flag_set (unlock after ch01_day_02_complete)
+# Load order: init 10: after the story-state, stats and hook helpers (init <= 0) it calls while
+#   seeding presets
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_chapters.py, tests/test_release_from_main.py,
+#   tests/test_behaviour_freeze.py
 
 define CHAPTER_SELECT_RULE = "developer_or_unlocked" if LC_IS_RELEASE else "always"  # game/00_release_build.rpy
 

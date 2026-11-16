@@ -1,18 +1,33 @@
-# PHONE WALLPAPER (darryn 2026-11-09)
-# Any picture sent in a chat (or kept in Photos) can become the phone's
-# home-screen background, chosen like on a real phone: open the photo, tap
-# "Set as wallpaper", drag to move it, zoom with the mouse wheel or the - / +
-# keys (touch / JoiPlay), then Set. Settings > Reset wallpaper goes back to
-# the default villa art.
+# Phone wallpaper - any chat photo can become the home-screen background
 #
-# Save data is plain: phone_wallpaper = None or
-#   {"image": <image name>, "zoom": 1.0..4.0, "x": 0..1, "y": 0..1}
-# (maths and validation: python-packages/lc_wallpaper_crop.py). Old saves
-# load with None. No displayable is ever stored in the save.
+# Purpose: Open a photo, tap 'Set as wallpaper', drag to move, zoom with the wheel or -/+ (touch),
+#   then Set; Settings > Reset wallpaper restores the default. Save data is plain: phone_wallpaper =
+#   None or {'image', 'zoom' 1.0..4.0, 'x' 0..1, 'y' 0..1}; no displayable is ever saved (maths:
+#   python-packages/lc_wallpaper_crop.py).
 #
-# Load-order contract: every name here is defined once. init 96 (kept from the
-# old zzzzzz_phone_wallpaper.rpy) runs after the handset's init 95 helpers in
-# screens/phone_sweetheart.rpy.
+# Public API (call these from scenes/screens):
+#   lc_phone_wallpaper()                      the saved wallpaper record, or None
+#   lc_phone_wallpaper_active() -> bool       True when a wallpaper is set
+#   lc_phone_wallpaper_reset() -> None        back to the default art
+#   lc_phone_wallpaper_commit(editor) -> None
+#       save the editor's crop
+#   lc_phone_wallpaper_view(wall)             cached view for a saved crop
+#   screen lc_phone_wallpaper_layers(wall)    home background layers
+#   screen lc_phone_wallpaper_editor(photo_asset)
+#       move/zoom editor
+#   class LCWallpaperView(renpy.Displayable)  displayable for a crop
+#   class LCWallpaperEditor(LCWallpaperView)  interactive editor displayable
+#   default phone_wallpaper                   save state: wallpaper record or None
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_wp_abs
+#
+# Example:
+#   use lc_phone_wallpaper_layers(lc_phone_wallpaper())      (screens/phone_sweetheart.rpy)
+#
+# Depends on: python-packages/lc_wallpaper_crop.py, screens/phone_sweetheart.rpy
+# Hooks: none
+# Load order: init 96: after the handset's init 95 helpers in screens/phone_sweetheart.rpy
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_wallpaper.py
 
 default phone_wallpaper = None
 

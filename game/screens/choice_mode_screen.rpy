@@ -1,4 +1,18 @@
-# Choice transparency settings / development preview.
+# Choice mode screen - developer preview of the choice display modes
+#
+# Purpose: Development page that switches the choice display mode and shows a live sample caption
+#   (choice_preview_text). Players change the mode in Preferences / player settings instead.
+#
+# Public API (call these from scenes/screens):
+#   screen choice_mode_screen()               mode buttons plus a live caption preview
+#
+# Example:
+#   call screen choice_mode_screen      (game/dev/dev_sandbox.rpy)
+#
+# Depends on: systems/choice_engine.rpy, screens/common_scroll.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_model.py
 
 screen choice_mode_screen():
 

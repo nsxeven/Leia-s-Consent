@@ -1,5 +1,45 @@
-# Optional POVs are scene-scoped, not story choices. Never show their image on
-# the master layer: only an intentional click records it as seen for the Gallery.
+# Hidden POV - optional, scene-scoped alternate views behind a sparkle
+#
+# Purpose: A registered moment shows a non-modal sparkle while its source CG is on screen between
+#   lc_pov_begin/lc_pov_end; clicking opens the alternate view and only that click marks it seen for
+#   the Gallery. Never shown on the master layer, never a story choice. Registrations are validated
+#   at init 999 (developer builds fail loudly).
+#
+# Public API (call these from scenes/screens):
+#   lc_pov_register(moment_id, image, source, position=None, title="Optional view", mature=None, center=None, gallery_id=None, sfx=True) -> None
+#       register one moment (stable image/source/position) at init
+#   lc_pov_begin(moment_id) -> None           open the moment's scope (its sparkle may show)
+#   lc_pov_end() -> None                      close the current scope
+#   lc_pov_in_scope(moment_id)                True while the moment's source image is showing
+#   lc_pov_available()                        True when a cue may show now
+#   lc_pov_open(moment_id) -> None            open the viewer (the sparkle's action)
+#   lc_pov_close() -> None                    close the viewer
+#   lc_pov_validate(moment_id)                problems with one registration
+#   lc_pov_validate_all()                     {moment_id: problems} for every registration
+#   LC_POV_OPPORTUNITIES                      the registry {moment_id: entry}
+#   screen lc_pov_viewer(moment_id)           the full-screen alternate view
+#   screen lc_pov_hotspot()                   overlay with the sparkle cue (desktop and touch
+#       variants)
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_pov_warn,
+#   lc_pov_hitbox_size, lc_pov_hit_rect, lc_pov_reduce_motion, lc_pov_announce_cue,
+#   lc_pov_hover_sound, lc_pov_afm_grace, lc_pov_afm_callback, lc_pov_scope_cleanup,
+#   _lc_pov_gallery_rows_for, _lc_pov_rects_overlap, lc_pov_static, lc_pov_cue_art
+#
+# Example:
+#   init 1 python:
+#       lc_pov_register("d2_breakfast_julian", image="cg ch01_d2_breakfast_julian_pov",
+#                       source="cg ch01_d2_breakfast_02", center=(1785, 255), title="Julian's POV", mature=True)
+#   $ lc_pov_begin("d2_breakfast_julian")   ...   $ lc_pov_end()
+#
+# Depends on: systems/hidden_pov_chime.rpy (LC_POV_CUE_AUDIO), systems/gallery.rpy,
+#   systems/lc_fx.rpy, screens/scrapbook_ui.rpy (lc_phone_covers_scene, lc_journal_menu_open)
+# Hooks: none (installs config.afm_callback, a start_interact callback and the lc_pov_hotspot
+#   overlay)
+# Load order: init -1 constants; init 0 registry and API (moments register at init 1); init 999
+#   validation, after every registration file and the gallery tables
+# Docs: docs/HIDDEN_POV.md   Tests: tests/test_hidden_pov.py, tests/test_d2_breakfast_cgs.py
+
 default lc_pov_active = None
 default lc_pov_viewed = False
 # The cue chime plays once per encounter (reset by lc_pov_begin).
