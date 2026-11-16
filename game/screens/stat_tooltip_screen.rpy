@@ -1,13 +1,23 @@
-# Stat explanation card shown next to whichever stat row has focus.
+# Stat tooltip card - explanation card next to the focused stat row
 #
-# Rows carry the text in their `tooltip` property (see lc_stat_tooltip() in
-# systems/stat_tooltips.rpy), so mouse hover, keyboard and controller focus all
-# work the same way and nothing depends on hovered/unhovered screen variables.
-# Each screen that shows stat rows ends with:
-#     use lc_stat_tip(GetTooltip("<that screen's name>"))
-# Use it at the screen's top level: nearrect needs the full screen area to
-# line the card up with the focused row. On touch screens the card shows while
-# a finger rests on a row.
+# Purpose: Rows carry their text in the `tooltip` property (lc_stat_tooltip), so mouse hover,
+#   keyboard and controller focus all work and nothing depends on hovered/unhovered variables. Use
+#   it at the screen's top level (nearrect needs the full area). On touch the card shows while a
+#   finger rests on a row.
+#
+# Public API (call these from scenes/screens):
+#   screen lc_stat_tip(tip, look="scrapbook")
+#       the card; look='scrapbook' or 'phone'
+#   define LC_STAT_TIP_SIZE                   {look: (width, height)}
+#   transform lc_stat_tip_fade                card fade transform
+#
+# Example:
+#   use lc_stat_tip(GetTooltip("<that screen's name>"))
+#
+# Depends on: systems/stat_tooltips.rpy
+# Hooks: none
+# Load order: default
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_tooltips.py, tests/test_phone_tip_polish.py
 
 style lc_stat_tip_row is default:
     xfill True

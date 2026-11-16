@@ -1,45 +1,35 @@
-## Load-time hooks: how one system reacts to another without re-defining it.
-##
-## Purpose
-##   A system that wants to add behaviour to another system's function registers
-##   a named hook; the owning function calls its hook point. This replaces the old
-##   load-order pattern where a later file captured `_orig = f` and re-defined `f`
-##   (forbidden now: tests/test_structure_rules.py rejects duplicate defs).
-##
-## API (defined at init -100, so every system can register from its own init block)
-##   lc_hook_add(event, fn)               register fn for event; adding the same fn
-##                                        again is a no-op. Returns fn.
-##   lc_hook_run(event, *args, **kw)      call every fn for event in registration
-##                                        order. Exceptions are NOT swallowed: a hook
-##                                        that must never break its caller wraps its
-##                                        own body in try/except. Returns None.
-##   lc_hook_filter(event, value, *args)  pass value through each fn in order
-##                                        (value = fn(value, *args)) and return it.
-##
-## Events in use
-##   "story_flag_set"   (flag_id, value)  after set_story_flag stores a flag
-##                                        (systems/story_state.rpy); chapter_select.rpy
-##                                        unlocks Chapter Select after Day Two.
-##   "review_finished"  (day_id)          after lc_review_finish records a day
-##                                        (systems/day_review.rpy); lc_tag_collection.rpy
-##                                        unlocks that day's tags and stickers.
-##   "review_titles"    filter, value = the automatic (ryan, leia) titles that
-##                                        lc_review_titles returns (systems/day_review.rpy);
-##                                        lc_tag_collection.rpy swaps in equipped tags.
-##
-## Example
-##   init 10 python:
-##       def my_system_on_flag(flag_id, value):
-##           if flag_id == "ch01_day_02_complete" and value:
-##               persistent.my_unlock = True
-##       lc_hook_add("story_flag_set", my_system_on_flag)
-##
-## Save safety: hooks are functions, registered only at init. Ren'Py saves only
-## store names that change after init, and _lc_hooks is only filled during init,
-## so saves never reference a hook and old saves load unchanged. python_dict /
-## python_list additionally keep the registry out of rollback tracking.
-## Register hooks only at init (never from story code).
-## Tests: tests/test_lc_hooks.py.
+# Hooks - how one system reacts to another without re-defining it
+#
+# Purpose: A system that adds behaviour to another system's function registers a named hook; the
+#   owning function calls its hook point. This replaces the old pattern of a later file capturing
+#   `_orig = f` and re-defining f (tests/test_structure_rules.py rejects duplicate defs). Exceptions
+#   are not swallowed: a hook that must never break its caller wraps its own body.
+#
+# Public API (call these from scenes/screens):
+#   lc_hook_add(event, fn)                    register fn for event (once per fn); returns fn
+#   lc_hook_run(event, *args, **kw) -> None   call every fn for event in registration order
+#   lc_hook_filter(event, value, *args)       value = fn(value, *args) through every fn; returns
+#       value
+#
+# Example:
+#   init 10 python:
+#       def my_system_on_flag(flag_id, value):
+#           if flag_id == "ch01_day_02_complete" and value:
+#               persistent.my_unlock = True
+#       lc_hook_add("story_flag_set", my_system_on_flag)
+#
+# Notes: Save safety: register hooks only at init. Ren'Py saves only store names changed after
+#   init and _lc_hooks is filled during init, so saves never reference a hook; python_dict /
+#   python_list keep the registry out of rollback.
+#
+# Depends on: nothing
+# Hooks: events in use: story_flag_set (flag_id, value) after set_story_flag
+#   (systems/story_state.rpy; listener systems/chapter_select.rpy); review_finished (day_id) after
+#   lc_review_finish (systems/day_review.rpy; listener systems/lc_tag_collection.rpy); review_titles
+#   filter over the (ryan, leia) titles lc_review_titles returns (listener
+#   systems/lc_tag_collection.rpy)
+# Load order: init -100, so every system can register from its own init block
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_hooks.py
 
 init -100 python:
 

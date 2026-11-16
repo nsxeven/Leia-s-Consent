@@ -1,13 +1,30 @@
-# Leia's Consent — Canonical Dialogue Staging
-# Source of truth for sprite positions. Reuse these transforms everywhere.
-# Rule (from Asset Production Blueprint):
-#   - Leia always RIGHT.
-#   - Other active speakers LEFT.
-#   - Face inward.
-#   - Do not pop characters in/out unnecessarily during immediate exchanges.
+# Dialogue staging - sprite height and the LEFT/RIGHT placement transforms
 #
-# Envelope: 760x900 dialogue sprites, explicit xpos/xanchor so placement
-# is independent of source canvas size.
+# Purpose: Source of truth for where dialogue sprites stand: one height for the whole game
+#   (lc_sprite_yoffset) and the enter/stay transforms for the right (Leia) and left (other speaker)
+#   slots, plus the prologue variants. Who goes in which slot is decided by
+#   systems/cast_staging.rpy.
+#
+# Public API (call these from scenes/screens):
+#   define lc_sprite_yoffset                  y offset of every dialogue sprite (feet hidden behind
+#       the box)
+#   define lc_sprite_enter_yoffset            start offset of an entering sprite
+#   transform leia_enter_right                RIGHT slot entrance
+#   transform leia_right                      RIGHT slot
+#   transform other_enter_left                LEFT slot entrance
+#   transform other_left                      LEFT slot
+#   transform prologue_leia_enter_right       prologue RIGHT entrance
+#   transform prologue_leia_right             prologue RIGHT
+#   transform prologue_other_enter_left       prologue LEFT entrance
+#   transform prologue_other_left             prologue LEFT
+#
+# Example:
+#   $ cast(ryan="pool", julian="pool")   (cast_staging picks these transforms; scenes do not name them)
+#
+# Depends on: nothing
+# Hooks: none
+# Load order: default (define/transform at init 0)
+# Docs: docs/SPRITE_STAGING.md   Tests: tests/test_cast_staging.py
 
 # --- Sprite height (whole game) ---------------------------------------------
 # One place for how high every dialogue sprite stands. The dialogue box spans

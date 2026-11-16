@@ -1,4 +1,19 @@
-# Full Transparency route selector (player-facing; no developer unlock needed).
+# Route explorer screen - Full Transparency route focus picker
+#
+# Purpose: Player-facing picker (no developer unlock needed) for the route focus kept by
+#   systems/full_transparency_route_explorer.rpy.
+#
+# Public API (call these from scenes/screens):
+#   screen lc_route_explorer_screen()         the picker (Show it; Esc hides)
+#
+# Example:
+#   textbutton "ROUTE EXPLORER" action Show("lc_route_explorer_screen")
+#
+# Depends on: systems/full_transparency_route_explorer.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_glass_menu.py
+
 screen lc_route_explorer_screen():
     modal True
     zorder 380

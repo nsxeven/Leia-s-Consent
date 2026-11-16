@@ -1,9 +1,31 @@
-# Phone HUD: the on-screen phone icon with its unread badge (phone_quick_access,
-# registered as an overlay in screens/phone_screen.rpy), the first-use tutorial,
-# the shared popup transforms and the phone's story-facing defaults. The handset
-# itself is screens/phone_sweetheart.rpy.
-# Load-order contract: only defaults, transforms and screens, each defined once,
-# so file order picks no winner (this was z_phone_presentation.rpy).
+# Phone HUD - the on-screen phone icon, tutorial and phone defaults
+#
+# Purpose: The phone icon with its unread badge (phone_quick_access, an overlay registered by
+#   screens/phone_screen.rpy), the first-use tutorial, the shared popup transforms and the phone's
+#   story-facing defaults. The handset is screens/phone_sweetheart.rpy. Only defaults, transforms
+#   and screens, each defined once.
+#
+# Public API (call these from scenes/screens):
+#   screen phone_quick_access()               HUD icon + badge; opens phone_screen
+#   screen phone_first_use_tutorial()         one-time phone tutorial
+#   default phone_unlocked                    save state: phone available
+#   default phone_hud_enabled                 save state: HUD icon shown
+#   default lc_phone_hud_on_cg                save state: keep the HUD over the current CG
+#   default phone_notification_queue          save state: queued banners
+#   default lc_phone_deep_link                save state: (app, thread) to open next
+#   default persistent.phone_tutorial_seen    tutorial shown once
+#   transform phone_notification_slide        banner transform
+#   transform lc_popup_soft_fade              popup fade transform
+#   transform lc_badge_lift(up)               badge hover lift
+#
+# Example:
+#   $ lc_phone_hud_on_cg = True
+#
+# Depends on: systems/phone_presentation_logic.rpy, systems/phone_state.rpy,
+#   screens/scrapbook_ui.rpy (lc_cg_on_screen)
+# Hooks: none
+# Load order: default (defaults/transforms at init 0, screens at init -500)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_smooth_hover.py, tests/test_hidden_pov.py
 
 default phone_unlocked = False
 default phone_hud_enabled = True

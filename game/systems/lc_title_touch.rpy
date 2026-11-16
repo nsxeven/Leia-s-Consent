@@ -1,10 +1,32 @@
-# Title-screen Leia: touch reactions (darryn 2026-11-09).
-# Click her for a voice clip, a small motion and a brief expression; she then
-# settles back to the face picked in Customize. Chest/private-area clicks escalate
-# and only turn lewd (moans, wet sounds, chest jiggle) when 18+ options are shown
-# (persistent.lc_title_all_memories, same rule as the Ahegao face). Logic and
-# tuning: python-packages/lc_title_touch.py. Rig wiring: lc_title_leia_rig in
-# systems/title_customiser.rpy. Click area + bubble: screens/title_screen.rpy.
+# Title-screen touch - click Leia on the title screen for a reaction
+#
+# Purpose: A click on Leia plays a voice clip, a small motion and a brief expression, then she
+#   settles back to the Customize face. Chest/private-area clicks escalate and only turn lewd when
+#   18+ title options are shown (persistent.lc_title_all_memories). Logic and tuning:
+#   python-packages/lc_title_touch.py. Rig: systems/title_customiser.rpy.
+#
+# Public API (call these from scenes/screens):
+#   lc_title_touch(region=None) -> None       button action: react to a click (returns None)
+#   screen lc_title_touch_area()              the invisible click area over Leia
+#   lc_title_touch_mask()                     her outline at title size (clicks outside pass
+#       through)
+#   lc_title_face_disp(default_face)          the rig's face layer with reaction swaps
+#   lc_title_touch_body(d)                    wrap the body layer in the reaction motion
+#   lc_title_touch_chest(d)                   wrap the chest layer in the reaction motion
+#   define LC_TITLE_TOUCH_POS                 area position
+#   define LC_TITLE_TOUCH_SIZE                area size
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_tt_face_displayable,
+#   _lc_tt_body_fn, _lc_tt_chest_fn, _lc_tt_bubble_fn, _lc_tt_bubble_text
+#
+# Example:
+#   use lc_title_touch_area()      (screens/title_screen.rpy)
+#
+# Depends on: python-packages/lc_title_touch.py, systems/title_customiser.rpy,
+#   systems/lc_breath.rpy, systems/lc_fx.rpy
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/TITLE_SCREEN.md   Tests: tests/test_title_leia_touch.py
 
 init python:
     import time as _lc_tt_time

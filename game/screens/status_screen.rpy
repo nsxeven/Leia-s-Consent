@@ -1,5 +1,26 @@
-# Player-facing status screen.
-# The active transparency mode controls how much of the internal state is revealed.
+# Status screen - the journal Status page
+#
+# Purpose: Two-page Status spread: relationship, Leia and Ryan rows, the Full 'Current lean' row,
+#   current titles and a button to replay the latest day review. The active transparency mode
+#   decides how much is revealed (rows from systems/status_display.rpy).
+#
+# Public API (call these from scenes/screens):
+#   screen status_screen(return_to=None)      the Status page (ShowMenu with return_to)
+#   screen status_section(title, rows, ink="#F5C568")
+#       one titled section
+#   screen status_stat_row(row)               one stat row with tooltip
+#   define LC_STATUS_SECTION_INK              {section: ink}
+#
+# Example:
+#   ShowMenu("status_screen", return_to=lc_journal_status_origin())
+#
+# Depends on: systems/status_display.rpy, systems/lc_tag_collection.rpy,
+#   screens/stat_tooltip_screen.rpy, screens/day_review_screen.rpy (lc_review_history_screen),
+#   screens/scrapbook_ui.rpy
+# Hooks: none
+# Load order: default
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_status_two_page.py, tests/test_status_colours.py,
+#   tests/test_status_menu_close.py
 
 screen status_stat_row(row):
 

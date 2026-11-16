@@ -1,16 +1,34 @@
-# Chapter registry bridge: one chapter per in-game day (display only).
+# Chapter registry bridge - chapter titles and cards for Ren'Py script
 #
-# The titles live in ONE place: game/python-packages/lc_chapters.py (CHAPTERS,
-# chosen by darryn 2026-11-09). This file only exposes them to
-# Ren'Py script and screens. Internal ids (ch01_* labels, story keys, review
-# day ids) are unchanged.
+# Purpose: Exposes python-packages/lc_chapters.py (the ONE place chapter titles live; one chapter
+#   per in-game day, display only) to scripts and screens, names new saves after the chapter, and
+#   defines the title-card variables. Internal ids (ch01_* labels, story keys, review day ids) never
+#   change.
 #
-# Title cards use the say statement so seen/skip/history keep working, and a
-# plain variable name so interpolation works with config.interpolate_exprs
-# on or off:
-#     centered "[lc_chapter_card_day2]"
-#     centered "[lc_chapter_complete_card_day4]\n\n{size=25}...{/size}"
-# A new day needs one CHAPTERS entry plus its define lines below.
+# Public API (call these from scenes/screens):
+#   lc_chapter_title(chapter_id, family=None)
+#       display title for (chapter, route family or None = neutral)
+#   lc_chapter_heading(chapter_id)            'Chapter N' heading
+#   lc_chapter_for_review_day(day_id)         chapter id for a review day id
+#   lc_route_family(route_key)                route family of a route key
+#   lc_chapter_set_save_name(chapter_id) -> None
+#       name new saves after a chapter
+#   lc_chapter_start_save_name() -> None      start callback: saves start as the Prologue
+#   define lc_chapter_card_day1               opening card text (same for day2 .. day5)
+#   define lc_chapter_card_day2               Day 2 opening card
+#   define lc_chapter_complete_card_day4      Day 4 completion card (also day5)
+#
+# Example:
+#   centered "[lc_chapter_card_day2]"
+#
+# Notes: A new day needs one CHAPTERS entry in lc_chapters.py plus its define line(s) here.
+#   Title cards use the say statement with a plain variable name, so interpolation works with
+#   config.interpolate_exprs on or off.
+#
+# Depends on: python-packages/lc_chapters.py
+# Hooks: none (adds lc_chapter_start_save_name to config.start_callbacks)
+# Load order: init -10: before anything (day review, gallery, Chapter Select) asks for titles
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_chapters.py
 
 init -10 python:
     import lc_chapters

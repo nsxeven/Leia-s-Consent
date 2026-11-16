@@ -1,17 +1,34 @@
-## Leia's breaths and moans for intimate / lewd beats.
-##
-##   $ lc_breath_start(1)                 # soft: mostly breaths, rare small moan
-##   $ lc_breath_start(1, moans=False)    # holding it in: breaths only
-##   $ lc_breath_start(3)                 # louder, quicker, more moans
-##   $ lc_breath_stop()                   # fade out (call when the beat ends)
-##
-## Each start builds a fresh random string of inhales, moans and pauses from
-## game/audio/voice/leia/<inhale|moan>-iNN-MM.ogg (any number of files; new
-## ones are picked up automatically) and loops it on its own channel under
-## the Voice volume slider. Higher intensity = louder files, more moans,
-## shorter pauses. Never more than two moans without a breath in between, and
-## the same clip is never played twice in a row.
-## Sounds: MoanBox by Selenyhr (Unlicense / public domain).
+# Leia's breaths - looping breaths and moans for intimate beats
+#
+# Purpose: Builds a fresh random string of inhales, moans and pauses from
+#   game/audio/voice/leia/<inhale|moan>-iNN-MM.ogg (new files are picked up automatically) and loops
+#   it on its own channel under the Voice slider. Higher intensity = louder, more moans, shorter
+#   pauses; never two clips of Leia at once. Sounds: MoanBox by Selenyhr (Unlicense / public
+#   domain).
+#
+# Public API (call these from scenes/screens):
+#   lc_breath_start(intensity=1, moans=True, fadein=0.6, volume=1.0, moan_chance=None, pause=None)
+#       start the loop (1 soft .. 3 louder); returns the sequence or None
+#   lc_breath_stop(fadeout=1.2) -> None       fade the loop out when the beat ends
+#   lc_breath_once(intensity=1, volume=1.0)   one soft inhale (ends a running loop)
+#   lc_moan_once(intensity=2, volume=1.0)     one moan; inside a loop it replaces the next sound
+#   lc_inhale_over(intensity=1, volume=1.0)   one inhale; inside a loop it replaces the next sound
+#   lc_breath_sequence(intensity=1, moans=True, length=28, moan_chance=None, pause=None)
+#       the random clip string a loop would play
+#   lc_leia_voice_clip(path, volume=1.0)      play one of Leia's vocal clips without stacking voices
+#   default lc_breath_loop                    save state: settings of the running loop, or None
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_breath_index,
+#   _lc_breath_pick, _lc_breath_loop_seq, _lc_breath_single
+#
+# Example:
+#   $ lc_breath_start(1, moans=False)  # Leia holding it in
+#   $ lc_breath_stop()
+#
+# Depends on: systems/lc_fx.rpy (lc_audio_gain), systems/lc_audio_scene_lock.rpy (lc_audio_mark)
+# Hooks: none
+# Load order: init -5 registers the lc_breath channel; the rest is init 0
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_breaths.py, tests/test_leia_voice_pacing.py
 
 # The loop that is running (its settings), so single moans can resume it; saved with the game.
 default lc_breath_loop = None

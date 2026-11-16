@@ -31,7 +31,7 @@ UNBACKED = ("Notes", "Maps", "Music", "Browser", "Calendar", "Camera")
 
 
 def _screen(src, name):
-    return src.split("screen {}(".format(name), 1)[1].split("\nscreen ", 1)[0]
+    return src.split("\nscreen {}(".format(name), 1)[1].split("\nscreen ", 1)[0]
 
 
 class PhoneShellTests(unittest.TestCase):

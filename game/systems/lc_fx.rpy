@@ -1,31 +1,60 @@
-# Effects + audio foundation (darryn 2026-11-06; plan: Kanban t_d30bd492).
+# Effects and audio - shakes, flashes, photos, SFX, ambience, music and UI sounds
 #
-# Story scripts call these helpers instead of raw `play`/`hpunch`, so every
-# effect respects the player's settings and a missing audio file is silent.
+# Purpose: Story scripts call these helpers instead of raw `play`/`hpunch`, so every effect respects
+#   the player's settings (SCREEN SHAKE, CAMERA FLASH, four volume sliders) and a missing audio file
+#   is silent. Files: game/audio/{sfx,amb,music,ui,voice,lewd}/.
 #
-#   Visual
-#     "line" with lc_shake("s")        small shake (impacts, comedic shouts)
-#     "line" with lc_shake("m")        medium shake (falls, collisions, waking)
-#     "line" with lc_punch()           quick zoom pop on the whole scene
-#     $ lc_flash()                     one soft white blink (photo); colour/strength optional
-#     $ lc_photo()                     camera shutter sound + flash
-#     scene cg x at lc_push_in         slow push-in on a CG (about 9 s)
-#     scene cg x at lc_dream_sway      nightmare warp (slow drift + blur pulse)
+# Public API (call these from scenes/screens):
+#   lc_shake(size="s")                        screen-shake transition ('s' / 'm'), None when shakes
+#       are off
+#   lc_punch()                                quick zoom-pop transition for a say line
+#   lc_flash(colour="#ffffff", strength=0.55, duration=0.42) -> None
+#       one soft blink (photo); off with camera flashes
+#   lc_photo(flash=True) -> None              shutter sound + flash
+#   lc_sfx(name, volume=1.0)                  one-shot from audio/sfx (overlaps); returns the path
+#       or None
+#   lc_sfx_loop(name, volume=1.0, fadein=0.3)
+#       loop an SFX until lc_sfx_loop_stop()
+#   lc_sfx_loop_stop(fadeout=0.8) -> None     stop the SFX loop
+#   lc_amb(name, volume=1.0, fadein=1.5, fadeout=1.5)
+#       looping ambience with crossfade
+#   lc_amb_stop(fadeout=1.5) -> None          stop ambience
+#   lc_music(name, volume=1.0, fadein=2.0, fadeout=2.0)
+#       looping track from audio/music
+#   lc_music_stop(fadeout=2.0) -> None        stop music
+#   lc_bgm(theme, fadein=2.0, fadeout=2.0) -> None
+#       play a BGM theme (no restart if already playing)
+#   lc_bgm_cut() -> None                      comic beat: music stops dead, theme remembered
+#   lc_bgm_hush(fadeout=1.5) -> None          intimate beat: fade to silence, theme remembered
+#   lc_bgm_resume(fadein=2.0) -> None         bring back the remembered theme
+#   lc_bgm_stop(fadeout=2.0) -> None          stop BGM and forget the theme
+#   lc_duck(level=0.3, delay=0.6) -> None     dip music + ambience
+#   lc_unduck(delay=1.2) -> None              restore after lc_duck
+#   lc_audio_quiet(fadeout=1.0) -> None       stop music and ambience
+#   lc_ui_sound(name, volume=1.0, hover=False)
+#       UI sound on the 'ui' channel; returns the path (wrap it in screen actions)
+#   lc_audio_path(kind, name)                 resolved audio/<kind>/<name>.<ext>, or None
+#   lc_audio_gain(kind, name, volume=1.0)     per-file/kind gain for a clip
+#   transform lc_push_in(z=1.05, t=9.0)       slow push-in on a CG (`scene cg x at lc_push_in`)
+#   transform lc_dream_sway                   nightmare warp transform
+#   LC_BGM_THEMES                             {theme: music file}
+#   default persistent.lc_screen_shake        player setting
+#   default persistent.lc_camera_flash        player setting
 #
-#   Audio (files are optional: missing = silent)
-#     $ lc_sfx("splash_big")           game/audio/sfx/<name>.ogg on the "audio" channel (overlaps)
-#     $ lc_amb("party_chatter")        game/audio/amb/<name>.ogg, looping, crossfades
-#     $ lc_amb_stop()
-#     $ lc_music("dinner_lounge")      game/audio/music/<name>.ogg, looping
-#     $ lc_music_stop()
-#     $ lc_duck() / lc_unduck()        dip / restore the music and ambience
-#     lc_ui_sound("tap")               game/audio/ui/<name>.ogg on the "ui" channel
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_sfx_find
 #
-# Settings: Preferences gets SCREEN SHAKE and CAMERA FLASH toggles and four
-# volume sliders (darryn): BGM (music mixer), SFX (sfx mixer: story sounds,
-# looping sounds, ambience and UI sounds), VOICE (voice mixer: Leia's breaths
-# plus every character vocal clip in audio/voice/) and LEWD (lewd mixer:
-# intimate foley in audio/lewd/).
+# Example:
+#   $ lc_bgm("party")
+#   $ lc_sfx("crowd_ooh")
+#   "She caught my wrist, stepped backward—and pulled me into the pool with her." with lc_shake("m")
+#   scene cg ch01_villa_arrival at lc_push_in
+#
+# Depends on: systems/lc_audio_scene_lock.rpy (lc_audio_mark), systems/lc_breath.rpy (Leia's vocal
+#   clips)
+# Hooks: none
+# Load order: init -10 registers the audio channels; init -2 helpers, so init 0 systems can use them
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_fx.py, tests/test_bgm.py,
+#   tests/test_demo_audio.py
 
 default persistent.lc_screen_shake = True
 default persistent.lc_camera_flash = True

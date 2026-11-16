@@ -1,5 +1,37 @@
-# Core relationship/stat logic.
-# Story code should use these helpers instead of directly changing stat dictionaries.
+# Stats - the five v2 stats and route resolvers for scenes
+#
+# Purpose: Story code changes and reads stats only through these helpers (stat dictionaries are save
+#   state in game/defaults.rpy). Rules, thresholds (LC_T) and route resolvers live in
+#   python-packages/lc_stat_model.py; this file binds them to the save and migrates pre-v2 saves
+#   after load.
+#
+# Public API (call these from scenes/screens):
+#   change_stat(group_name, stat_name, amount)
+#       change a stat in 'relationship' / 'partner' / 'player', clamped 0-100
+#   get_stat_group(group_name)                the mutable stat dict of a group
+#   clamp_stat(value)                         clamp to 0-100
+#   lc_stat(stat)                             current value of one stat by name
+#   lc_stats_flat()                           {stat: value} for the five stats
+#   lc_exhib_gained(prefix)                   Exhibitionism gained from choices with an id prefix
+#   lc_d1_route_pressure()                    Day 1 end state ('ntr_seeded' / 'nts_seeded' /
+#       'mixed')
+#   lc_d1_love_bedtime(pressure)              Day 1 Love bedtime variant
+#   lc_current_lean()                         lean key for the Full 'Current lean' line
+#   lc_current_lean_label()                   its label
+#   lc_migrate_stats_v2() -> None             after_load: convert a pre-v2 save once
+#   LC_T                                      thresholds from lc_stat_model.THRESHOLDS
+#   debug_change_stat(group_name, stat_name, amount) -> None
+#       dev: edit a stat
+#   debug_add_money(amount) -> None           dev: add money
+#
+# Example:
+#   $ ch01_photo_confidence = lc_stat("exhibitionism") + (LC_T["d1_photo_bolder_bonus"] if selected_pool_outfit == "pool_bolder" else 0)
+#
+# Depends on: python-packages/lc_stat_model.py, systems/choice_engine.rpy, systems/story_state.rpy,
+#   game/defaults.rpy
+# Hooks: none (adds lc_migrate_stats_v2 to config.after_load_callbacks)
+# Load order: default (init 0)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_runtime.py, tests/test_stat_model.py
 
 init python:
 

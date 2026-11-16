@@ -123,7 +123,7 @@ class HiddenPovHardeningTests(unittest.TestCase):
         self.assertIn("def lc_pov_reduce_motion", self.system)
 
     def test_viewer_sits_above_phone_banner(self):
-        viewer = self.system[self.system.index("screen lc_pov_viewer"):]
+        viewer = self.system[self.system.index("\nscreen lc_pov_viewer"):]
         zorder = int(viewer.split("zorder", 1)[1].split()[0])
         self.assertGreater(zorder, 620)
 

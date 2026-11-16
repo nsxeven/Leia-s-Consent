@@ -1,10 +1,17 @@
-# Phone quick-access overlay registration.
-# The active handset screen (phone_screen) lives in phone_sweetheart.rpy;
-# the old base copy that used to sit here was dead code and was removed in the
-# clean-up (it was always replaced by the later definition).
-
-# Diegetic in-game phone hub.
-# Bright, playful presentation with rounded mobile UI surfaces.
+# Phone overlay registration - register the phone HUD overlay
+#
+# Purpose: Only registers the phone_quick_access overlay (screens/phone_hud.rpy). The handset screen
+#   phone_screen lives in screens/phone_sweetheart.rpy.
+#
+# Public API: none - registration only
+#
+# Example:
+#   (nothing to call)
+#
+# Depends on: screens/phone_hud.rpy
+# Hooks: none (appends phone_quick_access to config.overlay_screens)
+# Load order: default (init 0); keeps the overlay's place in config.overlay_screens
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_effective_fingerprints.py (overlay order)
 
 init python:
     if "phone_quick_access" not in config.overlay_screens:

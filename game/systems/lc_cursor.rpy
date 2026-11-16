@@ -1,17 +1,21 @@
-# Themed mouse cursor: the Sparkle glint (darryn 2026-11-08, draft E).
+# Themed cursor - the animated Sparkle mouse cursor
 #
-# Ren'Py draws the cursor itself (config.mouse_displayable), so it shows in
-# fullscreen, windowed and the browser build alike. Touch devices (phones,
-# JoiPlay) keep no cursor.
+# Purpose: Ren'Py draws the cursor itself (a MouseDisplayable), so it shows in fullscreen, windowed
+#   and the browser build. Idle twinkle, a glint trail while moving, and an eased honey-to-pink
+#   hover with an orbiting twin over anything clickable. Touch devices get no cursor. Art:
+#   gui/cursor/ (tools/gen_cursor_sparkle.py). Only one cursor may exist.
 #
-# The sparkle is alive:
-#   * idle: a slow twinkle (gentle rock + breathing pulse);
-#   * moving: it leaves a short trail of fading glints;
-#   * over anything clickable it eases (same timing as button hovers,
-#     LC_HOVER_IN / LC_HOVER_OUT) from honey to pink, tilts, grows a touch, and
-#     a small twin sparkle orbits it.
-# The hotspot is the sparkle's centre. Art: gui/cursor/ (tools/gen_cursor_sparkle.py).
-# Knob: LC_CURSOR_TRAIL (glints on/off).
+# Public API (call these from scenes/screens):
+#   class LCCursor(MouseDisplayable)          the cursor displayable this file installs
+#   define LC_CURSOR_TRAIL                    glint trail on/off
+#
+# Example:
+#   define LC_CURSOR_TRAIL = False   (turns the glints off)
+#
+# Depends on: systems/lc_hover_fade.rpy (LC_HOVER_IN / LC_HOVER_OUT timings)
+# Hooks: none
+# Load order: init 5: after the hover timing defines (init 0) it reads
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_cursor.py
 
 define LC_CURSOR_TRAIL = True
 

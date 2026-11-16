@@ -1,7 +1,29 @@
-# End-of-day scrapbook. Pixel chrome is pre-scaled 3x (nearest) in
-# game/images/ui/scrapbook. Handwriting stays smooth Caveat on top.
-# Clicks never skip. Holding SPACE (LC_REVIEW_HOLD_SKIP s) sets `skipped` and
-# every drop, flash and tick snaps to the end.
+# Day review screens - the end-of-day scrapbook spread
+#
+# Purpose: Draws the review that systems/day_review.rpy prepares: night card, polaroids, stat bars,
+#   chips, tags and stickers, plus its settings block and the history replay. Pixel chrome is
+#   pre-scaled 3x in game/images/ui/scrapbook; handwriting is Caveat. Clicks never skip; holding
+#   SPACE (LC_REVIEW_HOLD_SKIP s) snaps every animation to the end.
+#
+# Public API (call these from scenes/screens):
+#   screen lc_day_review_screen(day_id, replay=False, skipped=False)
+#       the scrapbook spread (called by label lc_day_review)
+#   screen lc_review_night_screen(day_id)     the night card before the spread
+#   screen lc_review_history_screen(day_id)   replay of the latest review (Status screen)
+#   screen lc_review_settings()               review options block used in player settings
+#   screen lc_title_badge(character_id, title)
+#       brief sprite title badge (config.show hook)
+#   class LcReviewDelta(renpy.Displayable)    animated stat-change number
+#   class LcReviewTick(renpy.Displayable)     animated bar tick
+#
+# Example:
+#   call lc_day_review("ch01_d2") from lc_review_return_ch01_d2   (the label shows these screens)
+#
+# Depends on: systems/day_review.rpy, systems/stat_tooltips.rpy, systems/stat_delta_colours.rpy,
+#   screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy
+# Hooks: none
+# Load order: default (screens at init -500; the displayable classes at init 0)
+# Docs: docs/DAY_REVIEW.md   Tests: tests/test_day_review.py, tests/test_review_layout_icons.py
 
 transform lc_night_in:
     alpha 0.0

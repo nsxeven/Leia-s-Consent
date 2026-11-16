@@ -1,20 +1,49 @@
-# ACTIVE PHONE PRESENTATION — the Sweetheart handset.
-# Owns phone_screen (home grid, Messages, Photos, Shop, Wallet, Orders), the Status
-# and Settings apps (lc_phone_status, lc_phone_settings), the photo viewer, the
-# phone styles (lc_sw_*, lc_phone_btn*) and the handset helpers (lc_phone_*).
-# Story code still reads phone_app and phone_thread. Pixel art is pre-scaled 3x
-# (nearest); Patrick Hand stays smooth at 1080p. Related: phone_hud.rpy (HUD icon),
-# phone_wallpaper.rpy, systems/phone_presentation_logic.rpy (messages,
-# notifications), systems/phone_state.rpy (saved phone data).
+# Phone handset - the Sweetheart phone: home, Messages, Photos, Shop, Status, Settings
 #
-# Load-order contract: every screen, style and function here is defined once, so
-# file order picks no winner. The python blocks keep the init priorities of the
-# retired patch files they came from, so init runs in the same order as before:
-#   init 90  - lc_phone_extra_apps overlay registration + Home helpers
-#              (was screens/zz_day1_ui_qol_patch.rpy)
-#   init 95  - handset helpers (this file was zzzzzz_phone_ios_presentation.rpy)
-#   init 300 - lc_phone_hardware_overlay registration, the last phone overlay
-#              (was zzzzzzz_phone_hardware_polish.rpy)
+# Purpose: Owns phone_screen (home grid, Messages, Photos, Shop, Wallet, Orders), the Status and
+#   Settings apps, the photo viewer, the phone styles (lc_sw_*, lc_phone_btn*) and the handset
+#   helpers. Story code reads phone_app / phone_thread only. Pixel art is pre-scaled 3x; Patrick
+#   Hand stays smooth. Messages/notifications logic: systems/phone_presentation_logic.rpy; saved
+#   data: systems/phone_state.rpy.
+#
+# Public API (call these from scenes/screens):
+#   screen phone_screen()                     the handset (Show/call it; HUD icon opens it)
+#   screen lc_phone_status()                  Status app
+#   screen lc_phone_settings()                Settings app
+#   screen lc_phone_photo_viewer(photo_asset)
+#       full-screen photo
+#   lc_phone_close() -> None                  dismiss every phone layer
+#   lc_phone_back() -> None                   one tier back per press
+#   lc_phone_clock_text()                     clock text (story time or device clock)
+#   lc_phone_thread_clock_text(thread_id)     clock text for a revisited thread
+#   lc_phone_theme()                          'day' / 'night'
+#   lc_phone_palette(theme=None)              colour table for a theme
+#   lc_phone_art(name)                        path of a handset art file
+#   lc_phone_one_line(text, limit=36)         one-line preview with ellipsis
+#   lc_phone_price(amount)                    '$1,250' price label
+#   lc_phone_home_caption()                   home screen caption
+#   lc_phone_rounded_photo(asset_id, width, height)
+#       photo masked to rounded corners
+#   define LC_PHONE_BACKDROP                  dim backdrop colour
+#   default lc_phone_hearts                   decorative hearts on/off
+#
+# Internal (helpers for this file and its screens; do not call from scenes): lc_phone_current_app,
+#   lc_mark_status_intro_seen, lc_phone_reply_level, lc_phone_name_color, lc_phone_avatar_ink,
+#   lc_phone_avatar, lc_phone_initial, lc_phone_list_preview, lc_phone_thread_rows,
+#   lc_phone_thread_ranged, lc_phone_thread_adjustment, lc_sm_app_badge
+#
+# Example:
+#   action Show("phone_screen")      (screens/phone_hud.rpy)
+#
+# Depends on: systems/phone_presentation_logic.rpy, systems/phone_state.rpy,
+#   systems/phone_group_avatar.rpy, systems/status_display.rpy, systems/wardrobe_logic.rpy,
+#   screens/phone_wallpaper.rpy, screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy
+# Hooks: none (registers the lc_phone_extra_apps and lc_phone_hardware_overlay overlays)
+# Load order: every name defined once. The python blocks keep the priorities of the old load order,
+#   so init runs as before: init 90 lc_phone_extra_apps overlay + Home helpers; init 95 handset
+#   helpers; init 300 lc_phone_hardware_overlay registration, the last phone overlay
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_layout.py,
+#   tests/test_phone_back_navigation.py, tests/test_phone_replies.py, tests/test_sprite_match_ui.py
 
 default lc_phone_hearts = True
 

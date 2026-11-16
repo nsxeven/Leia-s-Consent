@@ -1,5 +1,43 @@
-# Wardrobe ownership, purchase validation, and route-based wear acceptance.
-# Buying an outfit and Leia agreeing to wear it are deliberately separate states.
+# Wardrobe logic - ownership, purchases and whether Leia agrees to wear an outfit
+#
+# Purpose: Buying an outfit and Leia agreeing to wear it are separate states: purchase_outfit spends
+#   money, attempt_wear_outfit equips only when a wear path (stats/story) passes. Definitions:
+#   systems/outfits_data.rpy; UI text: systems/outfit_display.rpy.
+#
+# Public API (call these from scenes/screens):
+#   get_outfit(outfit_id)                     one outfit definition
+#   outfit_name(outfit_id)                    display name
+#   owns_outfit(outfit_id) -> bool            True when owned
+#   purchase_outfit(outfit_id) -> bool        buy if visible, unlocked, not owned and affordable;
+#       True on success
+#   grant_story_outfit(outfit_id, equip=False)
+#       give an outfit from the story (no money); equip=True tries to wear it
+#   attempt_wear_outfit(outfit_id) -> bool    equip when a wear path passes; True on success
+#   can_wear(outfit_id)                       True when owned and a wear path passes
+#   passing_wear_path(outfit_id)              first satisfied wear path, or None
+#   is_shop_unlocked(outfit_id)               True when the Shop may sell it
+#   shop_story_gate_open(outfit_id)           False while a story scene reserves the outfit
+#   shop_outfit_ids()                         Shop-visible outfits in order
+#   valid_owned_outfit_ids()                  owned ids that still exist
+#   current_outfit_name()                     name of the equipped outfit
+#   outfit_status_text(outfit_id) -> str      ownership/wear status line
+#   outfit_requirement_text(outfit_id, mode=None)
+#       mode-aware wear requirements
+#   debug_unlock_all_outfits() -> None        dev: own everything
+#   debug_reset_wardrobe() -> None            dev: reset
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _requirement_value,
+#   _requirements_met, _wardrobe_stat_label
+#
+# Example:
+#   $ purchase_outfit("boutique_cutout_mini")
+#   if owns_outfit("boutique_cutout_mini"):
+#
+# Depends on: systems/outfits_data.rpy, systems/economy.rpy, systems/stats.rpy,
+#   systems/story_state.rpy
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_shop_coming_soon.py, tests/test_stat_model.py
 
 init python:
 

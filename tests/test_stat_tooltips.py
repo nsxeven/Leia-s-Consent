@@ -108,7 +108,7 @@ class StatTooltipWiringTests(unittest.TestCase):
 
     def _screen(self, rel, name):
         src = (GAME / rel).read_text(encoding="utf-8")
-        return src.split("screen {}(".format(name), 1)[1].split("\nscreen ", 1)[0]
+        return src.split("\nscreen {}(".format(name), 1)[1].split("\nscreen ", 1)[0]
 
     def test_rows_carry_tooltips(self):
         status = (GAME / "systems" / "status_display.rpy").read_text(encoding="utf-8")

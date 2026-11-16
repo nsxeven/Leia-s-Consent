@@ -1,18 +1,24 @@
-## Audio stays with its scene (darryn 2026-11-08).
-##
-## 1. Skipping: one-shot sounds (gasps, moans, SFX, lewd foley) are not played at
-##    all while Ren'Py is skipping, so nothing from a skipped CG or conversation
-##    sounds over what comes after. Looping beds (ambience, breath loops) still
-##    start, so the scene you land on sounds right.
-## 2. Scene changes: every `scene` statement (new background or CG) cuts one-shot
-##    clips that were started on an EARLIER line and are still ringing, with a
-##    short fade. Clips started in the same beat as the scene change (a door
-##    slam right before `scene ... with dissolve`) keep playing, and loops
-##    (ambience, Leia's breath loop, lewd loops) are never cut here: scenes that
-##    keep breathing across CG changes stay continuous.
-##
-## lc_sfx and Leia's voice helpers call lc_audio_mark(channel) when they start a
-## clip; lc_audio_scene_cut() runs from config.scene.
+# Audio scene lock - one-shot sounds stay with the scene that started them
+#
+# Purpose: While skipping, one-shot sounds are not played at all (config.skip_sounds); looping beds
+#   still start. Every `scene` statement on the master layer cuts one-shot clips started on an
+#   earlier line (short fade); same-beat clips and loops are kept. lc_sfx and Leia's voice helpers
+#   call lc_audio_mark(channel) when they start a clip.
+#
+# Public API (call these from scenes/screens):
+#   lc_audio_mark(channel) -> None            note that a one-shot clip started on channel now
+#   lc_audio_scene_cut() -> None              fade out stale one-shots (the scene wrapper calls it)
+#   define config.skip_sounds                 True: no one-shot sounds while skipping
+#   LC_SCENE_LOCKED_CHANNELS                  channels whose one-shots belong to their scene
+#
+# Example:
+#   $ lc_sfx("crowd_ooh")   (lc_fx marks the clip; the next `scene` cuts it if still ringing)
+#
+# Depends on: systems/lc_fx.rpy and systems/lc_breath.rpy (callers)
+# Hooks: none (wraps config.scene once at init 999)
+# Load order: init -40 (helpers, before lc_fx/lc_breath at -10/-5 use them); init 999 wraps whatever
+#   config.scene is installed last
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_audio_scene_lock.py
 
 define config.skip_sounds = True
 

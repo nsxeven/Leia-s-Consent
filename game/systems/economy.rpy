@@ -1,5 +1,20 @@
-# Core one-currency economy.
-# Story and systems code should use these helpers rather than mutating money directly.
+# Economy - the one in-game currency
+#
+# Purpose: Owns earning, checking and spending money (store.money, default in game/defaults.rpy);
+#   money never goes below zero. Prices and purchases live in systems/wardrobe_logic.rpy.
+#
+# Public API (call these from scenes/screens):
+#   earn_money(amount, reason=None)           add a non-negative amount; returns the new balance
+#   can_afford(amount) -> bool                True when the player has at least amount
+#   spend_money(amount, reason=None) -> bool  spend if affordable; True on success
+#
+# Example:
+#   "Buy the black mini for her." if can_afford(get_outfit("boutique_cutout_mini")["cost"]):
+#
+# Depends on: game/defaults.rpy (money)
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_shop_coming_soon.py
 
 init python:
 

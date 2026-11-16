@@ -1,6 +1,6 @@
 # Build Handoff — current state
 
-This file records what is true in the repository **now**. When code and any older note disagree, the code wins; fix the note.
+This file records what is true in the repository **now**. When code and any older note disagree, the code wins; fix the note. Folder layout, load order, coding rules and how to add a Day or a system: `docs/ARCHITECTURE.md`.
 
 - **Baseline:** `main` @ `5b076bd` (18 Oct 2026). This document was written on a branch cut from that commit.
 - **Superseded references:** `a309487` (old head of `feature/ch01-scenes-14-30`) and `c4e54dd` (audit baseline quoted by older design notes) are **stale**. Both are ancestors of `main` and predate the Day Three work. Do not use them as a baseline.
@@ -19,7 +19,7 @@ This file records what is true in the repository **now**. When code and any olde
 | Chapter Naming | One chapter per in-game day (display only): Prologue, then Chapter N = Day N. Every title lives in `game/python-packages/lc_chapters.py` (`CHAPTERS`, all **placeholder** until darryn names them); title cards show the neutral title, the end-of-day review reveals the route-flavoured one (`ROUTE_FAMILY`). Internal ids (`ch01_*` labels, story keys, review day ids) are unchanged |
 | Day Six | **Not built.** Day Five ends on a temporary end card until `ch01_day6_start` exists |
 | Gallery | Implemented: 47 entries (31 Prologue/Day 1-3 scene sequences + 5 Day 4 + 11 Day 5), unlocks derived from seen CGs, reachable from the main menu and game menu. Day Six entries not added yet (see Gallery below) |
-| `zz...` cleanup | Paused except where a late override directly conflicts with runtime |
+| Code layout | Clean-up done: per-Day folders, one definition per name, no `zz*` / patch files and no `config.label_overrides`; see `docs/ARCHITECTURE.md` |
 
 ## Stat model
 
@@ -48,7 +48,7 @@ Flow: `ch01_day2_scene_30_finish` (end-of-day review) -> `jump ch01_day3_start` 
 
 - Day Three keys off the stored `ch01_d2_end_route` and Day Two state, which the link does not touch. The Black Cutout Mini is owned by this point in a normal playthrough (Ryan or Leia bought it in the boutique).
 - Day Three file: `game/chapters/ch01/ch01_day3_scenes.rpy` (owned by the Scriptwriter). The link only added the title/completion cards, the `ch01_day_03_*` flags and the final `jump`; story text is unchanged.
-- Anything that calls Day Two (`call ch01_day2_start` etc.) now runs on through Day Three and Day Four before returning. QA harnesses that want a Day Two-only run should stop at `ch01_day3_start` (the harness uses a `config.label_overrides` entry for this).
+- Anything that calls Day Two (`call ch01_day2_start` etc.) now runs on through Day Three and Day Four before returning. QA harnesses that want a Day Two-only run should stop at `ch01_day3_start` (in a local, uncommitted harness file; the repository itself has no `config.label_overrides`).
 
 ### Day Four now replaces the stub
 
@@ -94,7 +94,7 @@ Flow: `ch01_day2_scene_30_finish` (end-of-day review) -> `jump ch01_day3_start` 
 
 - **Unit:** one entry per scene sequence ("moment"), with pages for variants (blue/white swimsuit, a/b capture photos, Ryan present/absent, sequence frames). 47 entries: Prologue 4, Day 1 17, Day 2 9, Day 3 1 (these 31 are the approved mapping), plus Day 4 5 and Day 5 11 (added after that mapping was written; each is its own block at the end of `gallery_data.rpy`, so deleting a block drops that day). Day 5 covers 15 of its 16 CGs; `ch01_d5_photo_private` is only ever a phone attachment (never shown by a `show`/`scene` statement), so it cannot unlock by seen-image and is left unmapped, like the three Day 1 definitions that are never shown (`ch01_dinner_spill` alias, `ch01_dinner_return_braless`, `ch01_dinner_stranger_compliment`). Mapping those 4 would need a different unlock source (for example the phone photo list). `GALLERY_PLACEHOLDER_IMAGES` and `gallery_validate()` only cover mapped images.
 - **Files:** `game/systems/gallery_data.rpy` (the **one data table**: `GALLERY_TABS`, `GALLERY_PLACEHOLDER_IMAGES`, one `gallery_row(...)` per entry), `game/systems/gallery.rpy` (registry, unlock rules, counts, QA helpers, `gallery_validate()`), `game/screens/gallery_screen.rpy` (tabs, grid, paged preview), a "Gallery" button in `navigation` (`screens.rpy`, main menu and game menu), and a QA section in `chapter_select_screen.rpy`.
-- **Unlock rule (chosen: seen-image based, not explicit `unlock_gallery` lines).** A page is viewable once its CG has ever been shown on this profile (`renpy.seen_image(("cg", name))`; Ren'Py records every `show`/`scene` of an image in `persistent._seen_images`). An entry is unlocked when any one of its pages is viewable; later pages of a partly seen sequence stay locked ("?") until seen. Why this over ~35 inserted `$ unlock_gallery(...)` lines: no story file is edited (so no conflict with the Scriptwriter-owned Day 3/Day 4 files or an in-flight Day Six branch), the late `zz...` label overrides cannot drift out of sync (the effective scene is whatever actually shows the CG), variant pages need no per-variant line, and it also covers earlier playthroughs on the same profile. Caveats: the image names are the key (never rename an image: point the same stable name at the new art), and anything that shows a CG counts (a QA run or skip-through unlocks it; Chapter Select skips scenes, so it unlocks nothing it did not show). `unlock_gallery(id)` still exists for manual/dev unlocks and opens every page of the entry. The story never calls it.
+- **Unlock rule (chosen: seen-image based, not explicit `unlock_gallery` lines).** A page is viewable once its CG has ever been shown on this profile (`renpy.seen_image(("cg", name))`; Ren'Py records every `show`/`scene` of an image in `persistent._seen_images`). An entry is unlocked when any one of its pages is viewable; later pages of a partly seen sequence stay locked ("?") until seen. Why this over ~35 inserted `$ unlock_gallery(...)` lines: no story file is edited (so no conflict with the Scriptwriter-owned Day 3/Day 4 files or an in-flight Day Six branch), the gallery cannot drift out of sync with the scenes (the effective scene is whatever actually shows the CG), variant pages need no per-variant line, and it also covers earlier playthroughs on the same profile. Caveats: the image names are the key (never rename an image: point the same stable name at the new art), and anything that shows a CG counts (a QA run or skip-through unlocks it; Chapter Select skips scenes, so it unlocks nothing it did not show). `unlock_gallery(id)` still exists for manual/dev unlocks and opens every page of the entry. The story never calls it.
 - **Unknown ids never raise.** `get_gallery_entry()` returns `None` for an unknown id, `is_gallery_unlocked()` is False, `unlock_gallery()` returns False, and counts/helpers ignore unknown ids. Old dev profiles that hold the six removed fake ids (`ch01_cg01..04`, `ch02_cg01..02`) in `persistent.gallery_unlocked` are left alone and ignored (not deleted, so ids from a newer build also survive a downgrade).
 - **Placeholders.** Cards and previews draw the real `cg <name>` image by its stable name, so the existing `Composite` text placeholders show as they are, with an "ART PENDING" / "PARTIAL ART" badge. The list of placeholder images is `GALLERY_PLACEHOLDER_IMAGES`; remove a name when final art replaces it. Locked entries show a "LOCKED" tile and the title "Locked CG" (no image, no title).
 - **Adult content.** The game has no age/content gate beyond the README 18+ warning and unlocking by playing, and none was added. Entries flagged `mature=True` (Day 2: sunset private, curtains drawn, curtains open, nightmare; Day 4: lamplight, terrace; Day 5: both cove sequences, lantern light, under the stars, the hairclip night) unlock only by seeing the scene, show a masked "MATURE 18+" cover in the grid instead of the image (`GALLERY_MASK_MATURE_COVERS`), an 18+ badge, and a mature line in the preview. Dream entries (Day 1 dream, Day 2 nightmare) carry "a dream is not evidence".
@@ -126,12 +126,12 @@ Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, 
 
 ## QA notes
 
-- `lint` (Ren'Py 8.5.3) leaves only pre-existing, non-blocking items: `scene white` in Day One scenes 04-06, unused legacy aliases in `chapters/ch01/day1/ch01_phone_moments.rpy`, init priorities above 999 in a few late patch files, and a `hide julian` without a prior show in Day One scene 27 (`chapters/ch01/day1/ch01_scenes_14_30.rpy`).
+- `lint` (Ren'Py 8.5.3) leaves one expected note: the `init -1500` priority of the start-up guard in `game/systems/dev_source_checks.rpy` (it must run before any other init code).
 - Always test with a fresh save when label or choice logic changed.
 
 ## Before starting a coding session
 
 - Fetch `main`, branch from it, and confirm the head.
-- Find the **effective** runtime owner of what you change (late `zz...` overrides replace earlier labels and screens).
-- Do not resume broad `zz...` cleanup unless explicitly requested.
+- Read `docs/ARCHITECTURE.md`. Every label, screen and function has one definition: edit the file that owns it (its header lists its API); never add a `zz*` / patch file or a `config.label_overrides` entry.
+- After pulling a change that moves scripts, close the game and run `tools/clean_orphan_rpyc.bat`.
 - Do not edit `ch01_day3_scenes.rpy` or add or replace CG art outside the owners' workflows.

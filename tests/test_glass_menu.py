@@ -11,7 +11,7 @@ TAGS = (GAME / 'screens/tag_collection_screen.rpy').read_text(encoding='utf-8')
 
 
 def screen(src, name):
-    return src.split('screen '+name+'(', 1)[1].split('\nscreen ', 1)[0]
+    return src.split('\nscreen '+name+'(', 1)[1].split('\nscreen ', 1)[0]
 
 
 class GoldenHourMenuTests(unittest.TestCase):

@@ -1,5 +1,21 @@
-## TAGS page: equip Ryan's and Leia's tags separately, browse moment stickers.
-## Opened from the in-game menu next to STATUS. Locked entries show as ???.
+# Tags screen - equip Ryan's and Leia's tags, browse stickers
+#
+# Purpose: Journal TAGS page next to STATUS: one column per character (equip a tag or Automatic) and
+#   the moment stickers. Locked entries show as ???. Data and rules: systems/lc_tag_collection.rpy.
+#
+# Public API (call these from scenes/screens):
+#   screen lc_tags_screen()                   the TAGS page
+#   screen lc_tag_column(who, name)           one character's column
+#   screen lc_tag_button(who, tag, earned, equipped)
+#       one tag button
+#
+# Example:
+#   ShowMenu("lc_tags_screen")      (journal tabs in screens/scrapbook_ui.rpy)
+#
+# Depends on: systems/lc_tag_collection.rpy, screens/common_scroll.rpy, screens/scrapbook_ui.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/DAY_REVIEW.md   Tests: tests/test_tag_collection.py, tests/test_glass_menu.py
 
 screen lc_tag_button(who, tag, earned, equipped):
     button:

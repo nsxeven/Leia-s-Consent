@@ -1,5 +1,23 @@
-# Player-facing gameplay settings.
-# V1 focuses on Information Transparency; audio/text preferences remain in Ren'Py Preferences for now.
+# Player settings screen - Information Transparency settings page
+#
+# Purpose: Journal page for choosing the transparency mode (mode cards with what each shows), the
+#   day-review options and the Full Transparency route explorer button. Audio and text preferences
+#   stay in the Preferences screen (screens/scrapbook_ui.rpy).
+#
+# Public API (call these from scenes/screens):
+#   screen player_settings_screen()           the settings page
+#   screen transparency_mode_card(mode_id)    one mode card
+#   screen transparency_detail_row(label, description)
+#       one detail row
+#
+# Example:
+#   call screen player_settings_screen      (game/dev/dev_sandbox.rpy)
+#
+# Depends on: systems/transparency_display.rpy, screens/day_review_screen.rpy (lc_review_settings),
+#   screens/route_explorer_screen.rpy, screens/scrapbook_ui.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_glass_menu.py
 
 screen transparency_mode_card(mode_id):
 

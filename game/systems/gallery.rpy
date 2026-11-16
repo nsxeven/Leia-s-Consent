@@ -1,14 +1,68 @@
-# Gallery logic: entry registry (built from systems/gallery_data.rpy), unlock rules,
-# counts and QA helpers. Unlocks are player-wide and survive across save slots/new games.
+# Gallery logic - entry registry, unlock rules, counts and QA helpers
 #
-# UNLOCK RULE (seen-image based, no story-script edits):
-#   * a page is viewable when its CG has ever been shown on this profile
-#     (renpy.seen_image(("cg", name)); Ren'Py records every show/scene of an image
-#     in persistent._seen_images), OR when the whole entry was unlocked explicitly
-#     (unlock_gallery(id), QA unlock-all);
-#   * an entry is unlocked when any one of its pages is viewable. Later pages of a
-#     partly seen sequence stay locked until they are seen.
-# Unknown ids (old dev profiles, entries from a newer build) are ignored, never raised.
+# Purpose: Builds GALLERY_ENTRIES from systems/gallery_data.rpy and answers what is unlocked: a page
+#   is viewable once its `cg <name>` was ever shown on this profile (renpy.seen_image) or the entry
+#   was unlocked explicitly; an entry is unlocked when any page is viewable. Unknown ids are
+#   ignored, never raised. Unlocks are player-wide.
+#
+# Public API (call these from scenes/screens):
+#   is_gallery_unlocked(gallery_id) -> bool   True when the entry is known and a page is viewable
+#   unlock_gallery(gallery_id) -> bool        manual/dev unlock of a whole entry (the story never
+#       calls it)
+#   gallery_customize_names(text)             swap default names in UI/data text for the player's
+#       names
+#   get_gallery_entry(gallery_id)             entry dict or None
+#   gallery_has_entry(gallery_id) -> bool     True for a known id
+#   gallery_ids_for_tab(tab_id)               entry ids of one tab, in order
+#   gallery_ids_for_chapter(chapter_id)       entry ids of one chapter
+#   gallery_all_ids()                         every entry id
+#   gallery_tab_label(tab_id)                 tab caption
+#   gallery_chapter_label(chapter_id)         chapter caption
+#   gallery_entry_chapter_label(entry)        'Chapter N' for an entry
+#   gallery_image_seen(image_name) -> bool    True once `cg <name>` was shown on this profile
+#   gallery_page_available(gallery_id, page_index)
+#       True when one page is viewable
+#   gallery_available_pages(gallery_id)       indexes of viewable pages
+#   gallery_unlocked_count(chapter_id=None, tab_id=None)
+#       unlocked entries (optionally per chapter/tab)
+#   gallery_total_count(chapter_id=None, tab_id=None)
+#       all entries (optionally per chapter/tab)
+#   gallery_pages_counts(gallery_id)          (viewable pages, total pages)
+#   gallery_display_title(gallery_id)         title, or 'Locked CG'
+#   gallery_display_description(gallery_id)   description or the locked hint
+#   gallery_is_hidden_pov(gallery_id) -> bool
+#       True when a Hidden POV registration unlocks the entry
+#   gallery_has_replay(gallery_id)            True when the entry has a replay label
+#   gallery_is_placeholder(image_name) -> bool
+#       True for a text-placeholder CG
+#   gallery_art_state(gallery_id) -> str      'final' / 'partial' / 'pending'
+#   gallery_first_page(gallery_id)            first viewable page index
+#   gallery_cover_image(gallery_id)           image of the first viewable page, or None
+#   gallery_card_masked(gallery_id)           True when the grid masks a mature cover
+#   gallery_neighbor_page(gallery_id, current, step)
+#       next/previous viewable page (wraps)
+#   gallery_thumb(image_name, width, height)  the CG fitted into a box
+#   gallery_grid_rows(tab_id, columns=3)      entry ids of a tab in rows
+#   gallery_validate()                        list of data problems (empty = OK)
+#   gallery_qa_tools_enabled()                True when QA unlock/reset buttons may show
+#   debug_unlock_gallery_entry(gallery_id) -> None
+#       QA: unlock one entry
+#   debug_unlock_all_gallery() -> None        QA: unlock everything
+#   debug_reset_seen_cgs() -> None            QA: forget seen CGs
+#   debug_reset_gallery() -> None             QA: clear explicit unlocks
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _gallery_build_entries,
+#   _gallery_unlock_list, gallery_explicitly_unlocked
+#
+# Example:
+#   text gallery_customize_names(page_info["label"])      (screens/gallery_screen.rpy)
+#
+# Depends on: systems/gallery_data.rpy (GALLERY_TABS, GALLERY_TABLE), systems/hidden_pov.rpy,
+#   systems/chapter_select.rpy (CHAPTER_SELECT_RULE), python-packages/lc_chapters.py
+# Hooks: none
+# Load order: default (init 0); its data table loads at init -2
+# Docs: docs/BUILD_HANDOFF.md   Tests: tests/test_gallery_flags.py, tests/test_hidden_pov.py,
+#   tests/test_day2_maya_cafe.py
 
 init python:
 

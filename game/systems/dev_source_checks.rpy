@@ -1,15 +1,23 @@
-# Source-checkout safety checks (developer machines only).
+# Source-checkout checks - stop start-up when stray compiled scripts are present
 #
-# Stray compiled scripts: Ren'Py loads a .rpyc even after its .rpy was moved or
-# deleted, and .rpyc files are git-ignored, so a pull that moves script files
-# leaves stale copies behind. A stale copy can silently replace a screen (e.g. an
-# old choice menu) or crash the game at load. This check stops the game with a
-# clear message instead. It only runs in a source checkout (game/script.rpy is
-# present); release builds ship no .rpy files, so it is skipped there.
-# Fix: close the game, double-click tools/clean_orphan_rpyc.bat
-# (or run: python tools/clean_orphan_rpyc.py). It first MOVES the .rpyc of a moved
-# script to its new path (tools/dev/rpyc_moves.json), so saves made inside that
-# file keep their place, then deletes the rest. Tests: tests/test_orphan_rpyc.py.
+# Purpose: Ren'Py loads a .rpyc even after its .rpy was moved or deleted (they are git-ignored),
+#   which can crash at load or silently replace a screen. In a source checkout only (game/script.rpy
+#   present) this stops the game with the list and the fix: close the game, run
+#   tools/clean_orphan_rpyc.bat (moves .rpyc per tools/dev/rpyc_moves.json so saves keep their
+#   place, then deletes the rest). Release builds skip it.
+#
+# Public API: none - it runs by itself at start-up
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_check_orphan_compiled_scripts
+#
+# Example:
+#   python tools/clean_orphan_rpyc.py --check     (list strays without changing anything)
+#
+# Depends on: config.gamedir and os only
+# Hooks: none
+# Load order: init -1500 (see below): earliest, so it reports before any code a stale .rpyc could
+#   break
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_orphan_rpyc.py
 
 # load order: as early as possible (init -1500), so it runs before any init code a
 # stale .rpyc could break (e.g. a duplicate Hidden POV registration at init 1).

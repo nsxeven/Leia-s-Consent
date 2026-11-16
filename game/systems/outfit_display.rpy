@@ -1,5 +1,29 @@
-# Player-facing presentation helpers for Wardrobe and Outfit Shop.
-# Mechanical rules stay in wardrobe_logic.rpy; this file only formats UI information.
+# Outfit display - player-facing text for the Wardrobe and Outfit Shop
+#
+# Purpose: Formats outfit information for the UI only (labels, contexts, style meters, status words
+#   and colours). Ownership, purchase and wear rules stay in systems/wardrobe_logic.rpy.
+#
+# Public API (call these from scenes/screens):
+#   outfit_category_label(outfit_id)          display name of an outfit's category
+#   outfit_context_text(outfit_id)            where the outfit fits (contexts joined, 'General' if
+#       none)
+#   outfit_style_rows(outfit_id)              (label, value) rows for the style meters
+#   outfit_status_short(outfit_id) -> str     'Wearing now' / 'Ready to wear' / 'Not comfortable
+#       yet'
+#   outfit_status_color(outfit_id) -> str     colour for that status
+#   outfit_comfort_note(outfit_id)            sentence about Leia's comfort with the outfit
+#   shop_item_state(outfit_id) -> str         'owned' / 'locked' / 'insufficient' / 'available'
+#   shop_item_status_label(outfit_id) -> str  badge text for that state
+#   shop_item_status_color(outfit_id) -> str  badge colour
+#   OUTFIT_CATEGORY_LABELS                    {category: label}
+#
+# Example:
+#   $ selected_styles = outfit_style_rows(shop_selected_outfit)   (screens/shop_screen.rpy)
+#
+# Depends on: systems/wardrobe_logic.rpy, systems/economy.rpy, systems/stats.rpy
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_shop_coming_soon.py
 
 init python:
 

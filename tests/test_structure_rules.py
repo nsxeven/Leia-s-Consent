@@ -49,6 +49,58 @@ def game_rel(path):
     return path.relative_to(m.GAME).as_posix()
 
 
+# Header block every game/systems/*.rpy and game/screens/*.rpy opens with (clean-up
+# PR 5). The tests below keep those headers honest: the Public API and Internal lists
+# may only name things the file really defines, and every path a header or
+# docs/ARCHITECTURE.md mentions must exist.
+HEADED_DIRS = ("systems", "screens")
+HEADER_SECTION = re.compile(r"^# [A-Z][^:]*:")
+API_ENTRY = re.compile(r"^#   (?:(screen|define|default|transform|label|class|style)\s+)?([A-Za-z_][\w.]*)")
+HEADER_PATH = re.compile(r"(?<![\w/.-])((?:game|docs|tests|tools)/[\w./-]+\.(?:rpy|py|md|json|bat)"
+                         r"|(?:systems|screens|chapters|dev|python-packages)/[\w./-]+\.(?:rpy|py))")
+DOC_PATH = re.compile(r"`((?:game|tools|tests|docs)/[^`\s]*)`")
+
+
+def headed_files():
+    return sorted(p for d in HEADED_DIRS for p in (m.GAME / d).glob("*.rpy"))
+
+
+def leading_comments(path):
+    """The comment lines a file opens with (blank lines kept as "")."""
+    out = []
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
+        s = line.strip()
+        if s and not s.startswith("#"):
+            break
+        out.append(line.rstrip())
+    return out
+
+
+def header_sections(lines):
+    """{section name: [lines]} for "# Name...:" sections; "#" or a blank line ends one."""
+    sections, current = {}, None
+    for line in lines:
+        if HEADER_SECTION.match(line):
+            current = line[2:].split(":", 1)[0].split(" (", 1)[0].strip()
+            sections[current] = [line]
+        elif current and line.startswith("#") and line.strip() != "#":
+            sections[current].append(line)
+        else:
+            current = None
+    return sections
+
+
+def is_defined(text, kind, name):
+    n = re.escape(name)
+    any_kind = (rf"^\s*(?:def|class|screen|transform|label|style)\s+{n}\b"
+                rf"|^\s*(?:define|default)\s+(?:-?\d+\s+)?{n}\b|^\s*{n}\s*=")
+    pattern = {
+        "define": rf"^\s*define\s+(?:-?\d+\s+)?{n}\b",
+        "default": rf"^\s*default\s+(?:-?\d+\s+)?{n}\b",
+    }.get(kind, rf"^\s*{kind}\s+{n}\b" if kind else any_kind)
+    return re.search(pattern, text, re.M) is not None
+
+
 class StructureRuleTests(unittest.TestCase):
     def test_no_new_duplicate_definitions(self):
         for kind, allowed in ALLOW_DUP.items():
@@ -114,6 +166,61 @@ class StructureRuleTests(unittest.TestCase):
             for rel in ref.findall(test.read_text(encoding="utf-8")):
                 if not (ROOT / rel).exists():
                     missing.append(f"{test.name}: {rel}")
+        self.assertEqual(missing, [])
+
+
+    def test_system_and_screen_files_open_with_header(self):
+        """Every system/screen file starts with the documented header block."""
+        missing = []
+        for path in headed_files():
+            head = "\n".join(leading_comments(path))
+            for needed in ("# Purpose:", "# Public API"):
+                if needed not in head:
+                    missing.append(f"{game_rel(path)}: no {needed!r} in the opening comment block")
+        self.assertEqual(missing, [])
+
+    def test_header_api_names_are_defined(self):
+        """Names listed under Public API / Internal must exist in that file, so headers cannot rot."""
+        problems = []
+        for path in headed_files():
+            text = m.read(path)
+            sections = header_sections(leading_comments(path))
+            for line in sections.get("Public API", [])[1:]:
+                if line.startswith("#    "):
+                    continue  # continuation of the previous entry's meaning
+                entry = API_ENTRY.match(line)
+                if not entry:
+                    problems.append(f"{game_rel(path)}: unreadable Public API line {line!r}")
+                elif not is_defined(text, entry.group(1), entry.group(2)):
+                    problems.append(f"{game_rel(path)}: Public API names {entry.group(2)!r}, not defined here")
+            internal = " ".join(l[1:] for l in sections.get("Internal", []))
+            for name in re.split(r"[,\s]+", internal.split(":", 1)[1] if ":" in internal else ""):
+                if name and not is_defined(text, None, name):
+                    problems.append(f"{game_rel(path)}: Internal names {name!r}, not defined here")
+        self.assertEqual(problems, [])
+
+    def test_paths_named_in_headers_exist(self):
+        missing = []
+        for path in headed_files():
+            for rel in HEADER_PATH.findall("\n".join(leading_comments(path))):
+                if not ((ROOT / rel).exists() or (m.GAME / rel).exists()):
+                    missing.append(f"{game_rel(path)}: {rel}")
+        self.assertEqual(missing, [])
+
+    def test_architecture_doc_paths_exist(self):
+        """docs/ARCHITECTURE.md exists and every `game/...`, `tools/...`, `tests/...` or
+        `docs/...` path it names in backticks exists (globs must match something)."""
+        doc = ROOT / "docs" / "ARCHITECTURE.md"
+        self.assertTrue(doc.exists(), "docs/ARCHITECTURE.md is missing")
+        missing = []
+        for rel in DOC_PATH.findall(doc.read_text(encoding="utf-8")):
+            rel = rel.rstrip("/")
+            if "*" in rel:
+                found = list(ROOT.glob(rel))
+            else:
+                found = (ROOT / rel).exists()
+            if not found:
+                missing.append(rel)
         self.assertEqual(missing, [])
 
 

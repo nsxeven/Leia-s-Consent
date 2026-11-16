@@ -1,18 +1,60 @@
-# Scrapbook / summer-journal UI: the game-wide skin that replaces Ren'Py's stock
-# screens (say, input, choice, quick_menu, main_menu, game_menu, save, load,
-# file_slots, preferences, history, confirm, skip_indicator, notify) and stock
-# styles (button, window, say_dialogue, choice_button_text, centered_text, ...),
-# plus the choice-feedback / phone-notification toasts, the adult notice, the demo
-# end screen, title cards and the LC_UI_SHOTS screenshot tour. Day-review screens
-# are intentionally not touched.
+# Scrapbook UI - the game-wide skin that replaces Ren'Py's stock screens
 #
-# Load-order contract (this file no longer relies on a zzzzzzzz_ filename):
-# - Screens: each stock screen is defined only here (tests/test_structure_rules.py
-#   forbids a second copy), so it wins whatever the file order.
-# - Styles: the style blocks here run at init 0, after screens.rpy's stock styles
-#   (`init offset = -1` there), so these properties override them.
-# - init -1 python registers the glass-menu sound-test channel; init 999 python
-#   restyles the narrators' click-to-continue after every Character exists.
+# Purpose: Defines the stock screens (say, input, choice, quick_menu, main_menu, game_menu, save,
+#   load, file_slots, preferences, history, confirm, skip_indicator, notify) and restyles the stock
+#   styles, plus the choice/phone toasts, adult notice, demo end screen, title cards and the
+#   LC_UI_SHOTS screenshot tour. End-of-day review screens are not here.
+#
+# Public API (call these from scenes/screens):
+#   screen say(who, what, think=False)        dialogue box (think=True for Ryan's inner voice)
+#   screen choice(items)                      choice cards (parses stat chips, path/CG stamps)
+#   screen input(prompt)                      name entry card
+#   screen quick_menu()                       keycap quick menu (desktop and touch variants)
+#   screen main_menu()                        uses lc_title_screen
+#   screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, hints=None)
+#       glass journal frame for menu pages
+#   screen preferences()                      settings incl. four volume sliders
+#   screen history()                          dialogue history
+#   screen confirm(message, yes_action, no_action)
+#       yes/no dialog
+#   screen lc_demo_end_screen()               demo end card with links
+#   screen lc_adult_notice_screen()           18+ notice
+#   screen lc_title_card(who, what)           chapter title card used by `centered`
+#   screen lc_journal_tabs(xpos=48)           side tabs of journal pages
+#   screen lc_glass_menu_backdrop()           glass menu backdrop
+#   screen lc_keycap_button(label, action, icon=None, selected_on=False, width=None, ghost=False)
+#       keycap-style button
+#   lc_ui_play(cue) -> None                   UI sound for screen actions
+#   lc_cg_on_screen() -> bool                 True while a full-screen CG is shown
+#   lc_phone_covers_scene() -> bool           True while the handset is open
+#   lc_journal_menu_open() -> bool            True while a journal page is up
+#   lc_journal_status_origin()                page the Status menu replaced
+#   set_dialogue_theme(theme) -> None         pin day/night dialogue paper until the scene changes
+#   lc_day_caption()                          time-of-day caption
+#   transform lc_lift                         hover lift transform
+#   define LC_NARRATION_INK                   {paper: narration colour}
+#   default lc_cinematic_mode                 save state: CG dialogue box on
+#
+# Internal (helpers for this file and its screens; do not call from scenes): lc_shown_scene_names,
+#   lc_refresh_dialogue_theme, lc_name_kind, lc_name_color, lc_speaker_color, lc_choice_actions,
+#   lc_history_record_choice, lc_effect_chips, lc_journal_tab_rows, lc_glass_sound_test,
+#   lc_mode_example_index, lc_mode_example_alpha
+#
+# Example:
+#   mc "Not at all."                  (screen say)
+#   centered "[lc_chapter_card_day2]"  (screen lc_title_card)
+#
+# Depends on: game/screens.rpy (stock styles it overrides), game/gui.rpy, systems/choice_engine.rpy,
+#   systems/choice_path_tags.rpy, systems/stat_delta_colours.rpy, systems/lc_typing_sounds.rpy,
+#   systems/title_customiser.rpy, screens/title_screen.rpy, python-packages/lc_ui_logic.py
+# Hooks: none (adds lc_refresh_dialogue_theme to config.start_interact_callbacks and quick_menu to
+#   config.always_shown_screens)
+# Load order: each stock screen is defined only here (tests forbid a second copy), so it wins
+#   whatever the file order. Style blocks run at init 0, after game/screens.rpy's stock styles (init
+#   offset -1 there), so these properties override them. init -1 registers the glass-menu sound-test
+#   channel; init 999 restyles every Character's click-to-continue once they all exist
+# Docs: docs/DIALOGUE_STYLE.md   Tests: tests/test_scrapbook_ui.py, tests/test_glass_menu.py,
+#   tests/test_text_styles.py
 
 default lc_cinematic_mode = False
 default lc_ui_shooting = False

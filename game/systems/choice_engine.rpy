@@ -1,6 +1,60 @@
-# Central choice-effect system.
-# Story files provide the visible choice text and a stable choice ID.
-# Effects live here so gameplay, Insight mode, Full Transparency mode, and developer tools all read the same data.
+# Choice engine - stat effects, tags and display of every story choice
+#
+# Purpose: Owns CHOICE_EFFECTS / CHOICE_TAGS (stable choice id -> effects and behaviour tags), the
+#   choice display mode (Immersive/Insight/Full/Developer), the caption formatter and apply_choice,
+#   which applies effects, records history and shows feedback. Story files only supply the caption
+#   text and the id; Day 2-5 register their ids with CHOICE_EFFECTS.update(...) at init 1-2.
+#
+# Public API (call these from scenes/screens):
+#   CHOICE_EFFECTS                            {choice_id: [(group, stat, amount), ...]} (extended by
+#       day files)
+#   CHOICE_TAGS                               {choice_id: (tag, ...)} behaviour tags (encouraging,
+#       nonchalant, ...)
+#   CHOICE_MODES                              the display modes
+#   STAT_LABELS                               {stat: player-facing name}
+#   format_choice(choice_id, base_text)       caption for a menu item in the current display mode
+#   apply_choice(choice_id)                   apply effects, record history, show feedback; returns
+#       choice_id
+#   current_choice_mode()                     the active display mode ('normal', 'insight', 'full',
+#       'developer')
+#   choice_mode_label()                       display name of the active mode
+#   set_choice_display_mode(mode) -> None     set the global display mode
+#   get_choice_effects(choice_id)             copy of a choice's effects (legacy stats folded to v2)
+#   get_choice_tags(choice_id)                behaviour tags of a choice
+#   lc_choice_route_tag(choice_id)            Full Transparency route tag of a choice
+#   choice_ids_with_prefix(prefix, choice_ids=None)
+#       recorded choice ids starting with a prefix
+#   choice_tag_count(tag, choice_ids=None)    how often a tag appears in the recorded history
+#   choice_tag_counts(choice_ids=None)        counts for every tag in the history
+#   choice_stance(choice_ids=None)            'encouraging' / 'protective' / 'neutral' / 'mixed'
+#       summary
+#   chapter_choice_ids(chapter_id)            recorded choice ids of one chapter prefix
+#   chapter_stance(chapter_id)                choice_stance() for one chapter
+#   chapter_nonchalant_count(chapter_id)      nonchalant choices in one chapter
+#   choice_preview_text()                     live sample caption for the choice-mode screen
+#   show_choice_feedback(choice_id) -> None   post-choice toast (Insight/Full)
+#   clear_choice_feedback(serial) -> None     screen action: hide a toast by serial
+#   maybe_show_status_choice_tutorial(choice_id) -> None
+#       one-time onboarding after the first stat change
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _choice_effect_text,
+#   LCChoiceToastRuntime, lc_choice_feedback_sound
+#
+# Example:
+#   $ ch01_outfit_bolder_text = format_choice("ch01_outfit_bolder", "Not at all. You'd look amazing in it.")
+#   menu:
+#       "[ch01_outfit_bolder_text]":
+#           $ apply_choice("ch01_outfit_bolder")
+#
+# Depends on: systems/stats.rpy (change_stat), systems/day_review.rpy (lc_review_note_choice),
+#   python-packages/lc_stat_model.py, python-packages/lc_ui_logic.py, screens/scrapbook_ui.rpy
+#   (toast screens)
+# Hooks: none
+# Load order: init 0 for the tables and formatters (day files extend them at init 1-2); init 90 for
+#   the feedback/apply block, kept from the retired load-order file so the init sequence is
+#   unchanged
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_choice_scoring.py, tests/test_choice_path_tags.py,
+#   tests/test_stat_runtime.py
 
 init python:
 

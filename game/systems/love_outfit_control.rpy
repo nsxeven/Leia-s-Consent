@@ -1,14 +1,36 @@
-# Love-route outfit control.
+# Love-route outfit control - Ryan may pick Leia's outfit on the Love route
 #
-# Design rule:
-# Once the story has resolved into a Love lane, outfit-prompt scenes can offer
-# Ryan a dedicated "let me choose" option. Love gives Ryan meaningful outfit
-# control, but Leia's current sexual confidence still matters. At ordinary
-# outdoor outfit prompts she will accept outdoor clothes he owns. Swimwear stays
-# visible in the picker but is locked until Exhibitionism reaches 50.
+# Purpose: Once the story has resolved into a Love lane, outfit-prompt scenes can offer a 'let me
+#   choose' option. Leia accepts outdoor clothes he owns; swimwear stays visible but locked until
+#   Exhibitionism reaches its threshold. Not a global Wardrobe bypass: it only applies when the
+#   script opens the picker.
 #
-# This is deliberately NOT a global Wardrobe bypass. The perk only applies when
-# the script explicitly opens the Love-route outfit picker.
+# Public API (call these from scenes/screens):
+#   love_outfit_control_active(route_lane=None) -> bool
+#       True when the story has earned Love outfit control
+#   love_outfit_candidates(story_ids=())      outfit ids for the picker, in stable order
+#   screen leia_love_outfit_picker(options, title_text=("What should " + girlfriend_name + " wear?"))
+#       the picker (renpy.call_screen returns the outfit id)
+#   love_route_wear_request(outfit_id, route_lane=None) -> bool
+#       equip because Ryan asked on the Love route; True on success
+#   love_outfit_is_daring(outfit_id)          narrative helper: secure vs daring outfit
+#   love_outfit_is_outdoor(outfit_id) -> bool
+#       True for an ordinary outdoor outfit
+#   love_outfit_is_swimwear(outfit_id) -> bool
+#       True for swimwear
+#   love_outfit_swimwear_unlocked()           True once Exhibitionism allows swimwear
+#   love_outfit_available(outfit_id)          availability inside the picker
+#   love_outfit_lock_text(outfit_id)          mode-aware reason a visible outfit is locked
+#
+# Example:
+#   d4_day_pick = renpy.call_screen("leia_love_outfit_picker", ...)
+#   love_route_wear_request(d4_day_pick, route_lane="love")
+#
+# Depends on: systems/wardrobe_logic.rpy, systems/outfit_display.rpy, systems/story_state.rpy,
+#   systems/gallery.rpy
+# Hooks: none
+# Load order: init 10: after the wardrobe and outfit tables (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: none directly (lint)
 
 init 10 python:
 

@@ -14,7 +14,7 @@ SW, SH = 506, 1020  # flat phone screen
 
 
 def _screen(src, name):
-    return src.split("screen {}(".format(name), 1)[1].split("\nscreen ", 1)[0]
+    return src.split("\nscreen {}(".format(name), 1)[1].split("\nscreen ", 1)[0]
 
 
 class CropMathTests(unittest.TestCase):

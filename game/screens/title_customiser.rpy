@@ -1,6 +1,22 @@
-# Title-screen customiser panel (PR 2). Opened from the "Customise" menu item;
-# every pick applies live to the title screen behind it.
-# Data + unlock rules: systems/title_customiser.rpy.
+# Title customiser panel - Customise panel on the title screen
+#
+# Purpose: Opened from the 'Customise' title menu item; tabs for background, outfit and expression,
+#   and every pick applies live to the title screen behind it. Data and unlock rules:
+#   systems/title_customiser.rpy.
+#
+# Public API (call these from scenes/screens):
+#   screen lc_title_customiser(tab)           the panel for a tab
+#   screen lc_tc_tab(label, value, tab)       one tab
+#   screen lc_tc_tile(thumb, label, selected, locked, action, w, h)
+#       one option tile
+#
+# Example:
+#   use lc_title_customiser(lc_title_ui["tab"])      (screens/title_screen.rpy)
+#
+# Depends on: systems/title_customiser.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/TITLE_SCREEN.md   Tests: tests/test_title_customiser.py
 
 style lc_tc_tab_text is default:
     font "fonts/Nunito-ExtraBold.ttf"

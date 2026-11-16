@@ -1,4 +1,27 @@
-﻿################################################################################
+﻿# Ren'Py stock screens - the SDK-generated screens.rpy, kept close to stock
+#
+# Purpose: The stock styles and the stock screens this project still uses as shipped (navigation,
+#   about, help, nvl, bubble). The project's own versions of say, choice, menus, save/load,
+#   preferences and history live in screens/scrapbook_ui.rpy, which also overrides the styles below.
+#   Only one definition per screen name is allowed.
+#
+# Public API (call these from scenes/screens):
+#   screen navigation()                       stock menu navigation
+#   screen about()                            About page
+#   screen help()                             help page
+#   screen nvl(dialogue, items=None)          NVL-mode screen
+#   screen bubble(who, what)                  speech-bubble screen
+#
+# Example:
+#   ShowMenu("about")
+#
+# Depends on: game/gui.rpy
+# Hooks: none
+# Load order: `init offset = -1` (below), so these stock styles load before screens/scrapbook_ui.rpy
+#   restyles them at init 0
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_structure_rules.py
+
+################################################################################
 ## Initialization
 ################################################################################
 

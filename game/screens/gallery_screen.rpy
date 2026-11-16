@@ -1,7 +1,24 @@
-# Player-facing gallery.
-# Cards and previews draw the real `cg <name>` image by its stable name, so a
-# Composite text placeholder and final art both work without changes here.
-# Data lives in systems/gallery_data.rpy; unlock rules in systems/gallery.rpy.
+# Gallery screen - the player-facing gallery grid and preview
+#
+# Purpose: Cards and previews draw the real `cg <name>` image by its stable name, so a text
+#   placeholder and final art both work without changes here. Data: systems/gallery_data.rpy; unlock
+#   rules: systems/gallery.rpy.
+#
+# Public API (call these from scenes/screens):
+#   screen gallery_screen()                   tabbed grid of entries (journal page)
+#   screen gallery_preview_screen(gallery_id)
+#       full view of one entry with page arrows
+#   screen gallery_card(gallery_id)           one grid card
+#
+# Example:
+#   ShowMenu("gallery_screen")      (journal tabs in screens/scrapbook_ui.rpy)
+#
+# Depends on: systems/gallery.rpy, systems/gallery_data.rpy, screens/common_scroll.rpy,
+#   screens/scrapbook_ui.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/BUILD_HANDOFF.md   Tests: tests/test_glass_menu.py, tests/test_hidden_pov.py,
+#   tests/test_typed_names.py
 
 screen gallery_card(gallery_id):
 

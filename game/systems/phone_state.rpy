@@ -1,7 +1,50 @@
-# In-game phone state and helpers.
-# The phone is a reusable diegetic hub for messages, online shopping, photos,
-# and future apps. Story code should add messages through the helpers below
-# instead of mutating the save-state lists directly.
+# Phone state - saved threads, messages and photos
+#
+# Purpose: Owns the save-specific phone data (threads by stable id, messages, photos, reply state,
+#   story clock) and the raw writer phone_store_message. Story code delivers messages with
+#   phone_add_message (systems/phone_presentation_logic.rpy), never by mutating these lists. Thread
+#   ids stay stable when the player renames characters.
+#
+# Public API (call these from scenes/screens):
+#   phone_send_player_message(thread_id, text, message_id=None)
+#       a message from Ryan (the player)
+#   phone_store_message(thread_id, sender_id, text="", message_id=None, attachment_id=None, attachment_label=None, mark_unread=True, notify=False, notification_title=None, save_attachment=True, display_time=None) -> bool
+#       raw writer under phone_add_message (internal to the phone system)
+#   phone_has_message(message_id) -> bool     True when a message id already exists
+#   phone_add_photo(photo_id, asset_id, label, source_thread=None, source_message_id=None) -> bool
+#       add a Photos entry once
+#   phone_has_photo(photo_id) -> bool         True when a photo id exists
+#   phone_photo_items()                       list of photo entries
+#   phone_messages_for_thread(thread_id)      messages of a thread
+#   phone_thread_label(thread_id)             player-facing thread name (custom names)
+#   phone_sender_label(sender_id)             player-facing sender name
+#   phone_mark_thread_read(thread_id) -> None
+#       mark a thread read
+#   phone_thread_unread_count(thread_id)      unread count of a thread
+#   phone_total_unread()                      unread count over all threads
+#   phone_thread_preview(thread_id)           last-message preview text
+#   lc_phone_set_story_time(value) -> None    pin the phone clock for a beat ('11:00')
+#   lc_phone_clear_story_time() -> None       back to the device clock at a time skip
+#   phone_debug_seed_messages() -> None       dev: add test messages
+#   phone_debug_clear_messages() -> None      dev: clear test messages
+#   PHONE_THREAD_ORDER                        thread order in Messages (Day One adds Maya at init
+#       998)
+#   default phone_messages                    save state: {thread_id: [message, ...]}
+#   default phone_photos                      save state: [photo, ...]
+#   default phone_reply_prompts               save state: open reply cards
+#   default phone_reply_delivery              save state: queued reply steps
+#   default lc_phone_story_time               save state: pinned clock text or None
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _phone_ensure_thread,
+#   _phone_next_debug_batch
+#
+# Example:
+#   $ lc_phone_set_story_time("11:00")   ...   $ lc_phone_clear_story_time()
+#
+# Depends on: game/characters.rpy (names), screens/gameplay_toasts.rpy (phone_show_notification)
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_replies.py, tests/test_day2_phone_time.py
 
 # Save-specific phone state. Thread IDs remain stable even when display names
 # are customized by the player.

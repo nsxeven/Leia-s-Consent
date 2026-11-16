@@ -1,12 +1,29 @@
-# Stat-change colours by MEANING, not sign (darryn 2026-11-08, stat model v2).
-# Wherever stat changes are shown (Insight / Full choice cards, end-of-day
-# review chips and numbers):
-#   LC_DELTA_UP   (soft green) = good for the couple: Love/Trust up, Temptation down
-#   LC_DELTA_DOWN (soft red)   = warning: Love/Trust down, Temptation up (toward NTR)
-#   Exhibitionism and Sharing are directions, not good or bad: they keep their own
-#   route colour either way (pink = Love+Exhib, purple = NTS).
-# The meaning comes from lc_stat_model.delta_kind(). Slightly deeper than true
-# pastel so the text stays readable on the cream cards.
+# Stat-change colours - colour stat changes by meaning, not sign
+#
+# Purpose: Wherever stat changes are shown (Insight/Full choice cards, review chips): LC_DELTA_UP
+#   soft green = good for the couple (Love/Trust up, Temptation down), LC_DELTA_DOWN soft red =
+#   toward NTR; Exhibitionism and Sharing keep their own route colour either way. The meaning comes
+#   from lc_stat_model.delta_kind().
+#
+# Public API (call these from scenes/screens):
+#   lc_delta_colour(stat, amount, palette="card")
+#       colour for one change ('card' or 'review' palette), or None
+#   lc_delta_colour_for_label(name, amount)   same, from a stat's display label
+#   lc_choice_effect_markup(chips)            coloured markup for parsed caption chips
+#   lc_choice_caption(caption)                menu caption with its [variable] substituted
+#   define LC_DELTA_UP                        good change
+#   define LC_DELTA_DOWN                      warning change
+#   define LC_DELTA_EXHIBITIONISM             Exhibitionism colour
+#   define LC_DELTA_SHARING                   Sharing colour
+#   define LC_REVIEW_DELTA_INK                darker inks for paper (review, path stamps)
+#
+# Example:
+#   $ line, chips = lc_ui_logic.parse_choice_caption(lc_choice_caption(item.caption))   (screen choice)
+#
+# Depends on: python-packages/lc_stat_model.py, python-packages/lc_ui_logic.py
+# Hooks: none
+# Load order: default (init 0)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_delta_colours.py
 
 define LC_DELTA_UP = "#5aa874"
 define LC_DELTA_DOWN = "#d4636e"

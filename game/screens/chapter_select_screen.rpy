@@ -1,5 +1,19 @@
-# Chapter Select screen: pick a day and a route preset, then start a new game there.
-# Shown from the main menu only when chapter_select_unlocked() (see systems/chapter_select.rpy).
+# Chapter Select screen - pick a day and a route preset, then start there
+#
+# Purpose: Menu page (tag menu) listing the days and route presets from systems/chapter_select.rpy;
+#   Start stores the pick and starts a new game through ch01_chapter_select_entry. Shown only when
+#   chapter_select_unlocked(). QA gallery buttons appear when gallery_qa_tools_enabled().
+#
+# Public API (call these from scenes/screens):
+#   screen chapter_select()                   the Chapter Select page
+#
+# Example:
+#   ShowMenu("chapter_select")      (journal tabs in screens/scrapbook_ui.rpy)
+#
+# Depends on: systems/chapter_select.rpy, systems/gallery.rpy, screens/scrapbook_ui.rpy (game_menu)
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_chapters.py, tests/test_release_from_main.py
 
 screen chapter_select():
 

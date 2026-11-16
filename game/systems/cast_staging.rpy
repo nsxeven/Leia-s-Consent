@@ -1,29 +1,49 @@
-# One sprite-staging model for the whole game (darryn, 2026-11-05).
+# Cast staging - who is on stage, in which outfit and with which face
 #
-# Writers only declare WHO is in the scene and WHAT they wear; the dialogue
-# decides who stands where. Nothing per line.
+# Purpose: Owns the sprite staging model: writers declare the scene's cast and expressions; the say
+#   callback puts each speaker in the LEFT/RIGHT slot on their line (Leia always RIGHT, Ryan or the
+#   speaking guest LEFT; no sprites over a CG). It does not define sprite images (game/sprites/,
+#   *_visuals.rpy) or transforms (systems/dialogue_staging.rpy).
 #
-#   $ cast(ryan="casual", leia="casual", julian="travel")   # after `scene bg ...`
-#   $ face("leia", "smile")                                 # expression change
-#   $ cast_add(leia="towel")    $ cast_remove("ryan")       # mid-scene changes
-#   $ cast()                                                # nobody on screen
+# Public API (call these from scenes/screens):
+#   cast(**members) -> None                   declare the scene's cast (who=outfit) after `scene
+#       bg`; replaces the old cast
+#   cast_add(**members) -> None               add people or change an outfit mid-scene (None
+#       removes; a rustle plays)
+#   cast_remove(*people) -> None              take people out; anyone on stage fades out
+#   face(who, expression) -> None             set an expression now or for their next entrance
+#   cast_hold() -> None                       freeze automatic staging for hand-placed show/hide
+#       lines
+#   cast_resume(**adopt) -> None              hand staging back; who="<tag>" adopts a hand-placed
+#       sprite
+#   lc_cast_who(character)                    cast id ('leia', 'ryan', ...) for a Character, or None
+#   lc_stage_speaker(who) -> None             put `who` on stage for their line (called by the say
+#       callback)
+#   lc_cast_say_callback(who, *args, **kwargs)
+#       config.say_arguments_callback installed by this file
+#   default lc_cast                           save state: {who: outfit} for the current scene
+#   default lc_faces                          save state: {who: expression}
+#   default lc_stage                          save state: {'left': who, 'right': who}
+#   default lc_cast_held                      save state: True between cast_hold() and cast_resume()
 #
-# Rules (darryn):
-#   - A sprite appears on that character's FIRST line, then stays. Scenes open empty.
-#   - Leia is always RIGHT.
-#   - Ryan stands LEFT. A guest (Julian, stranger, Maya, ...) who speaks takes
-#     the LEFT slot and keeps it through narration and Leia's lines, until Ryan
-#     or another guest speaks.
-#   - If Leia is not in the cast, Ryan stays LEFT and a guest takes the RIGHT.
-#   - No sprites while a CG / cinematic is up; they come back on the next line
-#     spoken after it.
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_sprite_name,
+#   _lc_slot_for, _lc_occupant, _lc_put, _lc_staging_blocked, _lc_refresh, _lc_clear_slots
 #
-# Adding a sprite later = define `image <who>_<outfit>` (optionally with
-# expressions: `image <who>_<outfit> smile`) and name the outfit in cast().
-# Speakers are matched by Character object in LC_CAST_SPEAKERS below.
+# Example:
+#   $ cast(ryan="prologue_party", leia="prologue_party", julian="party")
+#   $ face("leia", "shy")
+#   $ cast_add(leia="towel")        $ cast_remove("leia")
+#   $ cast_hold()  ...  $ cast_resume(leia="leia_purple_dress_wet")
 #
-# Manual staging (the dinner collision choreography): `$ cast_hold()` stops the
-# automatic system and clears its slots; `$ cast_resume()` hands control back.
+# Notes: Adding a sprite later = define `image <who>_<outfit>` (expressions: `image <who>_<outfit> smile`)
+#   and name the outfit in cast(). Speakers are matched by Character object in LC_CAST_SPEAKERS.
+#   `$ cast()` empties the stage. A sprite appears on that character's first line, then stays.
+#
+# Depends on: systems/dialogue_staging.rpy (transforms), Character objects in game/characters.rpy,
+#   lc_sfx (systems/lc_fx.rpy), lc_title_note_sprite (systems/title_customiser.rpy)
+# Hooks: none (chains any earlier config.say_arguments_callback)
+# Load order: default (init 0)
+# Docs: docs/SPRITE_STAGING.md   Tests: tests/test_cast_staging.py, tests/test_outfit_change_sfx.py
 
 default lc_cast = {}
 default lc_faces = {}

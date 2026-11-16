@@ -1,28 +1,33 @@
-# Gallery data table: THE ONE PLACE to add or change gallery entries.
+# Gallery data - THE ONE PLACE to add or change gallery entries
 #
-# Unit = one entry per scene sequence ("moment"), with variant pages. The
-# unlock is derived from Ren'Py's own seen-image list (renpy.seen_image), so no
-# story script calls unlock_gallery(): the moment a scene shows one of an
-# entry's `cg <name>` images, the entry unlocks and that page becomes viewable.
-# See systems/gallery.rpy for the rules and docs/BUILD_HANDOFF.md ("Gallery").
+# Purpose: One gallery_row per scene sequence (moment), pages = the stable `cg <name>` images in
+#   display order. Unlocks follow the CGs the player has seen, so story files need no unlock lines.
+#   Never rename a shipped entry id or an image name. Steps to add an entry are below; rules in
+#   systems/gallery.rpy.
 #
-# TO ADD AN ENTRY (for example the Day Five CGs):
-#   1. If it is a new day, add one row to GALLERY_TABS.
-#   2. Add one gallery_row(...) call to GALLERY_TABLE below. `pages` lists the
-#      stable image names exactly as the script shows them (`cg <name>`), in
-#      the order the pages should appear. Variant pages (blue/white, a/b,
-#      Ryan present/absent) are just extra pages.
-#   3. If the CG is still a Composite text placeholder, add its name to
-#      GALLERY_PLACEHOLDER_IMAGES (remove it again when final art lands).
-#   4. No unlock lines are needed. Run `lint` and the gallery QA check.
-# NEVER rename an entry id once shipped (ids are stored in persistent data).
-# Never rename an image: point the same stable name at the new art instead.
+# Public API (call these from scenes/screens):
+#   gallery_row(entry_id, tab, title, description, pages, mature=False, dream=False, route="All routes") -> None
+#       build one entry (id, tab, title, description, pages, mature/dream/route)
+#   GALLERY_TABS                              (tab id, label, chapter, day) rows; add one per new
+#       day
+#   GALLERY_TABLE                             the gallery_row(...) entries
+#   GALLERY_PLACEHOLDER_IMAGES                CGs still shown as text placeholders
 #
-# gallery_row fields: id, tab, title, description, pages, and optionally
-#   mature=True   adult scene: the grid shows a masked cover and an 18+ badge
-#   dream=True    dream/nightmare sequence ("not evidence" in canon)
-#   route=...     free text shown after unlock ("All routes", "Love lane", ...)
-# A page is either "image_name" or ("image_name", "Page label").
+# Example:
+#   gallery_row("pro_party_meet", "prologue", "The party",
+#       "The party where Ryan first notices Leia.",
+#       [("prologue_party_arrival", "Arrival"), ("prologue_party_couch", "On the couch")])
+#
+# Notes: To add an entry: 1. a new day gets one GALLERY_TABS row; 2. add one gallery_row(...) to
+#   GALLERY_TABLE; 3. list text-placeholder CGs in GALLERY_PLACEHOLDER_IMAGES (remove them
+#   when final art lands); 4. run lint and the unit tests. A page is "image" or
+#   ("image", "Page label"); mature=True masks the grid cover, dream=True marks a dream.
+#
+# Depends on: nothing at init (systems/gallery.rpy reads it)
+# Hooks: none
+# Load order: init -2: before systems/gallery.rpy builds the registry at init 0
+# Docs: docs/BUILD_HANDOFF.md   Tests: tests/test_gallery_flags.py, tests/test_title_screen.py,
+#   tests/test_hidden_pov.py
 
 init -2 python:
 

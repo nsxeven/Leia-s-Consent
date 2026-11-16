@@ -8,7 +8,7 @@ UI = (ROOT / "game/screens/scrapbook_ui.rpy").read_text(encoding="utf-8")
 
 
 def screen(name):
-    return UI.split("screen %s(" % name, 1)[1].split("\nscreen ", 1)[0]
+    return UI.split("\nscreen %s(" % name, 1)[1].split("\nscreen ", 1)[0]
 
 
 class PrefsSliderTests(unittest.TestCase):

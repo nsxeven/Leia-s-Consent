@@ -1,5 +1,20 @@
-# Player-facing Wardrobe UI.
-# Mechanical ownership and wear acceptance remain in wardrobe_logic.rpy.
+# Wardrobe screen - the player-facing Wardrobe
+#
+# Purpose: Lists owned outfits with style meters, comfort notes and requirements, and lets the
+#   player ask Leia to wear one. Ownership and wear acceptance stay in systems/wardrobe_logic.rpy.
+#
+# Public API (call these from scenes/screens):
+#   screen wardrobe_screen()                  the Wardrobe page
+#   screen outfit_style_meter(label, value)   one style meter (also used by the Shop)
+#
+# Example:
+#   call screen wardrobe_screen      (game/dev/dev_sandbox.rpy)
+#
+# Depends on: systems/wardrobe_logic.rpy, systems/outfit_display.rpy,
+#   systems/transparency_display.rpy
+# Hooks: none
+# Load order: default (screens at init -500)
+# Docs: docs/ARCHITECTURE.md   Tests: none directly (lint)
 
 screen outfit_style_meter(label, value):
 

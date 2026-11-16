@@ -1,11 +1,36 @@
-## Tag collection (darryn): every tag and moment sticker shown on an end-of-day
-## review is unlocked permanently (across all saves, like title-screen unlocks).
-## The TAGS page in the in-game menu lets the player equip one of Ryan's tags and
-## one of Leia's tags separately, or leave either slot on Automatic. The equipped
-## tag replaces the automatic one on the Status screen, the day review card and
-## the sprite title badges. Stickers are collectible only (view, not equip).
-##
-## Equipping never changes the story: route, facts and stats are untouched.
+# Tag collection - earned review tags and stickers, and equipping tags
+#
+# Purpose: Every tag and moment sticker shown on an end-of-day review is unlocked permanently
+#   (across saves). The TAGS page lets the player equip one of Ryan's and one of Leia's tags, or
+#   leave them Automatic; the equipped tag replaces the automatic one on Status, the review card and
+#   sprite badges. Equipping never changes route, facts or stats.
+#
+# Public API (call these from scenes/screens):
+#   lc_current_titles()                       latest finished day's (ryan, leia) titles, equipped
+#       ones applied
+#   lc_tag_list(who)                          [(tag, earned)] for 'ryan' or 'leia' in catalog order
+#   lc_sticker_list()                         [(sticker, earned)]
+#   lc_tag_equipped(who)                      equipped tag for who, or None (Automatic)
+#   lc_tag_equip(who, tag=None) -> None       equip an earned tag; None returns to Automatic
+#   lc_tag_is_earned(who, tag)                True once who:tag is earned
+#   lc_tags_earned_set()                      set of 'who:tag' strings
+#   lc_tags_apply(auto)                       swap equipped tags into an automatic (ryan, leia) pair
+#   lc_tags_unlock_pair(titles, stickers=()) -> None
+#       mark titles and stickers earned
+#   lc_tags_unlock_finished_day(day_id) -> None
+#       review_finished hook: unlock a day's tags/stickers
+#   LC_TAG_CATALOG                            {who: [tag, ...]} display order
+#   default persistent.lc_tags_earned         earned 'who:tag' strings
+#   default persistent.lc_stickers_earned     earned sticker names
+#   default persistent.lc_tag_equipped        {who: tag or None}
+#
+# Example:
+#   action Function(lc_tag_equip, who, tag)      (screens/tag_collection_screen.rpy)
+#
+# Depends on: systems/day_review.rpy (titles, stickers, LC_STYLE_TAGS), systems/lc_hooks.rpy
+# Hooks: listens to review_finished (unlock) and filters review_titles (equipped tags)
+# Load order: init 21: right after systems/day_review.rpy (init 20), whose tables it reads
+# Docs: docs/DAY_REVIEW.md   Tests: tests/test_tag_collection.py, tests/test_review_tags.py
 
 default persistent.lc_tags_earned = set()        # {"ryan:Her Bodyguard", "leia:Feeling Safe", ...}
 default persistent.lc_stickers_earned = set()    # {"Asked First", ...}

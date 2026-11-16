@@ -1,19 +1,25 @@
-# Save compatibility: old names kept only so older saves and rollback still resolve.
+# Save compatibility - old label names kept as one-line jumps
 #
-# Ren'Py saves remember where the player is by label name (and, mid-scene, by
-# statement identity). When a scene changes its label, an older save or the
-# rollback log may still point at the old name, so the old name stays here as a
-# one-line `jump` to the label that owns the scene now.
+# Purpose: Ren'Py saves and rollback refer to labels by name. When a scene's label changes, the old
+#   name stays here as a single `jump` to the label that owns the scene now, so older saves still
+#   resolve. Never jump to or call these from story code; keep every entry; each new entry says
+#   which saves need it (tests/lc_rpy_model.py resolves the jumps).
 #
-# Rules:
-# - Never jump to or call these names from story code; use the target label.
-# - Keep entries: they let old label names (rollback logs, older saves, external
-#   references) still resolve. Mid-scene loads use statement identity instead and
-#   fall back to the newest statement that still exists.
-# - New entries say which saves need them.
-# - Every entry here is a single `jump`, so tests/lc_rpy_model.py resolves it to its
-#   target and the label fingerprints stay pinned to the code that really runs.
-
+# Public API: nothing to call from scenes; these names only keep old saves loading (full list below)
+#   label ch01_day2_scene_03_maya_message_v2  e.g. old name -> ch01_day2_scene_03_maya_message
+#   label ch01_scene_27_late_photo_drop_staged
+#       e.g. old name -> ch01_scene_27_late_photo_drop
+#   screen lc_breakfast_julian_pov(*args, **kwargs)
+#       retired blocking screen; now returns at once
+#
+# Example:
+#   label ch01_old_name:                  # Needed by: saves made inside <scene> before <PR>
+#       jump ch01_new_name
+#
+# Depends on: the labels it jumps to (game/chapters/)
+# Hooks: none
+# Load order: default
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_save_names.py, tests/test_hidden_pov.py
 
 # Clean-up PR 3 folded the five config.label_overrides back into the labels they
 # replaced. Until then these were the bodies that actually ran, so a save or rollback

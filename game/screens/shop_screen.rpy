@@ -1,5 +1,23 @@
-# Player-facing outfit shop.
-# Purchasing adds ownership only; wear acceptance remains a separate Wardrobe decision.
+# Shop screen - the player-facing outfit shop
+#
+# Purpose: Purchasing adds ownership only; whether Leia wears it stays a Wardrobe decision. While
+#   LC_SHOP_ENABLED is False the Shop (here and the phone app) shows a 'coming soon' card, and story
+#   beats that open it branch on the flag.
+#
+# Public API (call these from scenes/screens):
+#   screen shop_screen()                      the Shop page
+#   screen lc_shop_coming_soon(close_action)  'coming soon' card
+#   define LC_SHOP_ENABLED                    False: Shop is under development
+#
+# Example:
+#   if LC_SHOP_ENABLED:
+#       call screen shop_screen
+#
+# Depends on: systems/wardrobe_logic.rpy, systems/outfit_display.rpy, systems/economy.rpy,
+#   screens/wardrobe_screen.rpy
+# Hooks: none
+# Load order: default
+# Docs: docs/ARCHITECTURE.md   Tests: tests/test_shop_coming_soon.py
 
 # The Shop is still under development (darryn, 2026-11-06): while this is False
 # the Shop (here and the phone app) shows a "coming soon" card instead of the

@@ -1,19 +1,38 @@
-# Full Transparency path stamps on choice cards (darryn 2026-11-08, stat model v2).
+# Choice path stamps - Full Transparency route and CG-count stamps on choice cards
 #
-# In Full Transparency only, each choice card gets a small ink stamp after its
-# stat line naming the path the choice leads (or may lead) to:
-#   -> LOVE, -> LOVE+EXHIB, -> NTS, -> NTR, MAY LEAD TO NTR, LOCKS NTR,
-#   NTR STAYS OPEN, REPAIR, REPAIR, NTR STAYS OPEN. Neutral choices get no stamp.
-# The tag is lc_choice_route_tag(choice_id) -> lc_stat_model.choice_route_tag, the
-# same function Developer mode, the route simulation and the tests use, so the
-# stamp can never disagree with the stats. Colours are the stat-delta meanings
-# (LC_REVIEW_DELTA_INK, the darker inks that read on paper): green = Love family
-# and Repair, red = toward NTR, pink = Love+Exhib, purple = NTS.
+# Purpose: In Full Transparency each choice card gets an ink stamp naming the path it leads to
+#   (lc_choice_route_tag, the same function the route simulation uses) and, for menus that unlock
+#   different CG counts, a camera stamp from LC_CHOICE_CG_COUNT. It also wraps the Day 2/4/5 gate
+#   formatters so gate options get the same marker. The card itself is screen choice in
+#   screens/scrapbook_ui.rpy.
 #
-# How the card knows the choice id: in Full mode format_choice() (and the gate
-# formatters below) put an invisible Ren'Py comment tag {#lcpath=<id>} in the
-# caption. Captions without one (literal test captions) fall back to the stat
-# line, scored by the same lc_stat_model.route_tag().
+# Public API (call these from scenes/screens):
+#   define LC_CHOICE_CG_COUNT                 {choice_id: (min, max)} CGs a choice's sequence
+#       unlocks
+#   lc_choice_path_stamp(caption)             (label markup, ink) for a caption's path stamp, or
+#       None
+#   lc_choice_cg_stamp(caption)               '2' / '1-2' camera stamp text for a caption, or None
+#   define LC_PATH_STAMP_ARROW                arrow glyph markup used in stamps
+#   define LC_PATH_STAMP_PAPER                stamp paper colour
+#   define LC_CG_STAMP_INK                    camera stamp ink
+#   transform lc_path_stamp_tilt              stamp tilt transform
+#
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_path_gate_formatter
+#
+# Example:
+#   "ch01_photo_exit": (1, 2),   # a row in LC_CHOICE_CG_COUNT: capture 02 only if her Exhibitionism carries her on
+#
+# Notes: How the card finds the choice id: in Full mode format_choice() (and the wrapped gate
+#   formatters) prepend an invisible {#lcpath=<id>} comment tag to the caption. Captions without
+#   one fall back to the stat line, scored by lc_stat_model.route_tag().
+#
+# Depends on: systems/choice_engine.rpy, systems/stat_delta_colours.rpy (LC_REVIEW_DELTA_INK),
+#   python-packages/lc_stat_model.py, python-packages/lc_ui_logic.py
+# Hooks: none (re-binds format_day2_risk_choice / format_day4_gate_choice / format_day5_gate_choice
+#   once at init)
+# Load order: init 6: after the day files define their gate formatters (init 1-2) and the v2
+#   re-scoring (init 5)
+# Docs: docs/STAT_MODEL.md   Tests: tests/test_choice_path_tags.py, tests/test_choice_cg_stamp.py
 
 define LC_PATH_STAMP_ARROW = "{font=DejaVuSans.ttf}\u2192{/font}"
 define LC_PATH_STAMP_PAPER = "#fbf4e6"
