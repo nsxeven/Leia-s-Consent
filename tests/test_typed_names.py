@@ -14,9 +14,11 @@ class TypedNameTests(unittest.TestCase):
     def test_demo_story_has_no_hardcoded_names_in_text(self):
         bad = []
         for rel in STORY:
+            prev = ""
             for n, line in enumerate((GAME / rel).read_text(encoding="utf-8").splitlines(), 1):
-                if line.lstrip().startswith('"""'):
-                    continue  # Python docstring, not player-visible
+                after_def, prev = prev.startswith("def "), (line.strip() or prev)
+                if after_def and line.lstrip().startswith('"""'):
+                    continue  # docstring of a Python function, not player-visible
                 code = line.split("#", 1)[0] if not line.lstrip().startswith(("\"", "gf ", "mc ", "friend ")) else line
                 for s in re.findall(r'"((?:[^"\\]|\\.)*)"', code):
                     if re.search(r"\b(Ryan|Leia|Julian)\b", s) and not any(d in line for d in DEFAULTS):

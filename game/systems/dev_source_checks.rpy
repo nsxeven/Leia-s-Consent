@@ -9,8 +9,10 @@
 # Fix: close the game, double-click tools/clean_orphan_rpyc.bat
 # (or run: python tools/clean_orphan_rpyc.py). Tests: tests/test_orphan_rpyc.py.
 
-# load order: last of all, after every other init block has registered.
-init 1999 python:
+# load order: as early as possible (init -1500), so it runs before any init code a
+# stale .rpyc could break (e.g. a duplicate Hidden POV registration at init 1).
+# It only needs config.gamedir and os.
+init -1500 python:
 
     def _lc_check_orphan_compiled_scripts():
         import os

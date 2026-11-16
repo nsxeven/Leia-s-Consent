@@ -7,7 +7,9 @@
 #
 # Rules:
 # - Never jump to or call these names from story code; use the target label.
-# - Never delete an entry: the saves listed beside it would stop loading.
+# - Keep entries: they let old label names (rollback logs, older saves, external
+#   references) still resolve. Mid-scene loads use statement identity instead and
+#   fall back to the newest statement that still exists.
 # - New entries say which saves need them.
 # - Every entry here is a single `jump`, so tests/lc_rpy_model.py resolves it to its
 #   target and the label fingerprints stay pinned to the code that really runs.
