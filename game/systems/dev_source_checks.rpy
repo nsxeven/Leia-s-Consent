@@ -7,7 +7,9 @@
 # clear message instead. It only runs in a source checkout (game/script.rpy is
 # present); release builds ship no .rpy files, so it is skipped there.
 # Fix: close the game, double-click tools/clean_orphan_rpyc.bat
-# (or run: python tools/clean_orphan_rpyc.py). Tests: tests/test_orphan_rpyc.py.
+# (or run: python tools/clean_orphan_rpyc.py). It first MOVES the .rpyc of a moved
+# script to its new path (tools/dev/rpyc_moves.json), so saves made inside that
+# file keep their place, then deletes the rest. Tests: tests/test_orphan_rpyc.py.
 
 # load order: as early as possible (init -1500), so it runs before any init code a
 # stale .rpyc could break (e.g. a duplicate Hidden POV registration at init 1).
