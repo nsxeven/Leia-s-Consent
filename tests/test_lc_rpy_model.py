@@ -20,8 +20,8 @@ class RpyModelTests(unittest.TestCase):
         self.assertLess(names.index("screens.rpy"), names.index("script.rpy"))
 
     def test_init_offset_and_screen_priority(self):
-        stock = [d for d in m.definitions("screen") if d.name == "say" and d.relpath == "game/screens.rpy"]
-        self.assertEqual([d.priority for d in stock], [-501])
+        defs = m.parse_text("init offset = -1\nscreen s():\n    null\nimage i = 'x.png'\n", "synthetic.rpy", 0)
+        self.assertEqual([(d.kind, d.priority) for d in defs], [("screen", -501), ("image", 499)])
 
     def test_effective_screen_winners(self):
         eff = m.effective("screen")

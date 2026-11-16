@@ -54,27 +54,6 @@ init python:
         return transparency_mode_info(mode)["label"]
 
 
-    def set_player_transparency_mode(mode):
-        """Set one of the three player-facing transparency preferences."""
-        if mode not in PLAYER_TRANSPARENCY_MODES:
-            raise ValueError("Unknown player transparency mode: {}".format(mode))
-
-        first_full_selection = (
-            mode == "full"
-            and not getattr(renpy.store.persistent, "full_transparency_notice_seen", False)
-        )
-
-        if first_full_selection:
-            renpy.store.persistent.full_transparency_notice_seen = True
-
-        set_choice_display_mode(mode)
-
-        if first_full_selection:
-            renpy.notify("Full Transparency may reveal relationship trends before the story makes them obvious.")
-
-        return mode
-
-
     def transparency_visibility_rows(mode=None):
         info = transparency_mode_info(mode)
         return (
