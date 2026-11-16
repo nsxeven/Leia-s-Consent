@@ -20,8 +20,11 @@ Use (from the game's root folder, with the game closed):
     python tools/clean_orphan_rpyc.py --check  # only lists them
 or double-click tools/clean_orphan_rpyc.bat.
 
-Never touches game/saves or game/cache. Note: the Ren'Py launcher's
-"Force Recompile" keeps orphan .rpyc files, so it does not fix this.
+Never touches game/saves or game/cache. The Ren'Py launcher's "Force Recompile"
+does NOT fix this: it renames orphans to .rpyc.bak and gives moved scripts new
+statement names. This tool also moves a listed .rpyc.bak into place, so running it
+after a Force Recompile still keeps saves. Run one Force Recompile AFTER this tool
+if you want error messages to show the new file paths (names are kept).
 When you move a .rpy in a PR, add "old path": "new path" to rpyc_moves.json.
 """
 import json
@@ -66,12 +69,41 @@ def move_target(game_dir, orphan, moves):
     return source + "c"
 
 
+def find_backups(game_dir, moves):
+    """Listed `<old>.rpyc.bak` files whose moved .rpy exists.
+
+    The launcher's Force Recompile (`renpy.exe <proj> compile`) renames an orphan .rpyc
+    to .rpyc.bak and compiles the moved .rpy with NEW statement names. The backup still
+    has the names saves use, so it is moved into place like an orphan .rpyc. Unlisted
+    .bak files are Ren'Py's own business and are left alone.
+    """
+    game_dir = Path(game_dir)
+    out = []
+    for bak in game_dir.rglob("*.rpyc.bak"):
+        rel = bak.relative_to(game_dir).as_posix()
+        if rel.split("/", 1)[0] in SKIP_DIRS or (game_dir / rel[:-5]).exists():
+            continue
+        if move_target(game_dir, rel[:-4], moves):
+            out.append(rel)
+    return sorted(out)
+
+
 def move_orphans(game_dir, moves):
-    """Move each listed orphan .rpyc next to its moved .rpy. Returns [(old, new)]."""
+    """Move each listed orphan .rpyc (or its Force-Recompile .bak) next to its moved .rpy.
+
+    Returns [(old, new)]. An orphan .rpyc wins over a .bak of the same script.
+    """
     moved = []
     for rel in find_orphans(game_dir):
         target = move_target(game_dir, rel, moves)
         if target is None:
+            continue
+        os.replace(Path(game_dir) / rel, Path(game_dir) / target)
+        moved.append((rel, target))
+    done = {new for _old, new in moved}
+    for rel in find_backups(game_dir, moves):
+        target = move_target(game_dir, rel[:-4], moves)
+        if target in done:
             continue
         os.replace(Path(game_dir) / rel, Path(game_dir) / target)
         moved.append((rel, target))
@@ -90,10 +122,10 @@ def main(argv, root=None):
     game_dir = root / "game"
     moves = load_moves(root)
     if "--check" in argv:
-        found = find_orphans(game_dir)
+        found = find_orphans(game_dir) + find_backups(game_dir, moves)
         lines = []
         for rel in found:
-            target = move_target(game_dir, rel, moves)
+            target = move_target(game_dir, rel[:-4] if rel.endswith(".bak") else rel, moves)
             lines.append(rel + (" (will move to " + target + ")" if target else ""))
         print("\n".join(lines) if lines else "No stray .rpyc files.")
         return 1 if found else 0

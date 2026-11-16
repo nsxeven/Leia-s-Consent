@@ -32,6 +32,17 @@ init -1500 python:
                 ren_py = os.path.join(root, name[:-5] + "_ren.py")
                 if not os.path.exists(source) and not os.path.exists(ren_py):
                     orphans.append(os.path.relpath(os.path.join(root, name), gamedir).replace("\\", "/"))
+        # A Force Recompile renames a moved script's old .rpyc to .rpyc.bak; that backup
+        # still holds the statement names saves use, so the tool must put it back first.
+        moves_path = os.path.join(config.basedir, "tools", "dev", "rpyc_moves.json")
+        if os.path.exists(moves_path):
+            import json
+            with open(moves_path, "r", encoding="utf-8") as handle:
+                moves = json.load(handle)
+            for old in moves:
+                bak = os.path.join(gamedir, old[:-4] + ".rpyc.bak")
+                if os.path.exists(bak) and not os.path.exists(os.path.join(gamedir, old)):
+                    orphans.append(old[:-4] + ".rpyc.bak")
         if orphans:
             raise Exception(
                 "Stale compiled script files were found (their .rpy was moved or deleted):\n  "

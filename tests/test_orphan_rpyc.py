@@ -114,6 +114,48 @@ class OrphanRpycTests(unittest.TestCase):
         self.assertEqual((game / "chapters/day1/scene.rpyc").read_text(encoding="utf-8"), "old names")
         self.assertFalse((game / "stale.rpyc").exists())
 
+    def test_recovers_a_backup_made_by_force_recompile(self):
+        # The launcher's Force Recompile (and `renpy.exe <proj> compile`) renames an orphan
+        # .rpyc to .rpyc.bak and compiles the moved .rpy with NEW names. The backup holds
+        # the names saves use, so it must replace that fresh compile.
+        game = self.make_game(["chapters/day1/scene.rpy"])
+        self.compiled(game, "chapters/scene.rpyc.bak", "old names")
+        self.compiled(game, "chapters/day1/scene.rpyc", "fresh names")
+        tool = load_tool()
+        moves = {"chapters/scene.rpy": "chapters/day1/scene.rpy"}
+        self.assertEqual(tool.find_backups(game, moves), ["chapters/scene.rpyc.bak"])
+        moved = tool.move_orphans(game, moves)
+        self.assertEqual(moved, [("chapters/scene.rpyc.bak", "chapters/day1/scene.rpyc")])
+        self.assertEqual((game / "chapters/day1/scene.rpyc").read_text(encoding="utf-8"), "old names")
+        self.assertFalse((game / "chapters/scene.rpyc.bak").exists())
+        self.assertEqual(tool.find_backups(game, moves), [])
+
+    def test_unlisted_backups_are_left_alone(self):
+        game = self.make_game(["script.rpy"])
+        self.compiled(game, "gone.rpyc.bak", "x")   # Ren'Py's own backup of a deleted script
+        tool = load_tool()
+        self.assertEqual(tool.find_backups(game, {}), [])
+        self.assertEqual(tool.move_orphans(game, {}), [])
+        self.assertTrue((game / "gone.rpyc.bak").exists())
+
+    def test_check_lists_backups_and_fails(self):
+        root = Path(tempfile.mkdtemp())
+        game = root / "game"
+        (root / "tools" / "dev").mkdir(parents=True)
+        (root / "tools" / "dev" / "rpyc_moves.json").write_text(
+            '{"chapters/scene.rpy": "chapters/day1/scene.rpy"}', encoding="utf-8")
+        self.compiled(game, "chapters/day1/scene.rpy", "label x:")
+        self.compiled(game, "chapters/scene.rpyc.bak", "old names")
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(load_tool().main(["--check"], root=root), 1)
+        self.assertIn("chapters/scene.rpyc.bak (will move to chapters/day1/scene.rpyc)", out.getvalue())
+
+    def test_startup_guard_also_stops_for_listed_backups(self):
+        guard = m.effective("def")["_lc_check_orphan_compiled_scripts"].body
+        self.assertIn(".rpyc.bak", guard)
+        self.assertIn("rpyc_moves.json", guard)
+
     def test_committed_rename_map_is_valid(self):
         """Every entry: old .rpy gone, new .rpy present (game/-relative paths)."""
         moves = json.loads((ROOT / "tools" / "dev" / "rpyc_moves.json").read_text(encoding="utf-8"))

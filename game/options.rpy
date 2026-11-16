@@ -205,16 +205,11 @@ init python:
     build.classify('work/**', None)
     build.classify('context_memo.rpy', None)
     build.documentation('game/audio/CREDITS.md')
-    # Public releases (game/00_release_build.rpy) leave developer/QA tools out.
-    # These must stay BEFORE the joiplay rule below (first match wins).
+    # Public releases (game/00_release_build.rpy) leave developer/QA tools out: every
+    # file in game/dev/ (put new dev-only scripts there). Must stay BEFORE the joiplay
+    # rule below (first match wins).
     if LC_IS_RELEASE:
-        for _lc_dev in ('game/dev/dev_sandbox.rpy*', 'game/dev/story_state_test.rpy*',
-                        'game/dev/systems_vertical_slice.rpy*', 'game/dev/dev_phone_shots.rpy*',
-                        'game/dev/dev_scrapbook_preview.rpy*', 'game/dev/debug_screen.rpy*',
-                        'game/dev/dev_menu_shell.rpy*', 'game/dev/dev_systems_menu_screen.rpy*',
-                        'game/dev/dev_verify_screen.rpy*', 'game/dev/story_state_test_screen.rpy*',
-                        'game/dev/dev_notifications.rpy*'):
-            build.classify(_lc_dev, None)
+        build.classify('game/dev/**', None)
 
     ## Exclude local caches, saves, and Python bytecode from distributions.
     build.classify('game/cache/**', None)

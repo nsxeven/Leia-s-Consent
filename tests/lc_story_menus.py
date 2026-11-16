@@ -7,7 +7,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-NOT_STORY = ("dev_sandbox.rpy", "story_state_test.rpy", "systems_vertical_slice.rpy")
 
 FORMATTERS = r"format_choice|format_day\d+_\w*choice"
 FORMAT_ASSIGN = re.compile(r'^\s*\$\s*(\w+)\s*=\s*(?:' + FORMATTERS + r')\(\s*"(\w+)"')
@@ -19,7 +18,7 @@ LABEL = re.compile(r"^label\s+(\w+)")
 
 
 def story_files():
-    return sorted(p for p in (GAME / "chapters").rglob("*.rpy") if p.name not in NOT_STORY)
+    return sorted((GAME / "chapters").rglob("*.rpy"))  # dev sandbox scripts live in game/dev/
 
 
 def formatted_ids(path):
