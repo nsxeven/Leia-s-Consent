@@ -135,9 +135,7 @@ init 20 python:
             store.lc_review_active = None
         record = store.lc_review_days[day_id]
         # Hook point (systems/lc_hooks.rpy): tag collection unlocks the day's tags here.
-        # The globals() check only matters when this block runs on its own (unit tests).
-        if "lc_hook_run" in globals():
-            lc_hook_run("review_finished", day_id)
+        lc_hook_run("review_finished", day_id)
         return record
 
     def lc_review_cards(day_id):
@@ -319,11 +317,8 @@ init 20 python:
     def lc_review_titles(day_id):
         """Titles the review card shows: the automatic titles passed through the
         "review_titles" filter (systems/lc_hooks.rpy; tag collection swaps in
-        equipped tags). The globals() check only matters in unit tests."""
-        auto = lc_review_auto_titles(day_id)
-        if "lc_hook_filter" in globals():
-            return lc_hook_filter("review_titles", auto)
-        return auto
+        equipped tags)."""
+        return lc_hook_filter("review_titles", lc_review_auto_titles(day_id))
 
     # Moment stickers: up to two per day, in this priority order.
     # "Asked First": the scene-20 flag set when Ryan promised to ask and did.

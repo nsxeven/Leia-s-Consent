@@ -34,9 +34,11 @@
 ##               persistent.my_unlock = True
 ##       lc_hook_add("story_flag_set", my_system_on_flag)
 ##
-## Save safety: hooks are functions, registered only at init. They live in a
-## python_dict of python_lists, which Ren'Py neither rolls back nor pickles into
-## save files, so saves never reference a hook and old saves load unchanged.
+## Save safety: hooks are functions, registered only at init. Ren'Py saves only
+## store names that change after init, and _lc_hooks is only filled during init,
+## so saves never reference a hook and old saves load unchanged. python_dict /
+## python_list additionally keep the registry out of rollback tracking.
+## Register hooks only at init (never from story code).
 ## Tests: tests/test_lc_hooks.py.
 
 init -100 python:
