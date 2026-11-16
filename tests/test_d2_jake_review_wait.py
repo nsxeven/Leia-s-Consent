@@ -8,7 +8,7 @@ GAME = Path(__file__).resolve().parents[1] / "game"
 class JakeAndWaitCue(unittest.TestCase):
 
     def test_jake_replaces_lisbon_and_j_joke_is_name_safe(self):
-        src = (GAME / "chapters/ch01/ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
+        src = (GAME / "chapters/ch01/day2/ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
         self.assertNotIn("Lisbon", src)
         self.assertIn("His name was Jake", src)
         self.assertIn('if friend_name[:1].upper() == "J":', src)

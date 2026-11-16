@@ -126,7 +126,7 @@ Boutique outfit `boutique_cutout_mini` (cost 280). If Ryan buys it in the Shop, 
 
 ## QA notes
 
-- `lint` (Ren'Py 8.5.3) leaves only pre-existing, non-blocking items: `scene white` in Day One scenes 04-06, unused legacy aliases in `chapters/ch01/ch01_phone_moments.rpy`, init priorities above 999 in a few late patch files, and a `hide julian` without a prior show in Day One scene 27 (`chapters/ch01/ch01_scenes_14_30.rpy`).
+- `lint` (Ren'Py 8.5.3) leaves only pre-existing, non-blocking items: `scene white` in Day One scenes 04-06, unused legacy aliases in `chapters/ch01/day1/ch01_phone_moments.rpy`, init priorities above 999 in a few late patch files, and a `hide julian` without a prior show in Day One scene 27 (`chapters/ch01/day1/ch01_scenes_14_30.rpy`).
 - Always test with a fresh save when label or choice logic changed.
 
 ## Before starting a coding session

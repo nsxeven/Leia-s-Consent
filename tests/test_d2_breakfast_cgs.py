@@ -3,15 +3,15 @@ from pathlib import Path
 GAME=Path(__file__).resolve().parents[1]/"game"
 class BreakfastCGs(unittest.TestCase):
  def test_assets_definitions_and_gallery(self):
-  v=(GAME/"chapters/ch01/ch01_day2_visuals.rpy").read_text()
+  v=(GAME/"chapters/ch01/day2/ch01_day2_visuals.rpy").read_text()
   g=(GAME/"systems/gallery_data.rpy").read_text()
   for n,f in [("01","Breakfast_01"),("02","Breakfast_02"),("03","Breakfast_03"),("04","Breakfast_04")]:
    self.assertIn("ch01_d2_breakfast_"+n,v); self.assertIn(f+".webp",v); self.assertTrue((GAME/f"images/cg/ch02/CH2D2_CG_{f}.webp").exists())
   self.assertIn("ch01_d2_breakfast_julian_pov",v); self.assertIn("BreakfastCloseup_01.webp",v)
   self.assertIn('mature=True',g)
  def test_sequence_and_reply_prompt(self):
-  s=(GAME/"chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text().split("label ch01_day2_scene_03_maya_message:",1)[1].split("\nlabel ",1)[0]
-  registry=(GAME/"chapters/ch01/ch01_day2_visuals.rpy").read_text()
+  s=(GAME/"chapters/ch01/day2/ch01_day2_scenes_01_15.rpy").read_text().split("label ch01_day2_scene_03_maya_message:",1)[1].split("\nlabel ",1)[0]
+  registry=(GAME/"chapters/ch01/day2/ch01_day2_visuals.rpy").read_text()
   self.assertIn("lc_pov_register(", registry)
   self.assertIn('image="cg ch01_d2_breakfast_julian_pov"', registry)
   self.assertIn('$ lc_pov_begin("d2_breakfast_julian")', s)

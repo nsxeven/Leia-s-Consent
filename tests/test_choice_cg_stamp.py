@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TAGS = (ROOT / "game/systems/choice_path_tags.rpy").read_text(encoding="utf-8")
 CARD = (ROOT / "game/screens/scrapbook_ui.rpy").read_text(encoding="utf-8")
-POOL = (ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
+POOL = (ROOT / "game/chapters/ch01/day1/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
 
 
 def counts():
@@ -31,7 +31,7 @@ class ChoiceCgStampTests(unittest.TestCase):
             self.assertLessEqual(low, high, choice_id)
             self.assertGreaterEqual(low, 0, choice_id)
             self.assertRegex(
-                "".join(p.read_text(encoding="utf-8") for p in (ROOT / "game/chapters").rglob("*.rpy")),
+                "".join(p.read_text(encoding="utf-8") for p in [*(ROOT / "game/chapters").rglob("*.rpy"), *(ROOT / "game/dev").rglob("*.rpy")]),
                 r'format_choice\("%s"' % choice_id, choice_id)
 
     def test_pool_photo_counts_match_the_scene(self):

@@ -79,7 +79,7 @@ class ChapterRegistryTests(unittest.TestCase):
             self.assertEqual(lc_chapters.chapter_for_review_day(day_id), cid)
 
     def test_every_chapter_card_is_wired(self):
-        text = "\n".join(p.read_text(encoding="utf-8") for p in (GAME / "chapters").rglob("*.rpy"))
+        text = "\n".join(p.read_text(encoding="utf-8") for p in [*(GAME / "chapters").rglob("*.rpy"), *(GAME / "dev").rglob("*.rpy")])
         for n in range(1, 6):
             self.assertEqual(text.count('centered "[lc_chapter_card_day%d]"' % n), 1, n)
         self.assertIn('centered "[lc_chapter_complete_card_day4]', text)

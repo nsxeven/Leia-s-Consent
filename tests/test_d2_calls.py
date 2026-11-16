@@ -13,9 +13,9 @@ CH01 = GAME / "chapters/ch01"
 sys.path.insert(0, str(GAME / "python-packages"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-SCENES = (CH01 / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-POLISH = (CH01 / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-VISUALS = (CH01 / "ch01_day2_visuals.rpy").read_text(encoding="utf-8")
+SCENES = (CH01 / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+POLISH = (CH01 / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+VISUALS = (CH01 / "day2" / "ch01_day2_visuals.rpy").read_text(encoding="utf-8")
 GALLERY = (GAME / "systems/gallery_data.rpy").read_text(encoding="utf-8")
 POV = (GAME / "systems/hidden_pov.rpy").read_text(encoding="utf-8")
 
@@ -119,9 +119,9 @@ class HiddenPovCueVisibilityTests(unittest.TestCase):
 
 class ProofreadOverflowTests(unittest.TestCase):
     def test_three_long_lines_are_split_and_grammar_fixed(self):
-        b19 = (CH01 / "ch01_day2_scene_19b_leia_asks_maya.rpy").read_text(encoding="utf-8")
-        d16 = (CH01 / "ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
-        d1 = (CH01 / "ch01_scenes_07_13.rpy").read_text(encoding="utf-8")
+        b19 = (CH01 / "day2" / "ch01_day2_scene_19b_leia_asks_maya.rpy").read_text(encoding="utf-8")
+        d16 = (CH01 / "day2" / "ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
+        d1 = (CH01 / "day1" / "ch01_scenes_07_13.rpy").read_text(encoding="utf-8")
         self.assertIn('everybody leaves eventually."\n    gf "I was ready', b19)
         self.assertIn('at some point in the night."\n    "One arm', SCENES)
         self.assertIn('what kind of guy says that."\n        think "Instead', d16)

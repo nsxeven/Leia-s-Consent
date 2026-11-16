@@ -1,8 +1,8 @@
 # Game-side comparison numbers on origin/main (same files and spoken-line rule as tic_scan.py)
 import re, subprocess, statistics, collections
 G = r"C:/RenPy/Leia's Consent/Leia-s-Consent"
-files = ["game/chapters/prologue.rpy", "game/chapters/ch01/ch01_main.rpy", "game/chapters/ch01/ch01_scenes_04_06.rpy",
-         "game/chapters/ch01/ch01_scenes_07_13.rpy", "game/chapters/ch01/ch01_scenes_14_30.rpy"]
+files = ["game/chapters/prologue/prologue.rpy", "game/chapters/ch01/ch01_main.rpy", "game/chapters/ch01/day1/ch01_scenes_04_06.rpy",
+         "game/chapters/ch01/day1/ch01_scenes_07_13.rpy", "game/chapters/ch01/day1/ch01_scenes_14_30.rpy"]
 say = re.compile(r'^\s*(mc|gf|friend|maya|\w+)?\s*"((?:[^"\\]|\\.)*)"')
 fill = re.compile(r"\b(uh|um|like|i mean|you know)\b", re.I)
 sizes, per, nfill, ncut, nlaugh = [], collections.defaultdict(list), 0, 0, 0

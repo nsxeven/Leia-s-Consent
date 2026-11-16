@@ -22,7 +22,7 @@ class ShopComingSoonTests(unittest.TestCase):
                         src.index("for outfit_id in shop_outfit_ids():"))
 
     def test_day2_boutique_still_lets_ryan_buy_without_the_shop(self):
-        src = (GAME / "chapters" / "ch01" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+        src = (GAME / "chapters" / "ch01" / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
         block = src.split('$ set_story_flag("ch01_d2_boutique_shop_open")', 1)[1][:1500]
         self.assertIn("if LC_SHOP_ENABLED:", block)
         self.assertRegex(block, r'"Buy the black mini for her\." if can_afford\(')

@@ -764,14 +764,16 @@ init 20 python:
         return value.strip()
 
     def _lc_review_scan_choices(root):
+        # Choice lines live in chapters/ (story) and dev/ (dev sandbox scenes).
         if not root:
             return {}
-        chapters = os.path.join(root, "chapters")
-        if not os.path.isdir(chapters):
+        roots = [os.path.join(root, d) for d in ("chapters", "dev")]
+        roots = [r for r in roots if os.path.isdir(r)]
+        if not roots:
             return {}
         found = {}
         calls = ("format_choice", "format_day2_risk_choice", "format_day4_gate_choice", "format_day5_gate_choice")
-        for dirpath, _dirs, files in os.walk(chapters):
+        for dirpath, _dirs, files in (entry for r in roots for entry in os.walk(r)):
             for name in files:
                 if not name.endswith(".rpy"):
                     continue

@@ -92,15 +92,15 @@ class PhoneRepliesTest(unittest.TestCase):
         self.assertIn('thread_yadj._lc_reply_transition = bool(_reply_animating)', source)
 
     def test_reply_delivery_is_timed_only_while_thread_open(self):
-        source = (ROOT / "game/chapters/ch01/ch01_phone_moments.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "game/chapters/ch01/day1/ch01_phone_moments.rpy").read_text(encoding="utf-8")
         self.assertIn('phone_reply_delivery', source)
         self.assertIn('timer 0.55 action Function(phone_deliver_reply_step, "group")', source)
         self.assertIn('if _ch01_group_thread_open:', source)
 
     def test_all_six_photo_followups_react_to_already_shared_photos(self):
         import re
-        files = ("game/chapters/ch01/ch01_phone_moments.rpy",
-                 "game/chapters/ch01/ch01_scenes_14_30.rpy")
+        files = ("game/chapters/ch01/day1/ch01_phone_moments.rpy",
+                 "game/chapters/ch01/day1/ch01_scenes_14_30.rpy")
         followups = []
         for name in files:
             source = (ROOT / name).read_text(encoding="utf-8")

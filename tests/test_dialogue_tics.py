@@ -13,8 +13,8 @@ import unittest
 from pathlib import Path
 
 GAME = Path(__file__).resolve().parents[1] / "game"
-STORY = ["chapters/prologue.rpy", "chapters/ch01/ch01_main.rpy", "chapters/ch01/ch01_scenes_04_06.rpy",
-         "chapters/ch01/ch01_scenes_07_13.rpy", "chapters/ch01/ch01_scenes_14_30.rpy"]
+STORY = ["chapters/prologue/prologue.rpy", "chapters/ch01/ch01_main.rpy", "chapters/ch01/day1/ch01_scenes_04_06.rpy",
+         "chapters/ch01/day1/ch01_scenes_07_13.rpy", "chapters/ch01/day1/ch01_scenes_14_30.rpy"]
 SAY = re.compile(r'^\s*(\w+)?\s*"((?:[^"\\]|\\.)*)"')
 BANNED = {
     "There she is / There it is": re.compile(r"\bthere (she|he|it) is\b", re.I),

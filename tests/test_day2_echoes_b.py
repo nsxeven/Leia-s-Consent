@@ -7,8 +7,8 @@ import unittest
 from pathlib import Path
 
 CH01 = Path(__file__).resolve().parents[1] / "game" / "chapters" / "ch01"
-D2B = CH01 / "ch01_day2_scenes_16_30.rpy"
-D2B_19 = CH01 / "ch01_day2_scene_19b_leia_asks_maya.rpy"
+D2B = CH01 / "day2" / "ch01_day2_scenes_16_30.rpy"
+D2B_19 = CH01 / "day2" / "ch01_day2_scene_19b_leia_asks_maya.rpy"
 SAY = re.compile(r'^(\w+)?\s*"((?:[^"\\]|\\.)*)"\s*$')
 
 
@@ -115,7 +115,7 @@ class LookingRuleEcho(unittest.TestCase):
             self.assertEqual(play(b, {}, d2_lane=lane), [], lane)
 
     def test_day_one_wording_still_matches(self):
-        d1 = (CH01 / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
+        d1 = (CH01 / "day1" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
         for line in ('mc "Looking is looking. Encouraging it is different."',
                      'mc "Trust matters more than arbitrary rules."',
                      'mc "I think a little jealousy can actually be fun."',

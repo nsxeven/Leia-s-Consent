@@ -164,7 +164,7 @@ class DayReviewTests(unittest.TestCase):
         self.assertEqual(len(self.call('lc_review_cards','ch01_d1')),1)
 
     def test_all_five_days_have_entry_and_exit_hooks(self):
-        text='\n'.join(p.read_text() for p in (ROOT/'game/chapters/ch01').glob('*.rpy'))
+        text='\n'.join(p.read_text() for p in (ROOT/'game/chapters/ch01').rglob('*.rpy'))
         for day in range(1,6):
             self.assertEqual(text.count('lc_review_begin("ch01_d%d")'%day),1)
             self.assertEqual(text.count('call lc_day_review("ch01_d%d")'%day),1)
@@ -338,7 +338,7 @@ class DayReviewTests(unittest.TestCase):
             self.assertTrue((art / name).is_file(), name)
 
     def test_dream_summary_has_no_effects_and_waking_menu_is_shared(self):
-        text=(ROOT/'game/chapters/ch01/ch01_scenes_14_30.rpy').read_text()
+        text=(ROOT/'game/chapters/ch01/day1/ch01_scenes_14_30.rpy').read_text()
         summary=text.split('if lc_dream_presentation == "summary":',1)[1].split('    else:',1)[0]
         self.assertNotIn('apply_choice',summary); self.assertNotIn('scene cg',summary)
         for cid in ('ch01_dream_ground','ch01_dream_curiosity','ch01_dream_withdraw'):

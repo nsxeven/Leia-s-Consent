@@ -40,7 +40,7 @@ class StatModelTests(unittest.TestCase):
     def test_retired_names_are_not_shown_anywhere(self):
         shown = ["systems/status_display.rpy", "systems/transparency_display.rpy", "systems/stat_tooltips.rpy",
                  "systems/full_transparency_route_explorer.rpy", "screens/choice_mode_screen.rpy",
-                 "screens/route_explorer_screen.rpy", "screens/debug_screen.rpy"]
+                 "screens/route_explorer_screen.rpy", "dev/debug_screen.rpy"]
         words = r"\b(Boredom|Curiosity|Acceptance|Jealousy|Momentum|Secrecy|Boundary Flexibility|Boundary Looseness|Comfort Being Seen|Affection|NTS Tendency|NTR Tendency|Distance)\b"
         for rel in shown:
             code = "\n".join(l for l in read(rel).splitlines() if not l.lstrip().startswith("#"))
@@ -81,7 +81,7 @@ class StatModelTests(unittest.TestCase):
         self.assertIn('set_story_value("ch01_d2_lane_migrated", lane)', body)
         for untouched in ("story_values =", "choice_history =", "ch01_d2_end_route", "story_flags ="):
             self.assertNotIn(untouched, body)
-        self.assertIn('migrated_lane=migrated', read("chapters/ch01/ch01_day2_scenes_01_15.rpy"))
+        self.assertIn('migrated_lane=migrated', read("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy"))
 
     def test_legacy_lane_matches_the_old_resolver(self):
         rel, par, ply = OLD_DEFAULTS
@@ -111,7 +111,7 @@ class StatModelTests(unittest.TestCase):
         lean = stats.split("def lc_current_lean():", 1)[1].split("def lc_current_lean_label", 1)[0]
         self.assertIn("ch01_d2_route_lane()", lean)
         self.assertIn("lc_d1_route_pressure()", lean)
-        self.assertIn("lc_d1_route_pressure()", read("chapters/ch01/ch01_scenes_14_30.rpy"))
+        self.assertIn("lc_d1_route_pressure()", read("chapters/ch01/day1/ch01_scenes_14_30.rpy"))
         status = read("systems/status_display.rpy")
         self.assertIn("lc_current_lean()", status)
         self.assertNotIn("nts_score", status)

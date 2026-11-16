@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SCN = (ROOT / "game/chapters/ch01/ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
+SCN = (ROOT / "game/chapters/ch01/day1/ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
 
 
 class RyanHomeClothesTests(unittest.TestCase):

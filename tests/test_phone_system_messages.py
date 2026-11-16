@@ -15,8 +15,8 @@ class PhoneSystemMessageTests(unittest.TestCase):
         self.assertNotIn("lc_phone_avatar", block)
 
     def test_group_events_use_system_sender(self):
-        src = ((ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
-               + (ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8"))
+        src = ((ROOT / "game/chapters/ch01/day1/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
+               + (ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8"))
         self.assertEqual(src.count('"system", text='), 3)
         self.assertIn('" changed the group picture."', src)
         self.assertNotIn("Changed the group picture to", src)

@@ -24,7 +24,7 @@ class BreathTests(unittest.TestCase):
         self.assertIn('register_channel("lc_breath", mixer="voice"', src)
 
     def test_day1_starts_are_stopped(self):
-        src = (GAME / "chapters" / "ch01" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
+        src = (GAME / "chapters" / "ch01" / "day1" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
         scene20 = src.split("label ch01_scene_20_no_hiding_place:", 1)[1].split("\nlabel ", 1)[0]
         self.assertIn("lc_breath_start(", scene20)
         self.assertIn("lc_breath_stop(", scene20)

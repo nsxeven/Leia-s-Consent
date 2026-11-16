@@ -36,19 +36,19 @@ class BgmTests(unittest.TestCase):
         self.assertIn("define config.default_music_volume = 0.6", opts)
 
     def test_story_cues(self):
-        prologue = src(GAME / "chapters" / "prologue.rpy")
+        prologue = src(GAME / "chapters" / "prologue" / "prologue.rpy")
         self.assertIn('lc_bgm("party")', prologue)
         self.assertIn('lc_bgm("cozy_home")', prologue)
         self.assertLess(prologue.index("lc_bgm_cut()"), prologue.index('lc_sfx("record_scratch")'))
         self.assertIn('lc_bgm("sunny_island")', src(CH / "ch01_main.rpy"))
-        pool = src(CH / "ch01_scenes_04_06.rpy")
+        pool = src(CH / "day1" / "ch01_scenes_04_06.rpy")
         self.assertIn('lc_bgm("cheeky")', pool)
         self.assertLess(pool.index("lc_bgm_cut()"), pool.index('lc_sfx("record_scratch")'))
-        evening = src(CH / "ch01_scenes_07_13.rpy")
+        evening = src(CH / "day1" / "ch01_scenes_07_13.rpy")
         for cue in ('lc_bgm("cozy_home")', 'lc_bgm("lounge_piano")', 'lc_bgm("warm_night")', "lc_duck(0.35)"):
             self.assertIn(cue, evening)
         self.assertNotIn("lc_music_stop()", evening)
-        night = src(CH / "ch01_scenes_14_30.rpy")
+        night = src(CH / "day1" / "ch01_scenes_14_30.rpy")
         for cue in ('lc_bgm("under_blanket"', 'lc_bgm("quiet_thoughts"', "lc_bgm_hush()", "lc_bgm_hush(1.5)"):
             self.assertIn(cue, night)
         grab = night.index("scene cg ch01_movie_ass_grab_01")

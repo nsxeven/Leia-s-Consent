@@ -18,7 +18,7 @@ class DemoEndCardTests(unittest.TestCase):
     def test_shown_only_through_the_demo_gate(self):
         gate = (GAME / "chapters" / "ch01" / "ch01_release_demo.rpy").read_text(encoding="utf-8")
         self.assertIn("call screen lc_demo_end_screen", gate)
-        day1 = (GAME / "chapters" / "ch01" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
+        day1 = (GAME / "chapters" / "ch01" / "day1" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
         self.assertIn("if LC_DAY1_DEMO_BUILD:\n        jump ch01_day1_demo_complete", day1.replace("\r\n", "\n"))
 
 
