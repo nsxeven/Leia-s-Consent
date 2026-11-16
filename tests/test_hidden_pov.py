@@ -3,16 +3,17 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-SCENE = ROOT / "game/chapters/ch01/zzzz_ch01_day2_polish_revision.rpy"
+SCENE = ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy"
 SYSTEM = ROOT / "game/systems/hidden_pov.rpy"
-REGISTRY = ROOT / "game/zzzz_ch01_breakfast_presentation.rpy"
+REGISTRY = ROOT / "game/chapters/ch01/ch01_day2_visuals.rpy"
+COMPAT = ROOT / "game/systems/save_compat.rpy"
 
 
 class HiddenPovSourceTests(unittest.TestCase):
     def test_scene_keeps_phone_and_story_order_without_blocking_prompt(self):
         scene = SCENE.read_text(encoding="utf-8")
-        start = scene.index("label ch01_day2_scene_03_maya_message_v2:")
-        end = scene.index("label ch01_day2_scene_08_maya_julian_v2:")
+        start = scene.index("label ch01_day2_scene_03_maya_message:")
+        end = scene.index("label ch01_day2_scene_04_jealousy_callback:")
         block = scene[start:end]
         self.assertNotIn("call screen lc_breakfast_julian_pov", block)
         self.assertNotIn('if _return == "pov"', block)
@@ -127,8 +128,9 @@ class HiddenPovHardeningTests(unittest.TestCase):
         self.assertGreater(zorder, 620)
 
     def test_legacy_breakfast_screen_stub_exists_for_old_saves(self):
-        self.assertIn("screen lc_breakfast_julian_pov(", self.registry)
-        self.assertIn("timer 0.01 action Return(None)", self.registry)
+        compat = COMPAT.read_text(encoding="utf-8")
+        self.assertIn("screen lc_breakfast_julian_pov(", compat)
+        self.assertIn("timer 0.01 action Return(None)", compat)
 
     def test_gallery_hint_for_missed_hidden_pov(self):
         gallery = (ROOT / "game/screens/gallery_screen.rpy").read_text(encoding="utf-8")

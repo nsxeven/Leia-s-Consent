@@ -48,7 +48,7 @@ D1 = [
 ]
 DREAM = ["ch01_dream_ground", "ch01_dream_curiosity", "ch01_dream_withdraw"]
 # Day 2 menus before the pre-split lane snapshot, as they play. The scene 3
-# "Is she pretty?" menu plays inside ch01_day2_scene_03_maya_message_v2. The
+# "Is she pretty?" menu plays inside ch01_day2_scene_03_maya_message. The
 # boutique go/leave menu only shows on the NTR-risk lane, and the reveal menu
 # only when Ryan went over (both handled in play()). The post-shop "I'm fine."
 # menu is flavor since v0.2.0; the cafe overheard incident is scored in its place.

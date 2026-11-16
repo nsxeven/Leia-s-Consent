@@ -11,7 +11,7 @@ from pathlib import Path
 GAME = Path(__file__).resolve().parents[1] / "game"
 CH = GAME / "chapters" / "ch01"
 DAY2 = CH / "ch01_day2_scenes_01_15.rpy"
-POLISH = CH / "zzzz_ch01_day2_polish_revision.rpy"
+POLISH = CH / "ch01_day2_scenes_01_15.rpy"
 DAY1 = [CH / "ch01_scenes_07_13.rpy", CH / "ch01_scenes_14_30.rpy"]
 
 # key -> (effective label that must contain the echo, values it must branch on)
@@ -120,9 +120,9 @@ class Day2EchoTests(unittest.TestCase):
             _, lab, _, _ = echo_block(key)
             self.assertEqual(lab, label, key)
             self.assertNotIn(lab, OVERRIDDEN)
-        polish = POLISH.read_text(encoding="utf-8")
+        compat = (GAME / "systems/save_compat.rpy").read_text(encoding="utf-8")
         for base in OVERRIDDEN:
-            self.assertIn('config.label_overrides["%s"] = "%s_v2"' % (base, base), polish)
+            self.assertIn('label %s_v2:\n    jump %s\n' % (base, base), compat)
 
     def test_upstairs_loving_paths_show_gratitude(self):
         _, _, ind, body = echo_block("ch01_upstairs_response")
