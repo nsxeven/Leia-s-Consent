@@ -56,6 +56,14 @@ def game_rel(path):
 HEADED_DIRS = ("systems", "screens")
 HEADER_SECTION = re.compile(r"^# [A-Z][^:]*:")
 API_ENTRY = re.compile(r"^#   (?:(screen|define|default|transform|label|class|style)\s+)?([A-Za-z_][\w.]*)")
+# Public API layout: an entry starts 3 spaces after "#", its wrapped meaning text 7 spaces.
+# Any other indentation is ambiguous (an entry indented 4-6 spaces used to be read as a
+# continuation and skipped), and so is a continuation line that reads like a signature.
+API_ENTRY_INDENT, API_CONT_INDENT = 3, 7
+LOOKS_LIKE_ENTRY = re.compile(r"^#\s+(?:(?:screen|transform|label|class)\s+)?[A-Za-z_][\w.]*\(")
+SIGNATURE_KINDS = ("screen", "label", "transform", "class")
+TOP_LEVEL_PYTHON = re.compile(r"^(?:init\b[^:]*\bpython\b|python\s+early\b)[^:]*:")
+TOP_LEVEL_DEF = re.compile(r"^    (?:def|class)\s+([A-Za-z_]\w*)")
 HEADER_PATH = re.compile(r"(?<![\w/.-])((?:game|docs|tests|tools)/[\w./-]+\.(?:rpy|py|md|json|bat)"
                          r"|(?:systems|screens|chapters|dev|python-packages)/[\w./-]+\.(?:rpy|py))")
 DOC_PATH = re.compile(r"`((?:game|tools|tests|docs)/[^`\s]*)`")
@@ -88,6 +96,60 @@ def header_sections(lines):
         else:
             current = None
     return sections
+
+
+def public_api_entries(path):
+    """([(kind or None, name, line)], [problems]) for the Public API section of a header."""
+    entries, problems = [], []
+    for line in header_sections(leading_comments(path)).get("Public API", [])[1:]:
+        indent = len(line) - len(line[1:].lstrip(" ")) - 1
+        if indent == API_CONT_INDENT and not LOOKS_LIKE_ENTRY.match(line):
+            continue  # continuation of the previous entry's meaning
+        entry = API_ENTRY.match(line) if indent == API_ENTRY_INDENT else None
+        if entry:
+            entries.append((entry.group(1), entry.group(2), line))
+        elif indent in (API_ENTRY_INDENT, API_CONT_INDENT):
+            problems.append(f"{game_rel(path)}: unreadable Public API line {line!r}")
+        else:
+            problems.append(f"{game_rel(path)}: ambiguous Public API line {line!r} (entries are indented "
+                            f"{API_ENTRY_INDENT} spaces after '#', wrapped meaning text {API_CONT_INDENT})")
+    return entries, problems
+
+
+def header_args(line, name):
+    """The text between the parentheses after `name` in a header entry, or None."""
+    start = line.find(name + "(")
+    if start < 0:
+        return None
+    start += len(name)
+    depth = 0
+    for end in range(start, len(line)):
+        depth += {"(": 1, ")": -1}.get(line[end], 0)
+        if depth == 0:
+            return line[start + 1:end]
+    return None
+
+
+def _norm_args(args):
+    return re.sub(r",$", "", re.sub(r"\s+", "", args))
+
+
+def internal_names(path):
+    internal = " ".join(l[1:] for l in header_sections(leading_comments(path)).get("Internal", []))
+    return [n for n in re.split(r"[,\s]+", internal.split(":", 1)[1] if ":" in internal else "") if n]
+
+
+def top_level_defs(text):
+    """Names of the defs/classes at the top of `init python` / `python early` blocks."""
+    names, in_python = [], False
+    for line in text.splitlines():
+        if line and not line[0].isspace() and not line.startswith("#"):
+            in_python = bool(TOP_LEVEL_PYTHON.match(line))
+        elif in_python:
+            found = TOP_LEVEL_DEF.match(line)
+            if found:
+                names.append(found.group(1))
+    return names
 
 
 def is_defined(text, kind, name):
@@ -184,20 +246,48 @@ class StructureRuleTests(unittest.TestCase):
         problems = []
         for path in headed_files():
             text = m.read(path)
-            sections = header_sections(leading_comments(path))
-            for line in sections.get("Public API", [])[1:]:
-                if line.startswith("#    "):
-                    continue  # continuation of the previous entry's meaning
-                entry = API_ENTRY.match(line)
-                if not entry:
-                    problems.append(f"{game_rel(path)}: unreadable Public API line {line!r}")
-                elif not is_defined(text, entry.group(1), entry.group(2)):
-                    problems.append(f"{game_rel(path)}: Public API names {entry.group(2)!r}, not defined here")
-            internal = " ".join(l[1:] for l in sections.get("Internal", []))
-            for name in re.split(r"[,\s]+", internal.split(":", 1)[1] if ":" in internal else ""):
-                if name and not is_defined(text, None, name):
+            entries, unreadable = public_api_entries(path)
+            problems += unreadable
+            for kind, name, _line in entries:
+                if not is_defined(text, kind, name):
+                    problems.append(f"{game_rel(path)}: Public API names {name!r}, not defined here")
+            for name in internal_names(path):
+                if not is_defined(text, None, name):
                     problems.append(f"{game_rel(path)}: Internal names {name!r}, not defined here")
         self.assertEqual(problems, [])
+
+    def test_header_signatures_match_code(self):
+        """A Public API entry written as name(args) must show the real parameters of the
+        def / screen / label / transform / class it names (whitespace and a trailing comma
+        aside), so a renamed or added argument cannot leave the header behind."""
+        problems = []
+        for path in headed_files():
+            text = m.read(path)
+            for kind, name, line in public_api_entries(path)[0]:
+                if kind not in SIGNATURE_KINDS + (None,):
+                    continue
+                args = header_args(line, name)
+                if args is None:
+                    continue
+                kind = kind or "def"
+                code = re.search(rf"^[ \t]*{kind}\s+{re.escape(name)}\s*\((.*?)\)\s*(?:->[^:]*)?:", text,
+                                 re.M | re.S)
+                if code is None or _norm_args(code.group(1)) != _norm_args(args):
+                    found = " ".join(code.group(1).split()) if code else "not found"
+                    problems.append(f"{game_rel(path)}: header {kind} {name}({args}) vs code ({found})")
+        self.assertEqual(problems, [])
+
+    def test_every_top_level_def_is_documented(self):
+        """Every def/class at the top of an init python block in a system/screen file is
+        listed under Public API or Internal in its header, so headers cannot fall behind."""
+        missing = []
+        for path in headed_files():
+            listed = {name for _kind, name, _line in public_api_entries(path)[0]}
+            listed |= set(internal_names(path))
+            for name in top_level_defs(m.read(path)):
+                if name not in listed:
+                    missing.append(f"{game_rel(path)}: {name} (add it under Public API or Internal)")
+        self.assertEqual(missing, [])
 
     def test_paths_named_in_headers_exist(self):
         missing = []

@@ -4,7 +4,8 @@
 #   which can crash at load or silently replace a screen. In a source checkout only (game/script.rpy
 #   present) this stops the game with the list and the fix: close the game, run
 #   tools/clean_orphan_rpyc.bat (moves .rpyc per tools/dev/rpyc_moves.json so saves keep their
-#   place, then deletes the rest). Release builds skip it.
+#   place, then deletes the rest). Builds without .rpy sources skip it; JoiPlay builds ship the .rpy
+#   files, so it runs there too, harmlessly (a fresh install has no strays).
 #
 # Public API: none - it runs by itself at start-up
 #

@@ -10,7 +10,7 @@
 #   define LC_CURSOR_TRAIL                    glint trail on/off
 #
 # Example:
-#   define LC_CURSOR_TRAIL = False   (turns the glints off)
+#   edit the `define LC_CURSOR_TRAIL = True` below to False to turn the glints off (one define only)
 #
 # Depends on: systems/lc_hover_fade.rpy (LC_HOVER_IN / LC_HOVER_OUT timings)
 # Hooks: none

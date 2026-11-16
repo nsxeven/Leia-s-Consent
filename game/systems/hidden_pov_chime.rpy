@@ -12,7 +12,7 @@
 #
 # Depends on: nothing
 # Hooks: none
-# Load order: init -1: before systems/hidden_pov.rpy reads it
+# Load order: init -1 (read at run time by systems/hidden_pov.rpy)
 # Docs: docs/HIDDEN_POV.md   Tests: tests/test_hidden_pov.py
 
 init -1 python:

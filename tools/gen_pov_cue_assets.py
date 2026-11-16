@@ -123,7 +123,7 @@ def chime_rpy(path):
         "#\n"
         "# Depends on: nothing\n"
         "# Hooks: none\n"
-        "# Load order: init -1: before systems/hidden_pov.rpy reads it\n"
+        "# Load order: init -1 (read at run time by systems/hidden_pov.rpy)\n"
         "# Docs: docs/HIDDEN_POV.md   Tests: tests/test_hidden_pov.py\n"
         "\n"
         "init -1 python:\n"

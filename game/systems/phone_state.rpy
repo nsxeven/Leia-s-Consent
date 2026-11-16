@@ -27,8 +27,8 @@
 #   lc_phone_clear_story_time() -> None       back to the device clock at a time skip
 #   phone_debug_seed_messages() -> None       dev: add test messages
 #   phone_debug_clear_messages() -> None      dev: clear test messages
-#   PHONE_THREAD_ORDER                        thread order in Messages (Day One adds Maya at init
-#       998)
+#   PHONE_THREAD_ORDER                        thread order in Messages; overwritten at init 998 by
+#       chapters/ch01/day1/ch01_phone_moments.rpy (adds Maya): add new threads there
 #   default phone_messages                    save state: {thread_id: [message, ...]}
 #   default phone_photos                      save state: [photo, ...]
 #   default phone_reply_prompts               save state: open reply cards

@@ -18,7 +18,8 @@
 # Internal (helpers for this file and its screens; do not call from scenes): _chapter_select_reset
 #
 # Example:
-#   textbutton "Chapters" action ShowMenu("chapter_select")   (screens/scrapbook_ui.rpy)
+#   textbutton "Chapters" action ShowMenu("chapter_select")   (screens/title_screen.rpy; the journal
+#   tab row in screens/scrapbook_ui.rpy adds a ("CHAPTERS", ShowMenu("chapter_select"), False) row)
 #
 # Depends on: systems/lc_hooks.rpy, systems/story_state.rpy, systems/stats.rpy,
 #   systems/wardrobe_logic.rpy, systems/day_review.rpy (lc_review_reset),

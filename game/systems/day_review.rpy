@@ -26,7 +26,8 @@
 #       record a choice (apply_choice calls it)
 #   lc_review_record_image(name) -> None      record a shown image (the config.show hook calls it)
 #   lc_review_choice_text(choice_id)          readable line for a recorded choice, never the id
-#   lc_review_sfx(name) -> None               play audio/sfx/review_<name> if it exists
+#   lc_review_sfx(name) -> None               play audio/sfx/review_<name> if it exists, else the UI
+#       sound kit (lc_ui_sound, LC_REVIEW_UI_FALLBACK)
 #   LC_REVIEW_DAYS                            {day_id: label/chapter/route_key}: one row per day
 #   LC_REVIEW_ROUTES                          {route key: (title, line)}
 #   LC_MOMENT_STICKERS                        [(name, test(day_id, ids))] sticker rules
@@ -55,6 +56,7 @@
 #   call lc_day_review("ch01_d2") from lc_review_return_ch01_d2   (day finish label)
 #
 # Depends on: systems/lc_hooks.rpy, systems/stats.rpy, systems/story_state.rpy, systems/lc_fx.rpy,
+#   systems/gallery.rpy (GALLERY_ENTRIES, read by lc_review_record_image),
 #   python-packages/lc_chapters.py, python-packages/lc_stat_model.py, screens/day_review_screen.rpy
 # Hooks: emits review_finished (lc_hook_run) and review_titles (lc_hook_filter); wraps config.show
 #   once at init
