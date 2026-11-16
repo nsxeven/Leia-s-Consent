@@ -30,23 +30,12 @@ ALLOW_DUP = {
 }
 
 # Load-order patch files (game/-relative): shrink, never grow.
-# systems/ and screens/ entries were retired in clean-up PR 2c; chapter files remain.
-ALLOW_PATCH_FILES = {
-    "chapters/ch01/ch01_photo_route_phone_patch.rpy",
-    "chapters/ch01/zz_ch01_phone_photo_aliases.rpy",
-    "chapters/ch01/zz_ch01_phone_sequence_revision.rpy",
-    "chapters/ch01/zz_ch01_scene_13_asleep_revision.rpy",
-    "chapters/ch01/zzzz_ch01_day2_polish_revision.rpy",
-    "chapters/ch01/zzzz_ch01_scene27_staged_phone.rpy",
-    "chapters/ch01/zzzzz_ch01_love_outfit_control.rpy",
-    "zzzz_ch01_breakfast_presentation.rpy",
-}
+# systems/ and screens/ entries were retired in clean-up PR 2c, chapter files in PR 3.
+ALLOW_PATCH_FILES = set()
 
 # Files that may still contain config.label_overrides: shrink, never grow.
-ALLOW_OVERRIDES = {
-    "chapters/ch01/zzzz_ch01_day2_polish_revision.rpy",
-    "chapters/ch01/zzzz_ch01_scene27_staged_phone.rpy",
-}
+# The last five overrides were folded into their labels in clean-up PR 3.
+ALLOW_OVERRIDES = set()
 
 # Days 3-5 belong to their own later pass; their Day 4/5 track-text helpers are
 # re-scored in systems/stat_model_v2_later_days.rpy on purpose.

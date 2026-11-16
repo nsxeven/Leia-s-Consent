@@ -591,28 +591,54 @@ label ch01_day2_scene_02_breakfast:
 label ch01_day2_scene_03_maya_message:
 
     "My phone buzzed beside the coffee."
-    "Maya's name appeared on the screen."
 
-    centered "MAYA: You people alive? I'm near the resort around lunch. Still meeting?"
+    python:
+        phone_add_message(
+            "maya",
+            "maya",
+            text="You people alive? I'm near the resort around lunch. Still meeting?",
+            message_id="ch01_d2_maya_lunch_checkin",
+            mark_unread=True,
+            notify=True,
+            notification_title="Maya",
+        )
 
-    "[girlfriend_name] saw the name before I put the phone down."
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_breakfast_02
+    with dissolve
+    $ lc_pov_begin("d2_breakfast_julian")
+    # Restore the phone HUD for the optional reply, but keep Breakfast_02
+    # behind the conversation instead of cutting to the placeholder card.
+    $ exit_cinematic_mode()
+    $ lc_phone_hud_on_cg = True
 
-    gf "Oh."
-    mc "What?"
-    gf "Nothing."
-    friend "That was the loudest 'nothing' I've ever heard."
+    "Maya's name appeared in the notification."
+    "[girlfriend_name] saw it before I put the phone down."
 
-    gf "So this is the Maya I've heard about."
+    gf "Oh. Maya."
+    mc "What? What's that face?"
+    gf "Nothing! No face. That's just my face. It's a nice name."
+    friend "That was the loudest 'nothing' I've ever heard, and I've known you two for four years."
+
+    python:
+        phone_offer_reply("maya", "ch01_d2_maya_lunch_reply", [
+            {"id": "alive", "text": "Alive. Barely. Lunch works, I'll send you where we are.",
+             "followups": [("maya", "Look at you, being organized 👍")]},
+            {"id": "leia", "text": "[girlfriend_name] says hi.",
+             "followups": [("maya", "Hi [girlfriend_name]! 👋")]},
+            {"id": "buying", "text": "Depends. Are you buying?",
+             "followups": [("maya", "In your dreams. See you at lunch.")]},
+        ], "alive")
+
+    # Leia's "Is she pretty?" beat (restored from the original scene 3). The
+    # loudest-'nothing' joke already landed above, so the lead-in goes straight
+    # to her question instead of repeating it.
+    "[girlfriend_name] waited until I'd set the phone face-down again."
+
+    gf "So that's the Maya I've heard about."
     mc "You've heard about her."
     gf "Mm."
-    mc "What does that mean?"
-    gf "Nothing."
-
-    "[friend_name] lowered his coffee."
-    friend "We're doing 'nothing' again?"
-
-    gf "Shut up."
-    "She looked back at me, trying and failing to make the next question sound casual."
+    "She turned her cup a slow quarter-turn, trying and failing to make the next question sound casual."
     gf "Is she pretty?"
 
     $ d2_maya_reassure_text = format_choice("ch01_d2_maya_reassure", "You're the one I'm here with.")
@@ -650,6 +676,7 @@ label ch01_day2_scene_03_maya_message:
         "Her answer should have reassured me. Instead, I found myself wondering whether I had been offering her the same honesty since I woke up."
 
     $ set_story_flag("ch01_d2_maya_meetup_confirmed")
+    $ lc_pov_end()
     jump ch01_day2_scene_04_jealousy_callback
 
 
@@ -900,35 +927,26 @@ label ch01_day2_scene_08_maya_julian:
 
     "Maya's attention eventually shifted to [friend_name]."
 
-    maya "So you're the rich one."
-    friend "Apparently that's my entire personality now."
-    maya "No, the sunglasses are your personality. The money is supporting cast."
+    maya "So you're the rich one. [player_name] told me."
+    friend "He— okay, wow. It's not really— it's more of a family thing. Can we talk about literally anything else?"
+    maya "No, relax, the sunglasses are your personality. The money's just supporting cast."
 
-    "[friend_name] laughed despite himself. [girlfriend_name] leaned toward me."
+    "[friend_name] went a little red, laughed, and shook his head. [girlfriend_name] leaned toward me."
 
-    gf "They get along."
-    mc "She insults people she likes."
+    gf "They get along. Like, really get along."
+    mc "She only insults people she likes."
     gf "That explains you."
 
     "A bee wandered close to the table."
     "[friend_name] stopped mid-sentence and leaned sharply away from it."
 
     maya "...Are you scared of bees?"
-    friend "No."
+    friend "No. No. Is it gone? It's gone, right?"
     maya "You moved six inches without using your feet."
-    friend "I respect bees. From a distance."
-    gf "Oh my God."
+    friend "I respect bees. I just respect them from a reasonable distance. Is that a crime?"
+    gf "Oh my God, you're actually scared of bees."
 
     "The bee left. The information did not."
-
-    maya "I'm remembering that."
-    friend "For what possible reason?"
-    maya "I don't know yet. That's what makes it exciting."
-    gf "I support this."
-    friend "[player_name]."
-    mc "I can't help you anymore."
-
-    "For the first time since Maya arrived, the four of us felt less like two existing friendships forced around one table and more like an actual group."
 
     $ set_story_flag("ch01_d2_julian_bee_fear_seeded")
     $ set_story_flag("ch01_d2_scene_08_complete")
@@ -1689,27 +1707,27 @@ label ch01_day2_scene_13_girls_upstairs:
     scene bg ch01_master_bedroom
     with dissolve
 
-    "Upstairs, [girlfriend_name] laid both of her swimsuits across the bed while Maya pulled her own from the day bag and changed beside her."
+    "Upstairs, [girlfriend_name] laid both bikinis across the bed while Maya changed beside her."
+    "Both were two-piece tie bikinis. The difference was coverage: one familiar and safer, the other cut noticeably smaller."
 
-    maya "You brought options."
-    gf "One is safe. One requires confidence."
-    maya "Which one do you want to wear?"
+    maya "Oh, you brought options. Okay, I see you."
+    gf "One is comfortable, and one requires a lot of confidence. Like, a lot."
+    maya "Okay, but which one do you want to wear? Not which one you should. Which one you want."
 
     "Yesterday [girlfriend_name] had asked me that question. Today she had to answer it herself."
 
     if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
-        gf "The new one."
-        maya "Oh."
-        gf "What?"
-        maya "Nothing. I'm updating my understanding of you."
-        gf "Shut up."
+        gf "The smaller one. I think. Yeah. The smaller one, before I talk myself out of it."
+        maya "Then wear the smaller one."
+        gf "That's it? That's your advice?"
+        maya "That's it. You already knew. I just say it back to people, it's a whole service."
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
-        gf "I think the comfortable one today."
-        maya "Then that one."
-        gf "You're surprisingly reasonable."
-        maya "Don't spread that around."
+        gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day."
+        maya "Then that one. Normal pool day. Done."
+        gf "Wait, that's it? You're surprisingly reasonable."
+        maya "Don't spread that around. I have a reputation."
 
     $ grant_story_outfit(get_story_value("ch01_d2_pool_outfit"), equip=True)
     $ set_story_flag("ch01_d2_scene_13_complete")
@@ -1719,19 +1737,23 @@ label ch01_day2_scene_13_girls_upstairs:
 label ch01_day2_scene_14_tie_foreshadow:
 
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
-        "[girlfriend_name] tied the top while still talking to Maya, fingers moving faster than her attention."
-        maya "That tie secure?"
-        "[girlfriend_name] glanced down and gave it a small tug."
-        gf "Should be fine."
+        "[girlfriend_name] changed into the bolder tie bikini while still talking to Maya, fastening the top with less attention than the knot deserved."
+        maya "Hey, double-knot that."
+        gf "It's fine, it's a bikini, not a parachute."
         maya "Famous last words."
-        gf "It's fine."
-        $ set_story_flag("ch01_d2_bikini_tie_loose")
+        gf "It's held up so far."
+        maya "So far you haven't had me talking at you the whole time you tied it."
     else:
-        "[girlfriend_name] changed into the swimsuit she already trusted while Maya borrowed the mirror and most of the counter space."
-        maya "You know what I like about you?"
-        gf "We've known each other a couple of hours."
-        maya "Exactly. Low sample size. No pressure."
+        "[girlfriend_name] changed into the more covered tie bikini while Maya borrowed the mirror and most of the counter space."
+        "She tied the top while answering Maya, gave the knot one quick tug, and moved on."
+        maya "Double-knot that, though."
+        gf "This is the safe one! It's been to, like, three beaches."
+        maya "A knot doesn't know that."
+        gf "It's fine. I tugged it. Look, tugged."
 
+    # Either bikini can come loose during the later pool commotion. Route choice
+    # changes how much skin it normally shows, not whether it uses ties.
+    $ set_story_flag("ch01_d2_bikini_tie_loose")
     $ set_story_flag("ch01_d2_scene_14_complete")
     jump ch01_day2_scene_15_pool_group
 
@@ -1766,3 +1788,16 @@ label ch01_day2_scene_15_pool_group:
 
     jump ch01_day2_scene_16_forced_split
 
+
+
+# Day Two pool-outfit names and descriptions (folded from the retired
+# zzzz_ch01_day2_polish_revision.rpy in clean-up PR 3, with its four label overrides).
+# load order: init 998, kept from that file so these overwrite the
+# systems/outfits_data.rpy entries at the same point of the init sequence as before.
+init 998 python:
+    # Both Day One/Day Two pool options are two-piece tie bikinis. The bolder
+    # version shows more skin; the classic version simply has more coverage.
+    OUTFIT_DEFINITIONS["pool_conservative"]["name"] = "Classic Tie Bikini"
+    OUTFIT_DEFINITIONS["pool_conservative"]["description"] = "A two-piece tie bikini with fuller coverage and a familiar, comfortable fit."
+    OUTFIT_DEFINITIONS["pool_bolder"]["name"] = "Bolder Tie Bikini"
+    OUTFIT_DEFINITIONS["pool_bolder"]["description"] = "A more revealing two-piece tie bikini with less coverage and a bolder resort cut."

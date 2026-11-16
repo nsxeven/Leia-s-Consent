@@ -16,7 +16,6 @@ SCENE_FILES = [
     "ch01_day2_scenes_01_15.rpy",
     "ch01_day2_scenes_16_30.rpy",
     "ch01_day2_scene_19b_leia_asks_maya.rpy",
-    "zzzz_ch01_day2_polish_revision.rpy",
     "ch01_day3_scenes.rpy",
     "ch01_day4_scenes_01_08.rpy",
     "ch01_day4_scenes_09_16.rpy",

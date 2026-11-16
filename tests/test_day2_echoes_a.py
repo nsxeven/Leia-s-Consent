@@ -11,7 +11,6 @@ from pathlib import Path
 GAME = Path(__file__).resolve().parents[1] / "game"
 CH = GAME / "chapters" / "ch01"
 DAY2 = CH / "ch01_day2_scenes_01_15.rpy"
-POLISH = CH / "zzzz_ch01_day2_polish_revision.rpy"
 DAY1 = [CH / "ch01_scenes_07_13.rpy", CH / "ch01_scenes_14_30.rpy"]
 
 # key -> (effective label that must contain the echo, values it must branch on)
@@ -22,8 +21,8 @@ ECHOES = {
     "ch01_bra_response": ("ch01_day2_scene_11b_boutique", {"reassuring", "playful_open", "cautious", "distracted"}),
     "ch01_towel_followup": ("ch01_day2_scene_11b_boutique", {"reassured", "honest", "teased", "brushed_off"}),
 }
-OVERRIDDEN = {"ch01_day2_scene_03_maya_message", "ch01_day2_scene_08_maya_julian",
-              "ch01_day2_scene_13_girls_upstairs", "ch01_day2_scene_14_tie_foreshadow"}
+FOLDED_OVERRIDES = {"ch01_day2_scene_03_maya_message", "ch01_day2_scene_08_maya_julian",
+              "ch01_day2_scene_13_girls_upstairs", "ch01_day2_scene_14_tie_foreshadow"}  # old _v2 names -> save_compat
 SAY = re.compile(r'^\s*(\w+)?\s*"((?:[^"\\]|\\.)*)"\s*(#.*)?$')
 NAME = re.compile(r"\b(Ryan|Leia|Julian)\b")
 BANNED = [re.compile(r"\bthere (she|he|it) is\b", re.I),
@@ -119,10 +118,9 @@ class Day2EchoTests(unittest.TestCase):
         for key, (label, _) in ECHOES.items():
             _, lab, _, _ = echo_block(key)
             self.assertEqual(lab, label, key)
-            self.assertNotIn(lab, OVERRIDDEN)
-        polish = POLISH.read_text(encoding="utf-8")
-        for base in OVERRIDDEN:
-            self.assertIn('config.label_overrides["%s"] = "%s_v2"' % (base, base), polish)
+        compat = (GAME / "systems/save_compat.rpy").read_text(encoding="utf-8")
+        for base in FOLDED_OVERRIDES:
+            self.assertIn('label %s_v2:\n    jump %s\n' % (base, base), compat)
 
     def test_upstairs_loving_paths_show_gratitude(self):
         _, _, ind, body = echo_block("ch01_upstairs_response")
@@ -137,7 +135,7 @@ class Day2NameAndTicTests(unittest.TestCase):
 
     def test_no_typed_default_names_in_dialogue(self):
         bad = []
-        for p in (DAY2, POLISH):
+        for p in (DAY2,):
             for n, l in enumerate(lines(p), 1):
                 m = SAY.match(l)
                 if m and NAME.search(m.group(2)):
@@ -146,7 +144,7 @@ class Day2NameAndTicTests(unittest.TestCase):
 
     def test_no_banned_tic_lines(self):
         bad = []
-        for p in (DAY2, POLISH):
+        for p in (DAY2,):
             for n, l in enumerate(lines(p), 1):
                 m = SAY.match(l)
                 if m:
@@ -157,7 +155,7 @@ class Day2NameAndTicTests(unittest.TestCase):
 
     def test_canon_dare_not_introduced(self):
         # Nobody "introduced" Ryan and Leia; Julian's dare started them.
-        for p in (DAY2, POLISH):
+        for p in (DAY2,):
             for n, l in enumerate(lines(p), 1):
                 m = SAY.match(l)
                 if m and re.search(r"introduc", m.group(2), re.I):

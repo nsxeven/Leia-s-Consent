@@ -10,8 +10,8 @@ class BreakfastCGs(unittest.TestCase):
   self.assertIn("ch01_d2_breakfast_julian_pov",v); self.assertIn("BreakfastCloseup_01.webp",v)
   self.assertIn('mature=True',g)
  def test_sequence_and_reply_prompt(self):
-  s=(GAME/"chapters/ch01/zzzz_ch01_day2_polish_revision.rpy").read_text()
-  registry=(GAME/"zzzz_ch01_breakfast_presentation.rpy").read_text()
+  s=(GAME/"chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text().split("label ch01_day2_scene_03_maya_message:",1)[1].split("\nlabel ",1)[0]
+  registry=(GAME/"chapters/ch01/ch01_day2_visuals.rpy").read_text()
   self.assertIn("lc_pov_register(", registry)
   self.assertIn('image="cg ch01_d2_breakfast_julian_pov"', registry)
   self.assertIn('$ lc_pov_begin("d2_breakfast_julian")', s)

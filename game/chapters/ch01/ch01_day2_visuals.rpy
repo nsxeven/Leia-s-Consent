@@ -235,3 +235,21 @@ transform ch01_d2_julian_left:
     xalign 0.20
     yalign 1.0
     yoffset lc_sprite_yoffset
+
+
+# Day Two breakfast Hidden POV (folded from the retired root
+# zzzz_ch01_breakfast_presentation.rpy in clean-up PR 3): the same stable CG id
+# remains mapped to the mature Gallery page. The registry owns only the opt-in cue
+# and image scope.
+# load order: init 1, kept from that file (lc_pov_register is defined at init 0 in
+# systems/hidden_pov.rpy).
+init 1 python:
+    lc_pov_register(
+        "d2_breakfast_julian",
+        image="cg ch01_d2_breakfast_julian_pov",
+        source="cg ch01_d2_breakfast_02",
+        # Sparkle centre: beside and just above Julian's eye, at his temple (darryn 2026-11-15).
+        center=(1785, 255),
+        title="Julian's POV",
+        mature=True,
+    )

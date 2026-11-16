@@ -14,7 +14,7 @@ sys.path.insert(0, str(GAME / "python-packages"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 SCENES = (CH01 / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-POLISH = (CH01 / "zzzz_ch01_day2_polish_revision.rpy").read_text(encoding="utf-8")
+POLISH = (CH01 / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
 VISUALS = (CH01 / "ch01_day2_visuals.rpy").read_text(encoding="utf-8")
 GALLERY = (GAME / "systems/gallery_data.rpy").read_text(encoding="utf-8")
 POV = (GAME / "systems/hidden_pov.rpy").read_text(encoding="utf-8")
@@ -65,7 +65,7 @@ class IsShePrettyMenuTests(unittest.TestCase):
     CHOICES = ("ch01_d2_maya_reassure", "ch01_d2_maya_tease_jealousy", "ch01_d2_maya_open_honest")
 
     def setUp(self):
-        self.body = block(POLISH, "ch01_day2_scene_03_maya_message_v2")
+        self.body = block(POLISH, "ch01_day2_scene_03_maya_message")
 
     def test_menu_follows_the_phone_reply_while_breakfast_is_up(self):
         order = ['phone_offer_reply("maya"', 'gf "Is she pretty?"', "    menu:",
