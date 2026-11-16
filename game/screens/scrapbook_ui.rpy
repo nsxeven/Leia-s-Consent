@@ -1,6 +1,18 @@
-# Scrapbook / summer-journal UI.
-# Loaded last so these screens and styles replace the stock ones.
-# Day-review screens are intentionally not touched.
+# Scrapbook / summer-journal UI: the game-wide skin that replaces Ren'Py's stock
+# screens (say, input, choice, quick_menu, main_menu, game_menu, save, load,
+# file_slots, preferences, history, confirm, skip_indicator, notify) and stock
+# styles (button, window, say_dialogue, choice_button_text, centered_text, ...),
+# plus the choice-feedback / phone-notification toasts, the adult notice, the demo
+# end screen, title cards and the LC_UI_SHOTS screenshot tour. Day-review screens
+# are intentionally not touched.
+#
+# Load-order contract (this file no longer relies on a zzzzzzzz_ filename):
+# - Screens: each stock screen is defined only here (tests/test_structure_rules.py
+#   forbids a second copy), so it wins whatever the file order.
+# - Styles: the style blocks here run at init 0, after screens.rpy's stock styles
+#   (`init offset = -1` there), so these properties override them.
+# - init -1 python registers the glass-menu sound-test channel; init 999 python
+#   restyles the narrators' click-to-continue after every Character exists.
 
 default lc_cinematic_mode = False
 default lc_ui_shooting = False
@@ -1873,6 +1885,12 @@ label lc_ui_shot_tour:
 
 
 ## Styles #####################################################################
+
+# Long/multiline menu choices are visually centred (was screens/zz_day1_ui_qol_patch.rpy).
+style choice_button_text:
+    text_align 0.5
+    xalign 0.5
+    line_spacing 4
 
 style button:
     background Frame("gui/scrapbook/frame_keycap.png", 9, 9)

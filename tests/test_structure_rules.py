@@ -30,6 +30,7 @@ ALLOW_DUP = {
 }
 
 # Load-order patch files (game/-relative): shrink, never grow.
+# systems/ and screens/ entries were retired in clean-up PR 2c; chapter files remain.
 ALLOW_PATCH_FILES = {
     "chapters/ch01/ch01_photo_route_phone_patch.rpy",
     "chapters/ch01/zz_ch01_phone_photo_aliases.rpy",
@@ -38,16 +39,6 @@ ALLOW_PATCH_FILES = {
     "chapters/ch01/zzzz_ch01_day2_polish_revision.rpy",
     "chapters/ch01/zzzz_ch01_scene27_staged_phone.rpy",
     "chapters/ch01/zzzzz_ch01_love_outfit_control.rpy",
-    "screens/z_phone_presentation.rpy",
-    "screens/zz_day1_ui_qol_patch.rpy",
-    "screens/zzzz_phone_app_icons_patch.rpy",
-    "screens/zzzzzz_phone_ios_presentation.rpy",
-    "screens/zzzzzz_phone_wallpaper.rpy",
-    "screens/zzzzzzz_phone_hardware_polish.rpy",
-    "screens/zzzzzzzz_scrapbook_ui.rpy",
-    "systems/zz_phone_presentation_logic.rpy",
-    "systems/zz_story_state_flag_getter.rpy",
-    "systems/zzz_menu_safe_transparency_patch.rpy",
     "zzzz_ch01_breakfast_presentation.rpy",
 }
 

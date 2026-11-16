@@ -1,4 +1,4 @@
-# Title screen layout. `screen main_menu` (screens/zzzzzzzz_scrapbook_ui.rpy)
+# Title screen layout. `screen main_menu` (screens/scrapbook_ui.rpy)
 # just does `use lc_title_screen`. Logic and the menu-safe list live in
 # systems/title_screen.rpy.
 #

@@ -106,3 +106,12 @@ init python:
         renpy.store.modified_save = True
         renpy.notify("Story flags and resolved outcomes reset.")
         return None
+
+
+# get_story_flag(flag_id): boolean getter paired with set_story_flag(). Older story
+# code reads has_story_flag(); newer route code assigns get_story_flag() to a local.
+# load order: init 998, kept from the retired systems/zz_story_state_flag_getter.rpy
+# so the init sequence is unchanged; nothing reads it during init.
+init 998 python:
+    def get_story_flag(flag_id):
+        return has_story_flag(flag_id)

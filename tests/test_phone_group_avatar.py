@@ -81,7 +81,7 @@ class TripGroupAvatarTest(unittest.TestCase):
     def test_story_changes_and_both_effective_screen_locations(self):
         one = (ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
         two = (ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-        screen = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+        screen = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
         self.assertLess(one.index("phone_group_avatar_stage = \"trio\""), one.index("ch01_scene_05_complete"))
         self.assertLess(two.index("phone_group_maya_member = True"), two.index("ch01_d2_photo_group"))
         self.assertEqual(screen.count("add phone_group_avatar():"), 2)

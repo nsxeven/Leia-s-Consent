@@ -2,7 +2,7 @@
 import unittest
 from pathlib import Path
 
-SRC = (Path(__file__).resolve().parents[1] / "game" / "screens" / "zzzzzzzz_scrapbook_ui.rpy")
+SRC = (Path(__file__).resolve().parents[1] / "game" / "screens" / "scrapbook_ui.rpy")
 
 
 class QuickMenuKeycapTests(unittest.TestCase):

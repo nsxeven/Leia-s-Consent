@@ -64,7 +64,7 @@ class PhoneRepliesTest(unittest.TestCase):
                          ["first", "pool_pick_ryan", "pool_pick_followup_01", "next"])
 
     def test_reply_choices_live_in_a_distinct_tray_not_outgoing_bubbles(self):
-        source = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
         tray = source.split('            if reply_view_prompt and _reply_level > 0.0:\n                frame:', 1)[1].split('            text "+":', 1)[0]
         self.assertIn('reply_choice.png', tray)
         self.assertIn('row_hover.png', tray)
@@ -73,7 +73,7 @@ class PhoneRepliesTest(unittest.TestCase):
         self.assertIn('Choose a reply', source)
 
     def test_reply_reveal_waits_then_moves_both_viewport_and_tray(self):
-        source = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
         block = source.split('    LC_PHONE_REPLY_DELAY = ', 1)[1].split('    def lc_phone_close():', 1)[0]
         namespace = {}
         exec(textwrap.dedent('    LC_PHONE_REPLY_DELAY = ' + block), namespace)

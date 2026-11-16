@@ -9,7 +9,7 @@ GAME = Path(__file__).resolve().parents[1] / "game"
 class TypingSoundTests(unittest.TestCase):
 
     def setUp(self):
-        self.screen = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        self.screen = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         self.system = (GAME / "systems" / "lc_typing_sounds.rpy").read_text(encoding="utf-8")
 
     def test_input_screen_wires_changed_and_submit(self):

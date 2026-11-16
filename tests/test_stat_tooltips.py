@@ -115,7 +115,7 @@ class StatTooltipWiringTests(unittest.TestCase):
         self.assertIn('"tooltip": lc_stat_tooltip(stat_name, mode)', status)
         row = self._screen("screens/status_screen.rpy", "status_stat_row")
         self.assertIn('tooltip row.get("tooltip")', row)
-        phone_row = self._screen("screens/zzzzzz_phone_ios_presentation.rpy", "lc_phone_status_row")
+        phone_row = self._screen("screens/phone_sweetheart.rpy", "lc_phone_status_row")
         self.assertIn('tooltip row.get("tooltip")', phone_row)
         review_row = self._screen("screens/day_review_screen.rpy", "lc_review_bar_row")
         self.assertIn('lc_stat_tooltip(row["stat"])', review_row)
@@ -124,7 +124,7 @@ class StatTooltipWiringTests(unittest.TestCase):
         self.assertIn('use lc_stat_tip(GetTooltip("status_screen"))',
                       self._screen("screens/status_screen.rpy", "status_screen"))
         self.assertIn('use lc_stat_tip(GetTooltip("lc_phone_status"), look="phone")',
-                      self._screen("screens/zzzzzz_phone_ios_presentation.rpy", "lc_phone_status"))
+                      self._screen("screens/phone_sweetheart.rpy", "lc_phone_status"))
         self.assertIn("use lc_stat_tip(GetTooltip(",
                       self._screen("screens/day_review_screen.rpy", "lc_day_review_screen"))
 

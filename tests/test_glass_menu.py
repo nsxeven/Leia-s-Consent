@@ -4,7 +4,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game'
-UI = (GAME / 'screens/zzzzzzzz_scrapbook_ui.rpy').read_text(encoding='utf-8')
+UI = (GAME / 'screens/scrapbook_ui.rpy').read_text(encoding='utf-8')
 GALLERY = (GAME / 'screens/gallery_screen.rpy').read_text(encoding='utf-8')
 STATUS = (GAME / 'screens/status_screen.rpy').read_text(encoding='utf-8')
 TAGS = (GAME / 'screens/tag_collection_screen.rpy').read_text(encoding='utf-8')

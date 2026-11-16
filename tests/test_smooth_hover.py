@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 HOOK = (ROOT / "game/systems/lc_hover_fade.rpy").read_text(encoding="utf-8")
-UI = (ROOT / "game/screens/zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+UI = (ROOT / "game/screens/scrapbook_ui.rpy").read_text(encoding="utf-8")
 
 
 def block(src, head):
@@ -34,7 +34,7 @@ class SmoothHoverTests(unittest.TestCase):
                 self.assertIn("easein LC_HOVER_", ev, head)
 
     def test_hud_badge_eases(self):
-        hud = (ROOT / "game/screens/z_phone_presentation.rpy").read_text(encoding="utf-8")
+        hud = (ROOT / "game/screens/phone_hud.rpy").read_text(encoding="utf-8")
         self.assertNotIn("861 if hud_hovered", hud)
         self.assertIn("at lc_badge_lift(hud_hovered)", hud)
 

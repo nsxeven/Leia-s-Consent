@@ -28,13 +28,13 @@ class RpyModelTests(unittest.TestCase):
         self.assertTrue(eff["quick_menu"].relpath.endswith(".rpy"))
         self.assertIn("scrapbook_ui", eff["quick_menu"].relpath)
         self.assertIn("scrapbook_ui", eff["quick_menu@touch"].relpath)
-        self.assertIn("phone_ios_presentation", eff["phone_screen"].relpath)
-        self.assertIn("phone_ios_presentation", eff["lc_phone_extra_apps"].relpath)
+        self.assertIn("phone_sweetheart", eff["phone_screen"].relpath)
+        self.assertIn("phone_sweetheart", eff["lc_phone_extra_apps"].relpath)
 
     def test_effective_function_winners(self):
         eff = m.effective("def")
-        # apply_choice: choice_engine (init 0) is replaced by the init 90 copy.
-        self.assertNotIn("choice_engine", eff["apply_choice"].relpath)
+        # apply_choice: the only copy, in choice_engine's init 90 block (folded in clean-up 2c).
+        self.assertIn("choice_engine", eff["apply_choice"].relpath)
         self.assertEqual(eff["apply_choice"].priority, 90)
         # ch01_d4_track_text: the init 5 re-score copy wins over the Day Four file.
         self.assertIn("stat_model_v2_later_days", eff["ch01_d4_track_text"].relpath)

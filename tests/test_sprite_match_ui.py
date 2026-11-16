@@ -6,8 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-PHONE_SRC = (GAME / "screens" / "zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
-PREFS_SRC = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+PHONE_SRC = (GAME / "screens" / "phone_sweetheart.rpy").read_text(encoding="utf-8")
+PREFS_SRC = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
 REVIEW_SRC = (GAME / "screens" / "day_review_screen.rpy").read_text(encoding="utf-8")
 
 # Native stat fills. The material pass must not recolor them.
@@ -93,7 +93,7 @@ class PhoneShellTests(unittest.TestCase):
             _screen(PHONE_SRC, "lc_phone_status"),
         )
         self.assertIn("phone_add_message", (GAME / "systems" / "phone_state.rpy").read_text(encoding="utf-8"))
-        self.assertIn("lc_phone_open_from_notification", (GAME / "systems" / "zz_phone_presentation_logic.rpy").read_text(encoding="utf-8"))
+        self.assertIn("lc_phone_open_from_notification", (GAME / "systems" / "phone_presentation_logic.rpy").read_text(encoding="utf-8"))
         for name in ("avatar_leia.png", "avatar_julian.png", "avatar_ryan.png", "avatar_maya.png", "avatar_group.png", "phone_home.png", "phone_thread.png", "phone_app.png"):
             self.assertTrue((GAME / "gui" / "phone" / "sprite_match" / name).is_file(), name)
 

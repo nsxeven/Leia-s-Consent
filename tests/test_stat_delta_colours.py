@@ -37,7 +37,7 @@ class StatDeltaColourTests(unittest.TestCase):
         self.assertIn("{color=#f00}Secrecy {font=DejaVuSans.ttf}\u2193{/font}{/color}", markup)
 
     def test_choice_screen_substitutes_then_colours(self):
-        src = (ROOT / "game" / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        src = (ROOT / "game" / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         body = src.split("screen choice(items):", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn("parse_choice_caption(lc_choice_caption(item.caption))", body)
         self.assertIn("lc_choice_effect_markup(chips)", body)

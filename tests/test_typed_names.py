@@ -25,7 +25,7 @@ class TypedNameTests(unittest.TestCase):
         self.assertIn("gallery_customize_names(STATUS_MODE_NOTES", (GAME / "systems/status_display.rpy").read_text(encoding="utf-8"))
         self.assertIn('gallery_customize_names(page_info["label"])', (GAME / "screens/gallery_screen.rpy").read_text(encoding="utf-8"))
         self.assertIn('gallery_customize_names(phone_outfit["description"])',
-                      (GAME / "screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8"))
+                      (GAME / "screens/phone_sweetheart.rpy").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

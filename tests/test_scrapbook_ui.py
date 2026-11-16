@@ -123,7 +123,7 @@ class AssetTests(unittest.TestCase):
             self.assertTrue((gui / name).is_file(), name)
 
     def test_day_review_files_untouched_by_ui_module(self):
-        screen = (ROOT / "game" / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text()
+        screen = (ROOT / "game" / "screens" / "scrapbook_ui.rpy").read_text()
         self.assertNotIn("day_review_screen", screen)
         self.assertNotIn("lc_day_review", screen)
 
