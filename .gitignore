@@ -24,3 +24,7 @@ Thumbs.db
 
 # Distribution builds
 *-dists/
+
+# Python bytecode
+__pycache__/
+*.pyc

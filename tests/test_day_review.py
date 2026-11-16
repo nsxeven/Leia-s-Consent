@@ -37,9 +37,10 @@ class DayReviewTests(unittest.TestCase):
             get_story_value=lambda key, default=None: self.values.get(key, default),
             lc_delta_colour=lambda stat, amount, palette='card': lc_stat_model.delta_kind(stat, amount),
             GALLERY_ENTRIES=self.gallery, STAT_LABELS={})
-        source = (ROOT/'game/systems/day_review.rpy').read_text()
-        init = source.split('init 20 python:\n', 1)[1].split('\nlabel lc_day_review', 1)[0]
-        exec(compile(textwrap.dedent(init), 'day_review_init', 'exec'), self.env)
+        # The day-review init block, found by what it defines (not by file path).
+        sys.path.insert(0, str(ROOT / 'tests'))
+        from lc_rpy_harness import load_blocks
+        load_blocks(['lc_review_begin'], self.env)
 
     def call(self, name, *a, **kw):
         return self.env[name](*a, **kw)

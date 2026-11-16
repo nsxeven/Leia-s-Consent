@@ -1,4 +1,5 @@
 """Phone reply cards: executable Ren'Py Python blocks with a small store stub."""
+import sys
 import textwrap
 import unittest
 from pathlib import Path
@@ -23,10 +24,10 @@ def load_logic():
         "set_story_value": lambda key, value: story.__setitem__(key, value),
         "phone_queue_notification": lambda *a, **kw: None,
     }
-    for relative in ("game/systems/phone_state.rpy", "game/systems/zz_phone_presentation_logic.rpy"):
-        source = (ROOT / relative).read_text(encoding="utf-8")
-        block = textwrap.dedent(source.split("init python:\n", 1)[1])
-        exec(compile(block, relative, "exec"), env)
+    # Base phone writer + presentation wrapper, found by what they define (not by file path).
+    sys.path.insert(0, str(ROOT / "tests"))
+    from lc_rpy_harness import load_blocks
+    load_blocks(["phone_add_message"], env)
     return env, story, store
 
 
