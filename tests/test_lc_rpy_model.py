@@ -60,6 +60,13 @@ class RpyModelTests(unittest.TestCase):
         self.assertNotIn("__init__", names)
         self.assertNotIn("render", names)
 
+    def test_multiline_signature_keeps_whole_body(self):
+        """A def whose `):` closes back at the def indent is still one block."""
+        base = [d for d in m.definitions("def") if d.name == "phone_add_message"
+                and d.relpath.endswith("phone_state.rpy")][0]
+        self.assertIn("save_attachment", base.body)
+        self.assertIn("return True", base.body)
+
 
 if __name__ == "__main__":
     unittest.main()
