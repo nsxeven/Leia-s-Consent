@@ -105,6 +105,14 @@ init python:
     def lc_stat(stat):
         return lc_stats_flat()[stat]
 
+    def lc_leia_tint(lane=None, lane_scene=False):
+        """Subtle Day Two tint for Leia's line: 'shy' or a stat id (lc_stat_model.leia_tint).
+
+        Call once per tint point, store it in a local and branch on that, always ending in a
+        shy else. Pure: never writes stats or flags.
+        """
+        return lc_stat_model.leia_tint(lc_stats_flat(), lane, lane_scene)
+
     def lc_exhib_gained(prefix):
         """Exhibitionism gained from choices whose ids start with `prefix` (e.g. today's)."""
         total = 0
