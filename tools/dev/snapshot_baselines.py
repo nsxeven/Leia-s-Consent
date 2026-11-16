@@ -15,9 +15,30 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tests"))
 
 import lc_rpy_model as m  # noqa: E402
+from lc_effective_effects import effective_effects  # noqa: E402
 from lc_save_names import save_names  # noqa: E402
 
-PINNED_KINDS = ("screen", "def", "class", "define", "default", "transform", "image", "assign")
+PINNED_KINDS = ("screen", "def", "class", "define", "default", "transform", "image",
+                "layeredimage", "assign")
+
+
+def pinned_effect(d):
+    """Init side effects worth pinning: everything except imports (merging files
+    may drop a duplicate import harmlessly) and label_overrides entries (the
+    label pins already resolve them, so folding one is proved there)."""
+    first = d.body.split("\n", 1)[0]
+    return not (first.startswith(("import ", "from ")) or first.startswith("config.label_overrides["))
+
+
+def effect_counts():
+    """Multiset of init side-effect statements: moving one to another file keeps
+    the count; dropping, duplicating or editing one changes it."""
+    counts = {}
+    for d in m.definitions("effect"):
+        if pinned_effect(d):
+            key = d.body.split("\n", 1)[0][:90] + " #" + m.fingerprint(d.body)
+            counts[key] = counts.get(key, 0) + 1
+    return counts
 
 
 def style_print(name):
@@ -41,6 +62,10 @@ def fingerprints():
     out["label"] = {name: m.fingerprint(m.effective_label_body(name) or "")
                     for name in sorted(m.effective("label"))}
     out["style"] = {name: style_print(name) for name in sorted({d.name for d in m.definitions("style")})}
+    out["effect"] = effect_counts()
+    # Order-sensitive outcomes: overlay stacking and the final choice table.
+    out["overlay_order"] = m.overlay_order()
+    out["choice_effects"] = {"table": m.fingerprint(json.dumps(effective_effects(), sort_keys=True))}
     return out
 
 

@@ -42,9 +42,10 @@ class RpyModelTests(unittest.TestCase):
         self.assertIn("tag_collection", eff["lc_review_finish"].relpath)
 
     def test_label_override_resolution(self):
-        body = m.effective_label_body("ch01_scene_27_late_photo_drop")
-        staged = m.effective("label")["ch01_scene_27_late_photo_drop_staged"]
-        self.assertEqual(body, m.body_without_header(staged))
+        self.assertEqual(m.effective_label_body("ch01_scene_27_late_photo_drop"),
+                         m.effective_label_body("ch01_scene_27_late_photo_drop_staged"))
+        self.assertNotEqual(m.effective_label_body("ch01_scene_27_late_photo_drop"),
+                            m.effective_label_body("ch01_scene_26_the_compliment"))
 
     def test_single_jump_alias_resolves_to_target(self):
         labels = m.effective("label")

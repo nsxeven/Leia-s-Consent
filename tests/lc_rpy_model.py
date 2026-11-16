@@ -3,18 +3,21 @@
 Used by the structure, fingerprint and characterization tests so they follow a
 screen/function/label wherever it lives, instead of hard-coding file paths.
 
-Ren'Py rules mirrored here (checked against renpy-8.5.3 renpy/script.py and
-renpy/parser.py):
+Ren'Py rules mirrored here (checked against renpy-8.5.3 renpy/script.py,
+renpy/parser.py and common/00layeredimage_ren.py, and against an engine-side
+dump of the winners during review of PR #215):
 * Script files load sorted by their path relative to game/ without extension;
   names sorting below "A" (e.g. "00_release_build") load first.
 * Init code then runs stably sorted by priority. Priorities: `screen` -500,
-  `image` 500, `define`/`default`/`transform` 0 (or an explicit number),
-  `init N` / `init N python` N; every one is shifted by the file's current
-  `init offset = K`. Statements inside an `init N:` block take N + offset.
+  `image` 500, `define`/`default`/`transform`/`layeredimage`/`style` 0 (or an
+  explicit number), `init N` / `init N python` N; every one is shifted by the
+  file's current `init offset = K`. Statements inside `init N:` take N + offset.
   `python early` runs before all of them.
 * For a name defined more than once, the definition that runs last wins.
-  Screens are keyed by name plus `variant`.
+  Screens and styles are keyed by name plus `variant`.
 * `config.label_overrides["a"] = "b"` makes `jump a` run label b.
+* Top-level init-python statements that are not def/class/simple assignment
+  (overlay registrations, table updates, loops) are kept as kind "effect".
 """
 import hashlib
 import re
@@ -26,7 +29,8 @@ GAME = ROOT / "game"
 
 Def = namedtuple("Def", "kind name priority order relpath line body")
 
-KINDS = ("screen", "label", "def", "class", "define", "default", "image", "transform", "assign", "style")
+KINDS = ("screen", "label", "def", "class", "define", "default", "image", "layeredimage",
+         "transform", "assign", "effect", "style", "pyblock")
 
 _INIT_OFFSET = re.compile(r"^init\s+offset\s*=\s*(-?\d+)")
 _INIT_BLOCK = re.compile(r"^init(?:\s+(-?\d+))?\s*:")
@@ -36,20 +40,23 @@ _SCREEN = re.compile(r"^screen\s+([A-Za-z_]\w*)")
 _LABEL = re.compile(r"^label\s+([A-Za-z_][\w.]*)")
 _DEFINE = re.compile(r"^(define|default)\s+(?:(-?\d+)\s+)?([A-Za-z_][\w.]*)\s*(?:=|\+=|\|=)")
 _IMAGE = re.compile(r"^image\s+([^=:]+?)\s*(?:=|:)")
+_LAYERED = re.compile(r"^layeredimage\s+([^:]+?)\s*:")
 _TRANSFORM = re.compile(r"^transform\s+(?:(-?\d+)\s+)?([A-Za-z_]\w*)")
 _STYLE = re.compile(r"^style\s+([A-Za-z_]\w*)")
 _PYDEF = re.compile(r"^def\s+([A-Za-z_]\w*)")
 _PYCLASS = re.compile(r"^class\s+([A-Za-z_]\w*)")
 _PYASSIGN = re.compile(r"^([A-Za-z_][\w.]*)\s*=(?!=)")
-_VARIANT = re.compile(r"^\s+variant\s+(['\"])(.+?)\1")
+_VARIANT = re.compile(r"^\s+variant\s+(.+?)\s*$")
 _OVERRIDE = re.compile(r"config\.label_overrides\[\s*['\"](\w+)['\"]\s*\]\s*=\s*['\"](\w+)['\"]")
 _JUMP_ONLY = re.compile(r"^jump\s+(\w+)$")
+_STRING = re.compile(r"'(?:\\.|[^'\\])*'|\"(?:\\.|[^\"\\])*\"")
 
 EARLY = -10 ** 6
 
 
 def rpy_files():
-    files = [p for p in GAME.rglob("*.rpy") if "/tl/" not in p.as_posix()]
+    files = [p for p in GAME.rglob("*.rpy")
+             if not p.relative_to(GAME).as_posix().startswith("tl/")]
 
     def key(p):
         fn = p.relative_to(GAME).with_suffix("").as_posix()
@@ -62,34 +69,58 @@ def relpath(path):
     return path.relative_to(ROOT).as_posix()
 
 
+def read(path):
+    return path.read_text(encoding="utf-8-sig").replace("\r\n", "\n").replace("\r", "\n")
+
+
 def _indent(line):
     return len(line) - len(line.lstrip(" "))
 
 
-_STRING = re.compile(r"('''|\"\"\"|'(?:\\.|[^'\\])*'|\"(?:\\.|[^\"\\])*\")")
+def _code_parts(line, in_triple):
+    """Code on a line outside triple-quoted strings; returns (code, still_open_quote)."""
+    code = []
+    rest = line
+    while rest:
+        if in_triple:
+            j = rest.find(in_triple)
+            if j < 0:
+                return "".join(code), in_triple
+            rest, in_triple = rest[j + 3:], None
+        else:
+            hits = [(rest.find(q), q) for q in ('"""', "'''") if rest.find(q) >= 0]
+            if not hits:
+                code.append(rest)
+                break
+            j, q = min(hits)
+            code.append(rest[:j])
+            rest, in_triple = rest[j + 3:], q
+    return "".join(code), in_triple
 
 
-def _depth_change(line):
-    """Net open brackets on a line, ignoring strings and comments (approximate)."""
-    s = _STRING.sub("", line).split("#", 1)[0]
+def _depth_change(code):
+    s = _STRING.sub("", code).split("#", 1)[0]
     return sum(s.count(c) for c in "([{") - sum(s.count(c) for c in ")]}")
 
 
 def _block(lines, i):
     """Lines i.. of the block opened at line i (the header plus deeper lines).
 
-    A header whose brackets stay open (multi-line def signature) continues
-    until they close, even if its closing `):` is back at the header indent."""
+    Open brackets or an open triple-quoted string keep the statement going even
+    when a continuation line (e.g. a closing `):`) is back at the header indent."""
     base = _indent(lines[i])
     out = [lines[i]]
-    depth = _depth_change(lines[i])
+    code, triple = _code_parts(lines[i], None)
+    depth = _depth_change(code)
     j = i + 1
     while j < len(lines):
         s = lines[j]
-        if depth <= 0 and s.strip() and _indent(s) <= base:
+        if depth <= 0 and not triple and s.strip() and _indent(s) <= base:
             break
-        if depth > 0:
-            depth += _depth_change(s)
+        code, triple_after = _code_parts(s, triple)
+        if depth > 0 or triple:
+            depth += _depth_change(code)
+        triple = triple_after
         out.append(s)
         j += 1
     while out and not out[-1].strip():
@@ -107,10 +138,17 @@ def _normalise(block):
     return "\n".join(keep)
 
 
-def _parse_file(path, file_index):
-    text = path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
-    lines = text.split("\n")
-    rel = relpath(path)
+def _variant(block):
+    for line in block[1:]:
+        v = _VARIANT.match(line)
+        if v and _indent(line) > _indent(block[0]):
+            names = re.findall(r"['\"]([^'\"]+)['\"]", v.group(1))
+            return ",".join(names) if names else v.group(1)
+    return None
+
+
+def parse_text(text, rel, file_index):
+    lines = text.lstrip("\ufeff").replace("\r\n", "\n").replace("\r", "\n").split("\n")
     offset = 0
     out = []
     seq = 0
@@ -121,25 +159,28 @@ def _parse_file(path, file_index):
         out.append(Def(kind, name, priority, (priority, file_index, seq), rel, i + 1, _normalise(block)))
 
     def scan_python(start, end, priority):
-        """Top-level def/class/assign inside an init python block body."""
+        """Top-level statements inside an init python block body."""
         body = [k for k in range(start, end) if lines[k].strip() and not lines[k].strip().startswith("#")]
         if not body:
             return
         top = _indent(lines[body[0]])
-        for k in body:
+        k = body[0]
+        while k < end:
             s = lines[k]
-            if _indent(s) != top:
-                continue
             st = s.strip()
-            m = _PYDEF.match(st) or _PYCLASS.match(st)
-            if m:
-                block, _ = _block(lines, k)
-                add("def" if st.startswith("def") else "class", m.group(1), priority, k, block)
+            if not st or st.startswith("#") or _indent(s) != top:
+                k += 1
                 continue
-            m = _PYASSIGN.match(st)
-            if m:
-                block, _ = _block(lines, k)
-                add("assign", m.group(1), priority, k, block)
+            block, nxt = _block(lines, k)
+            nxt = min(nxt, end)
+            md = _PYDEF.match(st) or _PYCLASS.match(st)
+            if md:
+                add("def" if st.startswith("def") else "class", md.group(1), priority, k, block)
+            elif _PYASSIGN.match(st):
+                add("assign", _PYASSIGN.match(st).group(1), priority, k, block)
+            elif not st.startswith("@"):
+                add("effect", _normalise(block), priority, k, block)
+            k = nxt
 
     def scan_statements(start, end, priority, top):
         """Ren'Py statements at indentation `top` in lines[start:end]."""
@@ -152,25 +193,32 @@ def _parse_file(path, file_index):
                 continue
             block, nxt = _block(lines, k)
             nxt = min(nxt, end)
-            m = _SCREEN.match(st)
-            if m:
-                variant = next((v.group(2) for v in map(_VARIANT.match, block[1:]) if v), None)
-                name = m.group(1) + (f"@{variant}" if variant else "")
-                add("screen", name, priority if priority is not None else -500 + offset, k, block)
+
+            def pr(default, explicit=None):
+                if priority is not None:
+                    return priority
+                return (int(explicit) if explicit else default) + offset
+
+            if _SCREEN.match(st):
+                variant = _variant(block)
+                name = _SCREEN.match(st).group(1) + (f"@{variant}" if variant else "")
+                add("screen", name, pr(-500), k, block)
             elif _LABEL.match(st):
                 add("label", _LABEL.match(st).group(1), 0, k, block)
             elif _DEFINE.match(st):
                 d = _DEFINE.match(st)
-                pr = priority if priority is not None else int(d.group(2) or 0) + offset
-                add(d.group(1), d.group(3), pr, k, block)
+                add(d.group(1), d.group(3), pr(0, d.group(2)), k, block)
             elif _TRANSFORM.match(st):
                 t = _TRANSFORM.match(st)
-                pr = priority if priority is not None else int(t.group(1) or 0) + offset
-                add("transform", t.group(2), pr, k, block)
+                add("transform", t.group(2), pr(0, t.group(1)), k, block)
+            elif _LAYERED.match(st):
+                add("layeredimage", " ".join(_LAYERED.match(st).group(1).split()), pr(0), k, block)
             elif _IMAGE.match(st):
-                add("image", " ".join(_IMAGE.match(st).group(1).split()), priority if priority is not None else 500 + offset, k, block)
+                add("image", " ".join(_IMAGE.match(st).group(1).split()), pr(500), k, block)
             elif _STYLE.match(st):
-                add("style", _STYLE.match(st).group(1), priority if priority is not None else offset, k, block)
+                variant = _variant(block)
+                name = _STYLE.match(st).group(1) + (f"@{variant}" if variant else "")
+                add("style", name, pr(0), k, block)
             elif _PY_EARLY.match(st):
                 scan_python(k + 1, nxt, EARLY)
             elif st.startswith("python") and st.endswith(":") and priority is not None:
@@ -184,22 +232,24 @@ def _parse_file(path, file_index):
         if not st or st.startswith("#") or _indent(s) != 0:
             i += 1
             continue
-        m = _INIT_OFFSET.match(st)
-        if m:
-            offset = int(m.group(1))
+        mo = _INIT_OFFSET.match(st)
+        if mo:
+            offset = int(mo.group(1))
             i += 1
             continue
         block, nxt = _block(lines, i)
-        m = _INIT_PY.match(st)
-        if m:
-            scan_python(i + 1, nxt, int(m.group(1) or 0) + offset)
+        mp = _INIT_PY.match(st)
+        if mp:
+            # Whole block too (kind "pyblock", named by file) so tests can exec it as the game does.
+            add("pyblock", rel, int(mp.group(1) or 0) + offset, i, block)
+            scan_python(i + 1, nxt, int(mp.group(1) or 0) + offset)
         elif _PY_EARLY.match(st):
             scan_python(i + 1, nxt, EARLY)
         elif _INIT_BLOCK.match(st):
-            pr = int(_INIT_BLOCK.match(st).group(1) or 0) + offset
+            pri = int(_INIT_BLOCK.match(st).group(1) or 0) + offset
             inner = [k for k in range(i + 1, nxt) if lines[k].strip()]
             if inner:
-                scan_statements(i + 1, nxt, pr, _indent(lines[inner[0]]))
+                scan_statements(i + 1, nxt, pri, _indent(lines[inner[0]]))
         else:
             scan_statements(i, nxt, None, 0)
         i = nxt
@@ -213,7 +263,7 @@ def all_definitions():
     if "all" not in _CACHE:
         defs = []
         for index, path in enumerate(rpy_files()):
-            defs.extend(_parse_file(path, index))
+            defs.extend(parse_text(read(path), relpath(path), index))
         _CACHE["all"] = defs
     return _CACHE["all"]
 
@@ -223,10 +273,14 @@ def definitions(kind):
     return [d for d in all_definitions() if d.kind == kind]
 
 
+def in_run_order(kinds=KINDS):
+    return sorted((d for d in all_definitions() if d.kind in kinds), key=lambda d: d.order)
+
+
 def effective(kind):
-    """{name: winning Def}; for 'style' the last block (see style_chain)."""
+    """{name: winning Def} (for 'style', see style_chain)."""
     table = {}
-    for d in sorted(definitions(kind), key=lambda d: d.order):
+    for d in in_run_order((kind,)):
         table[d.name] = d
     return table
 
@@ -239,22 +293,46 @@ def duplicates(kind):
 
 
 def style_chain(name):
-    """Every block for one style in run order: later blocks add/override properties."""
-    return [d for d in sorted(definitions("style"), key=lambda d: d.order) if d.name == name]
+    """Every block for one style (name or name@variant) in run order."""
+    return [d for d in in_run_order(("style",)) if d.name == name]
+
+
+def overrides_in_text(text):
+    pairs = {}
+    for line in text.split("\n"):
+        if line.lstrip().startswith("#"):
+            continue
+        for mo in _OVERRIDE.finditer(line):
+            pairs[mo.group(1)] = mo.group(2)
+    return pairs
 
 
 def label_overrides():
     pairs = {}
     for path in rpy_files():
-        text = path.read_text(encoding="utf-8")
-        for m in _OVERRIDE.finditer(text):
-            pairs[m.group(1)] = m.group(2)
+        pairs.update(overrides_in_text(read(path)))
     return pairs
 
 
+def files_using_overrides():
+    return {relpath(p) for p in rpy_files() if overrides_in_text(read(p))}
+
+
+def overlay_order():
+    """config.overlay_screens / always_shown_screens registrations in run order."""
+    out = {"overlay_screens": [], "always_shown_screens": []}
+    pat = re.compile(r"config\.(overlay_screens|always_shown_screens)\.append\(\s*['\"](\w+)['\"]")
+    for d in in_run_order(("effect", "assign", "define")):
+        for mo in pat.finditer(d.body):
+            if mo.group(2) not in out[mo.group(1)]:
+                out[mo.group(1)].append(mo.group(2))
+    return out
+
+
 def effective_label_body(name, _seen=None):
-    """Body that actually runs for `jump name`: follows label_overrides and
-    labels whose whole body is a single `jump other` (compatibility aliases)."""
+    """Parameters + body that actually run for `jump name`: follows
+    label_overrides and labels whose whole body is a single `jump other`
+    (compatibility aliases)."""
     seen = _seen or set()
     if name in seen:
         return None
@@ -264,14 +342,15 @@ def effective_label_body(name, _seen=None):
     d = labels.get(target)
     if d is None:
         return None
-    rest = d.body.split("\n")[1:]
+    header, *rest = d.body.split("\n")
     if len(rest) == 1:
-        m = _JUMP_ONLY.match(rest[0].strip())
-        if m:
-            resolved = effective_label_body(m.group(1), seen)
+        mo = _JUMP_ONLY.match(rest[0].strip())
+        if mo:
+            resolved = effective_label_body(mo.group(1), seen)
             if resolved is not None:
                 return resolved
-    return "\n".join(rest)
+    params = header[header.find("("):] if "(" in header else ""
+    return params + "\n" + "\n".join(rest)
 
 
 def fingerprint(text):
@@ -279,6 +358,4 @@ def fingerprint(text):
 
 
 def body_without_header(d):
-    """Definition body minus its first line (so moving a screen into an init
-    block or changing only its priority prefix does not change the print)."""
     return "\n".join(d.body.split("\n")[1:])

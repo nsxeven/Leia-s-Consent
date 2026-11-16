@@ -20,13 +20,13 @@ _MESSAGE = re.compile(r"\bmessage_id\s*=\s*['\"]([\w.-]+)['\"]")
 
 
 def save_names():
-    text = "\n".join(p.read_text(encoding="utf-8") for p in m.rpy_files())
+    text = "\n".join(m.read(p) for p in m.rpy_files())
     return {
         "label": {d.name for d in m.definitions("label")},
         "store": {d.name for d in m.definitions("define") + m.definitions("default")},
         "story_key": set(_STORY_KEY.findall(text)),
         "choice_id": set(_CHOICE.findall(text)) | set(effective_effects()),
         "message_id": set(_MESSAGE.findall(text)),
-        "image": {d.name for d in m.definitions("image")},
+        "image": {d.name for d in m.definitions("image") + m.definitions("layeredimage")},
         "screen": {d.name.split("@")[0] for d in m.definitions("screen")},
     }

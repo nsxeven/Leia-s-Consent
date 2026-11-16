@@ -99,7 +99,7 @@ class StructureRuleTests(unittest.TestCase):
                          "no new zz*/ *_patch.rpy files: edit the owning file")
 
     def test_no_new_label_overrides(self):
-        users = {game_rel(p) for p in m.rpy_files() if "config.label_overrides" in p.read_text(encoding="utf-8")}
+        users = {game_rel(p) for p in m.rpy_files() if m.overrides_in_text(m.read(p))}
         self.assertEqual(users - ALLOW_OVERRIDES, set(),
                          "no new config.label_overrides: edit the label itself")
         self.assertEqual(ALLOW_OVERRIDES - users, set(), "remove fixed files from ALLOW_OVERRIDES")
@@ -122,6 +122,12 @@ class StructureRuleTests(unittest.TestCase):
                 if cid not in effects:
                     missing.append(f"{path.name}: {cid}")
         self.assertEqual(missing, [])
+
+    def test_no_orphan_compiled_scripts(self):
+        """Ren'Py still loads a .rpyc whose .rpy was moved or deleted (local builds only)."""
+        orphans = [p.relative_to(m.GAME).as_posix() for p in m.GAME.rglob("*.rpyc")
+                   if not p.with_suffix(".rpy").exists()]
+        self.assertEqual(orphans, [], "delete stale .rpyc files left behind by a move")
 
     def test_paths_named_in_tests_exist(self):
         """A moved file must take its tests with it, or they silently test nothing."""

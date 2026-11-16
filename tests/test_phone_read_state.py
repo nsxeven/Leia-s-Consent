@@ -1,23 +1,29 @@
 """Reading a thread (e.g. opened from a notification) leaves no unread badge (darryn 2026-11-08)."""
+import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LOGIC = (ROOT / "game/systems/zz_phone_presentation_logic.rpy").read_text(encoding="utf-8")
-PHONE = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+sys.path.insert(0, str(ROOT / "tests"))
+import lc_rpy_model as m  # noqa: E402
+
+# Found by what they define, so the checks follow the code when files are merged or moved.
+_DEFS = m.effective("def")
+_SCREENS = m.effective("screen")
 
 
 class PhoneReadStateTests(unittest.TestCase):
 
     def test_messages_into_open_thread_are_read(self):
-        wrapper = LOGIC.split("    def phone_add_message(", 1)[1].split("_phone_add_message_base(", 1)[0]
+        wrapper = _DEFS["phone_add_message"].body.split("_phone_add_message_base(", 1)[0]
         self.assertIn("if mark_unread and lc_phone_thread_open(thread_id):", wrapper)
         self.assertIn("mark_unread = False", wrapper)
 
     def test_leaving_thread_marks_read(self):
-        self.assertIn('on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread)', PHONE)
-        self.assertIn('lc_phone_leave_thread(app, thread)', PHONE.split('    def lc_phone_back():', 1)[1].split('    def lc_phone_clock_text():', 1)[0])
-        self.assertIn('action Function(lc_phone_back)', PHONE.split('screen phone_screen():', 1)[1])
+        screen = _SCREENS["phone_screen"].body
+        self.assertIn('on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread)', screen)
+        self.assertIn('lc_phone_leave_thread(app, thread)', _DEFS["lc_phone_back"].body)
+        self.assertIn('action Function(lc_phone_back)', screen)
 
 
 if __name__ == "__main__":

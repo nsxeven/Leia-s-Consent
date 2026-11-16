@@ -50,7 +50,8 @@ class ApplyChoiceTests(unittest.TestCase):
             renpy=SimpleNamespace(store=self.store),
             get_choice_effects=lambda cid: effects.get(cid, []),
             change_stat=lambda g, s, a: self.calls.append(("stat", g, s, a)),
-            lc_review_stats=lambda: "SNAPSHOT",
+            # The snapshot is what has been changed so far: it must be taken BEFORE any stat moves.
+            lc_review_stats=lambda: tuple(c for c in self.calls if c[0] == "stat"),
             lc_review_note_choice=lambda cid, before: self.calls.append(("review", cid, before)),
             show_choice_feedback=lambda cid: self.calls.append(("feedback", cid)),
             maybe_show_status_choice_tutorial=lambda cid: self.calls.append(("tutorial", cid)),
@@ -63,7 +64,7 @@ class ApplyChoiceTests(unittest.TestCase):
         self.assertEqual(self.calls, [
             ("stat", "relationship", "love", 2),
             ("stat", "partner", "exhibitionism", -1),
-            ("review", "c_up", "SNAPSHOT"),
+            ("review", "c_up", ()),
             ("feedback", "c_up"),
             ("tutorial", "c_up"),
         ])
@@ -73,7 +74,7 @@ class ApplyChoiceTests(unittest.TestCase):
     def test_choice_without_effects_is_still_recorded(self):
         self.env["apply_choice"]("c_flavour")
         self.assertEqual(self.store.choice_history, ["c_flavour"])
-        self.assertIn(("review", "c_flavour", "SNAPSHOT"), self.calls)
+        self.assertIn(("review", "c_flavour", ()), self.calls)
 
 
 class PhoneAddMessageTests(unittest.TestCase):

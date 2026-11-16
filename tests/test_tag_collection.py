@@ -27,11 +27,10 @@ class TagCollectionTests(unittest.TestCase):
             get_stat_group=lambda group: getattr(self.store, group + '_stats'),
             get_story_value=lambda key, default=None: default, lc_delta_colour=lambda stat, amount, palette='card': lc_stat_model.delta_kind(stat, amount),
             GALLERY_ENTRIES={}, STAT_LABELS={})
-        review = (ROOT / 'game/systems/day_review.rpy').read_text(encoding='utf-8')
-        init = review.split('init 20 python:\n', 1)[1].split('\nlabel lc_day_review', 1)[0]
-        exec(compile(textwrap.dedent(init), 'day_review_init', 'exec'), self.env)
-        coll = (ROOT / 'game/systems/lc_tag_collection.rpy').read_text(encoding='utf-8')
-        exec(compile(textwrap.dedent(coll.split('init 21 python:\n', 1)[1]), 'tags_init', 'exec'), self.env)
+        # Day review + tag collection init blocks, found by what they define (not by file path).
+        sys.path.insert(0, str(ROOT / 'tests'))
+        from lc_rpy_harness import load_blocks
+        load_blocks(['lc_review_begin', 'lc_tags_apply'], self.env)
 
     def call(self, name, *a, **kw):
         return self.env[name](*a, **kw)
