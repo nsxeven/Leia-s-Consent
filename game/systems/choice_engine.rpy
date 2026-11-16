@@ -550,19 +550,6 @@ init python:
         return tuple(CHOICE_TAGS.get(choice_id, ()))
 
 
-    def apply_choice(choice_id):
-        """Apply the real effects, record the selection, and surface mode-safe feedback."""
-        review_before = lc_review_stats()
-        for group_name, stat_name, amount in get_choice_effects(choice_id):
-            change_stat(group_name, stat_name, amount)
-
-        renpy.store.last_choice_id = choice_id
-        renpy.store.choice_history.append(choice_id)
-        lc_review_note_choice(choice_id, review_before)
-        show_choice_feedback(choice_id)
-        return choice_id
-
-
     def choice_ids_with_prefix(prefix, choice_ids=None):
         """Return recorded choices whose stable IDs begin with a chapter/event prefix."""
         source = renpy.store.choice_history if choice_ids is None else choice_ids

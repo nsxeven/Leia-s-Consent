@@ -22,18 +22,11 @@ from lc_effective_effects import effective_effects  # noqa: E402
 
 # Definitions that are knowingly duplicated today: shrink, never grow.
 ALLOW_DUP = {
-    "screen": {
-        "choice", "choice_feedback_overlay", "confirm", "file_slots", "game_menu", "history",
-        "input", "lc_phone_extra_apps", "lc_phone_settings", "lc_phone_settings_mode",
-        "lc_phone_status", "lc_phone_status_row", "lc_phone_status_section", "load", "main_menu",
-        "notify", "phone_notification_banner", "phone_notification_overlay", "phone_screen",
-        "preferences", "quick_menu", "quick_menu@touch", "save", "say", "skip_indicator",
-        "status_choice_tutorial",
-    },
+    # 26 dead duplicate screens and 6 dead defs removed in clean-up PR 2a.
+    "screen": set(),
     "def": {
-        "apply_choice", "clear_choice_feedback", "lc_phone_set_information_mode",
-        "lc_review_finish", "lc_review_titles", "phone_add_message", "set_dialogue_theme",
-        "set_player_transparency_mode", "set_story_flag", "show_choice_feedback",
+        # Load-time wrapper chains (base still called through an alias); folded in PR 2b.
+        "lc_review_finish", "lc_review_titles", "phone_add_message", "set_story_flag",
     },
     "label": set(),
 }
@@ -48,7 +41,6 @@ ALLOW_PATCH_FILES = {
     "chapters/ch01/zzzz_ch01_scene27_staged_phone.rpy",
     "chapters/ch01/zzzzz_ch01_love_outfit_control.rpy",
     "screens/z_phone_presentation.rpy",
-    "screens/zz_choice_screen_developer_scroll.rpy",
     "screens/zz_day1_ui_qol_patch.rpy",
     "screens/zzzz_phone_app_icons_patch.rpy",
     "screens/zzzzzz_phone_ios_presentation.rpy",
@@ -122,6 +114,13 @@ class StructureRuleTests(unittest.TestCase):
                 if cid not in effects:
                     missing.append(f"{path.name}: {cid}")
         self.assertEqual(missing, [])
+
+    def test_no_empty_python_blocks(self):
+        """Deleting the last statement of an `init python:` block is a script error at
+        launch that lint does not report (seen in clean-up PR 2a)."""
+        empty = [f"{d.relpath}:{d.line}" for d in m.definitions("pyblock")
+                 if not m.body_without_header(d).strip()]
+        self.assertEqual(empty, [])
 
     def test_no_orphan_compiled_scripts(self):
         """Ren'Py still loads a .rpyc whose .rpy was moved or deleted (local builds only)."""

@@ -86,57 +86,6 @@ screen phone_quick_access():
                     yalign 0.55
 
 
-screen phone_notification_banner():
-
-    zorder 620
-
-    if phone_notification_current:
-        fixed:
-            at phone_notification_slide
-            xalign 0.5
-            yalign 0.0
-            xsize 700
-            ysize 116
-
-            add "gui/phone/notification_card.svg"
-
-            vbox:
-                xpos 24
-                ypos 13
-                xsize 652
-                spacing 2
-
-                fixed:
-                    xfill True
-                    ysize 25
-
-                    hbox:
-                        xalign 0.0
-                        yalign 0.5
-                        spacing 7
-
-                        add phone_app_icon_path(phone_notification_current["app"]):
-                            xysize (22, 22)
-                            yalign 0.5
-
-                        text "[phone_notification_current['app']]":
-                            size 17
-                            color "#6e6e73"
-                            bold True
-                            yalign 0.5
-
-                    text "now":
-                        size 15
-                        color "#8e8e93"
-                        xalign 1.0
-                        yalign 0.5
-
-                text "[phone_notification_current['title']]" size 22 color "#111111" bold True
-                text "[phone_notification_current['body']]" size 18 color "#2c2c2e"
-
-        timer 3.75 action Function(phone_finish_notification)
-
-
 screen phone_first_use_tutorial():
 
     modal True
