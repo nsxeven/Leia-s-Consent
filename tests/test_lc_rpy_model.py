@@ -36,10 +36,9 @@ class RpyModelTests(unittest.TestCase):
         # apply_choice: choice_engine (init 0) is replaced by the init 90 copy.
         self.assertNotIn("choice_engine", eff["apply_choice"].relpath)
         self.assertEqual(eff["apply_choice"].priority, 90)
-        # set_story_flag: chapter_select's init 10 wrapper wins over story_state.
-        self.assertIn("chapter_select", eff["set_story_flag"].relpath)
-        # lc_review_finish/titles: tag collection (init 21) wraps day_review (init 20).
-        self.assertIn("tag_collection", eff["lc_review_finish"].relpath)
+        # ch01_d4_track_text: the init 5 re-score copy wins over the Day Four file.
+        self.assertIn("stat_model_v2_later_days", eff["ch01_d4_track_text"].relpath)
+        self.assertEqual(eff["ch01_d4_track_text"].priority, 5)
 
     def test_label_override_resolution(self):
         self.assertEqual(m.effective_label_body("ch01_scene_27_late_photo_drop"),
@@ -63,8 +62,7 @@ class RpyModelTests(unittest.TestCase):
 
     def test_multiline_signature_keeps_whole_body(self):
         """A def whose `):` closes back at the def indent is still one block."""
-        base = [d for d in m.definitions("def") if d.name == "phone_add_message"
-                and d.relpath.endswith("phone_state.rpy")][0]
+        base = [d for d in m.definitions("def") if d.name == "phone_store_message"][0]
         self.assertIn("save_attachment", base.body)
         self.assertIn("return True", base.body)
 

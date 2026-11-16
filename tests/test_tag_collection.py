@@ -61,6 +61,22 @@ class TagCollectionTests(unittest.TestCase):
         self.call('lc_tag_equip', 'ryan', 'Open Book')
         self.assertIsNone(self.call('lc_tag_equipped', 'ryan'))
 
+    def test_finish_unlocks_automatic_tag_even_when_another_is_equipped(self):
+        """The unlock uses the day's AUTOMATIC titles, not the equipped ones (clean-up 2b review)."""
+        self.persistent.lc_tags_earned = {'leia:Blushing Again'}
+        self.call('lc_tag_equip', 'leia', 'Blushing Again')
+        self.play('ch01_outfit_conservative', 'ch01_towel_boundary')
+        self.assertIn('leia:Feeling Safe', self.persistent.lc_tags_earned)
+
+    def test_unlock_failure_does_not_break_the_end_of_day(self):
+        """A broken sticker rule must not crash the review: the unlock swallows errors."""
+        def broken(day_id, limit=2):
+            raise RuntimeError('broken sticker')
+        self.env['lc_review_stickers'] = broken
+        self.call('lc_review_begin', 'ch01_d1')
+        record = self.call('lc_review_finish', 'ch01_d1')
+        self.assertIsNotNone(record.get('end'))
+
     def test_title_style_off_still_hides(self):
         self.play('ch01_outfit_conservative', 'ch01_towel_boundary')
         self.call('lc_tag_equip', 'ryan', 'Her Bodyguard')

@@ -1,5 +1,5 @@
-# Phone presentation logic. This file sorts after phone_state.rpy so it can
-# safely wrap the core message writer without changing Phone V1 internals.
+# Phone presentation logic: the story-facing phone_add_message, built on the raw
+# writer phone_store_message in phone_state.rpy, plus reply cards and notifications.
 
 init python:
 
@@ -196,8 +196,8 @@ init python:
         sender, text, message_id = pending.pop(0)
         if not pending:
             del renpy.store.phone_reply_delivery[thread_id]
-        added = _phone_add_message_base(thread_id, sender, text=text, message_id=message_id,
-                                        mark_unread=False, notify=False)
+        added = phone_store_message(thread_id, sender, text=text, message_id=message_id,
+                                    mark_unread=False, notify=False)
         if added and sender != "player":
             lc_phone_message_pop(thread_id)
         renpy.restart_interaction()
@@ -218,8 +218,7 @@ init python:
         phone_choose_reply(thread_id, option_id, staged=True)
         return None
 
-    _phone_add_message_base = phone_add_message
-
+    # The one writer story code calls: phone_store_message plus presentation.
     def phone_add_message(
         thread_id,
         sender_id,
@@ -241,7 +240,7 @@ init python:
         if sender_id != "player" and not (message_id and phone_has_message(message_id)):
             phone_default_reply(thread_id)
             phone_flush_reply_delivery(thread_id)
-        added = _phone_add_message_base(
+        added = phone_store_message(
             thread_id,
             sender_id,
             text=text,

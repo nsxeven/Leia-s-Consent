@@ -24,10 +24,8 @@ from lc_effective_effects import effective_effects  # noqa: E402
 ALLOW_DUP = {
     # 26 dead duplicate screens and 6 dead defs removed in clean-up PR 2a.
     "screen": set(),
-    "def": {
-        # Load-time wrapper chains (base still called through an alias); folded in PR 2b.
-        "lc_review_finish", "lc_review_titles", "phone_add_message", "set_story_flag",
-    },
+    # 4 load-time wrapper chains folded into hooks (game/systems/lc_hooks.rpy) in PR 2b.
+    "def": set(),
     "label": set(),
 }
 

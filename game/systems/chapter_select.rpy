@@ -14,8 +14,8 @@
 #                                (set automatically the first time Day 2 is finished)
 #     "developer_or_unlocked" -> either of the above
 #     "never"                 -> hidden
-# persistent.ch01_chapter_select_unlocked is set by a wrapper around set_story_flag
-# when "ch01_day_02_complete" is set, so no story scene had to change.
+# persistent.ch01_chapter_select_unlocked is set by a "story_flag_set" hook
+# (systems/lc_hooks.rpy) when "ch01_day_02_complete" is set, so no story scene had to change.
 
 define CHAPTER_SELECT_RULE = "developer_or_unlocked" if LC_IS_RELEASE else "always"  # game/00_release_build.rpy
 
@@ -259,14 +259,13 @@ init 10 python:
         return entry
 
     # Unlock after the first completed Day Two, without editing any story scene.
-    _chapter_select_orig_set_story_flag = set_story_flag
-
-    def set_story_flag(flag_id, value=True):
-        result = _chapter_select_orig_set_story_flag(flag_id, value)
+    def chapter_select_unlock_after_day_two(flag_id, value=True):
+        """story_flag_set hook: the first finished Day Two unlocks Chapter Select."""
         if flag_id == "ch01_day_02_complete" and value:
             if not getattr(persistent, "ch01_chapter_select_unlocked", False):
                 persistent.ch01_chapter_select_unlocked = True
-        return result
+
+    lc_hook_add("story_flag_set", chapter_select_unlock_after_day_two)
 
 
 label ch01_chapter_select_entry:

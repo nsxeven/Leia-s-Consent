@@ -27,6 +27,10 @@ from snapshot_baselines import fingerprints  # noqa: E402
 
 # kind -> {name: (reason, "tests.module.Class.test_method")}.
 FOLDED = {}
+# How to use FOLDED: a PR that intentionally rewrites an effective body lists it
+# here while it proves the fold (behaviour tests + transcripts). Once proven, the
+# SAME PR re-runs tools/dev/snapshot_baselines.py and empties FOLDED again, so the
+# new code is pinned too (clean-up 2b review). Never merge with FOLDED non-empty.
 
 # Kinds where a NEW entry is as suspicious as a missing one.
 BOTH_WAYS = ("effect",)
@@ -52,6 +56,10 @@ class EffectiveFingerprintTests(unittest.TestCase):
                 for name in set(now_kind) - set(names) - set(allowed):
                     problems.append(f"{kind} {name}: new")
         self.assertEqual(problems, [], "\n" + "\n".join(problems))
+
+    def test_folded_is_empty_when_merged(self):
+        """FOLDED is a temporary list while a PR proves a fold; re-baseline and empty it."""
+        self.assertEqual(FOLDED, {}, "re-run tools/dev/snapshot_baselines.py and empty FOLDED")
 
     def test_folded_entries_name_a_behaviour_test(self):
         loader = unittest.TestLoader()

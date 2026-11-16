@@ -27,7 +27,7 @@ def load_logic():
     # Base phone writer + presentation wrapper, found by what they define (not by file path).
     sys.path.insert(0, str(ROOT / "tests"))
     from lc_rpy_harness import load_blocks
-    load_blocks(["phone_add_message"], env)
+    load_blocks(["phone_add_message", "phone_store_message"], env)
     return env, story, store
 
 

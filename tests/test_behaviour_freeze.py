@@ -21,8 +21,13 @@ class StoryFlagHookTests(unittest.TestCase):
     def setUp(self):
         self.persistent = SimpleNamespace()
         self.store = SimpleNamespace(story_flags={}, story_values={})
-        self.env = load(["set_story_flag", "_chapter_select_orig_set_story_flag", "has_story_flag"],
+        self.env = load(["set_story_flag", "has_story_flag",
+                         "_lc_hooks", "lc_hook_add", "lc_hook_run", "chapter_select_unlock_after_day_two"],
                         dict(renpy=SimpleNamespace(store=self.store), persistent=self.persistent))
+
+    def test_value_is_stored_and_returned_as_bool(self):
+        self.assertIs(self.env["set_story_flag"]("some_flag", "yes"), True)
+        self.assertIs(self.store.story_flags["some_flag"], True)
 
     def test_day_two_complete_unlocks_chapter_select(self):
         self.assertTrue(self.env["set_story_flag"]("ch01_day_02_complete"))
@@ -97,7 +102,7 @@ class PhoneAddMessageTests(unittest.TestCase):
             phone_add_photo=lambda *a, **kw: self.events.append(("photo", a[1])),
         )
         self.env = load(["_phone_ensure_thread", "phone_has_message", "phone_add_message",
-                         "_phone_add_message_base"], stubs)
+                         "phone_store_message"], stubs)
 
     def thread(self, t):
         return self.store.phone_messages[t]
@@ -129,6 +134,31 @@ class PhoneAddMessageTests(unittest.TestCase):
     def test_attachment_goes_to_photos(self):
         self.env["phone_add_message"]("group", "julian", attachment_id="pool_1", message_id="m5")
         self.assertIn(("photo", "pool_1"), self.events)
+
+
+class PhoneReplyStepTests(unittest.TestCase):
+    """One staged reply beat: stored as read, no notification, pop only for incoming."""
+
+    def setUp(self):
+        self.events = []
+        self.store = SimpleNamespace(phone_reply_delivery={
+            "group": [("player", "ok", "r1"), ("julian", "nice", "r2")]})
+        stubs = dict(
+            renpy=SimpleNamespace(store=self.store, restart_interaction=lambda: None),
+            phone_store_message=lambda *a, **kw: self.events.append(("store", a[0], a[1], kw)) or True,
+            lc_phone_message_pop=lambda t: self.events.append(("pop", t)),
+        )
+        self.env = load(["phone_deliver_reply_step"], stubs)
+
+    def test_player_beat_then_incoming_beat(self):
+        step = self.env["phone_deliver_reply_step"]
+        step("group")
+        self.assertEqual([e[0] for e in self.events], ["store"])
+        self.assertEqual(self.events[0][3], {"text": "ok", "message_id": "r1",
+                                             "mark_unread": False, "notify": False})
+        step("group")
+        self.assertEqual(self.events[-1], ("pop", "group"))
+        self.assertNotIn("group", self.store.phone_reply_delivery)
 
 
 if __name__ == "__main__":

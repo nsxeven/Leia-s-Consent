@@ -111,7 +111,10 @@ init python:
         return None
 
 
-    def phone_add_message(
+    # internal: the raw message writer. Story code calls phone_add_message
+    # (systems/zz_phone_presentation_logic.rpy), which adds open-thread read state,
+    # reply deadlines, the chat pop and the queued notification around this.
+    def phone_store_message(
         thread_id,
         sender_id,
         text="",

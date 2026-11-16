@@ -15,7 +15,7 @@ _SCREENS = m.effective("screen")
 class PhoneReadStateTests(unittest.TestCase):
 
     def test_messages_into_open_thread_are_read(self):
-        wrapper = _DEFS["phone_add_message"].body.split("_phone_add_message_base(", 1)[0]
+        wrapper = _DEFS["phone_add_message"].body.split("phone_store_message(", 1)[0]
         self.assertIn("if mark_unread and lc_phone_thread_open(thread_id):", wrapper)
         self.assertIn("mark_unread = False", wrapper)
 
