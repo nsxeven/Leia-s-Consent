@@ -21,7 +21,8 @@ class StoryFlagHookTests(unittest.TestCase):
     def setUp(self):
         self.persistent = SimpleNamespace()
         self.store = SimpleNamespace(story_flags={}, story_values={})
-        self.env = load(["set_story_flag", "_chapter_select_orig_set_story_flag", "has_story_flag"],
+        self.env = load(["set_story_flag", "_chapter_select_orig_set_story_flag", "has_story_flag",
+                         "_lc_hooks", "lc_hook_add", "lc_hook_run", "chapter_select_unlock_after_day_two"],
                         dict(renpy=SimpleNamespace(store=self.store), persistent=self.persistent))
 
     def test_day_two_complete_unlocks_chapter_select(self):
@@ -97,7 +98,7 @@ class PhoneAddMessageTests(unittest.TestCase):
             phone_add_photo=lambda *a, **kw: self.events.append(("photo", a[1])),
         )
         self.env = load(["_phone_ensure_thread", "phone_has_message", "phone_add_message",
-                         "_phone_add_message_base"], stubs)
+                         "_phone_add_message_base", "phone_store_message"], stubs)
 
     def thread(self, t):
         return self.store.phone_messages[t]

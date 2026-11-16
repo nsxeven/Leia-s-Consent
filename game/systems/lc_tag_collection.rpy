@@ -80,23 +80,21 @@ init 21 python:
             return auto
         return (lc_tag_equipped("ryan") or auto[0], lc_tag_equipped("leia") or auto[1])
 
+    # Hooks into the day review (systems/lc_hooks.rpy).
     # Unlock on every finished day: whatever the card shows automatically.
-    _lc_tags_orig_review_titles = lc_review_titles
-    _lc_tags_orig_review_finish = lc_review_finish
-
-    def lc_review_finish(day_id):
-        record = _lc_tags_orig_review_finish(day_id)
+    def lc_tags_unlock_finished_day(day_id):
+        """review_finished hook: unlock the day's automatic tags and moment stickers."""
         try:
-            lc_tags_unlock_pair(_lc_tags_orig_review_titles(day_id), lc_review_stickers(day_id))
+            lc_tags_unlock_pair(lc_review_auto_titles(day_id), lc_review_stickers(day_id))
         except Exception:
             pass
-        return record
 
-    def lc_review_titles(day_id):
-        return lc_tags_apply(_lc_tags_orig_review_titles(day_id))
+    lc_hook_add("review_finished", lc_tags_unlock_finished_day)
+    # The review card shows the equipped tags instead of the automatic ones.
+    lc_hook_add("review_titles", lc_tags_apply)
 
     def lc_current_titles():
         """Status screen / title badges: latest finished day's tags, equipped ones applied."""
         latest = lc_review_latest()
-        auto = _lc_tags_orig_review_titles(latest) if latest else lc_character_titles()
+        auto = lc_review_auto_titles(latest) if latest else lc_character_titles()
         return lc_tags_apply(auto)

@@ -133,7 +133,12 @@ init 20 python:
                               titles_after=lc_character_titles(route=route))
         if store.lc_review_active == day_id:
             store.lc_review_active = None
-        return store.lc_review_days[day_id]
+        record = store.lc_review_days[day_id]
+        # Hook point (systems/lc_hooks.rpy): tag collection unlocks the day's tags here.
+        # The globals() check only matters when this block runs on its own (unit tests).
+        if "lc_hook_run" in globals():
+            lc_hook_run("review_finished", day_id)
+        return record
 
     def lc_review_cards(day_id):
         record = store.lc_review_days.get(day_id, {})
@@ -298,7 +303,8 @@ init 20 python:
         return bool(facts.get("separated") or facts.get("repair_chosen") or facts.get("betrayal_known")
                     or (facts.get("sharing_agreed") and facts.get("sharing_happened")))
 
-    def lc_review_titles(day_id):
+    def lc_review_auto_titles(day_id):
+        """The (ryan, leia) titles a finished day earned, before any equipped tag."""
         record = store.lc_review_days.get(day_id, {})
         route, facts = record.get("route", "mixed"), record.get("facts", {}) or {}
         if getattr(persistent, "lc_title_style", "story") == "off":
@@ -309,6 +315,15 @@ init 20 python:
         if style is None:
             return lc_character_titles(route, facts)
         return LC_STYLE_TAGS.get(style, LC_STYLE_MIXED)
+
+    def lc_review_titles(day_id):
+        """Titles the review card shows: the automatic titles passed through the
+        "review_titles" filter (systems/lc_hooks.rpy; tag collection swaps in
+        equipped tags). The globals() check only matters in unit tests."""
+        auto = lc_review_auto_titles(day_id)
+        if "lc_hook_filter" in globals():
+            return lc_hook_filter("review_titles", auto)
+        return auto
 
     # Moment stickers: up to two per day, in this priority order.
     # "Asked First": the scene-20 flag set when Ryan promised to ask and did.

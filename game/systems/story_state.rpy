@@ -4,9 +4,15 @@
 init python:
 
     def set_story_flag(flag_id, value=True):
-        """Set a boolean story flag for this save and return its new value."""
+        """Set a boolean story flag for this save and return its new value.
+
+        Afterwards runs the "story_flag_set" hooks (systems/lc_hooks.rpy) with the
+        value as passed; Chapter Select's Day Two unlock is one of them.
+        """
         renpy.store.story_flags[flag_id] = bool(value)
-        return renpy.store.story_flags[flag_id]
+        result = renpy.store.story_flags[flag_id]
+        lc_hook_run("story_flag_set", flag_id, value)
+        return result
 
 
     def has_story_flag(flag_id):
