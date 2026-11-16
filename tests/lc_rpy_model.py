@@ -66,15 +66,30 @@ def _indent(line):
     return len(line) - len(line.lstrip(" "))
 
 
+_STRING = re.compile(r"('''|\"\"\"|'(?:\\.|[^'\\])*'|\"(?:\\.|[^\"\\])*\")")
+
+
+def _depth_change(line):
+    """Net open brackets on a line, ignoring strings and comments (approximate)."""
+    s = _STRING.sub("", line).split("#", 1)[0]
+    return sum(s.count(c) for c in "([{") - sum(s.count(c) for c in ")]}")
+
+
 def _block(lines, i):
-    """Lines i.. of the block opened at line i (the header plus deeper lines)."""
+    """Lines i.. of the block opened at line i (the header plus deeper lines).
+
+    A header whose brackets stay open (multi-line def signature) continues
+    until they close, even if its closing `):` is back at the header indent."""
     base = _indent(lines[i])
     out = [lines[i]]
+    depth = _depth_change(lines[i])
     j = i + 1
     while j < len(lines):
         s = lines[j]
-        if s.strip() and _indent(s) <= base:
+        if depth <= 0 and s.strip() and _indent(s) <= base:
             break
+        if depth > 0:
+            depth += _depth_change(s)
         out.append(s)
         j += 1
     while out and not out[-1].strip():
