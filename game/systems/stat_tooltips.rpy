@@ -35,7 +35,7 @@ init python:
         "trust": {
             "normal": "Whether she feels safe telling you anything.",
             "insight": "How safe [girlfriend_name] feels being honest with you. Checking in raises it; accusing or dodging lowers it.",
-            "full": "Honesty and consent between you. Keep it high to unlock agreed NTS steps and to repair NTR; low Trust feeds NTR.",
+            "full": "Honesty and agreeing things together. Keep it high to unlock agreed NTS steps and to repair NTR; low Trust feeds NTR.",
         },
         "exhibitionism": {
             "normal": "How she feels when eyes turn her way.",

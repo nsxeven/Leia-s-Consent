@@ -14,8 +14,7 @@ She's a real friend, not a plot device: she can push, but Leia always chooses
 **darryn (2026-11-08): very flirty and slightly sexual. She's the catalyst for Leia and Ryan
 to explore more.** She flirts with everyone a little (Julian most), says the
 sexual thing out loud that the couple have only thought, and makes trying something feel
-normal and fun. The consent rule still holds: she opens the door and makes it easy to say
-yes, but she always checks Leia (and Ryan) really want it, and drops it instantly at a no.
+normal and fun. She opens the door and makes it easy to say yes.
 
 ## Wants / fears
 - Wants: fun, honesty, people to stop being so careful; Julian (more than she

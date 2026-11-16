@@ -1,6 +1,6 @@
 # Leia's Consent
 
-**Leia's Consent** is an adult (18+) choice-driven visual novel built with [Ren'Py](https://www.renpy.org/). It is a consent-driven slow burn: every central character is an adult, and the story is about Leia's curiosity and discovery while she and her boyfriend Ryan work out what they are comfortable with together.
+**Leia's Consent** is an adult (18+) choice-driven visual novel built with [Ren'Py](https://www.renpy.org/). It is a slow burn: every central character is an adult, and the story is about Leia's curiosity and discovery while she and her boyfriend Ryan work out what they are comfortable with together.
 
 > Content warning: this project contains sexual content, nudity and suggestive material. It is intended for adults only.
 
