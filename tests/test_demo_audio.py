@@ -42,7 +42,7 @@ class DemoAudioTests(unittest.TestCase):
         for kind in SFX_FOLDERS:
             self.assertIn('("%s", ' % kind, fx)
         self.assertIn('mixer="lewd"', fx)
-        ui = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        ui = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         self.assertIn('Preference("mixer lewd volume")', ui)
 
     def test_every_file_is_in_the_manifest_with_a_licence(self):

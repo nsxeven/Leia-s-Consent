@@ -6,8 +6,8 @@ import lc_wallpaper_crop as wp
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-PHONE = (GAME / "screens" / "zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
-WALL = (GAME / "screens" / "zzzzzz_phone_wallpaper.rpy").read_text(encoding="utf-8")
+PHONE = (GAME / "screens" / "phone_sweetheart.rpy").read_text(encoding="utf-8")
+WALL = (GAME / "screens" / "phone_wallpaper.rpy").read_text(encoding="utf-8")
 ART = GAME / "gui" / "phone" / "sprite_match"
 
 SW, SH = 506, 1020  # flat phone screen

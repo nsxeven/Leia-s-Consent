@@ -10,7 +10,7 @@ GAME = ROOT / "game"
 class TitleScreenTests(unittest.TestCase):
 
     def test_main_menu_uses_title_screen(self):
-        src = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        src = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         body = src.split("screen main_menu():", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn("use lc_title_screen()", body)
         self.assertIn("screen lc_title_screen():", (GAME / "screens" / "title_screen.rpy").read_text(encoding="utf-8"))

@@ -246,7 +246,7 @@ class Day3ChoiceTests(unittest.TestCase):
         self.assertIn('set_story_value("ch01_d3_lane", d3_lane)', self.scene)
 
     def test_effective_apply_choice_records_the_review(self):
-        source = (ROOT / "game" / "screens" / "zz_day1_ui_qol_patch.rpy").read_text()
+        source = (ROOT / "game" / "systems" / "choice_engine.rpy").read_text(encoding="utf-8")
         body = source.split("def apply_choice(choice_id):", 1)[1].split("\n    def ", 1)[0]
         self.assertIn("lc_review_note_choice(choice_id, review_before)", body)
         self.assertLess(body.index("review_before = lc_review_stats()"), body.index("change_stat("))

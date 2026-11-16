@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DISP = (ROOT / "game/systems/status_display.rpy").read_text(encoding="utf-8")
 OPT = (ROOT / "game/screens/status_screen.rpy").read_text(encoding="utf-8")
-PHONE = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+PHONE = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
 GEN = (ROOT / "tools/gen_glass_menu_ui.py").read_text(encoding="utf-8")
 ICONS = (ROOT / "tools/gen_sprite_match_ui.py").read_text(encoding="utf-8")
 STATS = ("love", "trust", "exhibitionism", "temptation", "sharing")

@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 
-SOURCE = (Path(__file__).resolve().parents[1] / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text()
+SOURCE = (Path(__file__).resolve().parents[1] / "game/screens/phone_sweetheart.rpy").read_text()
 
 
 class FakeRenpy:

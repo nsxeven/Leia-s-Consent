@@ -2,7 +2,7 @@
 import unittest
 from pathlib import Path
 
-UI = (Path(__file__).resolve().parents[1] / "game/screens/zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+UI = (Path(__file__).resolve().parents[1] / "game/screens/scrapbook_ui.rpy").read_text(encoding="utf-8")
 
 
 class CheckKnobTests(unittest.TestCase):

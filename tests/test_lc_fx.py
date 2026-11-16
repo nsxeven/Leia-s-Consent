@@ -37,7 +37,7 @@ class EffectsFoundationTests(unittest.TestCase):
         self.assertRegex(FX, r"def lc_flash\(.*\n(.*\n){0,2}\s+if not persistent\.lc_camera_flash:\n\s+return")
 
     def test_preferences_expose_toggles_and_mixers(self):
-        ui = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        ui = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         prefs = ui.split("screen preferences():", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn('ToggleField(persistent, "lc_screen_shake")', prefs)
         self.assertIn('ToggleField(persistent, "lc_camera_flash")', prefs)

@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-UI = (ROOT / "game/screens/zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+UI = (ROOT / "game/screens/scrapbook_ui.rpy").read_text(encoding="utf-8")
 
 
 def screen(name):

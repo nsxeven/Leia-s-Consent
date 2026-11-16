@@ -4,8 +4,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PHONE_STATE = (ROOT / "game/systems/phone_state.rpy").read_text(encoding="utf-8")
-PHONE_LOGIC = (ROOT / "game/systems/zz_phone_presentation_logic.rpy").read_text(encoding="utf-8")
-PHONE_UI = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+PHONE_LOGIC = (ROOT / "game/systems/phone_presentation_logic.rpy").read_text(encoding="utf-8")
+PHONE_UI = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
 SCENE = (ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
 
 

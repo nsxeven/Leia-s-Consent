@@ -462,7 +462,7 @@ def _handset_scale(image):
 
 
 def build_wallpaper_layers():
-    """Layers for a player-chosen phone wallpaper (screens/zzzzzz_phone_wallpaper.rpy).
+    """Layers for a player-chosen phone wallpaper (screens/phone_wallpaper.rpy).
 
     phone_wall_frame.png  handset with a transparent screen (notch, status, home bar)
     phone_wall_dock.png   the home dock alone, full 540x1040 canvas

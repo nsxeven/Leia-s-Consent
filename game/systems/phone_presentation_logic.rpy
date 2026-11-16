@@ -1,5 +1,7 @@
 # Phone presentation logic: the story-facing phone_add_message, built on the raw
 # writer phone_store_message in phone_state.rpy, plus reply cards and notifications.
+# Load-order contract: init 0, every name defined once; it calls phone_state.rpy
+# only at run time, so loading before that file is fine (was zz_phone_presentation_logic.rpy).
 
 init python:
 
@@ -313,4 +315,22 @@ init python:
             renpy.show_screen("phone_first_use_tutorial")
         else:
             renpy.notify("Phone unlocked.")
+        return None
+
+
+# lc_phone_hovered_app(): the phone_screen scope's hovered app id, or None. No
+# caller today; kept so no function disappears in a behaviour-frozen clean-up.
+# Kept out of screens/phone_sweetheart.rpy, which must not use a shared hover
+# variable (tests/test_phone_icon_hover.py).
+# load order: init 95, kept from the retired screens/zzzz_phone_app_icons_patch.rpy
+# so the init sequence keeps the same priorities.
+init 95 python:
+
+    def lc_phone_hovered_app():
+        phone = renpy.get_screen("phone_screen")
+        if phone is None:
+            return None
+        scope = getattr(phone, "scope", None)
+        if isinstance(scope, dict):
+            return scope.get("hovered_app")
         return None

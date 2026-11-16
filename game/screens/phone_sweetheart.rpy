@@ -1,13 +1,52 @@
-# ACTIVE PHONE PRESENTATION — Sweetheart.
-# Late-loading phone_screen. Story still reads phone_app and phone_thread.
-# Pixel art is pre-scaled 3x (nearest). Patrick Hand stays smooth at 1080p.
-# The scrapbook case overlay must not draw on top of this (see the hardware file).
+# ACTIVE PHONE PRESENTATION — the Sweetheart handset.
+# Owns phone_screen (home grid, Messages, Photos, Shop, Wallet, Orders), the Status
+# and Settings apps (lc_phone_status, lc_phone_settings), the photo viewer, the
+# phone styles (lc_sw_*, lc_phone_btn*) and the handset helpers (lc_phone_*).
+# Story code still reads phone_app and phone_thread. Pixel art is pre-scaled 3x
+# (nearest); Patrick Hand stays smooth at 1080p. Related: phone_hud.rpy (HUD icon),
+# phone_wallpaper.rpy, systems/phone_presentation_logic.rpy (messages,
+# notifications), systems/phone_state.rpy (saved phone data).
+#
+# Load-order contract: every screen, style and function here is defined once, so
+# file order picks no winner. The python blocks keep the init priorities of the
+# retired patch files they came from, so init runs in the same order as before:
+#   init 90  - lc_phone_extra_apps overlay registration + Home helpers
+#              (was screens/zz_day1_ui_qol_patch.rpy)
+#   init 95  - handset helpers (this file was zzzzzz_phone_ios_presentation.rpy)
+#   init 300 - lc_phone_hardware_overlay registration, the last phone overlay
+#              (was zzzzzzz_phone_hardware_polish.rpy)
 
 default lc_phone_hearts = True
 
 # Share the SAME displayable between idle and hover; the global hover-fade
 # hook compares identity, so two separately constructed Solids still flicker.
 define LC_PHONE_BACKDROP = Solid("#071225c4")
+
+
+# load order: init 90 (see header). Registers the empty lc_phone_extra_apps overlay
+# in the same place of config.overlay_screens as before.
+init 90 python:
+
+    def lc_phone_current_app():
+        """Read the active Phone app safely so extra app buttons only appear on Home."""
+        phone = renpy.get_screen("phone_screen")
+        if phone is None:
+            return None
+        scope = getattr(phone, "scope", None)
+        if isinstance(scope, dict):
+            return scope.get("phone_app", "home")
+        return "home"
+
+
+    def lc_mark_status_intro_seen():
+        renpy.store.persistent.status_page_intro_seen = True
+        renpy.save_persistent()
+        renpy.restart_interaction()
+        return None
+
+
+    if "lc_phone_extra_apps" not in config.overlay_screens:
+        config.overlay_screens.append("lc_phone_extra_apps")
 
 
 init 95 python:
@@ -1366,3 +1405,18 @@ screen lc_phone_settings():
                         color "#6E8399"
                         xmaximum 440
                 null height 16
+
+
+# Phone hardware overlay. The Sweetheart handset draws its own bezel inside
+# phone_screen, lc_phone_status and lc_phone_settings. This overlay used to stamp
+# the scrapbook case on top of those screens; it stays registered (and draws
+# nothing) so config.overlay_screens keeps the same entries in the same order.
+# load order: init 300 (see header).
+
+init 300 python:
+    if "lc_phone_hardware_overlay" not in config.overlay_screens:
+        config.overlay_screens.append("lc_phone_hardware_overlay")
+
+
+screen lc_phone_hardware_overlay():
+    zorder 399

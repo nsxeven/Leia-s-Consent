@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PHONE = (ROOT / "game/screens/zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+PHONE = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
 TIP = (ROOT / "game/screens/stat_tooltip_screen.rpy").read_text(encoding="utf-8")
 
 

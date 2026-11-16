@@ -1,4 +1,9 @@
-# Phone presentation screens using the custom phone icon set.
+# Phone HUD: the on-screen phone icon with its unread badge (phone_quick_access,
+# registered as an overlay in screens/phone_screen.rpy), the first-use tutorial,
+# the shared popup transforms and the phone's story-facing defaults. The handset
+# itself is screens/phone_sweetheart.rpy.
+# Load-order contract: only defaults, transforms and screens, each defined once,
+# so file order picks no winner (this was z_phone_presentation.rpy).
 
 default phone_unlocked = False
 default phone_hud_enabled = True
@@ -34,7 +39,7 @@ transform lc_popup_soft_fade_hide:
         linear 0.40 alpha 0.0
 
 
-# Override the original quick-access overlay. The Phone is absent before its
+# The quick-access overlay. The Phone is absent before its
 # story introduction and can be hidden during full-screen cinematic CGs.
 # Breakfast_02 is a deliberate exception: Maya's optional reply is offered
 # while that illustration remains on-screen.

@@ -7,7 +7,7 @@ GAME = Path(__file__).resolve().parents[1] / "game"
 
 class DemoEndCardTests(unittest.TestCase):
     def test_card_content_and_links(self):
-        ui = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        ui = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         card = ui.split("screen lc_demo_end_screen():", 1)[1].split("\nscreen ", 1)[0]
         for needle in ("lc_title_logo()", "Thank you for playing the demo!", "UPCOMING RELEASES",
                        '"Day 2"', "LC_PATREON_URL,", "LC_DISCORD_URL,", "Return()"):

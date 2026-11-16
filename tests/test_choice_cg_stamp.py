@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TAGS = (ROOT / "game/systems/choice_path_tags.rpy").read_text(encoding="utf-8")
-CARD = (ROOT / "game/screens/zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+CARD = (ROOT / "game/screens/scrapbook_ui.rpy").read_text(encoding="utf-8")
 POOL = (ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
 
 

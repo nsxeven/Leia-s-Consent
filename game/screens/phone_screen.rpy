@@ -1,5 +1,5 @@
 # Phone quick-access overlay registration.
-# The active handset screen (phone_screen) lives in zzzzzz_phone_ios_presentation.rpy;
+# The active handset screen (phone_screen) lives in phone_sweetheart.rpy;
 # the old base copy that used to sit here was dead code and was removed in the
 # clean-up (it was always replaced by the later definition).
 

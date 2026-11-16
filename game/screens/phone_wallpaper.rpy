@@ -9,6 +9,10 @@
 #   {"image": <image name>, "zoom": 1.0..4.0, "x": 0..1, "y": 0..1}
 # (maths and validation: python-packages/lc_wallpaper_crop.py). Old saves
 # load with None. No displayable is ever stored in the save.
+#
+# Load-order contract: every name here is defined once. init 96 (kept from the
+# old zzzzzz_phone_wallpaper.rpy) runs after the handset's init 95 helpers in
+# screens/phone_sweetheart.rpy.
 
 default phone_wallpaper = None
 

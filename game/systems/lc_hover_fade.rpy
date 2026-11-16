@@ -6,7 +6,7 @@
 ## LC_HOVER_OUT (losing it); imagebuttons cross-fade their idle/hover images
 ## the same way. So choices, menu tabs, keycaps, phone rows, glass
 ## cards and title chips all ease the same way. Movement (lift, slide) is done by
-## the shared ATL transforms in zzzzzzzz_scrapbook_ui.rpy with the same timings.
+## the shared ATL transforms in scrapbook_ui.rpy with the same timings.
 ##
 ## Only real state changes between the four interactive states fade; a button's
 ## first style set-up (screen shown) never does. Set LC_HOVER_FADE = False to

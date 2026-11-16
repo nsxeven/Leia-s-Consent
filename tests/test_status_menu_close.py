@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1] / "game" / "screens"
 
 class StatusMenuCloseTests(unittest.TestCase):
     def test_status_tab_replaces_current_menu_and_tracks_origin(self):
-        source = (ROOT / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         self.assertIn('ShowMenu("status_screen", return_to=lc_journal_status_origin())', source)
         self.assertNotIn('Show("status_screen")', source)
         self.assertIn('renpy.get_screen(name) is not None', source)
@@ -15,7 +15,7 @@ class StatusMenuCloseTests(unittest.TestCase):
     def test_origin_lookup_uses_the_visible_menu_page(self):
         import textwrap
         from types import SimpleNamespace
-        source = (ROOT / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         body = source.split("    def lc_journal_status_origin():", 1)[1].split("\n    def lc_journal_tab_rows():", 1)[0]
         code = "def lc_journal_status_origin():" + body
         visible = {"preferences"}
@@ -33,7 +33,7 @@ class StatusMenuCloseTests(unittest.TestCase):
         self.assertIsNone(origin())
 
     def test_phone_status_right_click_goes_back_to_phone(self):
-        source = (ROOT / "zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "phone_sweetheart.rpy").read_text(encoding="utf-8")
         screen = source.split("screen lc_phone_status():", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn('key "game_menu" action Function(lc_phone_back)', screen)
         self.assertIn('key "K_ESCAPE" action Function(lc_phone_back)', screen)

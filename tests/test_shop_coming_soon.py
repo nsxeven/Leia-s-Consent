@@ -16,7 +16,7 @@ class ShopComingSoonTests(unittest.TestCase):
         self.assertIn("still under development", src)
 
     def test_phone_shop_app_shows_coming_soon(self):
-        src = (GAME / "screens" / "zzzzzz_phone_ios_presentation.rpy").read_text(encoding="utf-8")
+        src = (GAME / "screens" / "phone_sweetheart.rpy").read_text(encoding="utf-8")
         self.assertIn('if phone_app == "shop" and not LC_SHOP_ENABLED:', src)
         self.assertLess(src.index('if phone_app == "shop" and not LC_SHOP_ENABLED:'),
                         src.index("for outfit_id in shop_outfit_ids():"))

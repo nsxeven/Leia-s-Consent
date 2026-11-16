@@ -210,7 +210,7 @@ class ScreenWiringTests(unittest.TestCase):
         self.assertNotIn("choice_mark", insight)
 
     def test_choice_card_draws_the_stamp(self):
-        src = (GAME / "screens" / "zzzzzzzz_scrapbook_ui.rpy").read_text(encoding="utf-8")
+        src = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
         body = src.split("screen choice(items):", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn("$ stamp = lc_choice_path_stamp(item.caption)", body)
         self.assertIn("box_wrap True", body)
