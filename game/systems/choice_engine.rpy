@@ -660,8 +660,7 @@ init python:
 # never resurrects after rollback. The toast is drawn by choice_feedback_overlay
 # (screens/scrapbook_ui.rpy, registered in screens/gameplay_toasts.rpy).
 # load order: init 90, kept from the retired screens/zz_day1_ui_qol_patch.rpy so
-# the init sequence is unchanged (tests/test_lc_rpy_model.py pins it). This is the
-# only apply_choice; its docstring's "replaces" note predates the fold.
+# the init sequence is unchanged (tests/test_lc_rpy_model.py pins it).
 init 90 python:
 
     class LCChoiceToastRuntime(renpy.python.NoRollback):
@@ -760,7 +759,7 @@ init 90 python:
     def apply_choice(choice_id):
         """Apply effects, record the choice, show transient feedback and onboarding.
 
-        This init-90 definition replaces the choice engine's apply_choice.
+        The only apply_choice (init 90, after the effect tables are registered).
         Keep the day-review snapshot here so the recap can list each choice.
         """
         review_before = lc_review_stats()
