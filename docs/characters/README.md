@@ -37,4 +37,4 @@ default names so they're readable.
 
 All characters are adults (Prologue: Ryan ~22, Leia ~21, Julian ~23; present
 day: Ryan 26, Leia 25, Julian 27; Maya is Ryan's age group, exact age TBD).
-Everything sexual is between willing adults, and consent stays on the page.
+Everything sexual is between adults.

@@ -27,7 +27,7 @@ Scope: Prologue and Day One launch. Day 2–5 working branches are deliberately 
 - Demo identity changed to `Leia's Consent — Day One Demo`, `0.1.0-demo.1`.
 
 ## Route Explorer constraints
-Currently the supported dynamic branch steering is Day One and Day Two. Later fixed end states are intentionally not rewritten; switching stops being available after Day Two completes. For future Day 3–5 releases, extend the route adapter with explicit saved knowledge/consent and scene-state contracts before promising arbitrary late-game route switching. In this Day One demo all three early focuses are selectable from the Full Transparency screen.
+Currently the supported dynamic branch steering is Day One and Day Two. Later fixed end states are intentionally not rewritten; switching stops being available after Day Two completes. For future Day 3–5 releases, extend the route adapter with explicit saved-knowledge and scene-state contracts before promising arbitrary late-game route switching. In this Day One demo all three early focuses are selectable from the Full Transparency screen.
 
 ## Outstanding artwork (currently literal placeholder CGs)
 1. `ch01_trip_catch`

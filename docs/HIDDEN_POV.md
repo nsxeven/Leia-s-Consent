@@ -1,6 +1,6 @@
 # Hidden POV opportunities
 
-Optional views are discoverable, nonmodal cues during ordinary say dialogue, **not** story choices. Ignoring a cue advances the same line and route. Opening one does not grant consent, change stats, send messages, or change the narrative image. The full-screen modal viewer closes onto the very same dialogue interaction.
+Optional views are discoverable, nonmodal cues during ordinary say dialogue, **not** story choices. Ignoring a cue advances the same line and route. Opening one does not change stats, send messages, or change the narrative image. The full-screen modal viewer closes onto the very same dialogue interaction.
 
 ## Add a moment
 
