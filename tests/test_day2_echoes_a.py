@@ -10,8 +10,8 @@ from pathlib import Path
 
 GAME = Path(__file__).resolve().parents[1] / "game"
 CH = GAME / "chapters" / "ch01"
-DAY2 = CH / "ch01_day2_scenes_01_15.rpy"
-DAY1 = [CH / "ch01_scenes_07_13.rpy", CH / "ch01_scenes_14_30.rpy"]
+DAY2 = CH / "day2" / "ch01_day2_scenes_01_15.rpy"
+DAY1 = [CH / "day1" / "ch01_scenes_07_13.rpy", CH / "day1" / "ch01_scenes_14_30.rpy"]
 
 # key -> (effective label that must contain the echo, values it must branch on)
 ECHOES = {

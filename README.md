@@ -36,14 +36,21 @@ game/
   characters.rpy        Character definitions (mc, gf, friend, maya, stranger, passerby)
   defaults.rpy          save-state defaults (stats, flags, outfits, money)
   chapters/
-    prologue.rpy, prologue_visuals.rpy
+    prologue/           prologue.rpy, prologue_visuals.rpy
     ch01/               Chapter One: Something Different
       ch01_main.rpy                 Day One scenes 1-3
-      ch01_scenes_04_06.rpy         Day One pool, photography, towel
-      ch01_scenes_07_13.rpy         Day One dinner, walk, shop, return
-      ch01_scenes_14_30.rpy         Day One night pool, movie night, dream
-      ch01_day2_scenes_01_15.rpy    Day Two morning to pool (incl. boutique)
-      ch01_day2_scenes_16_30.rpy    Day Two pool accident to the five end states
+      day1/                         Day One (file names keep their ch01_ prefix)
+        ch01_scenes_04_06.rpy         Day One pool, photography, towel
+        ch01_scenes_07_13.rpy         Day One dinner, walk, shop, return
+        ch01_scenes_14_30.rpy         Day One night pool, movie night, dream
+        ch01_phone_moments.rpy        Day One phone moments, pool-photo route, reply timers
+        ch01_scenes_*_visuals.rpy     Day One scene images
+      day2/                         Day Two
+        ch01_day2_scenes_01_15.rpy    Day Two morning to pool (incl. boutique)
+        ch01_day2_scenes_16_30.rpy    Day Two pool accident to the five end states
+        ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_visuals.rpy
+      ch01_visuals.rpy              Chapter One images shared across days
+      ch01_release_demo.rpy         Day One demo gate
       ch01_day3_scenes.rpy          Day Three first pass (linked from Day Two)
       ch01_day4_scenes_01_08.rpy    Day Four 'Recalibration' scenes 1-8 (entry ch01_day4_start)
       ch01_day4_scenes_09_16.rpy    Day Four scenes 9-16, end routes, temporary end card
@@ -54,12 +61,14 @@ game/
       ch01_day5_visuals.rpy         Day Five placeholder bg/cg images
       *_visuals.rpy                 stable image names (placeholders or real art)
       zz*/zzzz* ...                 late override patches (see below)
-    dev_sandbox.rpy, systems_vertical_slice.rpy, story_state_test.rpy   developer test labels
   systems/              choice_engine, stats, story_state, economy, outfits_data,
                         wardrobe_logic, love_outfit_control, dialogue_staging,
                         phone_state, gallery (+ gallery_data: the entry table),
                         status/transparency display ...
   screens/              UI and phone screens (several late zz* presentation overlays)
+  dev/                  developer/QA-only labels and screens (dev_sandbox, story_state_test,
+                        systems_vertical_slice, debug/dev menus, screenshot tours); left out
+                        of release builds by game/options.rpy
   sprites/              layered character sprites (Leia, Ryan, dinner stranger)
   images/               backgrounds/, cg/, sprites/ (production art)
 docs/

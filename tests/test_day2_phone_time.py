@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PHONE_STATE = (ROOT / "game/systems/phone_state.rpy").read_text(encoding="utf-8")
 PHONE_LOGIC = (ROOT / "game/systems/phone_presentation_logic.rpy").read_text(encoding="utf-8")
 PHONE_UI = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
-SCENE = (ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+SCENE = (ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
 
 
 class DayTwoPhoneTimeTests(unittest.TestCase):

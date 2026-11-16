@@ -59,7 +59,7 @@ class StatRuntimeTests(unittest.TestCase):
         )
         env["get_choice_effects"] = lambda cid: list(env["CHOICE_EFFECTS"][cid])
         exec(compile(_block("systems/stats.rpy", "init python:\n"), "stats_init", "exec"), env)
-        day2 = _block("chapters/ch01/ch01_day2_scenes_01_15.rpy", "init 1 python:\n", "\nlabel ")
+        day2 = _block("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy", "init 1 python:\n", "\nlabel ")
         exec(compile(day2, "day2_init", "exec"), env)
         self.env = env
 

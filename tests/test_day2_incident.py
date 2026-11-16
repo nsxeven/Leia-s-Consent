@@ -25,8 +25,8 @@ import lc_stat_model as m  # noqa: E402
 from lc_effective_effects import effective_effects  # noqa: E402
 
 CH = ROOT / "game" / "chapters" / "ch01"
-SCENES = (CH / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-S19B = (CH / "ch01_day2_scene_19b_leia_asks_maya.rpy").read_text(encoding="utf-8")
+SCENES = (CH / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+S19B = (CH / "day2" / "ch01_day2_scene_19b_leia_asks_maya.rpy").read_text(encoding="utf-8")
 
 
 def label_body(src, name):

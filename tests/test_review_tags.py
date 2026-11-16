@@ -43,7 +43,7 @@ class ReviewTagTests(unittest.TestCase):
     def test_every_day1_choice_is_mapped(self):
         import re
         src = ''.join((ROOT / 'game' / 'chapters' / 'ch01' / f).read_text(encoding='utf-8')
-                      for f in ('ch01_main.rpy', 'ch01_scenes_04_06.rpy', 'ch01_scenes_07_13.rpy', 'ch01_scenes_14_30.rpy'))
+                      for f in ('ch01_main.rpy', 'day1/ch01_scenes_04_06.rpy', 'day1/ch01_scenes_07_13.rpy', 'day1/ch01_scenes_14_30.rpy'))
         ids = set(re.findall(r'format_choice\("(ch01_[a-z0-9_]+)"', src))
         missing = sorted(i for i in ids if i not in self.env['LC_CHOICE_STYLE'])
         self.assertEqual(missing, [])

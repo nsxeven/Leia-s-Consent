@@ -7,10 +7,10 @@ import unittest
 from pathlib import Path
 
 CH01 = Path(__file__).resolve().parents[1] / "game" / "chapters" / "ch01"
-S04 = CH01 / "ch01_scenes_04_06.rpy"
-S07 = CH01 / "ch01_scenes_07_13.rpy"
-S14 = CH01 / "ch01_scenes_14_30.rpy"
-D2B = CH01 / "ch01_day2_scenes_16_30.rpy"
+S04 = CH01 / "day1" / "ch01_scenes_04_06.rpy"
+S07 = CH01 / "day1" / "ch01_scenes_07_13.rpy"
+S14 = CH01 / "day1" / "ch01_scenes_14_30.rpy"
+D2B = CH01 / "day2" / "ch01_day2_scenes_16_30.rpy"
 SAY = re.compile(r'^(\w+)?\s*"((?:[^"\\]|\\.)*)"\s*$')
 
 
@@ -116,7 +116,7 @@ LOCALS = {"Day One echo E4": {"ch01_day1_love_ending": False}}
 
 class EchoBranches(unittest.TestCase):
     def test_every_value_is_really_stored_by_day_one(self):
-        src = "".join(p.read_text(encoding="utf-8") for p in CH01.glob("ch01_*.rpy")
+        src = "".join(p.read_text(encoding="utf-8") for p in CH01.rglob("ch01_*.rpy")
                       if "day2" not in p.name and "day3" not in p.name and "day4" not in p.name
                       and "day5" not in p.name)
         for marker, (_, key, values, _) in ECHOES.items():

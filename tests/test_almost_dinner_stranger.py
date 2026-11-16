@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 
-SOURCE = (Path(__file__).resolve().parents[1] / "game/chapters/ch01/ch01_scenes_07_13.rpy")
+SOURCE = (Path(__file__).resolve().parents[1] / "game/chapters/ch01/day1/ch01_scenes_07_13.rpy")
 
 
 class AlmostDinnerStrangerTests(unittest.TestCase):

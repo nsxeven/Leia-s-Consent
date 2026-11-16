@@ -13,9 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 CH01 = ROOT / "game" / "chapters" / "ch01"
 
 SCENE_FILES = [
-    "ch01_day2_scenes_01_15.rpy",
-    "ch01_day2_scenes_16_30.rpy",
-    "ch01_day2_scene_19b_leia_asks_maya.rpy",
+    "day2/ch01_day2_scenes_01_15.rpy",
+    "day2/ch01_day2_scenes_16_30.rpy",
+    "day2/ch01_day2_scene_19b_leia_asks_maya.rpy",
     "ch01_day3_scenes.rpy",
     "ch01_day4_scenes_01_08.rpy",
     "ch01_day4_scenes_09_16.rpy",
@@ -25,7 +25,7 @@ SCENE_FILES = [
     "ch01_day5_choice_registration.rpy",
 ]
 VISUAL_FILES = [
-    "ch01_day2_visuals.rpy",
+    "day2/ch01_day2_visuals.rpy",
     "ch01_day3_visuals.rpy",
     "ch01_day4_visuals.rpy",
     "ch01_day5_visuals.rpy",
@@ -188,7 +188,7 @@ class AgeGateTests(unittest.TestCase):
         self.assertIn("return", start)
         self.assertIn("jump prologue_name_setup", start)
 
-        day1 = (CH01 / "ch01_scenes_14_30.rpy").read_text()
+        day1 = (CH01 / "day1" / "ch01_scenes_14_30.rpy").read_text()
         self.assertIn("if LC_DAY1_DEMO_BUILD:", day1)
         self.assertIn("jump ch01_day1_demo_complete", day1)
 

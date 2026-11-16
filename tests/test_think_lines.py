@@ -22,7 +22,7 @@ class ThinkLineTests(unittest.TestCase):
 
 
     def test_upstairs_replay_is_thought(self):
-        src = (CH / "ch01" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
+        src = (CH / "ch01" / "day1" / "ch01_scenes_14_30.rpy").read_text(encoding="utf-8")
         self.assertIn('think "The guy with a drink spilled all down his white trousers.', src)
         self.assertIn('think "Nobody had done anything wrong.', src)
         self.assertIn('    "I swapped my dinner shirt for a T-shirt', src)

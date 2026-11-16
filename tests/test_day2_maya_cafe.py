@@ -5,8 +5,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1] / "game"
-SCENES = (ROOT / "chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-VISUALS = (ROOT / "chapters/ch01/ch01_day2_visuals.rpy").read_text(encoding="utf-8")
+SCENES = (ROOT / "chapters/ch01/day2/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+VISUALS = (ROOT / "chapters/ch01/day2/ch01_day2_visuals.rpy").read_text(encoding="utf-8")
 GALLERY = (ROOT / "systems/gallery_data.rpy").read_text(encoding="utf-8")
 GALLERY_LOGIC = (ROOT / "systems/gallery.rpy").read_text(encoding="utf-8")
 RIG = (ROOT / "sprites/maya.rpy").read_text(encoding="utf-8")

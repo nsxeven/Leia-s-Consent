@@ -4,8 +4,8 @@ import re
 import unittest
 
 GAME = Path(__file__).resolve().parents[1] / "game"
-STORY = [GAME / "chapters" / "prologue.rpy"]
-STORY += sorted((GAME / "chapters" / "ch01").glob("ch01_*.rpy"))
+STORY = [GAME / "chapters" / "prologue" / "prologue.rpy"]
+STORY += sorted((GAME / "chapters" / "ch01").rglob("ch01_*.rpy"))
 STORY = [p for p in STORY if not re.search(r"day[345]", p.name)]
 RAW = re.compile(r"\b(?:hpunch|vpunch)\b", re.IGNORECASE)
 

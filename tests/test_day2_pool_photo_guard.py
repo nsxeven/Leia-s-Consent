@@ -4,9 +4,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DAY2 = (ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
-HELPER = (ROOT / "game/chapters/ch01/ch01_phone_moments.rpy").read_text(encoding="utf-8")
-DAY1 = (ROOT / "game/chapters/ch01/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
+DAY2 = (ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+HELPER = (ROOT / "game/chapters/ch01/day1/ch01_phone_moments.rpy").read_text(encoding="utf-8")
+DAY1 = (ROOT / "game/chapters/ch01/day1/ch01_scenes_04_06.rpy").read_text(encoding="utf-8")
 
 
 def scene(label):

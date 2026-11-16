@@ -1,7 +1,7 @@
 # BBC Stranger — Day One restaurant casual outfit (legacy single-state name).
 #
 # The production art is split into dry and wet states that share one 941x1672
-# canvas (see chapters/ch01/ch01_scenes_07_13_visuals.rpy):
+# canvas (see chapters/ch01/day1/ch01_scenes_07_13_visuals.rpy):
 #   stranger_casual_dry  -> pre-spill approach
 #   stranger_casual_wet  -> post-spill aftermath and exit
 #

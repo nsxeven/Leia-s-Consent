@@ -15,13 +15,13 @@ def label_scenes(path, label):
 class Day2BackgroundTimeTests(unittest.TestCase):
 
     def test_morning_uses_day_art(self):
-        scenes = label_scenes(CH01 / "ch01_day2_scenes_01_15.rpy", "ch01_day2_scene_01_morning_after")
+        scenes = label_scenes(CH01 / "day2" / "ch01_day2_scenes_01_15.rpy", "ch01_day2_scene_01_morning_after")
         self.assertTrue(scenes)
         for bg in scenes:
             self.assertNotRegex(bg, r"evening|night", bg)
 
     def test_after_sunset_bedroom_uses_night_art(self):
-        f = CH01 / "ch01_day2_scenes_16_30.rpy"
+        f = CH01 / "day2" / "ch01_day2_scenes_16_30.rpy"
         for label in ("ch01_day2_scene_21_pre_sunset", "ch01_day2_scene_30_bedroom", "ch01_day2_scene_30_love",
                       "ch01_day2_scene_30_exhibition", "ch01_day2_scene_30_ntr_nightmare"):
             scenes = label_scenes(f, label)

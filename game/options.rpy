@@ -208,12 +208,12 @@ init python:
     # Public releases (game/00_release_build.rpy) leave developer/QA tools out.
     # These must stay BEFORE the joiplay rule below (first match wins).
     if LC_IS_RELEASE:
-        for _lc_dev in ('game/chapters/dev_sandbox.rpy*', 'game/chapters/story_state_test.rpy*',
-                        'game/chapters/systems_vertical_slice.rpy*', 'game/dev_phone_shots.rpy*',
-                        'game/dev_scrapbook_preview.rpy*', 'game/screens/debug_screen.rpy*',
-                        'game/screens/dev_menu_shell.rpy*', 'game/screens/dev_systems_menu_screen.rpy*',
-                        'game/screens/dev_verify_screen.rpy*', 'game/screens/story_state_test_screen.rpy*',
-                        'game/systems/dev_notifications.rpy*'):
+        for _lc_dev in ('game/dev/dev_sandbox.rpy*', 'game/dev/story_state_test.rpy*',
+                        'game/dev/systems_vertical_slice.rpy*', 'game/dev/dev_phone_shots.rpy*',
+                        'game/dev/dev_scrapbook_preview.rpy*', 'game/dev/debug_screen.rpy*',
+                        'game/dev/dev_menu_shell.rpy*', 'game/dev/dev_systems_menu_screen.rpy*',
+                        'game/dev/dev_verify_screen.rpy*', 'game/dev/story_state_test_screen.rpy*',
+                        'game/dev/dev_notifications.rpy*'):
             build.classify(_lc_dev, None)
 
     ## Exclude local caches, saves, and Python bytecode from distributions.

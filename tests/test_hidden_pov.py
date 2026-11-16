@@ -3,9 +3,9 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-SCENE = ROOT / "game/chapters/ch01/ch01_day2_scenes_01_15.rpy"
+SCENE = ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy"
 SYSTEM = ROOT / "game/systems/hidden_pov.rpy"
-REGISTRY = ROOT / "game/chapters/ch01/ch01_day2_visuals.rpy"
+REGISTRY = ROOT / "game/chapters/ch01/day2/ch01_day2_visuals.rpy"
 COMPAT = ROOT / "game/systems/save_compat.rpy"
 
 
