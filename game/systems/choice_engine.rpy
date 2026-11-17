@@ -682,7 +682,7 @@ init python:
         for (_g, _s, meant), (group_name, stat_name, amount) in zip(registered, effects):
             label = STAT_LABELS.get(stat_name, stat_name.replace("_", " ").title())
             if amount != meant:
-                label += " (capped)"
+                label += lc_stat_model.CAPPED_SUFFIX
 
             if exact:
                 parts.append("{} {:+d}".format(label, amount))

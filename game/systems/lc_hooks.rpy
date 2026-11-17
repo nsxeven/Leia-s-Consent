@@ -29,7 +29,9 @@
 #   systems/discovery.rpy); review_titles
 #   filter over the (ryan, leia) titles lc_review_titles returns (listener
 #   systems/lc_tag_collection.rpy); choice_effects filter and choice_applied (choice_id, effects)
-#   from systems/choice_engine.rpy (listener systems/leia_side.rpy, Leia's +2/day cap)
+#   from systems/choice_engine.rpy (listener systems/leia_side.rpy, Leia's +2/day cap);
+#   discovery_strip filter over the Moments strip items (systems/discovery.rpy; listener
+#   systems/leia_side.rpy, which also listens to review_finished)
 # Load order: init -100, so every system can register from its own init block
 # Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_hooks.py
 

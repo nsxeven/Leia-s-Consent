@@ -47,7 +47,7 @@
 # Depends on: game/screens.rpy (stock styles it overrides), game/gui.rpy, systems/choice_engine.rpy,
 #   systems/choice_path_tags.rpy, systems/stat_delta_colours.rpy, systems/lc_typing_sounds.rpy,
 #   systems/title_customiser.rpy, screens/title_screen.rpy, python-packages/lc_ui_logic.py,
-#   systems/leia_side.rpy (lc_leia_segment_active, LC_LEIA_BOX_TINT: the say box in her segment)
+#   systems/leia_side.rpy (lc_leia_segment_active, lc_leia_box_matrix: the say box in her segment)
 # Hooks: none (adds lc_refresh_dialogue_theme to config.start_interact_callbacks and quick_menu to
 #   config.always_shown_screens)
 # Load order: each stock screen is defined only here (tests forbid a second copy), so it wins
@@ -548,7 +548,7 @@ screen say(who, what, think=False):
     # so the player always knows whose eyes they are behind.
     $ leia_side = lc_leia_segment_active()
     if leia_side:
-        $ box = Transform(box, matrixcolor=TintMatrix(LC_LEIA_BOX_TINT[theme]))
+        $ box = Transform(box, matrixcolor=lc_leia_box_matrix(theme))
     $ kind = lc_name_kind(who)
     $ ink = "#ece2f2" if theme == "night" else "#34242c"
     # Plain narration (no speaker, not a thought) gets the softer tint.

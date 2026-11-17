@@ -14,9 +14,9 @@ default lc_dev_leia_place = None
 
 init 1 python:
     lc_leia_place("dev_leia", "cafe", "Café", "bg ch01_d2_cafe",
-                  "Something cold and sweet for him.", mood="his drink")
+                  "Something cold and sweet for him.", mood="his drink", done="Frappuccino: got it.")
     lc_leia_place("dev_leia", "shop", "Resort shop", "bg ch01_shop_night",
-                  "His favorite snack, if they have any left.", mood="his snack")
+                  "His favorite snack, if they have any left.", mood="his snack", done="Muffins: got them.")
     lc_leia_place("dev_leia", "bar", "Resort bar", "bg ch01_restaurant_bar",
                   "Cocktails and loud music.",
                   locked_reason="A bar, on my own, at four in the afternoon? Not on day two. Maybe if Maya comes next time.")
@@ -41,8 +41,9 @@ init 1 python:
 label lc_dev_leia_side:
     if not config.developer:
         return
-    # Sandbox only: start the demo with a clean Leia-side record so it can be replayed.
-    $ lc_leia_side_state = {}
+    # Sandbox only: forget the demo's own visits, cap ledger and outcomes so it can be replayed;
+    # every story day's Leia-side record in this save is kept.
+    $ lc_leia_side_state = lc_leia_side.reset_day(lc_leia_side_state, "dev_leia", outcome_prefix="dev_leia_")
     call lc_leia_segment_begin("dev_leia") from lc_dev_leia_side_begin
     scene bg ch01_villa_entry_day
     with dissolve
@@ -54,6 +55,8 @@ label lc_dev_leia_side:
             $ lc_leia_visit("dev_leia", lc_dev_leia_place)
             call expression "lc_dev_leia_" + lc_dev_leia_place from lc_dev_leia_side_stop
     $ lc_dev_leia_order = " then ".join(lc_leia_visits("dev_leia"))
+    if lc_leia_visited_first("dev_leia", "shop"):
+        leia_think "Muffins first, so the ice survives the walk home. See? I can plan."
     "Both bags in one hand, I headed back. (Visited: [lc_dev_leia_order].)"
     call lc_leia_segment_end from lc_dev_leia_side_end
     scene bg dev

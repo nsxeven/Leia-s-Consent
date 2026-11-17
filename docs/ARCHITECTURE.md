@@ -130,12 +130,13 @@ Events in use:
 | Event | Emitted by | Listener |
 |---|---|---|
 | `story_flag_set` (flag_id, value) | `set_story_flag` in `game/systems/story_state.rpy` | `game/systems/chapter_select.rpy` unlocks Chapter Select after Day Two |
-| `review_finished` (day_id) | `lc_review_finish` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` unlocks the day's tags and stickers; `game/systems/discovery.rpy` marks the day cleared on the profile (Moments strip) |
+| `review_finished` (day_id) | `lc_review_finish` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` unlocks the day's tags and stickers; `game/systems/discovery.rpy` marks the day cleared on the profile (Moments strip); `game/systems/leia_side.rpy` clears a Leia segment a scene forgot to end |
 | `review_titles` (filter over the (ryan, leia) titles) | `lc_review_titles` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` swaps in equipped tags |
 | `review_closed` (day_id) | `label lc_day_review` in `game/systems/day_review.rpy`, after the spread closes | `game/systems/thoughts.rpy` offers Ryan's thoughts (may show a screen) |
 | `phone_reply_chosen` (thread_id, prompt_id, option, unopened=bool) | `phone_choose_reply` in `game/systems/phone_presentation_logic.rpy` | `game/systems/phone_moments.rpy` records a leave-on-read receipt and marks a registered phone moment found |
 | `choice_effects` (filter over a choice's effects, choice_id) | `lc_choice_effective_effects` in `game/systems/choice_engine.rpy` (used by `apply_choice`, the caption formatter and the toast) | `game/systems/leia_side.rpy` cuts Leia-side gains to her +2 a day |
 | `choice_applied` (choice_id, effects) | `apply_choice` in `game/systems/choice_engine.rpy`, after the stats moved | `game/systems/leia_side.rpy` records the applied gain in the day's cap ledger |
+| `discovery_strip` (filter over the Moments strip items, day_id) | `lc_discovery_strip` in `game/systems/discovery.rpy` | `game/systems/leia_side.rpy` drops a day's errand moments while that save has no visit that day |
 
 Hooks are registered at init only, so they never enter a save. Tests:
 `tests/test_lc_hooks.py`.

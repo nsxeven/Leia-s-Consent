@@ -47,7 +47,8 @@
 #
 # Depends on: python-packages/lc_discovery.py, systems/lc_hooks.rpy, systems/hidden_pov.rpy
 #   (LC_POV_OPPORTUNITIES, read at call time), systems/choice_engine.rpy (current_choice_mode)
-# Hooks: listens to review_finished (systems/day_review.rpy)
+# Hooks: listens to review_finished (systems/day_review.rpy); emits discovery_strip (filter over
+#   the strip items, day_id) in lc_discovery_strip (listener systems/leia_side.rpy)
 # Load order: init 0, so registrations at init 1 (lc_pov_register with day_id) find the registry;
 #   the legacy migration runs in the same block (persistent is loaded before init)
 # Docs: docs/HIDDEN_POV.md, docs/ARCHITECTURE.md   Tests: tests/test_discovery.py
@@ -174,9 +175,12 @@ init python:
     lc_discovery_migrate_legacy()
 
     def lc_discovery_strip(day_id, mode=None):
-        return lc_discovery.strip(LC_DISCOVERIES, day_id,
-                                  getattr(store, "lc_discoveries_found", None) or set(),
-                                  lc_discovery_day_cleared(day_id), mode or current_choice_mode())
+        items = lc_discovery.strip(LC_DISCOVERIES, day_id,
+                                   getattr(store, "lc_discoveries_found", None) or set(),
+                                   lc_discovery_day_cleared(day_id), mode or current_choice_mode())
+        # Hook point (systems/lc_hooks.rpy): a system may drop moments that can't apply to this
+        # save (systems/leia_side.rpy: errand moments of a day she never went out on).
+        return lc_hook_filter("discovery_strip", items, day_id)
 
     def lc_discovery_count_line(day_id, mode=None, items=None):
         if not lc_discovery_day_cleared(day_id):

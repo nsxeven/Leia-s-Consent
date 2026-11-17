@@ -5,7 +5,8 @@
 #   hint. Open cards return their place id. Visited cards carry a BEEN THERE stamp; locked cards are
 #   greyed, show Leia's in-character reason in every mode and "Opens on a later day." in
 #   Insight/Full. Locked and visited cards still take keyboard/gamepad focus (so their text can be
-#   read) but do nothing when activated. No dismiss button: she visits every open place.
+#   read) but do nothing when activated. No dismiss button: she visits every open place. The map sits
+#   below the quick menu (zorder 90 < 100), so Back/Save/Log/Prefs stay clickable while it is up.
 #
 # Public API (call these from scenes/screens):
 #   screen lc_leia_map_screen(day, cards)     the map (called by lc_leia_map; cards from
@@ -48,7 +49,8 @@ transform lc_leia_card_still:
 
 screen lc_leia_map_screen(day, cards):
     modal True
-    zorder 120
+    # Below quick_menu (zorder 100), like the choice menu: Back/Save/Log/Prefs stay clickable.
+    zorder 90
     $ still = lc_pov_reduce_motion()
     $ first_open = next((c["id"] for c in cards if c["activatable"]), None)
     $ any_visited = any(c["state"] == "visited" for c in cards)
