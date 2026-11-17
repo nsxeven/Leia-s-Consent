@@ -1876,6 +1876,7 @@ label ch01_day2_scene_30_bedroom:
     # Leia's errand posts (ch01_day2_feed.rpy): "saw a post" bring-up, before every bedroom gate
     # (the nightmare jump and the pool-suspicion menu). Wording follows the ERRAND lane, not the
     # bedroom variant. Moves stats only; every id is left out of tonight's lane and end route.
+    $ d2_feed_pending = bool(lc_feed_reaction_queue)
     call lc_feed_reaction_runner from d2_feed_reactions_sc30
     $ d2_errand_lane = get_story_value("ch01_d2_errand_lane")
     $ d2_seen_love_pool = lc_feed_seen("d2_feed_love_poolguy")
@@ -1883,9 +1884,9 @@ label ch01_day2_scene_30_bedroom:
     $ d2_feed_letgo_text = format_choice("ch01_d2_feed_let_go", "Let it go.")
 
     if d2_errand_lane == "love" and (d2_seen_love_pool or d2_seen_love_shop):
-        if d2_seen_love_pool:
+        if d2_seen_love_pool and not d2_feed_pending:
             think "That post was still sitting in my head. Stopped a creep at the resort café, got shot down by the same girl. Her boyfriend is a lucky man."
-        if d2_seen_love_shop:
+        if d2_seen_love_shop and not d2_feed_pending:
             think "And the one from the shop. A young lady bought the last chocolate muffins for her sweetheart today."
         $ d2_feed_love_text = format_choice("ch01_d2_feed_love_tease", "Tease her about the post.")
         menu:
