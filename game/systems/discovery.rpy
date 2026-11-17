@@ -20,7 +20,8 @@
 #   lc_discovery_strip(day_id, mode=None)     strip items for the review (lc_discovery.strip)
 #   lc_discovery_count_line(day_id, mode=None, items=None)
 #       'n of m' for Insight/Full once the day is cleared, else None (items: the strip, if built)
-#   lc_discovery_thumb(item, width, height)   thumbnail (found) or grey silhouette (unfound)
+#   lc_discovery_thumb(item, width, height)   thumbnail (found) or grey silhouette (unfound);
+#       a found moment with no image gets a FOUND stamp on its paper card
 #   lc_discovery_on_review_finished(day_id) -> None
 #       review_finished hook: remember whether the day was cleared, then clear it
 #   lc_discovery_migrate_legacy() -> None     once per profile at init: days finished before this
@@ -35,7 +36,8 @@
 #   default persistent.lc_days_cleared_legacy_checked   profile: migration ran
 #
 # Internal (helpers for this file and its screens; do not call from scenes): _lc_discovery_mature,
-#   _lc_discovery_warn, _lc_discovery_cleared_before, lc_discovery_new_run_id
+#   _lc_discovery_warn, _lc_discovery_cleared_before, _lc_discovery_found_stamp,
+#   lc_discovery_new_run_id
 #
 # Example:
 #   init 1 python:
@@ -190,13 +192,26 @@ init python:
             return bool(pov.get("mature"))
         return False
 
+    def _lc_discovery_found_stamp():
+        """Berry ink-stamp 'FOUND' (outlined box, slight tilt) for image-less found tiles."""
+        ink = "#a83a5a"
+        word = Text("FOUND", font="fonts/Handjet-ExtraBold.ttf", size=30, color=ink, xalign=0.5, yalign=0.5)
+        w, h = 96, 40
+        box = Fixed(Solid(ink, xysize=(w, 3)), Solid(ink, xysize=(w, 3), ypos=h - 3),
+                    Solid(ink, xysize=(3, h)), Solid(ink, xysize=(3, h), xpos=w - 3),
+                    word, xysize=(w, h))
+        return Transform(box, rotate=-8, rotate_pad=False, alpha=0.85, xalign=0.5, yalign=0.5)
+
     def lc_discovery_thumb(item, width, height):
         """Found: the art, fitted like the review polaroids (mature art blurred with an 18+ mark,
         as the Gallery masks mature covers). Unfound: a greyed, blurred silhouette of the same
-        art, or a plain paper card when the moment has no image."""
+        art, or a plain paper card when the moment has no image. A found moment with no image
+        gets a tilted FOUND stamp on its card, so it can't pass for an unfound one."""
         image = item.get("image")
         paper = Solid("#e6d9c2" if item.get("found") else "#cfc4b4", xysize=(width, height))
         if not (image and renpy.has_image(image, exact=True)):
+            if item.get("found"):
+                return Fixed(paper, _lc_discovery_found_stamp(), xysize=(width, height))
             return paper
         art = Transform(image, fit="cover", xysize=(width, height))
         if not item.get("found"):

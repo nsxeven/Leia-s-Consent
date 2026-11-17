@@ -487,7 +487,7 @@ label ch01_day2_scene_01_morning_after:
     $ cast(ryan="home", leia="camisole_panty")
 
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ d2_tint = lc_leia_tint()
+    $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
         gf "You were a menace last night, by the way. During the movie. My menace, but still a menace."
     elif d2_tint == "temptation":
@@ -1000,7 +1000,7 @@ label ch01_day2_scene_07_leia_maya_click:
         "[girlfriend_name] knelt up on her chair and leaned all the way across the table to show Maya another photo."
         "[friend_name]'s eyes went with her. They came back about half a second later than they should have, and went straight into his glass."
         friend "These are really good drinks, by the way. Has everyone tried theirs? I'm just, um. I'm really enjoying mine."
-        think "That was twice today. At breakfast he'd looked away from her just as fast, with exactly the same face."
+        think "That was twice today. At breakfast I'd caught him watching us too, and he'd looked away with exactly the same face."
         "[girlfriend_name] sat back down and caught us both at it: him studying his ice, me studying him."
         if d2_witness_lane == "exhibitionism":
             "She went a little pink and tugged the hem of her shorts down. Then she checked my face, and whatever she found there made her smile into her straw."
@@ -1284,7 +1284,7 @@ label ch01_day2_scene_11b_boutique:
 
     maya "No, stop looking at the straps. Look at you. Babe, you look so hot right now it's actually kind of annoying."
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ d2_tint = lc_leia_tint()
+    $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
         gf "I look terrified. Look at my face, that's a terrified face. And [player_name]'s going to do his stupid happy face when he sees it, I just know it."
     elif d2_tint == "exhibitionism":
@@ -1648,11 +1648,11 @@ label ch01_day2_scene_11b_boutique:
 
         "[d2_postshop_dream_text]" if d2_dream_thought_kept:
             $ apply_choice("ch01_d2_postshop_dream")
-            mc "I had a weird dream last night. It's kind of been following me around all day."
+            mc "I had a weird dream last night. I never told you about it. It's kind of stupid."
             gf "A weird dream? What kind of weird?"
             mc "The guy from dinner. The drink guy. He was there, and you were there, and I couldn't move or say anything. I just had to watch."
             "[girlfriend_name] stared at me for a second."
-            $ d2_tint = lc_leia_tint()
+            $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
             if d2_tint == "temptation":
                 gf "Okay, babe, that's a pretty weird dream."
                 gf "It was just a guy with a drink. He said sorry, like, nine times."
@@ -1660,7 +1660,7 @@ label ch01_day2_scene_11b_boutique:
                 "She patted my hand and went back to her drink. It was nice of her. It just wasn't what I'd been hoping for."
             else:
                 "Then she laughed at me. Properly, with her whole face."
-                gf "The drink guy? You've been carrying the drink guy around all day? Come here, you."
+                gf "The drink guy? You've been carrying the drink guy around since last night? Come here, you."
                 "She leaned over and hugged me, right there at the table, shopping bags and all."
                 gf "He apologized to me about nine times and went back to his table. That's the whole story. That's all he ever gets to be."
                 think "She laughed at me, and then she hugged me. I'd known she would. I just hadn't let her."
@@ -1684,15 +1684,15 @@ label ch01_day2_scene_11b_boutique:
             $ apply_choice("ch01_d2_boutique_her_version")
             mc "Hang on. Back up a second. Did he really look away that fast?"
             "[girlfriend_name] stopped turning her cup."
-            gf "...No. Not really."
-            gf "He looked for a second. Maybe two. And then he saw me see him, and he went so red I honestly thought he was going to pass out into the shirts."
-            $ d2_tint = lc_leia_tint()
+            gf "Technically, yeah. By the time I looked up he was staring at the ceiling."
+            gf "But nobody goes that red from looking at a ceiling. He looked, babe. I don't know for how long, and I keep wondering. And he knew I knew, and I honestly thought he was going to pass out into the shirts."
+            $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
             if d2_tint == "love":
                 gf "And the whole time I just kept wishing it was you standing there instead. Is that dumb? That's dumb."
                 mc "It's not dumb. I should've been there."
                 "She hooked her ankle around mine under the table and left it there."
             elif d2_tint == "exhibitionism":
-                gf "And I didn't hate it as much as I probably should have. Don't make that face, I'm telling you, aren't I?"
+                gf "And I didn't hate it as much as I probably should have. Mostly I kept wondering what your face would've done. Don't make that face, I'm telling you, aren't I?"
                 "She was pink to the ears, and she still didn't look away from me."
             elif d2_tint == "temptation":
                 gf "It was nothing. He said sorry about fifty times. I don't even know why I told it the other way first."
@@ -1882,7 +1882,7 @@ label ch01_day2_scene_13_girls_upstairs:
     if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ d2_tint = lc_leia_tint()
+        $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
         if d2_tint == "exhibitionism":
             gf "The smaller one. Yeah. The smaller one, before I talk myself out of it. I kind of want to see who notices."
         elif d2_tint == "temptation":
@@ -1895,7 +1895,7 @@ label ch01_day2_scene_13_girls_upstairs:
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ d2_tint = lc_leia_tint()
+        $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
         if d2_tint == "temptation":
             gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day. And I'm not even asking [player_name] this time, it's my bikini."
         else:

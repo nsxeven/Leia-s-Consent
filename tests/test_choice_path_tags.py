@@ -219,5 +219,11 @@ class ScreenWiringTests(unittest.TestCase):
         self.assertIn("{font=DejaVuSans.ttf}", (TAGS_RPY).read_text(encoding="utf-8"))
 
 
+class MenuSize(unittest.TestCase):
+    def test_no_story_menu_offers_more_than_five_options(self):
+        # screen choice fits at most five cards in its 920 px viewport (PR #226 review I1).
+        for menu in menus():
+            self.assertLessEqual(len(menu["options"]), 5, "%s:%d" % (menu["file"], menu["line"]))
+
 if __name__ == "__main__":
     unittest.main()

@@ -241,8 +241,13 @@ class LeiasVersion(unittest.TestCase):
         body = src(D2A)
         start = body.index('$ apply_choice("ch01_d2_boutique_her_version")')
         part = body[start:body.index('[friend_name] stood and picked up his shopping bag', start)]
-        self.assertIn("Not really.", part)
-        self.assertIn("He looked for a second.", part)
+        # The scene shows only the end: Julian already looking at the ceiling, red. She admits what
+        # she knows (he looked, she doesn't know how long), never claims she saw him looking.
+        self.assertIn("By the time I looked up he was staring at the ceiling.", part)
+        self.assertIn("nobody goes that red from looking at a ceiling", part)
+        self.assertIn("I don't know for how long", part)
+        for claim in ("He looked for a second", "saw me see him", "Not really."):
+            self.assertNotIn(claim, part)
 
 
 # --------------------------------------------------------------------------- B2 doors
@@ -307,7 +312,8 @@ class DoorMoments(unittest.TestCase):
 
 PHOTO = (D2A, "# Ryan's thoughts (B3): the Day One photo thought", '    "[friend_name] looked at me over his drink."')
 CARRY = (D2B, "# Ryan's thoughts (B3): the Day One carry thought",
-         '        \"Maya caught [friend_name] by the arm and steered him toward the villa, leaving [girlfriend_name] and me beside the pool.\"')
+         '        "[girlfriend_name] shook her head at Maya\'s back, red to the ears, and didn\'t so much as glance '
+         'down the deck. Once they were gone, she leaned into me instead."')
 DINNER = (D2B, "# Ryan's thoughts (B3): the Day One dinner thought", '    $ set_story_flag("ch01_d2_scene_22_complete")')
 SOFA = (D2B, "# Ryan's thoughts (B3): the Day One sofa thought", '    $ set_story_value("ch01_d2_nhie_leia_clothes", "bra_panties")')
 
@@ -334,9 +340,10 @@ class TintedThinkLines(unittest.TestCase):
         self.assertIn("keys", text(out))
         for tid in (None,) + tuple(t for t in ALL_D1 if t != "d1_julian_carry"):
             self.assertEqual(play(lines, kept=self.kept(tid)), [], tid)
-        # It sits right after Julian's "Why am I always the one carrying?" (Love-lane branch).
+        # It sits after Maya steers Julian off toward the villa (Love-lane branch), when he has gone.
         b = src(D2B)
         self.assertLess(b.index('friend "Why am I always the one carrying?'), b.index(CARRY[1]))
+        self.assertLess(b.index('"Maya caught [friend_name] by the arm and steered him'), b.index(CARRY[1]))
 
     def test_dinner_line_per_lane_and_neutral_for_everyone_else(self):
         lines = block(*DINNER)

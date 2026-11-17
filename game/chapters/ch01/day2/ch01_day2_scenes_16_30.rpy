@@ -125,10 +125,10 @@ label ch01_day2_scene_16_forced_split:
         maya "We'll go. You two keep the pool. Babe, if you feel like doing that again while I'm gone, the guys down there would not complain. Encore. I'm just saying."
         maya "[friend_name], you're carrying. Come on, up."
         friend "Why am I always the one carrying? I'm coming, I'm coming."
+        "Maya caught [friend_name] by the arm and steered him toward the villa, leaving [girlfriend_name] and me beside the pool."
         # Ryan's thoughts (B3): the Day One carry thought, if he kept it. Otherwise nothing extra.
         if lc_thought_kept("ch01_d1") == "d1_julian_carry":
             think "Last night he'd carried her in from the car while I held the keys. Today he got the drinks, and I got to stay right here with her. I'd take that trade every time."
-        "Maya caught [friend_name] by the arm and steered him toward the villa, leaving [girlfriend_name] and me beside the pool."
         "[girlfriend_name] shook her head at Maya's back, red to the ears, and didn't so much as glance down the deck. Once they were gone, she leaned into me instead."
         gf "I really like her. Like, I didn't expect to like her this much."
         mc "Good. I was a bit nervous about that, after yesterday. You had about eleven questions about her."
@@ -806,7 +806,7 @@ label ch01_day2_scene_22_sunset_couple:
         if get_story_value("ch01_d2_ntr_soft_gate", False):
             think "Every time a waiter passed with a full tray, I thought about last night. Mostly about where her eyes had gone afterwards."
         elif d2_lane == "exhibitionism":
-            think "Last night some guy went out of his way to tell her the dress still looked incredible. Tonight I kept catching people glance over at our table, and I didn't mind one bit."
+            think "Last night some guy went out of his way to tell her the dress still looked incredible. Tonight, every time she caught my eye across the table, I wondered who else in here had noticed her. I didn't mind one bit."
         else:
             think "Every time a waiter came past with a full tray, I watched it all the way to the next table. Nobody was spilling anything on her tonight, not if I could help it."
 
