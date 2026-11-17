@@ -1,7 +1,8 @@
 # Ryan's thoughts - keep one thought at the end of a day review; it evolves with stats and lane
 #
-# Purpose: When a day's review closes, offer up to three of Ryan's thoughts drawn from beats this
-#   save actually saw that day, plus "keep nothing" (screens/thoughts_screen.rpy). The kept thought
+# Purpose: When a day's review closes, offer one of Ryan's thoughts per part of the day (Day One:
+#   daytime, evening, night), drawn from beats this save actually saw, plus "keep nothing"
+#   (screens/thoughts_screen.rpy). The kept thought
 #   is a save-local value; a later day reads it to tint a few `think` lines or add one reply
 #   option. Keeping a thought never changes stats. Hidden in the Day One demo build. Rules and the
 #   thought pool live in python-packages/lc_thoughts.py; this file binds them to the store.
@@ -50,15 +51,21 @@ init python:
         return {key: getattr(store, key, None) for key in ("player_name", "girlfriend_name", "friend_name")}
 
     def _lc_thought_stats():
+        """Flat stats for tinting. Release builds fall back to {} (base text); developer mode
+        raises so a broken stats call is seen."""
         try:
             return lc_stats_flat()
         except Exception:
+            if config.developer:
+                raise
             return {}
 
     def lc_thought_lane():
         try:
             return lc_thoughts.lane_from_lean(lc_current_lean())
         except Exception:
+            if config.developer:
+                raise
             return None
 
     def lc_thought_text(thought_id):

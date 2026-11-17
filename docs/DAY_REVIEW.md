@@ -16,7 +16,7 @@ The existing Information Transparency setting controls detail:
 
 Moments strip: a day with registered discoveries (Hidden POVs registered with `day_id`, and later notices, doors and phone moments; `game/systems/discovery.rpy`) gets a MOMENTS row at the top of the right-page footer: one fixed-height row at any count (extra tiles scroll sideways with the mouse wheel or a drag), so the choices above keep their space. Found moments show their art; once the profile had finished that day before, unfound ones show as grey silhouettes with label and mood only. Insight/Full add "n of m" on such a replay; Immersive never shows a count or route words. Days with nothing registered look exactly as before. Details: `docs/HIDDEN_POV.md`.
 
-Ryan's thoughts: when the spread closes, a day with a thought pool (Day One today) opens a second spread offering up to three thoughts from beats this save saw; the player keeps one or keeps nothing. Hidden in the Day One demo build. Details: `docs/THOUGHTS.md`.
+Ryan's thoughts: when the spread closes, a day with a thought pool (Day One today) opens a second spread offering one thought per part of the day from beats this save saw; the player keeps one or keeps nothing. Hidden in the Day One demo build. Details: `docs/THOUGHTS.md`.
 
 Optional stings, if a later pass adds them: `audio/sfx/review_paper.ogg` when a photo lands and `audio/sfx/review_tick.ogg` when a bar settles. Missing files stay silent.
 

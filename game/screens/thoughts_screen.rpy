@@ -2,8 +2,9 @@
 #
 # Purpose: A fresh scrapbook spread shown right after the day review closes (systems/thoughts.rpy
 #   calls it through the review_closed hook). The left page says what this is; the right page
-#   holds up to three handwritten thought cards. Clicking a card keeps it; KEEP NOTHING (where
-#   CONTINUE always sits) or Esc keeps nothing. Insight/Full stamp each card with the lane or
+#   holds one handwritten thought card per part of the day. Clicking a card keeps it; KEEP NOTHING
+#   (where CONTINUE always sits) or Esc keeps nothing. Keyboard/gamepad focus starts on the first
+#   card and moves between the cards and KEEP NOTHING. Insight/Full stamp each card with the lane or
 #   stat tinting it; Immersive shows only the words.
 #
 # Public API (call these from scenes/screens):
@@ -43,7 +44,8 @@ screen lc_thought_offer_screen(day_id, ids):
     # Esc keeps nothing. Enter is left to the focused card (keyboard players pick with it).
     key "K_ESCAPE" action Return(None)
 
-    # Stray clicks on the paper do nothing; only a card or KEEP NOTHING answers.
+    # Stray clicks on the paper do nothing; only a card or KEEP NOTHING answers. It never takes
+    # keyboard/gamepad focus, so arrow keys and the pad move between the cards and KEEP NOTHING.
     button:
         xpos 0
         ypos 0
@@ -52,6 +54,7 @@ screen lc_thought_offer_screen(day_id, ids):
         background None
         hover_background None
         padding (0, 0)
+        keyboard_focus False
         action NullAction()
 
     add "images/ui/scrapbook/spread.png" at (lc_spread_in if animate else lc_spread_still)
@@ -97,6 +100,7 @@ screen lc_thought_offer_screen(day_id, ids):
                 padding (0, 0)
                 background Fixed(Solid("#3b2a30"), Transform(Solid("#fffaf0"), xpos=3, ypos=3, xysize=(card_w - 6, card_h - 6)), xysize=(card_w, card_h))
                 hover_background Fixed(Solid("#a83a5a"), Transform(Solid("#f8e3ea"), xpos=3, ypos=3, xysize=(card_w - 6, card_h - 6)), xysize=(card_w, card_h))
+                default_focus (index == 0)
                 action Return(thought_id)
                 fixed:
                     xsize card_w
@@ -121,11 +125,12 @@ screen lc_thought_offer_screen(day_id, ids):
     add "images/ui/scrapbook/continue.png" xpos 1472 ypos 988
     text "KEEP NOTHING" xpos 1520 ypos 1006 style "lc_pixel_bold" size 24 color "#fff3f7"
     add "images/ui/scrapbook/continue_arrow.png" xpos 1720 ypos 1010
+    # KEEP NOTHING lightens when it has focus (mouse, keyboard or pad).
     button:
         xpos 1472
         ypos 988
         xysize (312, 66)
         background None
-        hover_background None
+        hover_background Solid("#ffffff33")
         padding (0, 0)
         action Return(None)

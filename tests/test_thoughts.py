@@ -173,12 +173,111 @@ class LaneTests(unittest.TestCase):
             self.assertIsNone(lc_thoughts.lane_from_lean(lean))
 
 
+class LaneLimitTests(unittest.TestCase):
+    """A lane limits which stat variants may tint a thought (Love warmth, NTR temptation)."""
+
+    # Every value Day One can reach and then some (the simulation's ranges are Love 40-66,
+    # Trust 46-72, Exhibitionism 10-49, Temptation 10-26).
+    GRID = [dict(CALM, love=lo, trust=tr, exhibitionism=ex, temptation=te)
+            for lo in (40, 58, 70) for tr in (40, 57, 58, 66, 80)
+            for ex in (10, 18, 19, 30, 49, 60) for te in (10, 11, 12, 20, 26, 40)]
+
+    def keys(self, lane):
+        for tid in lc_thoughts.THOUGHT_ORDER:
+            for st in self.GRID:
+                yield tid, st, lc_thoughts.variant_key(tid, st, lane)
+
+    def test_love_lane_only_shows_love_or_trust_words(self):
+        for tid, st, key in self.keys("love_lane"):
+            self.assertIn(key, (None, "love_lane", "love", "trust"), (tid, st))
+
+    def test_every_day_one_thought_has_a_love_lane_line(self):
+        for tid in lc_thoughts.day_thoughts(DAY1):
+            self.assertIn("love_lane", lc_thoughts.THOUGHTS[tid]["variants"], tid)
+
+    def test_ntr_lane_never_shows_love_and_prefers_temptation_over_exhibitionism(self):
+        for tid, st, key in self.keys("ntr_lane"):
+            self.assertNotIn(key, ("love", "love_lane"), (tid, st))
+            variants = lc_thoughts.THOUGHTS[tid]["variants"]
+            if "temptation" in variants and st["temptation"] >= lc_thoughts.TINT["temptation"]:
+                self.assertEqual(key, "temptation", (tid, st))
+
+    def test_exhib_lane_never_shows_temptation_over_exhibitionism(self):
+        for tid, st, key in self.keys("exhib_lane"):
+            variants = lc_thoughts.THOUGHTS[tid]["variants"]
+            if "exhibitionism" in variants and st["exhibitionism"] >= lc_thoughts.TINT["exhibitionism"]:
+                self.assertEqual(key, "exhibitionism", (tid, st))
+
+    def test_every_lane_key_has_a_stat_limit(self):
+        self.assertEqual(set(lc_thoughts.LANE_STATS), set(lc_thoughts.LANES))
+        for lane, allowed in lc_thoughts.LANE_STATS.items():
+            for stat in allowed:
+                self.assertIn(stat, lc_thoughts.TINT, lane)
+
+
 class OfferTests(unittest.TestCase):
-    def test_offer_is_at_most_three_and_only_seen_beats(self):
+    def test_offer_is_one_card_per_part_of_the_day(self):
         got = lc_thoughts.offer(DAY1, CALM, None, ALL_DAY1_BEATS)
         self.assertEqual(len(got), 3)
-        for tid in got:
-            self.assertIn(lc_thoughts.THOUGHTS[tid]["requires"], ALL_DAY1_BEATS)
+        parts = lc_thoughts.OFFER_PARTS[DAY1]
+        for part, tid in zip(parts, got):
+            self.assertIn(tid, part)
+
+    def test_parts_cover_the_day_once_in_day_order(self):
+        for day in {e["day"] for e in lc_thoughts.THOUGHTS.values()}:
+            flat = [tid for part in lc_thoughts.OFFER_PARTS[day] for tid in part]
+            self.assertEqual(flat, lc_thoughts.day_thoughts(day), day)
+
+    def test_day_one_parts_are_daytime_evening_night(self):
+        self.assertEqual(lc_thoughts.OFFER_PARTS[DAY1], (
+            ("d1_photo_shoot", "d1_towel"),
+            ("d1_dinner_stranger", "d1_julian_carry"),
+            ("d1_sofa_glance", "d1_dream")))
+
+    def test_a_part_with_nothing_seen_gives_no_card(self):
+        seen = {lc_thoughts.THOUGHTS[t]["requires"] for t in ("d1_towel", "d1_dream")}
+        self.assertEqual(lc_thoughts.offer(DAY1, CALM, None, seen), ["d1_towel", "d1_dream"])
+
+    def test_uncoloured_parts_fall_back_to_day_order(self):
+        got = lc_thoughts.offer(DAY1, CALM, None, ALL_DAY1_BEATS)
+        self.assertEqual(got, ["d1_photo_shoot", "d1_dinner_stranger", "d1_sofa_glance"])
+
+    def test_a_coloured_thought_beats_an_uncoloured_one_in_its_part(self):
+        # Trust colours the towel, carry and dream, never the photo, dinner or sofa.
+        st = stats(trust=lc_thoughts.TINT["trust"] + 5)
+        got = lc_thoughts.offer(DAY1, st, None, ALL_DAY1_BEATS)
+        self.assertEqual(got, ["d1_towel", "d1_julian_carry", "d1_dream"])
+
+    def test_the_thought_this_save_colours_most_wins_its_part(self):
+        t = lc_thoughts.TINT
+        # Temptation and Exhibitionism colour all six; Trust adds a colour to towel/carry/dream.
+        hot = stats(exhibitionism=t["exhibitionism"] + 5, temptation=t["temptation"] + 5)
+        self.assertEqual(lc_thoughts.offer(DAY1, hot, "ntr_lane", ALL_DAY1_BEATS),
+                         ["d1_photo_shoot", "d1_dinner_stranger", "d1_sofa_glance"])
+        hot["trust"] = t["trust"] + 1
+        self.assertEqual(lc_thoughts.offer(DAY1, hot, "ntr_lane", ALL_DAY1_BEATS),
+                         ["d1_towel", "d1_julian_carry", "d1_dream"])
+        # Love lane: every thought has a love line; Trust decides between the two.
+        self.assertEqual(lc_thoughts.offer(DAY1, stats(trust=t["trust"] + 9), "love_lane", ALL_DAY1_BEATS),
+                         ["d1_towel", "d1_julian_carry", "d1_dream"])
+        self.assertEqual(lc_thoughts.offer(DAY1, CALM, "love_lane", ALL_DAY1_BEATS),
+                         ["d1_photo_shoot", "d1_dinner_stranger", "d1_sofa_glance"])
+
+    def test_a_lane_never_counts_a_stat_it_forbids(self):
+        # Love lane ignores Exhibitionism/Temptation when picking, as it does when tinting.
+        t = lc_thoughts.TINT
+        st = stats(exhibitionism=t["exhibitionism"] + 20, temptation=t["temptation"] + 20)
+        self.assertEqual(lc_thoughts.offer(DAY1, st, "love_lane", ALL_DAY1_BEATS),
+                         ["d1_photo_shoot", "d1_dinner_stranger", "d1_sofa_glance"])
+
+    def test_every_day_one_thought_can_be_offered(self):
+        t = lc_thoughts.TINT
+        offered = set()
+        for lane in (None,) + lc_thoughts.LANES:
+            for trust in (50, t["trust"] + 3):
+                for seen in (ALL_DAY1_BEATS, ALL_DAY1_BEATS - {"d1_photo_shoot"}):
+                    offered.update(lc_thoughts.offer(DAY1, stats(trust=trust), lane, seen))
+        self.assertEqual(offered, set(lc_thoughts.day_thoughts(DAY1)))
 
     def test_unseen_beats_are_never_offered(self):
         ids = lc_thoughts.day_thoughts(DAY1)
@@ -195,16 +294,6 @@ class OfferTests(unittest.TestCase):
     def test_demo_build_offers_nothing(self):
         self.assertEqual(lc_thoughts.offer(DAY1, CALM, None, ALL_DAY1_BEATS, demo=True), [])
 
-    def test_tinted_thoughts_are_preferred_then_day_order(self):
-        ids = lc_thoughts.day_thoughts(DAY1)
-        st = stats(temptation=lc_thoughts.TINT["temptation"] + 3)
-        tinted = [t for t in ids if lc_thoughts.variant_key(t, st, None)]
-        self.assertTrue(tinted)
-        got = lc_thoughts.offer(DAY1, st, None, ALL_DAY1_BEATS)
-        for t in tinted[:3]:
-            self.assertIn(t, got)
-        self.assertEqual(got, [t for t in ids if t in got])  # shown in the day's order
-
     def test_offer_is_deterministic(self):
         a = lc_thoughts.offer(DAY1, CALM, "love_lane", ALL_DAY1_BEATS)
         b = lc_thoughts.offer(DAY1, CALM, "love_lane", set(ALL_DAY1_BEATS))
@@ -212,6 +301,39 @@ class OfferTests(unittest.TestCase):
 
 
 class SeenBeatTests(unittest.TestCase):
+    def test_every_beat_reads_a_flag_or_value_day_one_really_sets(self):
+        # Canon guard: a renamed Day One flag would otherwise silently hide a thought forever.
+        day1 = ROOT / "game/chapters/ch01/day1"
+        script = "\n".join(p.read_text(encoding="utf-8") for p in sorted(day1.glob("*.rpy")))
+        for beat, spec in lc_thoughts.BEATS.items():
+            if spec["day"] != DAY1:
+                continue
+            kind, key = spec["test"][0], spec["test"][1]
+            if kind == "flag":
+                self.assertIn('set_story_flag("%s")' % key, script, beat)
+            elif kind == "value_set":
+                self.assertIn('set_story_value("%s",' % key, script, beat)
+            else:
+                values = [int(n) for n in re.findall(r'set_story_value\("%s", (\d+)\)' % re.escape(key), script)]
+                self.assertTrue(values, beat)
+                self.assertTrue(any(v >= spec["test"][2] for v in values), beat)
+                self.assertTrue(any(v < spec["test"][2] for v in values), beat)
+
+    def test_every_thought_names_its_source_label(self):
+        # Each thought's comment names the Day One label its words are checked against.
+        source = (ROOT / "game/python-packages/lc_thoughts.py").read_text(encoding="utf-8")
+        day1 = ROOT / "game/chapters/ch01/day1"
+        script = "\n".join(p.read_text(encoding="utf-8") for p in sorted(day1.glob("*.rpy")))
+        for tid in lc_thoughts.day_thoughts(DAY1):
+            before = source[:source.index('    "%s": {\n        "day"' % tid)].split("\n")[:-1]
+            comment = []
+            while before and before[-1].startswith("    #"):
+                comment.append(before.pop())
+            labels = " ".join(re.findall(r"Source:((?: \w+)+)", "\n".join(comment))).split()
+            self.assertTrue(labels, tid)
+            for label in labels:
+                self.assertIn("label %s:" % label, script, (tid, label))
+
     def test_beats_read_flags_and_values(self):
         flags, values = set(), {}
         has_flag = flags.__contains__
@@ -256,6 +378,12 @@ class KeepTests(unittest.TestCase):
             lc_thoughts.keep({}, DAY1, "nope")
         with self.assertRaises(ValueError):
             lc_thoughts.keep({}, "ch01_d2", lc_thoughts.day_thoughts(DAY1)[0])
+
+    def test_keep_and_kept_id_use_an_injected_pool(self):
+        pool = {"x1": {"day": DAY1, "requires": "b", "base": "x", "variants": {}}}
+        kept = lc_thoughts.keep({}, DAY1, "x1", thoughts=pool)
+        self.assertEqual(lc_thoughts.kept_id(kept, DAY1, thoughts=pool), "x1")
+        self.assertIsNone(lc_thoughts.kept_id(kept, DAY1))
 
     def test_old_saves_read_nothing_kept(self):
         self.assertIsNone(lc_thoughts.kept_id(None, DAY1))
@@ -422,6 +550,40 @@ class SourceContractTests(unittest.TestCase):
         self.assertIn('if mode != "normal"', screen)
         self.assertIn('style "lc_hand"', screen)
         self.assertIn("substitute False", screen)
+
+    def test_offer_screen_is_reachable_by_keyboard_and_gamepad(self):
+        text = (ROOT / "game/screens/thoughts_screen.rpy").read_text(encoding="utf-8")
+        screen = text[text.index("\nscreen lc_thought_offer_screen("):]
+        # The invisible stray-click catcher must never take keyboard/gamepad focus.
+        catcher = screen[screen.index("action NullAction()") - 400:screen.index("action NullAction()")]
+        self.assertIn("keyboard_focus False", catcher[catcher.rindex("button:"):])
+        # The first card starts focused, and KEEP NOTHING shows when it has focus.
+        self.assertIn("default_focus (index == 0)", screen)
+        keep_nothing = screen[screen.index('text "KEEP NOTHING"'):]
+        self.assertNotIn("hover_background None", keep_nothing)
+
+
+class ThoughtStatsErrorTests(unittest.TestCase):
+    """A broken stats/lean call shows the base text in release but raises in developer mode."""
+
+    def setUp(self):
+        self.config = SimpleNamespace(developer=False)
+
+        def boom():
+            raise RuntimeError("stats broke")
+        self.env = dict(store=SimpleNamespace(lc_thoughts_kept={}), config=self.config,
+                        renpy=SimpleNamespace(log=lambda *a: None),
+                        lc_stats_flat=boom, lc_current_lean=boom)
+        load_blocks(["lc_thought_kept"], self.env)
+
+    def test_release_falls_back_and_developer_mode_raises(self):
+        self.assertEqual(self.env["_lc_thought_stats"](), {})
+        self.assertIsNone(self.env["lc_thought_lane"]())
+        self.config.developer = True
+        with self.assertRaises(RuntimeError):
+            self.env["_lc_thought_stats"]()
+        with self.assertRaises(RuntimeError):
+            self.env["lc_thought_lane"]()
 
 
 if __name__ == "__main__":

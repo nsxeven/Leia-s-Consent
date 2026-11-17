@@ -1,13 +1,18 @@
 """Ryan's thoughts: keep one thought at the end of a day review (pure Python, no Ren'Py import).
 
-At the end of a day's review the game may offer up to three *thoughts* drawn from beats the
-player actually saw that day, plus "keep nothing". The kept thought is a save-local value that a
-later day reads (lc_thought_kept / lc_thought_line in game/systems/thoughts.rpy) to tint a few
-`think` lines or add one reply option. It never changes stats by itself.
+At the end of a day's review the game offers one *thought* per part of the day (OFFER_PARTS:
+Day One = daytime, evening, night), drawn only from beats the player actually saw, plus "keep
+nothing". The kept thought is a save-local value that a later day reads (lc_thought_kept /
+lc_thought_line in game/systems/thoughts.rpy) to tint a few `think` lines or add one reply
+option. It never changes stats by itself.
 
 Each thought has a base text and variants by lane or stat. A variant is resolved whenever the
-thought is shown, so a kept thought evolves with the save: the lane rule comes first, then the
-stat that sits furthest over its tint bar (TINT), else the base text.
+thought is shown, so a kept thought evolves with the save: the lane variant comes first; then,
+in a lane, the first of that lane's stats (LANE_STATS) over its tint bar (TINT); with no lane,
+the stat furthest over its bar; else the base text.
+
+Every text is checked against the Day One script: the comment above each thought names the
+label(s) it was checked against (`Source:`, tested), so an edit to either side re-checks both.
 
 Texts are Ryan's inner voice (docs/characters/ryan.md, LC-Brain Characters/Ryan.md: a bit timid,
 self-deprecating, plain words). They use [player_name] / [girlfriend_name] / [friend_name] and
@@ -25,7 +30,8 @@ _LEAN_TO_LANE = {"love": "love_lane", "love_exhib": "exhib_lane", "ntr": "ntr_la
 # Tint bars: a stat at or over its bar can tint a thought. Day One scale (defaults are
 # Love/Trust 50, Exhibitionism/Temptation 10, Sharing 0): a few warm choices pass Love/Trust 58,
 # Exhibitionism 19 is the Day One "shared glance" line (lc_stat_model d1_pool_shared_glance),
-# Temptation 12 is two slips (one short of the Day One NTR seed at 13).
+# Temptation 12 is two slips (one short of the Day One NTR seed at 13). Love and Sharing have no
+# Day One variant yet (Sharing never moves on Day One): their bars are for Day Two onward.
 TINT = {
     "love": 58,
     "trust": 58,
@@ -34,8 +40,18 @@ TINT = {
     "temptation": 12,
 }
 
-# Tie-break when two stats sit equally far over their bars.
+# Tie-break when two stats sit equally far over their bars (saves with no lane).
 STAT_PRIORITY = ("temptation", "exhibitionism", "sharing", "trust", "love")
+
+# A lane limits which stat variants may tint it, in order of preference: the first listed stat
+# over its bar wins. Love keeps its warmth (never an Exhibitionism or Temptation pull), NTR never
+# reads as Love and prefers Temptation over Exhibitionism, Love + Exhibitionism never lets
+# Temptation outrank Exhibitionism.
+LANE_STATS = {
+    "love_lane": ("love", "trust"),
+    "exhib_lane": ("exhibitionism", "trust", "love", "temptation"),
+    "ntr_lane": ("temptation", "exhibitionism", "trust"),
+}
 
 # Labels for the small tint stamp in Insight/Full (never shown in Immersive).
 TINT_LABELS = {
@@ -69,6 +85,7 @@ THOUGHT_ORDER = (
 
 THOUGHTS = {
     # Scene 5: Julian takes the pool photos (not offered if Ryan stopped the shoot).
+    # Source: ch01_scene_05_photography
     "d1_photo_shoot": {
         "day": "ch01_d1", "requires": "d1_photo_shoot",
         "base": "She says every photo of her is terrible, and then [friend_name] gets one where "
@@ -82,49 +99,65 @@ THOUGHTS = {
                           "four years. I'm trying really hard not to read anything into that.",
         },
     },
-    # Scene 6: the towel on the balcony.
+    # Scene 6: the towel on the balcony; scene 7: she asks what he saw. Towel shift, "I was trying
+    # to tell you to get ready!", "You weren't two seconds ago!"; by the restaurant "the towel
+    # incident had disappeared beneath ordinary conversation".
+    # Source: ch01_scene_06_friendship_and_towel ch01_scene_07_did_he_see
     "d1_towel": {
         "day": "ch01_d1", "requires": "d1_towel",
         "base": "She stood there arguing with me in a towel, completely sure she was winning. I still "
                 "don't know who was more embarrassed, her or [friend_name].",
         "variants": {
-            "exhibitionism": "She went bright red, sure. But by dinner she was laughing about it, and I "
-                             "keep picturing the second before she noticed.",
-            "temptation": "[friend_name] saw it before I said anything. I keep wondering how long he'd "
-                          "been looking, which is probably not a great thing to keep wondering.",
+            "love_lane": "Bright red, clutching that towel, and she was still telling us off for not "
+                         "getting ready. That's just so her. I really wouldn't change a thing.",
+            "exhibitionism": "She went bright red, sure. But by the time we got to dinner she'd let it "
+                             "go, and I keep picturing the second before she noticed.",
+            "temptation": "She said he wasn't looking at the water two seconds before. I keep wondering "
+                          "how long he'd been looking, which is probably not a great thing to keep "
+                          "wondering.",
             "trust": "Afterwards she asked me what [friend_name] actually saw, and she wanted the real "
                      "answer, not the nice one. I like that she asks me.",
         },
     },
-    # Scene 9: the stranger at dinner.
+    # Scene 9: she walks into the stranger, his drink soaks them both, he apologizes, her eyes
+    # follow his glance down; she turns down his photo offer and laughs at "we're both terrible at
+    # walking"; later a different man ("passerby") compliments the dress, then "Still stands" at
+    # the table. Source: ch01_scene_09_dinner
     "d1_dinner_stranger": {
         "day": "ch01_d1", "requires": "d1_dinner_stranger",
-        "base": "Some guy spills a drink down her dress, apologizes twice and goes back to his table. "
-                "I don't know why I'm still thinking about the way he looked at her.",
+        "base": "She walks straight into some guy, his drink goes everywhere, and he's the one who "
+                "keeps apologizing. I don't know why I'm still thinking about where her eyes went "
+                "after.",
         "variants": {
-            "love_lane": "Soaked dress, ruined dinner, and she still made him laugh about it. I don't "
-                         "think she knows how good she is at that.",
-            "exhibitionism": "He told her she looked great, and she lit up a little. Honestly, so did I. "
-                             "He wasn't wrong.",
+            "love_lane": "Soaked dress, no dinner photo, and a minute later she was laughing about it. "
+                         "I don't think she knows how good she is at that.",
+            "exhibitionism": "Later some other guy came past our table just to tell her the dress still "
+                             "looked incredible, and she lit up a little. Honestly, so did I. He wasn't "
+                             "wrong.",
             "temptation": "He offered to take her photo and she took a second too long to answer. It's "
                           "probably nothing. It's probably just me.",
         },
     },
-    # Scenes 12-13: Julian carries her in from the car.
+    # Scene 13: Ryan's lift "lasted about three seconds", Julian carries her ("get under the
+    # knees"), Ryan has the keys; her head settles on Julian's shoulder and she keeps sleeping;
+    # the dress slips on Julian's side and he says so. Source: ch01_scene_13_back_at_villa
     "d1_julian_carry": {
         "day": "ch01_d1", "requires": "d1_julian_carry",
         "base": "I couldn't even get my own girlfriend out of the car. [friend_name] picked her up like "
                 "she weighed nothing, and I got to hold the keys.",
         "variants": {
+            "love_lane": "I tried to carry her and lasted about three seconds. Next time I'm learning "
+                         "the knees thing, so I'm not just the guy holding the keys.",
             "exhibitionism": "Her dress slipped, and he was the one who could see it, not me. I feel "
                              "like I should mind that more than I do.",
-            "temptation": "She slept the whole way in with her head on his shoulder. It was an accident, "
-                          "I know it was. I just keep seeing it anyway.",
+            "temptation": "Her head just settled on his shoulder and she kept sleeping. She didn't even "
+                          "know she was doing it. I just keep seeing it anyway.",
             "trust": "When her dress slipped he told me straight away, even though it was awkward for "
                      "both of us. I think that's what a real friend does.",
         },
     },
-    # Scene 21: on the sofa she checks where Julian is looking.
+    # Scene 21: legs across Ryan's lap; she "checked where his eyes were before settling again.
+    # It was quick. I still caught it." (true on every answer). Source: ch01_scene_21_watching_julian
     "d1_sofa_glance": {
         "day": "ch01_d1", "requires": "d1_sofa_glance",
         "base": "When she moved on the sofa, she checked where [friend_name] was looking first. It was "
@@ -134,11 +167,13 @@ THOUGHTS = {
                          "the world. I'd honestly take a hundred more nights like that.",
             "exhibitionism": "Why did that feel good to watch? She checked whether he could see her, and "
                              "part of me sort of hoped he could.",
-            "temptation": "She checked where his eyes were before she checked mine. I noticed and didn't "
-                          "say anything, which is kind of my whole thing lately.",
+            "temptation": "She checked where his eyes were before she settled back against me. It was "
+                          "quick, and I keep telling myself it didn't mean anything.",
         },
     },
-    # Scene 30: the dream.
+    # Scene 30: the dream (the dinner stranger, Ryan mute); he wakes and she is asleep beside him.
+    # The exhibitionism line recalls the real passerby at dinner, not the dream.
+    # Source: ch01_scene_30_end_day_one ch01_scene_09_dinner
     "d1_dream": {
         "day": "ch01_d1", "requires": "d1_dream",
         "base": "It was only a dream. She was asleep right next to me the whole time. I just wish my "
@@ -146,8 +181,9 @@ THOUGHTS = {
         "variants": {
             "love_lane": "I woke up and she was right there, breathing slow, half of her on my pillow. "
                          "That's the real version, and that's the one I'm keeping.",
-            "exhibitionism": "The dream was awful, but the part before it, how he looked at her at "
-                             "dinner... I don't hate that part. I don't really know what to do with that.",
+            "exhibitionism": "The dream was awful. But at the real dinner, when some other guy went out "
+                             "of his way to tell her she looked incredible... I don't hate remembering "
+                             "that part. I'm not sure what to do with it.",
             "temptation": "None of it happened, and I know that. So why did I wake up feeling like I'd "
                           "already lost something?",
             "trust": "I could tell her about the dream. She'd probably laugh at me, and then she'd hug "
@@ -156,7 +192,15 @@ THOUGHTS = {
     },
 }
 
-OFFER_LIMIT = 3
+# One card per part of the day, in day order. Within a part the offer takes the seen thought
+# this save colours most (colour_count), else the first in day order.
+OFFER_PARTS = {
+    "ch01_d1": (
+        ("d1_photo_shoot", "d1_towel"),               # daytime
+        ("d1_dinner_stranger", "d1_julian_carry"),    # evening
+        ("d1_sofa_glance", "d1_dream"),               # night
+    ),
+}
 
 _DEFAULT_NAMES = {"player_name": "Ryan", "girlfriend_name": "Leia", "friend_name": "Julian"}
 
@@ -180,31 +224,54 @@ def _number(value):
         return None
 
 
+def _over_bar(stat, stats):
+    """How far the stat sits over its tint bar, or None when it is under it or unreadable."""
+    value = _number(stats.get(stat))
+    if value is None or value < TINT[stat]:
+        return None
+    return value - TINT[stat]
+
+
 def variant_key(thought_id, stats, lane, thoughts=None):
     """The variant key that applies now, or None for the base text.
 
-    The lane rule comes first (when the thought has a variant for that lane), then the stat
-    furthest over its TINT bar among the stats the thought has a variant for (ties follow
-    STAT_PRIORITY). Missing or non-numeric stats never tint.
+    The lane variant comes first (when the thought has one for that lane). In a lane, the first
+    of LANE_STATS[lane] that the thought has a variant for and that sits over its TINT bar wins;
+    a lane never shows a stat it does not list. With no lane, the stat furthest over its bar
+    (ties follow STAT_PRIORITY). Missing or non-numeric stats never tint.
     """
     thoughts = THOUGHTS if thoughts is None else thoughts
     variants = thoughts[thought_id]["variants"]
     if lane in LANES and lane in variants:
         return lane
     stats = stats or {}
+    if lane in LANE_STATS:
+        for stat in LANE_STATS[lane]:
+            if stat in variants and _over_bar(stat, stats) is not None:
+                return stat
+        return None
     best, best_margin = None, None
     for stat in STAT_PRIORITY:
         if stat not in variants:
             continue
-        value = _number(stats.get(stat))
-        if value is None:
-            continue
-        margin = value - TINT[stat]
-        if margin < 0:
+        margin = _over_bar(stat, stats)
+        if margin is None:
             continue
         if best_margin is None or margin > best_margin:
             best, best_margin = stat, margin
     return best
+
+
+def colour_count(thought_id, stats, lane, thoughts=None):
+    """How many of this save's colours the thought has words for: its lane variant, plus each
+    stat the lane allows (every stat with no lane) that is over its bar. 0 = it reads as base."""
+    thoughts = THOUGHTS if thoughts is None else thoughts
+    variants = thoughts[thought_id]["variants"]
+    stats = stats or {}
+    count = 1 if (lane in LANES and lane in variants) else 0
+    allowed = LANE_STATS.get(lane, STAT_PRIORITY)
+    return count + sum(1 for stat in allowed
+                       if stat in variants and _over_bar(stat, stats) is not None)
 
 
 def thought_text(thought_id, stats, lane, thoughts=None):
@@ -242,32 +309,39 @@ def seen_beats(day_id, has_flag, get_value, beats=None):
             if spec["day"] == day_id and _beat_seen(spec["test"], has_flag, get_value)}
 
 
-def offer(day_id, stats, lane, seen, demo=False, limit=OFFER_LIMIT, thoughts=None, order=None):
-    """Up to `limit` thought ids for the end of day_id's review, in day order.
+def offer(day_id, stats, lane, seen, demo=False, thoughts=None, parts=None):
+    """The thought ids for the end of day_id's review: one per part of the day, in day order.
 
-    Only thoughts whose required beat is in `seen`. Thoughts a lane/stat currently tints come
-    first (they reflect how this save played the day), then day order. A demo build offers
+    Only thoughts whose required beat is in `seen`; a part with none seen gives no card. Within
+    a part, the thought this save colours most (colour_count: it reflects how this save played
+    the day) wins; equal counts (including none) go to the earlier beat. A demo build offers
     nothing.
     """
     if demo:
         return []
     seen = seen or ()
     thoughts = THOUGHTS if thoughts is None else thoughts
-    ids = [tid for tid in day_thoughts(day_id, thoughts, order) if thoughts[tid]["requires"] in seen]
-    ranked = sorted(ids, key=lambda tid: (variant_key(tid, stats, lane, thoughts) is None,
-                                          ids.index(tid)))
-    picked = set(ranked[:max(0, limit)])
-    return [tid for tid in ids if tid in picked]
+    parts = OFFER_PARTS if parts is None else parts
+    out = []
+    for part in parts.get(day_id, ()):
+        ids = [tid for tid in part if thoughts[tid]["requires"] in seen]
+        if not ids:
+            continue
+        ranked = sorted(enumerate(ids),
+                        key=lambda pair: (-colour_count(pair[1], stats, lane, thoughts), pair[0]))
+        out.append(ranked[0][1])
+    return out
 
 
-def keep(kept, day_id, thought_id):
+def keep(kept, day_id, thought_id, thoughts=None):
     """A new {day_id: thought id or None} dict with day_id's choice recorded.
 
     thought_id None means "keep nothing" and is stored as None. An unknown id, or one from
     another day, raises ValueError.
     """
+    thoughts = THOUGHTS if thoughts is None else thoughts
     if thought_id is not None:
-        entry = THOUGHTS.get(thought_id)
+        entry = thoughts.get(thought_id)
         if entry is None or entry["day"] != day_id:
             raise ValueError("not a %s thought: %r" % (day_id, thought_id))
     out = dict(kept or {})
@@ -275,11 +349,12 @@ def keep(kept, day_id, thought_id):
     return out
 
 
-def kept_id(kept, day_id):
+def kept_id(kept, day_id, thoughts=None):
     """The thought id kept for day_id, or None (nothing kept, never offered, old save, or an id
     that no longer exists)."""
+    thoughts = THOUGHTS if thoughts is None else thoughts
     tid = (kept or {}).get(day_id)
-    return tid if tid in THOUGHTS else None
+    return tid if tid in thoughts else None
 
 
 def tint_label(key):
