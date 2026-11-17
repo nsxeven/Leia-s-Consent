@@ -24,7 +24,7 @@ label ch01_day2_scene_19b_leia_asks_maya:
     gf "Maya."
     maya "Fine. Fine, ask. I'm braced."
 
-    gf "Are you into [friend_name]?"
+    gf "So it's not— you're going to laugh at me. Are you into [friend_name]?"
 
     "Maya did not answer right away."
 

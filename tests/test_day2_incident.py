@@ -121,11 +121,14 @@ class FlavorBeatsTests(unittest.TestCase):
         self.assertNotIn("apply_choice", body)
 
     def test_hushed_secret_has_no_menu_and_pays_off_innocently(self):
-        body = label_body(SCENES, "ch01_day2_scene_15_pool_group")
+        full = label_body(SCENES, "ch01_day2_scene_15_pool_group")
+        # The secret beat itself has no menu. Door A (darryn 2026-11-17) is a later menu in the same
+        # label, placed after the pre-split lane record so it can't change the pool split.
+        body = full[: full.index("ch01_d2_route_lane_pre_split")]
         self.assertIn("Very boring sunscreen stuff.", body)
         self.assertNotIn("menu:", body)
         self.assertNotIn("apply_choice", body)
-        self.assertLess(body.index("Very boring sunscreen stuff."), body.index("ch01_d2_route_lane_pre_split"))
+        self.assertLess(full.index("ch01_d2_route_lane_pre_split"), full.index("ch01_d2_knot_response"))
         payoff = label_body(S19B, "ch01_day2_scene_19c_back_outside")
         self.assertIn("Getting you on your own before dinner was the secret.", payoff)
         self.assertNotIn("menu:", payoff)

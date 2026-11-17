@@ -13,6 +13,8 @@
 #   lc_stat(stat)                             current value of one stat by name
 #   lc_stats_flat()                           {stat: value} for the five stats
 #   lc_exhib_gained(prefix)                   Exhibitionism gained from choices with an id prefix
+#   lc_leia_tint(lane=None, lane_scene=False) Day Two line tint for Leia: 'shy' or a stat id
+#       (lc_stat_model.leia_tint; call once per tint point, branch on a local, end in a shy else)
 #   lc_d1_route_pressure()                    Day 1 end state ('ntr_seeded' / 'nts_seeded' /
 #       'mixed')
 #   lc_d1_love_bedtime(pressure)              Day 1 Love bedtime variant

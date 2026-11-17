@@ -80,7 +80,7 @@ def text(out):
 
 
 LOOKING = ("# Day One looking rule", '    maya "Never have I ever enjoyed knowing someone was checking me out."')
-UPSTAIRS = ("# Day One upstairs echo", '    "Neither of us was stumbling or confused by the time we got into bed."')
+UPSTAIRS = ("# Day One upstairs echo", '    # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.')
 JULIAN = ("# Julian check-in", '    "An hour later the coffee table was crowded with bottles, mixers, snacks and four glasses."')
 
 
