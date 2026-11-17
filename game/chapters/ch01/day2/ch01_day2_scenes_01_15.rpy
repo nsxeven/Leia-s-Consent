@@ -1405,8 +1405,12 @@ label ch01_day2_scene_11b_boutique:
         gf "I look terrified. Look at my face, that's a terrified face."
     maya "Both can be true. Terrified and hot. That's a whole look."
     maya "I'm serious, I'm actually jealous. I picked the wrong dress for myself and the right one for you, and now I have to live with that."
-    gf "It's a size too small, Maya. I'm holding it on."
-    maya "So hold it on out here. You look this hot and you don't want to show it off? Come on. Two steps. The mirror out here is way better anyway."
+    gf "Maya, it's a size too small. I'm literally holding it on. Should I just try the bigger one?"
+    maya "No! Absolutely not. The bigger one won't do this. This is the one."
+    gf "It's not doing anything, it's barely staying on. If I pull the bottom down, the top comes with it."
+    maya "Okay, so here's what we do. I hold the top up for you, from behind. You hold the bottom down. Two people, one dress. Easy."
+    gf "That's a terrible plan."
+    maya "It's a great plan. You look this hot and you don't want to show it off? Come on. Two steps. The mirror out here is way better anyway."
     gf "The mirror in here is fine."
     maya "The mirror in there is a little sad and you know it."
     "[girlfriend_name] looked at her for a long moment. Then, very slowly, the curtain opened the rest of the way."
@@ -1422,8 +1426,10 @@ label ch01_day2_scene_11b_boutique:
     gf "I'm facing the mirror. That's what mirrors are for."
     maya "The mirror's not the one who needs to see you, babe."
     gf "Nobody needs to see me. I'm good right here. This is a great spot."
-    "The zip at the back had given up a little short of the top. Maya caught both sides of it and held them closed, so the halter had something to pull against."
-    maya "Okay, here's the deal. I've got the back. You've got the front. Nothing's going anywhere. All you have to do is turn around."
+    gf "Okay. Top. You've got the top, right? Hold it up. Properly, Maya, not just touching it."
+    "Maya took the back of the dress in both hands and lifted, so the front panels sat higher and stayed where they were supposed to."
+    "[girlfriend_name] let go of her chest, slowly, like she didn't trust it, and put both hands on the front of the hem instead, pulling it as low as it would go."
+    maya "See? I've got the top. You've got the bottom. Nothing's going anywhere. All you have to do is turn around."
     gf "And then what?"
     maya "And then people see how good you look, and you get to stand there and let them."
     gf "People are already looking. I can feel them looking, Maya."
@@ -1431,7 +1437,7 @@ label ch01_day2_scene_11b_boutique:
     "Behind them, a man over by the racks had stopped pretending to look at shirts a while ago."
     gf "...Two seconds. I'll turn around for two seconds."
     maya "Ten."
-    gf "Five, and you don't let go."
+    gf "Five, and you don't let go of the top. Whatever happens, you don't let go."
     maya "Deal. I'm not letting go."
 
     $ lc_pov_end()
@@ -1441,7 +1447,7 @@ label ch01_day2_scene_11b_boutique:
     $ cast(ryan="casual")
 
     "From my chair by the window, I watched [girlfriend_name] turn around."
-    "Even from across the shop, the dress was a lot. She had one hand pinning the hem down and the other arm flat across the front panels, and Maya was right behind her, still holding the back closed."
+    "Even from across the shop, the dress was a lot. She had both hands pulling the hem down at the front, and Maya was right behind her, holding the top up for her."
 
     maya "[player_name]! Get over here! You need to see this up close!"
 
@@ -1479,7 +1485,7 @@ label ch01_day2_scene_11b_boutique:
         "I was already out of the chair."
 
     if d2_mall_ryan_present:
-        "I crossed the shop. By the time I got there, [girlfriend_name] had both arms locked over the dress, and Maya was still holding the back closed for her."
+        "I crossed the shop. By the time I got there, [girlfriend_name] still had both hands on the hem, and Maya was still holding the top up for her."
         $ d2_selfie_reply = get_story_value("ch01_d2_boutique_selfie_reply")
         if d2_selfie_reply == "affection":
             gf "Don't say it again. If you say incredible again in front of all these people, I'm going to die. Right here, by the mirror."
@@ -1521,7 +1527,7 @@ label ch01_day2_scene_11b_boutique:
     boutique_stranger "Really. You should get it."
     maya "I'm getting it! I was getting it anyway, but now I'm definitely getting it. Wait, say that again, slower."
     "She laughed and turned toward him, and both her hands came up to push her hair back over her shoulders."
-    "They were the hands that had been holding [girlfriend_name]'s dress closed."
+    "They were the hands that had been holding [girlfriend_name]'s top up."
     "One side of [girlfriend_name]'s top slipped straight down."
 
     gf "Maya!"
