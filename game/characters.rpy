@@ -17,6 +17,9 @@ define passerby = Character("Stranger")
 # Day 3 cutout-stand stranger: a separate person from the Day 2 dinner collision
 # stranger (and from the passerby). Same on-screen name, separate speaker object.
 define stranger_d3 = Character("Stranger")
+# Day 2 boutique: the man by the racks who compliments Maya (and the Hidden POV there).
+# A separate person again; no sprite, so he is not in LC_CAST_SPEAKERS.
+define boutique_stranger = Character("Stranger")
 define maya = Character("Maya")
 # Day One used the temporary phone_friend role before Maya was introduced in person.
 define phone_friend = maya

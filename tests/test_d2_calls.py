@@ -54,8 +54,12 @@ class LeiaCasualOutfitTests(unittest.TestCase):
 
     def test_boutique_casts_casual_then_hides_her_in_the_changing_room(self):
         body = block(SCENES, "ch01_day2_scene_11b_boutique")
-        after = body.split("scene cg ch01_d2_boutique_changing_room", 1)[1]
-        self.assertLess(after.index('$ cast_remove("leia")'), after.index('gf "[player_name]? Are you still out there?"'))
+        before, after = body.split("scene cg ch01_d2_boutique_changing_room", 1)
+        # Changing-room rework: Leia and Maya leave the stage (try-on dresses have no
+        # sprites yet) before the first changing-room CG; afterwards only Ryan is cast.
+        self.assertIn('$ cast_remove("leia", "maya")', before.split('"Maya kept the red dress', 1)[1])
+        self.assertNotIn('leia="', after.split("label ", 1)[0])
+        self.assertNotIn('maya="', after.split("label ", 1)[0])
         self.assertIn('$ cast(ryan="casual", leia="casual", maya="green_tube_top")\n    "Maya kept the red dress', body)
         villa = block(SCENES, "ch01_day2_scene_12_villa_pool_plan")
         self.assertIn("$ cast()", villa.split('"We headed back', 1)[0])

@@ -49,8 +49,9 @@ D1 = [
 DREAM = ["ch01_dream_ground", "ch01_dream_curiosity", "ch01_dream_withdraw"]
 # Day 2 menus before the pre-split lane snapshot, as they play. The scene 3
 # "Is she pretty?" menu plays inside ch01_day2_scene_03_maya_message. The
-# boutique go/leave menu only shows on the NTR-risk lane, and the reveal menu
-# only when Ryan went over (both handled in play()). The post-shop "I'm fine."
+# boutique go/leave menu only shows on the NTR-risk lane. The reveal menu is Ryan's reply
+# to her changing-room selfie: it always plays, before the go/leave menu (handled in
+# play()). The post-shop "I'm fine."
 # menu is flavor since v0.2.0; the cafe overheard incident is scored in its place.
 D2_PRE = [
     ["ch01_d2_morning_reassure", "ch01_d2_morning_tease", "ch01_d2_morning_dismiss"],
@@ -110,16 +111,15 @@ def play(d1, d2, pool=None, sunset=None, bed=None, wink=None):
     pressure = m.d1_route_pressure(stats)
     bedtime = m.d1_love_bedtime(pressure, stats)
     apply(pick(DREAM, per_menu(d2, 0)))
-    ryan_at_reveal = True
     for i, menu in enumerate(D2_PRE):
         if i == MALL_GO:
+            # The selfie reply (reveal menu) plays first on every lane, then Maya's shout.
+            apply(pick(D2_PRE[MALL_REVEAL], per_menu(d2, MALL_REVEAL + 1)))
             if m.d2_route_lane(stats, pressure, gained_today()) != "ntr_risk":
                 continue
-            choice = pick(menu, per_menu(d2, i + 1))
-            ryan_at_reveal = choice == "ch01_d2_mall_go_to_leia"
-            apply(choice)
+            apply(pick(menu, per_menu(d2, i + 1)))
             continue
-        if i == MALL_REVEAL and not ryan_at_reveal:
+        if i == MALL_REVEAL:
             continue
         apply(pick(menu, per_menu(d2, i + 1)))
 

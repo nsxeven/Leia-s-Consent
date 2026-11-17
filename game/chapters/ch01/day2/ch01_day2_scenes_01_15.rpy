@@ -1263,30 +1263,138 @@ label ch01_day2_scene_11b_boutique:
     $ set_story_flag("ch01_d2_maya_pushed_boutique_tryon")
     $ set_story_value("ch01_d2_boutique_trial_outfit", "boutique_cutout_mini")
 
+    maya "I'm trying the red one too. Solidarity. Now go, before you talk yourself out of it."
+
+    "Maya took the curtain on the left. [girlfriend_name] took the one beside it, like she was walking into an exam."
+
+    # Leia and Maya are in the changing rooms in the try-on dresses (no sprites for
+    # those outfits yet), so only Ryan stays on stage for the rest of the boutique.
+    $ cast_remove("leia", "maya")
+    "I found the one chair in the boutique, next to the window display, and settled in to wait."
+
     $ enter_cinematic_mode()
     scene cg ch01_d2_boutique_changing_room
     with dissolve
 
-    "Maya's red dress fit as if she'd picked it for herself a hundred times before."
-    "[girlfriend_name]'s was another matter."
-    "She stood in front of the mirror holding the two triangular front panels securely against herself while Maya worked out the straps behind her."
+    "Behind the curtain, [girlfriend_name] held the dress up at arm's length and looked at it for a long time."
+    "It looked even smaller in there. Two front panels, a halter tie and a lot of cutouts, and somehow it was supposed to hold her in."
+    gf "Okay. It's a dress. People wear dresses. People wear dresses all the time."
+    maya "Are you in it yet?"
+    gf "I'm looking at it!"
+    maya "Stop looking at it and put it on! Mine's already on, and I look amazing, by the way."
 
-    gf "This isn't a dress. This is, like, a suggestion of a dress."
-    maya "You're wearing it, so it's a dress. That's how dresses work."
-    gf "If I move my hand, I'm getting banned from this mall."
-    maya "Only because I haven't done the straps yet. Hang on. Don't move."
-    gf "'Don't move' is not making me feel better, Maya."
+    scene cg ch01_d2_changing_room_02
+    with dissolve
 
-    "Maya moved behind her, took over the tension in the straps and carefully pulled the top into place."
+    "It went on easier than she expected. Then she looked up at the mirror."
+    gf "Oh. Oh, okay."
+    "The black hugged everything. The cutouts sat exactly where she'd been afraid they would, and the hem stopped a lot higher up her thighs than anything she owned."
+    gf "Maya, how short is this supposed to be?"
+    maya "Short! It's a mini, that's the whole idea of a mini!"
 
-    gf "How is yours cut just as low and somehow more secure?"
-    maya "Years of practice. And tape. Mostly tape."
-    gf "That's not how clothes work. That can't be how clothes work."
-    maya "It's exactly how clothes work. Breathe in."
+    scene cg ch01_d2_changing_room_03
+    with dissolve
 
-    "Maya stepped back, took [girlfriend_name] by the shoulders and turned her square to the mirror, grinning like she'd made the dress herself."
+    "She turned to check the back, and the hem rode straight up with her."
+    "She tugged it down. The top shifted. She caught that with her other arm, pressed the front panels up against her chest and stood very, very still."
+    gf "Yeah, no. It's a size too small."
+    maya "Is it, though? Or is it just a lot of dress?"
+    gf "It's not a lot of anything, Maya, that's the problem. If I pull it down, the top goes, and if I fix the top, the bottom goes, and I only have two hands."
+    maya "So you hold both. Easy."
+    gf "I'm not going out there holding both."
+    "She looked at herself for a while anyway. Then, still holding the front in place with one arm, she dug her phone out of her shorts on the bench."
 
-    maya "No, stop looking at the straps. Look at you. Babe, you look so hot right now it's actually kind of annoying."
+    scene cg ch01_d2_changing_room_capture
+    with dissolve
+    $ lc_photo()
+
+    "She angled the phone at the mirror and took the picture before she could change her mind."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
+    $ cast(ryan="casual")
+
+    $ lc_sfx("phone_notify")
+    "My phone buzzed against my leg."
+    python:
+        phone_add_message(
+            "leia",
+            "leia",
+            text="",
+            message_id="ch01_d2_boutique_selfie",
+            attachment_id="ch01_d2_changing_room_selfie",
+            attachment_label=girlfriend_name + " in the changing room",
+            mark_unread=True,
+            notify=True,
+        )
+        phone_add_message(
+            "leia",
+            "leia",
+            text="Be honest. Is this too much?? Maya picked it. Obviously.",
+            message_id="ch01_d2_boutique_selfie_ask",
+            mark_unread=True,
+        )
+
+    "A photo from [girlfriend_name]. The changing-room mirror, the black dress Maya had picked, one arm clamped across her chest and the other hand on the hem."
+    "Her face was trying very hard to look like this was all a joke."
+    "Underneath it: \"Be honest. Is this too much?? Maya picked it. Obviously.\""
+
+    # Ryan's reply to the selfie is the scored reveal reaction (same choice ids and
+    # effects as the old in-person reveal). It now plays on every lane, before the shout.
+    $ d2_mall_affection_text = format_choice("ch01_d2_mall_reveal_affection", "You look incredible.")
+    $ d2_mall_open_text = format_choice("ch01_d2_mall_reveal_open", "Didn't know you had that in you.")
+    $ d2_mall_tease_text = format_choice("ch01_d2_mall_reveal_tease", "Maya really did this to you?")
+    $ d2_mall_flat_text = format_choice("ch01_d2_mall_reveal_flat", "It's... nice.")
+
+    menu:
+        "[d2_mall_affection_text]":
+            $ apply_choice("ch01_d2_mall_reveal_affection")
+            $ set_story_value("ch01_d2_boutique_selfie_reply", "affection")
+            $ phone_send_player_message("leia", "You look incredible.", message_id="ch01_d2_boutique_selfie_reply")
+            $ phone_add_message("leia", "leia", text="You have to say that. You're biased.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
+            "Her answer came straight back: \"You have to say that. You're biased.\""
+            "I typed back that I was very biased and that it was still true. Three dots came up, went away, and came up again."
+
+        "[d2_mall_open_text]":
+            $ apply_choice("ch01_d2_mall_reveal_open")
+            $ set_story_value("ch01_d2_boutique_selfie_reply", "open")
+            $ phone_send_player_message("leia", "Didn't know you had that in you.", message_id="ch01_d2_boutique_selfie_reply")
+            $ phone_add_message("leia", "leia", text="I DON'T. This is all Maya. I'm just standing in it.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
+            "Her answer came straight back: \"I DON'T. This is all Maya. I'm just standing in it.\""
+
+        "[d2_mall_tease_text]":
+            $ apply_choice("ch01_d2_mall_reveal_tease")
+            $ set_story_value("ch01_d2_boutique_selfie_reply", "tease")
+            $ phone_send_player_message("leia", "Maya really did this to you?", message_id="ch01_d2_boutique_selfie_reply")
+            $ phone_add_message("leia", "leia", text="Against my better judgment. VERY much against it.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
+            "Her answer came straight back: \"Against my better judgment. VERY much against it.\""
+
+        "[d2_mall_flat_text]":
+            $ apply_choice("ch01_d2_mall_reveal_flat")
+            $ set_story_value("ch01_d2_boutique_selfie_reply", "flat")
+            $ phone_send_player_message("leia", "It's... nice.", message_id="ch01_d2_boutique_selfie_reply")
+            $ phone_add_message("leia", "leia", text="Nice.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
+            "Her answer took a while: \"Nice.\""
+            "Just the one word, with a full stop on it. I started typing that I meant really nice, and deleted it, and started again."
+
+    $ phone_add_message("leia", "leia", text="Don't come over here. I'm not coming out in this. Changing room only.", message_id="ch01_d2_boutique_selfie_stay", mark_unread=True)
+    "Another one landed before I'd even put the phone down: \"Don't come over here. I'm not coming out in this. Changing room only.\""
+    "I put my phone away and stayed in my chair. Whatever happened next, it was going to be her call."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_changing_room_04
+    with dissolve
+
+    "On the other side of the shop, [girlfriend_name]'s head came out from behind the curtain. Just her head."
+    gf "Maya? Are you out there?"
+    maya "I'm out here looking amazing. Let me see you."
+    gf "No. I'm asking for thoughts. Verbal thoughts, through the curtain."
+    maya "You sent [player_name] a picture and you won't show me? I'm the one who picked it!"
+    gf "That's different. He's— that's different."
+    maya "Babe. Open the curtain."
+    "The curtain opened about a hand's width. Maya looked through it for a long second."
+    maya "Oh, I hate you. Babe, you look so hot right now it's actually kind of annoying."
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
     $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
@@ -1296,19 +1404,53 @@ label ch01_day2_scene_11b_boutique:
     else:
         gf "I look terrified. Look at my face, that's a terrified face."
     maya "Both can be true. Terrified and hot. That's a whole look."
+    maya "I'm serious, I'm actually jealous. I picked the wrong dress for myself and the right one for you, and now I have to live with that."
+    gf "It's a size too small, Maya. I'm holding it on."
+    maya "So hold it on out here. You look this hot and you don't want to show it off? Come on. Two steps. The mirror out here is way better anyway."
+    gf "The mirror in here is fine."
+    maya "The mirror in there is a little sad and you know it."
+    "[girlfriend_name] looked at her for a long moment. Then, very slowly, the curtain opened the rest of the way."
 
-    "[girlfriend_name] looked at herself again. This time she didn't immediately cover more of the dress."
+    scene cg ch01_d2_shop_showoff
+    with dissolve
+    # Hidden POV (darryn 2026-11-17): the stranger by the racks on the left; his view
+    # is ShopShowOffCloseup_01. Optional cue only; no stats or story change.
+    $ lc_pov_begin("d2_boutique_stranger")
 
+    "Maya got her as far as the big mirror outside the changing rooms. [girlfriend_name] planted herself in front of it, back to the whole shop, and refused to go one step farther."
+    maya "You're facing the wrong way."
+    gf "I'm facing the mirror. That's what mirrors are for."
+    maya "The mirror's not the one who needs to see you, babe."
+    gf "Nobody needs to see me. I'm good right here. This is a great spot."
+    "The zip at the back had given up a little short of the top. Maya caught both sides of it and held them closed, so the halter had something to pull against."
+    maya "Okay, here's the deal. I've got the back. You've got the front. Nothing's going anywhere. All you have to do is turn around."
+    gf "And then what?"
+    maya "And then people see how good you look, and you get to stand there and let them."
+    gf "People are already looking. I can feel them looking, Maya."
+    maya "Because you look like that! That's literally my whole point!"
+    "Behind them, a man over by the racks had stopped pretending to look at shirts a while ago."
+    gf "...Two seconds. I'll turn around for two seconds."
+    maya "Ten."
+    gf "Five, and you don't let go."
+    maya "Deal. I'm not letting go."
+
+    $ lc_pov_end()
     $ exit_cinematic_mode()
     scene bg ch01_d2_boutique
     with dissolve
-    # She is calling from the changing room in the try-on dress (no sprite for
-    # it), so keep her casual sprite off stage for the rest of the boutique.
-    $ cast_remove("leia")
+    $ cast(ryan="casual")
 
-    gf "[player_name]? Are you still out there?"
-    mc "Yeah, I'm here. What's up?"
-    gf "Can you come here for a second? I need a second opinion. Yours."
+    "From my chair by the window, I watched [girlfriend_name] turn around."
+    "Even from across the shop, the dress was a lot. She had one hand pinning the hem down and the other arm flat across the front panels, and Maya was right behind her, still holding the back closed."
+
+    maya "[player_name]! Get over here! You need to see this up close!"
+
+    "Maya's voice carried across the entire boutique. Every head that hadn't already turned toward the changing rooms turned now."
+    "A woman at the shoe wall stopped halfway into a sandal. Two guys by the jeans gave up pretending to look at jeans."
+    "[girlfriend_name] went red from her collarbones up. She looked at the floor like she was hoping it would open up for her."
+    gf "Maya! Why would you yell?"
+    maya "So he'd hear me! And it worked, look, everyone heard me."
+    gf "That's not the good part!"
 
     $ d2_mall_lane = ch01_d2_route_lane()
     $ set_story_value("ch01_d2_mall_entry_lane", d2_mall_lane)
@@ -1322,77 +1464,49 @@ label ch01_day2_scene_11b_boutique:
             "[d2_mall_go_text]":
                 $ apply_choice("ch01_d2_mall_go_to_leia")
                 $ set_story_value("ch01_d2_mall_ryan_response", "reconnected")
-                "Whatever distance had been building between us, she had asked for me."
+                "Whatever distance had been building between us, she was standing over there in front of half the shop."
                 "I went over."
 
             "[d2_mall_leave_text]":
                 $ apply_choice("ch01_d2_mall_leave_to_maya")
                 $ set_story_value("ch01_d2_mall_ryan_response", "ignored")
                 $ d2_mall_ryan_present = False
-                mc "Maya's better at this than me. I'll just get in the way."
-                "There was a short pause from behind the curtain."
+                mc "You two are fine! Maya's better at this than me. I'll just get in the way."
+                "There was a short pause from over by the mirror."
                 gf "...Okay."
     else:
         $ set_story_value("ch01_d2_mall_ryan_response", "came_over")
-        "I headed toward the changing rooms."
+        "I was already out of the chair."
 
     if d2_mall_ryan_present:
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_boutique_reveal_ryan
-        with dissolve
-
-        "Maya opened the curtain while standing behind [girlfriend_name], both hands still responsible for keeping the black top properly tensioned."
-        "[girlfriend_name] looked considerably less certain than Maya did."
-
-        gf "Well? Say something, I'm dying here."
-
-        $ d2_mall_affection_text = format_choice("ch01_d2_mall_reveal_affection", "You look incredible.")
-        $ d2_mall_open_text = format_choice("ch01_d2_mall_reveal_open", "Didn't know you had that in you.")
-        $ d2_mall_tease_text = format_choice("ch01_d2_mall_reveal_tease", "Maya really did this to you?")
-        $ d2_mall_flat_text = format_choice("ch01_d2_mall_reveal_flat", "It's... nice.")
-
-        menu:
-            "[d2_mall_affection_text]":
-                $ apply_choice("ch01_d2_mall_reveal_affection")
-                mc "You look incredible."
-                "[girlfriend_name]'s shoulders relaxed a little."
-                gf "You have to say that. You're biased."
-                mc "Very biased. Still true, though."
-
-            "[d2_mall_open_text]":
-                $ apply_choice("ch01_d2_mall_reveal_open")
-                mc "Didn't know you had that in you."
-                gf "I don't! I didn't. Maya put it there, this is all Maya."
-                maya "You're welcome. Both of you."
-
-            "[d2_mall_tease_text]":
-                $ apply_choice("ch01_d2_mall_reveal_tease")
-                mc "Maya really did this to you?"
-                gf "Against my better judgment, yes. Very much against it."
-                maya "Her judgment's getting better, actually. We're working on it."
-
-            "[d2_mall_flat_text]":
-                $ apply_choice("ch01_d2_mall_reveal_flat")
-                mc "It's... yeah. It's nice."
-                gf "Nice."
-                maya "Nice? She looks like that and you've got 'nice'?"
-                mc "I mean really nice. I just— I wasn't ready for it."
-                "[girlfriend_name] tugged the top a little higher and didn't ask me again."
-
-        $ exit_cinematic_mode()
-        scene bg ch01_d2_boutique
-        with dissolve
+        "I crossed the shop. By the time I got there, [girlfriend_name] had both arms locked over the dress, and Maya was still holding the back closed for her."
+        $ d2_selfie_reply = get_story_value("ch01_d2_boutique_selfie_reply")
+        if d2_selfie_reply == "affection":
+            gf "Don't say it again. If you say incredible again in front of all these people, I'm going to die. Right here, by the mirror."
+            mc "I wasn't going to say it again."
+            "I was absolutely going to say it again. She could tell, and she went even redder."
+        elif d2_selfie_reply == "open":
+            gf "Don't. I can see you thinking it. 'Didn't know you had that in you.'"
+            mc "I'm thinking it a little."
+            maya "He's thinking it a lot. Look at him."
+        elif d2_selfie_reply == "tease":
+            gf "Yes. She did this to me. You can see that now. In person."
+            maya "You're welcome. Both of you."
+        elif d2_selfie_reply == "flat":
+            gf "Still just nice?"
+            mc "It's more than nice. Up close it's way more than nice. I just didn't know how to type it."
+            gf "Okay. Thanks."
+            "She tugged the hem down again and didn't quite look at me."
+        else:
+            gf "Well? Say something, I'm dying here."
+        "People were still looking. She knew it, too. She kept her eyes on me like I was the only safe place left to put them."
 
     else:
-        maya "[friend_name]!"
+        maya "Fine! [friend_name]!"
         gf "Maya—"
         maya "What? We need a second opinion, and he's right there."
 
         "[friend_name] appeared from the next section holding two nearly identical shirts."
-
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_boutique_reveal_julian
-        with dissolve
 
         friend "Oh."
         maya "'Oh'? That's all you've got?"
@@ -1401,24 +1515,14 @@ label ch01_day2_scene_11b_boutique:
         friend "You look good, though. Really. Okay. I'm going back to the shirts."
         gf "...Thanks."
 
-        $ exit_cinematic_mode()
-        scene bg ch01_d2_boutique
-        with dissolve
-
-    "Maya was still holding [girlfriend_name]'s top securely when something over [girlfriend_name]'s shoulder caught her attention."
-    maya "Wait— oh my God. Look. That one."
-    gf "What?"
-    maya "That. On the display. Look at it."
-
-    "A metallic mesh mini hung on a nearby display in deep crimson: a plunging draped front, delicate chain straps and a slit cut almost to the hip."
-
-    gf "You're already wearing red."
-    maya "Not for me, for you! You, in that, at dinner."
-    gf "Absolutely not. I'm still in this one."
-    maya "[girlfriend_name], look at it—"
-
-    "Maya turned and reached toward the display without properly releasing the tension she was holding."
-    "One side of [girlfriend_name]'s black top immediately slipped."
+    "The man from the racks had drifted closer while all that was going on. He wasn't looking at [girlfriend_name] now, though. He was looking at Maya."
+    boutique_stranger "Sorry, I'm not trying to be weird. I just have to say, that red is unreal on you."
+    maya "Oh my God. Stop. Really?"
+    boutique_stranger "Really. You should get it."
+    maya "I'm getting it! I was getting it anyway, but now I'm definitely getting it. Wait, say that again, slower."
+    "She laughed and turned toward him, and both her hands came up to push her hair back over her shoulders."
+    "They were the hands that had been holding [girlfriend_name]'s dress closed."
+    "One side of [girlfriend_name]'s top slipped straight down."
 
     gf "Maya!"
 
@@ -1431,7 +1535,7 @@ label ch01_day2_scene_11b_boutique:
         "Maya froze, horrified."
         maya "Sorry! Sorry, sorry, I've got it, I've got it."
         gf "Maya! You were holding it, you were literally standing there holding it and you just let go!"
-        maya "I know! I got distracted by the other dress, it's a very good dress."
+        maya "I know! He was being nice to me, and I got distracted, and my hands just went."
         gf "I can't believe this is happening in a shop."
 
         $ exit_cinematic_mode()
@@ -1455,7 +1559,7 @@ label ch01_day2_scene_11b_boutique:
 
         maya "Sorry! Sorry, sorry, I've got it, I've got it."
         gf "Maya. You were holding it."
-        maya "I know! I got distracted by the other dress, it's a very good dress."
+        maya "I know! He was being nice to me, and I got distracted, and my hands just went."
         gf "I can't believe this is happening in a shop."
         friend "Sorry. I'm so sorry, I wasn't— I didn't mean to, I was just standing here with the shirts and then it was— sorry. I'm really sorry, [girlfriend_name]."
         "He held up the two shirts, one in each hand, and didn't look at either of them."
@@ -1469,8 +1573,8 @@ label ch01_day2_scene_11b_boutique:
         $ set_story_flag("ch01_d2_leia_noticed_julian_stare")
         $ set_story_value("ch01_d2_boutique_slip_witness", "julian")
 
-    "Maya glanced back toward the crimson mesh dress."
-    maya "I still think you'd look amazing in that one. Just saying."
+    "The man from the racks had already found somewhere else in the shop to be."
+    maya "In my defense, he had really good taste."
     gf "I'm changing. Into my own clothes. Right now."
     maya "So that's a maybe."
     gf "That's a no, Maya."
@@ -1622,7 +1726,7 @@ label ch01_day2_scene_11b_boutique:
         mc "So what happened in there? After I, um. After I stayed out."
         gf "Nothing. Nothing dramatic."
         "She turned her cup slowly between her hands."
-        gf "The top slipped a little. When Maya was grabbing the other dress."
+        gf "The top slipped a little. Some guy started complimenting Maya, and she just let go."
         mc "Oh."
         gf "[friend_name] was there."
         "I looked at her."

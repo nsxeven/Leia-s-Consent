@@ -45,7 +45,7 @@ init -2 python:
     GALLERY_PLACEHOLDER_IMAGES = set([
         # Day 2
         "ch01_d2_photo_leia_maya",
-        "ch01_d2_boutique_changing_room", "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
+        "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_boutique_slip_ryan", "ch01_d2_boutique_slip_julian",
         "ch01_d2_pool_top_accident",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
@@ -200,10 +200,14 @@ init -2 python:
         [("ch01_d2_mall_arrival", "Arriving"), ("ch01_d2_mall_boutique_window", "At the window"),
          ("ch01_d2_shop_dresses", "Red or black?")])
     gallery_row("d2_boutique", "ch01_d2", "Boutique",
-        "Maya pushes Leia to try on the cutout mini. Pages depend on who is there.",
-        [("ch01_d2_boutique_changing_room", "Changing room"), ("ch01_d2_boutique_reveal_ryan", "Reveal (Ryan)"),
-         ("ch01_d2_boutique_reveal_julian", "Reveal (Julian)"), ("ch01_d2_boutique_slip_ryan", "Slip (Ryan)"),
-         ("ch01_d2_boutique_slip_julian", "Slip (Julian)")])
+        "Maya pushes Leia to try on the cutout mini, then talks her out of the changing room. Slip pages depend on who is there.",
+        [("ch01_d2_boutique_changing_room", "The dress"), ("ch01_d2_changing_room_02", "On"),
+         ("ch01_d2_changing_room_03", "A size too small"), ("ch01_d2_changing_room_capture", "Selfie"),
+         ("ch01_d2_changing_room_04", "Maya?"), ("ch01_d2_shop_showoff", "Facing the mirror"),
+         ("ch01_d2_boutique_slip_ryan", "Slip (Ryan)"), ("ch01_d2_boutique_slip_julian", "Slip (Julian)")])
+    gallery_row("d2_boutique_pov", "ch01_d2", "A stranger's view",
+        "Somebody by the racks stopped pretending to look at shirts.",
+        [("ch01_d2_shop_showoff_stranger_pov", "A stranger's POV")], mature=True)
     gallery_row("d2_pool_top_accident", "ch01_d2", "The bee",
         "An accident in the pool: Leia hides behind Julian's shoulders.",
         ["ch01_d2_pool_top_accident"])

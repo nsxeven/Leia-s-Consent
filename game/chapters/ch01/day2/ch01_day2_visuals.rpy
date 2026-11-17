@@ -181,12 +181,23 @@ image cg ch01_d2_ntr_dream_wrong_room = Composite(
 image bg ch01_d2_mall = At("images/backgrounds/chapter 2/ch02_mall.webp", prologue_bg_blur)
 image bg ch01_d2_boutique = At("images/backgrounds/chapter 2/ch02_clothingstore.webp", prologue_bg_blur)
 
-image cg ch01_d2_boutique_changing_room = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#765e69"),
-    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO BOUTIQUE — MAYA + {gf} CHANGING ROOM\nMAYA RED SLIP DRESS / {gf} BLACK CUTOUT MINI", size=48, color="#ffffff"),
-)
+# Boutique try-on (darryn 2026-11-17): Leia alone with the black cutout mini (01-03),
+# the mirror selfie she sends Ryan (Capture), asking Maya through the curtain (04),
+# then backs to the shop at the outside mirror (ShopShowOff_01). The stable id
+# ch01_d2_boutique_changing_room keeps its name and is now ChangingRoom_01.
+image cg ch01_d2_boutique_changing_room = At("images/cg/ch02/CH2D2_CG_ChangingRoom_01.webp", prologue_fullscreen)
+image cg ch01_d2_changing_room_02 = At("images/cg/ch02/CH2D2_CG_ChangingRoom_02.webp", prologue_fullscreen)
+image cg ch01_d2_changing_room_03 = At("images/cg/ch02/CH2D2_CG_ChangingRoom_03.webp", prologue_fullscreen)
+image cg ch01_d2_changing_room_capture = At("images/cg/ch02/CH2D2_CG_ChangingRoom_Capture.webp", prologue_fullscreen)
+image cg ch01_d2_changing_room_04 = At("images/cg/ch02/CH2D2_CG_ChangingRoom_04.webp", prologue_fullscreen)
+image cg ch01_d2_shop_showoff = At("images/cg/ch02/CH2D2_CG_ShopShowOff_01.webp", prologue_fullscreen)
+# Hidden POV: the stranger by the racks (left of ShopShowOff_01).
+image cg ch01_d2_shop_showoff_stranger_pov = At("images/cg/ch02/CH2D2_CG_ShopShowOffCloseup_01.webp", prologue_fullscreen)
+# Phone photo alias for the selfie Leia sends Ryan (bubbles need a non-cg name).
+image ch01_d2_changing_room_selfie = "cg ch01_d2_changing_room_capture"
 
+# Retired reveal placeholders: the reveal is now the selfie reply plus the shout, so these
+# two no longer play. Kept defined so a save made on them still loads.
 image cg ch01_d2_boutique_reveal_ryan = Composite(
     (1920, 1080),
     (0, 0), Solid("#684d5a"),
@@ -255,6 +266,18 @@ init 1 python:
         # Moments strip on the Day Two review (systems/discovery.rpy).
         day_id="ch01_d2",
         label="Julian, breakfast",
+        mood="noticed",
+    )
+    lc_pov_register(
+        "d2_boutique_stranger",
+        image="cg ch01_d2_shop_showoff_stranger_pov",
+        source="cg ch01_d2_shop_showoff",
+        # Sparkle centre: the stranger by the racks, left background (darryn 2026-11-17).
+        center=(415, 230),
+        title="A stranger's POV",
+        mature=True,
+        day_id="ch01_d2",
+        label="Stranger, boutique",
         mood="noticed",
     )
     # Moments strip: the two Day Two doors (systems/discovery.rpy). Marked when a non-neutral
