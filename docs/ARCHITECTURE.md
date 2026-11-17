@@ -22,7 +22,7 @@ is placeholder art) lives in `docs/BUILD_HANDOFF.md`.
 | `game/screens/` | feature screens (phone, review, gallery, menus, title screen) |
 | `game/sprites/` | layered character sprites |
 | `game/dev/` | developer/QA-only labels and screens; left out of release builds by `game/options.rpy` |
-| `game/python-packages/` | pure-Python modules with no Ren'Py import, unit-tested directly: `lc_stat_model.py` (stats, thresholds, routes), `lc_chapters.py` (chapter registry), `lc_discovery.py` (discovery registry, Moments strip rules), `lc_thoughts.py` (Ryan's thoughts pool and rules), `lc_phone_moments.py` (calls, hesitation typing, leave on read), `lc_ui_logic.py`, `lc_title_touch.py`, `lc_wallpaper_crop.py` |
+| `game/python-packages/` | pure-Python modules with no Ren'Py import, unit-tested directly: `lc_stat_model.py` (stats, thresholds, routes), `lc_chapters.py` (chapter registry), `lc_discovery.py` (discovery registry, Moments strip rules), `lc_thoughts.py` (Ryan's thoughts pool and rules), `lc_phone_moments.py` (calls, hesitation typing, leave on read), `lc_notice.py` (Things Ryan noticed: push-in maths, registry checks, found record), `lc_ui_logic.py`, `lc_title_touch.py`, `lc_wallpaper_crop.py` |
 | `tools/` | asset generators (`gen_*.py`) and `tools/clean_orphan_rpyc.py` / `tools/clean_orphan_rpyc.bat` |
 | `tools/dev/` | `tools/dev/snapshot_baselines.py` (behaviour pins) and `tools/dev/rpyc_moves.json` (moved-script map) |
 | `tests/` | the unittest suite plus its helpers (`tests/lc_rpy_model.py`, `tests/lc_rpy_harness.py`, `tests/lc_save_names.py`, `tests/lc_effective_effects.py`) and baselines in `tests/data/` |
@@ -65,7 +65,7 @@ per name (see Rules). Priorities in use:
 | 200 | `game/systems/transparency_display.rpy`, `game/systems/full_transparency_route_explorer.rpy` | kept from the old load order |
 | 300 | `game/screens/phone_sweetheart.rpy` | the last phone overlay registration |
 | 998 | `game/systems/story_state.rpy` (`get_story_flag`) and Day One/Two data adjustments (including `PHONE_THREAD_ORDER` in `game/chapters/ch01/day1/ch01_phone_moments.rpy`) | late data overrides kept from the old load order |
-| 999 | `game/systems/hidden_pov.rpy` (validation), `game/systems/lc_audio_scene_lock.rpy` (wraps `config.scene`), `game/screens/scrapbook_ui.rpy` (click-to-continue on every Character), `game/screens/phone_call.rpy` (appends `lc_phone_moments_overlay` after the Chapter One phone overlay) | need everything else registered first |
+| 999 | `game/systems/hidden_pov.rpy` (validation), `game/systems/notice.rpy` (validation), `game/systems/lc_audio_scene_lock.rpy` (wraps `config.scene`), `game/screens/scrapbook_ui.rpy` (click-to-continue on every Character), `game/screens/phone_call.rpy` (appends `lc_phone_moments_overlay` after the Chapter One phone overlay) | need everything else registered first |
 
 Priorities are chosen for a reason and written next to the block (`# load order: ...`).
 Never rename a file to change when it loads; give the block an explicit priority.
@@ -236,6 +236,8 @@ Work through the steps in order; each names the file that owns the table.
    `lc_pov_end` (`docs/HIDDEN_POV.md`; Day Two's breakfast is the example). Pass
    `day_id="ch01_dN"`, `label=` and `mood=` to put it on the day's Moments strip; other
    optional moments register with `lc_discovery_register(...)` (`game/systems/discovery.rpy`).
+   Push-in notices (Things Ryan noticed) follow the same pattern with `lc_notice_register` /
+   `lc_notice_begin` / `lc_notice_end` (`docs/NOTICES.md`).
 8. **Phone.** Deliver texts with `phone_add_message(...)` and a stable `message_id`. A new
    contact needs its thread id in the `PHONE_THREAD_ORDER` tuple assigned at init 998 in
    `game/chapters/ch01/day1/ch01_phone_moments.rpy` (it overwrites the
@@ -325,6 +327,7 @@ Work through the steps in order; each names the file that owns the table.
 | Hidden POV | `game/systems/hidden_pov.rpy`, `game/systems/hidden_pov_chime.rpy` | `docs/HIDDEN_POV.md` | `tests/test_hidden_pov.py` |
 | Discoveries and Moments strip | `game/systems/discovery.rpy`, `game/python-packages/lc_discovery.py`, `game/screens/day_review_screen.rpy` (`lc_review_moments`) | `docs/HIDDEN_POV.md` | `tests/test_discovery.py` |
 | Ryan's thoughts | `game/systems/thoughts.rpy`, `game/python-packages/lc_thoughts.py`, `game/screens/thoughts_screen.rpy` | `docs/THOUGHTS.md` | `tests/test_thoughts.py` |
+| Things Ryan noticed | `game/systems/notice.rpy`, `game/python-packages/lc_notice.py`, `game/screens/notice_screen.rpy`, `game/screens/phone_sweetheart.rpy` (Status pins) | `docs/NOTICES.md` | `tests/test_notice.py` |
 | Phone moments (calls, hesitation typing, leave on read) | `game/systems/phone_moments.rpy`, `game/python-packages/lc_phone_moments.py`, `game/screens/phone_call.rpy`, `game/dev/dev_phone_moments.rpy` (demo) | `docs/PHONE_MOMENTS.md` | `tests/test_phone_moments.py` |
 | Gallery | `game/systems/gallery.rpy`, `game/systems/gallery_data.rpy`, `game/screens/gallery_screen.rpy` | `docs/BUILD_HANDOFF.md` | `tests/test_gallery_flags.py` |
 | Phone data | `game/systems/phone_state.rpy`, `game/systems/phone_presentation_logic.rpy`, `game/systems/phone_group_avatar.rpy` | this file | `tests/test_phone_replies.py`, `tests/test_phone_read_state.py`, `tests/test_phone_group_avatar.py` |

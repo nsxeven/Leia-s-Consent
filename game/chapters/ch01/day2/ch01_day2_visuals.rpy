@@ -262,3 +262,52 @@ init 1 python:
     # and leaves the door unopened. No image: both scenes still use placeholder art.
     lc_discovery_register("ch01_d2", "d2_knot_door", "door", "Pool, the knot", "you saw it first")
     lc_discovery_register("ch01_d2", "d2_dare_door", "door", "Game night, the dare", "her eyes on you")
+
+# Things Ryan noticed (systems/notice.rpy, docs/NOTICES.md): two push-in notices on finished
+# Day Two morning CGs. The spot is the same on every lane; the captions change by lane (Love
+# captions are about Leia). Both feed one extra option in the sunset talk (scene 20).
+# load order: init 1, after lc_notice_register (init 0, systems/notice.rpy).
+init 1 python:
+    lc_notice_register(
+        "d2_notice_bed_hand",
+        source="cg ch01_d2_leia_sleeping",
+        # Eye on her forearm (her hand rests on the sheet at the near edge, below the dialogue
+        # box). The push-in frames the arm and hand; her face sits at the top of that frame and
+        # her hand at bottom left, so the captions go on the empty duvet at bottom right.
+        center=(600, 680),
+        focus_rect=(330, 560, 520, 500),
+        caption_box=(790, 792, 1080),
+        lines=["Her hand had slid to the very edge of the mattress, palm up, right where I'd been lying a minute ago."],
+        lane_lines={
+            "love": ["Her hand had found its way over to my side of the bed and stayed there, palm up, right where I'd been.",
+                     "Even asleep, [girlfriend_name] goes looking for me. I don't think she even knows she does it."],
+            "exhib": ["Camisole rucked up past her stomach, the duvet shoved down to her hips, one arm stretched out across the sheet toward me.",
+                      "Anyone could have walked past and seen her like this. That barely bothered me, which probably should have."],
+            "ntr": ["Her hand lay at the very edge of the bed, palm open, toward the side I'd just left.",
+                    "She hadn't stirred when I got up. I couldn't tell if that was sweet, or if she just hadn't noticed I was gone."],
+        },
+        day_id="ch01_d2",
+        label="Morning, her hand",
+        mood="still reaching",
+    )
+    lc_notice_register(
+        "d2_notice_breakfast_smile",
+        source="cg ch01_d2_breakfast_01",
+        # Eye beside her hand on her cheek. The push-in frames both faces: [friend_name] sits right
+        # beside her in the same chin-on-hand pose (the NTR caption is about that).
+        center=(1040, 300),
+        focus_rect=(560, 40, 1300, 620),
+        zoom=1.2,
+        lines=["Chin propped on her hand, smiling across the table at me while [friend_name] kept talking."],
+        lane_lines={
+            "love": ["Chin on her hand, smiling right at me like [friend_name] wasn't even at the table.",
+                     "That smile's just for me. I've never once had to ask [girlfriend_name] for it."],
+            "exhib": ["Her shirt had slid off one shoulder and she hadn't bothered fixing it, with [friend_name] sitting right there.",
+                      "She caught me noticing and just smiled wider."],
+            "ntr": ["She was smiling at me, chin propped on one hand, coffee in the other.",
+                    "Right beside her, [friend_name] was sitting exactly the same way, with the same smile. I couldn't stop seeing it."],
+        },
+        day_id="ch01_d2",
+        label="Breakfast, her smile",
+        mood="across the table",
+    )

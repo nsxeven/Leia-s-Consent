@@ -316,6 +316,7 @@ label ch01_day2_scene_01_morning_after:
 
     scene cg ch01_d2_leia_sleeping
     with dissolve
+    $ lc_notice_begin("d2_notice_bed_hand")  # Things Ryan noticed (docs/NOTICES.md)
 
     "[girlfriend_name] had claimed about three-quarters of the bed at some point in the night."
     "One arm was flung over her head, the other was hanging off the edge, and her mouth was wide open like she was halfway through arguing with someone in her dream."
@@ -324,6 +325,7 @@ label ch01_day2_scene_01_morning_after:
     mc "Hey. [friend_name]'s awake. Which means we're officially late."
     gf "Mmhh... five more... hours."
     mc "He sent 'Bro wake up.' That's the whole message. He's escalating."
+    $ lc_notice_end()
 
     scene cg ch01_d2_leia_waking
     with dissolve
@@ -595,6 +597,7 @@ label ch01_day2_scene_02_breakfast:
     $ enter_cinematic_mode()
     scene cg ch01_d2_breakfast_01
     with fade
+    $ lc_notice_begin("d2_notice_breakfast_smile")  # Things Ryan noticed (docs/NOTICES.md)
     "Breakfast started with the kind of easy rhythm we'd found by the end of yesterday."
 
     friend "Oh, look who's alive. I was about to send a search party. I had a whole message drafted and everything."
@@ -642,6 +645,7 @@ label ch01_day2_scene_02_breakfast:
         gf "I admit nothing. The duvet came to me."
         "She poured it anyway."
 
+    $ lc_notice_end()
     $ set_story_flag("ch01_d2_scene_02_complete")
     jump ch01_day2_scene_03_maya_message
 

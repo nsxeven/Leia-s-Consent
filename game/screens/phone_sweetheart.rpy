@@ -38,7 +38,8 @@
 # Depends on: systems/phone_presentation_logic.rpy, systems/phone_state.rpy,
 #   systems/phone_moments.rpy (Seen receipt, missed-call rows), python-packages/lc_phone_moments.py,
 #   systems/phone_group_avatar.rpy, systems/status_display.rpy, systems/wardrobe_logic.rpy,
-#   screens/phone_wallpaper.rpy, screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy
+#   screens/phone_wallpaper.rpy, screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy,
+#   systems/notice.rpy + screens/notice_screen.rpy (Status "Things I noticed" pins)
 # Hooks: none (registers the lc_phone_extra_apps and lc_phone_hardware_overlay overlays)
 # Load order: every name defined once. The python blocks keep the priorities of the old load order,
 #   so init runs as before: init 90 lc_phone_extra_apps overlay + Home helpers; init 95 handset
@@ -1253,6 +1254,7 @@ screen lc_phone_status():
     $ _leia_rows = status_leia_rows(_mode)
     $ _ryan_rows = status_ryan_rows(_mode)
     $ _route_rows = status_route_rows(_mode)
+    $ _notice_pins = lc_notice_pins()
 
     use lc_phone_backdrop(Function(lc_phone_close))
     fixed:
@@ -1341,6 +1343,8 @@ screen lc_phone_status():
                 use lc_phone_status_section(player_name, _ryan_rows)
                 if _route_rows:
                     use lc_phone_status_section("Route tendencies", _route_rows)
+                if _notice_pins:
+                    use lc_phone_notice_pins(_notice_pins)
                 textbutton "Open settings":
                     style "lc_phone_btn"
                     action [Hide("lc_phone_status"), Show("lc_phone_settings")]

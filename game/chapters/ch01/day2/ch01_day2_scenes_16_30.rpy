@@ -569,6 +569,20 @@ label ch01_day2_scene_19_change_for_evening:
     jump ch01_day2_scene_19b_leia_asks_maya
 
 
+# Things Ryan noticed (docs/NOTICES.md): the extra sunset-talk option offered after a morning
+# notice. Scored like any choice (Love shape); noticing itself never moves stats.
+init 1 python:
+    CHOICE_EFFECTS.update({
+        "ch01_d2_sunset_noticed": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
+    })
+    CHOICE_TAGS.update({
+        "ch01_d2_sunset_noticed": ("supportive", "attentive", "honest"),
+    })
+
+
 label ch01_day2_scene_20_dinner_outfit:
 
     # Sunset route payoff. The legacy label name is preserved for save
@@ -775,6 +789,37 @@ label ch01_day2_scene_20_dinner_outfit:
                     centered "Major relationship consequence."
                 elif current_choice_mode() == "insight":
                     centered "[girlfriend_name] stops repeatedly reaching back toward [player_name]."
+
+    # Things Ryan noticed (docs/NOTICES.md): every lane reaches this point after its sunset talk.
+    # One extra, scored option when a Day Two morning notice was made; not after "I'm fine".
+    if lc_noticed_any("d2_notice_bed_hand", "d2_notice_breakfast_smile") and not get_story_value("ch01_d2_ntr_soft_gate", False):
+        $ d2_sunset_noticed_text = format_choice("ch01_d2_sunset_noticed", "Tell her what you noticed this morning.")
+        menu:
+            "[d2_sunset_noticed_text]":
+                $ apply_choice("ch01_d2_sunset_noticed")
+                $ set_story_value("ch01_d2_sunset_noticed", True)
+                if lc_noticed("d2_notice_bed_hand"):
+                    mc "This morning, when I got up. Did you know your hand went straight over to my side of the bed? Palm up, right at the edge, like you were looking for me."
+                else:
+                    mc "At breakfast, while [friend_name] was busy defending his movie, you just looked over at me and smiled. Like nobody else was even at the table."
+                if d2_lane == "love":
+                    gf "Wait, you saw that? Oh my god, I didn't even know I did that."
+                    gf "No, don't make it weird, I like that you saw it. I really, really like that you saw it."
+                    mc "I notice most of what you do. I just don't usually say it out loud."
+                    gf "Then say it out loud more. All of it, every dumb little thing. I want the whole list."
+                    "She tucked herself under my arm and stayed there while the last of the light went."
+                elif d2_lane == "exhibitionism":
+                    gf "You were watching me that closely, huh?"
+                    mc "Hard not to."
+                    gf "Good. I like knowing it's you watching. That's my favorite part, actually."
+                    "She bumped her knee against mine, very pleased with herself."
+                else:
+                    gf "...You noticed that?"
+                    mc "I notice you. I've just been bad at saying it today."
+                    gf "Then say that stuff. That's exactly the stuff I want to hear from you."
+                    "She leaned her head on my shoulder, and for a minute it was just the two of us again."
+            "Keep it to yourself.":
+                pass
 
     "A few minutes later [friend_name] came back downstairs, freshly changed and completely unaware of what had just happened."
 
