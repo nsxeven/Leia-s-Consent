@@ -169,10 +169,16 @@ def validate_options(options):
     return None
 
 
-def record_left_on_read(receipts, thread_id, prompt_id, message_id, time=None):
-    """A new receipts dict: thread_id's latest left-on-read message. Never mutates `receipts`."""
+def record_left_on_read(receipts, thread_id, prompt_id, message_id, time=None, unopened=False):
+    """A new receipts dict: thread_id's latest left-on-read message. Never mutates `receipts`.
+    unopened: the card ran out at a deadline while Ryan never had the chat open, so nothing was
+    'Seen' (no receipt row, and the thread stays unread for a later unread-bubble beat)."""
     receipts = dict(receipts or {})
-    receipts[thread_id] = {"prompt": prompt_id, "message_id": message_id, "time": time}
+    if unopened:
+        receipts[thread_id] = {"prompt": prompt_id, "message_id": None, "time": None,
+                               "unopened": True}
+    else:
+        receipts[thread_id] = {"prompt": prompt_id, "message_id": message_id, "time": time}
     return receipts
 
 

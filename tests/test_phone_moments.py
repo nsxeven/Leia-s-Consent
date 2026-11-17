@@ -175,6 +175,13 @@ class LeaveOnReadTests(unittest.TestCase):
         pm.record_left_on_read(start, "maya", "p", None, None)
         self.assertEqual(start, {})
 
+    def test_unopened_record_has_no_seen_row(self):
+        receipts = pm.record_left_on_read({}, "maya", "p", "m1", "23:41", unopened=True)
+        self.assertEqual(receipts["maya"], {"prompt": "p", "message_id": None, "time": None,
+                                            "unopened": True})
+        self.assertIsNone(pm.receipt_row([{"id": "m1", "sender": "maya"}], receipts["maya"]))
+        self.assertNotIn("unopened", pm.record_left_on_read({}, "maya", "p", "m1")["maya"])
+
     def test_last_incoming_id(self):
         messages = [{"id": "a", "sender": "maya"}, {"id": "b", "sender": "player"},
                     {"id": "c", "sender": "system"}]
@@ -391,6 +398,85 @@ class ReplyCardHarnessTests(unittest.TestCase):
                                                    "hesitate": True}, {"id": "b", "text": "y"}], "b")
 
 
+class DeadlineHarnessTests(unittest.TestCase):
+    """I1: a missed call is not a reply deadline. I2: leave-on-read chosen by default at a
+    deadline keeps the chat unread with no 'Seen' receipt."""
+
+    def setup_card(self, default="plain", **kw):
+        env, story, store, marked, shown = load_phone(**kw)
+        env["phone_add_message"]("maya", "maya", "you two okay up there?", message_id="m1")
+        env["phone_offer_reply"]("maya", "ch01_test_dm", [
+            {"id": "plain", "text": "On my way, two minutes."},
+            {"id": "read", "text": "Leave it on read", "leave_on_read": True},
+        ], default)
+        return env, story, store
+
+    def ids(self, store):
+        return [m["id"] for m in store.phone_messages["maya"]]
+
+    def test_a_missed_call_leaves_an_open_reply_card_open(self):
+        env, story, store = self.setup_card(screen_result="ignored")
+        self.assertEqual(env["phone_call_offer"]("maya", "c1"), "ignored")
+        self.assertEqual(self.ids(store), ["m1", "lc_call_c1_missed"])
+        self.assertNotIn("ch01_test_dm", story)
+        self.assertIsNotNone(env["phone_pending_reply"]("maya"))
+        # The next real message is still the deadline.
+        env["phone_add_message"]("maya", "maya", "hello??", message_id="m2")
+        self.assertEqual(self.ids(store), ["m1", "lc_call_c1_missed", "ch01_test_dm_ryan", "m2"])
+        self.assertEqual(story["ch01_test_dm"], "plain")
+
+    def test_a_picked_reply_still_posts_before_the_missed_call(self):
+        env, story, store = self.setup_card(screen_result="ignored")
+        env["phone_select_reply"]("maya", "plain")
+        env["phone_call_offer"]("maya", "c1")
+        self.assertEqual(self.ids(store), ["m1", "ch01_test_dm_ryan", "lc_call_c1_missed"])
+
+    def test_default_leave_on_read_at_a_deadline_stays_unread(self):
+        env, story, store = self.setup_card("read")
+        env["phone_add_message"]("maya", "maya", "hello??", message_id="m2")
+        self.assertEqual(story["ch01_test_dm"], "read")
+        self.assertTrue(env["lc_phone_left_on_read"]("ch01_test_dm"))
+        self.assertTrue(env["lc_phone_left_unopened"]("ch01_test_dm"))
+        self.assertIsNone(env["lc_phone_read_receipt_row"]("maya"))
+        self.assertEqual(env["lc_phone_receipt_time"]("maya"), "")
+        self.assertEqual([m["read"] for m in store.phone_messages["maya"]], [False, False])
+        self.assertEqual(env["phone_thread_unread_count"]("maya"), 2)
+
+    def test_a_picked_leave_on_read_is_seen_not_unopened(self):
+        env, story, store = self.setup_card("plain")
+        env["phone_choose_reply"]("maya", "read")
+        self.assertFalse(env["lc_phone_left_unopened"]("ch01_test_dm"))
+        self.assertEqual(env["lc_phone_read_receipt_row"]("maya"), 0)
+
+
+class TypingRecordTests(unittest.TestCase):
+    def test_a_rolled_back_pick_drops_its_typing_record(self):
+        env, story, store, marked, shown = load_phone()
+        env["phone_add_message"]("maya", "maya", "hey", message_id="m1")
+        env["phone_offer_reply"]("maya", "p", [
+            {"id": "a", "text": "We're fine. Go to sleep", "hesitate": True},
+            {"id": "b", "text": "Night"}], "b")
+        env["phone_select_reply"]("maya", "a")
+        self.assertTrue(env["phone_reply_typing_active"]("maya"))
+        # Rollback/load restores the store from before the pick: nothing queued any more.
+        store.phone_reply_delivery = {}
+        self.assertFalse(env["phone_reply_typing_active"]("maya"))
+        self.assertIsNone(env["phone_reply_typing_text"]("maya"))
+        self.assertNotIn("maya", env["LC_PHONE_TYPING"])
+
+
+class CallLabelSourceTests(unittest.TestCase):
+    def test_answer_and_ignore_calls_have_stable_from_names(self):
+        src = (ROOT / "game/systems/phone_moments.rpy").read_text(encoding="utf-8")
+        self.assertIn("call expression answer_label from lc_phone_call_answer_return", src)
+        self.assertIn("call expression ignore_label from lc_phone_call_ignore_return", src)
+
+    def test_the_call_hides_the_dialogue_window(self):
+        src = (ROOT / "game/systems/phone_moments.rpy").read_text(encoding="utf-8")
+        self.assertIn("_window_hide(None)", src)
+        self.assertIn("_window_show(None)", src)
+
+
 class ScreenSourceTests(unittest.TestCase):
     def read(self, rel):
         return (ROOT / rel).read_text(encoding="utf-8")
@@ -398,8 +484,12 @@ class ScreenSourceTests(unittest.TestCase):
     def test_call_screen_uses_the_phone_look(self):
         src = self.read("game/screens/phone_call.rpy")
         self.assertIn("screen phone_call(caller_id):", src)
-        self.assertIn('style "lc_phone_btn_primary"', src)
-        self.assertIn('style "lc_phone_btn"', src)
+        self.assertIn('style "lc_phone_call_btn_primary"', src)
+        self.assertIn('style "lc_phone_call_btn"', src)
+        # A visible focus ring (keyboard/gamepad), and "Let it ring" stays white when focused.
+        self.assertIn("style lc_phone_call_btn is lc_phone_btn:", src)
+        self.assertIn("style lc_phone_call_btn_primary is lc_phone_btn_primary:", src)
+        self.assertEqual(src.count("hover_background lc_phone_call_focus("), 2)
         self.assertIn('Return("answered")', src)
         self.assertIn('Return("ignored")', src)
         self.assertIn("lc_phone_motion_instant()", src)

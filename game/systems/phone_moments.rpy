@@ -3,7 +3,8 @@
 # Purpose: Small optional phone beats. An incoming call rings over the scene (screen phone_call
 #   in screens/phone_call.rpy) with Answer / Let it ring; the outcome is stored once per save,
 #   and an ignored call leaves an unread "Missed call" row in the caller's thread (the Messages
-#   badge) that the story can return later. Reply cards (systems/phone_presentation_logic.rpy)
+#   badge) that the story can return later; that row is not a reply deadline, so a reply card open
+#   in the thread stays open. The dialogue window is hidden while it rings. Reply cards (systems/phone_presentation_logic.rpy)
 #   gain a first-class "leave it on read" option, recorded here as a read receipt, and a
 #   hesitate flag (typed-draft animation). A phone moment can register on a day's Moments strip
 #   (kind 'phone'). Rules live in python-packages/lc_phone_moments.py; this file binds them to
@@ -24,6 +25,8 @@
 #   lc_phone_call_ring() -> None              the ring cue (screen action; never raises)
 #   lc_phone_left_on_read(prompt_id)          True when that reply card was answered by leaving
 #       the message on read
+#   lc_phone_left_unopened(prompt_id)         True when that leave-on-read was the default taken
+#       at a deadline with the chat closed (unread, no 'Seen'; for an unread-bubble beat later)
 #   lc_phone_read_receipt_row(thread_id)      index of the message the 'Seen' receipt sits under
 #       in phone_messages_for_thread(thread_id), or None
 #   lc_phone_receipt_time(thread_id)          the receipt's clock text ('' when none)
@@ -31,12 +34,13 @@
 #       init 1+: put a call (moment_id = call_id) or reply card (moment_id = prompt_id) on the
 #       day's Moments strip; found when the outcome / option id is in found_on (default:
 #       'answered')
-#   lc_phone_on_reply_chosen(thread_id, prompt_id, option) -> None
+#   lc_phone_on_reply_chosen(thread_id, prompt_id, option, unopened=False) -> None
 #       phone_reply_chosen hook: records the read receipt and marks a registered moment
 #   LC_PHONE_MOMENTS                          {moment_id: found_on} (init-time, never saved)
 #   default lc_phone_calls                    save state: {call_id: {caller, outcome, time,
 #       returned}}
 #   default lc_phone_read_receipts            save state: {thread_id: {prompt, message_id, time}}
+#       (unopened defaults: message_id/time None and unopened True)
 #
 # Internal (helpers for this file and its screens; do not call from scenes): _lc_phone_now_text,
 #   _lc_phone_moment_mark, _lc_phone_call_record
@@ -106,10 +110,11 @@ init python:
             _lc_phone_now_text())
         set_story_value(call_id, outcome)
         if outcome == "ignored":
+            # Not a reply deadline: an open card in this thread stays open (no default sent).
             phone_add_message(caller_id, "system", text="Missed call",
                               message_id=lc_phone_moments.missed_call_message_id(call_id),
                               mark_unread=True, notify=True, notification_app="Phone",
-                              notification_title=phone_thread_label(caller_id))
+                              notification_title=phone_thread_label(caller_id), deadline=False)
         _lc_phone_moment_mark(call_id, outcome)
         return None
 
@@ -122,7 +127,14 @@ init python:
         if done:
             return done
         lc_phone_close()
+        # A Python call_screen skips window auto: hide the last line's box under the handset,
+        # and put it back afterwards when the scene keeps the window shown by hand.
+        window_was_shown = bool(getattr(renpy.store, "_window", False))
+        if window_was_shown:
+            _window_hide(None)
         outcome = renpy.call_screen("phone_call", caller_id=caller_id)
+        if window_was_shown and not getattr(renpy.store, "_window_auto", True):
+            _window_show(None)
         if outcome not in lc_phone_moments.CALL_OUTCOMES:
             outcome = "ignored"
         _lc_phone_call_record(caller_id, call_id, outcome)
@@ -131,6 +143,10 @@ init python:
     def lc_phone_left_on_read(prompt_id):
         receipts = getattr(renpy.store, "lc_phone_read_receipts", None) or {}
         return any(r.get("prompt") == prompt_id for r in receipts.values())
+
+    def lc_phone_left_unopened(prompt_id):
+        receipts = getattr(renpy.store, "lc_phone_read_receipts", None) or {}
+        return any(r.get("prompt") == prompt_id and r.get("unopened") for r in receipts.values())
 
     def lc_phone_read_receipt_row(thread_id):
         receipt = (getattr(renpy.store, "lc_phone_read_receipts", None) or {}).get(thread_id)
@@ -142,12 +158,12 @@ init python:
         receipt = (getattr(renpy.store, "lc_phone_read_receipts", None) or {}).get(thread_id) or {}
         return receipt.get("time") or ""
 
-    def lc_phone_on_reply_chosen(thread_id, prompt_id, option):
+    def lc_phone_on_reply_chosen(thread_id, prompt_id, option, unopened=False):
         if lc_phone_moments.is_leave_on_read(option):
             renpy.store.lc_phone_read_receipts = lc_phone_moments.record_left_on_read(
                 getattr(renpy.store, "lc_phone_read_receipts", None), thread_id, prompt_id,
                 lc_phone_moments.last_incoming_id(phone_messages_for_thread(thread_id)),
-                _lc_phone_now_text())
+                _lc_phone_now_text(), unopened=unopened)
         _lc_phone_moment_mark(prompt_id, option.get("id"))
         return None
 
@@ -158,7 +174,7 @@ init python:
 label lc_phone_call(caller_id, call_id, answer_label=None, ignore_label=None):
     $ _lc_phone_call_outcome = phone_call_offer(caller_id, call_id)
     if _lc_phone_call_outcome == "answered" and answer_label:
-        call expression answer_label
+        call expression answer_label from lc_phone_call_answer_return
     elif _lc_phone_call_outcome == "ignored" and ignore_label:
-        call expression ignore_label
+        call expression ignore_label from lc_phone_call_ignore_return
     return lc_phone_call_outcome(call_id)

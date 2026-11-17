@@ -133,7 +133,7 @@ Events in use:
 | `review_finished` (day_id) | `lc_review_finish` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` unlocks the day's tags and stickers; `game/systems/discovery.rpy` marks the day cleared on the profile (Moments strip) |
 | `review_titles` (filter over the (ryan, leia) titles) | `lc_review_titles` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` swaps in equipped tags |
 | `review_closed` (day_id) | `label lc_day_review` in `game/systems/day_review.rpy`, after the spread closes | `game/systems/thoughts.rpy` offers Ryan's thoughts (may show a screen) |
-| `phone_reply_chosen` (thread_id, prompt_id, option) | `phone_choose_reply` in `game/systems/phone_presentation_logic.rpy` | `game/systems/phone_moments.rpy` records a leave-on-read receipt and marks a registered phone moment found |
+| `phone_reply_chosen` (thread_id, prompt_id, option, unopened=bool) | `phone_choose_reply` in `game/systems/phone_presentation_logic.rpy` | `game/systems/phone_moments.rpy` records a leave-on-read receipt and marks a registered phone moment found |
 
 Hooks are registered at init only, so they never enter a save. Tests:
 `tests/test_lc_hooks.py`.

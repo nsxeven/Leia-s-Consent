@@ -33,8 +33,13 @@ if _return == "answered":
   ringing again (the label still calls the matching branch). Rollback restores both with the store.
 - **Let it ring** leaves a centred "☎ Missed call · 23:12" row (unread) in the caller's thread and
   a banner, so Messages shows the badge and the thread list shows "Missed call". The row's message
-  id is `lc_call_<call_id>_missed`. Like any incoming message, it is the deadline for a reply card
-  still open in that thread (the card resolves to its default first).
+  id is `lc_call_<call_id>_missed`. Unlike other incoming messages it is **not** a reply deadline:
+  a reply card still open in that thread stays open (no default reply is sent above the row); a
+  reply the player already picked posts before it.
+- The dialogue window is hidden while the phone rings (the last line's box would otherwise show
+  under the handset) and comes back with the next line.
+- Answer / Let it ring ignore clicks for the first 0.35 s, and show a ring when they have keyboard
+  or gamepad focus (Let it ring stays white; Answer turns a lighter blue).
 - Calling back is story content: check `lc_phone_missed_calls()` (ignored, not yet returned), play
   the call, then `$ lc_phone_call_mark_returned("ch01_d2_call_maya")`.
 - Old saves and Chapter Select starts read `lc_phone_call_outcome(call_id)` as `None` ("no call").
@@ -62,8 +67,10 @@ $ phone_offer_reply("maya", "ch01_d2_maya_dm", [
 - About 1-3 seconds, never more than 4 (`MAX_SECONDS`; long texts type faster).
 - **Skip mode, or reduced motion (screen shake or transitions turned off): no animation, the reply
   sends as it always did.** The choice itself is saved the moment it is picked; the typing is only
-  a transient display (`LC_PHONE_TYPING`, never saved). Loading or rolling back mid-typing just
-  sends. A story deadline (the next incoming message) never waits for it.
+  a transient display (`LC_PHONE_TYPING`, never saved). A save holds the state from the start of
+  the dialogue line, so loading a save made mid-typing (or rolling back) opens the card again
+  with the pick undone; the leftover typing record is dropped because Ryan's message is no longer
+  queued. A story deadline (the next incoming message) never waits for it.
 - It plays inside the open phone, which is already modal: it never takes the click that advances
   dialogue, and closing the phone mid-typing is fine (the reply posts the next time the chat is
   open, or at the deadline).
@@ -77,7 +84,10 @@ $ phone_offer_reply("maya", "ch01_d2_maya_dm", [
   receipt goes away. `followups` still play (the other person reacting), with no Ryan bubble.
 - Read it back with `lc_phone_left_on_read(prompt_id)`. The receipt lives in
   `lc_phone_read_receipts` (per thread); old saves have none.
-- It may be the card's default, so a player who never opens the phone has "left it on read".
+- It may be the card's default. When the card runs out at a deadline while the chat is closed,
+  the choice is still stored (`lc_phone_left_on_read` is True) but Ryan never opened it: the
+  thread stays **unread** (badge, unread bubble) and no "Seen" receipt appears.
+  `lc_phone_left_unopened(prompt_id)` tells the two cases apart, for a later unread-bubble beat.
 
 ## One-to-one chats now post picked replies while open
 

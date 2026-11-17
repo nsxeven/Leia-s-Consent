@@ -9,13 +9,15 @@
 #   hesitate=True with an optional draft (a typed-draft animation before the send).
 #
 # Public API (call these from scenes/screens):
-#   phone_add_message(thread_id, sender_id, text="", message_id=None, attachment_id=None, attachment_label=None, mark_unread=True, notify=False, notification_app="Messages", notification_title=None, display_time=None)
-#       deliver one message (stable message_id; optional photo/notification)
+#   phone_add_message(thread_id, sender_id, text="", message_id=None, attachment_id=None, attachment_label=None, mark_unread=True, notify=False, notification_app="Messages", notification_title=None, display_time=None, deadline=True)
+#       deliver one message (stable message_id; optional photo/notification); deadline=False
+#       (a missed-call row) never resolves an open reply card to its default
 #   phone_offer_reply(thread_id, prompt_id, options, default_id) -> bool
 #       queue a save-safe, stat-free reply card for a thread (option keys: id, text, followups,
 #       leave_on_read, hesitate, draft)
-#   phone_choose_reply(thread_id, option_id, staged=False) -> bool
-#       queue a picked reply (or post it at a story deadline)
+#   phone_choose_reply(thread_id, option_id, staged=False, by_default=False) -> bool
+#       queue a picked reply (or post it at a story deadline); by_default: the card ran out, so
+#       a leave-on-read default with the chat closed leaves it unread and unseen
 #   phone_select_reply(thread_id, option_id) -> None
 #       screen action for a reply option (starts the hesitation typing for hesitate=True)
 #   phone_default_reply(thread_id)            pick the default reply
@@ -57,7 +59,8 @@
 #   phone_unread_badge_label(count=None)      badge text ('99+' cap)
 #   debug_reset_phone_tutorial() -> None      dev: show the tutorial again
 #
-# Internal (helpers for this file and its screens; do not call from scenes): _lc_phone_plain
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_phone_plain,
+#   _lc_phone_typing_record
 #
 # Example:
 #   $ phone_add_message(
@@ -69,8 +72,8 @@
 #   systems/lc_hooks.rpy, python-packages/lc_phone_moments.py,
 #   screens/gameplay_toasts.rpy, screens/phone_hud.rpy (defaults), screens/scrapbook_ui.rpy (banner
 #   screen)
-# Hooks: emits phone_reply_chosen (thread_id, prompt_id, option) from phone_choose_reply
-#   (systems/phone_moments.rpy listens)
+# Hooks: emits phone_reply_chosen (thread_id, prompt_id, option, unopened=bool) from
+#   phone_choose_reply (systems/phone_moments.rpy listens)
 # Load order: default (init 0); it calls systems/phone_state.rpy only at run time
 # Docs: docs/ARCHITECTURE.md, docs/PHONE_MOMENTS.md   Tests: tests/test_phone_replies.py,
 #   tests/test_phone_read_state.py, tests/test_behaviour_freeze.py, tests/test_phone_moments.py
@@ -240,7 +243,7 @@ init python:
         }
         return True
 
-    def phone_choose_reply(thread_id, option_id, staged=False):
+    def phone_choose_reply(thread_id, option_id, staged=False, by_default=False):
         """Queue a picked reply, or post it in order at a story deadline."""
         prompt = phone_pending_reply(thread_id)
         if not prompt:
@@ -251,15 +254,19 @@ init python:
         # Remove first so the writer's deadline hook cannot resolve twice.
         del renpy.store.phone_reply_prompts[thread_id]
         set_story_value(prompt["id"], option_id)
+        # A default taken at a deadline while the chat is closed: Ryan never opened it.
+        unopened = bool(by_default) and not lc_phone_thread_open(thread_id)
         if lc_phone_moments.is_leave_on_read(option):
             # Ryan reads it and writes nothing; only the other side's follow-ups may come.
-            phone_mark_thread_read(thread_id)
+            # Unopened, it stays unread (no 'Seen' either).
+            if not unopened:
+                phone_mark_thread_read(thread_id)
             steps = []
         else:
             steps = [("player", option["text"], prompt["id"] + "_ryan")]
         steps.extend((sender, text, "{}_followup_{:02d}".format(prompt["id"], index + 1))
                      for index, (sender, text) in enumerate(option.get("followups", ())))
-        lc_hook_run("phone_reply_chosen", thread_id, prompt["id"], option)
+        lc_hook_run("phone_reply_chosen", thread_id, prompt["id"], option, unopened=unopened)
         if staged and steps:
             # Save state contains plain strings, not callables or displayables.
             if not hasattr(renpy.store, "phone_reply_delivery"):
@@ -300,7 +307,7 @@ init python:
 
     def phone_default_reply(thread_id):
         prompt = phone_pending_reply(thread_id)
-        return phone_choose_reply(thread_id, prompt["default"]) if prompt else False
+        return phone_choose_reply(thread_id, prompt["default"], by_default=True) if prompt else False
 
     def phone_select_reply(thread_id, option_id):
         # Ren'Py Function actions must return None or the Phone closes.
@@ -312,14 +319,26 @@ init python:
                                                         skip=lc_phone_motion_instant())
             if frames:
                 LC_PHONE_TYPING[thread_id] = {"frames": frames, "start": _lc_phone_clock.time(),
-                                              "step": lc_phone_moments.frame_step(frames)}
+                                              "step": lc_phone_moments.frame_step(frames),
+                                              "message_id": prompt["id"] + "_ryan"}
         return None
 
     # Hesitation typing (phone moments). Transient: an init-time python_dict is never saved or
-    # rolled back, and every record runs out on the wall clock, so a load or rollback mid-typing
-    # simply sends. The save-safe part (the chosen reply and its queued steps) is already stored
-    # by phone_choose_reply before the typing starts.
+    # rolled back. A record only counts while Ryan's queued message (saved state) is still next
+    # in phone_reply_delivery, so a rollback or load that undid the pick drops it. The save-safe
+    # part (the chosen reply and its queued steps) is stored by phone_choose_reply before the
+    # typing starts.
     LC_PHONE_TYPING = python_dict()
+
+    def _lc_phone_typing_record(thread_id):
+        record = LC_PHONE_TYPING.get(thread_id)
+        if not record:
+            return None
+        pending = (getattr(renpy.store, "phone_reply_delivery", None) or {}).get(thread_id) or ()
+        if not pending or pending[0][2] != record.get("message_id"):
+            LC_PHONE_TYPING.pop(thread_id, None)
+            return None
+        return record
 
     def _lc_phone_plain(text):
         """Names filled in ('[girlfriend_name]' -> the player's name) before the text is typed
@@ -343,10 +362,10 @@ init python:
                 or not _preferences.transitions)
 
     def phone_reply_typing_active(thread_id):
-        return thread_id in LC_PHONE_TYPING
+        return _lc_phone_typing_record(thread_id) is not None
 
     def phone_reply_typing_text(thread_id):
-        record = LC_PHONE_TYPING.get(thread_id)
+        record = _lc_phone_typing_record(thread_id)
         if not record:
             return None
         return lc_phone_moments.frame_at(record["frames"], _lc_phone_clock.time() - record["start"],
@@ -372,14 +391,17 @@ init python:
         notification_app="Messages",
         notification_title=None,
         display_time=None,
+        deadline=True,
     ):
         # Landing in the chat the player is reading right now = already read
         # (darryn 2026-11-08: no badge after reading a thread from a notification).
         if mark_unread and lc_phone_thread_open(thread_id):
             mark_unread = False
-        # A new incoming message is the deadline; stable-ID replays are not.
+        # A new incoming message is the deadline; stable-ID replays are not. deadline=False (a
+        # missed-call row) still posts what the player already picked, but leaves an open card open.
         if sender_id != "player" and not (message_id and phone_has_message(message_id)):
-            phone_default_reply(thread_id)
+            if deadline:
+                phone_default_reply(thread_id)
             phone_flush_reply_delivery(thread_id)
         added = phone_store_message(
             thread_id,

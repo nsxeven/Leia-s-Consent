@@ -15,6 +15,10 @@
 #   lc_phone_open_thread()                    the chat thread the phone shows now, or None
 #   transform lc_phone_call_ripple(delay=0.0)
 #       the expanding ring behind the caller's avatar
+#   lc_phone_call_focus(ring, fill)           focus/hover art for the call buttons: `fill` inset
+#       4 px inside a `ring` frame (keyboard/gamepad focus stays visible)
+#   style lc_phone_call_btn / lc_phone_call_btn_primary
+#       Let it ring (stays white, blue ring when focused) / Answer (lighter key, white ring)
 #   LC_PHONE_CALL_CADENCE                     (Ryan's beat, a reply beat) seconds in 1:1 chats
 #
 # Example:
@@ -24,8 +28,9 @@
 #   screens/phone_sweetheart.rpy (styles, lc_phone_avatar, lc_phone_backdrop, clock),
 #   screens/phone_wallpaper.rpy (wallpaper layers, LC_WP_MASK), systems/phone_group_avatar.rpy
 # Hooks: none (registers the lc_phone_moments_overlay overlay)
-# Load order: default (init 0); the overlay registers after the Chapter 1 phone overlay's
-#   init 998, so it is drawn above it (it draws nothing; it only runs timers)
+# Load order: default (init 0); lc_phone_call_focus is init -1 so the styles below can use it;
+#   the overlay registers after the Chapter 1 phone overlay's init 998, so it is drawn above it
+#   (it draws nothing; it only runs timers)
 # Docs: docs/PHONE_MOMENTS.md   Tests: tests/test_phone_moments.py
 
 init 999 python:
@@ -33,6 +38,12 @@ init 999 python:
     # overlay order stays as it was and this one is appended last.
     if "lc_phone_moments_overlay" not in config.overlay_screens:
         config.overlay_screens.append("lc_phone_moments_overlay")
+
+init -1 python:
+    def lc_phone_call_focus(ring, fill):
+        """Focused/hovered call button: the `fill` key inset 4 px inside a `ring` frame."""
+        return Window(Frame(fill, 18, 18), style="empty", padding=(4, 4),
+                      background=Frame(ring, 18, 18))
 
 init python:
     LC_PHONE_CALL_CADENCE = (0.45, 0.9)
@@ -45,6 +56,19 @@ init python:
         if scope.get("phone_app") != "thread":
             return None
         return scope.get("phone_thread")
+
+
+# The call's two buttons: the phone button look, plus a ring that shows keyboard/gamepad focus.
+style lc_phone_call_btn is lc_phone_btn:
+    hover_background lc_phone_call_focus("gui/phone/sprite_match/key.png", "gui/phone/sprite_match/card.png")
+
+style lc_phone_call_btn_text is lc_phone_btn_text:
+    hover_color "#3D8FD4"
+
+style lc_phone_call_btn_primary is lc_phone_btn_primary:
+    hover_background lc_phone_call_focus("gui/phone/sprite_match/card.png", Transform("gui/phone/sprite_match/key.png", matrixcolor=BrightnessMatrix(0.12)))
+
+style lc_phone_call_btn_primary_text is lc_phone_btn_primary_text
 
 
 transform lc_phone_call_ripple(delay=0.0):
@@ -64,6 +88,10 @@ screen phone_call(caller_id):
     zorder 330
 
     on "show" action Function(lc_phone_call_ring)
+
+    # A click meant for the line before the ring can't land on a button.
+    default call_armed = False
+    timer 0.35 action SetScreenVariable("call_armed", True)
 
     $ _still = lc_phone_motion_instant()
     $ _caller_art = phone_group_avatar() if caller_id == "group" else lc_phone_avatar(caller_id)
@@ -130,15 +158,15 @@ screen phone_call(caller_id):
             ypos 920
             spacing 28
             textbutton "Let it ring":
-                style "lc_phone_btn"
+                style "lc_phone_call_btn"
                 xfill False
                 xsize 196
-                action Return("ignored")
+                action If(call_armed, Return("ignored"), NullAction())
             textbutton "Answer":
-                style "lc_phone_btn_primary"
+                style "lc_phone_call_btn_primary"
                 xfill False
                 xsize 196
-                action Return("answered")
+                action If(call_armed, Return("answered"), NullAction())
 
 
 # Posts staged reply steps while a one-to-one chat is open (the Trip Group keeps its own
