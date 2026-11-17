@@ -6,6 +6,10 @@ define mc = Character("player_name", dynamic=True)
 # tag. Plain past-tense narration stays on the narrator (darryn 2026-11-08).
 #     think "What the hell was that?"
 define think = Character(None, show_think=True)
+# Leia's inner voice during her own segment (systems/leia_side.rpy, docs/LEIA_SIDE.md): the
+# same italic, no-name look as Ryan's think; the tinted text box says whose head it is.
+#     leia_think "He'd never ask for this. That's why I'm doing it."
+define leia_think = Character(None, show_think=True)
 define gf = Character("girlfriend_name", dynamic=True)
 define friend = Character("friend_name", dynamic=True)
 

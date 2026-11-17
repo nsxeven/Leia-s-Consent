@@ -58,6 +58,9 @@ class StatRuntimeTests(unittest.TestCase):
             lc_route_explorer_for_lane=lambda: self.focus,
         )
         env["get_choice_effects"] = lambda cid: list(env["CHOICE_EFFECTS"][cid])
+        # systems/leia_side.rpy: no Leia-side choices here, so applied = registered effects
+        env["lc_leia_is_side_choice"] = lambda cid: False
+        env["lc_choice_applied_effects"] = env["get_choice_effects"]
         exec(compile(_block("systems/stats.rpy", "init python:\n"), "stats_init", "exec"), env)
         day2 = _block("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy", "init 1 python:\n", "\nlabel ")
         exec(compile(day2, "day2_init", "exec"), env)

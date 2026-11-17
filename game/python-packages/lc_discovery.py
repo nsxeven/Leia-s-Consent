@@ -10,7 +10,7 @@ Ren'Py side: game/systems/discovery.rpy. Tests: tests/test_discovery.py.
 """
 import re
 
-KINDS = ("pov", "notice", "door", "phone")
+KINDS = ("pov", "notice", "door", "phone", "errand")
 
 # Neutral stand-in label when an Immersive-mode label would name a route.
 KIND_LABELS = {
@@ -18,6 +18,7 @@ KIND_LABELS = {
     "notice": "Something noticed",
     "door": "A moment",
     "phone": "A message",
+    "errand": "Her errand",
 }
 
 # Route and lane vocabulary that Immersive mode must not show (whole words, any case).

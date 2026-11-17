@@ -207,6 +207,8 @@ init 1 python:
 
     # Door A (sc 15, after the pre-split record) must not change which of today's lanes plays:
     # its Exhibitionism counts for the end-of-day route and Days 3+, not for the lane checks.
+    # Leia's errand ids and Ryan's confession reply join this tuple too (docs/LEIA_SIDE.md): the
+    # loop subtracts what each really applied (lc_choice_applied_effects), as lc_exhib_gained adds.
     CH01_D2_LANE_EXEMPT_CHOICES = ("ch01_d2_knot_watch",)
 
     def ch01_d2_route_lane():
@@ -226,7 +228,7 @@ init 1 python:
         gained = lc_exhib_gained("ch01_d2_")
         for exempt_id in CH01_D2_LANE_EXEMPT_CHOICES:
             if exempt_id in renpy.store.choice_history and exempt_id in CHOICE_EFFECTS:
-                for _group, stat, amount in get_choice_effects(exempt_id):
+                for _group, stat, amount in lc_choice_applied_effects(exempt_id):
                     stats[stat] = stats.get(stat, 0) - amount
                     if stat == "exhibitionism":
                         gained -= amount

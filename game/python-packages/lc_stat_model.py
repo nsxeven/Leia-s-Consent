@@ -389,8 +389,16 @@ def delta_kind(stat, amount):
     return "good" if amount > 0 else "bad"
 
 
+# Suffix on a stat label whose gain Leia's daily cap cut ("Love (capped)"; docs/LEIA_SIDE.md).
+CAPPED_SUFFIX = " (capped)"
+
+
 def stat_id_for_label(label):
+    # "Love (capped)" (a Leia-side gain cut by her daily cap) keeps Love's colour.
     key = (label or "").strip().lower()
+    suffix = CAPPED_SUFFIX.strip()
+    if key.endswith(suffix):
+        key = key[:-len(suffix)].strip()
     for stat, name in STAT_LABELS.items():
         if name.lower() == key:
             return stat

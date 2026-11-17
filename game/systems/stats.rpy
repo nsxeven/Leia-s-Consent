@@ -30,7 +30,7 @@
 #   $ ch01_photo_confidence = lc_stat("exhibitionism") + (LC_T["d1_photo_bolder_bonus"] if selected_pool_outfit == "pool_bolder" else 0)
 #
 # Depends on: python-packages/lc_stat_model.py, systems/choice_engine.rpy, systems/story_state.rpy,
-#   game/defaults.rpy
+#   game/defaults.rpy, systems/leia_side.rpy (lc_choice_applied_effects, lc_leia_is_side_choice)
 # Hooks: none (adds lc_migrate_stats_v2 to config.after_load_callbacks)
 # Load order: default (init 0)
 # Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_runtime.py, tests/test_stat_model.py
@@ -116,12 +116,20 @@ init python:
         return lc_stat_model.leia_tint(lc_stats_flat(), lane, lane_scene)
 
     def lc_exhib_gained(prefix):
-        """Exhibitionism gained from choices whose ids start with `prefix` (e.g. today's)."""
+        """Exhibitionism gained from choices whose ids start with `prefix` (e.g. today's).
+
+        Counts what each choice really applied (lc_choice_applied_effects): a Leia-side gain her
+        daily cap cut counts at its capped amount, once (her ledger already sums her picks)."""
         total = 0
+        leia_seen = set()
         for choice_id in renpy.store.choice_history:
             if not choice_id.startswith(prefix) or choice_id not in CHOICE_EFFECTS:
                 continue
-            for _group, stat, amount in get_choice_effects(choice_id):
+            if lc_leia_is_side_choice(choice_id):
+                if choice_id in leia_seen:
+                    continue
+                leia_seen.add(choice_id)
+            for _group, stat, amount in lc_choice_applied_effects(choice_id):
                 if stat == "exhibitionism":
                     total += amount
         return total

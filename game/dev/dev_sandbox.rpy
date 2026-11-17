@@ -70,6 +70,10 @@ label dev_systems_menu:
         call lc_dev_phone_moments from dev_systems_phone_moments
         jump dev_systems_menu
 
+    elif dev_systems_action == "leia_side":
+        call lc_dev_leia_side from dev_systems_leia_side
+        jump dev_systems_menu
+
     else:
         return
 
