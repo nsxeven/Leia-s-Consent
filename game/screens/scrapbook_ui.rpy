@@ -670,7 +670,7 @@ screen choice(items):
             background Frame("gui/scrapbook/frame_kraft.png", 9, 9)
             padding (28, 6, 16, 6)
             ysize 48
-            text "WHAT DO I SAY?" size 24 color "#5a4030" font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
+            text ("WHAT DO I DO?" if lc_leia_segment_active() else "WHAT DO I SAY?") size 24 color "#5a4030" font "fonts/Handjet-ExtraBold.ttf" yalign 0.5
 
     # Starts 24px higher with 24px of top padding inside, so the hover tape on
     # the first option is not clipped. Options grow to fit: minimum height is

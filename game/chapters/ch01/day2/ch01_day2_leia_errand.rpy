@@ -208,6 +208,10 @@ label ch01_day2_leia_errand:
 # B03: the map. She visits both open places; the player picks the order.
 label ch01_day2_errand_map:
 
+    if lc_leia_visits("ch01_d2"):
+        $ cast()
+        scene bg ch01_d2_island_day
+        with dissolve
     if not lc_leia_visits("ch01_d2"):
         "At the bottom of the villa path there was a big painted resort map on a wooden board, with little cartoon palm trees all over it."
         leia_think "Café, shop. Two stops, back before he wakes up. Easy."
