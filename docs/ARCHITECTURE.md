@@ -22,7 +22,7 @@ is placeholder art) lives in `docs/BUILD_HANDOFF.md`.
 | `game/screens/` | feature screens (phone, review, gallery, menus, title screen) |
 | `game/sprites/` | layered character sprites |
 | `game/dev/` | developer/QA-only labels and screens; left out of release builds by `game/options.rpy` |
-| `game/python-packages/` | pure-Python modules with no Ren'Py import, unit-tested directly: `lc_stat_model.py` (stats, thresholds, routes), `lc_chapters.py` (chapter registry), `lc_discovery.py` (discovery registry, Moments strip rules), `lc_ui_logic.py`, `lc_title_touch.py`, `lc_wallpaper_crop.py` |
+| `game/python-packages/` | pure-Python modules with no Ren'Py import, unit-tested directly: `lc_stat_model.py` (stats, thresholds, routes), `lc_chapters.py` (chapter registry), `lc_discovery.py` (discovery registry, Moments strip rules), `lc_thoughts.py` (Ryan's thoughts pool and rules), `lc_ui_logic.py`, `lc_title_touch.py`, `lc_wallpaper_crop.py` |
 | `tools/` | asset generators (`gen_*.py`) and `tools/clean_orphan_rpyc.py` / `tools/clean_orphan_rpyc.bat` |
 | `tools/dev/` | `tools/dev/snapshot_baselines.py` (behaviour pins) and `tools/dev/rpyc_moves.json` (moved-script map) |
 | `tests/` | the unittest suite plus its helpers (`tests/lc_rpy_model.py`, `tests/lc_rpy_harness.py`, `tests/lc_save_names.py`, `tests/lc_effective_effects.py`) and baselines in `tests/data/` |
@@ -132,6 +132,7 @@ Events in use:
 | `story_flag_set` (flag_id, value) | `set_story_flag` in `game/systems/story_state.rpy` | `game/systems/chapter_select.rpy` unlocks Chapter Select after Day Two |
 | `review_finished` (day_id) | `lc_review_finish` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` unlocks the day's tags and stickers; `game/systems/discovery.rpy` marks the day cleared on the profile (Moments strip) |
 | `review_titles` (filter over the (ryan, leia) titles) | `lc_review_titles` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` swaps in equipped tags |
+| `review_closed` (day_id) | `label lc_day_review` in `game/systems/day_review.rpy`, after the spread closes | `game/systems/thoughts.rpy` offers Ryan's thoughts (may show a screen) |
 
 Hooks are registered at init only, so they never enter a save. Tests:
 `tests/test_lc_hooks.py`.
@@ -321,6 +322,7 @@ Work through the steps in order; each names the file that owns the table.
 | Tags and stickers | `game/systems/lc_tag_collection.rpy`, `game/screens/tag_collection_screen.rpy` | `docs/DAY_REVIEW.md` | `tests/test_tag_collection.py`, `tests/test_review_tags.py` |
 | Hidden POV | `game/systems/hidden_pov.rpy`, `game/systems/hidden_pov_chime.rpy` | `docs/HIDDEN_POV.md` | `tests/test_hidden_pov.py` |
 | Discoveries and Moments strip | `game/systems/discovery.rpy`, `game/python-packages/lc_discovery.py`, `game/screens/day_review_screen.rpy` (`lc_review_moments`) | `docs/HIDDEN_POV.md` | `tests/test_discovery.py` |
+| Ryan's thoughts | `game/systems/thoughts.rpy`, `game/python-packages/lc_thoughts.py`, `game/screens/thoughts_screen.rpy` | `docs/THOUGHTS.md` | `tests/test_thoughts.py` |
 | Gallery | `game/systems/gallery.rpy`, `game/systems/gallery_data.rpy`, `game/screens/gallery_screen.rpy` | `docs/BUILD_HANDOFF.md` | `tests/test_gallery_flags.py` |
 | Phone data | `game/systems/phone_state.rpy`, `game/systems/phone_presentation_logic.rpy`, `game/systems/phone_group_avatar.rpy` | this file | `tests/test_phone_replies.py`, `tests/test_phone_read_state.py`, `tests/test_phone_group_avatar.py` |
 | Phone UI | `game/screens/phone_sweetheart.rpy`, `game/screens/phone_hud.rpy`, `game/screens/phone_screen.rpy`, `game/screens/phone_input_blocker.rpy`, `game/screens/phone_wallpaper.rpy`, `game/screens/gameplay_toasts.rpy` | this file | `tests/test_phone_layout.py`, `tests/test_phone_back_navigation.py`, `tests/test_phone_wallpaper.py` |
