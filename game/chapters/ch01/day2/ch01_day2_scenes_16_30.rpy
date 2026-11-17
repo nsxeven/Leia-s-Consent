@@ -1790,7 +1790,7 @@ label ch01_day2_scene_30_bedroom:
         if d2_dm_mood == "love":
             "I'd tipped the screen toward [girlfriend_name]. She read it, laughed through her nose, and took the phone out of my hand to answer it herself."
             "Then she gave it back and tucked herself against my side."
-            gf "For the record, we are. Okay, I mean. Really okay. I'm so glad it's you up here with me."
+            gf "We really are okay, you know. I'm so glad it's you up here with me."
             "She kissed my cheek and got very interested in the ceiling."
         elif d2_dm_mood == "exhib":
             "I'd tipped the screen toward [girlfriend_name]. She read it, grinned, and had the phone out of my hand before I could ask."
