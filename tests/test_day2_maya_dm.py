@@ -19,7 +19,8 @@ from lc_rpy_harness import load  # noqa: E402
 from test_phone_moments import load_phone  # noqa: E402
 
 SCENES = (ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
-IDS = ("ch01_d2_maya_dm_reply", "ch01_d2_maya_dm_read", "ch01_d2_maya_dm_show")
+IDS = ("ch01_d2_maya_dm_reply", "ch01_d2_maya_dm_read", "ch01_d2_maya_dm_show",
+       "ch01_d2_maya_dm_reply_late")
 
 
 def block(label):
@@ -39,7 +40,7 @@ def load_dm(**kw):
         "girlfriend_name": "Leia",
     })
     load(["CH01_D2_MAYA_DM_SHOW", "ch01_d2_maya_dm_mood", "ch01_d2_maya_dm_offer",
-          "ch01_d2_maya_dm_settle", "ch01_d2_maya_dm_review_lines"], env)
+          "ch01_d2_maya_dm_end_show", "ch01_d2_maya_dm_settle", "ch01_d2_maya_dm_review_lines"], env)
     env["lc_phone_moment_register"]("ch01_d2_maya_dm", "ch01_d2", "Maya, a late text", "nosy",
                                     found_on=("reply", "show"))
     return env, story, store, marked, applied, clock
@@ -51,6 +52,7 @@ class ScoringTests(unittest.TestCase):
         self.assertEqual(effects["ch01_d2_maya_dm_reply"], [("relationship", "trust", 1)])
         self.assertEqual(effects["ch01_d2_maya_dm_show"], [("relationship", "love", 1)])
         self.assertEqual(effects["ch01_d2_maya_dm_read"], [])
+        self.assertEqual(effects["ch01_d2_maya_dm_reply_late"], [])  # nobody on screen sees it
         for cid in IDS:
             self.assertEqual(m.scoring_violations(cid, effects[cid]), [], cid)
             self.assertIn(cid, applied_choice_ids())
@@ -88,10 +90,14 @@ class MoodTests(unittest.TestCase):
 class OfferAndSettleTests(unittest.TestCase):
     def test_offer_posts_two_messages_and_a_three_option_card(self):
         env, story, store, marked, applied, clock = load_dm()
+        banners = []
+        env["phone_queue_notification"] = lambda *a, **kw: banners.append(a)
         env["ch01_d2_maya_dm_offer"]("love")
         msgs = store.phone_messages["maya"]
         self.assertEqual([x["id"] for x in msgs], ["ch01_d2_maya_dm_01", "ch01_d2_maya_dm_02"])
-        self.assertTrue(msgs[0]["text"].startswith("you two okay up there?"))
+        self.assertTrue(msgs[0]["text"].startswith("you two okay in there?"))
+        self.assertIn("through this wall", msgs[1]["text"])  # Julian's room is next door
+        self.assertEqual(len(banners), 1)  # one banner for one DM
         self.assertEqual(clock, ["23:52"])
         card = env["phone_pending_reply"]("maya")
         self.assertEqual(card["id"], "ch01_d2_maya_dm")
@@ -102,8 +108,12 @@ class OfferAndSettleTests(unittest.TestCase):
         self.assertTrue(opts["reply"]["draft"])
         self.assertTrue(opts["read"]["leave_on_read"])
         self.assertNotIn("followups", opts["read"])  # an unopened default must not read "seen"
-        self.assertIn("[girlfriend_name]", opts["show"]["text"])
-        self.assertEqual(opts["show"]["text"], env["CH01_D2_MAYA_DM_SHOW"]["love"][0])
+        self.assertEqual(opts["reply"]["draft"], "why are you listening through the w")
+        # The card says what the option does; the bubble posts what Leia types.
+        self.assertEqual(opts["show"]["text"], "Show [girlfriend_name]")
+        self.assertEqual(opts["show"]["send"], env["CH01_D2_MAYA_DM_SHOW"]["love"][0])
+        self.assertEqual({k: o["choice_id"] for k, o in opts.items()},
+                         {k: "ch01_d2_maya_dm_" + k for k in opts})
 
     def test_every_mood_has_leia_text_and_a_maya_answer(self):
         env = load_dm()[0]
@@ -123,6 +133,7 @@ class OfferAndSettleTests(unittest.TestCase):
         self.assertEqual(marked, ["ch01_d2_maya_dm"])
         ids = [x["id"] for x in store.phone_messages["maya"]]
         self.assertEqual(ids[-2:], ["ch01_d2_maya_dm_ryan", "ch01_d2_maya_dm_followup_01"])
+        self.assertEqual(store.phone_messages["maya"][-2]["text"], env["CH01_D2_MAYA_DM_SHOW"]["shy"][0])
         self.assertEqual(clock[-1], None)
 
     def test_ignored_card_runs_out_as_unopened_read_at_the_end_of_the_day(self):
@@ -140,14 +151,42 @@ class OfferAndSettleTests(unittest.TestCase):
         self.assertEqual([x["id"] for x in store.phone_messages["maya"]],
                          ["ch01_d2_maya_dm_01", "ch01_d2_maya_dm_02"])
 
-    def test_a_late_reply_is_scored_at_the_end_of_the_day(self):
+    def test_after_the_beat_show_is_gone_and_read_stays_the_default(self):
+        env, story, store, marked, applied, clock = load_dm()
+        env["ch01_d2_maya_dm_offer"]("love")
+        env["ch01_d2_maya_dm_end_show"]()
+        card = env["phone_pending_reply"]("maya")
+        self.assertEqual([o["id"] for o in card["options"]], ["reply", "read"])
+        self.assertEqual(card["default"], "read")
+        # The card's stat label tells the truth about a late reply: no stats.
+        self.assertEqual(card["options"][0]["choice_id"], "ch01_d2_maya_dm_reply_late")
+        self.assertFalse(env["phone_choose_reply"]("maya", "show"))
+
+    def test_a_late_reply_is_settled_neutrally(self):
         env, story, store, marked, applied, clock = load_dm()
         env["ch01_d2_maya_dm_offer"]("exhib")
+        env["ch01_d2_maya_dm_end_show"]()
         env["ch01_d2_maya_dm_settle"]()
         env["phone_choose_reply"]("maya", "reply")
         env["ch01_d2_maya_dm_settle"](close=True)
-        self.assertEqual(applied, ["ch01_d2_maya_dm_reply"])
+        self.assertEqual(applied, ["ch01_d2_maya_dm_reply_late"])
         self.assertEqual(marked, ["ch01_d2_maya_dm"])
+
+    def test_a_reply_during_the_beat_keeps_trust_and_end_show_is_a_no_op(self):
+        env, story, store, marked, applied, clock = load_dm()
+        env["ch01_d2_maya_dm_offer"]("love")
+        env["phone_choose_reply"]("maya", "reply")
+        env["ch01_d2_maya_dm_end_show"]()
+        env["ch01_d2_maya_dm_settle"]()
+        self.assertEqual(applied, ["ch01_d2_maya_dm_reply"])
+        self.assertEqual(clock[-1], None)  # nothing pending: the phone goes back to its clock
+
+    def test_an_open_card_keeps_the_late_clock_until_the_day_ends(self):
+        env, story, store, marked, applied, clock = load_dm()
+        env["ch01_d2_maya_dm_offer"]("cool")
+        env["ch01_d2_maya_dm_end_show"]()
+        env["ch01_d2_maya_dm_settle"]()
+        self.assertEqual(clock, ["23:52"])
 
     def test_settle_on_an_old_save_does_nothing(self):
         env, story, store, marked, applied, clock = load_dm()
@@ -157,7 +196,7 @@ class OfferAndSettleTests(unittest.TestCase):
 
     def test_review_lines_cover_every_choice(self):
         env = load_dm()[0]
-        self.assertEqual(len(env["ch01_d2_maya_dm_review_lines"]()), 3)
+        self.assertEqual(len(env["ch01_d2_maya_dm_review_lines"]()), 4)
         for cid in IDS:
             self.assertIn('format_choice("%s", ' % cid, SCENES)
 
@@ -167,13 +206,26 @@ class PlacementTests(unittest.TestCase):
         body = block("ch01_day2_scene_30_bedroom")
         order = ["$ d2_tint = lc_leia_tint(d2_lane, lane_scene=True)",
                  "$ ch01_d2_maya_dm_offer(d2_dm_mood)",
-                 '"My phone lit up on the nightstand. Maya, from somewhere down the corridor."',
+                 '"My phone lit up on the nightstand. Maya, from the other side of the wall."',
                  'if get_story_value("ch01_d2_maya_dm") == "show":',
+                 'elif get_story_value("ch01_d2_maya_dm") == "reply":',
+                 "$ ch01_d2_maya_dm_end_show()",
                  "$ ch01_d2_maya_dm_settle()",
                  "if d2_soft_gate and d2_wink:"]
         offsets = [body.index(part) for part in order]
         self.assertEqual(offsets, sorted(offsets))
         self.assertEqual(SCENES.count("ch01_d2_maya_dm_offer(d2_dm_mood)"), 1)
+
+    def test_nothing_says_maya_is_downstairs(self):
+        # Canon: Julian's room is next door on the second floor (ch01_main.rpy).
+        dm = SCENES.split("def ch01_d2_maya_dm_offer", 1)[1].split("def ch01_d2_maya_dm_settle", 1)[0]
+        for phrase in ("up there", "down here", "down th", "down the corridor"):
+            self.assertNotIn(phrase, dm)
+        self.assertNotIn("Maya, from somewhere down the corridor", SCENES)
+
+    def test_the_love_reaction_does_not_repeat_the_echo(self):
+        beat = block("ch01_day2_scene_30_bedroom").split("ch01_d2_maya_dm_offer(d2_dm_mood)", 1)[1]
+        self.assertNotIn("weird parts", beat.split("$ ch01_d2_maya_dm_settle()", 1)[0])
 
     def test_day_end_settles_before_the_review(self):
         body = block("ch01_day2_scene_30_finish")

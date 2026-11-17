@@ -4,7 +4,8 @@ Three small, optional phone beats: an **incoming call**, a **hesitating reply** 
 stops, deletes and rewrites before he sends), and **leaving a message on read**. Each one is
 optional and never blocks: a player who ignores them plays exactly as before, nothing has a
 timer or a fail state, and none of them moves stats by itself (a later scored choice may read
-what happened, like any story value). All characters are adults.
+what happened, like any story value). A reply card can be scored once by the story (Maya's DM:
+`ch01_d2_maya_dm_settle`), and then its default must be neutral. All characters are adults.
 
 Files: `game/python-packages/lc_phone_moments.py` (pure rules), `game/systems/phone_moments.rpy`
 (calls, read receipts, Moments-strip registration), `game/systems/phone_presentation_logic.rpy`
@@ -48,15 +49,24 @@ if _return == "answered":
 ## Reply-card flags
 
 Reply cards are still `phone_offer_reply(thread_id, prompt_id, options, default_id)` (2-3
-options, stat-free). Two optional keys on an option:
+options, stat-free unless an option names a `choice_id`: scored in the story, the card shows its
+stat line in Insight/Full). Optional keys on an option:
 
 ```renpy
 $ phone_offer_reply("maya", "ch01_d2_maya_dm", [
     {"id": "reply", "text": "We're fine, go to sleep", "hesitate": True, "draft": "Why are you"},
     {"id": "read", "text": "Leave it on read", "leave_on_read": True},
-    {"id": "show", "text": "Show [girlfriend_name]", "followups": [("maya", "hi!")]},
+    {"id": "show", "text": "Show [girlfriend_name]", "send": "it's [girlfriend_name] 🙂",
+     "followups": [("maya", "hi!")], "choice_id": "ch01_d2_maya_dm_show"},
 ], "read")
 ```
+
+- `"send"`: what the bubble posts (and the hesitation types) when it differs from the card
+  label, e.g. the label "Show [girlfriend_name]" sends what she types.
+- `"choice_id"`: a registered choice the story scores for this pick. In Insight/Full mode the
+  card draws that choice's stat line under the option (`lc_phone_reply_caption`, same text and
+  colours as a story choice card; Developer adds the ID); Normal/Immersive shows none. The card
+  never applies it: the story does (`apply_choice`), once. Options without it are unchanged.
 
 ### Hesitation (`"hesitate": True`, optional `"draft"`)
 
@@ -84,8 +94,8 @@ $ phone_offer_reply("maya", "ch01_d2_maya_dm", [
   receipt goes away. `followups` still play (the other person reacting), with no Ryan bubble.
 - Read it back with `lc_phone_left_on_read(prompt_id)`. The receipt lives in
   `lc_phone_read_receipts` (per thread); old saves have none.
-- It may be the card's default. When the card runs out at a deadline while the chat is closed,
-  the choice is still stored (`lc_phone_left_on_read` is True) but Ryan never opened it: the
+- It may be the card's default. When the card runs out at a deadline while the chat is closed
+  and still unread (Ryan never opened it; opened and closed counts as read), the choice is still stored (`lc_phone_left_on_read` is True) but Ryan never opened it: the
   thread stays **unread** (badge, unread bubble) and no "Seen" receipt appears.
   `lc_phone_left_unopened(prompt_id)` tells the two cases apart, for a later unread-bubble beat.
 

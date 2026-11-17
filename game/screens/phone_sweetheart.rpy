@@ -832,13 +832,25 @@ screen phone_screen():
                                         size 24
                                         color "#557da7"
                                         yalign 0.5
-                                    text reply_option["text"]:
-                                        style "lc_sw_hand"
-                                        size 24
-                                        color ("#5C6E82" if reply_option.get("leave_on_read") else "#293C53")
+                                    # A scored option (choice_id) shows its stat line in
+                                    # Insight/Full mode, like a story choice card.
+                                    $ _reply_caption = lc_phone_reply_caption(reply_option)
+                                    vbox:
                                         yalign 0.5
-                                        xmaximum 366
-                                        line_spacing -2
+                                        spacing 0
+                                        text reply_option["text"]:
+                                            style "lc_sw_hand"
+                                            size 24
+                                            color ("#5C6E82" if reply_option.get("leave_on_read") else "#293C53")
+                                            xmaximum 366
+                                            line_spacing -2
+                                        if _reply_caption:
+                                            text _reply_caption:
+                                                style "lc_sw_hand"
+                                                size 20
+                                                color "#425f80"
+                                                xmaximum 366
+                                                substitute False
             text "+":
                 style "lc_sw_hand"
                 size 30

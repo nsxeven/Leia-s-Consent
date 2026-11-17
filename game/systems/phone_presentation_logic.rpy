@@ -6,7 +6,9 @@
 #   links, phone unlock/HUD switches, cinematic mode. Screens live in screens/phone_sweetheart.rpy
 #   and screens/phone_hud.rpy. Reply options may carry the phone-moment flags (docs/PHONE_MOMENTS.md):
 #   leave_on_read=True (sends nothing, records the choice, shows a 'Seen' receipt) and
-#   hesitate=True with an optional draft (a typed-draft animation before the send).
+#   hesitate=True with an optional draft (a typed-draft animation before the send). Optional
+#   send="..." (the bubble text when it differs from the card label) and choice_id="..." (the card
+#   draws that choice's stat line in Insight/Full mode; the story scores the pick).
 #
 # Public API (call these from scenes/screens):
 #   phone_add_message(thread_id, sender_id, text="", message_id=None, attachment_id=None, attachment_label=None, mark_unread=True, notify=False, notification_app="Messages", notification_title=None, display_time=None, deadline=True)
@@ -14,13 +16,15 @@
 #       (a missed-call row) never resolves an open reply card to its default
 #   phone_offer_reply(thread_id, prompt_id, options, default_id) -> bool
 #       queue a save-safe, stat-free reply card for a thread (option keys: id, text, followups,
-#       leave_on_read, hesitate, draft)
+#       leave_on_read, hesitate, draft, send, choice_id)
 #   phone_choose_reply(thread_id, option_id, staged=False, by_default=False) -> bool
 #       queue a picked reply (or post it at a story deadline); by_default: the card ran out, so
-#       a leave-on-read default with the chat closed leaves it unread and unseen
+#       a leave-on-read default with the chat closed and still unread leaves it unread and unseen
 #   phone_select_reply(thread_id, option_id) -> None
 #       screen action for a reply option (starts the hesitation typing for hesitate=True)
 #   phone_default_reply(thread_id)            pick the default reply
+#   lc_phone_reply_caption(option)            stat line for an option's choice_id by choice mode
+#       ('' in Normal mode or without a choice_id); render with substitute False
 #   phone_pending_reply(thread_id)            the open reply prompt of a thread, or None
 #   phone_deliver_reply_step(thread_id, force=False) -> None
 #       one timed beat of a queued reply sequence (Ryan's beat waits while his reply is still
@@ -69,6 +73,7 @@
 #   )
 #
 # Depends on: systems/phone_state.rpy, systems/story_state.rpy, systems/lc_fx.rpy,
+#   systems/choice_engine.rpy, systems/stat_delta_colours.rpy,
 #   systems/lc_hooks.rpy, python-packages/lc_phone_moments.py,
 #   screens/gameplay_toasts.rpy, screens/phone_hud.rpy (defaults), screens/scrapbook_ui.rpy (banner
 #   screen)
@@ -225,10 +230,13 @@ init python:
         return getattr(renpy.store, "phone_reply_prompts", {}).get(thread_id)
 
     def phone_offer_reply(thread_id, prompt_id, options, default_id):
-        """Queue a save-safe, stat-free reply card for one thread.
+        """Queue a save-safe reply card for one thread (stat-free: the story scores a pick).
 
         Options are dicts with id, text and optional followups: (sender, text)
-        pairs. Stable prompt IDs become story-value keys and message-ID prefixes.
+        pairs. Optional "send": the text the bubble posts when it differs from the card label
+        ("Show [girlfriend_name]"). Optional "choice_id": the stat line the card shows in
+        Insight/Full mode (lc_phone_reply_caption) for a pick the story scores.
+        Stable prompt IDs become story-value keys and message-ID prefixes.
         """
         if thread_id not in PHONE_THREAD_ORDER or not prompt_id:
             raise ValueError("Unknown thread or missing reply prompt ID")
@@ -255,7 +263,8 @@ init python:
         del renpy.store.phone_reply_prompts[thread_id]
         set_story_value(prompt["id"], option_id)
         # A default taken at a deadline while the chat is closed: Ryan never opened it.
-        unopened = bool(by_default) and not lc_phone_thread_open(thread_id)
+        unopened = (bool(by_default) and not lc_phone_thread_open(thread_id)
+                    and phone_thread_unread_count(thread_id) > 0)
         if lc_phone_moments.is_leave_on_read(option):
             # Ryan reads it and writes nothing; only the other side's follow-ups may come.
             # Unopened, it stays unread (no 'Seen' either).
@@ -263,7 +272,7 @@ init python:
                 phone_mark_thread_read(thread_id)
             steps = []
         else:
-            steps = [("player", option["text"], prompt["id"] + "_ryan")]
+            steps = [("player", option.get("send", option["text"]), prompt["id"] + "_ryan")]
         steps.extend((sender, text, "{}_followup_{:02d}".format(prompt["id"], index + 1))
                      for index, (sender, text) in enumerate(option.get("followups", ())))
         lc_hook_run("phone_reply_chosen", thread_id, prompt["id"], option, unopened=unopened)
@@ -315,13 +324,31 @@ init python:
         option = next((item for item in (prompt or {}).get("options", ()) if item["id"] == option_id), None)
         if phone_choose_reply(thread_id, option_id, staged=True) and option and option.get("hesitate"):
             frames = lc_phone_moments.hesitation_frames(_lc_phone_plain(option.get("draft")),
-                                                        _lc_phone_plain(option["text"]),
+                                                        _lc_phone_plain(option.get("send", option["text"])),
                                                         skip=lc_phone_motion_instant())
             if frames:
                 LC_PHONE_TYPING[thread_id] = {"frames": frames, "start": _lc_phone_clock.time(),
                                               "step": lc_phone_moments.frame_step(frames),
                                               "message_id": prompt["id"] + "_ryan"}
         return None
+
+    def lc_phone_reply_caption(option):
+        """Stat line for a scored reply option (its "choice_id"), in the same format and colours
+        as a story choice card: Insight arrows, Full numbers. '' in Normal (Immersive) mode, for
+        options without a choice_id and for no-stat picks (Developer shows ID / "no stats").
+        Computed at render time, so a mode change updates it. Render with substitute False."""
+        choice_id = (option or {}).get("choice_id")
+        mode = current_choice_mode()
+        if not choice_id or mode == "normal":
+            return ""
+        import lc_ui_logic
+        _line, chips = lc_ui_logic.parse_choice_caption(format_choice(choice_id, "-"))
+        if chips:
+            return lc_choice_effect_markup(chips)
+        if mode == "developer":
+            return "[{}]  [ID: {}]".format(_choice_effect_text(choice_id, exact=True) or "no stats",
+                                           choice_id)
+        return ""
 
     # Hesitation typing (phone moments). Transient: an init-time python_dict is never saved or
     # rolled back. A record only counts while Ryan's queued message (saved state) is still next
