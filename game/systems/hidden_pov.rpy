@@ -476,7 +476,7 @@ screen lc_pov_hotspot_body(size):
             background lc_pov_cue_art(size, False, still, bang)
             hover_background lc_pov_cue_art(size, True, still, bang)
             focus_mask None
-            alt "Hidden moment: [cue_title]"
+            alt ("Hidden moment: " + cue_title.replace("[", "[["))  # plain string: self-voicing reads alt outside the screen scope
             action Function(lc_pov_open, moment_id)
             hovered Function(lc_pov_hover_sound)
             if mode == "insight":

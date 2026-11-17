@@ -114,7 +114,7 @@ class HiddenPovHardeningTests(unittest.TestCase):
         self.assertIn("lc_pov_end()", begin)
 
     def test_accessibility_sfx_and_reduced_motion(self):
-        self.assertIn('alt "Hidden moment: [cue_title]"', self.system)
+        self.assertIn('alt ("Hidden moment: " + cue_title', self.system)
         self.assertIn("renpy.music.play(LC_POV_CUE_AUDIO", self.system)
         chime = (ROOT / "game/systems/hidden_pov_chime.rpy").read_text(encoding="utf-8")
         self.assertIn("LC_POV_CUE_AUDIO = AudioData(", chime)

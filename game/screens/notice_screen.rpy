@@ -123,7 +123,7 @@ screen lc_notice_hotspot_body(size):
             background lc_notice_cue_art(size, False, still, disc)
             hover_background lc_notice_cue_art(size, True, still, disc)
             focus_mask None
-            alt "Something you noticed: [cue_label]"
+            alt ("Something you noticed: " + cue_label.replace("[", "[["))  # plain string: self-voicing reads alt outside the screen scope
             action Function(lc_notice_open, notice_id)
             hovered Function(lc_notice_hover_sound)
         if mode == "developer":
