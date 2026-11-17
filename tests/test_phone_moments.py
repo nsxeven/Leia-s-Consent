@@ -391,6 +391,22 @@ class ReplyCardHarnessTests(unittest.TestCase):
         env["phone_select_reply"]("maya", "reply")
         self.assertFalse(any("typing" in name.lower() for name in vars(store)))
 
+    def test_send_posts_its_own_text_under_a_label(self):
+        # "send": the card shows a label ("Show Leia"), the bubble posts what is typed.
+        env, story, store, marked = self.setup_thread()
+        store.phone_reply_prompts["maya"]["options"][2].update(
+            {"text": "Show [girlfriend_name]", "send": "it's [girlfriend_name] 🙂", "hesitate": True})
+        env["phone_select_reply"]("maya", "plain")
+        frames = env["LC_PHONE_TYPING"]["maya"]["frames"]
+        self.assertTrue(frames[-1].startswith("it's "), frames[-1])  # types the send, not the label
+        env["phone_flush_reply_delivery"]("maya")
+        self.assertEqual(store.phone_messages["maya"][-1]["text"], "it's [girlfriend_name] 🙂")
+
+    def test_options_without_send_post_their_text(self):
+        env, story, store, marked = self.setup_thread()
+        env["phone_choose_reply"]("maya", "plain")
+        self.assertEqual(store.phone_messages["maya"][-1]["text"], "Night")
+
     def test_bad_option_flags_raise_at_offer(self):
         env, *_ = load_phone()
         with self.assertRaises(ValueError):
@@ -442,6 +458,16 @@ class DeadlineHarnessTests(unittest.TestCase):
         self.assertEqual([m["read"] for m in store.phone_messages["maya"]], [False, False])
         self.assertEqual(env["phone_thread_unread_count"]("maya"), 2)
 
+    def test_a_chat_opened_then_closed_is_seen_not_unopened(self):
+        # Opened and closed unanswered (leaving a chat marks it read): the default at the
+        # deadline is a 'Seen', not an unread bubble for a later lock-screen beat.
+        env, story, store = self.setup_card("read")
+        env["phone_mark_thread_read"]("maya")
+        env["phone_default_reply"]("maya")
+        self.assertEqual(story["ch01_test_dm"], "read")
+        self.assertFalse(env["lc_phone_left_unopened"]("ch01_test_dm"))
+        self.assertEqual(env["lc_phone_read_receipt_row"]("maya"), 0)
+
     def test_a_picked_leave_on_read_is_seen_not_unopened(self):
         env, story, store = self.setup_card("plain")
         env["phone_choose_reply"]("maya", "read")
@@ -477,6 +503,57 @@ class CallLabelSourceTests(unittest.TestCase):
         self.assertIn("_window_show(None)", src)
 
 
+def load_caption(mode):
+    """lc_phone_reply_caption with the real choice engine and stat colours."""
+    import lc_stat_model
+    import lc_ui_logic
+    from lc_rpy_harness import load
+    env = {
+        "renpy": SimpleNamespace(store=SimpleNamespace(persistent=SimpleNamespace(
+            choice_display_mode=mode))),
+        "lc_stat_model": lc_stat_model, "lc_ui_logic": lc_ui_logic,
+        "LC_DELTA_UP": "#5aa874", "LC_DELTA_DOWN": "#d4636e",
+        "LC_DELTA_EXHIBITIONISM": "#c2568c", "LC_DELTA_SHARING": "#8a62b8",
+        "LC_REVIEW_DELTA_INK": {},
+        "CHOICE_EFFECTS": {"t_love": [("relationship", "love", 1)], "t_none": []},
+        "lc_choice_route_tag": lambda cid: "Love",
+        "get_choice_tags": lambda cid: (),
+    }
+    load(["CHOICE_MODES", "STAT_LABELS", "current_choice_mode", "get_choice_effects",
+          "_choice_effect_text", "format_choice", "lc_delta_colour", "lc_delta_colour_for_label",
+          "lc_choice_effect_markup", "lc_phone_reply_caption"], env)
+    env["CHOICE_EFFECTS"] = {"t_love": [("relationship", "love", 1)], "t_none": []}
+    return env["lc_phone_reply_caption"], env
+
+
+class ReplyCaptionTests(unittest.TestCase):
+    """A scored reply option (`choice_id`) shows the same stat line as a story choice card."""
+
+    def test_normal_mode_and_unscored_options_show_nothing(self):
+        caption, _ = load_caption("normal")
+        self.assertEqual(caption({"id": "a", "text": "x", "choice_id": "t_love"}), "")
+        for mode in ("insight", "full", "developer"):
+            caption, _ = load_caption(mode)
+            self.assertEqual(caption({"id": "a", "text": "x"}), "", mode)
+
+    def test_insight_and_full_match_the_choice_card_markup(self):
+        for mode in ("insight", "full"):
+            caption, env = load_caption(mode)
+            _line, chips = env["lc_ui_logic"].parse_choice_caption(env["format_choice"]("t_love", "x"))
+            self.assertTrue(chips)
+            expected = env["lc_choice_effect_markup"](chips)
+            self.assertEqual(caption({"id": "a", "text": "x", "choice_id": "t_love"}), expected)
+            self.assertIn("Love", expected)
+        self.assertIn("+1", load_caption("full")[0]({"choice_id": "t_love"}))
+        self.assertIn("\u2191", load_caption("insight")[0]({"choice_id": "t_love"}))
+
+    def test_a_no_stat_choice_has_no_label_except_in_developer_mode(self):
+        self.assertEqual(load_caption("full")[0]({"choice_id": "t_none"}), "")
+        dev = load_caption("developer")[0]({"choice_id": "t_none"})
+        self.assertIn("no stats", dev)
+        self.assertIn("t_none", dev)
+
+
 class ScreenSourceTests(unittest.TestCase):
     def read(self, rel):
         return (ROOT / rel).read_text(encoding="utf-8")
@@ -500,6 +577,12 @@ class ScreenSourceTests(unittest.TestCase):
         self.assertIn("lc_phone_read_receipt_row(phone_thread)", src)
         self.assertIn("lc_phone_moments.is_missed_call_message", src)
         self.assertIn('reply_option.get("leave_on_read")', src)
+
+    def test_reply_card_draws_the_stat_label_unsubstituted(self):
+        src = self.read("game/screens/phone_sweetheart.rpy")
+        block = src.split("for reply_option in reply_view_prompt[\"options\"]:", 1)[1].split('text "+":', 1)[0]
+        self.assertIn("lc_phone_reply_caption(reply_option)", block)
+        self.assertIn("substitute False", block)
 
     def test_demo_label_is_dev_only(self):
         src = self.read("game/dev/dev_phone_moments.rpy")
