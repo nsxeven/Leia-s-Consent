@@ -152,7 +152,7 @@ label ch01_day2_scene_19b2_ryan_dozes:
     else:
         "Last night's dream had mostly worn off. The sun was doing a pretty good job on the rest of it."
 
-    "The water slapped quietly against the edge of the pool. [friend_name] was saying something about the reservation, and whether eight meant eight or eight-ish here."
+    "The water slapped against the edge of the pool. [friend_name] was saying something about the reservation, and whether eight meant eight or eight-ish here."
     "I don't remember him finishing the sentence."
 
     scene black
@@ -396,7 +396,7 @@ label ch01_day2_errand_cafe_ntr:
     "I had a whole speech in my head. A really good one, actually."
     "What I did instead was stand there with my face burning and say none of it."
     leia_think "Why aren't you saying anything? Say something. Say anything at all."
-    "The worst part wasn't that he'd done it. It was the half a second right after, before I got angry, when something low in my stomach went warm and fluttery and I didn't know what to do with it."
+    "The worst part was the half a second right after, before I got angry, when something low in my stomach went warm and fluttery and I didn't know what to do with it."
     cafe_stranger "See? You're smiling."
     gf "I'm not smiling."
     "I was, a little. I could feel it on my face, and I hated it."

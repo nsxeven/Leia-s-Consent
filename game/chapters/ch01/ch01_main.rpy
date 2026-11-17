@@ -82,7 +82,7 @@ label ch01_scene_02_villa:
 
     "Inside, the living room opened straight toward a private pool, an outdoor lounge, and a strip of beach beyond it."
     gf "Look at that view."
-    "Glass, pale wood, soft furniture—everything looked expensive without trying to announce it."
+    "Glass, pale wood, soft furniture. Everything looked expensive without trying to announce it."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_corridor
@@ -314,7 +314,7 @@ label ch01_scene_03_outfit_choice:
         $ cast(ryan="casual", leia="white_ruffle", julian="travel")
         $ face("leia", "smile")
 
-    "From downstairs, [friend_name] called that the pool—and the cold drinks—were waiting."
+    "From downstairs, [friend_name] called that the pool was waiting, and so were the cold drinks."
 
     if selected_pool_outfit == "pool_bolder":
         $ cast_remove("leia")

@@ -54,7 +54,7 @@ label ch01_scene_13b_night_pool:
     $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
     "[friend_name]'s eyes drifted toward her for a moment."
-    "This time nothing had slipped and nobody had tripped. There was nothing to catch and nothing to explain."
+    "This time nothing had slipped and nobody had tripped, so there was nothing for him to catch and nothing to explain."
     "He noticed her, realized I had noticed him noticing, and looked back toward the water."
 
     $ set_story_flag("ch01_night_pool_julian_glance")
@@ -675,8 +675,8 @@ label ch01_scene_19_too_hot:
     with dissolve
     $ lc_breath_once()  # soft inhale on Leia's CG (darryn: less static)
 
-    "Without it, there was nothing unusual about the way we were sitting—just [girlfriend_name] curled beside me in her loungewear."
-    "But whatever had felt private under the blanket no longer had anywhere to hide."
+    "Without it, there was nothing unusual about the way we were sitting, just [girlfriend_name] curled beside me in her loungewear."
+    "But with the blanket gone, whatever had felt private under it was just sitting out in the open."
 
     $ exit_cinematic_mode()
     # Back-and-forth conversation runs on BG + sprites (darryn); the sofa CG
@@ -783,7 +783,7 @@ label ch01_scene_20_no_hiding_place:
 label ch01_scene_21_watching_julian:
 
     "Eventually [girlfriend_name] turned sideways and stretched her legs across my lap."
-    "When [friend_name] reached forward for the snacks, she adjusted instinctively—and checked where his eyes were before settling again."
+    "When [friend_name] reached forward for the snacks, she adjusted instinctively and checked where his eyes were before settling again."
     "It was quick. I still caught it."
 
     $ ch01_watch_claim_text = format_choice("ch01_watch_claim", "Eyes on me.")
@@ -890,7 +890,7 @@ label ch01_scene_22_first_micro_test:
             "[girlfriend_name]'s eyes stayed on mine."
             gf "I know."
             "She left the fabric exactly where it was for a little while longer."
-            "[friend_name] never visibly noticed. That somehow made the choice feel more deliberate, not less."
+            "[friend_name] never visibly noticed, and somehow that made the choice feel more deliberate on her part."
 
         "[ch01_micro_dismiss_text]":
             $ apply_choice("ch01_micro_dismiss")
@@ -1598,7 +1598,7 @@ label ch01_scene_30_end_day_one:
             $ set_story_value("ch01_dream_response", "curious")
             "I shut my eyes again, but the last image stayed there."
             think "Why did that bother me... and why couldn't I stop thinking about it?"
-            "Jealousy explained some of it. Not all of it."
+            "Jealousy explained some of it, though not nearly all."
             "I wasn't ready to put a name to the rest."
 
         "[dream_withdraw_text]":
