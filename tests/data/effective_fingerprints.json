@@ -1,6 +1,7 @@
 {
  "assign": {
   "CH01_D2_LANE_EXEMPT_CHOICES": "d0be1dda9840b540",
+  "CH01_D2_MAYA_DM_SHOW": "952e8a3930489c31",
   "CH01_SELECT_DAY2_PRESETS": "f04bb0e4558a91c6",
   "CH01_SELECT_DAY2_ROUTES": "430d9aacac1e584e",
   "CH01_SELECT_DAY5_PRESETS": "a386d9b32d112817",
@@ -188,7 +189,7 @@
   "vcentered.screen": "d4770f0cd3111a2f"
  },
  "choice_effects": {
-  "table": "4ff2aeacd36e43ed"
+  "table": "6b67bea8f73c17ff"
  },
  "class": {
   "LCChoiceToastRuntime": "933cce13b06696f3",
@@ -269,6 +270,10 @@
   "ch01_breakfast_deliver_leia_reply": "9b67c743b2e4572f",
   "ch01_breakfast_phone_closed_early": "5641af090080ae1c",
   "ch01_d2_choice_ids": "f44e506d82a06cb8",
+  "ch01_d2_maya_dm_mood": "4e427acff4840fb4",
+  "ch01_d2_maya_dm_offer": "0accbf89d695f2c0",
+  "ch01_d2_maya_dm_review_lines": "5d2b84cac9da9b88",
+  "ch01_d2_maya_dm_settle": "fa1b046352db2195",
   "ch01_d2_route_lane": "c065a3c5b1f0be4b",
   "ch01_d4_choice_ids": "7ad25c376fdc982b",
   "ch01_d4_day_outfit_options": "edb437cd83a0d007",
@@ -1107,6 +1112,8 @@
   "CHOICE_EFFECTS.update({ #3e44bb11be89e99b": 1,
   "CHOICE_EFFECTS.update({ #60cc3707687edc98": 1,
   "CHOICE_EFFECTS.update({ #72e6399ded0ca12a": 1,
+  "CHOICE_EFFECTS.update({ #7b09f2e0235f6329": 1,
+  "CHOICE_TAGS.update({ #28812a91fe0327de": 1,
   "CHOICE_TAGS.update({ #2bc260ed05b737e3": 1,
   "CHOICE_TAGS.update({ #4e78125e3134878f": 1,
   "CHOICE_TAGS.update({ #ac187255a72ce41f": 1,
@@ -1238,6 +1245,7 @@
   "lc_hook_add(\"review_finished\", lc_tags_unlock_finished_day) #4f4bba022f135a3a": 1,
   "lc_hook_add(\"review_titles\", lc_tags_apply) #0ce7aed81f42da81": 1,
   "lc_hook_add(\"story_flag_set\", chapter_select_unlock_after_day_two) #2ca61c8a3dfa527b": 1,
+  "lc_phone_moment_register(\"ch01_d2_maya_dm\", \"ch01_d2\", \"Maya, a late text\", \"nosy\", #c90b881c15158435": 1,
   "lc_pov_register( #d1921ed054239453": 1,
   "lc_title_register_background(\"bar\", \"Bar\", _b + \"chapter 1/ch01_bar.webp\", (\"ch01_restaura #b4a4049aff637533": 1,
   "lc_title_register_background(\"bedroom_day\", \"Bedroom, day\", _b + \"villa/villa_master_day.w #557db2ffecd1391a": 1,
@@ -1634,9 +1642,9 @@
   "ch01_day2_scene_27_game_escalates": "f57646b4de622fed",
   "ch01_day2_scene_28_julian_strips": "a7ad447acae6edba",
   "ch01_day2_scene_29_game_winds_down": "532badd9b075b414",
-  "ch01_day2_scene_30_bedroom": "6bd892825225a962",
+  "ch01_day2_scene_30_bedroom": "040705be54ac212e",
   "ch01_day2_scene_30_exhibition": "839068d03bbc7116",
-  "ch01_day2_scene_30_finish": "b96334f673cbe71a",
+  "ch01_day2_scene_30_finish": "99cef8445d7d3733",
   "ch01_day2_scene_30_love": "65b8c38cf606215a",
   "ch01_day2_scene_30_ntr_nightmare": "caeef229d5b512d3",
   "ch01_day2_start": "1a218c55da91405e",

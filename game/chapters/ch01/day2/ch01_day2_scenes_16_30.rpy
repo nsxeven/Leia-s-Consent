@@ -1,6 +1,98 @@
 # Leia's Consent — Chapter One: Something Different
 # Day Two, Scenes 16–30.
 
+init 1 python:
+
+    # Day Two phone moment (docs/PHONE_MOMENTS.md): Maya's late DM in scene 30. The reply card
+    # itself is stat-free; ch01_d2_maya_dm_settle() scores the pick once, in the story. Leaving
+    # it on read is the card's default and neutral, so a player who never opens the phone plays
+    # the scene as before (one extra narration line).
+    CHOICE_EFFECTS.update({
+        "ch01_d2_maya_dm_reply": [
+            ("relationship", "trust", 1),
+        ],
+        "ch01_d2_maya_dm_read": [],
+        "ch01_d2_maya_dm_show": [
+            ("relationship", "love", 1),
+        ],
+    })
+    CHOICE_TAGS.update({
+        "ch01_d2_maya_dm_reply": ("attentive",),
+        "ch01_d2_maya_dm_read": (),
+        "ch01_d2_maya_dm_show": ("open", "supportive"),
+    })
+    lc_phone_moment_register("ch01_d2_maya_dm", "ch01_d2", "Maya, a late text", "nosy",
+                             found_on=("reply", "show"))
+
+    # What Leia types when he shows her, and Maya's answer, by the bedroom branch that follows.
+    CH01_D2_MAYA_DM_SHOW = {
+        "love": ("it's [girlfriend_name] 🙂 we're really good. go be nice to [friend_name] 💕",
+                 "BABE 😭 okay okay, leaving you alone. goodnight lovebirds"),
+        "exhib": ("it's [girlfriend_name] 😇 we're very okay. don't ask",
+                  "oh I'm asking. tomorrow. in detail 👀"),
+        "shy": ("hi it's [girlfriend_name] 🙈 we're fine!! goodnight",
+                "🙈 cute. goodnight you two"),
+        "cool": ("it's [girlfriend_name]. we're fine. go to sleep lol",
+                 "rude 😂 night babe"),
+    }
+
+    def ch01_d2_maya_dm_mood(lane, tint, soft_gate, wink, pool_suspicion, love_exhib_blend):
+        """Leia's answer follows the branch scene 30 takes next: the nightmare or the pool talk
+        (cool), the open curtains (exhib), the Love lane (love), else her shy baseline."""
+        if tint == "temptation" or (soft_gate and wink) or (
+                pool_suspicion and not soft_gate and lane == "ntr_risk"):
+            return "cool"
+        if lane == "exhibitionism" or love_exhib_blend:
+            return "exhib"
+        if lane == "love":
+            return "love"
+        return "shy"
+
+    def ch01_d2_maya_dm_offer(mood):
+        leia_text, maya_answer = CH01_D2_MAYA_DM_SHOW.get(mood, CH01_D2_MAYA_DM_SHOW["shy"])
+        lc_phone_set_story_time("23:52")
+        phone_add_message("maya", "maya", text="you two okay up there? 👀",
+                          message_id="ch01_d2_maya_dm_01", mark_unread=True, notify=True,
+                          notification_title="Maya")
+        phone_add_message("maya", "maya",
+                          text="asking because it's very quiet down here and [friend_name] is pretending to be asleep. badly.",
+                          message_id="ch01_d2_maya_dm_02", mark_unread=True, notify=True,
+                          notification_title="Maya")
+        phone_offer_reply("maya", "ch01_d2_maya_dm", [
+            {"id": "reply", "text": "We're good. Go to sleep, Maya.", "hesitate": True,
+             "draft": "why is it so quiet down th",
+             "followups": [("maya", "\"we're good.\" wow. riveting. goodnight 😘")]},
+            {"id": "read", "text": "Leave it on read", "leave_on_read": True},
+            {"id": "show", "text": leia_text, "followups": [("maya", maya_answer)]},
+        ], "read")
+        return None
+
+    def ch01_d2_maya_dm_settle(close=False):
+        """Score the DM pick once. close=True (end of Day Two): a card nobody answered runs out
+        as left on read (unopened), and the phone clock goes back to the device clock."""
+        if close and (phone_pending_reply("maya") or {}).get("id") == "ch01_d2_maya_dm":
+            phone_default_reply("maya")
+        pick = get_story_value("ch01_d2_maya_dm")
+        if pick and not has_story_flag("ch01_d2_maya_dm_scored"):
+            set_story_flag("ch01_d2_maya_dm_scored")
+            if pick == "show":
+                apply_choice("ch01_d2_maya_dm_show")
+            elif pick == "reply":
+                apply_choice("ch01_d2_maya_dm_reply")
+            else:
+                apply_choice("ch01_d2_maya_dm_read")
+        if close:
+            lc_phone_clear_story_time()
+        return None
+
+    def ch01_d2_maya_dm_review_lines():
+        """The day review's readable line for each pick (lc_review_choice_catalog scans these)."""
+        return [
+            format_choice("ch01_d2_maya_dm_reply", "Texted Maya back that we were good."),
+            format_choice("ch01_d2_maya_dm_read", "Left Maya's late text on read."),
+            format_choice("ch01_d2_maya_dm_show", "Showed " + girlfriend_name + " Maya's late text."),
+        ]
+
 label ch01_day2_scene_16_forced_split:
 
     $ d2_lane = get_story_value("ch01_d2_route_lane_pre_split", "love")
@@ -1658,6 +1750,38 @@ label ch01_day2_scene_30_bedroom:
     else:
         "[girlfriend_name] pulled her hair loose and let it fall, yawning into the back of her hand."
 
+    # Maya's late DM (phone moment ch01_d2_maya_dm, docs/PHONE_MOMENTS.md). Optional and never
+    # blocks: ignored, it runs out as "left on read" at the end of the day. Leia reacts here
+    # only if he showed her before this line ends; the pick is scored once (Day Two file init).
+    $ d2_dm_mood = ch01_d2_maya_dm_mood(d2_lane, d2_tint, d2_soft_gate, d2_wink, d2_pool_suspicion, d2_love_exhib_blend)
+    $ lc_sfx("phone_notify")
+    $ ch01_d2_maya_dm_offer(d2_dm_mood)
+    "My phone lit up on the nightstand. Maya, from somewhere down the corridor."
+
+    if get_story_value("ch01_d2_maya_dm") == "show":
+        if d2_dm_mood == "love":
+            "I'd tipped the screen toward [girlfriend_name]. She read it, laughed through her nose, and took the phone out of my hand to answer it herself."
+            "Then she gave it back and tucked herself against my side."
+            gf "For the record, we are. Okay, I mean. Even with all the weird parts today, I'm really glad it's you up here with me."
+            "She kissed my cheek and got very interested in the ceiling."
+        elif d2_dm_mood == "exhib":
+            "I'd tipped the screen toward [girlfriend_name]. She read it, grinned, and had the phone out of my hand before I could ask."
+            mc "What did you tell her?"
+            gf "That it's none of her business."
+            "She handed it back with pink cheeks, very pleased with herself."
+            gf "She's going to ask me about it tomorrow. Probably in front of everyone."
+            gf "...I don't really mind that."
+        elif d2_dm_mood == "cool":
+            "[girlfriend_name] glanced at the screen, typed a quick answer with one thumb and handed the phone back."
+            gf "She's just drunk."
+            "She was already looking at something else."
+        else:
+            "[girlfriend_name] read it over my shoulder and went pink."
+            gf "Oh my god. She's so..."
+            "She took the phone anyway, typed something short and gave it back face-down."
+            gf "Don't read it out loud."
+    $ ch01_d2_maya_dm_settle()
+
     if d2_soft_gate and d2_wink:
         jump ch01_day2_scene_30_ntr_nightmare
 
@@ -2077,6 +2201,7 @@ label ch01_day2_scene_30_ntr_nightmare:
 label ch01_day2_scene_30_finish:
 
     $ set_story_flag("ch01_d2_scene_30_complete")
+    $ ch01_d2_maya_dm_settle(close=True)
     $ set_story_flag("ch01_day_02_complete")
 
     scene black
