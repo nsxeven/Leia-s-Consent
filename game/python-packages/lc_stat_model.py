@@ -87,6 +87,14 @@ THRESHOLDS = {
     "d2_morning_bold": 45,             # was 26
     "d2_pool_outfit_bold": 36,         # was exhibitionism 22 or curiosity 27
     "d2_game_drinks": 28,              # was 18
+    # Subtle Day Two tint for a handful of Leia's lines (darryn 2026-11-17): the stat furthest
+    # above its own threshold colours the line; below every threshold she stays shy.
+    # Trust climbs faster than Love on a loving run, so its bar sits higher.
+    "d2_tint_love": 60,
+    "d2_tint_trust": 78,
+    "d2_tint_exhibitionism": 36,       # = d2_exhib_lane
+    "d2_tint_sharing": 6,
+    "d2_tint_temptation": 14,          # one below d2_risk_temptation
     # Day 4-5 her-own-call constants (override the scriptwriter defaults)
     "d4_brief_reveal": 45,             # was 26
     "d5_bolder_swim": 41,              # was 24
@@ -447,6 +455,30 @@ def d2_love_exhib_blend(lane, stats, exhib_gained_today):
         and stats["exhibitionism"] >= THRESHOLDS["d2_love_exhib_blend"]
         and exhib_gained_today >= 1
     )
+
+
+def leia_tint(stats, lane=None, lane_scene=False):
+    """Day Two line tint for Leia: 'shy' or the stat id furthest above its d2_tint_* bar.
+
+    The lane decides the scene; the tint only colours lines inside it. The Love lane never
+    gets the Temptation tint, and a scene inside the NTR-risk lane never gets the Love tint.
+    Missing or non-numeric stats count as their defaults.
+    """
+    stats = stats or {}
+    allowed = list(STAT_ORDER)
+    if lane == "love":
+        allowed.remove("temptation")
+    if lane == "ntr_risk" and lane_scene:
+        allowed.remove("love")
+    best, best_margin = "shy", -1
+    for stat in allowed:
+        value = stats.get(stat)
+        if not isinstance(value, (int, float)):
+            value = DEFAULTS[STAT_GROUPS[stat]][stat]
+        margin = value - THRESHOLDS["d2_tint_" + stat]
+        if margin >= 0 and margin > best_margin:
+            best, best_margin = stat, margin
+    return best
 
 
 def lean_from_route_value(value):
