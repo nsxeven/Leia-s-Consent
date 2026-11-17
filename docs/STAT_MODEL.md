@@ -107,7 +107,8 @@ says, how she reacts), not by what Ryan meant.
    If an answer seems to need two paths, split it into two answers or pick the stronger pull.
 3. If the branch writes a route value (`ntr_confirmed`, `ntr_unresolved`, `mixed_unresolved`, a soft
    NTR gate), add the id to `CHOICE_ROUTE_FLAGS` (and `CHOICE_GATES` for a gate) so the stamp says
-   `LOCKS NTR` / `NTR STAYS OPEN` / `MAY LEAD TO NTR`.
+   `LOCKS NTR` / `NTR STAYS OPEN` / `MAY LEAD TO NTR`. The flag `"lean"` stamps the plain lean even
+   for a one-step slip (`ch01_d2_errand_walk_keep` stamps `NTR`, not `MAY LEAD TO NTR`).
 4. In the script: `$ x_text = format_choice("<id>", "Line.")`, caption `"[x_text]"`, and
    `$ apply_choice("<id>")` as the first line of the same branch. Never apply stats with a plain caption.
 5. Give answers in one menu different stat lines unless they really lead to the same path.

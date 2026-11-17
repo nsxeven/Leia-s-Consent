@@ -126,8 +126,10 @@ CHOICE_GATES = {
 }
 
 # Route value the branch writes: "locks" (ntr_confirmed), "stays_open"
-# (ntr_unresolved), "may_lead" (soft gate or mixed_unresolved).
+# (ntr_unresolved), "may_lead" (soft gate or mixed_unresolved). "lean" stamps the plain
+# lean even for a one-step slip (Leia's walk-back "keep it" is her NTR-side pick, K4).
 CHOICE_ROUTE_FLAGS = {
+    "ch01_d2_errand_walk_keep": "lean",
     "ch01_d2_sunset_ignore_gate": "may_lead",
     "ch01_d2_bed_pool_accuse": "may_lead",
     "ch01_d2_wink_accuse_hard": "locks",
@@ -247,6 +249,8 @@ def route_tag(effects, route_flag=None):
         return "NTR stays open" if lean == "NTR" else "Repair, NTR stays open"
     if route_flag == "may_lead":
         return "May lead to NTR"
+    if route_flag == "lean":
+        return lean
     if lean == "NTR" and effect_deltas(effects).get("temptation", 0) == 1:
         # A one-step slip (Temptation +1) only leans toward NTR; several of them
         # are what open it (darryn's slow burn, choice-sense pass).

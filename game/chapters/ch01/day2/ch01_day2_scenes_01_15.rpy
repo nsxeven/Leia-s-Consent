@@ -209,7 +209,33 @@ init 1 python:
     # its Exhibitionism counts for the end-of-day route and Days 3+, not for the lane checks.
     # Leia's errand ids and Ryan's confession reply join this tuple too (docs/LEIA_SIDE.md): the
     # loop subtracts what each really applied (lc_choice_applied_effects), as lc_exhib_gained adds.
-    CH01_D2_LANE_EXEMPT_CHOICES = ("ch01_d2_knot_watch",)
+    # Leia's errand, Ryan's confession reply and his scene 30 bring-up (Leia's side design,
+    # "Lanes and the end route"): they count from Day Three on, never for tonight's lane or end
+    # route (ch01_d2_love_exhib_blend below). Door A only skips the lane checks.
+    CH01_D2_ERRAND_EXEMPT_CHOICES = (
+        "ch01_d2_errand_cafe_love_thank",
+        "ch01_d2_errand_cafe_love_brush",
+        "ch01_d2_errand_cafe_exhib_linger",
+        "ch01_d2_errand_cafe_exhib_mention",
+        "ch01_d2_errand_cafe_ntr_linger",
+        "ch01_d2_errand_cafe_ntr_shut",
+        "ch01_d2_errand_shop_tell",
+        "ch01_d2_errand_shop_keep",
+        "ch01_d2_errand_shop_mirror_leave",
+        "ch01_d2_errand_shop_mirror_fix",
+        "ch01_d2_errand_walk_tell",
+        "ch01_d2_errand_walk_keep",
+        "ch01_d2_confession_ask",
+        "ch01_d2_confession_protect",
+        "ch01_d2_confession_brush",
+        "ch01_d2_feed_love_tease",
+        "ch01_d2_feed_exhib_show",
+        "ch01_d2_feed_told_aside",
+        "ch01_d2_feed_kept_ask",
+        "ch01_d2_feed_kept_silent",
+        "ch01_d2_feed_let_go",
+    )
+    CH01_D2_LANE_EXEMPT_CHOICES = ("ch01_d2_knot_watch",) + CH01_D2_ERRAND_EXEMPT_CHOICES
 
     def ch01_d2_route_lane():
         """Resolve the active Day Two lane (stat model v2: lc_stat_model.d2_route_lane).
@@ -239,6 +265,24 @@ init 1 python:
             focus=lc_route_explorer_for_lane(),
             migrated_lane=migrated,
         )
+
+
+    def ch01_d2_love_exhib_blend(lane):
+        """Scene 30's Love + Exhibitionism blend (the end route) without Leia's errand ids.
+
+        Stats and today's Exhibitionism minus what each CH01_D2_ERRAND_EXEMPT_CHOICES pick really
+        applied (lc_choice_applied_effects, as the lane does), so her side and Ryan's replies to
+        it never change tonight's end route. Door A still counts here, as before.
+        """
+        stats = dict(lc_stats_flat())
+        gained = lc_exhib_gained("ch01_d2_")
+        for exempt_id in CH01_D2_ERRAND_EXEMPT_CHOICES:
+            if exempt_id in renpy.store.choice_history and exempt_id in CHOICE_EFFECTS:
+                for _group, stat, amount in lc_choice_applied_effects(exempt_id):
+                    stats[stat] = stats.get(stat, 0) - amount
+                    if stat == "exhibitionism":
+                        gained -= amount
+        return lc_stat_model.d2_love_exhib_blend(lane, stats, gained)
 
 
     def format_day2_risk_choice(choice_id, base_text, severity="soft"):
