@@ -1276,17 +1276,34 @@ label ch01_day2_scene_11b_boutique:
     scene cg ch01_d2_boutique_changing_room
     with dissolve
 
-    "Behind the curtain, [girlfriend_name] held the dress up at arm's length and looked at it for a long time."
+    "Behind the curtain, [girlfriend_name] held the dress up at arm's length, put her other hand to her chin and looked at it for a long time."
     "It looked even smaller in there. Two front panels, a halter tie and a lot of cutouts, and somehow it was supposed to hold her in."
     gf "Okay. It's a dress. People wear dresses. People wear dresses all the time."
-    maya "Are you in it yet?"
-    gf "I'm looking at it!"
-    maya "Stop looking at it and put it on! Mine's already on, and I look amazing, by the way."
+    "Then she looked down at herself. White off-shoulder T-shirt, denim shorts, and her bikini underneath, because the plan had been the pool after this."
+    "She looked back at the dress. At the heart cut out of the chest, and the holes running down both sides."
+    "Every single one of them sat right where a bikini string would be."
+    "So the bikini would show. Straps poking out of every hole, like wearing socks with sandals, only worse, because the whole point of the dress was the holes."
+    "Which meant the bikini would have to come off. Which meant there'd be nothing under the dress. At all. In a mall. Behind a curtain that didn't quite reach the wall."
+    gf "No. Absolutely not. That's insane."
+    "She kept holding the dress up anyway."
+    gf "...Maya?"
+    maya "Yes! Are you in it?"
+    gf "No. I've got my bikini on under my clothes, and this thing has, like, holes everywhere. It's going to show. Like, all of it is going to show."
+    maya "So take it off."
+    gf "The bikini?"
+    maya "Everything. Take it all off. Nobody wears anything under a dress like that, babe. That's the whole point of a dress like that."
+    gf "Is that true? That can't be true. Wait, is that actually true?"
+    maya "Why do you think mine looks this good? Confidence and nothing else. Mostly nothing else."
+    gf "Maya!"
+    maya "What? Now you know! Everything off, dress on. I want to see."
+    "[girlfriend_name] looked at the curtain, then at the gap at its edge, then back at the dress."
+    gf "If anyone opens this curtain, I'm just going to live in here now. This is my home."
+    maya "Noted. Hurry up."
 
     scene cg ch01_d2_changing_room_02
     with dissolve
 
-    "It went on easier than she expected. Then she looked up at the mirror."
+    "The bikini went into her bag with the T-shirt and shorts. The dress went on easier than she expected, which somehow made it worse. Then she looked up at the mirror."
     gf "Oh. Oh, okay."
     "The black hugged everything. The cutouts sat exactly where she'd been afraid they would, and the hem stopped a lot higher up her thighs than anything she owned."
     gf "Maya, how short is this supposed to be?"
@@ -1302,7 +1319,7 @@ label ch01_day2_scene_11b_boutique:
     gf "It's not a lot of anything, Maya, that's the problem. If I pull it down, the top goes, and if I fix the top, the bottom goes, and I only have two hands."
     maya "So you hold both. Easy."
     gf "I'm not going out there holding both."
-    "She looked at herself for a while anyway. Then, still holding the front in place with one arm, she dug her phone out of her shorts on the bench."
+    "She looked at herself for a while anyway. Then, still holding the front in place with one arm, she dug her phone out of her bag on the bench."
 
     scene cg ch01_d2_changing_room_capture
     with dissolve
