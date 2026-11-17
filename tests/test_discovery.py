@@ -125,16 +125,52 @@ class CountLineTests(unittest.TestCase):
         self.assertIsNone(lc_discovery.count_line([], "full"))
 
 
+class ClearedBeforeTests(unittest.TestCase):
+    """Rule: a day counts as cleared before a review unless this playthrough cleared it first."""
+
+    def test_not_cleared_on_the_profile(self):
+        self.assertFalse(lc_discovery.cleared_before("ch01_d2", set(), {}, "runA"))
+        self.assertFalse(lc_discovery.cleared_before("ch01_d2", None, None, None))
+
+    def test_the_playthrough_that_first_cleared_it_still_reads_first_clear(self):
+        self.assertFalse(lc_discovery.cleared_before("ch01_d2", {"ch01_d2"}, {"ch01_d2": "runA"}, "runA"))
+
+    def test_another_playthrough_or_unknown_first_run_reads_cleared(self):
+        self.assertTrue(lc_discovery.cleared_before("ch01_d2", {"ch01_d2"}, {"ch01_d2": "runA"}, "runB"))
+        # Cleared before first-run ids existed (or migrated from older evidence).
+        self.assertTrue(lc_discovery.cleared_before("ch01_d2", {"ch01_d2"}, {}, "runA"))
+        self.assertTrue(lc_discovery.cleared_before("ch01_d2", {"ch01_d2"}, {"ch01_d2": "runA"}, None))
+
+
+class StripLayoutTests(unittest.TestCase):
+    """The Moments strip is ONE fixed-height row at any count (review I1)."""
+
+    def test_height_never_grows_with_the_count(self):
+        heights = {lc_discovery.strip_layout(n, 714)["height"] for n in range(1, 16)}
+        self.assertEqual(heights, {lc_discovery.STRIP_HEIGHT})
+        self.assertEqual(lc_discovery.STRIP_HEIGHT, 24 + 4 + lc_discovery.STRIP_TILE_H)
+
+    def test_overflow_only_past_five_tiles_on_the_review_page(self):
+        for n in range(1, 6):
+            self.assertFalse(lc_discovery.strip_layout(n, 714)["overflow"], n)
+        for n in (6, 7, 12):
+            layout = lc_discovery.strip_layout(n, 714)
+            self.assertTrue(layout["overflow"], n)
+            self.assertEqual(layout["content_w"], n * 136 + (n - 1) * 8)
+
+
 class DiscoveryRuntimeTests(unittest.TestCase):
     """The production init block of game/systems/discovery.rpy with engine boundaries stubbed."""
 
     def setUp(self):
         self.persistent = SimpleNamespace(lc_days_cleared=set())
-        self.store = SimpleNamespace(lc_discoveries_found=set(), lc_discovery_review_cleared={})
+        self.store = SimpleNamespace(lc_discoveries_found=set(), lc_discovery_review_cleared={},
+                                     lc_discovery_run_id="runA",
+                                     LC_POV_OPPORTUNITIES={"p_unreg": {}})
+        self.config = SimpleNamespace(developer=False)
         self.env = dict(store=self.store, persistent=self.persistent,
-                        renpy=SimpleNamespace(store=self.store),
-                        current_choice_mode=lambda: "full",
-                        LC_POV_OPPORTUNITIES={"p_unreg": {}})
+                        renpy=SimpleNamespace(store=self.store), config=self.config,
+                        current_choice_mode=lambda: "full")
         load_blocks(["lc_discovery_register"], self.env)
         self.call("lc_discovery_register", "ch01_d2", "p1", "pov", "Julian, breakfast", "noticed",
                   image="cg x_pov")
@@ -183,23 +219,105 @@ class DiscoveryRuntimeTests(unittest.TestCase):
         self.assertEqual([i["id"] for i in self.call("lc_discovery_strip", "ch01_d2")], ["n1"])
         # Another playthrough of the day on this profile: unfound items appear greyed.
         self.store.lc_discovery_review_cleared = {}
+        self.store.lc_discovery_run_id = "runB"
         self.call("lc_hook_run", "review_finished", "ch01_d2")
         items = self.call("lc_discovery_strip", "ch01_d2")
         self.assertEqual([(i["id"], i["found"]) for i in items], [("p1", False), ("n1", True)])
         self.assertEqual(self.call("lc_discovery_count_line", "ch01_d2"), "1 of 2")
         self.assertIsNone(self.call("lc_discovery_count_line", "ch01_d2", "normal"))
 
-    def test_hook_failure_never_breaks_the_review(self):
+    def test_rollback_past_the_review_then_replay_stays_a_first_clear(self):
+        # Review M1: persistent is not rolled back, the save-local snapshot is.
+        self.call("lc_discovery_mark", "n1")
+        self.call("lc_hook_run", "review_finished", "ch01_d2")
+        self.store.lc_discovery_review_cleared = {}       # rollback to before lc_review_finish
+        self.assertEqual([i["id"] for i in self.call("lc_discovery_strip", "ch01_d2")], ["n1"])
+        self.call("lc_hook_run", "review_finished", "ch01_d2")   # play forward again
+        self.assertEqual([i["id"] for i in self.call("lc_discovery_strip", "ch01_d2")], ["n1"])
+        self.assertIsNone(self.call("lc_discovery_count_line", "ch01_d2"))
+        self.assertEqual(self.store.lc_discovery_review_cleared, {"ch01_d2": False})
+
+    def test_save_without_a_run_id_still_snapshots_once(self):
+        del self.store.lc_discovery_run_id
+        self.call("lc_hook_run", "review_finished", "ch01_d2")
+        self.assertEqual(self.store.lc_discovery_review_cleared, {"ch01_d2": False})
+        self.assertEqual(self.persistent.lc_days_cleared, {"ch01_d2"})
+
+    def test_hook_failure_never_breaks_the_review_in_release(self):
         self.persistent.lc_days_cleared = None
         self.store.lc_discovery_review_cleared = None
         self.call("lc_hook_run", "review_finished", "ch01_d2")
         self.assertEqual(self.persistent.lc_days_cleared, {"ch01_d2"})
+        self.persistent.lc_days_cleared = 5    # a real bug: not iterable
+        self.call("lc_hook_run", "review_finished", "ch01_d3")
+
+    def test_hook_failure_is_loud_in_developer_mode(self):
+        # Review M5: a real bug must not vanish silently in dev.
+        self.config.developer = True
+        self.persistent.lc_days_cleared = 5
+        with self.assertRaises(TypeError):
+            self.call("lc_hook_run", "review_finished", "ch01_d2")
+
+    def test_mark_unknown_id_raises_in_developer_mode(self):
+        # Review M3: a typo'd id would otherwise be stored and never shown.
+        self.config.developer = True
+        with self.assertRaises(Exception) as ctx:
+            self.call("lc_discovery_mark", "d2_breakfast_julain")
+        self.assertIn("d2_breakfast_julain", str(ctx.exception))
+        self.assertEqual(self.store.lc_discoveries_found, set())
+        self.call("lc_discovery_mark", "p_unreg")      # registered Hidden POV without day_id
+        self.assertEqual(self.store.lc_discoveries_found, {"p_unreg"})
+
+    def test_mark_unknown_id_does_nothing_in_release(self):
+        self.call("lc_discovery_mark", "d2_breakfast_julain")
+        self.assertEqual(self.store.lc_discoveries_found, set())
+        self.assertFalse(self.call("lc_discovery_found", "d2_breakfast_julain"))
 
     def test_days_without_discoveries_draw_nothing(self):
         self.call("lc_hook_run", "review_finished", "ch01_d1")
         self.store.lc_discovery_review_cleared = {}
         self.assertEqual(self.call("lc_discovery_strip", "ch01_d1"), [])
         self.assertIsNone(self.call("lc_discovery_count_line", "ch01_d1"))
+
+    def test_count_line_reuses_the_strip_items(self):
+        self.store.lc_discovery_review_cleared = {"ch01_d2": True}
+        items = self.call("lc_discovery_strip", "ch01_d2")
+        self.assertEqual(self.call("lc_discovery_count_line", "ch01_d2", "full", items), "0 of 2")
+
+
+class LegacyClearedTests(unittest.TestCase):
+    """Review M2: a profile that finished Day Two before discoveries existed counts as cleared.
+    The evidence is persistent.ch01_chapter_select_unlocked (set on the first finished Day Two,
+    systems/chapter_select.rpy), read once at init so this PR's own first clear is unaffected."""
+
+    def boot(self, **persistent):
+        self.persistent = SimpleNamespace(**persistent)
+        self.store = SimpleNamespace(lc_discoveries_found=set(), lc_discovery_review_cleared={},
+                                     lc_discovery_run_id="runA", LC_POV_OPPORTUNITIES={})
+        self.env = dict(store=self.store, persistent=self.persistent,
+                        renpy=SimpleNamespace(store=self.store),
+                        config=SimpleNamespace(developer=False),
+                        current_choice_mode=lambda: "full")
+        load_blocks(["lc_discovery_register"], self.env)
+        self.env["lc_discovery_register"]("ch01_d2", "n1", "notice", "Terrace", "someone watching")
+
+    def test_profile_that_finished_day_two_before_reads_cleared(self):
+        self.boot(ch01_chapter_select_unlocked=True)
+        self.assertIn("ch01_d2", self.persistent.lc_days_cleared)
+        self.env["lc_hook_run"]("review_finished", "ch01_d2")
+        self.assertEqual([(i["id"], i["found"]) for i in self.env["lc_discovery_strip"]("ch01_d2")],
+                         [("n1", False)])
+        self.assertEqual(self.env["lc_discovery_count_line"]("ch01_d2"), "0 of 1")
+
+    def test_fresh_profile_first_clear_is_unaffected_by_the_unlock_flag(self):
+        self.boot(lc_days_cleared=set())
+        self.assertEqual(self.persistent.lc_days_cleared, set())
+        # Day Two's finish sets the unlock flag just before its review: too late to count.
+        self.persistent.ch01_chapter_select_unlocked = True
+        self.env["lc_discovery_migrate_legacy"]()
+        self.env["lc_hook_run"]("review_finished", "ch01_d2")
+        self.assertEqual(self.env["lc_discovery_strip"]("ch01_d2"), [])
+        self.assertEqual(self.persistent.lc_days_cleared, {"ch01_d2"})
 
 
 class HiddenPovDiscoveryTests(unittest.TestCase):
@@ -221,8 +339,9 @@ class HiddenPovDiscoveryTests(unittest.TestCase):
                          "LC_DISCOVERIES", "lc_discovery_register", "lc_discovery_mark",
                          "lc_discovery_found", "lc_pov_seen_in_save"],
                         dict(renpy=renpy, store=self.store, lc_discovery=lc_discovery,
-                             persistent=SimpleNamespace(),
+                             persistent=SimpleNamespace(), config=SimpleNamespace(developer=True),
                              lc_pov_available=lambda: True))
+        self.store.LC_POV_OPPORTUNITIES = self.env["LC_POV_OPPORTUNITIES"]
 
     def call(self, name, *a, **kw):
         return self.env[name](*a, **kw)
@@ -289,13 +408,30 @@ class ReviewStripScreenTests(unittest.TestCase):
 
     def test_strip_is_drawn_only_when_items_exist(self):
         self.assertIn("$ moments = lc_discovery_strip(day_id, mode)", self.screen)
-        self.assertIn("$ moments_count = lc_discovery_count_line(day_id, mode)", self.screen)
+        self.assertIn("$ moments_count = lc_discovery_count_line(day_id, mode, moments)", self.screen)
         self.assertIn("if moments:", self.screen)
         self.assertIn("use lc_review_moments(moments, moments_count, text_w)", self.screen)
 
-    def test_strip_uses_scrapbook_look_and_custom_names(self):
+    def strip(self):
         start = self.text.index("\nscreen lc_review_moments(")
-        strip = self.text[start:self.text.index("\nscreen ", start + 10)]
+        return self.text[start:self.text.index("\nscreen ", start + 10)]
+
+    def test_strip_is_one_fixed_height_row(self):
+        # Review I1: the footer reserves the same height at any count, so "WHAT I SAID" keeps
+        # its space; extra tiles scroll sideways in a viewport instead of wrapping.
+        self.assertIn('$ footer_h += lc_discovery.strip_layout(len(moments), text_w)["height"]', self.screen)
+        self.assertNotIn("moments_rows", self.screen)
+        strip = self.strip()
+        self.assertNotIn("box_wrap", strip)
+        self.assertIn('viewport id "lc_review_moments"', strip)
+        self.assertIn('mousewheel ("horizontal" if overflow else False)', strip)
+        self.assertIn("draggable overflow", strip)
+        self.assertIn("ysize lc_discovery.STRIP_TILE_H", strip)
+        # The scrollbar sits in the header row and only when the tiles overflow.
+        self.assertIn('if overflow:\n                bar value XScrollValue("lc_review_moments")', strip)
+
+    def test_strip_uses_scrapbook_look_and_custom_names(self):
+        strip = self.strip()
         self.assertIn("lc_discovery_thumb(item,", strip)
         self.assertIn("gallery_customize_names(item[\"label\"])", strip)
         self.assertIn("if count:", strip)

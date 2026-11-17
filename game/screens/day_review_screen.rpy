@@ -148,6 +148,11 @@ style lc_review_vscrollbar is vscrollbar:
     base_bar Solid("#e3d5b8")
     thumb Solid("#8a6a50")
     unscrollable "hide"
+style lc_review_hscrollbar is scrollbar:
+    ysize 8
+    base_bar Solid("#e3d5b8")
+    thumb Solid("#8a6a50")
+    unscrollable "hide"
 
 init python:
     class LcReviewDelta(renpy.Displayable):
@@ -329,13 +334,53 @@ screen lc_review_tag(who, title, tag_w=356):
 
 
 screen lc_review_moments(items, count, text_w):
-    # Moments strip (systems/discovery.rpy), up to five 136x122 tiles a row: found moments show
-    # their art like the polaroids; unfound ones (only once the day was cleared before) a greyed
-    # silhouette with label and mood. `count` is None in Immersive mode and on a first clear.
-    vbox:
+    # Moments strip (systems/discovery.rpy): ONE row of fixed height at any count
+    # (lc_discovery.strip_layout), so the choices above keep their space. The 136x122 tiles sit
+    # in a horizontal viewport (mouse wheel + drag); a thin scrollbar appears in the header line
+    # only when they overflow. Found moments show their art like the polaroids; unfound ones
+    # (only once the day was cleared before) a greyed silhouette with label and mood. `count`
+    # is None in Immersive mode and on a first clear.
+    # The viewport is declared before the header line because its scrollbar (XScrollValue)
+    # can only reference a viewport that already exists in the screen.
+    $ overflow = lc_discovery.strip_layout(len(items), text_w)["overflow"]
+    fixed:
         xsize text_w
-        spacing 4
+        ysize lc_discovery.STRIP_HEIGHT
+        viewport id "lc_review_moments":
+            xpos 0
+            ypos (lc_discovery.STRIP_HEIGHT - lc_discovery.STRIP_TILE_H)
+            xsize text_w
+            ysize lc_discovery.STRIP_TILE_H
+            mousewheel ("horizontal" if overflow else False)
+            draggable overflow
+            hbox:
+                spacing lc_discovery.STRIP_GAP
+                for item in items:
+                    $ ink = "#3b2a30" if item["found"] else "#8a7a7c"
+                    fixed:
+                        xsize lc_discovery.STRIP_TILE_W
+                        ysize lc_discovery.STRIP_TILE_H
+                        add Solid("#3b2a30" if item["found"] else "#a89a90") xysize (136, 80)
+                        add lc_discovery_thumb(item, 132, 76) xpos 2 ypos 2
+                        fixed:
+                            xpos 0
+                            ypos 84
+                            xsize 136
+                            ysize 18
+                            clipping True
+                            text gallery_customize_names(item["label"]) style "lc_pixel" size 15 color ink substitute False
+                        if item["mood"]:
+                            fixed:
+                                xpos 0
+                                ypos 100
+                                xsize 136
+                                ysize 22
+                                clipping True
+                                text gallery_customize_names(item["mood"]) style "lc_hand" size 21 color ("#7a5648" if item["found"] else "#8a7a74") substitute False
+
         fixed:
+            xpos 0
+            ypos 0
             xsize text_w
             ysize 24
             hbox:
@@ -343,36 +388,10 @@ screen lc_review_moments(items, count, text_w):
                 yalign 0.5
                 add "images/ui/scrapbook/mark.png" yalign 0.5
                 text "MOMENTS" style "lc_pixel" size 18 color "#7a6266" yalign 0.5
+            if overflow:
+                bar value XScrollValue("lc_review_moments") style "lc_review_hscrollbar" xpos 150 xsize (text_w - 270) yalign 0.5
             if count:
                 text count style "lc_pixel" size 18 color "#a83a5a" xanchor 1.0 xpos (text_w - 8) yalign 0.5 substitute False
-        hbox:
-            xsize text_w
-            spacing 8
-            box_wrap True
-            box_wrap_spacing 6
-            for item in items:
-                $ ink = "#3b2a30" if item["found"] else "#8a7a7c"
-                fixed:
-                    xsize 136
-                    ysize 122
-                    add Solid("#3b2a30" if item["found"] else "#a89a90") xysize (136, 80)
-                    add lc_discovery_thumb(item, 132, 76) xpos 2 ypos 2
-                    fixed:
-                        xpos 0
-                        ypos 84
-                        xsize 136
-                        ysize 18
-                        clipping True
-                        text gallery_customize_names(item["label"]) style "lc_pixel" size 15 color ink substitute False
-                    if item["mood"]:
-                        fixed:
-                            xpos 0
-                            ypos 100
-                            xsize 136
-                            ysize 22
-                            clipping True
-                            text gallery_customize_names(item["mood"]) style "lc_hand" size 21 color ("#7a5648" if item["found"] else "#9a8a84") substitute False
-
 
 screen lc_review_bar_column(rows, offset, skipped, exact, pitch, col_w, seq_i, seq_phase):
     vbox:
@@ -590,10 +609,10 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
     $ footer_n = 0
     # Moments strip (systems/discovery.rpy): nothing is drawn for a day without discoveries.
     $ moments = lc_discovery_strip(day_id, mode)
-    $ moments_count = lc_discovery_count_line(day_id, mode)
-    $ moments_rows = (len(moments) + 4) // 5
+    $ moments_count = lc_discovery_count_line(day_id, mode, moments)
     if moments:
-        $ footer_h += 28 + moments_rows * 122 + 6 * (moments_rows - 1)
+        # One fixed-height row at any count (review I1): never squeezes "WHAT I SAID".
+        $ footer_h += lc_discovery.strip_layout(len(moments), text_w)["height"]
         $ footer_n += 1
     if show_stats:
         $ footer_h += 24

@@ -99,3 +99,32 @@ def count_line(items, mode):
     if mode == "normal" or not items:
         return None
     return "%d of %d" % (sum(1 for item in items if item["found"]), len(items))
+
+
+def cleared_before(day_id, cleared, first_runs, run_id):
+    """True when the profile had finished day_id before this playthrough's review of it.
+
+    cleared: the profile's finished review days; first_runs: {day_id: run id of the playthrough
+    that first finished it}. The playthrough that first finished the day keeps reading False, so
+    rolling back past its review and replaying stays a first clear. A day finished before run ids
+    existed (or carried over from older completion evidence) has no first run: it reads True.
+    """
+    if day_id not in (cleared or ()):
+        return False
+    first = (first_runs or {}).get(day_id)
+    return not (run_id and first == run_id)
+
+
+# Moments strip geometry (screens/day_review_screen.rpy): ONE row of fixed height at any count.
+# Header line (24) + spacing (4) + the tile row; extra tiles scroll sideways, never wrap.
+STRIP_TILE_W = 136
+STRIP_TILE_H = 122
+STRIP_GAP = 8
+STRIP_HEIGHT = 24 + 4 + STRIP_TILE_H
+
+
+def strip_layout(count, width):
+    """{"height", "content_w", "overflow"} for count tiles in a strip width px wide.
+    height is constant (STRIP_HEIGHT); overflow is True when the tiles need to scroll."""
+    content_w = max(0, count * STRIP_TILE_W + (count - 1) * STRIP_GAP)
+    return {"height": STRIP_HEIGHT, "content_w": content_w, "overflow": content_w > width}
