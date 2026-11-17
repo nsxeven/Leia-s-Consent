@@ -252,4 +252,8 @@ init 1 python:
         center=(1785, 255),
         title="Julian's POV",
         mature=True,
+        # Moments strip on the Day Two review (systems/discovery.rpy).
+        day_id="ch01_d2",
+        label="Julian, breakfast",
+        mood="noticed",
     )

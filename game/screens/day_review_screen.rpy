@@ -11,6 +11,8 @@
 #   screen lc_review_night_screen(day_id)     the night card before the spread
 #   screen lc_review_history_screen(day_id)   replay of the latest review (Status screen)
 #   screen lc_review_settings()               review options block used in player settings
+#   screen lc_review_moments(items, count, text_w)
+#       the Moments strip row in the right-page footer (systems/discovery.rpy data)
 #   screen lc_title_badge(character_id, title)
 #       brief sprite title badge (config.show hook)
 #   class LcReviewDelta(renpy.Displayable)    animated stat-change number
@@ -20,10 +22,12 @@
 #   call lc_day_review("ch01_d2") from lc_review_return_ch01_d2   (the label shows these screens)
 #
 # Depends on: systems/day_review.rpy, systems/stat_tooltips.rpy, systems/stat_delta_colours.rpy,
-#   screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy
+#   screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy, systems/discovery.rpy (Moments
+#   strip), systems/gallery.rpy (gallery_customize_names)
 # Hooks: none
 # Load order: default (screens at init -500; the displayable classes at init 0)
-# Docs: docs/DAY_REVIEW.md   Tests: tests/test_day_review.py, tests/test_review_layout_icons.py
+# Docs: docs/DAY_REVIEW.md   Tests: tests/test_day_review.py, tests/test_review_layout_icons.py,
+#   tests/test_discovery.py
 
 transform lc_night_in:
     alpha 0.0
@@ -324,6 +328,52 @@ screen lc_review_tag(who, title, tag_w=356):
         text title style "lc_hand_tag" size 26 xpos 32 ypos 38 xmaximum (tag_w - 48) substitute False
 
 
+screen lc_review_moments(items, count, text_w):
+    # Moments strip (systems/discovery.rpy), up to five 136x122 tiles a row: found moments show
+    # their art like the polaroids; unfound ones (only once the day was cleared before) a greyed
+    # silhouette with label and mood. `count` is None in Immersive mode and on a first clear.
+    vbox:
+        xsize text_w
+        spacing 4
+        fixed:
+            xsize text_w
+            ysize 24
+            hbox:
+                spacing 8
+                yalign 0.5
+                add "images/ui/scrapbook/mark.png" yalign 0.5
+                text "MOMENTS" style "lc_pixel" size 18 color "#7a6266" yalign 0.5
+            if count:
+                text count style "lc_pixel" size 18 color "#a83a5a" xanchor 1.0 xpos (text_w - 8) yalign 0.5 substitute False
+        hbox:
+            xsize text_w
+            spacing 8
+            box_wrap True
+            box_wrap_spacing 6
+            for item in items:
+                $ ink = "#3b2a30" if item["found"] else "#8a7a7c"
+                fixed:
+                    xsize 136
+                    ysize 122
+                    add Solid("#3b2a30" if item["found"] else "#a89a90") xysize (136, 80)
+                    add lc_discovery_thumb(item, 132, 76) xpos 2 ypos 2
+                    fixed:
+                        xpos 0
+                        ypos 84
+                        xsize 136
+                        ysize 18
+                        clipping True
+                        text gallery_customize_names(item["label"]) style "lc_pixel" size 15 color ink substitute False
+                    if item["mood"]:
+                        fixed:
+                            xpos 0
+                            ypos 100
+                            xsize 136
+                            ysize 22
+                            clipping True
+                            text gallery_customize_names(item["mood"]) style "lc_hand" size 21 color ("#7a5648" if item["found"] else "#9a8a84") substitute False
+
+
 screen lc_review_bar_column(rows, offset, skipped, exact, pitch, col_w, seq_i, seq_phase):
     vbox:
         spacing 0
@@ -538,6 +588,13 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
     $ page_h = 890
     $ footer_h = 0
     $ footer_n = 0
+    # Moments strip (systems/discovery.rpy): nothing is drawn for a day without discoveries.
+    $ moments = lc_discovery_strip(day_id, mode)
+    $ moments_count = lc_discovery_count_line(day_id, mode)
+    $ moments_rows = (len(moments) + 4) // 5
+    if moments:
+        $ footer_h += 28 + moments_rows * 122 + 6 * (moments_rows - 1)
+        $ footer_n += 1
     if show_stats:
         $ footer_h += 24
         $ footer_n += 1
@@ -675,6 +732,8 @@ screen lc_day_review_screen(day_id, replay=False, skipped=False):
                 xsize text_w
                 ysize footer_h
                 spacing 4
+                if moments:
+                    use lc_review_moments(moments, moments_count, text_w)
                 if show_stats:
                     fixed:
                         xsize text_w

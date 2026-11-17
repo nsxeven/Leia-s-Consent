@@ -6,13 +6,15 @@
 #   at init 999 (developer builds fail loudly).
 #
 # Public API (call these from scenes/screens):
-#   lc_pov_register(moment_id, image, source, position=None, title="Optional view", mature=None, center=None, gallery_id=None, sfx=True) -> None
-#       register one moment (stable image/source/position) at init
+#   lc_pov_register(moment_id, image, source, position=None, title="Optional view", mature=None, center=None, gallery_id=None, sfx=True, day_id=None, label=None, mood=None) -> None
+#       register one moment (stable image/source/position) at init; day_id also registers it
+#       as a `pov` discovery on that day's Moments strip (label defaults to title)
 #   lc_pov_begin(moment_id) -> None           open the moment's scope (its sparkle may show)
 #   lc_pov_end() -> None                      close the current scope
 #   lc_pov_in_scope(moment_id)                True while the moment's source image is showing
 #   lc_pov_available()                        True when a cue may show now
-#   lc_pov_open(moment_id) -> None            open the viewer (the sparkle's action)
+#   lc_pov_open(moment_id) -> None            open the viewer (the sparkle's action); also marks the
+#       moment found in this save (lc_discovery_mark, read back with lc_pov_seen_in_save)
 #   lc_pov_close() -> None                    close the viewer
 #   lc_pov_validate(moment_id)                problems with one registration
 #   lc_pov_validate_all()                     {moment_id: problems} for every registration
@@ -33,12 +35,14 @@
 #   $ lc_pov_begin("d2_breakfast_julian")   ...   $ lc_pov_end()
 #
 # Depends on: systems/hidden_pov_chime.rpy (LC_POV_CUE_AUDIO), systems/gallery.rpy,
-#   systems/lc_fx.rpy, screens/scrapbook_ui.rpy (lc_phone_covers_scene, lc_journal_menu_open)
+#   systems/lc_fx.rpy, screens/scrapbook_ui.rpy (lc_phone_covers_scene, lc_journal_menu_open),
+#   systems/discovery.rpy (lc_discovery_register, lc_discovery_mark)
 # Hooks: none (installs config.afm_callback, a start_interact callback and the lc_pov_hotspot
 #   overlay)
 # Load order: init -1 constants; init 0 registry and API (moments register at init 1); init 999
 #   validation, after every registration file and the gallery tables
-# Docs: docs/HIDDEN_POV.md   Tests: tests/test_hidden_pov.py, tests/test_d2_breakfast_cgs.py
+# Docs: docs/HIDDEN_POV.md   Tests: tests/test_hidden_pov.py, tests/test_d2_breakfast_cgs.py,
+#   tests/test_discovery.py
 
 default lc_pov_active = None
 default lc_pov_viewed = False
@@ -83,13 +87,17 @@ init python:
         return None
 
     def lc_pov_register(moment_id, image, source, position=None, title="Optional view",
-                        mature=None, center=None, gallery_id=None, sfx=True):
+                        mature=None, center=None, gallery_id=None, sfx=True,
+                        day_id=None, label=None, mood=None):
         """Register one optional POV moment.
 
         position: legacy (x, y) upper-left of a 64x64 slot (sparkle centre = +32).
         center:   (x, y) sparkle centre; preferred for new moments.
         mature:   None derives it from the Gallery row that lists `image`.
         sfx:      play the soft sparkle chime when the cue first appears.
+        day_id:   review day (e.g. "ch01_d2"); when given the moment is also a `pov`
+                  discovery on that day's Moments strip (systems/discovery.rpy), shown with
+                  `label` (default: title) and `mood` (default: "").
         """
         if moment_id in LC_POV_OPPORTUNITIES:
             raise ValueError("Duplicate optional POV: " + moment_id)
@@ -107,6 +115,8 @@ init python:
             "mature": None if mature is None else bool(mature),
             "gallery_id": gallery_id, "sfx": bool(sfx),
         }
+        if day_id is not None:
+            lc_discovery_register(day_id, moment_id, "pov", label or title, mood or "", image=image)
 
     def lc_pov_hitbox_size():
         return LC_POV_HITBOX_TOUCH if renpy.variant("touch") else LC_POV_HITBOX
@@ -179,6 +189,10 @@ init python:
         image = LC_POV_OPPORTUNITIES[moment_id]["image"]
         renpy.stop_skipping()  # SDK exports/contextexports.py; do not resume Skip.
         renpy.store.lc_pov_viewed = True
+        # Save-local "seen" record (systems/discovery.rpy): rollback restores it with the
+        # store; retain_after_load keeps it in a save made on this same line.
+        lc_discovery_mark(moment_id)
+        renpy.retain_after_load()
         renpy.mark_image_seen(image)  # SDK exports/persistentexports.py.
         renpy.save_persistent()
         renpy.show_screen("lc_pov_viewer", moment_id=moment_id)
