@@ -102,7 +102,7 @@ label ch01_d2_feed_react_love_shop:
     return
 
 label ch01_d2_feed_react_exhib:
-    think "The girl from the pool next door. So that was why she'd come back from a coffee run all pink."
+    think "So one of the guys from the pool had played hero at the café. That was why she'd come back from a coffee run all pink."
     return
 
 label ch01_d2_feed_react_ntr:
