@@ -469,7 +469,7 @@ class SourceContractTests(unittest.TestCase):
         hotspot = self.screen[self.screen.index("\nscreen lc_notice_hotspot_body("):]
         self.assertIn("button:", hotspot)
         self.assertIn("hover_background lc_notice_cue_art(size, True", hotspot)
-        self.assertIn('alt "Something you noticed: [cue_label]"', hotspot)
+        self.assertIn('alt ("Something you noticed: " + cue_label', hotspot)
         self.assertNotIn("keyboard_focus False", hotspot.split("screen lc_notice_viewer")[0])
         for name in ("eye_idle", "eye_hover", "eye_disc_idle", "eye_disc_hover"):
             svg = (GAME / "gui/notice" / (name + ".svg")).read_text(encoding="utf-8")
@@ -558,3 +558,18 @@ class DayTwoNoticeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AltTextInterpolationTests(unittest.TestCase):
+    """Self-voicing reads a button's alt text outside the screen's scope, so a screen-local
+    [variable] in a quoted alt string raises NameError on hover (crash seen 2026-11-18)."""
+
+    def test_no_alt_string_interpolates_a_variable(self):
+        import pathlib, re
+        game = pathlib.Path(__file__).resolve().parents[1] / "game"
+        bad = []
+        for path in game.rglob("*.rpy"):
+            for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                if re.match(r'\s*alt\s+"[^"]*\[[^\[]', line):
+                    bad.append(f"{path.relative_to(game)}:{n}")
+        self.assertEqual(bad, [])
