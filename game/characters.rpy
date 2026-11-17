@@ -24,6 +24,13 @@ define stranger_d3 = Character("Stranger")
 # Day 2 boutique: the man by the racks who compliments Maya (and the Hidden POV there).
 # A separate person again; no sprite, so he is not in LC_CAST_SPEAKERS.
 define boutique_stranger = Character("Stranger")
+# Day 2 Leia's errand (chapters/ch01/day2/ch01_day2_leia_errand.rpy): the man at the café
+# counter (a separate person again), the barista, the guy from the pool and Margaret at the
+# resort shop. No sprites, so none of them is in LC_CAST_SPEAKERS.
+define cafe_stranger = Character("Stranger")
+define barista = Character("Barista")
+define pool_guy = Character("Guy from the pool")
+define shop_owner = Character("Shop owner")
 define maya = Character("Maya")
 # Day One used the temporary phone_friend role before Maya was introduced in person.
 define phone_friend = maya

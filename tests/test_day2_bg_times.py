@@ -31,6 +31,20 @@ class Day2BackgroundTimeTests(unittest.TestCase):
                     continue  # placeholders
                 self.assertIn("night", bg, "%s uses %s" % (label, bg))
 
+    def test_leia_errand_uses_day_art(self):
+        f = CH01 / "day2" / "ch01_day2_leia_errand.rpy"
+        labels = re.findall(r"^label (\w+):", f.read_text(encoding="utf-8"), re.M)
+        self.assertIn("ch01_day2_errand_shop", labels)
+        used = set()
+        for label in labels:
+            for bg in label_scenes(f, label):
+                used.add(bg)
+                self.assertNotRegex(bg, r"evening|night", "%s uses %s" % (label, bg))
+                # Single-variant night art (skill note): the night shop and the night roadside.
+                self.assertNotIn(bg, ("ch01_conveniencestore", "ch01_roadside"), label)
+        self.assertIn("ch01_shop_day", used)       # K2: darryn's daytime shop (placeholder until rendered)
+        self.assertIn("ch01_d2_island_day", used)  # the walks
+
 
 if __name__ == "__main__":
     unittest.main()

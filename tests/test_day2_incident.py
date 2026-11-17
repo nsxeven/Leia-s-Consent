@@ -131,7 +131,8 @@ class FlavorBeatsTests(unittest.TestCase):
         self.assertLess(full.index("ch01_d2_route_lane_pre_split"), full.index("ch01_d2_knot_response"))
         payoff = label_body(S19B, "ch01_day2_scene_19c_back_outside")
         self.assertIn("Getting you on your own before dinner was the secret.", payoff)
-        self.assertNotIn("menu:", payoff)
+        # The payoff itself has no menu; Leia's told-path confession (Leia's errand) follows it.
+        self.assertNotIn("menu:", payoff[: payoff.index("Don't tell her it worked.")])
 
 
 class SceneOneReconcileTests(unittest.TestCase):

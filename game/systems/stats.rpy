@@ -30,7 +30,8 @@
 #   $ ch01_photo_confidence = lc_stat("exhibitionism") + (LC_T["d1_photo_bolder_bonus"] if selected_pool_outfit == "pool_bolder" else 0)
 #
 # Depends on: python-packages/lc_stat_model.py, systems/choice_engine.rpy, systems/story_state.rpy,
-#   game/defaults.rpy, systems/leia_side.rpy (lc_choice_applied_effects, lc_leia_is_side_choice)
+#   game/defaults.rpy, systems/leia_side.rpy (lc_choice_applied_effects, lc_leia_is_side_choice),
+#   chapters/ch01/day2/ch01_day2_scenes_01_15.rpy (ch01_d2_route_lane, ch01_d2_love_exhib_blend)
 # Hooks: none (adds lc_migrate_stats_v2 to config.after_load_callbacks)
 # Load order: default (init 0)
 # Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_runtime.py, tests/test_stat_model.py
@@ -159,7 +160,7 @@ init python:
             return lc_stat_model.lean_from_route_value(get_story_value("ch01_d2_end_route", "love"))
         if has_story_flag("ch01_day_02_started"):
             lane = ch01_d2_route_lane()
-            if lc_stat_model.d2_love_exhib_blend(lane, flat, lc_exhib_gained("ch01_d2_")):
+            if ch01_d2_love_exhib_blend(lane):
                 return "love_exhib"
             return lc_stat_model.lean_from_route_value(lane)
         if has_story_flag("ch01_started"):

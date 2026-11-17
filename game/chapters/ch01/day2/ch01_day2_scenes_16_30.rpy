@@ -722,7 +722,11 @@ label ch01_day2_scene_20_dinner_outfit:
     else:
         "[girlfriend_name] stood beside me for a while before finally turning toward me."
 
-        gf "Hey. Can I ask you something?"
+        # Told path (Leia's errand): one lead-in line; the soft-gate menu below is unchanged.
+        if get_story_value("ch01_d2_leia_told") == "told":
+            gf "So I told you my thing. Can I ask you something now? It's only fair."
+        else:
+            gf "Hey. Can I ask you something?"
         mc "Yeah, sure. What's up?"
         gf "Are we okay?"
         "I looked at her."
@@ -1073,6 +1077,14 @@ label ch01_day2_scene_24_dinner_aftermath:
     maya "I didn't say no, [friend_name]. Don't put words in my mouth."
 
     "We paid, walked back to the villa together, and let the night follow us home."
+
+    # Leia's errand posts (ch01_day2_feed.rpy): released side by side, only the lane's matching
+    # ones come out, one banner. A save without the errand gets none.
+    if get_story_value("ch01_d2_errand_lane"):
+        $ lc_phone_set_story_time("21:40")
+        $ lc_feed_release("d2_feed_love_poolguy", "d2_feed_love_shop", "d2_feed_exhib_poolguy", "d2_feed_exhib_poolguy_linger", "d2_feed_ntr_clip", "d2_feed_ntr_clip_linger")
+        "Somewhere on the walk my phone buzzed in my pocket. [LC_FEED_APP_NAME]: new posts from around the resort. I left it for later."
+        $ lc_phone_clear_story_time()
 
     $ set_story_flag("ch01_d2_scene_24_complete")
     jump ch01_day2_scene_25_maya_stays
@@ -1754,7 +1766,8 @@ label ch01_day2_scene_30_bedroom:
     $ d2_wink = get_story_value("ch01_d2_dinner_wink", False)
     $ d2_pool_suspicion = get_story_flag("ch01_d2_pool_suspicion")
     python:
-        d2_love_exhib_blend = lc_stat_model.d2_love_exhib_blend(d2_lane, lc_stats_flat(), lc_exhib_gained("ch01_d2_"))
+        # End route: Leia's errand and its follow-ups never count tonight (CH01_D2_ERRAND_EXEMPT_CHOICES).
+        d2_love_exhib_blend = ch01_d2_love_exhib_blend(d2_lane)
 
     scene bg ch01_villa_bedroom_night  # after game night: night art (darryn)
     with fade
@@ -1859,6 +1872,115 @@ label ch01_day2_scene_30_bedroom:
         "I sent Maya something short and put the phone face-down. [girlfriend_name] saw me do it and didn't have to ask."
     $ ch01_d2_maya_dm_end_show()
     $ ch01_d2_maya_dm_settle()
+
+    # Leia's errand posts (ch01_day2_feed.rpy): "saw a post" bring-up, before every bedroom gate
+    # (the nightmare jump and the pool-suspicion menu). Wording follows the ERRAND lane, not the
+    # bedroom variant. Moves stats only; every id is left out of tonight's lane and end route.
+    call lc_feed_reaction_runner from d2_feed_reactions_sc30
+    $ d2_errand_lane = get_story_value("ch01_d2_errand_lane")
+    $ d2_seen_love_pool = lc_feed_seen("d2_feed_love_poolguy")
+    $ d2_seen_love_shop = lc_feed_seen("d2_feed_love_shop")
+    $ d2_feed_letgo_text = format_choice("ch01_d2_feed_let_go", "Let it go.")
+
+    if d2_errand_lane == "love" and (d2_seen_love_pool or d2_seen_love_shop):
+        if d2_seen_love_pool:
+            think "That post was still sitting in my head. Stopped a creep at the resort café, got shot down by the same girl. Her boyfriend is a lucky man."
+        if d2_seen_love_shop:
+            think "And the one from the shop. A young lady bought the last chocolate muffins for her sweetheart today."
+        $ d2_feed_love_text = format_choice("ch01_d2_feed_love_tease", "Tease her about the post.")
+        menu:
+            "[d2_feed_love_text]":
+                $ apply_choice("ch01_d2_feed_love_tease")
+                $ set_story_value("ch01_d2_feed_bringup", "love_tease")
+                if d2_seen_love_pool:
+                    mc "So. Apparently I'm a lucky man."
+                else:
+                    mc "So. Apparently I'm your sweetheart."
+                gf "What? Who said that?"
+                "I turned the phone around. [girlfriend_name] read it and went red from her collarbones up."
+                if d2_seen_love_pool:
+                    gf "He posted it? He actually posted it? Oh my God, I'm going to die."
+                    mc "You didn't tell me some guy was being a creep."
+                    gf "Because it was nothing, and somebody stopped him, and I didn't want your frappuccino story to be about some creep. It was supposed to be about you."
+                    mc "Well, it's about me now. Apparently I'm lucky."
+                    gf "You are, actually. Write that down somewhere."
+                if d2_seen_love_shop:
+                    gf "And that's Margaret! From the shop! She's so sweet. She's been married to Harold for forty-one years, and he's commenting on her posts. That's going to be us, by the way. You're going to be Harold."
+                    mc "I'd be a good Harold."
+                    gf "You'd be a great Harold."
+                "She took my phone, liked everything on it, and gave it back."
+            "[d2_feed_letgo_text]":
+                $ apply_choice("ch01_d2_feed_let_go")
+                $ set_story_value("ch01_d2_feed_bringup", "let_go")
+                "I put the phone down. Whatever else had happened on that walk, she'd come back with my frappuccino and the last box of muffins. That told me most of what I needed to know."
+
+    elif d2_errand_lane == "exhibitionism" and lc_feed_any_seen("d2_feed_exhib_poolguy", "d2_feed_exhib_poolguy_linger"):
+        think "The post from the café was still open on my phone. She's TAKEN, boys. And underneath it, a bunch of strangers working out exactly which girl from the pool she was."
+        $ d2_feed_exhib_text = format_choice("ch01_d2_feed_exhib_show", "Show her the comments.")
+        menu:
+            "[d2_feed_exhib_text]":
+                $ apply_choice("ch01_d2_feed_exhib_show")
+                $ set_story_value("ch01_d2_feed_bringup", "exhib_show")
+                mc "So, you're a little bit famous."
+                "I handed her the phone. She scrolled, and her mouth fell open, and then she kept scrolling."
+                gf "'The one with the strings.' They're talking about me. They're actually sitting there talking about me."
+                mc "You don't sound that upset about it."
+                gf "I'm mortified. I'm... okay, I'm mortified and I'm reading every single one of them."
+                gf "I was going to tell you about him tonight, I swear. I wanted to see your face. He just got there first."
+                mc "My face is doing this, if that helps."
+                "She looked at me, and whatever she saw made her bite her lip."
+                gf "Yeah. That helps."
+            "[d2_feed_letgo_text]":
+                $ apply_choice("ch01_d2_feed_let_go")
+                $ set_story_value("ch01_d2_feed_bringup", "let_go")
+                "I put the phone down. If she wanted to tell me about the café, she would. From the look on her face, she was already planning how."
+
+    elif d2_errand_lane == "ntr_risk" and lc_feed_any_seen("d2_feed_ntr_clip", "d2_feed_ntr_clip_linger"):
+        think "The post was still open on my phone. A blurry photo of a café counter, some guy's hand, and a pair of denim shorts I'd watched her pack."
+        if get_story_value("ch01_d2_leia_told") == "told":
+            think "She told me. She sat on the end of my lounger and told me before I ever saw this."
+            $ d2_feed_told_text = format_choice("ch01_d2_feed_told_aside", "Show her, and say you're glad she told you first.")
+            menu:
+                "[d2_feed_told_text]":
+                    $ apply_choice("ch01_d2_feed_told_aside")
+                    $ set_story_value("ch01_d2_feed_bringup", "told_aside")
+                    mc "Somebody posted it, by the way. The café thing."
+                    "[girlfriend_name] sat up so fast the bed bounced."
+                    gf "What? Let me see."
+                    "She looked at it for a long time. Long enough that I could hear Maya laughing at something through the wall."
+                    gf "'She didn't slap him.' Great. Thanks, Kayla, whoever you are."
+                    mc "I'm really glad I heard it from you first. If I'd just found this..."
+                    gf "Yeah. I know. That's kind of why I told you."
+                    if get_story_value("ch01_d2_confession_reply") == "asked":
+                        "She looked at the photo again, and something in her face went pink and quiet, and she didn't hand the phone back straight away."
+                "[d2_feed_letgo_text]":
+                    $ apply_choice("ch01_d2_feed_let_go")
+                    $ set_story_value("ch01_d2_feed_bringup", "let_go")
+                    "I put the phone face-down. She'd already told me. There wasn't anything in that post she hadn't said first."
+        else:
+            think "The café. She'd come back from the café with my frappuccino, sat on the end of my lounger and talked about muffins."
+            $ d2_feed_ask_text = format_choice("ch01_d2_feed_kept_ask", "Ask her about the café.")
+            $ d2_feed_silent_text = format_choice("ch01_d2_feed_kept_silent", "Put the phone away and say nothing.")
+            menu:
+                "[d2_feed_ask_text]":
+                    $ apply_choice("ch01_d2_feed_kept_ask")
+                    $ set_story_value("ch01_d2_feed_bringup", "kept_asked")
+                    mc "Hey. What happened at the café today?"
+                    "[girlfriend_name] went still."
+                    gf "What do you mean? I got your drink."
+                    "I turned the phone around. She looked at the screen and didn't say anything for a while."
+                    gf "It was nothing. Some gross guy. It was one second, and then I left."
+                    mc "You didn't tell me."
+                    gf "Because it was nothing! I didn't want it to be a whole thing. You've been in your own head all day, I didn't want to put something else in there."
+                    "It sounded true. I just couldn't tell if it was all of it."
+                    gf "...I'm sorry. I should've told you."
+                    "She put the phone down on the nightstand, screen-down, and neither of us picked it up again."
+                "[d2_feed_silent_text]":
+                    $ apply_choice("ch01_d2_feed_kept_silent")
+                    $ set_story_value("ch01_d2_feed_bringup", "kept_silent")
+                    "I locked the screen and put the phone face-down on the nightstand."
+                    "[girlfriend_name] was right there, and I didn't ask her anything."
+                    think "If it was nothing, she'd have told me. If it was something, I didn't want to hear it tonight."
 
     if d2_soft_gate and d2_wink:
         jump ch01_day2_scene_30_ntr_nightmare

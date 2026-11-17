@@ -48,6 +48,7 @@ init -2 python:
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_boutique_slip_ryan", "ch01_d2_boutique_slip_julian",
         "ch01_d2_pool_top_accident",
+        "d2_cafe_stranger",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
         "ch01_d2_dinner_reach", "ch01_d2_julian_underwear_reveal",
         "ch01_d2_love_bedroom_01", "ch01_d2_love_bedroom_02",
@@ -208,6 +209,10 @@ init -2 python:
     gallery_row("d2_boutique_pov", "ch01_d2", "A stranger's view",
         "Somebody by the racks stopped pretending to look at shirts.",
         [("ch01_d2_shop_showoff_stranger_pov", "A stranger's POV")], mature=True)
+    gallery_row("d2_cafe_stranger", "ch01_d2", "The café counter",
+        "Leia waits for his frappuccino, and a stranger leans in.",
+        ["d2_cafe_stranger"],
+        route="Leia's errand (every lane)")
     gallery_row("d2_pool_top_accident", "ch01_d2", "The bee",
         "An accident in the pool: Leia hides behind Julian's shoulders.",
         ["ch01_d2_pool_top_accident"])

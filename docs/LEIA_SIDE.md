@@ -132,7 +132,8 @@ in a few short sprite scenes with a couple of her own choices. Day Two's errand 
   to `lc_leia_map` then works.
 - `lc_leia_visits("ch01_d2") == ["shop"]` → `lc_leia_visited_first("ch01_d2", "shop")`.
 - Lane exemption: add every errand id **and** Ryan's three confession-reply ids to
-  `CH01_D2_LANE_EXEMPT_CHOICES` and change nothing else (see the cap section below).
+  `CH01_D2_LANE_EXEMPT_CHOICES` (Day Two does it through `CH01_D2_ERRAND_EXEMPT_CHOICES`, see the cap
+  section below).
 
 ## The map
 
@@ -194,6 +195,12 @@ never capped and never refund the allowance.
     are never capped, so registered = applied).
   Don't call `lc_leia_applied_effects` for this: it returns `[]` for any id that is not hers, so
   Ryan's reply would silently stop being subtracted.
+- **End route (Day Two):** the errand ids, Ryan's confession reply and his scene 30 bring-up live in
+  `CH01_D2_ERRAND_EXEMPT_CHOICES` (`ch01_day2_scenes_01_15.rpy`), which joins the lane tuple and is
+  also subtracted (same applied values) by `ch01_d2_love_exhib_blend(lane)`, the scene 30 blend
+  check and the Full "Current lean" readout. Door A (`ch01_d2_knot_watch`) only skips the lane.
+  `tests/test_route_simulation.py` (`ErrandRouteTests`) plays every lane x visit order x told/kept
+  x reply x feed option and checks the end route never moves.
 - The cap is pure (`lc_leia_side.cap_effects` / `record_gain`) and unit-tested.
 
 ## Saves and rollback

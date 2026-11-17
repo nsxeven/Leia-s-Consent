@@ -35,6 +35,16 @@ image bg ch01_d2_island_day = Composite(
     (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — ISLAND SHOPS / PHOTO WALK", size=46, color="#ffffff"),
 )
 
+# K2 (darryn 2026-11-18): the resort shop in daylight for Leia's errand (about 4-5 PM). darryn
+# renders it; until then this card stands in. Not the night ch01_conveniencestore.
+image bg ch01_shop_day = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#e9dcc4"),
+    (0, 700), Transform(Solid("#b9a07c"), xysize=(1920, 380)),
+    (1180, 160), Transform(Solid("#a9d6e2"), xysize=(560, 420)),
+    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — RESORT SHOP, DAYTIME (bg ch01_shop_day)\nSNACKS / SUNSCREEN / DRINKS FRIDGE / TILL\nFINAL ART PENDING (DARRYN)", size=44, color="#352f2b"),
+)
+
 image bg ch01_d2_sunset = Composite(
     (1920, 1080),
     (0, 0), Solid("#b06e6e"),
@@ -99,6 +109,21 @@ image cg ch01_d2_julian_underwear_reveal = Composite(
     (1920, 1080),
     (0, 0), Solid("#393744"),
     (90, 70), lc_placeholder_text("CG PLACEHOLDER\nNEVER HAVE I EVER — {friend} DOWN TO UNDERWEAR\nREACTIONS CARRY THE REVEAL", size=50, color="#ffffff"),
+)
+
+
+# Leia's errand (darryn renders both; stable ids, repoint them at the files when they land).
+# d2_cafe_stranger: shared by every lane, at the café counter before the lanes split.
+image cg d2_cafe_stranger = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#6d5847"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO CAFÉ — THE STRANGER AT THE COUNTER\n{gf} WAITING FOR THE FRAPPUCCINO / HE LEANS IN TOO CLOSE\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+# d2_feed_cafe_clip: Kayla's blurry phone shot of the spank, only the NTR-risk feed photo (18+).
+image cg d2_feed_cafe_clip = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#4b3f3a"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nFEED PHOTO — BLURRY CAFÉ CLIP (NTR-RISK LANE)\nPHONE CAMERA / COUNTER / HIS HAND / {gf}'S DENIM SHORTS\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
 
 

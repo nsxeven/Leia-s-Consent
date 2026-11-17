@@ -133,3 +133,9 @@ init 1 python:
   story clock is set to 14:10 (after lunch) and `d2_maya_group_photo` is released, stamped
   14:10 (text-only: the four-person group selfie art is still pending). The clock is cleared
   before scene 10.
+- Leia's errand (`ch01_day2_leia_errand.rpy`): scene 24 releases six posts side by side on the walk
+  home (story clock 21:40, one banner). Gates: Love lane = Dan's post + Margaret's; Exhibitionism =
+  one of Dan's two caption variants (her café pick, `leia_did` / `leia_did_not`); NTR-risk = one of
+  Kayla's two clip variants (`cg d2_feed_cafe_clip`, `mature=True`). Stamps follow her visit order
+  (`ch01_d2_errand_stamp`: 16:20 first stop, 16:45 second). Each has a one-line reaction label.
+  Scene 30 calls `lc_feed_reaction_runner`, then offers one bring-up option if he saw his lane's post.
