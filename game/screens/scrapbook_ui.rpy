@@ -1507,7 +1507,7 @@ screen phone_notification_banner():
                 background Transform(lc_phone_art("banner_" + _theme), nearest=True)
                 hover_background Transform(lc_phone_art("banner_" + _theme), nearest=True)
                 action Function(lc_phone_open_from_notification, _note)
-                add Transform("gui/phone/sprite_match/messages.png", xysize=(64, 64)):
+                add Transform(("gui/phone/sprite_match/feed.png" if _note.get("kind") == "feed" else "gui/phone/sprite_match/messages.png"), xysize=(64, 64)):
                     xpos 30
                     ypos 36
                 text (_note.get("app") or "Messages").upper():

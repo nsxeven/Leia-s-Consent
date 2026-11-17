@@ -1103,6 +1103,20 @@ label ch01_day2_scene_09_photo_walk:
     $ phone_group_avatar_stage = "four"
     $ phone_add_message("group", "system", text=friend_name + " changed the group picture.", message_id="ch01_trip_group_four_photo", mark_unread=False)
 
+    maya "And it's going on [LC_FEED_APP_NAME], obviously. A photo this good doesn't get to live in a group chat."
+    "She was already typing a caption with one thumb."
+    maya "Wait. [player_name], you're not even on [LC_FEED_APP_NAME], are you? I just tried to tag you and you don't exist."
+    mc "I've never really needed it."
+    maya "Nobody needs it. That's not the point. Give me your phone."
+    gf "She did mine at lunch. Don't fight it."
+    "I handed it over before I'd really decided to. She had the app installed, an account made and herself followed in about the time it took [friend_name] to pay for his sunglasses."
+    maya "There. Now you follow me, so you'll see my posts. Liking them is mandatory."
+    # Feed app intro (systems/feed.rpy, docs/FEED.md): the app joins Ryan's home grid with
+    # Maya's post. Old saves already past this point keep a phone without the app.
+    $ lc_feed_install()
+    $ lc_feed_release("d2_maya_group_photo")
+    "My phone buzzed in my hand the second she gave it back. Maya had posted the group photo."
+
     "Then Maya started assigning pairs like a teacher on school photo day."
 
     "We took the obvious ones first: all four of us, [girlfriend_name] and me, Maya and me, [friend_name] and Maya."
