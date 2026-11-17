@@ -684,7 +684,9 @@ screen choice(items):
                         action lc_choice_actions(item)
                         sensitive item.action.get_sensitive()
                         xsize (1460 if dev else 820)
-                        yminimum (90 if dev else 180)
+                        # Five options get a shorter minimum (5 x 150 + 4 x 16 + 36 padding = 850 px
+                        # <= the 920 px viewport, which has no scrollbar outside dev).
+                        yminimum (90 if dev else (180 if len(items) < 5 else 150))
                         yfill False
                         background Frame(("gui/scrapbook/frame_paper.png" if dev else "gui/scrapbook/frame_choice.png"), (9 if dev else 18), 12, 12, 12)
                         hover_background Frame(("gui/scrapbook/frame_paper_hi.png" if dev else "gui/scrapbook/frame_choice_hi.png"), (9 if dev else 18), 12, 12, 12)

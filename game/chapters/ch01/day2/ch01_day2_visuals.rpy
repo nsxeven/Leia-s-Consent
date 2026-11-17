@@ -257,3 +257,8 @@ init 1 python:
         label="Julian, breakfast",
         mood="noticed",
     )
+    # Moments strip: the two Day Two doors (systems/discovery.rpy). Marked when a non-neutral
+    # answer is picked (Door A fix/watch, Door B nod/lap); the neutral answer plays today's text
+    # and leaves the door unopened. No image: both scenes still use placeholder art.
+    lc_discovery_register("ch01_d2", "d2_knot_door", "door", "Pool, the knot", "you saw it first")
+    lc_discovery_register("ch01_d2", "d2_dare_door", "door", "Game night, the dare", "her eyes on you")

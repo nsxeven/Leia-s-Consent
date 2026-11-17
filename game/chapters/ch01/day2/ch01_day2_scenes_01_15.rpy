@@ -144,6 +144,16 @@ init 1 python:
         "ch01_d2_knot_watch": [
             ("partner", "exhibitionism", 1),
         ],
+        # Post-shop extras (new mechanics program, B1/B3). Each shows only when its condition holds.
+        # Leia's version (B1): the boutique slip played with Julian there (Ryan-absent branch).
+        "ch01_d2_boutique_her_version": [
+            ("relationship", "trust", 1),
+        ],
+        # Ryan's thoughts (B3): only when he kept the Day One dream thought.
+        "ch01_d2_postshop_dream": [
+            ("relationship", "love", 1),
+            ("relationship", "trust", 1),
+        ],
     })
 
     CHOICE_TAGS.update({
@@ -186,6 +196,8 @@ init 1 python:
         "ch01_d2_knot_fix": ("protective", "attentive", "supportive"),
         "ch01_d2_knot_tell": ("neutral", "attentive", "honest"),
         "ch01_d2_knot_watch": ("encouraging", "curious", "open"),
+        "ch01_d2_boutique_her_version": ("attentive", "honest", "curious"),
+        "ch01_d2_postshop_dream": ("supportive", "attentive", "honest", "repair"),
     })
 
 
@@ -475,7 +487,7 @@ label ch01_day2_scene_01_morning_after:
     $ cast(ryan="home", leia="camisole_panty")
 
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ d2_tint = lc_leia_tint()
+    $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
         gf "You were a menace last night, by the way. During the movie. My menace, but still a menace."
     elif d2_tint == "temptation":
@@ -959,7 +971,11 @@ label ch01_day2_scene_07_leia_maya_click:
         friend "In my defense, she'd stopped posing by then. She was mostly looking past me at [player_name]. I just pressed the button."
         gf "Well, it's going on my lock screen. Don't look at me like that, it's the best one of me on the whole trip."
         "She did it right there at the table, then turned the phone around to show me."
-        think "Yesterday I'd been the photographer in this relationship. Apparently that had a shelf life. At least I was the one she'd been looking at."
+        # Ryan's thoughts (B3): the Day One photo thought, if he kept it. Otherwise today's line.
+        if lc_thought_kept("ch01_d1") == "d1_photo_shoot":
+            think "Last night I'd told myself I should learn how to hold a phone properly. Today [friend_name]'s photo was on her lock screen. At least I was the one she'd been looking at."
+        else:
+            think "Yesterday I'd been the photographer in this relationship. Apparently that had a shelf life. At least I was the one she'd been looking at."
     else:
         "[girlfriend_name] scrolled back to yesterday's group selfie instead. It was the only pool photo she still had."
         gf "This is all that's left from the pool. I'm the one holding the phone, so it's mostly my arm and everybody's foreheads."
@@ -976,6 +992,28 @@ label ch01_day2_scene_07_leia_maya_click:
     maya "Same. I'm keeping her."
 
     "It was said jokingly, but [girlfriend_name]'s posture had changed. She wasn't [player_name]'s girlfriend meeting [player_name]'s friend anymore. She was talking to Maya on her own terms."
+
+    # Who saw what (B1): only when this save opened Julian's breakfast view (lc_pov_seen_in_save,
+    # save-local). Not opened, or an old save: nothing extra plays. Flavor only, no stats.
+    if lc_pov_seen_in_save("d2_breakfast_julian"):
+        $ d2_witness_lane = ch01_d2_route_lane()
+        "[girlfriend_name] knelt up on her chair and leaned all the way across the table to show Maya another photo."
+        "[friend_name]'s eyes went with her. They came back about half a second later than they should have, and went straight into his glass."
+        friend "These are really good drinks, by the way. Has everyone tried theirs? I'm just, um. I'm really enjoying mine."
+        think "That was twice today. At breakfast I'd caught him watching us too, and he'd looked away with exactly the same face."
+        "[girlfriend_name] sat back down and caught us both at it: him studying his ice, me studying him."
+        if d2_witness_lane == "exhibitionism":
+            "She went a little pink and tugged the hem of her shorts down. Then she checked my face, and whatever she found there made her smile into her straw."
+        elif d2_witness_lane == "ntr_risk":
+            "For a second she looked at me like she was waiting for me to say something. I didn't, so she went back to Maya."
+        else:
+            gf "What? Why are you two being weird?"
+            "She looked from him to me, worked it out about a second later, and burst out laughing."
+            gf "Oh my God. Babe. You've got the guard dog face on."
+            mc "I don't have a guard dog face."
+            "She scooted her chair over until it bumped mine and leaned her whole weight against my shoulder."
+            gf "You do, and it's really cute. I'm right here, okay? Right here, leaning on you, being all yours. Nobody else gets a vote."
+            "She stayed there for the rest of her drink, and I stopped keeping track of where anybody else was looking."
 
     $ set_story_value("ch01_d2_leia_maya_comfort", 2)
     $ set_story_flag("ch01_d2_scene_07_complete")
@@ -1246,7 +1284,7 @@ label ch01_day2_scene_11b_boutique:
 
     maya "No, stop looking at the straps. Look at you. Babe, you look so hot right now it's actually kind of annoying."
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ d2_tint = lc_leia_tint()
+    $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
         gf "I look terrified. Look at my face, that's a terrified face. And [player_name]'s going to do his stupid happy face when he sees it, I just know it."
     elif d2_tint == "exhibitionism":
@@ -1592,6 +1630,12 @@ label ch01_day2_scene_11b_boutique:
     $ d2_postshop_sleep_text = format_choice("ch01_d2_postshop_sleep", "I didn't sleep well.")
     $ d2_postshop_head_text = format_choice("ch01_d2_postshop_head", "I've just got a lot in my head.")
     $ d2_postshop_shut_text = format_choice("ch01_d2_postshop_shut_down", "I'm fine.")
+    # Extra replies (new mechanics program). Leia's version (B1): only when the slip played with
+    # Julian there. The dream (B3): only when Ryan kept the Day One dream thought. Old saves: neither.
+    $ d2_postshop_dream_text = format_choice("ch01_d2_postshop_dream", "I had a weird dream last night.")
+    $ d2_postshop_version_text = format_choice("ch01_d2_boutique_her_version", "Hang on. Did he really look away that fast?")
+    $ d2_dream_thought_kept = lc_thought_kept("ch01_d1") == "d1_dream"
+    $ d2_leia_version_offered = get_story_value("ch01_d2_boutique_slip_witness") == "julian" and has_story_flag("ch01_d2_leia_noticed_julian_stare")
 
     menu:
         "[d2_postshop_sleep_text]":
@@ -1601,6 +1645,25 @@ label ch01_day2_scene_11b_boutique:
             mc "Sorry. I didn't mean to keep you up."
             gf "You don't have to apologize for being tired, babe. I just wanted to know you're okay."
             "It wasn't the whole truth, but at least I had stopped pretending there was nothing to explain."
+
+        "[d2_postshop_dream_text]" if d2_dream_thought_kept:
+            $ apply_choice("ch01_d2_postshop_dream")
+            mc "I had a weird dream last night. I never told you about it. It's kind of stupid."
+            gf "A weird dream? What kind of weird?"
+            mc "The guy from dinner. The drink guy. He was there, and you were there, and I couldn't move or say anything. I just had to watch."
+            "[girlfriend_name] stared at me for a second."
+            $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
+            if d2_tint == "temptation":
+                gf "Okay, babe, that's a pretty weird dream."
+                gf "It was just a guy with a drink. He said sorry, like, nine times."
+                mc "I know. I know it was."
+                "She patted my hand and went back to her drink. It was nice of her. It just wasn't what I'd been hoping for."
+            else:
+                "Then she laughed at me. Properly, with her whole face."
+                gf "The drink guy? You've been carrying the drink guy around since last night? Come here, you."
+                "She leaned over and hugged me, right there at the table, shopping bags and all."
+                gf "He apologized to me about nine times and went back to his table. That's the whole story. That's all he ever gets to be."
+                think "She laughed at me, and then she hugged me. I'd known she would. I just hadn't let her."
 
         "[d2_postshop_head_text]":
             $ apply_choice("ch01_d2_postshop_head")
@@ -1616,6 +1679,31 @@ label ch01_day2_scene_11b_boutique:
             "[girlfriend_name] watched me for a second."
             gf "Okay."
             "This time the word meant she was done asking."
+
+        "[d2_postshop_version_text]" if d2_leia_version_offered:
+            $ apply_choice("ch01_d2_boutique_her_version")
+            mc "Hang on. Back up a second. Did he really look away that fast?"
+            "[girlfriend_name] stopped turning her cup."
+            gf "Technically, yeah. By the time I looked up he was staring at the ceiling."
+            gf "But nobody goes that red from looking at a ceiling. He looked, babe. I don't know for how long, and I keep wondering. And he knew I knew, and I honestly thought he was going to pass out into the shirts."
+            $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
+            if d2_tint == "love":
+                gf "And the whole time I just kept wishing it was you standing there instead. Is that dumb? That's dumb."
+                mc "It's not dumb. I should've been there."
+                "She hooked her ankle around mine under the table and left it there."
+            elif d2_tint == "exhibitionism":
+                gf "And I didn't hate it as much as I probably should have. Mostly I kept wondering what your face would've done. Don't make that face, I'm telling you, aren't I?"
+                "She was pink to the ears, and she still didn't look away from me."
+            elif d2_tint == "temptation":
+                gf "It was nothing. He said sorry about fifty times. I don't even know why I told it the other way first."
+                "She shrugged and went back to her drink, like that was the end of it."
+            else:
+                gf "I don't know why I told it the other way first. I think I just wanted it to be smaller than it was."
+                mc "Thanks for telling me the real one."
+                gf "You asked for the real one. I like it when you ask."
+            gf "You totally dodged my question, though. Don't think I didn't notice."
+            mc "...Later?"
+            gf "Later. I'm holding you to later."
 
     "[friend_name] stood and picked up his shopping bag."
     friend "I'm getting another drink before we go. Anyone want anything? [player_name], come help me carry."
@@ -1794,7 +1882,7 @@ label ch01_day2_scene_13_girls_upstairs:
     if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ d2_tint = lc_leia_tint()
+        $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
         if d2_tint == "exhibitionism":
             gf "The smaller one. Yeah. The smaller one, before I talk myself out of it. I kind of want to see who notices."
         elif d2_tint == "temptation":
@@ -1807,7 +1895,7 @@ label ch01_day2_scene_13_girls_upstairs:
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ d2_tint = lc_leia_tint()
+        $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
         if d2_tint == "temptation":
             gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day. And I'm not even asking [player_name] this time, it's my bikini."
         else:
@@ -1886,6 +1974,7 @@ label ch01_day2_scene_15_pool_group:
         "[d2_knot_fix_text]":
             $ apply_choice("ch01_d2_knot_fix")
             $ set_story_value("ch01_d2_knot_response", "fixed")
+            $ lc_discovery_mark("d2_knot_door")
             "I waded over behind her, caught both strings before anything could happen, and tied them again. Double knot, this time."
             gf "Oh! What are you— wait. Was it coming undone?"
             mc "A little. It's fine now. Nobody saw."
@@ -1902,6 +1991,7 @@ label ch01_day2_scene_15_pool_group:
         "[d2_knot_watch_text]":
             $ apply_choice("ch01_d2_knot_watch")
             $ set_story_value("ch01_d2_knot_response", "watched")
+            $ lc_discovery_mark("d2_knot_door")
             "I didn't say anything."
             "Every time she laughed, the loose string slipped a little further, and every time it somehow held."
             # Love lane (scene 16's else: Ryan and Leia stay at the pool): ends playful and warm.

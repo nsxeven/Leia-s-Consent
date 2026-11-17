@@ -1,7 +1,7 @@
 # Ryan's thoughts
 
 At the end of a day's review the game offers one of Ryan's thoughts per part of that day (Day
-One: daytime, evening, night).
+One: daytime, evening, night; Day Two: morning, afternoon, night).
 The player keeps one, or keeps nothing. A later day reads the kept thought to tint a few `think`
 lines or add one reply option. Keeping a thought never changes stats, and ignoring the offer
 plays exactly as before.
@@ -25,8 +25,9 @@ value, hook, API), `game/screens/thoughts_screen.rpy` (the offer page). Tests:
   it again (the stored answer rolls back with the store). Old saves, Chapter Select starts and
   saves that never reached the offer read as "nothing kept".
 - The Day One demo build (`LC_DAY1_DEMO_BUILD`) never shows the offer.
-- Today only Day One has a pool (six thoughts). Day Two lines that use the kept thought are
-  written with the Day Two rewrite.
+- Day One and Day Two have a pool (six thoughts each). Day Two reads the Day One thought (see
+  "Day Two uses of the Day One thought"); the Day Two thought is stored for Day Three, which
+  nothing reads yet.
 
 ## How a thought resolves
 
@@ -50,7 +51,8 @@ allows that is over its bar), so it reflects how this save played the day; equal
 the earlier beat. On Day One this gives Love saves (high Trust) the towel, carry and dream, and
 lower-Trust saves the photo shoot, dinner and sofa (the towel when the shoot was stopped).
 
-Every text was checked against the Day One script. The comment above each thought names its
+Every text was checked against its day's script; a Day Two text must hold on every path where
+its beat is seen (who was at the pool or in the shop differs by lane). The comment above each thought names its
 `Source:` label(s) (tested to exist); re-read those scenes when editing either side.
 
 ## Using a kept thought on a later day
@@ -96,3 +98,29 @@ Parts: daytime (photo shoot, towel), evening (dinner stranger, carry), night (so
 | `d1_julian_carry` | value `ch01_carry_response` | love lane, exhibitionism, temptation, trust |
 | `d1_sofa_glance` | value `ch01_watching_response` | love lane, exhibitionism, temptation |
 | `d1_dream` | flag `ch01_day1_towel_dream_seen` | love lane, exhibitionism, temptation, trust |
+
+## Day Two pool
+
+Parts: morning (breakfast, Maya at the cafe), afternoon (boutique, pool bee), night (dinner, game
+night). The two thoughts in a part have different stat variants, so either can win its part.
+
+| Id | Beat (seen when) | Variants |
+|---|---|---|
+| `d2_breakfast` | flag `ch01_d2_scene_04_complete` | love lane, exhibitionism, temptation |
+| `d2_maya_cafe` | flag `ch01_d2_scene_07_complete` | love lane, exhibitionism, trust |
+| `d2_boutique` | value `ch01_d2_boutique_slip_witness` | love lane, exhibitionism, trust |
+| `d2_pool_bee` | value `ch01_d2_pool_incident` | love lane, exhibitionism, temptation |
+| `d2_dinner` | value `ch01_d2_dinner_reach` | love lane, trust, temptation |
+| `d2_game_night` | flag `ch01_d2_strip_penalty_agreed` | love lane, exhibitionism, temptation |
+
+## Day Two uses of the Day One thought
+
+Each reads `lc_thought_kept("ch01_d1")`; nothing kept (or an old save) plays today's text.
+
+| Kept thought | Where | What changes |
+|---|---|---|
+| `d1_photo_shoot` | sc 7 cafe, the lock-screen photo | his `think` line recalls "hold a phone properly" |
+| `d1_julian_carry` | sc 16 (Love-lane branch), [friend_name] carries the drinks | one extra `think` line |
+| `d1_dinner_stranger` | sc 22 dinner | one extra `think` line (soft gate / exhibitionism / warm) |
+| `d1_sofa_glance` | sc 27, after she sits back down | one extra `think` line (exhibitionism / soft gate / warm) |
+| `d1_dream` | sc 11b post-shop "You've been kind of quiet" | extra reply `ch01_d2_postshop_dream` (Love +1, Trust +1) |

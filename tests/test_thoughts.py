@@ -21,6 +21,7 @@ import lc_thoughts  # noqa: E402
 from lc_rpy_harness import load_blocks  # noqa: E402
 
 DAY1 = "ch01_d1"
+DAY2 = "ch01_d2"
 # Defaults: below every tint bar.
 CALM = {"love": 50, "trust": 50, "exhibitionism": 10, "sharing": 0, "temptation": 10}
 
@@ -33,6 +34,8 @@ def stats(**over):
 
 ALL_DAY1_BEATS = {lc_thoughts.THOUGHTS[t]["requires"] for t in lc_thoughts.THOUGHT_ORDER
                   if lc_thoughts.THOUGHTS[t]["day"] == DAY1}
+ALL_DAY2_BEATS = {lc_thoughts.THOUGHTS[t]["requires"] for t in lc_thoughts.THOUGHT_ORDER
+                  if lc_thoughts.THOUGHTS[t]["day"] == DAY2}
 
 
 class PoolTests(unittest.TestCase):
@@ -69,7 +72,8 @@ class PoolTests(unittest.TestCase):
             self.assertIsNone(stat_words.search(text), (tid, key, text))
 
     def test_texts_use_name_tokens_never_typed_names(self):
-        typed = re.compile(r"\b(?:Ryan|Leia|Julian|Maya)\b")
+        # Maya has no name token (she is not renameable), so Day Two texts may name her.
+        typed = re.compile(r"\b(?:Ryan|Leia|Julian)\b")
         for tid, key, text in self.all_texts():
             self.assertIsNone(typed.search(text), (tid, key, text))
             for token in re.findall(r"\[(\w+)\]", text):
@@ -359,6 +363,91 @@ class SeenBeatTests(unittest.TestCase):
         self.assertEqual(lc_thoughts.seen_beats(DAY1, lambda f: False, {}.get, beats=beats), set())
 
 
+class DayTwoPoolTests(unittest.TestCase):
+    """Day Two's thoughts: offered at the end of the Day Two review, kept for Day Three."""
+
+    DAY2_DIR = ROOT / "game/chapters/ch01/day2"
+
+    def script(self):
+        return "\n".join(p.read_text(encoding="utf-8") for p in sorted(self.DAY2_DIR.glob("*.rpy")))
+
+    def test_day_two_has_about_six_thoughts_each_on_its_own_beat(self):
+        ids = lc_thoughts.day_thoughts(DAY2)
+        self.assertTrue(5 <= len(ids) <= 7, ids)
+        beats = [lc_thoughts.THOUGHTS[t]["requires"] for t in ids]
+        self.assertEqual(len(beats), len(set(beats)))
+        for beat in beats:
+            self.assertEqual(lc_thoughts.BEATS[beat]["day"], DAY2)
+
+    def test_day_two_parts_are_morning_afternoon_night(self):
+        self.assertEqual(lc_thoughts.OFFER_PARTS[DAY2], (
+            ("d2_breakfast", "d2_maya_cafe"),
+            ("d2_boutique", "d2_pool_bee"),
+            ("d2_dinner", "d2_game_night")))
+
+    def test_every_day_two_beat_reads_a_flag_or_value_day_two_really_sets(self):
+        script = self.script()
+        for beat, spec in lc_thoughts.BEATS.items():
+            if spec["day"] != DAY2:
+                continue
+            kind, key = spec["test"][0], spec["test"][1]
+            self.assertIn(kind, ("flag", "value_set"), beat)
+            if kind == "flag":
+                self.assertIn('set_story_flag("%s")' % key, script, beat)
+            else:
+                self.assertIn('set_story_value("%s",' % key, script, beat)
+
+    def test_every_day_two_thought_names_its_source_label(self):
+        source = (ROOT / "game/python-packages/lc_thoughts.py").read_text(encoding="utf-8")
+        script = self.script()
+        for tid in lc_thoughts.day_thoughts(DAY2):
+            before = source[:source.index('    "%s": {\n        "day"' % tid)].split("\n")[:-1]
+            comment = []
+            while before and before[-1].startswith("    #"):
+                comment.append(before.pop())
+            labels = " ".join(re.findall(r"Source:((?: \w+)+)", "\n".join(comment))).split()
+            self.assertTrue(labels, tid)
+            for label in labels:
+                self.assertIn("label %s:" % label, script, (tid, label))
+
+    def test_every_day_two_thought_has_a_love_lane_line(self):
+        for tid in lc_thoughts.day_thoughts(DAY2):
+            self.assertIn("love_lane", lc_thoughts.THOUGHTS[tid]["variants"], tid)
+
+    def test_day_two_offer_is_three_cards_from_the_day_two_pool(self):
+        got = lc_thoughts.offer(DAY2, CALM, None, ALL_DAY2_BEATS)
+        self.assertEqual(got, ["d2_breakfast", "d2_boutique", "d2_dinner"])
+        self.assertEqual(lc_thoughts.offer(DAY2, CALM, None, ALL_DAY1_BEATS), [])
+        self.assertEqual(lc_thoughts.offer(DAY1, CALM, None, ALL_DAY2_BEATS), [])
+
+    def test_every_day_two_thought_can_be_offered(self):
+        # Monte Carlo over the stats Day Two can reach (wider than Day One) and every lane.
+        import random
+        rng = random.Random(2)
+        t = lc_thoughts.TINT
+        offered, love_keys = set(), set()
+        for _ in range(4000):
+            st = stats(love=rng.randint(40, 80), trust=rng.randint(40, 80),
+                       exhibitionism=rng.randint(10, 60), temptation=rng.randint(10, 40),
+                       sharing=rng.randint(0, 8))
+            lane = rng.choice((None,) + lc_thoughts.LANES)
+            for tid in lc_thoughts.offer(DAY2, st, lane, ALL_DAY2_BEATS):
+                offered.add(tid)
+                key = lc_thoughts.variant_key(tid, st, lane)
+                if lane == "love_lane":
+                    love_keys.add(key)
+        self.assertEqual(offered, set(lc_thoughts.day_thoughts(DAY2)))
+        self.assertEqual(love_keys, {"love_lane"})
+        self.assertTrue(t)
+
+    def test_keep_a_day_two_thought_for_day_three(self):
+        kept = lc_thoughts.keep({DAY1: "d1_dream"}, DAY2, "d2_game_night")
+        self.assertEqual(lc_thoughts.kept_id(kept, DAY2), "d2_game_night")
+        self.assertEqual(lc_thoughts.kept_id(kept, DAY1), "d1_dream")
+        with self.assertRaises(ValueError):
+            lc_thoughts.keep({}, DAY2, "d1_dream")
+
+
 class KeepTests(unittest.TestCase):
     def test_keep_nothing_stores_none(self):
         kept = lc_thoughts.keep({}, DAY1, None)
@@ -468,6 +557,21 @@ class ThoughtRuntimeTests(unittest.TestCase):
         self.reply = [t for t in lc_thoughts.day_thoughts(DAY1) if t not in offered][0]
         self.call("lc_thought_offer", DAY1)
         self.assertEqual(self.store.lc_thoughts_kept, {DAY1: None})
+
+    def test_day_two_review_offers_the_day_two_pool(self):
+        for beat in ALL_DAY2_BEATS:
+            test = lc_thoughts.BEATS[beat]["test"]
+            if test[0] == "flag":
+                self.flags.add(test[1])
+            else:
+                self.values[test[1]] = "x"
+        self.store.lc_thoughts_kept = {DAY1: "d1_dream"}
+        ids = self.call("lc_thought_offer_ids", DAY2)
+        self.assertEqual(len(ids), 3)
+        self.reply = ids[2]
+        self.call("lc_thought_on_review_closed", DAY2)
+        self.assertEqual(self.store.lc_thoughts_kept, {DAY1: "d1_dream", DAY2: ids[2]})
+        self.assertEqual(self.call("lc_thought_kept", DAY2), ids[2])
 
     def test_demo_build_hides_the_offer(self):
         self.see_all_day1()
