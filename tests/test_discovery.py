@@ -56,8 +56,8 @@ class RegisterTests(unittest.TestCase):
         reg = {}
         for i, kind in enumerate(lc_discovery.KINDS):
             lc_discovery.register(reg, "ch01_d2", "m%d" % i, kind, "Label", "mood")
-        self.assertEqual(lc_discovery.KINDS, ("pov", "notice", "door", "phone"))
-        self.assertEqual(len(reg["ch01_d2"]), 4)
+        self.assertEqual(lc_discovery.KINDS, ("pov", "notice", "door", "phone", "errand"))
+        self.assertEqual(len(reg["ch01_d2"]), 5)
 
     def test_find_returns_the_entry_or_none(self):
         reg = _registry(("ch01_d2", "a", "pov", "Breakfast", "noticed"))

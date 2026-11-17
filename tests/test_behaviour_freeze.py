@@ -54,11 +54,14 @@ class ApplyChoiceTests(unittest.TestCase):
         env = dict(
             renpy=SimpleNamespace(store=self.store),
             get_choice_effects=lambda cid: effects.get(cid, []),
+            # No choice_effects filter registered: the effective effects are the registered ones.
+            lc_choice_effective_effects=lambda cid: effects.get(cid, []),
+            lc_hook_run=lambda event, *a: self.calls.append(("hook", event) + a),
             change_stat=lambda g, s, a: self.calls.append(("stat", g, s, a)),
             # The snapshot is what has been changed so far: it must be taken BEFORE any stat moves.
             lc_review_stats=lambda: tuple(c for c in self.calls if c[0] == "stat"),
             lc_review_note_choice=lambda cid, before: self.calls.append(("review", cid, before)),
-            show_choice_feedback=lambda cid: self.calls.append(("feedback", cid)),
+            show_choice_feedback=lambda cid, fx=None: self.calls.append(("feedback", cid)),
             maybe_show_status_choice_tutorial=lambda cid: self.calls.append(("tutorial", cid)),
         )
         # Only apply_choice is loaded; its collaborators are the stubs above.
@@ -69,6 +72,7 @@ class ApplyChoiceTests(unittest.TestCase):
         self.assertEqual(self.calls, [
             ("stat", "relationship", "love", 2),
             ("stat", "partner", "exhibitionism", -1),
+            ("hook", "choice_applied", "c_up", [("relationship", "love", 2), ("partner", "exhibitionism", -1)]),
             ("review", "c_up", ()),
             ("feedback", "c_up"),
             ("tutorial", "c_up"),

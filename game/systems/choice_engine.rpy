@@ -20,6 +20,8 @@
 #   choice_mode_label()                       display name of the active mode
 #   set_choice_display_mode(mode) -> None     set the global display mode
 #   get_choice_effects(choice_id)             copy of a choice's effects (legacy stats folded to v2)
+#   lc_choice_effective_effects(choice_id)    the effects apply_choice would apply now: the
+#       registered ones through the choice_effects filter (Leia's side caps her gains)
 #   get_choice_tags(choice_id)                behaviour tags of a choice
 #   lc_choice_route_tag(choice_id)            Full Transparency route tag of a choice
 #   choice_ids_with_prefix(prefix, choice_ids=None)
@@ -32,7 +34,8 @@
 #   chapter_stance(chapter_id)                choice_stance() for one chapter
 #   chapter_nonchalant_count(chapter_id)      nonchalant choices in one chapter
 #   choice_preview_text()                     live sample caption for the choice-mode screen
-#   show_choice_feedback(choice_id) -> None   post-choice toast (Insight/Full)
+#   show_choice_feedback(choice_id, effects=None) -> None
+#       post-choice toast (Insight/Full); effects = what apply_choice applied
 #   clear_choice_feedback(serial) -> None     screen action: hide a toast by serial
 #   maybe_show_status_choice_tutorial(choice_id) -> None
 #       one-time onboarding after the first stat change
@@ -49,7 +52,9 @@
 # Depends on: systems/stats.rpy (change_stat), systems/day_review.rpy (lc_review_note_choice),
 #   python-packages/lc_stat_model.py, python-packages/lc_ui_logic.py, screens/scrapbook_ui.rpy
 #   (toast screens)
-# Hooks: none
+# Hooks: emits choice_effects (filter over a choice's effects, choice_id) wherever effects are
+#   shown or applied, and choice_applied (choice_id, effects) after apply_choice moved the stats
+#   (listener for both: systems/leia_side.rpy, the +2/day cap on Leia's side)
 # Load order: init 0 for the tables and formatters (day files extend them at init 1-2); init 90 for
 #   the feedback/apply block, kept from the retired load-order file so the init sequence is
 #   unchanged
@@ -588,6 +593,13 @@ init python:
         return lc_stat_model.fold_legacy_effects(CHOICE_EFFECTS[choice_id])
 
 
+    def lc_choice_effective_effects(choice_id):
+        """The effects apply_choice would apply right now: get_choice_effects passed through the
+        choice_effects hook filter (systems/leia_side.rpy cuts Leia-side gains to her +2 a day).
+        Same length and order as get_choice_effects, so labels can show which stat was cut."""
+        return lc_hook_filter("choice_effects", get_choice_effects(choice_id), choice_id)
+
+
     def lc_choice_route_tag(choice_id):
         """Full Transparency route tag ('Love', 'Love+Exhib', 'NTS', 'NTR', 'Repair',
         'May lead to NTR', 'Locks NTR', 'NTR stays open', 'Neutral', ...).
@@ -656,11 +668,21 @@ init python:
         return choice_tag_count("nonchalant", chapter_choice_ids(chapter_id))
 
 
-    def _choice_effect_text(choice_id, exact=False):
+    def _choice_effect_text(choice_id, exact=False, effects=None):
+        """Stat line of a choice. effects: what is (or was) really applied; default = the
+        effective effects now. A gain the choice_effects filter cut is labelled
+        "<Stat> (capped)" with the amount that really applies (docs/LEIA_SIDE.md)."""
         parts = []
+        registered = get_choice_effects(choice_id)
+        if effects is None:
+            effects = lc_choice_effective_effects(choice_id)
+        if len(effects) != len(registered):
+            registered = effects
 
-        for group_name, stat_name, amount in get_choice_effects(choice_id):
+        for (_g, _s, meant), (group_name, stat_name, amount) in zip(registered, effects):
             label = STAT_LABELS.get(stat_name, stat_name.replace("_", " ").title())
+            if amount != meant:
+                label += " (capped)"
 
             if exact:
                 parts.append("{} {:+d}".format(label, amount))
@@ -737,11 +759,14 @@ init 90 python:
         return None
 
 
-    def show_choice_feedback(choice_id):
-        """Show mode-safe post-choice feedback as transient, non-rollback UI."""
-        effects = get_choice_effects(choice_id)
-        if not effects:
+    def show_choice_feedback(choice_id, effects=None):
+        """Show mode-safe post-choice feedback as transient, non-rollback UI.
+
+        effects: what apply_choice applied (a capped Leia-side gain shows as capped)."""
+        if not get_choice_effects(choice_id):
             return None
+        if effects is None:
+            effects = lc_choice_effective_effects(choice_id)
 
         mode = current_choice_mode()
 
@@ -750,16 +775,16 @@ init 90 python:
             body = "Your response has been remembered."
         elif mode == "insight":
             title = "CHOICE IMPACT"
-            body = _choice_effect_text(choice_id, exact=False)
+            body = _choice_effect_text(choice_id, exact=False, effects=effects)
         elif mode == "full":
             title = "STAT CHANGES"
-            body = _choice_effect_text(choice_id, exact=True)
+            body = _choice_effect_text(choice_id, exact=True, effects=effects)
         else:
             title = "DEBUG CHOICE"
             tags = get_choice_tags(choice_id)
             tag_text = ", ".join(tags) if tags else "none"
             body = "{}\nID: {}\nTags: {}".format(
-                _choice_effect_text(choice_id, exact=True),
+                _choice_effect_text(choice_id, exact=True, effects=effects),
                 choice_id,
                 tag_text,
             )
@@ -817,12 +842,14 @@ init 90 python:
         Keep the day-review snapshot here so the recap can list each choice.
         """
         review_before = lc_review_stats()
-        for group_name, stat_name, amount in get_choice_effects(choice_id):
+        effects = lc_choice_effective_effects(choice_id)
+        for group_name, stat_name, amount in effects:
             change_stat(group_name, stat_name, amount)
 
         renpy.store.last_choice_id = choice_id
         renpy.store.choice_history.append(choice_id)
+        lc_hook_run("choice_applied", choice_id, effects)
         lc_review_note_choice(choice_id, review_before)
-        show_choice_feedback(choice_id)
+        show_choice_feedback(choice_id, effects)
         maybe_show_status_choice_tutorial(choice_id)
         return choice_id

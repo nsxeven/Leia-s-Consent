@@ -520,7 +520,7 @@ def load_caption(mode):
         "get_choice_tags": lambda cid: (),
     }
     load(["CHOICE_MODES", "STAT_LABELS", "current_choice_mode", "get_choice_effects",
-          "_choice_effect_text", "format_choice", "lc_delta_colour", "lc_delta_colour_for_label",
+          "_lc_hooks", "lc_hook_filter", "lc_choice_effective_effects", "_choice_effect_text", "format_choice", "lc_delta_colour", "lc_delta_colour_for_label",
           "lc_choice_effect_markup", "lc_phone_reply_caption"], env)
     env["CHOICE_EFFECTS"] = {"t_love": [("relationship", "love", 1)], "t_none": []}
     return env["lc_phone_reply_caption"], env
