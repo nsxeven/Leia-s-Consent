@@ -1107,15 +1107,17 @@ label ch01_day2_scene_09_photo_walk:
     "She was already typing a caption with one thumb."
     maya "Wait. [player_name], you're not even on [LC_FEED_APP_NAME], are you? I just tried to tag you and you don't exist."
     mc "I've never really needed it."
-    maya "Nobody needs it. That's not the point. Give me your phone."
-    gf "She did mine at lunch. Don't fight it."
+    maya "Nobody needs it, that's not the point. Give me your phone, I'm doing this for you whether you like it or not."
+    gf "She did mine at lunch while she was going through my photos. I didn't even get a say, babe, so just hand it over."
     "I handed it over before I'd really decided to. She had the app installed, an account made and herself followed in about the time it took [friend_name] to pay for his sunglasses."
     maya "There. Now you follow me, so you'll see my posts. Liking them is mandatory."
     # Feed app intro (systems/feed.rpy, docs/FEED.md): the app joins Ryan's home grid with
     # Maya's post. Old saves already past this point keep a phone without the app.
+    # 14:10 = after lunch (breakfast after 11, then the café); the post is stamped with it.
+    $ lc_phone_set_story_time("14:10")
     $ lc_feed_install()
     $ lc_feed_release("d2_maya_group_photo")
-    "My phone buzzed in my hand the second she gave it back. Maya had posted the group photo."
+    "My phone buzzed in my hand the second she gave it back. Maya had already posted."
 
     "Then Maya started assigning pairs like a teacher on school photo day."
 
@@ -1126,6 +1128,7 @@ label ch01_day2_scene_09_photo_walk:
     $ set_story_flag("ch01_d2_photo_ryan_maya")
     $ set_story_flag("ch01_d2_photo_julian_maya")
 
+    $ lc_phone_clear_story_time()
     jump ch01_day2_scene_10_leia_maya_photo
 
 

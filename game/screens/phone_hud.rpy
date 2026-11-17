@@ -97,8 +97,10 @@ screen phone_quick_access():
             hovered [SetScreenVariable("hud_hovered", True), Function(lc_ui_play, "tick")]
             unhovered SetScreenVariable("hud_hovered", False)
 
-        if phone_total_unread() > 0:
-            $ _badge = phone_unread_badge_label()
+        # Unread messages plus feed posts Ryan hasn't seen (systems/feed.rpy).
+        $ _hud_count = phone_total_unread() + lc_feed_unseen_count()
+        if _hud_count > 0:
+            $ _badge = phone_unread_badge_label(_hud_count)
             $ _badge_w = 39 if len(_badge) <= 1 else (18 + 15 * len(_badge))
             fixed:
                 xpos (1893 - _badge_w)
@@ -134,7 +136,7 @@ screen phone_first_use_tutorial():
             add "gui/phone/sprite_match/hud_idle.png" xysize (114, 150) xalign 0.5
             text "PHONE UNLOCKED" size 31 color "#1c1c1e" bold True xalign 0.5
             text "Messages, photos, purchases, deliveries, and other updates can appear on [player_name]'s phone as the story progresses." size 20 color "#3a3a3c" text_align 0.5 xalign 0.5 line_spacing 5
-            text "New activity can appear as a notification at the top of the screen. The badge on the Phone shows how many unread messages are waiting." size 18 color "#8e8e93" text_align 0.5 xalign 0.5 line_spacing 4
+            text "New activity can appear as a notification at the top of the screen. The badge on the Phone shows how many unread messages and new posts are waiting." size 18 color "#8e8e93" text_align 0.5 xalign 0.5 line_spacing 4
 
             null height 4
 

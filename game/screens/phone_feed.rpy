@@ -2,19 +2,22 @@
 #
 # Purpose: Draws the social-feed app (systems/feed.rpy) in the sprite-matched phone style: white
 #   cards, phone blue, Patrick Hand. lc_feed_list is used inside phone_screen's content viewport
-#   when phone_app == "feed" (newest post first, an empty state before any post); tapping a card
-#   calls lc_feed_open_post, which marks the post seen and shows lc_feed_post. A post photo opens
-#   the shared full-screen photo viewer. Mature photos stay blurred with an 18+ mark on the cards.
+#   when phone_app == "feed" (newest post first, an empty state before any post); the list being
+#   on screen marks every post in it seen (phone_screen's catch-up timer), and tapping a card calls
+#   lc_feed_open_post, which shows lc_feed_post. Keyboard/gamepad focus scrolls the focused card
+#   into view (lc_feed_reveal_focus). A post photo opens the shared full-screen photo viewer.
+#   Mature photos show a gallery-style 18+ card (no image) on the list and the opened post.
 #
 # Public API (call these from scenes/screens):
-#   screen lc_feed_list()                     feed cards (or the empty state) for phone_screen
+#   screen lc_feed_list(yadj=None)            feed cards (or the empty state) for phone_screen;
+#       yadj = the content viewport's yadjustment
 #   screen lc_feed_post(post_id)              one opened post on the handset (zorder 340)
 #
 # Internal (helpers for this file and its screens; do not call from scenes): lc_feed_author_row
 #
 # Example:
 #   elif phone_app == "feed":
-#       use lc_feed_list
+#       use lc_feed_list(feed_yadj)
 #
 # Depends on: systems/feed.rpy, screens/phone_sweetheart.rpy (lc_phone_backdrop,
 #   lc_phone_body_blocker, lc_phone_back, lc_phone_close, lc_phone_photo_viewer, styles)
@@ -50,7 +53,8 @@ screen lc_feed_author_row(entry):
                 size 26
                 color "#293C53"
                 substitute False
-            $ _meta = "@" + lc_feed_text(entry["handle"]) + (("  -  " + entry["when"]) if entry["when"] else "")
+            $ _when = lc_feed_when(entry)
+            $ _meta = "@" + lc_feed_text(entry["handle"]) + (("  -  " + _when) if _when else "")
             text _meta:
                 style "lc_sw_hand"
                 size 20
@@ -58,7 +62,7 @@ screen lc_feed_author_row(entry):
                 substitute False
 
 
-screen lc_feed_list():
+screen lc_feed_list(yadj=None):
     $ _posts = lc_feed_visible()
     if not _posts:
         frame:
@@ -85,15 +89,16 @@ screen lc_feed_list():
                     xmaximum 420
     for _entry in _posts:
         $ _pid = _entry["id"]
-        $ _new = not lc_feed_seen(_pid)
+        $ _new = lc_feed_is_fresh(_pid)
         $ _ncom = len(_entry["comments"])
-        $ _footer = "%d likes" % _entry["likes"] + (("  -  %d comment%s" % (_ncom, "" if _ncom == 1 else "s")) if _ncom else "")
+        $ _footer = lc_feed_likes(_entry) + (("  -  %d comment%s" % (_ncom, "" if _ncom == 1 else "s")) if _ncom else "")
         button:
             style "lc_sw_hit"
             xfill True
             padding (14, 12, 14, 14)
             background Frame("gui/phone/sprite_match/card.png", 18, 18)
             hover_background Frame("gui/phone/sprite_match/row_hover.png", 18, 18)
+            hovered Function(lc_feed_reveal_focus, yadj)
             action [Function(lc_ui_play, "app_tap"), Function(lc_feed_open_post, _pid)]
             vbox:
                 spacing 10
@@ -158,6 +163,8 @@ screen lc_feed_post(post_id):
             xpos 76
             ypos 98
         if _entry:
+            # No focusable cards here: the arrow and page keys scroll a long post (and move
+            # focus once it reaches either end).
             viewport:
                 ypos 164
                 xpos LC_PHONE_CONTENT_LEFT
@@ -165,6 +172,8 @@ screen lc_feed_post(post_id):
                 ysize 820
                 mousewheel True
                 draggable True
+                arrowkeys True
+                pagekeys True
                 scrollbars None
                 vbox:
                     xsize LC_PHONE_CONTENT_WIDTH
@@ -178,13 +187,13 @@ screen lc_feed_post(post_id):
                                 ysize LC_PHONE_CONTENT_WIDTH
                                 action [Function(lc_ui_play, "app_tap"), Show("lc_phone_photo_viewer", photo_asset=_entry["image"])]
                                 add lc_feed_photo(_entry, LC_PHONE_CONTENT_WIDTH, LC_PHONE_CONTENT_WIDTH, "post")
+                            if _entry["mature"] and not GALLERY_MASK_MATURE_COVERS:
+                                text "18+  -  tap the photo to view it full screen.":
+                                    style "lc_sw_hand"
+                                    size 20
+                                    color "#6E8399"
                         else:
                             add lc_feed_photo(_entry, LC_PHONE_CONTENT_WIDTH, LC_PHONE_CONTENT_WIDTH, "post")
-                        if _entry["mature"]:
-                            text "18+  -  tap the photo to view it.":
-                                style "lc_sw_hand"
-                                size 20
-                                color "#6E8399"
                     frame:
                         style "lc_sw_frame"
                         xfill True
@@ -198,7 +207,7 @@ screen lc_feed_post(post_id):
                                 color "#293C53"
                                 xmaximum (LC_PHONE_CONTENT_WIDTH - 32)
                                 substitute False
-                            text ("%d likes" % _entry["likes"]):
+                            text lc_feed_likes(_entry):
                                 style "lc_sw_hand"
                                 size 22
                                 color "#3D8FD4"
