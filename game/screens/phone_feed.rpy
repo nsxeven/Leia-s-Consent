@@ -106,7 +106,7 @@ screen lc_feed_list():
                         add "gui/phone/sprite_match/dot.png" xalign 1.0 yalign 0.5
                 if _entry["image"]:
                     add lc_feed_photo(_entry, LC_PHONE_CONTENT_WIDTH - 28, 240, "list")
-                text lc_phone_one_line(lc_feed_text(_entry["caption"]), 90):
+                text lc_phone_one_line(lc_feed_text(_entry["caption"]), 140):
                     style "lc_sw_hand"
                     size 24
                     color "#293C53"

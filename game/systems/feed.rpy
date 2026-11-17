@@ -102,8 +102,8 @@ init python:
         store.lc_feed_banner_days = days
         if banner and notify:
             entry = LC_FEED_POSTS[post_id]
-            phone_queue_notification(LC_FEED_APP_NAME, entry["author"],
-                                     entry["author"] + " posted: " + entry["caption"], kind="feed")
+            phone_queue_notification(LC_FEED_APP_NAME, lc_feed_text(entry["author"]),
+                                     lc_feed_text(entry["caption"]), kind="feed")
         return None
 
     def lc_feed_visible():
