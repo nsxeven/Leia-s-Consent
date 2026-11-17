@@ -193,8 +193,14 @@ init 1 python:
         return choice_ids_with_prefix("ch01_d2_")
 
 
+    # Door A (sc 15, after the pre-split record) must not change which of today's lanes plays:
+    # its Exhibitionism counts for the end-of-day route and Days 3+, not for the lane checks.
+    CH01_D2_LANE_EXEMPT_CHOICES = ("ch01_d2_knot_watch",)
+
     def ch01_d2_route_lane():
         """Resolve the active Day Two lane (stat model v2: lc_stat_model.d2_route_lane).
+
+        Choices in CH01_D2_LANE_EXEMPT_CHOICES are left out of today's lane checks.
 
         NTR risk needs Temptation, with a Day One NTR seed or high enough on its
         own. The Love + Exhibitionism lane needs Exhibitionism plus some gained
@@ -204,10 +210,18 @@ init 1 python:
         migrated = None
         if not has_story_flag("ch01_day_02_complete"):
             migrated = get_story_value("ch01_d2_lane_migrated", None)
+        stats = dict(lc_stats_flat())
+        gained = lc_exhib_gained("ch01_d2_")
+        for exempt_id in CH01_D2_LANE_EXEMPT_CHOICES:
+            if exempt_id in renpy.store.choice_history and exempt_id in CHOICE_EFFECTS:
+                for _group, stat, amount in get_choice_effects(exempt_id):
+                    stats[stat] = stats.get(stat, 0) - amount
+                    if stat == "exhibitionism":
+                        gained -= amount
         return lc_stat_model.d2_route_lane(
-            lc_stats_flat(),
+            stats,
             get_story_value("ch01_day1_route_pressure", "mixed"),
-            lc_exhib_gained("ch01_d2_"),
+            gained,
             focus=lc_route_explorer_for_lane(),
             migrated_lane=migrated,
         )
@@ -461,10 +475,10 @@ label ch01_day2_scene_01_morning_after:
     $ cast(ryan="home", leia="camisole_panty")
 
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ _tint = lc_leia_tint()
-    if _tint == "love":
+    $ d2_tint = lc_leia_tint()
+    if d2_tint == "love":
         gf "You were a menace last night, by the way. During the movie. My menace, but still a menace."
-    elif _tint == "temptation":
+    elif d2_tint == "temptation":
         gf "You were kind of a menace last night, by the way. During the movie."
         "She said it to her phone, thumb still scrolling, like it had only just crossed her mind."
     else:
@@ -1232,10 +1246,10 @@ label ch01_day2_scene_11b_boutique:
 
     maya "No, stop looking at the straps. Look at you. Babe, you look so hot right now it's actually kind of annoying."
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ _tint = lc_leia_tint()
-    if _tint == "love":
+    $ d2_tint = lc_leia_tint()
+    if d2_tint == "love":
         gf "I look terrified. Look at my face, that's a terrified face. And [player_name]'s going to do his stupid happy face when he sees it, I just know it."
-    elif _tint == "exhibitionism":
+    elif d2_tint == "exhibitionism":
         gf "I look terrified. Look at my face, that's a terrified face. It's kind of good from the side, though. Don't you dare repeat that."
     else:
         gf "I look terrified. Look at my face, that's a terrified face."
@@ -1402,7 +1416,7 @@ label ch01_day2_scene_11b_boutique:
         maya "I know! I got distracted by the other dress, it's a very good dress."
         gf "I can't believe this is happening in a shop."
         friend "Sorry. I'm so sorry, I wasn't— I didn't mean to, I was just standing here with the shirts and then it was— sorry. I'm really sorry, [girlfriend_name]."
-        "He held up the two shirts, one in each hand, and didn't look at either of us."
+        "He held up the two shirts, one in each hand, and didn't look at either of them."
         friend "Which one of these is better? The blue one or the, um. The other blue one. I honestly can't tell anymore."
         maya "They're the same shirt, [friend_name]."
         "He took both of them back toward menswear, walking a lot faster than he needed to."
@@ -1425,13 +1439,13 @@ label ch01_day2_scene_11b_boutique:
     if d2_mall_ryan_present:
         $ set_story_flag("ch01_d2_boutique_shop_open")
         if LC_SHOP_ENABLED:
-            "The boutique's catalog was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe. Whether it ever left her suitcase was, judging by the last half hour, mostly up to Maya."
+            "The boutique's catalog was available through the Shop on my phone. Buying something would add it to [girlfriend_name]'s wardrobe. Whether it ever left her suitcase was up to her, though Maya clearly had opinions about that."
             $ last_shop_message = "Boutique visit: the Black Cutout Mini is now available."
             call screen shop_screen
         else:
             # The Shop is switched off while it's under development
             # (LC_SHOP_ENABLED); the purchase happens as an in-story choice.
-            "I could buy it for her. Whether it ever came out of the suitcase seemed to be Maya's department, not mine."
+            "I could buy it for her. Whether it ever came out of the suitcase was her call. Maya's opinion was already on record."
             menu:
                 "Buy the black mini for her." if can_afford(get_outfit("boutique_cutout_mini")["cost"]):
                     $ purchase_outfit("boutique_cutout_mini")
@@ -1780,10 +1794,10 @@ label ch01_day2_scene_13_girls_upstairs:
     if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ _tint = lc_leia_tint()
-        if _tint == "exhibitionism":
+        $ d2_tint = lc_leia_tint()
+        if d2_tint == "exhibitionism":
             gf "The smaller one. Yeah. The smaller one, before I talk myself out of it. I kind of want to see who notices."
-        elif _tint == "temptation":
+        elif d2_tint == "temptation":
             gf "The smaller one. I think. Yeah. I'm not running this one past [player_name], either, I'm just deciding."
         else:
             gf "The smaller one. I think. Yeah. The smaller one, before I talk myself out of it."
@@ -1793,8 +1807,8 @@ label ch01_day2_scene_13_girls_upstairs:
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ _tint = lc_leia_tint()
-        if _tint == "temptation":
+        $ d2_tint = lc_leia_tint()
+        if d2_tint == "temptation":
             gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day. And I'm not even asking [player_name] this time, it's my bikini."
         else:
             gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day."
@@ -1892,6 +1906,7 @@ label ch01_day2_scene_15_pool_group:
             "Every time she laughed, the loose string slipped a little further, and every time it somehow held."
             # Love lane (scene 16's else: Ryan and Leia stay at the pool): ends playful and warm.
             if get_story_value("ch01_d2_route_lane_pre_split", "love") not in ("ntr_risk", "exhibitionism"):
+                "She turned around halfway through a laugh and caught me."
                 gf "What? Why are you staring at me like that?"
                 mc "No reason. Just looking."
                 "She splashed me for it, then swam over and kissed me anyway. The knot held through that too."

@@ -33,7 +33,7 @@ label ch01_day2_scene_16_forced_split:
         "Then she turned back toward the strangers."
         "[girlfriend_name] raised both arms over her head in a slow stretch, extending through her shoulders and back before letting them fall again."
         "The same man kept looking."
-        "Maya noticed. I didn't. I didn't notice much of anything that afternoon until Maya started pointing it out."
+        "Maya noticed. I didn't. Apart from that loose string, I didn't notice much of anything that afternoon until Maya started pointing it out."
         $ set_story_value("ch01_d2_pool_attention", "leia_stretched_without_ryan")
 
     else:
@@ -280,6 +280,7 @@ label ch01_day2_scene_17_pool_return:
             gf "And I retied it! [player_name] told me it was loose and I retied it, so this isn't even my fault."
         elif get_story_value("ch01_d2_knot_response") == "watched":
             gf "Wait, why don't you look surprised? You saw it was loose earlier, didn't you?"
+            mc "...Maybe a little."
         $ set_story_value("ch01_d2_pool_incident", "leia_maya_bee_top_off")
 
     else:
@@ -506,10 +507,10 @@ label ch01_day2_scene_20_dinner_outfit:
         gf "I like this."
         mc "This, as in the trip?"
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ _tint = lc_leia_tint(d2_lane, lane_scene=True)
-        if _tint == "love":
+        $ d2_tint = lc_leia_tint(d2_lane, lane_scene=True)
+        if d2_tint == "love":
             gf "Us, babe. I like us. I like us so much, like, a lot. Is that a weird thing to say on a holiday?"
-        elif _tint == "exhibitionism":
+        elif d2_tint == "exhibitionism":
             gf "Us, dummy. I like us. And maybe— okay, maybe a little bit the being-outside part, too."
         else:
             gf "Us. I— I like us. That's all."
@@ -832,7 +833,7 @@ label ch01_day2_scene_23_dinner_reach:
         "He did not wink back."
         "[girlfriend_name] simply sat down and continued eating."
 
-        "I'd only half seen it, reaching for my glass. It took me a moment to work out what I'd actually seen, and by then she was eating again. I knew I hadn't imagined it."
+        "It was over before I'd even put my glass down. Less than a second. Long enough that I knew I hadn't imagined it."
 
         $ set_story_value("ch01_d2_dinner_wink", True)
         $ set_story_value("ch01_d2_dinner_reach", "winked_julian")
@@ -1109,11 +1110,11 @@ label ch01_day2_scene_26_game_rules:
     maya "It is now. I'm the rules person. Somebody has to be."
 
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ _tint = lc_leia_tint(d2_lane)
-    if _tint == "exhibitionism":
+    $ d2_tint = lc_leia_tint(d2_lane) if d2_lane != "ntr_risk" else "shy"
+    if d2_tint == "exhibitionism":
         gf "I'm in."
         "She said it fast, then glanced at me with a tiny grin she clearly hadn't meant to let out."
-    elif _tint == "sharing":
+    elif d2_tint == "sharing":
         gf "Well, I'm not letting Maya do this on her own. I'm in."
         "She looked at me when she said it, like it was something the two of us were signing up for together."
     else:
@@ -1231,7 +1232,10 @@ label ch01_day2_scene_27_game_escalates:
     maya "Never have I ever enjoyed attention from someone I knew I probably shouldn't."
 
     "[girlfriend_name]'s expression changed."
-    "Before she said anything, her eyes came to me."
+    if d2_soft_gate:
+        "Before she said anything, her eyes came to me. It was the first time she'd looked my way since the game started."
+    else:
+        "Before she said anything, her eyes came to me."
 
     # Door B (program design Part A): Ryan only signals. The lane branch below plays as before;
     # ch01_d2_dare_signal only changes her lines and my narration inside it. Shrug = today's text.
@@ -1534,7 +1538,10 @@ label ch01_day2_scene_29_game_winds_down:
 
     if d2_lane == "love":
         "[girlfriend_name] found her dress, looked at it, then decided putting it back on for the walk upstairs was unnecessary."
-        "She stayed in her bra and panties and came over to me."
+        if get_story_value("ch01_d2_dare_signal") == "lap":
+            "She stayed in her bra and panties and slid back onto my lap like she'd never left it."
+        else:
+            "She stayed in her bra and panties and came over to me."
     else:
         "[girlfriend_name] was still in her panties, both arms folded across her bare chest."
         "Even after the game ended she was not yet comfortable simply standing uncovered in the room."
@@ -1620,10 +1627,10 @@ label ch01_day2_scene_30_bedroom:
             "She didn't make me say it twice. She came and sat next to me, close enough that our knees touched."
 
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-    $ _tint = lc_leia_tint(d2_lane, lane_scene=True)
-    if _tint == "love":
+    $ d2_tint = lc_leia_tint(d2_lane, lane_scene=True)
+    if d2_tint == "love":
         "[girlfriend_name] pulled her hair loose, then leaned in and kissed my shoulder, like she'd been saving it up all night."
-    elif _tint == "temptation":
+    elif d2_tint == "temptation":
         "[girlfriend_name] pulled her hair loose with one hand and scrolled her phone with the other, not really looking up."
     else:
         "[girlfriend_name] pulled her hair loose and let it fall, yawning into the back of her hand."
@@ -1758,7 +1765,10 @@ label ch01_day2_scene_30_exhibition:
     gf "Did you like it?"
     mc "Which part?"
     gf "You know which part."
-    mc "Watching you take your clothes off in front of everyone?"
+    if has_story_flag("ch01_d2_nhie_leia_topless_covering"):
+        mc "Watching you take your clothes off in front of everyone?"
+    else:
+        mc "Watching you sit there in your underwear in front of everyone, playing it cool?"
     "[girlfriend_name]'s face heated again."
     gf "...Yeah."
     mc "Yeah. I really did."
@@ -1787,7 +1797,6 @@ label ch01_day2_scene_30_exhibition:
 
     gf "Don't stop."
 
-
     scene cg ch01_d2_exhib_bed_open_04
     with dissolve
 
@@ -1798,7 +1807,6 @@ label ch01_day2_scene_30_exhibition:
     "I slowed down without meaning to, just to look at her."
     "She caught the back of my neck and pulled me down to her."
     gf "Keep going."
-
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_bedroom_night  # night art (darryn)

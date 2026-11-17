@@ -121,5 +121,19 @@ class StatRuntimeTests(unittest.TestCase):
         self.assertEqual(self.env["ch01_d2_route_lane"](), "ntr_risk")
 
 
+    def test_door_a_watch_does_not_change_todays_lane(self):
+        # Review C1 (2026-11-17): Door A sits after the scene 15 lane record; its Exhibitionism
+        # must not flip a Love afternoon into the Exhibitionism sunset recap.
+        import lc_stat_model
+        self.store.relationship_stats = {"love": 55, "trust": 55, "sharing": 0, "temptation": 12}
+        self.store.partner_stats = {"exhibitionism": 36}
+        self.store.player_stats = {}
+        self.flags["ch01_day_02_started"] = True
+        self.values["ch01_day1_route_pressure"] = "mixed"
+        self.store.choice_history = ["ch01_d2_knot_watch"]
+        flat = {"love": 55, "trust": 55, "sharing": 0, "temptation": 12, "exhibitionism": 36}
+        self.assertEqual(lc_stat_model.d2_route_lane(flat, "mixed", 1), "exhibitionism")  # without the exemption
+        self.assertEqual(self.env["ch01_d2_route_lane"](), "love")
+
 if __name__ == "__main__":
     unittest.main()
