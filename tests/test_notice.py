@@ -139,6 +139,43 @@ class RegisterTests(unittest.TestCase):
         for lean in ("undecided", "strained", None, ""):
             self.assertIsNone(lc_notice.lane_from_lean(lean))
 
+    def test_love_lean_with_an_exhibitionism_tint_takes_the_exhib_captions(self):
+        # Day Two scene 1 comes before any Day Two choice, so the lean can't be love_exhib yet.
+        self.assertEqual(lc_notice.lane_from_lean("love", "exhibitionism"), "exhib")
+        for tint in ("shy", "love", "trust", "sharing", None):
+            self.assertEqual(lc_notice.lane_from_lean("love", tint), "love", tint)
+        # The tint never moves another lean (and never toward NTR).
+        self.assertEqual(lc_notice.lane_from_lean("ntr", "exhibitionism"), "ntr")
+        self.assertIsNone(lc_notice.lane_from_lean("undecided", "exhibitionism"))
+
+    def test_every_bed_caption_lane_is_reachable_at_day_two_start(self):
+        """Monte Carlo over Day One choice paths: at Day Two scene 1 (no Day Two choice yet) the
+        bed notice can show its love, exhib and ntr captions, and the Love lane never gets ntr."""
+        import random
+        sys.path.insert(0, str(ROOT / "tests"))
+        import lc_stat_model as m
+        import test_route_simulation as rs
+        rng = random.Random(228)
+        seen = set()
+        for _ in range(4000):
+            stats = {s: m.DEFAULTS[m.STAT_GROUPS[s]][s] for s in m.STAT_ORDER}
+            lean_exhib = rng.random()
+            for menu in rs.D1 + [rs.DREAM]:
+                if rng.random() < lean_exhib:
+                    choice = max(menu, key=lambda c: sum(a for _g, s, a in rs.EFF[c] if s == "exhibitionism"))
+                else:
+                    choice = rng.choice(menu)
+                for _g, stat, amount in rs.EFF[choice]:
+                    stats[stat] = m.clamp(stats[stat] + amount)
+            lane = m.d2_route_lane(stats, m.d1_route_pressure(stats), 0)
+            self.assertIn(lane, ("love", "ntr_risk"))          # never Love + Exhib this early
+            lean = m.lean_from_route_value(lane)
+            caption_lane = lc_notice.lane_from_lean(lean, m.leia_tint(stats, "love") if lean == "love" else None)
+            if lane == "love":
+                self.assertNotEqual(caption_lane, "ntr")
+            seen.add(caption_lane)
+        self.assertEqual(seen, {"love", "exhib", "ntr"})
+
     def test_captions_pick_the_lane_then_fall_back(self):
         entry, _reg = _entry(lines=["Base."], lane_lines={"love": ["Love one.", "Love two."]})
         self.assertEqual(lc_notice.caption_lines(entry, "love"), ("Love one.", "Love two."))
@@ -196,6 +233,29 @@ class ValidateTests(unittest.TestCase):
     def test_overlong_captions_are_reported(self):
         entry, _ = _entry(lines=["x" * (lc_notice.MAX_LINE_CHARS + 1)])
         self.assertTrue(any("long" in p for p in self.problems(entry)))
+
+    def test_first_captions_fit_the_status_pin(self):
+        ok = "x" * lc_notice.MAX_PIN_CHARS
+        entry, _ = _entry(lines=[ok, "y" * lc_notice.MAX_LINE_CHARS])
+        self.assertEqual(self.problems(entry), [])
+        entry, _ = _entry(lines=[ok], lane_lines={"love": [ok + "x"]})
+        self.assertTrue(any("Status pin" in p for p in self.problems(entry)))
+
+    def test_caption_box_override_is_checked(self):
+        entry, _ = _entry(caption_box=(790, 792, 998))
+        self.assertEqual(self.problems(entry), [])
+        self.assertEqual(lc_notice.caption_box(entry), (790, 792, 998, 222))
+        for bad in ((1000, 792, 998), (790, 900, 998), (790, 792, 400)):
+            entry, _ = _entry(caption_box=bad)
+            self.assertTrue(any("caption_box" in p for p in self.problems(entry)), bad)
+        with self.assertRaises(ValueError):
+            _entry(caption_box=(1, 2))
+
+    def test_default_caption_box_follows_the_slot(self):
+        entry, _ = _entry(focus_rect=(330, 560, 520, 500))
+        self.assertEqual(lc_notice.caption_box(entry), (132, 110, 1656, 222))
+        entry, _ = _entry(focus_rect=(560, 40, 1300, 620), zoom=1.2)
+        self.assertEqual(lc_notice.caption_box(entry), (132, 792, 1656, 222))
 
 
 class FoundRecordTests(unittest.TestCase):
@@ -269,6 +329,7 @@ class NoticeRuntimeTests(unittest.TestCase):
             variant=lambda name: False,
         )
         self.lean = "love"
+        self.tint = "shy"
         config = SimpleNamespace(developer=True, afm_callback=None, start_interact_callbacks=[],
                                  overlay_screens=[], screen_width=1920, screen_height=1080)
         self.env = dict(store=self.store, renpy=renpy, config=config,
@@ -276,6 +337,7 @@ class NoticeRuntimeTests(unittest.TestCase):
                         current_choice_mode=lambda: "normal",
                         lc_phone_covers_scene=lambda: False, lc_journal_menu_open=lambda: False,
                         lc_current_lean=lambda: self.lean, _preferences=SimpleNamespace(transitions=1),
+                        lc_leia_tint=lambda lane=None, lane_scene=False: self.tint,
                         LC_POV_RESERVED_RECTS=RESERVED, LC_POV_HITBOX=120, LC_POV_HITBOX_TOUCH=160,
                         lc_pov_reduce_motion=lambda: False, lc_ui_sound=lambda *a, **k: "x")
         load_blocks(["lc_discovery_register", "lc_notice_register"], self.env)
@@ -341,6 +403,13 @@ class NoticeRuntimeTests(unittest.TestCase):
         self.lean = "undecided"
         self.assertEqual(self.call("lc_notice_captions", "n1"), ["Base Mia."])
         self.assertEqual(self.call("lc_notice_captions", "n1", "love"), ["Love Mia."])
+
+    def test_love_lean_with_an_exhibitionism_tint_uses_the_exhib_lane(self):
+        self.tint = "exhibitionism"
+        self.assertEqual(self.call("lc_notice_lane"), "exhib")
+        self.assertEqual(self.call("lc_notice_captions", "n1"), ["Base Mia."])   # n1 has no exhib lines
+        self.lean = "ntr"
+        self.assertEqual(self.call("lc_notice_lane"), "ntr")
 
     def test_pins_show_the_caption_seen_at_the_time(self):
         self.call("lc_notice_begin", "n1")

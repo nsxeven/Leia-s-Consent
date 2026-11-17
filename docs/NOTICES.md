@@ -27,6 +27,8 @@ All characters are adults. Captions use `[player_name]`, `[girlfriend_name]` and
            lines=["Base caption (no lane / mixed)."],
            lane_lines={"love": ["...", "..."], "exhib": ["..."], "ntr": ["..."]},
            # closeup="cg some_existing_closeup", # cut to an existing close-up render instead
+           # caption_box=(790, 792, 998),        # caption paper (x, y, width) when the default
+           #                                     # spot would cover something the captions name
            day_id="ch01_d2", label="Morning, her hand", mood="still reaching",
        )
    ```
@@ -38,7 +40,8 @@ All characters are adults. Captions use `[player_name]`, `[girlfriend_name]` and
    | `focus_rect` | The part of the CG the push-in frames. The zoom is lowered automatically if the rect would not fit the visible window. |
    | `zoom` | Push-in zoom, default 1.35, at most 1.4 (`lc_notice.MAX_ZOOM`); more would blur a 1920x1080 CG. |
    | `lines` | 1-2 captions shown when no lane caption applies. Required. |
-   | `lane_lines` | Optional `{"love" / "exhib" / "ntr": [1-2 captions]}`. The lane comes from the stats-model lean (`lc_current_lean`: `love`, `love_exhib`, `ntr`); other leans use `lines`. **Love captions are about Leia** and stay warm. |
+   | `lane_lines` | Optional `{"love" / "exhib" / "ntr": [1-2 captions]}`. The lane comes from the stats-model lean (`lc_current_lean`: `love`, `love_exhib`, `ntr`); other leans use `lines`. On the `love` lean, Leia's Love-lane tint (`lc_leia_tint("love")`, never Temptation) picks the `exhib` captions when it is Exhibitionism: at the start of a day the lean can't be `love_exhib` yet (Day Two's lane needs Exhibitionism gained that day, and scene 1 comes before any Day Two choice), so this is how a save leaning that way sees them. Nothing moves a lean toward `ntr`. **Love captions are about Leia** and stay warm. |
+   | `caption_box` | Optional `(x, y, width)` for the caption paper (222 px tall, stretched sideways only, 900-1656 px wide). By default it sits in the dialogue-box spot, or in a top spot when the pushed-in detail sits under the dialogue box. Use it when that spot would cover a face or something the captions name. |
    | `closeup` | Optional existing close-up render: the viewer fades to it (over the push-in) instead of only zooming. |
    | `day_id`, `label`, `mood` | Optional: also registers a `notice` discovery on that day's Moments strip (`docs/HIDDEN_POV.md`, "Seen record and Moments strip"). The label also titles the Status pin; keep route words out of it. |
 
@@ -58,7 +61,9 @@ reports, and in developer builds (including lint) raises on: an undefined `sourc
 a cue hit area off screen or over reserved UI (`LC_POV_RESERVED_RECTS`: the dialogue box and
 everything under it, y >= 792, and the phone banner); a cue overlapping a Hidden POV cue or
 another notice **on the same CG**; a `focus_rect` outside the frame; a zoom outside 1.0-1.4; a
-caption that types a default name or is longer than 150 characters. Rules:
+caption that types a default name or is longer than 150 characters; a first caption longer than
+125 characters (the Status pin shows it in a fixed-height card); a `caption_box` off screen or
+outside 900-1656 px wide. Rules:
 `game/python-packages/lc_notice.py`.
 
 ## Behaviour
@@ -72,12 +77,15 @@ caption that types a default name or is longer than 150 characters. Rules:
 - **Viewer.** Modal, zorder 630 (above the phone banner). The CG pushes in (`LC_NOTICE_IN`,
   0.9 s ease) and the captions fade up in the dialogue-box spot. A click anywhere, Esc, right
   click, Space/Enter or the Back button eases back (`LC_NOTICE_OUT`, 0.45 s) and closes onto
-  the same line: nothing advances the dialogue, and Auto waits while it is open. Skipping or
-  reduced motion (Screen shake or Transitions off) makes the push-in and the ease back instant.
-  Opening stops Skip.
+  the same line: nothing advances the dialogue, and Auto waits while it is open. Reduced
+  motion (Screen shake or Transitions off) makes the push-in and the ease back instant. Opening
+  the viewer stops Skip, so the push-in then plays normally.
 - **Record.** Only the click writes `lc_noticed_record` (save-local `{notice_id: caption lane
   seen}`, a new dict each time, so rollback undoes it and a repeat click changes nothing) and
   marks the `notice` discovery. Old saves and Chapter Select starts read as nothing noticed.
+  Rolling forward again does not replay the click: the record is empty and the cue is offered
+  again on that line, so the player has to open it again (Hidden POV's seen record behaves the
+  same).
 - **Status pins.** The phone Status app shows a "Things I noticed" card once something was
   noticed: one fixed-height row of pins (a crop of the noticed detail, the label and the first
   caption Ryan saw), scrolling sideways when there are more.
@@ -86,8 +94,12 @@ caption that types a default name or is longer than 150 characters. Rules:
 
 | Notice | CG | Spot |
 |---|---|---|
-| `d2_notice_bed_hand` | `cg ch01_d2_leia_sleeping` (scene 1) | her hand reaching to Ryan's side of the bed |
-| `d2_notice_breakfast_smile` | `cg ch01_d2_breakfast_01` (scene 2) | her smile across the breakfast table |
+| `d2_notice_bed_hand` | `cg ch01_d2_leia_sleeping` (scene 1) | her hand reaching to Ryan's side of the bed; captions on the duvet at bottom right (`caption_box`), clear of her face and hand |
+| `d2_notice_breakfast_smile` | `cg ch01_d2_breakfast_01` (scene 2) | her smile across the breakfast table; the push-in (zoom 1.2) keeps both her and Julian, right beside her, in frame |
+
+Scene 1 comes before any Day Two choice, so the bed notice's lane is the Day Two lane the save
+starts with (Love or NTR risk), with the exhib captions coming from Leia's tint (see
+`lane_lines` above).
 
 Either one offers **"Tell her what you noticed this morning."** (`ch01_d2_sunset_noticed`,
 Love +1, Trust +1) after the sunset talk in `ch01_day2_scene_20_dinner_outfit`, on the shared

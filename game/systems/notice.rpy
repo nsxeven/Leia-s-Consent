@@ -10,10 +10,11 @@
 #   python-packages/lc_notice.py; registrations are validated at init 999.
 #
 # Public API (call these from scenes/screens):
-#   lc_notice_register(notice_id, source, center, focus_rect, zoom=1.35, lines=None, lane_lines=None, closeup=None, day_id=None, label=None, mood=None) -> None
+#   lc_notice_register(notice_id, source, center, focus_rect, zoom=1.35, lines=None, lane_lines=None, closeup=None, day_id=None, label=None, mood=None, caption_box=None) -> None
 #       register one notice at init 1+; lane_lines = {"love"|"exhib"|"ntr": [1-2 lines]};
 #       closeup = an existing close-up render to cut to instead of zooming; day_id also
-#       registers a `notice` discovery on that day's Moments strip
+#       registers a `notice` discovery on that day's Moments strip; caption_box = (x, y, width)
+#       of the caption paper when the default spot would cover something the captions name
 #   lc_notice_begin(notice_id) -> None        open the notice's scope (its eye cue may show)
 #   lc_notice_end() -> None                   close the current scope
 #   lc_notice_in_scope(notice_id)             True while the notice's source CG is showing
@@ -22,14 +23,15 @@
 #   lc_notice_close() -> None                 close the viewer (after its ease back)
 #   lc_noticed(notice_id)                     True once this save noticed it
 #   lc_noticed_any(*notice_ids)               True once this save noticed any of them
-#   lc_notice_lane()                          caption lane now ("love"/"exhib"/"ntr") or None
+#   lc_notice_lane()                          caption lane now ("love"/"exhib"/"ntr") or None: the
+#       lean, with the Love lean taking the exhib captions when Leia's tint is Exhibitionism
 #   lc_notice_captions(notice_id, lane="current")
 #       the captions for a lane (default: the lane now), player names filled in
 #   lc_notice_focus(notice_id)                (xalign, yalign, zoom) of the push-in
-#   lc_notice_caption_y(notice_id)            caption box y (bottom spot, or top when the detail
-#       sits under the dialogue box)
-#   lc_notice_instant()                       True when the push-in must be instant (skip, reduced
-#       motion)
+#   lc_notice_caption_box(notice_id)          caption paper (x, y, w, h): its caption_box, else the
+#       bottom spot, or the top spot when the detail sits under the dialogue box
+#   lc_notice_instant()                       True when the push-in must be instant (reduced motion;
+#       opening stops Skip, so the push-in then plays normally)
 #   lc_notice_pins()                          Status pins, registration order, with the captions
 #       seen when each was noticed
 #   lc_notice_validate(notice_id)             problems with one registration
@@ -53,7 +55,7 @@
 #
 # Depends on: python-packages/lc_notice.py, systems/hidden_pov.rpy (LC_POV_RESERVED_RECTS,
 #   LC_POV_OPPORTUNITIES, lc_pov_reduce_motion), systems/discovery.rpy (lc_discovery_register,
-#   lc_discovery_mark), systems/stats.rpy (lc_current_lean), screens/scrapbook_ui.rpy
+#   lc_discovery_mark), systems/stats.rpy (lc_current_lean, lc_leia_tint), screens/scrapbook_ui.rpy
 #   (lc_phone_covers_scene, lc_journal_menu_open), screens/notice_screen.rpy
 # Hooks: none (chains config.afm_callback after Hidden POV, adds a start_interact callback and the
 #   lc_notice_hotspot overlay)
@@ -88,11 +90,12 @@ init python:
         return None
 
     def lc_notice_register(notice_id, source, center, focus_rect, zoom=1.35, lines=None,
-                           lane_lines=None, closeup=None, day_id=None, label=None, mood=None):
+                           lane_lines=None, closeup=None, day_id=None, label=None, mood=None,
+                           caption_box=None):
         """Register one notice (rules: python-packages/lc_notice.py)."""
         lc_notice.register(LC_NOTICES, notice_id, source, center, focus_rect, zoom=zoom,
                            lines=lines, lane_lines=lane_lines, closeup=closeup, day_id=day_id,
-                           label=label, mood=mood)
+                           label=label, mood=mood, caption_box=caption_box)
         if day_id is not None:
             lc_discovery_register(day_id, notice_id, "notice", label or lc_notice.DEFAULT_LABEL,
                                   mood or "", image=closeup or source)
@@ -140,9 +143,12 @@ init python:
         )
 
     def lc_notice_lane():
-        """Caption lane from the stats-model lean. Release builds fall back to the base lines."""
+        """Caption lane from the stats-model lean; on the Love lean Leia's Love-lane tint can pick
+        the exhib captions (lc_notice.lane_from_lean). Release builds fall back to the base lines."""
         try:
-            return lc_notice.lane_from_lean(lc_current_lean())
+            lean = lc_current_lean()
+            tint = lc_leia_tint("love") if lean == "love" else None
+            return lc_notice.lane_from_lean(lean, tint)
         except Exception:
             if config.developer:
                 raise
@@ -163,15 +169,15 @@ init python:
         return lc_notice.focus_transform(entry["focus_rect"], entry["zoom"],
                                          (config.screen_width, config.screen_height))
 
-    def lc_notice_caption_y(notice_id):
-        """Caption box y: the dialogue-box spot, or the top spot when the detail sits under it."""
-        entry = LC_NOTICES[notice_id]
-        slot = lc_notice.caption_slot(entry["focus_rect"], entry["zoom"],
-                                      (config.screen_width, config.screen_height))
-        return (lc_notice.CAPTION_TOP if slot == "top" else lc_notice.CAPTION_BOTTOM)[0]
+    def lc_notice_caption_box(notice_id):
+        """Caption paper (x, y, w, h): the registration's caption_box, else the dialogue-box spot,
+        or the top spot when the detail sits under it."""
+        return lc_notice.caption_box(LC_NOTICES[notice_id], (config.screen_width, config.screen_height))
 
     def lc_notice_instant():
-        """No push-in animation while skipping or with reduced motion (Hidden POV's rule)."""
+        """No push-in animation with reduced motion (Hidden POV's rule). lc_notice_open stops Skip
+        before the viewer shows, so opening during Skip still animates; the is_skipping check
+        only guards a viewer that is somehow up while skipping."""
         return bool(renpy.is_skipping() or lc_pov_reduce_motion())
 
     def lc_noticed(notice_id):

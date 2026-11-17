@@ -6,7 +6,9 @@
 #   then over the warm Hidden POV glow; Full/Developer: a honey disc with a white eye (Developer
 #   adds the id). Hover and keyboard/gamepad focus share the pink hover state. The push-in eases
 #   in, the captions fade up, and a click (or Esc / right click / Space / Enter) eases back
-#   before closing; skip and reduced motion make both instant.
+#   before closing; reduced motion makes both instant (opening stops Skip, so the push-in then
+#   plays normally). The caption paper sits in the dialogue-box spot, the top spot, or a
+#   registration's own caption_box (stretched sideways only).
 #
 # Public API (call these from scenes/screens):
 #   screen lc_notice_hotspot()                overlay with the eye cue (desktop and touch variants)
@@ -174,18 +176,21 @@ screen lc_notice_viewer(notice_id):
         $ ink = "#ece2f2" if theme == "night" else "#34242c"
         $ halo = "#1e1628c0" if theme == "night" else "#efe4cdc0"
         $ caption = "\n".join(lc_notice_captions(notice_id, lc_noticed_record.get(notice_id) if notice_id in lc_noticed_record else "current"))
+        $ box_x, box_y, box_w, box_h = lc_notice_caption_box(notice_id)
         frame:
             at (Transform() if instant else lc_notice_fade_in(LC_NOTICE_IN * 0.7, 0.3))
-            xpos 132
-            ypos lc_notice_caption_y(notice_id)
-            xsize 1656
-            ysize 222
-            background ("lc_say_cg_%s" % theme)
-            padding (84, 28, 72, 18)
+            xpos box_x
+            ypos box_y
+            xsize box_w
+            ysize box_h
+            # The dialogue paper, stretched sideways only (left border keeps the margin line).
+            background Frame(("lc_say_cg_%s" % theme), 96, 0, 24, 0)
+            padding ((84, 28, 72, 18) if box_w >= lc_notice.CAPTION_W else (84, 20, 48, 12))
             text caption:
                 substitute False
                 font "fonts/PatrickHand-Regular.ttf"
-                size 40
+                # A narrower caption_box keeps two captions to 4 lines with a smaller hand.
+                size (40 if box_w >= lc_notice.CAPTION_W else 34)
                 italic True
                 color ink
                 line_spacing 6

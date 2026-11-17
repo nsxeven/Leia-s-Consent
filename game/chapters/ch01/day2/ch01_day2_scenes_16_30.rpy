@@ -799,7 +799,7 @@ label ch01_day2_scene_20_dinner_outfit:
                 $ apply_choice("ch01_d2_sunset_noticed")
                 $ set_story_value("ch01_d2_sunset_noticed", True)
                 if lc_noticed("d2_notice_bed_hand"):
-                    mc "This morning, when I got up. Did you know your hand went straight over to my side of the bed? Palm up, hanging off the edge, like you were looking for me."
+                    mc "This morning, when I got up. Did you know your hand went straight over to my side of the bed? Palm up, right at the edge, like you were looking for me."
                 else:
                     mc "At breakfast, while [friend_name] was busy defending his movie, you just looked over at me and smiled. Like nobody else was even at the table."
                 if d2_lane == "love":
@@ -812,7 +812,7 @@ label ch01_day2_scene_20_dinner_outfit:
                     gf "You were watching me that closely, huh?"
                     mc "Hard not to."
                     gf "Good. I like knowing it's you watching. That's my favorite part, actually."
-                    "She leaned into me, very pleased with herself."
+                    "She bumped her knee against mine, very pleased with herself."
                 else:
                     gf "...You noticed that?"
                     mc "I notice you. I've just been bad at saying it today."

@@ -16,12 +16,15 @@ MIN_ZOOM = 1.0
 MAX_ZOOM = 1.4
 DEFAULT_ZOOM = 1.35
 
-# Caption lanes, from the stats-model lean (systems/stats.rpy lc_current_lean).
+# Caption lanes, from the stats-model lean (systems/stats.rpy lc_current_lean), coloured on the
+# Love lean by Leia's Day Two tint (lc_leia_tint): see lane_from_lean.
 LANES = ("love", "exhib", "ntr")
 _LEAN_TO_LANE = {"love": "love", "love_exhib": "exhib", "ntr": "ntr"}
 
 MAX_LINES = 2
 MAX_LINE_CHARS = 150
+# The Status pin shows the first caption in a fixed-height card: 4 lines at most.
+MAX_PIN_CHARS = 125
 DEFAULT_LABEL = "Something I noticed"
 
 # Player-editable names must be written as [player_name] / [girlfriend_name] / [friend_name].
@@ -81,9 +84,13 @@ def focus_transform(focus_rect, zoom=DEFAULT_ZOOM, frame=FRAME):
 
 
 # Caption box bands on screen (y, height): the dialogue-box spot, and a top spot below the Back
-# button for a detail that the push-in leaves in the lower part of the screen.
+# button for a detail that the push-in leaves in the lower part of the screen. The box is the
+# dialogue paper (222 px tall); it only ever stretches sideways.
 CAPTION_BOTTOM = (792, 222)
 CAPTION_TOP = (110, 222)
+CAPTION_X = 132
+CAPTION_W = 1656
+CAPTION_MIN_W = 900
 
 
 def focus_on_screen(focus_rect, zoom=DEFAULT_ZOOM, frame=FRAME):
@@ -106,10 +113,29 @@ def caption_slot(focus_rect, zoom=DEFAULT_ZOOM, frame=FRAME):
     return "top" if cover(CAPTION_BOTTOM) > cover(CAPTION_TOP) else "bottom"
 
 
+def caption_box(entry, frame=FRAME):
+    """Caption paper on screen (x, y, w, h): the registration's caption_box (x, y, w) when given,
+    else the full-width bottom spot, or the top spot when the detail sits under it."""
+    if entry.get("caption_box"):
+        x, y, w = entry["caption_box"]
+        return (x, y, w, CAPTION_BOTTOM[1])
+    slot = caption_slot(entry["focus_rect"], entry["zoom"], frame)
+    y, h = CAPTION_TOP if slot == "top" else CAPTION_BOTTOM
+    return (CAPTION_X, y, CAPTION_W, h)
+
+
 # ---------------------------------------------------------------- registry
 
-def lane_from_lean(lean):
-    """Caption lane for a stats-model lean ('love' / 'love_exhib' / 'ntr'); None otherwise."""
+def lane_from_lean(lean, tint=None):
+    """Caption lane for a stats-model lean ('love' / 'love_exhib' / 'ntr'); None otherwise.
+
+    tint is Leia's Love-lane tint (lc_stat_model.leia_tint with lane 'love', which never returns
+    temptation). On the Love lean, an Exhibitionism tint picks the exhib captions: early in a day
+    (Day Two scene 1, before any Day Two choice) the lane can't be Love + Exhib yet, so this is
+    how a save that leans that way still sees them. Nothing ever moves a lean toward NTR.
+    """
+    if lean == "love" and tint == "exhibitionism":
+        return "exhib"
     return _LEAN_TO_LANE.get(lean)
 
 
@@ -133,7 +159,7 @@ def _text(name, value, optional=False):
 
 
 def register(registry, notice_id, source, center, focus_rect, zoom=DEFAULT_ZOOM, lines=None,
-             lane_lines=None, closeup=None, day_id=None, label=None, mood=None):
+             lane_lines=None, closeup=None, day_id=None, label=None, mood=None, caption_box=None):
     """Add one notice to registry ({notice_id: entry}) and return the entry.
 
     Shape errors (duplicate id, missing captions, unknown lane, malformed points) raise
@@ -148,6 +174,9 @@ def register(registry, notice_id, source, center, focus_rect, zoom=DEFAULT_ZOOM,
         raise ValueError("notice center must be an (x, y) pixel pair, got %r" % (center,))
     if not _is_rect(focus_rect):
         raise ValueError("notice focus_rect must be (x, y, w, h), got %r" % (focus_rect,))
+    if caption_box is not None and not (isinstance(caption_box, (tuple, list)) and len(caption_box) == 3
+                                        and all(isinstance(v, (int, float)) for v in caption_box)):
+        raise ValueError("notice caption_box must be (x, y, width), got %r" % (caption_box,))
     base = _lines("lines", lines)
     lanes = {}
     for lane, value in (lane_lines or {}).items():
@@ -161,6 +190,7 @@ def register(registry, notice_id, source, center, focus_rect, zoom=DEFAULT_ZOOM,
         "day_id": _text("day_id", day_id, optional=True),
         "label": _text("label", label, optional=True),
         "mood": mood if isinstance(mood, str) else "",
+        "caption_box": tuple(caption_box) if caption_box is not None else None,
     }
     registry[notice_id] = entry
     return entry
@@ -206,6 +236,16 @@ def validate(entry, hitbox, reserved_rects, pov_rects=(), others=(), frame=FRAME
     if not MIN_ZOOM < entry["zoom"] <= MAX_ZOOM:
         problems.append("zoom %r is outside %.1f-%.1f (CGs are %dx%d)" % (entry["zoom"], MIN_ZOOM, MAX_ZOOM,
                                                                          frame[0], frame[1]))
+    box = entry.get("caption_box")
+    if box is not None:
+        x, y, bw = box
+        if not rect_in_frame((x, y, bw, CAPTION_BOTTOM[1]), frame) or not CAPTION_MIN_W <= bw <= CAPTION_W:
+            problems.append("caption_box %r must sit inside the frame and be %d-%d px wide"
+                            % (box, CAPTION_MIN_W, CAPTION_W))
+    for first in [entry["lines"][0]] + [lines[0] for lines in entry["lane_lines"].values()]:
+        if len(first) > MAX_PIN_CHARS:
+            problems.append("first caption %r is too long for the Status pin (max %d characters)"
+                            % (first[:40], MAX_PIN_CHARS))
     texts = list(entry["lines"]) + [line for lines in entry["lane_lines"].values() for line in lines]
     texts += [entry["label"] or "", entry["mood"] or ""]
     for text in texts:
