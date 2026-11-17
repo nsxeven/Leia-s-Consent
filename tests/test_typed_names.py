@@ -8,7 +8,7 @@ STORY = ["chapters/prologue/prologue.rpy", "chapters/ch01/ch01_main.rpy", "chapt
          "chapters/ch01/day1/ch01_scenes_07_13.rpy", "chapters/ch01/day1/ch01_scenes_14_30.rpy",
          "chapters/ch01/day1/ch01_phone_moments.rpy",
          "chapters/ch01/day2/ch01_day2_scenes_01_15.rpy", "chapters/ch01/day2/ch01_day2_scenes_16_30.rpy",
-         "chapters/ch01/day2/ch01_day2_scene_19b_leia_asks_maya.rpy"]
+         "chapters/ch01/day2/ch01_day2_scene_19b_leia_asks_maya.rpy", "chapters/ch01/day2/ch01_day2_feed.rpy"]
 DEFAULTS = {'entered_player_name else "Ryan"', 'entered_girlfriend_name else "Leia"', 'entered_friend_name else "Julian"'}
 
 

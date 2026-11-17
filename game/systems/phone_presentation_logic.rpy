@@ -191,6 +191,10 @@ init python:
         if thread_id:
             phone_mark_thread_read(thread_id)
             target = ("thread", thread_id)
+        elif item.get("kind") == "feed":
+            # A feed banner (systems/feed.rpy) opens the feed app (a new visit: fresh blue dots).
+            lc_feed_visit_start()
+            target = ("feed", None)
         else:
             target = (PHONE_NOTIFICATION_APP_SCREENS.get((item.get("app") or "").strip(), "home"), None)
         renpy.store.lc_phone_deep_link = target

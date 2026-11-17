@@ -384,6 +384,13 @@ def draw_app_icon(name, top, bot):
         draw.rectangle((8, 14, 40, 22), fill="#F4E2B0")
         draw.rounded_rectangle((24, 24, 40, 34), 2, fill="#3E526E")
         draw.ellipse((32, 26, 36, 30), fill="#F6D56A")
+    elif name == "feed":
+        # Social feed (systems/feed.rpy): a white camera outline with a heart for a lens.
+        draw.rounded_rectangle((9, 9, 38, 38), 9, outline=white, width=3)
+        draw.ellipse((15, 17, 24, 26), fill=white)
+        draw.ellipse((23, 17, 32, 26), fill=white)
+        draw.polygon([(16, 23), (31, 23), (23.5, 32)], fill=white)
+        draw.ellipse((31, 12, 34, 15), fill=white)
     else:
         raise SystemExit("no glyph for %s" % name)
     return image.resize((96, 96), Image.Resampling.NEAREST).resize((80, 80), Image.Resampling.NEAREST)
@@ -566,6 +573,7 @@ def build_chrome():
         "delivery": ("#87C4D7", "#4A819F"),
         "shop": ("#F4B183", "#D4784A"),
         "wallet": ("#8E9AAF", "#2C3E50"),
+        "feed": ("#F7A6C1", "#D9577E"),
     }
     for name, (top, bot) in colors.items():
         draw_app_icon(name, top, bot).save(PHONE / f"{name}.png")

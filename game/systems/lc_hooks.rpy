@@ -26,7 +26,8 @@
 # Hooks: events in use: story_flag_set (flag_id, value) after set_story_flag
 #   (systems/story_state.rpy; listener systems/chapter_select.rpy); review_finished (day_id) after
 #   lc_review_finish (systems/day_review.rpy; listeners systems/lc_tag_collection.rpy and
-#   systems/discovery.rpy); review_titles
+#   systems/discovery.rpy); phone_closed () at the end of lc_phone_close
+#   (screens/phone_sweetheart.rpy; listener systems/feed.rpy); review_titles
 #   filter over the (ryan, leia) titles lc_review_titles returns (listener
 #   systems/lc_tag_collection.rpy); choice_effects filter and choice_applied (choice_id, effects)
 #   from systems/choice_engine.rpy (listener systems/leia_side.rpy, Leia's +2/day cap);

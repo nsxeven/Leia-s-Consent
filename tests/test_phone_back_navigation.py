@@ -44,9 +44,12 @@ class PhoneNavigationTests(unittest.TestCase):
         self.renpy = FakeRenpy()
         self.sounds = []
         self.left = []
+        self.hooks = []
         scope = {"renpy": self.renpy,
                  "lc_ui_play": self.sounds.append,
-                 "lc_phone_leave_thread": lambda app, thread: self.left.append((app, thread))}
+                 "lc_phone_leave_thread": lambda app, thread: self.left.append((app, thread)),
+                 # lc_phone_close ends with the phone_closed hook (systems/lc_hooks.rpy).
+                 "lc_hook_run": lambda event, *a, **k: self.hooks.append(event)}
         exec(self.code, scope)
         self.back = scope["lc_phone_back"]
         self.close = scope["lc_phone_close"]

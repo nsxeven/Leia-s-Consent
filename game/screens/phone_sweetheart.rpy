@@ -30,7 +30,7 @@
 # Internal (helpers for this file and its screens; do not call from scenes): lc_phone_current_app,
 #   lc_mark_status_intro_seen, lc_phone_reply_level, lc_phone_name_color, lc_phone_avatar_ink,
 #   lc_phone_avatar, lc_phone_initial, lc_phone_list_preview, lc_phone_thread_rows,
-#   lc_phone_thread_ranged, lc_phone_thread_adjustment, lc_sm_app_badge
+#   lc_phone_thread_ranged, lc_phone_thread_adjustment, lc_sm_app_badge, lc_sm_home_apps
 #
 # Example:
 #   action Show("phone_screen")      (screens/phone_hud.rpy)
@@ -39,8 +39,10 @@
 #   systems/phone_moments.rpy (Seen receipt, missed-call rows), python-packages/lc_phone_moments.py,
 #   systems/phone_group_avatar.rpy, systems/status_display.rpy, systems/wardrobe_logic.rpy,
 #   screens/phone_wallpaper.rpy, screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy,
-#   systems/notice.rpy + screens/notice_screen.rpy (Status "Things I noticed" pins)
-# Hooks: none (registers the lc_phone_extra_apps and lc_phone_hardware_overlay overlays)
+#   systems/notice.rpy + screens/notice_screen.rpy (Status "Things I noticed" pins),
+#   systems/feed.rpy + screens/phone_feed.rpy (the feed app, once installed)
+# Hooks: runs phone_closed at the end of lc_phone_close (listener systems/feed.rpy); registers the
+#   lc_phone_extra_apps and lc_phone_hardware_overlay overlays
 # Load order: every name defined once. The python blocks keep the priorities of the old load order,
 #   so init runs as before: init 90 lc_phone_extra_apps overlay + Home helpers; init 95 handset
 #   helpers; init 300 lc_phone_hardware_overlay registration, the last phone overlay
@@ -99,10 +101,12 @@ init 95 python:
 
     def lc_phone_close():
         """Dismiss every phone layer; the phone's hide action plays the close cue."""
-        for name in ("lc_phone_photo_viewer", "lc_phone_status", "lc_phone_settings", "phone_screen"):
+        for name in ("lc_phone_photo_viewer", "lc_feed_post", "lc_phone_status", "lc_phone_settings", "phone_screen"):
             if renpy.get_screen(name):
                 renpy.hide_screen(name)
         renpy.restart_interaction()
+        # Listeners (systems/feed.rpy: first-sight reactions) may call a label from here.
+        lc_hook_run("phone_closed")
         return None
 
     def lc_phone_back():
@@ -112,6 +116,9 @@ init 95 python:
             renpy.hide_screen("lc_phone_wallpaper_editor")
         elif renpy.get_screen("lc_phone_photo_viewer"):
             renpy.hide_screen("lc_phone_photo_viewer")
+        elif renpy.get_screen("lc_feed_post"):
+            # An opened feed post -> back to the feed list under it.
+            renpy.hide_screen("lc_feed_post")
         elif renpy.get_screen("lc_phone_status"):
             renpy.hide_screen("lc_phone_status")
         elif renpy.get_screen("lc_phone_settings"):
@@ -328,6 +335,13 @@ init 95 python:
     )
     LC_SM_DOCK = ("messages", "photos", "shop", "wallet")
 
+    def lc_sm_home_apps():
+        """Home-grid rows: the real apps, plus the feed app (8th slot) once the story installed
+        it (systems/feed.rpy)."""
+        if lc_feed_app_visible():
+            return LC_SM_HOME + (("feed", LC_FEED_APP_NAME, "app"),)
+        return LC_SM_HOME
+
 
     def lc_sm_app_badge(app_id):
         if app_id == "messages":
@@ -337,6 +351,8 @@ init 95 python:
             return None
         if app_id == "status" and not getattr(renpy.store.persistent, "status_page_intro_seen", False):
             return "!"
+        if app_id == "feed":
+            return lc_feed_badge()
         return None
 
 
@@ -490,6 +506,8 @@ screen phone_screen():
     default reply_closed_at = 0.0
     default reply_close_from = 0.0
     default reply_tick = 0
+    # The feed list's scroll position: the focused card scrolls into view (lc_feed_reveal_focus).
+    default feed_yadj = ui.adjustment()
 
     on "show" action [SetVariable("lc_phone_deep_link", None), Function(lc_ui_play, "phone_open")]
     on "hide" action [Function(lc_phone_leave_thread, phone_app, phone_thread), Function(lc_ui_play, "phone_close")]
@@ -535,7 +553,7 @@ screen phone_screen():
                 ypos 132
                 outlines [(2, "#102033", 0, 1)]
 
-            for i, row in enumerate(LC_SM_HOME):
+            for i, row in enumerate(lc_sm_home_apps()):
                 $ app_id = row[0]
                 $ label = row[1]
                 $ kind = row[2]
@@ -546,6 +564,8 @@ screen phone_screen():
                     $ app_action = Show("lc_phone_status")
                 elif kind == "settings":
                     $ app_action = Show("lc_phone_settings")
+                elif app_id == "feed":
+                    $ app_action = [Function(lc_feed_visit_start), SetScreenVariable("phone_app", "feed")]
                 else:
                     $ app_action = SetScreenVariable("phone_app", app_id)
                 button:
@@ -926,6 +946,15 @@ screen phone_screen():
                     color "#293C53"
                     xpos 76
                     ypos 98
+            elif phone_app == "feed":
+                text LC_FEED_APP_NAME:
+                    style "lc_sw_hand"
+                    size 36
+                    color "#293C53"
+                    xpos 76
+                    ypos 98
+                # The list shows every caption, so posts on it count as seen (systems/feed.rpy).
+                timer 0.2 repeat True action Function(lc_feed_catch_up, _update_screens=False)
             else:
                 text "Phone":
                     style "lc_sw_hand"
@@ -942,6 +971,7 @@ screen phone_screen():
                 mousewheel True
                 draggable True
                 scrollbars None
+                yadjustment (feed_yadj if phone_app == "feed" else None)
                 vbox:
                     xsize LC_PHONE_CONTENT_WIDTH
                     spacing 14
@@ -1000,6 +1030,9 @@ screen phone_screen():
                                     xpos 88
                                     ypos 97
                                     xysize (340, 2)
+
+                    elif phone_app == "feed":
+                        use lc_feed_list(feed_yadj)
 
                     elif phone_app == "shop" and not LC_SHOP_ENABLED:
                         # Shop under development (LC_SHOP_ENABLED in shop_screen.rpy).

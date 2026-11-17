@@ -227,6 +227,8 @@ init 10 python:
             store.equipped_outfit = "resort_dinner_dress"
             for flag in ("ch01_day_02_started", "ch01_d2_scene_30_complete", "ch01_day_02_complete"):
                 set_story_flag(flag)
+            # Every Day Two path installs the feed app on the photo walk (systems/feed.rpy).
+            lc_feed_install()
             if day == "day3":
                 entry = "ch01_day3_start"
             else:
