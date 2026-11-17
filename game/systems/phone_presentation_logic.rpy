@@ -4,23 +4,35 @@
 #   (systems/phone_state.rpy), flushes pending reply steps first, marks messages read in the chat
 #   that is open, and queues the banner. Also: stat-free reply cards, notification queue and deep
 #   links, phone unlock/HUD switches, cinematic mode. Screens live in screens/phone_sweetheart.rpy
-#   and screens/phone_hud.rpy.
+#   and screens/phone_hud.rpy. Reply options may carry the phone-moment flags (docs/PHONE_MOMENTS.md):
+#   leave_on_read=True (sends nothing, records the choice, shows a 'Seen' receipt) and
+#   hesitate=True with an optional draft (a typed-draft animation before the send).
 #
 # Public API (call these from scenes/screens):
 #   phone_add_message(thread_id, sender_id, text="", message_id=None, attachment_id=None, attachment_label=None, mark_unread=True, notify=False, notification_app="Messages", notification_title=None, display_time=None)
 #       deliver one message (stable message_id; optional photo/notification)
 #   phone_offer_reply(thread_id, prompt_id, options, default_id) -> bool
-#       queue a save-safe, stat-free reply card for a thread
+#       queue a save-safe, stat-free reply card for a thread (option keys: id, text, followups,
+#       leave_on_read, hesitate, draft)
 #   phone_choose_reply(thread_id, option_id, staged=False) -> bool
 #       queue a picked reply (or post it at a story deadline)
 #   phone_select_reply(thread_id, option_id) -> None
-#       screen action for a reply option
+#       screen action for a reply option (starts the hesitation typing for hesitate=True)
 #   phone_default_reply(thread_id)            pick the default reply
 #   phone_pending_reply(thread_id)            the open reply prompt of a thread, or None
-#   phone_deliver_reply_step(thread_id) -> None
-#       one timed beat of a queued reply sequence
+#   phone_deliver_reply_step(thread_id, force=False) -> None
+#       one timed beat of a queued reply sequence (Ryan's beat waits while his reply is still
+#       being typed, unless force)
 #   phone_flush_reply_delivery(thread_id) -> None
-#       post every pending step now
+#       post every pending step now (never waits for typing)
+#   phone_reply_typing_text(thread_id)        the hesitation draft in the composer now, or None
+#   phone_reply_typing_active(thread_id)      True while a typing record exists (also the moment
+#       after the frames end, until Ryan's message is posted)
+#   phone_reply_typing_clear(thread_id=None) -> None
+#       drop the typing record of one thread (or all)
+#   lc_phone_motion_instant()                 True under skip mode or reduced motion (screen
+#       shake or transitions off): phone moments play instantly
+#   LC_PHONE_TYPING                           transient typing records (never saved)
 #   phone_queue_notification(app, title, body, kind="message", thread_id=None, sender=None) -> None
 #       queue a banner
 #   phone_show_next_notification() -> None    show the next queued banner
@@ -45,6 +57,8 @@
 #   phone_unread_badge_label(count=None)      badge text ('99+' cap)
 #   debug_reset_phone_tutorial() -> None      dev: show the tutorial again
 #
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_phone_plain
+#
 # Example:
 #   $ phone_add_message(
 #       "group", "julian", text="I'm downstairs.", message_id="prologue_julian_downstairs_01",
@@ -52,14 +66,18 @@
 #   )
 #
 # Depends on: systems/phone_state.rpy, systems/story_state.rpy, systems/lc_fx.rpy,
+#   systems/lc_hooks.rpy, python-packages/lc_phone_moments.py,
 #   screens/gameplay_toasts.rpy, screens/phone_hud.rpy (defaults), screens/scrapbook_ui.rpy (banner
 #   screen)
-# Hooks: none
+# Hooks: emits phone_reply_chosen (thread_id, prompt_id, option) from phone_choose_reply
+#   (systems/phone_moments.rpy listens)
 # Load order: default (init 0); it calls systems/phone_state.rpy only at run time
-# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_replies.py, tests/test_phone_read_state.py,
-#   tests/test_behaviour_freeze.py
+# Docs: docs/ARCHITECTURE.md, docs/PHONE_MOMENTS.md   Tests: tests/test_phone_replies.py,
+#   tests/test_phone_read_state.py, tests/test_behaviour_freeze.py, tests/test_phone_moments.py
 
 init python:
+    import time as _lc_phone_clock
+    import lc_phone_moments
 
     PHONE_NOTIFICATION_BODY_MAX = 72
     PHONE_NOTIFICATION_TITLE_MAX = 32
@@ -214,6 +232,7 @@ init python:
         ids = [option["id"] for option in options]
         if not 2 <= len(ids) <= 3 or len(set(ids)) != len(ids) or default_id not in ids:
             raise ValueError("Reply prompts need 2-3 unique choices and a valid default")
+        lc_phone_moments.validate_options(options)
         if has_story_value(prompt_id) or phone_pending_reply(thread_id):
             return False
         renpy.store.phone_reply_prompts[thread_id] = {
@@ -232,10 +251,16 @@ init python:
         # Remove first so the writer's deadline hook cannot resolve twice.
         del renpy.store.phone_reply_prompts[thread_id]
         set_story_value(prompt["id"], option_id)
-        steps = [("player", option["text"], prompt["id"] + "_ryan")]
+        if lc_phone_moments.is_leave_on_read(option):
+            # Ryan reads it and writes nothing; only the other side's follow-ups may come.
+            phone_mark_thread_read(thread_id)
+            steps = []
+        else:
+            steps = [("player", option["text"], prompt["id"] + "_ryan")]
         steps.extend((sender, text, "{}_followup_{:02d}".format(prompt["id"], index + 1))
                      for index, (sender, text) in enumerate(option.get("followups", ())))
-        if staged:
+        lc_hook_run("phone_reply_chosen", thread_id, prompt["id"], option)
+        if staged and steps:
             # Save state contains plain strings, not callables or displayables.
             if not hasattr(renpy.store, "phone_reply_delivery"):
                 renpy.store.phone_reply_delivery = {}
@@ -246,11 +271,16 @@ init python:
                                   mark_unread=False, notify=False)
         return True
 
-    def phone_deliver_reply_step(thread_id):
-        """One timed beat in the existing open-thread sequence overlay."""
+    def phone_deliver_reply_step(thread_id, force=False):
+        """One timed beat in the existing open-thread sequence overlay. Ryan's own beat waits
+        while his hesitating reply is still being typed (force: a story deadline never waits)."""
         pending = getattr(renpy.store, "phone_reply_delivery", {}).get(thread_id)
         if not pending:
             return None
+        if pending[0][0] == "player":
+            if not force and phone_reply_typing_text(thread_id) is not None:
+                return None
+            phone_reply_typing_clear(thread_id)
         sender, text, message_id = pending.pop(0)
         if not pending:
             del renpy.store.phone_reply_delivery[thread_id]
@@ -264,7 +294,8 @@ init python:
     def phone_flush_reply_delivery(thread_id):
         """A subsequent story message catches up the pending reply in order."""
         while getattr(renpy.store, "phone_reply_delivery", {}).get(thread_id):
-            phone_deliver_reply_step(thread_id)
+            phone_deliver_reply_step(thread_id, force=True)
+        phone_reply_typing_clear(thread_id)
         return None
 
     def phone_default_reply(thread_id):
@@ -273,7 +304,59 @@ init python:
 
     def phone_select_reply(thread_id, option_id):
         # Ren'Py Function actions must return None or the Phone closes.
-        phone_choose_reply(thread_id, option_id, staged=True)
+        prompt = phone_pending_reply(thread_id)
+        option = next((item for item in (prompt or {}).get("options", ()) if item["id"] == option_id), None)
+        if phone_choose_reply(thread_id, option_id, staged=True) and option and option.get("hesitate"):
+            frames = lc_phone_moments.hesitation_frames(_lc_phone_plain(option.get("draft")),
+                                                        _lc_phone_plain(option["text"]),
+                                                        skip=lc_phone_motion_instant())
+            if frames:
+                LC_PHONE_TYPING[thread_id] = {"frames": frames, "start": _lc_phone_clock.time(),
+                                              "step": lc_phone_moments.frame_step(frames)}
+        return None
+
+    # Hesitation typing (phone moments). Transient: an init-time python_dict is never saved or
+    # rolled back, and every record runs out on the wall clock, so a load or rollback mid-typing
+    # simply sends. The save-safe part (the chosen reply and its queued steps) is already stored
+    # by phone_choose_reply before the typing starts.
+    LC_PHONE_TYPING = python_dict()
+
+    def _lc_phone_plain(text):
+        """Names filled in ('[girlfriend_name]' -> the player's name) before the text is typed
+        out a letter at a time, so no frame holds half a substitution."""
+        if not text:
+            return text
+        try:
+            return renpy.substitute(text)
+        except Exception:
+            return text
+
+    def lc_phone_motion_instant():
+        """Skip mode or reduced motion (screen shake or transitions off): no typing or ring
+        animation, and nothing waits on one."""
+        try:
+            if renpy.is_skipping():
+                return True
+        except Exception:
+            pass
+        return (not getattr(persistent, "lc_screen_shake", True)
+                or not _preferences.transitions)
+
+    def phone_reply_typing_active(thread_id):
+        return thread_id in LC_PHONE_TYPING
+
+    def phone_reply_typing_text(thread_id):
+        record = LC_PHONE_TYPING.get(thread_id)
+        if not record:
+            return None
+        return lc_phone_moments.frame_at(record["frames"], _lc_phone_clock.time() - record["start"],
+                                         record["step"])
+
+    def phone_reply_typing_clear(thread_id=None):
+        if thread_id is None:
+            LC_PHONE_TYPING.clear()
+        else:
+            LC_PHONE_TYPING.pop(thread_id, None)
         return None
 
     # The one writer story code calls: phone_store_message plus presentation.

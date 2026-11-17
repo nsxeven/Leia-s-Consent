@@ -66,6 +66,10 @@ label dev_systems_menu:
     elif dev_systems_action == "verify":
         jump dev_verify_state
 
+    elif dev_systems_action == "phone_moments":
+        call lc_dev_phone_moments from dev_systems_phone_moments
+        jump dev_systems_menu
+
     else:
         return
 
