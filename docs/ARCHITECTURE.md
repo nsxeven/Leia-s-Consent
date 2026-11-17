@@ -22,7 +22,7 @@ is placeholder art) lives in `docs/BUILD_HANDOFF.md`.
 | `game/screens/` | feature screens (phone, review, gallery, menus, title screen) |
 | `game/sprites/` | layered character sprites |
 | `game/dev/` | developer/QA-only labels and screens; left out of release builds by `game/options.rpy` |
-| `game/python-packages/` | pure-Python modules with no Ren'Py import, unit-tested directly: `lc_stat_model.py` (stats, thresholds, routes), `lc_chapters.py` (chapter registry), `lc_ui_logic.py`, `lc_title_touch.py`, `lc_wallpaper_crop.py` |
+| `game/python-packages/` | pure-Python modules with no Ren'Py import, unit-tested directly: `lc_stat_model.py` (stats, thresholds, routes), `lc_chapters.py` (chapter registry), `lc_discovery.py` (discovery registry, Moments strip rules), `lc_ui_logic.py`, `lc_title_touch.py`, `lc_wallpaper_crop.py` |
 | `tools/` | asset generators (`gen_*.py`) and `tools/clean_orphan_rpyc.py` / `tools/clean_orphan_rpyc.bat` |
 | `tools/dev/` | `tools/dev/snapshot_baselines.py` (behaviour pins) and `tools/dev/rpyc_moves.json` (moved-script map) |
 | `tests/` | the unittest suite plus its helpers (`tests/lc_rpy_model.py`, `tests/lc_rpy_harness.py`, `tests/lc_save_names.py`, `tests/lc_effective_effects.py`) and baselines in `tests/data/` |
@@ -130,7 +130,7 @@ Events in use:
 | Event | Emitted by | Listener |
 |---|---|---|
 | `story_flag_set` (flag_id, value) | `set_story_flag` in `game/systems/story_state.rpy` | `game/systems/chapter_select.rpy` unlocks Chapter Select after Day Two |
-| `review_finished` (day_id) | `lc_review_finish` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` unlocks the day's tags and stickers |
+| `review_finished` (day_id) | `lc_review_finish` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` unlocks the day's tags and stickers; `game/systems/discovery.rpy` marks the day cleared on the profile (Moments strip) |
 | `review_titles` (filter over the (ryan, leia) titles) | `lc_review_titles` in `game/systems/day_review.rpy` | `game/systems/lc_tag_collection.rpy` swaps in equipped tags |
 
 Hooks are registered at init only, so they never enter a save. Tests:
@@ -231,7 +231,9 @@ Work through the steps in order; each names the file that owns the table.
    new gate formatter (step 2b).
 7. **Hidden POV.** Register each moment in the day's visuals file in an `init 1 python:`
    block with `lc_pov_register(...)` and bracket its lines with `lc_pov_begin` /
-   `lc_pov_end` (`docs/HIDDEN_POV.md`; Day Two's breakfast is the example).
+   `lc_pov_end` (`docs/HIDDEN_POV.md`; Day Two's breakfast is the example). Pass
+   `day_id="ch01_dN"`, `label=` and `mood=` to put it on the day's Moments strip; other
+   optional moments register with `lc_discovery_register(...)` (`game/systems/discovery.rpy`).
 8. **Phone.** Deliver texts with `phone_add_message(...)` and a stable `message_id`. A new
    contact needs its thread id in the `PHONE_THREAD_ORDER` tuple assigned at init 998 in
    `game/chapters/ch01/day1/ch01_phone_moments.rpy` (it overwrites the
@@ -318,6 +320,7 @@ Work through the steps in order; each names the file that owns the table.
 | Day review | `game/systems/day_review.rpy`, `game/screens/day_review_screen.rpy` | `docs/DAY_REVIEW.md` | `tests/test_day_review.py`, `tests/test_review_sfx.py` |
 | Tags and stickers | `game/systems/lc_tag_collection.rpy`, `game/screens/tag_collection_screen.rpy` | `docs/DAY_REVIEW.md` | `tests/test_tag_collection.py`, `tests/test_review_tags.py` |
 | Hidden POV | `game/systems/hidden_pov.rpy`, `game/systems/hidden_pov_chime.rpy` | `docs/HIDDEN_POV.md` | `tests/test_hidden_pov.py` |
+| Discoveries and Moments strip | `game/systems/discovery.rpy`, `game/python-packages/lc_discovery.py`, `game/screens/day_review_screen.rpy` (`lc_review_moments`) | `docs/HIDDEN_POV.md` | `tests/test_discovery.py` |
 | Gallery | `game/systems/gallery.rpy`, `game/systems/gallery_data.rpy`, `game/screens/gallery_screen.rpy` | `docs/BUILD_HANDOFF.md` | `tests/test_gallery_flags.py` |
 | Phone data | `game/systems/phone_state.rpy`, `game/systems/phone_presentation_logic.rpy`, `game/systems/phone_group_avatar.rpy` | this file | `tests/test_phone_replies.py`, `tests/test_phone_read_state.py`, `tests/test_phone_group_avatar.py` |
 | Phone UI | `game/screens/phone_sweetheart.rpy`, `game/screens/phone_hud.rpy`, `game/screens/phone_screen.rpy`, `game/screens/phone_input_blocker.rpy`, `game/screens/phone_wallpaper.rpy`, `game/screens/gameplay_toasts.rpy` | this file | `tests/test_phone_layout.py`, `tests/test_phone_back_navigation.py`, `tests/test_phone_wallpaper.py` |

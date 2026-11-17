@@ -25,7 +25,8 @@
 # Depends on: nothing
 # Hooks: events in use: story_flag_set (flag_id, value) after set_story_flag
 #   (systems/story_state.rpy; listener systems/chapter_select.rpy); review_finished (day_id) after
-#   lc_review_finish (systems/day_review.rpy; listener systems/lc_tag_collection.rpy); review_titles
+#   lc_review_finish (systems/day_review.rpy; listeners systems/lc_tag_collection.rpy and
+#   systems/discovery.rpy); review_titles
 #   filter over the (ryan, leia) titles lc_review_titles returns (listener
 #   systems/lc_tag_collection.rpy)
 # Load order: init -100, so every system can register from its own init block
