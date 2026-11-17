@@ -58,8 +58,8 @@
 # Depends on: systems/lc_hooks.rpy, systems/stats.rpy, systems/story_state.rpy, systems/lc_fx.rpy,
 #   systems/gallery.rpy (GALLERY_ENTRIES, read by lc_review_record_image),
 #   python-packages/lc_chapters.py, python-packages/lc_stat_model.py, screens/day_review_screen.rpy
-# Hooks: emits review_finished (lc_hook_run) and review_titles (lc_hook_filter); wraps config.show
-#   once at init
+# Hooks: emits review_finished (lc_hook_run), review_titles (lc_hook_filter) and review_closed
+#   (lc_hook_run, label lc_day_review, after the spread closes); wraps config.show once at init
 # Load order: init 20: after the choice engine tables and hooks; systems/lc_tag_collection.rpy (init
 #   21) reads its tables
 # Docs: docs/DAY_REVIEW.md   Tests: tests/test_day_review.py, tests/test_review_tags.py,
@@ -993,6 +993,10 @@ label lc_day_review(day_id):
         call screen lc_review_night_screen(day_id)
         $ lc_review_skipped = (_return == "skip")
     call screen lc_day_review_screen(day_id, skipped=lc_review_skipped)
+    # Hook point (systems/lc_hooks.rpy): optional offers after the spread, still on the review's
+    # music with the HUD hidden (systems/thoughts.rpy offers Ryan's thoughts). Nothing to offer
+    # = nothing shown.
+    $ lc_hook_run("review_closed", day_id)
     $ phone_hud_enabled = lc_review_saved_hud
     $ quick_menu = lc_review_saved_quick
     $ lc_bgm_stop(2.5)  # the next day picks its own music
