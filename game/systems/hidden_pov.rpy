@@ -15,11 +15,19 @@
 #   lc_pov_available()                        True when a cue may show now
 #   lc_pov_open(moment_id) -> None            open the viewer (the sparkle's action); also marks the
 #       moment found in this save (lc_discovery_mark, read back with lc_pov_seen_in_save)
-#   lc_pov_close() -> None                    close the viewer
+#   lc_pov_close() -> None                    close the viewer (the viewer's ease back calls it)
+#   lc_pov_instant()                          True when the viewer opens/closes without animation
+#   lc_pov_focus(moment_id)                   (xalign, yalign) of the push toward the sparkle
+#   LC_POV_IN, LC_POV_OUT, LC_POV_PUSH_ZOOM   viewer transition seconds and push-in zoom
 #   lc_pov_validate(moment_id)                problems with one registration
 #   lc_pov_validate_all()                     {moment_id: problems} for every registration
 #   LC_POV_OPPORTUNITIES                      the registry {moment_id: entry}
-#   screen lc_pov_viewer(moment_id)           the full-screen alternate view
+#   screen lc_pov_viewer(moment_id)           the full-screen alternate view: the source CG
+#       pushes in toward the sparkle and the POV CG fades up over it; closing reverses it. Every
+#       registered moment gets this transition; nothing to add per moment.
+#   transform lc_pov_push_in(xa, ya, z, t) / lc_pov_push_out(xa, ya, z, t)   source CG legs
+#   transform lc_pov_reveal(t) / lc_pov_unreveal(t)                          POV CG legs
+#   transform lc_pov_fade(a0, a1, delay, t)                                  backdrop / labels
 #   screen lc_pov_hotspot()                   overlay with the sparkle cue (desktop and touch
 #       variants)
 #
@@ -66,6 +74,12 @@ init -1 python:
     )
     # Soft chime when a cue appears: LC_POV_CUE_AUDIO (systems/hidden_pov_chime.rpy).
     LC_POV_CUE_VOLUME = 0.7
+    # Viewer transition (darryn 2026-11-18: no instant snap, match the push-in of Things Ryan
+    # noticed). Open: the source CG pushes in toward the sparkle while the POV fades up over it.
+    # Close: the POV fades out while the source eases back to the full frame.
+    LC_POV_IN = 0.8
+    LC_POV_OUT = 0.6
+    LC_POV_PUSH_ZOOM = 1.3
 
 init python:
     import time as _lc_pov_time
@@ -219,6 +233,16 @@ init python:
             return (1.0 * (config.afm_bonus + max(len(what), 1)) / config.afm_characters) * _preferences.afm_time
         except Exception:
             return 2.0
+
+    def lc_pov_instant():
+        """No viewer transition with reduced motion (or while skipping, which opening stops)."""
+        return bool(renpy.is_skipping() or lc_pov_reduce_motion())
+
+    def lc_pov_focus(moment_id):
+        """(xalign, yalign) that keeps the sparkle point fixed while the source CG zooms."""
+        cx, cy = LC_POV_OPPORTUNITIES[moment_id]["center"]
+        w, h = float(config.screen_width), float(config.screen_height)
+        return (min(max(cx / w, 0.0), 1.0), min(max(cy / h, 0.0), 1.0))
 
     def lc_pov_close():
         renpy.hide_screen("lc_pov_viewer")
@@ -476,35 +500,104 @@ screen lc_pov_hotspot_body(size):
                 ypos (py + size // 2 - 12)
                 size 20 color "#ffdb82" outlines [(2, "#231019", 0, 0)]
 
+# ------------------------------------------------------------- viewer transition
+# The viewer opens on a copy of the source CG that matches the master layer, so fading it in only
+# fades the dialogue box away; then it pushes toward the sparkle and the POV fades up over it.
+transform lc_pov_push_in(xa, ya, z, t):
+    subpixel True
+    xalign xa yalign ya
+    zoom 1.0 alpha 0.0
+    parallel:
+        ease (t * 0.25) alpha 1.0
+    parallel:
+        easein t zoom z
+    # Hidden behind the opaque POV from here on (and out of any letterbox bars).
+    alpha 0.0
+
+transform lc_pov_push_out(xa, ya, z, t):
+    subpixel True
+    xalign xa yalign ya
+    zoom z alpha 1.0
+    parallel:
+        ease (t * 0.8) zoom 1.0
+    parallel:
+        pause (t * 0.75)
+        ease (t * 0.25) alpha 0.0
+
+transform lc_pov_reveal(t):
+    subpixel True
+    xalign 0.5 yalign 0.5
+    alpha 0.0 zoom 1.08
+    pause (t * 0.4)
+    ease (t * 0.6) alpha 1.0 zoom 1.0
+
+transform lc_pov_unreveal(t):
+    subpixel True
+    xalign 0.5 yalign 0.5
+    alpha 1.0 zoom 1.0
+    ease (t * 0.45) alpha 0.0 zoom 1.06
+
+transform lc_pov_fade(a0, a1, delay, t):
+    alpha a0
+    pause delay
+    ease t alpha a1
+
 screen lc_pov_viewer(moment_id):
     modal True
     # Above the phone notification banner (620) so a toast never covers the art.
     zorder 630
+    default closing = False
     $ entry = LC_POV_OPPORTUNITIES.get(moment_id)
-    key "K_ESCAPE" action Function(lc_pov_close)
-    key "game_menu" action Function(lc_pov_close)
-    key "mouseup_3" action Function(lc_pov_close)
-    add Solid("#110c12")
+    $ instant = lc_pov_instant()
+    $ dismiss = Function(lc_pov_close) if instant else SetScreenVariable("closing", True)
+    key "K_ESCAPE" action dismiss
+    key "game_menu" action dismiss
+    key "mouseup_3" action dismiss
+    if closing:
+        timer LC_POV_OUT action Function(lc_pov_close)
+    if instant:
+        add Solid("#110c12")
+    elif closing:
+        add Solid("#110c12") at lc_pov_fade(1.0, 0.0, LC_POV_OUT * 0.75, LC_POV_OUT * 0.25)
+    else:
+        add Solid("#110c12") at lc_pov_fade(0.0, 1.0, 0.0, LC_POV_IN * 0.25)
     if entry and lc_pov_active == moment_id and lc_pov_in_scope(moment_id):
-        add entry["image"]:
-            align (0.5, 0.5)
-            fit "contain"
-            xysize (1920, 1080)
-        text gallery_customize_names(entry["title"]):
-            xpos 48 ypos 32
-            font "fonts/PatrickHand-Regular.ttf"
-            size 34 color "#fff2d8" outlines [(2, "#21131c", 0, 0)]
-        if entry["mature"]:
-            text "18+" xpos 48 ypos 78 size 24 color "#fff2d8"
+        $ xa, ya = lc_pov_focus(moment_id)
+        $ source = Transform(entry["source"], xysize=(1920, 1080))
+        $ art = Transform(entry["image"], fit="contain", xysize=(1920, 1080))
+        if instant:
+            add art align (0.5, 0.5)
+        elif closing:
+            add source at lc_pov_push_out(xa, ya, LC_POV_PUSH_ZOOM, LC_POV_OUT)
+            add art at lc_pov_unreveal(LC_POV_OUT)
+        else:
+            add source at lc_pov_push_in(xa, ya, LC_POV_PUSH_ZOOM, LC_POV_IN)
+            add art at lc_pov_reveal(LC_POV_IN)
+        if not closing:
+            frame:
+                background None
+                padding (0, 0)
+                at (Transform() if instant else lc_pov_fade(0.0, 1.0, LC_POV_IN * 0.7, 0.3))
+                xpos 48 ypos 32
+                vbox:
+                    spacing 12
+                    text gallery_customize_names(entry["title"]):
+                        font "fonts/PatrickHand-Regular.ttf"
+                        size 34 color "#fff2d8" outlines [(2, "#21131c", 0, 0)]
+                    if entry["mature"]:
+                        text "18+" size 24 color "#fff2d8"
     # A full-screen input shield consumes dismiss keys/clicks without Return().
     button:
         xfill True
         yfill True
         background None
+        keyboard_focus False
         action NullAction()
-    textbutton "Close view":
-        xpos 1620 ypos 32
-        xsize 250 ysize 64
-        text_size 32
-        alt "Close hidden moment"
-        action Function(lc_pov_close)
+    if not closing:
+        textbutton "Close view":
+            at (Transform() if instant else lc_pov_fade(0.0, 1.0, LC_POV_IN * 0.7, 0.3))
+            xpos 1620 ypos 32
+            xsize 250 ysize 64
+            text_size 32
+            alt "Close hidden moment"
+            action dismiss

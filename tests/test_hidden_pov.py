@@ -172,6 +172,27 @@ class HiddenPovNoAdvanceTests(unittest.TestCase):
         self.assertIn("config.afm_characters", grace)
         self.assertIn("_preferences.afm_time", grace)
 
+    def test_viewer_transition_is_built_in_for_every_moment(self):
+        # darryn 2026-11-18: no instant snap. The viewer itself pushes the source CG toward the
+        # sparkle and fades the POV up; closing reverses it before lc_pov_close. Reduced motion
+        # stays instant. Registrations carry nothing for this, so every new moment inherits it.
+        viewer = self.system[self.system.index("\nscreen lc_pov_viewer"):]
+        for token in ("default closing = False", "instant = lc_pov_instant()",
+                      'SetScreenVariable("closing", True)',
+                      "timer LC_POV_OUT action Function(lc_pov_close)",
+                      "lc_pov_push_in(xa, ya, LC_POV_PUSH_ZOOM, LC_POV_IN)",
+                      "lc_pov_reveal(LC_POV_IN)",
+                      "lc_pov_push_out(xa, ya, LC_POV_PUSH_ZOOM, LC_POV_OUT)",
+                      "lc_pov_unreveal(LC_POV_OUT)",
+                      "xa, ya = lc_pov_focus(moment_id)", "keyboard_focus False"):
+            self.assertIn(token, viewer, token)
+        for name in ("lc_pov_push_in", "lc_pov_push_out", "lc_pov_reveal", "lc_pov_unreveal"):
+            self.assertIn("\ntransform %s(" % name, self.system)
+        self.assertIn("lc_pov_reduce_motion()", self._func("lc_pov_instant"))
+        self.assertIn('["center"]', self._func("lc_pov_focus"))
+        register = self._func("lc_pov_register")
+        self.assertNotIn("zoom", register.split(":", 1)[0])
+
 
 if __name__ == "__main__":
     unittest.main()
