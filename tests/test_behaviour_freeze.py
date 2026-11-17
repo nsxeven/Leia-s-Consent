@@ -147,6 +147,9 @@ class PhoneReplyStepTests(unittest.TestCase):
             renpy=SimpleNamespace(store=self.store, restart_interaction=lambda: None),
             phone_store_message=lambda *a, **kw: self.events.append(("store", a[0], a[1], kw)) or True,
             lc_phone_message_pop=lambda t: self.events.append(("pop", t)),
+            # Phone moments: no hesitation typing in progress.
+            phone_reply_typing_text=lambda t: None,
+            phone_reply_typing_clear=lambda t=None: None,
         )
         self.env = load(["phone_deliver_reply_step"], stubs)
 

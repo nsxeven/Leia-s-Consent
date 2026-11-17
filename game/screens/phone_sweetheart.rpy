@@ -36,14 +36,16 @@
 #   action Show("phone_screen")      (screens/phone_hud.rpy)
 #
 # Depends on: systems/phone_presentation_logic.rpy, systems/phone_state.rpy,
+#   systems/phone_moments.rpy (Seen receipt, missed-call rows), python-packages/lc_phone_moments.py,
 #   systems/phone_group_avatar.rpy, systems/status_display.rpy, systems/wardrobe_logic.rpy,
 #   screens/phone_wallpaper.rpy, screens/stat_tooltip_screen.rpy, screens/scrapbook_ui.rpy
 # Hooks: none (registers the lc_phone_extra_apps and lc_phone_hardware_overlay overlays)
 # Load order: every name defined once. The python blocks keep the priorities of the old load order,
 #   so init runs as before: init 90 lc_phone_extra_apps overlay + Home helpers; init 95 handset
 #   helpers; init 300 lc_phone_hardware_overlay registration, the last phone overlay
-# Docs: docs/ARCHITECTURE.md   Tests: tests/test_phone_layout.py,
-#   tests/test_phone_back_navigation.py, tests/test_phone_replies.py, tests/test_sprite_match_ui.py
+# Docs: docs/ARCHITECTURE.md, docs/PHONE_MOMENTS.md   Tests: tests/test_phone_layout.py,
+#   tests/test_phone_back_navigation.py, tests/test_phone_replies.py, tests/test_sprite_match_ui.py,
+#   tests/test_phone_moments.py
 
 default lc_phone_hearts = True
 
@@ -686,6 +688,7 @@ screen phone_screen():
                         color "#8692A6"
                         xalign 0.5
                     $ thread_rows = lc_phone_thread_rows(phone_thread)
+                    $ _receipt_row = lc_phone_read_receipt_row(phone_thread)
                     if not thread_rows:
                         text "No messages yet.":
                             style "lc_sw_hand"
@@ -693,7 +696,7 @@ screen phone_screen():
                             color "#6E8399"
                             xalign 0.5
                             text_align 0.5
-                    for row in thread_rows:
+                    for _row_index, row in enumerate(thread_rows):
                         $ _sender = row["sender"]
                         $ _out = row["outgoing"]
                         $ _message = row["message"]
@@ -701,7 +704,29 @@ screen phone_screen():
                         $ _attachment = _message.get("attachment_id")
                         $ _group = phone_thread == "group"
                         $ _bubble_max = 360 if _group else 410
-                        if _sender == "system":
+                        if _sender == "system" and lc_phone_moments.is_missed_call_message(_message.get("id")):
+                            # Phone moments: an ignored call (systems/phone_moments.rpy).
+                            $ _missed_time = _message.get("display_time")
+                            frame:
+                                style "lc_sw_frame"
+                                xalign 0.5
+                                xmaximum 400
+                                background Frame("gui/phone/sprite_match/card.png", 18, 18)
+                                padding (18, 8)
+                                hbox:
+                                    spacing 10
+                                    text "☎":
+                                        font "DejaVuSans.ttf"
+                                        size 22
+                                        color "#C8455A"
+                                        yalign 0.5
+                                    text ("Missed call" + ((" · " + _missed_time) if _missed_time else "")):
+                                        style "lc_sw_hand"
+                                        size 22
+                                        color "#C8455A"
+                                        yalign 0.5
+                                        substitute False
+                        elif _sender == "system":
                             # Group events (picture changed, member added): a centred
                             # blue pill, no avatar or name (darryn 2026-11-08).
                             frame:
@@ -755,6 +780,14 @@ screen phone_screen():
                                             xalign (1.0 if _out else 0.0)
                                             action Show("lc_phone_photo_viewer", photo_asset=_attachment)
                                             add lc_phone_rounded_photo(_attachment, min(320, _bubble_max), 180)
+                        if _row_index == _receipt_row:
+                            # Phone moments: Ryan left this on read.
+                            text "Seen [lc_phone_receipt_time(phone_thread)]":
+                                style "lc_sw_hand"
+                                size 22
+                                color "#8B99AB"
+                                xalign 0.0
+                                xoffset (48 if _group else 4)
                     if thread_rows and thread_rows[-1]["outgoing"]:
                         text "Read [lc_phone_thread_clock_text(phone_thread)]":
                             style "lc_sw_hand"
@@ -793,7 +826,8 @@ screen phone_screen():
                                 hbox:
                                     spacing 11
                                     yalign 0.5
-                                    text "↩":
+                                    # Phone moments: leaving it on read sends nothing.
+                                    text ("✓" if reply_option.get("leave_on_read") else "↩"):
                                         font "DejaVuSans.ttf"
                                         size 24
                                         color "#557da7"
@@ -801,7 +835,7 @@ screen phone_screen():
                                     text reply_option["text"]:
                                         style "lc_sw_hand"
                                         size 24
-                                        color "#293C53"
+                                        color ("#5C6E82" if reply_option.get("leave_on_read") else "#293C53")
                                         yalign 0.5
                                         xmaximum 366
                                         line_spacing -2
@@ -811,15 +845,23 @@ screen phone_screen():
                 color "#6884A0"
                 xpos 42
                 ypos 920
-            $ _composer = ("Choose a reply…" if reply_prompt else
-                           "Message " + (phone_thread_label(phone_thread) if phone_thread else "") + "...")
+            # Phone moments: a hesitating reply is typed, deleted and retyped here first.
+            $ _typing_now = phone_reply_typing_text(phone_thread)
+            if phone_reply_typing_active(phone_thread):
+                timer 0.04 repeat True action SetScreenVariable("reply_tick", reply_tick + 1)
+            if _typing_now is not None:
+                $ _composer = (lc_phone_moments.composer_tail(_typing_now, 30) + "|").replace("{", "{{")
+            else:
+                $ _composer = ("Choose a reply…" if reply_prompt else
+                               "Message " + (phone_thread_label(phone_thread) if phone_thread else "") + "...")
             text _composer:
                 style "lc_sw_hand"
                 size 26
-                color "#9BA9BA"
+                color ("#293C53" if _typing_now is not None else "#9BA9BA")
                 xpos 74
                 ypos 926
                 xmaximum 370
+                substitute (_typing_now is None)
 
         else:
             add "gui/phone/sprite_match/phone_app.png"

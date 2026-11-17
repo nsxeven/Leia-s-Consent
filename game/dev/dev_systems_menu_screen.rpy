@@ -11,6 +11,7 @@ screen dev_systems_menu_screen():
         textbutton "Economy + Wardrobe test" action Return("economy") xfill True
         textbutton "Choice Engine test" action Return("choice") xfill True
         textbutton "Reset Phone tutorial (persistent)" action Function(debug_reset_phone_tutorial) xfill True
+        textbutton "Phone moments demo (call, hesitation, leave on read)" action Return("phone_moments") xfill True
         textbutton "Open Developer Panel" action Return("developer") xfill True
         textbutton "Open verification / save-state menu" action Return("verify") xfill True
         textbutton "Finish systems test and return to the main menu" action Return("finish") xfill True
