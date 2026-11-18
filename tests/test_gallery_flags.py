@@ -3,7 +3,10 @@ import re
 import unittest
 from pathlib import Path
 
-DATA = (Path(__file__).resolve().parents[1] / "game" / "systems" / "gallery_data.rpy").read_text(encoding="utf-8")
+GAME = Path(__file__).resolve().parents[1] / "game"
+# Gallery rows live in each Day pack's *_gallery.rpy (systems/gallery_data.rpy has the helpers).
+DATA = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "gallery_data.rpy",
+                                                         *sorted((GAME / "chapters").rglob("*_gallery.rpy"))])
 
 
 def _row(entry_id):

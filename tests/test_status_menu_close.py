@@ -33,7 +33,7 @@ class StatusMenuCloseTests(unittest.TestCase):
         self.assertIsNone(origin())
 
     def test_phone_status_right_click_goes_back_to_phone(self):
-        source = (ROOT / "phone_sweetheart.rpy").read_text(encoding="utf-8")
+        source = (ROOT / "phone_app_status.rpy").read_text(encoding="utf-8")
         screen = source.split("screen lc_phone_status():", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn('key "game_menu" action Function(lc_phone_back)', screen)
         self.assertIn('key "K_ESCAPE" action Function(lc_phone_back)', screen)

@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PHONE = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
+from lc_screen_source import family_source  # noqa: E402
+PHONE = family_source("phone")
 TIP = (ROOT / "game/screens/stat_tooltip_screen.rpy").read_text(encoding="utf-8")
 
 

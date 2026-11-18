@@ -100,7 +100,7 @@ FEED_OPTIONS = {
 
 
 def _errand_exempt():
-    src = (ROOT / "game" / "chapters" / "ch01" / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
+    src = (ROOT / "game" / "chapters" / "ch01" / "day2" / "ch01_day2_registrations.rpy").read_text(encoding="utf-8")
     found = re.search(r"CH01_D2_ERRAND_EXEMPT_CHOICES = \(([^)]*)\)", src, re.S)
     return frozenset(re.findall(r'"(\w+)"', found.group(1))) if found else frozenset()
 

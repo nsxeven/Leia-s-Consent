@@ -30,7 +30,7 @@ class TagCollectionTests(unittest.TestCase):
         # Day review + tag collection init blocks, found by what they define (not by file path).
         sys.path.insert(0, str(ROOT / 'tests'))
         from lc_rpy_harness import load_blocks
-        load_blocks(['lc_review_begin', 'lc_tags_apply'], self.env)
+        load_blocks(['lc_review_begin', 'lc_tags_apply'], self.env, packs=('day1',))
 
     def call(self, name, *a, **kw):
         return self.env[name](*a, **kw)

@@ -28,9 +28,37 @@ import lc_rpy_model as m  # noqa: E402
 _HOOK_ADD = re.compile(r"^lc_hook_add\(\s*['\"]\w+['\"]\s*,\s*(\w+)\s*\)$")
 
 
+# Tables the Day packs fill at init (their engine owners create them at an earlier priority). A
+# test that loads a Day pack without the owning system gets an empty stand-in; when the owner is
+# loaded too, its own (empty) table replaces the stand-in first, as in game.
+DAY_PACK_TABLES = {
+    "CHOICE_EFFECTS": dict, "CHOICE_TAGS": dict, "LC_CHOICE_CG_COUNT": dict,
+    "LC_CHOICE_STYLE": dict, "LC_MOMENT_STICKERS": tuple, "LC_REVIEW_DAYS": dict,
+    "CHAPTER_SELECT_PRESETS": dict, "LC_REVIEW_NIGHT": dict, "LC_REVIEW_TICKET": dict,
+    "LC_GATE_FORMATTERS": list, "LC_TITLE_SAFE_GALLERY": tuple,
+}
+
+
 def _store_builtins(env):
     env.setdefault("python_dict", dict)
     env.setdefault("python_list", list)
+    env.setdefault("_", lambda s: s)  # Ren'Py's translation marker
+    for name, kind in DAY_PACK_TABLES.items():
+        env.setdefault(name, kind())
+
+
+def day_pack_files(*days):
+    """Repo-relative paths of the registrations and chapter files of the named Day packs
+    ("prologue", "day1" ... "day5"; see DAY_PACKS in tests/test_day_packs.py)."""
+    import test_day_packs as packs
+    out = set()
+    for pack in packs.DAY_PACKS:
+        if pack["day"] in days:
+            for suffix in ("_registrations.rpy", "_chapter.rpy"):
+                path = m.GAME / pack["folder"] / (pack["prefix"] + suffix)
+                if path.exists():
+                    out.add(m.relpath(path))
+    return out
 
 
 def _registers_loaded_hook(d, wanted):
@@ -56,13 +84,16 @@ def files_defining(anchors):
     return {d.relpath for d in m.all_definitions() if d.kind in ("def", "class") and d.name in wanted}
 
 
-def load_blocks(anchors, env):
+def load_blocks(anchors, env, packs=()):
     """Exec every whole `init python` block of the files that define the anchor
     names, in Ren'Py order, exactly as the game runs them. Tests name a function
     they care about instead of a file path, so they survive a file being merged
     into another or moved to a new folder. The hook API file is always included:
-    like Ren'Py itself, every system may call it."""
-    files = files_defining(anchors)
+    like Ren'Py itself, every system may call it. `packs` (Day names such as "day1") adds
+    the registrations and chapter files of those Day packs, so their table rows load too."""
+    # Every Day's *_chapter.rpy registers its review row and title card, like in game.
+    files = files_defining(anchors) | day_pack_files(*packs) | {
+        m.relpath(p) for p in sorted((m.GAME / "chapters").rglob("*_chapter.rpy"))}
     if not files:
         raise LookupError(f"no file defines any of {sorted(anchors)}")
     files |= files_defining(["lc_hook_add"])

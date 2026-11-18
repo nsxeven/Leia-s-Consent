@@ -5,7 +5,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-SRC = (GAME / "systems" / "title_customiser.rpy").read_text(encoding="utf-8")
+# The registry, plus every Day pack's registrations (their *_visuals.rpy).
+SRC = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "title_customiser.rpy",
+                                                    *sorted((GAME / "chapters").rglob("*_visuals.rpy"))])
 
 
 def _calls(name):
@@ -28,7 +30,8 @@ class TitleCustomiserTests(unittest.TestCase):
         self.assertEqual(mature, {"towel", "purple_dress_wet", "purple_dress_no_bra"})
 
     def test_outfit_seen_cgs_are_real_gallery_pages(self):
-        data = (GAME / "systems" / "gallery_data.rpy").read_text(encoding="utf-8")
+        data = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "gallery_data.rpy",
+                                                                 *sorted((GAME / "chapters").rglob("*_gallery.rpy"))])
         for call in _calls("lc_title_register_outfit"):
             block = call.split("seen_cgs=(", 1)[1]
             for cg in re.findall(r'"([a-z0-9_]+)"', block):

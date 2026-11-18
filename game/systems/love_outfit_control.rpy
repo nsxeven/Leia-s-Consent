@@ -27,7 +27,8 @@
 #   love_route_wear_request(d4_day_pick, route_lane="love")
 #
 # Depends on: systems/wardrobe_logic.rpy, systems/outfit_display.rpy, systems/story_state.rpy,
-#   systems/gallery.rpy
+#   systems/gallery.rpy, the Day Two pack (ch01_day2_registrations.rpy, init 10: its narrative outfit and
+#   LOVE_OUTFIT_ROUTE_KEY)
 # Hooks: none
 # Load order: init 10: after the wardrobe and outfit tables (init 0)
 # Docs: docs/ARCHITECTURE.md   Tests: none directly (lint)
@@ -39,34 +40,7 @@ init 10 python:
     # at the top "her own call" bar (Day 5 comfortable step) on the faster v2 scale.
     LOVE_SWIMWEAR_EXHIBITIONISM_MIN = 63
 
-    # Day Two needs a distinct narrative outfit even though final art is still
-    # pending. Until final layers are generated it reuses the current bold
-    # placeholder layer.
-    if "d2_loose_low_cut" not in OUTFIT_DEFINITIONS:
-        OUTFIT_DEFINITIONS["d2_loose_low_cut"] = {
-            "name": "Loose Low-Cut Top + Fitted Skirt",
-            "category": "bold",
-            "description": "A loose low-cut evening top with a fitted skirt. The neckline shifts noticeably when Leia leans forward.",
-            "cost": 0,
-            "shop_visible": False,
-            "story_grant": True,
-            "shop_requirements": [],
-            "boldness": 70,
-            "exposure": 65,
-            "public_risk": 55,
-            "comfort": 45,
-            "playfulness": 65,
-            "elegance": 55,
-            "contexts": ("date", "restaurant", "nightlife", "evening"),
-            "asset_id": "leia_outfit_d2_loose_low_cut",
-            "wear_paths": [
-                {
-                    "id": "story_d2_evening",
-                    "label": "Day Two evening outfit",
-                    "requirements": [],
-                },
-            ],
-        }
+    # Each Day pack adds its narrative outfits (Day Two: d2_loose_low_cut, its *_registrations.rpy).
 
 
 
@@ -75,7 +49,7 @@ init 10 python:
         if route_lane == "love":
             return True
 
-        end_route = get_story_value("ch01_d2_end_route", None)
+        end_route = get_story_value(LOVE_OUTFIT_ROUTE_KEY, None)  # the Day pack's end route (Day Two)
         return end_route in LOVE_OUTFIT_END_STATES
 
 

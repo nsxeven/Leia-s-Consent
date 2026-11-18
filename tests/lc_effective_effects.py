@@ -3,8 +3,8 @@
 Every `CHOICE_EFFECTS = {...}` / `CHOICE_EFFECTS.update({...})` literal is
 collected with the init priority of the block it sits in. Ren'Py runs init
 blocks by priority, then file order, so later definitions win; that gives the
-table the game actually uses (e.g. systems/stat_model_v2_later_days.rpy at
-init 5 re-scores the Scriptwriter-owned Day 3-5 registrations at init 1).
+table the game actually uses (each Day pack's *_registrations.rpy registers its own
+rows at init 1; a later block for the same id would win).
 """
 import ast
 import re

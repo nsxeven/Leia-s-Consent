@@ -63,100 +63,20 @@ RETIRED_STATS = ("boredom", "curiosity", "acceptance", "secrecy", "boundary_loos
 # thresholds count slips (choice-sense pass, darryn 2026-11-08): an ordinary slip
 # is Temptation +1 from the default 10, so one slip never seeds NTR and three do.
 # Day 3+ lanes still come from stored values.
-THRESHOLDS = {
-    # Day 1 end (ch01_scenes_14_30.rpy)
-    "d1_ntr_seed_temptation": 13,      # >= : ntr_seeded (three +1 slips; one never does)
-    "d1_exhib_seed": 30,               # >= (and below the NTR seed): nts_seeded ("Exhibition seeded")
-    "d1_love_bedtime_love": 54,
-    "d1_love_bedtime_trust": 54,
-    "d1_love_bedtime_temptation_max": 11,  # one slip still gets the Love bedtime
-    # Day 2 lanes (ch01_d2_route_lane)
-    "d2_risk_temptation": 15,          # >= with a Day 1 NTR seed (two more slips) ...
-    "d2_risk_temptation_unseeded": 16, # ... or >= this without one (six slips in all)
-    "d2_exhib_lane": 36,               # >= and gained Exhibitionism today
-    "d2_love_exhib_blend": 28,         # love lane bedroom with an open-curtains edge
-    # Her own call (Exhibitionism) in Day 1-2 dialogue
-    "d1_pool_shared_glance": 19,       # was exhibitionism/acceptance 14
-    "d1_can_tell_unsure": 28,          # was 18
-    "d1_can_tell_bold": 45,            # was 26
-    "d1_compliment_liked": 21,         # was curiosity 25
-    "d1_compliment_restless_temptation": 13,  # was boredom 16; = the Day 1 NTR seed
-    "d1_photo_confidence": 14,         # Exhibitionism (+3 bolder outfit), was curiosity+acceptance 38
-    "d1_photo_bolder_bonus": 3,
-    "d2_morning_unsure": 28,           # was 18
-    "d2_morning_bold": 45,             # was 26
-    "d2_pool_outfit_bold": 36,         # was exhibitionism 22 or curiosity 27
-    "d2_game_drinks": 28,              # was 18
-    # Subtle Day Two tint for a handful of Leia's lines (darryn 2026-11-17): the stat furthest
-    # above its own threshold colours the line; below every threshold she stays shy.
-    # Trust climbs faster than Love on a loving run, so its bar sits higher.
-    "d2_tint_love": 60,
-    "d2_tint_trust": 78,
-    "d2_tint_exhibitionism": 36,       # = d2_exhib_lane
-    "d2_tint_sharing": 6,
-    "d2_tint_temptation": 14,          # one below d2_risk_temptation
-    # Day 4-5 her-own-call constants (override the scriptwriter defaults)
-    "d4_brief_reveal": 45,             # was 26
-    "d5_bolder_swim": 41,              # was 24
-    "d5_comfortable": 63,              # was 34
-    "d5_comfortable_after_brief": 54,  # was 30
-}
+THRESHOLDS = {}  # each Day's STAT_THRESHOLDS in lc_days/<day>.py (added at import, in play order)
 
 # Choices that write a route value or are gate-formatted. Used for the derived
 # Full route tag and for the scoring rule (gates may move up to 5; hard gates
 # may move three stats).
-CHOICE_GATES = {
-    "ch01_d2_sunset_ignore_gate": "soft",
-    "ch01_d2_wink_accuse_hard": "hard",
-    "ch01_d2_wink_reject_hard": "hard",
-    "ch01_d4_ntr_text_fine_soft": "soft",
-    "ch01_d4_ntr_fine_soft2": "soft",
-    "ch01_d4_ntr_gate_reconnect": "soft",
-    "ch01_d4_ntr_gate_accuse_hard": "hard",
-    "ch01_d4_ntr_gate_withdraw_hard": "hard",
-    "ch01_d5_ntr_snorkel_stay": "soft",
-    "ch01_d5_ntr_bunk_apart": "soft",
-    "ch01_d5_ntr_u_ask_gently": "soft",
-    "ch01_d5_ntr_c_go_to_her": "soft",
-    "ch01_d5_ntr_gate_fine_hard": "hard",
-    "ch01_d5_ntr_u_fine_hard": "hard",
-    "ch01_d5_ntr_u_press_hard": "hard",
-    "ch01_d5_ntr_c_accuse_hard": "hard",
-    "ch01_d5_ntr_c_fine_hard": "hard",
-}
+CHOICE_GATES = {}  # each Day's STAT_CHOICE_GATES in lc_days/<day>.py (added at import)
 
 # Route value the branch writes: "locks" (ntr_confirmed), "stays_open"
 # (ntr_unresolved), "may_lead" (soft gate or mixed_unresolved). "lean" stamps the plain
 # lean even for a one-step slip (Leia's walk-back "keep it" is her NTR-side pick, K4).
-CHOICE_ROUTE_FLAGS = {
-    "ch01_d2_errand_walk_keep": "lean",
-    "ch01_d2_sunset_ignore_gate": "may_lead",
-    "ch01_d2_bed_pool_accuse": "may_lead",
-    "ch01_d2_wink_accuse_hard": "locks",
-    "ch01_d2_wink_reject_hard": "locks",
-    "ch01_d4_ntr_text_fine_soft": "may_lead",
-    "ch01_d4_ntr_fine_soft2": "may_lead",
-    "ch01_d4_ntr_gate_accuse_hard": "stays_open",
-    "ch01_d4_ntr_gate_withdraw_hard": "locks",
-    "ch01_d5_ntr_snorkel_stay": "may_lead",
-    "ch01_d5_ntr_bunk_apart": "may_lead",
-    "ch01_d5_ntr_gate_fine_hard": "stays_open",
-    "ch01_d5_ntr_c_go_to_her": "stays_open",
-    "ch01_d5_ntr_u_fine_hard": "locks",
-    "ch01_d5_ntr_u_press_hard": "locks",
-    "ch01_d5_ntr_c_accuse_hard": "locks",
-    "ch01_d5_ntr_c_fine_hard": "locks",
-}
+CHOICE_ROUTE_FLAGS = {}  # each Day's STAT_ROUTE_FLAGS in lc_days/<day>.py (added at import)
 
 # Repair beats: the only choices allowed to pair Temptation down with Love/Trust up.
-REPAIR_CHOICES = frozenset((
-    "ch01_d2_bed_pool_love", "ch01_d2_overheard_own",
-    "ch01_d2_sunset_partial", "ch01_d2_wink_repair", "ch01_d3_ntr_enjoy", "ch01_d3_ntr_talk",
-    "ch01_d4_ntr_ask_gently", "ch01_d4_ntr_compliment", "ch01_d4_ntr_gate_reconnect",
-    "ch01_d4_ntr_react_boundary", "ch01_d4_ntr_text_join", "ch01_d5_invite_read_aloud",
-    "ch01_d5_ntr_c_go_to_her", "ch01_d5_ntr_pack_help", "ch01_d5_ntr_react_boundary",
-    "ch01_d5_ntr_u_ask_gently",
-))
+REPAIR_CHOICES = frozenset()  # each Day's STAT_REPAIR_CHOICES in lc_days/<day>.py (added at import)
 
 TAGS = ("Love", "Love+Exhib", "NTS", "NTR", "May lead to NTR", "Locks NTR",
         "NTR stays open", "Repair", "Repair, NTR stays open", "Neutral")
@@ -411,88 +331,6 @@ def stat_id_for_label(label):
 
 # ---------------------------------------------------------------- routes
 
-def d1_route_pressure(stats, focus=None):
-    """Day 1 end state: 'ntr_seeded', 'nts_seeded' or 'mixed'.
-
-    `stats` is a flat {stat: value} dict; `focus` is the Route Explorer override.
-    """
-    if focus == "ntr_risk":
-        return "ntr_seeded"
-    if focus == "exhibitionism":
-        return "nts_seeded"
-    if focus is not None:
-        return "mixed"
-    t = THRESHOLDS
-    if stats["temptation"] >= t["d1_ntr_seed_temptation"]:
-        return "ntr_seeded"
-    if stats["exhibitionism"] >= t["d1_exhib_seed"]:
-        return "nts_seeded"
-    return "mixed"
-
-
-def d1_love_bedtime(pressure, stats):
-    t = THRESHOLDS
-    return (
-        pressure == "mixed"
-        and stats["love"] >= t["d1_love_bedtime_love"]
-        and stats["trust"] >= t["d1_love_bedtime_trust"]
-        and stats["temptation"] <= t["d1_love_bedtime_temptation_max"]
-    )
-
-
-def d2_route_lane(stats, day1_pressure, exhib_gained_today, focus=None, migrated_lane=None):
-    """Day 2 lane: 'ntr_risk', 'exhibitionism' or 'love'."""
-    if focus is not None:
-        return focus
-    if migrated_lane in ("love", "exhibitionism", "ntr_risk"):
-        return migrated_lane
-    t = THRESHOLDS
-    temptation = stats["temptation"]
-    if temptation >= t["d2_risk_temptation"] and (
-        day1_pressure == "ntr_seeded" or temptation >= t["d2_risk_temptation_unseeded"]
-    ):
-        return "ntr_risk"
-    if (
-        stats["exhibitionism"] >= t["d2_exhib_lane"]
-        and exhib_gained_today >= 1
-        and temptation < t["d2_risk_temptation"]
-    ):
-        return "exhibitionism"
-    return "love"
-
-
-def d2_love_exhib_blend(lane, stats, exhib_gained_today):
-    return (
-        lane == "love"
-        and stats["exhibitionism"] >= THRESHOLDS["d2_love_exhib_blend"]
-        and exhib_gained_today >= 1
-    )
-
-
-def leia_tint(stats, lane=None, lane_scene=False):
-    """Day Two line tint for Leia: 'shy' or the stat id furthest above its d2_tint_* bar.
-
-    The lane decides the scene; the tint only colours lines inside it. The Love lane never
-    gets the Temptation tint, and a scene inside the NTR-risk lane never gets the Love tint.
-    Missing or non-numeric stats count as their defaults.
-    """
-    stats = stats or {}
-    allowed = list(STAT_ORDER)
-    if lane == "love":
-        allowed.remove("temptation")
-    if lane == "ntr_risk" and lane_scene:
-        allowed.remove("love")
-    best, best_margin = "shy", -1
-    for stat in allowed:
-        value = stats.get(stat)
-        if not isinstance(value, (int, float)):
-            value = DEFAULTS[STAT_GROUPS[stat]][stat]
-        margin = value - THRESHOLDS["d2_tint_" + stat]
-        if margin >= 0 and margin > best_margin:
-            best, best_margin = stat, margin
-    return best
-
-
 def lean_from_route_value(value):
     """Lean key for a stored lane / end state (Day 2 onward)."""
     if value in ("love", "love_repaired", "mixed", "love_private"):
@@ -565,22 +403,22 @@ def migrate_deltas(deltas):
     return fold_legacy_effects([(g, s, v) for g, s, v in deltas if v])
 
 
-def legacy_d2_lane(relationship, partner, player, day1_pressure, d1_nonchalant, d2_nonchalant, d2_open, d2_attentive):
-    """The pre-v2 Day 2 resolver, kept only so a save migrated mid-Day-2 keeps its lane."""
-    risk_seed = day1_pressure == "ntr_seeded" or d1_nonchalant >= 4 or relationship.get("boredom", 10) >= 17
-    risk_now = (
-        risk_seed
-        and relationship.get("boredom", 10) >= 15
-        and (d2_nonchalant >= 1 or relationship.get("love", 50) <= 48)
-        and d2_attentive <= d2_nonchalant + 2
-    )
-    if risk_now:
-        return "ntr_risk"
-    if (
-        partner.get("exhibitionism", 10) >= 22
-        and partner.get("curiosity", 20) >= 24
-        and player.get("acceptance", 10) >= 15
-        and d2_open >= 1
-    ):
-        return "exhibitionism"
-    return "love"
+# ---------------------------------------------------------------- Day packs
+def _install_day_packs():
+    """Add every Day's thresholds, gate and route-flag rows, repair choices and route resolvers
+    (game/python-packages/lc_days/<day>.py), in play order. Runs once, at import."""
+    global REPAIR_CHOICES
+    import lc_days
+    rest = dict(THRESHOLDS)  # thresholds not owned by a Day: after the Days', in play order
+    THRESHOLDS.clear()
+    for day in lc_days.modules():
+        THRESHOLDS.update(getattr(day, "STAT_THRESHOLDS", {}))
+        CHOICE_GATES.update(getattr(day, "STAT_CHOICE_GATES", {}))
+        CHOICE_ROUTE_FLAGS.update(getattr(day, "STAT_ROUTE_FLAGS", {}))
+        REPAIR_CHOICES = REPAIR_CHOICES | frozenset(getattr(day, "STAT_REPAIR_CHOICES", ()))
+        for name in getattr(day, "STAT_MODEL_EXPORTS", ()):
+            globals()[name] = getattr(day, name)
+    THRESHOLDS.update(rest)
+
+
+_install_day_packs()

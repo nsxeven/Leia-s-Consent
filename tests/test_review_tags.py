@@ -29,7 +29,7 @@ class ReviewTagTests(unittest.TestCase):
         # The day-review init block (+ hooks), found by what it defines (not by file path).
         sys.path.insert(0, str(ROOT / 'tests'))
         from lc_rpy_harness import load_blocks
-        load_blocks(['lc_review_begin'], self.env)
+        load_blocks(['lc_review_begin'], self.env, packs=('day1',))
 
     def call(self, name, *a, **kw):
         return self.env[name](*a, **kw)
@@ -43,7 +43,7 @@ class ReviewTagTests(unittest.TestCase):
     def test_every_day1_choice_is_mapped(self):
         import re
         src = ''.join((ROOT / 'game' / 'chapters' / 'ch01' / f).read_text(encoding='utf-8')
-                      for f in ('ch01_main.rpy', 'day1/ch01_scenes_04_06.rpy', 'day1/ch01_scenes_07_13.rpy', 'day1/ch01_scenes_14_30.rpy'))
+                      for f in ('day1/ch01_main.rpy', 'day1/ch01_scenes_04_06.rpy', 'day1/ch01_scenes_07_13.rpy', 'day1/ch01_scenes_14_30.rpy'))
         ids = set(re.findall(r'format_choice\("(ch01_[a-z0-9_]+)"', src))
         missing = sorted(i for i in ids if i not in self.env['LC_CHOICE_STYLE'])
         self.assertEqual(missing, [])

@@ -12,7 +12,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lc_rpy_harness import load  # noqa: E402
+from lc_rpy_harness import load, load_blocks  # noqa: E402
 
 
 class StoryFlagHookTests(unittest.TestCase):
@@ -21,9 +21,11 @@ class StoryFlagHookTests(unittest.TestCase):
     def setUp(self):
         self.persistent = SimpleNamespace()
         self.store = SimpleNamespace(story_flags={}, story_values={})
+        env = dict(renpy=SimpleNamespace(store=self.store), persistent=self.persistent)
+        load_blocks([], env)  # every Day's *_chapter.rpy: the Chapter Select presets (unlock flag)
         self.env = load(["set_story_flag", "has_story_flag",
                          "_lc_hooks", "lc_hook_add", "lc_hook_run", "chapter_select_unlock_after_day_two"],
-                        dict(renpy=SimpleNamespace(store=self.store), persistent=self.persistent))
+                        env)
 
     def test_value_is_stored_and_returned_as_bool(self):
         self.assertIs(self.env["set_story_flag"]("some_flag", "yes"), True)

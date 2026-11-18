@@ -14,10 +14,9 @@ is placeholder art) lives in `docs/BUILD_HANDOFF.md`.
 | `game/characters.rpy`, `game/defaults.rpy` | Character objects; save-state defaults (stats, flags, outfits, money) |
 | `game/options.rpy`, `game/gui.rpy`, `game/screens.rpy` | Ren'Py project config, GUI variables and the stock screens/styles |
 | `game/chapters/prologue/` | the Prologue (`prologue.rpy`) and its images |
-| `game/chapters/ch01/` | Chapter One shared files: `ch01_main.rpy` (Day One scenes 1-3, entry `chapter_one_start`), `ch01_visuals.rpy` (images shared across days), `ch01_release_demo.rpy` (Day One demo gate and demo end) |
-| `game/chapters/ch01/day1/` | Day One scenes 4-30 and its phone moments, each scene file with a `*_visuals.rpy` partner |
-| `game/chapters/ch01/day2/` | Day Two scenes, the scene 19b side file and `ch01_day2_visuals.rpy` |
-| `game/chapters/ch01/` (`ch01_day3_*`, `ch01_day4_*`, `ch01_day5_*`) | Days Three to Five: scenes, choice registration and visuals. Scriptwriter-owned; they stay flat in `ch01/` until their own pass |
+| `game/chapters/ch01/` | Chapter One shared files: `ch01_visuals.rpy` (images shared across days), `ch01_release_demo.rpy` (Day One demo gate and demo end) |
+| `game/chapters/prologue/`, `game/chapters/ch01/day1/` ... `day5/` | one **Day pack** per Day (`docs/DAY_PACK.md`): scenes, `*_visuals.rpy`, `*_registrations.rpy` (choice effects/tags, CG counts, review styles, Day helpers, story-key ledger), `*_gallery.rpy` (Gallery tab and rows), `*_chapter.rpy` (title card, review row). Day One: `ch01_main.rpy` (scenes 1-3, entry `chapter_one_start`) and `ch01_scenes_*.rpy` (scenes 4-30) |
+| `game/python-packages/lc_days/` | the pure-Python half of each Day pack: `prologue.py`, `day1.py` ... `day5.py` (chapter entry; Day One's route rules, thoughts and journal flags). `lc_stat_model`, `lc_thoughts`, `lc_ui_logic` and `lc_chapters` add them at import |
 | `game/systems/` | reusable game systems: one feature per file, no story text |
 | `game/screens/` | feature screens (phone, review, gallery, menus, title screen) |
 | `game/sprites/` | layered character sprites |
@@ -51,13 +50,13 @@ per name (see Rules). Priorities in use:
 | -40 | `game/systems/lc_audio_scene_lock.rpy` | audio-lock helpers before the audio helpers that call them |
 | -10 | `game/systems/lc_chapters.rpy`, `game/systems/lc_fx.rpy` | chapter registry import; audio channel registration |
 | -5 | `game/systems/lc_breath.rpy` | Leia's breath channel |
-| -2 | `game/systems/gallery_data.rpy`, `game/systems/lc_fx.rpy` | gallery table before `game/systems/gallery.rpy` builds it; audio helpers |
+| -3, -2, -1 | `game/systems/gallery_data.rpy` (-3 helpers, -1 Day order), each Day pack's `*_gallery.rpy` (-2), `game/systems/lc_fx.rpy` (-2) | gallery table before `game/systems/gallery.rpy` builds it; audio helpers |
 | `init offset = -2` / `-1` | `game/gui.rpy` / `game/screens.rpy` | stock GUI and styles load before the project restyles them at 0 |
 | -1 | `game/systems/hidden_pov.rpy`, `game/systems/hidden_pov_chime.rpy`, `game/systems/title_customiser.rpy`, `game/screens/scrapbook_ui.rpy` | registries, tables and an audio channel that init 0 and `init 1` code use |
 | -1 | `game/chapters/ch01/day2/ch01_day2_visuals.rpy` | the `lc_placeholder_text` helper (text stand-in cards) that the Day 2-5 visuals files call |
 | 0 | most systems and screens | the default |
 | 1, 2 | day registration blocks (`CHOICE_EFFECTS.update`, Hidden POV `lc_pov_register`, Day 4/5 helpers at init 2) in `game/chapters/`; `game/chapters/ch01/ch01_release_demo.rpy` (init 1: the demo-build Gallery filter, not a day registration); `game/gui.rpy` font scaling; `game/sprites/julian.rpy` images | after the engine tables and init-0 helpers exist |
-| 5 | `game/systems/stat_model_v2_later_days.rpy`, `game/systems/lc_cursor.rpy` | v2 re-scoring after the Day 3-5 registration blocks; cursor after the hover timings |
+| 5 | `game/systems/lc_cursor.rpy` | cursor after the hover timings |
 | 6 | `game/systems/choice_path_tags.rpy` | wraps the gate formatters the day files define |
 | 10 | `game/systems/chapter_select.rpy`, `game/systems/love_outfit_control.rpy` | after the story, stats and wardrobe helpers |
 | 20, 21 | `game/systems/day_review.rpy`, then `game/systems/lc_tag_collection.rpy` | the tag collection reads the review tables |
@@ -91,17 +90,13 @@ Never rename a file to change when it loads; give the block an explicit priority
   still hold becomes a one-line `jump` in `game/systems/save_compat.rpy`.
   (`test_no_new_label_overrides`)
 - **One definition per name.** A screen, label or `def` defined twice is rejected
-  (`test_no_new_duplicate_definitions`). `ALLOW_DUP` is empty; the one exception is
-  `OUT_OF_SCOPE_DUP = {"def": {"ch01_d4_track_text", "ch01_d5_track_text"}}`: the Day 4/5
-  track-text functions live in the Scriptwriter-owned Day 4/5 files and are re-defined by
-  `game/systems/stat_model_v2_later_days.rpy` until those days get their own pass.
+  (`test_no_new_duplicate_definitions`). `ALLOW_DUP` and `OUT_OF_SCOPE_DUP` are empty.
   Allow-lists may only shrink (`test_allow_lists_only_shrink`).
 - **Add behaviour through hooks, not wrappers.** Re-defining another file's function
   (`_orig = f; def f(...)`) is the pattern the hooks replaced. Existing exceptions, kept
   until their own pass: `game/systems/day_review.rpy` wraps `config.show`
   (`lc_review_show`), `game/systems/lc_audio_scene_lock.rpy` wraps `config.scene`,
-  `game/systems/choice_path_tags.rpy` wraps the Day 2/4/5 gate formatters, and
-  `game/systems/stat_model_v2_later_days.rpy` re-defines the Day 4/5 track-text functions.
+  and `game/systems/choice_path_tags.rpy` wraps the Day 2/4/5 gate formatters.
   New code uses `lc_hooks` instead.
 - **Headers stay true.** Every system/screen file opens with a header
   (`test_system_and_screen_files_open_with_header`); every name its Public API or Internal
@@ -168,42 +163,48 @@ statement identity. So:
 Day One and Day Two are the reference; Day Five shows how the last day of the build hands
 over. For Day N the internal ids stay `ch01_*`: story flags `ch01_day_0N_started` /
 `ch01_day_0N_complete`, review day id `ch01_dN`, chapter id `dayN`, story keys `ch01_dN_*`.
-Work through the steps in order; each names the file that owns the table.
+Work through the steps in order; each names the file that owns the table. Every Day is a
+**Day pack** (`docs/DAY_PACK.md`): its folder holds `ch01_dayN_*_registrations.rpy`,
+`_gallery.rpy`, `_chapter.rpy`, `_visuals.rpy` and the scene files, and
+`lc_days/dayN.py` (in `game/python-packages/`) holds its chapter entry. `python tools/new_day.py N`
+(dry run; `--write` creates them) scaffolds all of these; `tests/test_day_packs.py` checks the
+contract.
 
-1. **Files.** Create a day folder next to `game/chapters/ch01/day2/` (for example
-   day6 for Day Six) with the scene files (`ch01_dayN_scenes_01_15.rpy`, ...) and a
-   `ch01_dayN_visuals.rpy` with the stable image names. Text placeholders are fine until
+1. **Files.** Create the day folder next to `game/chapters/ch01/day2/` (for example
+   day6 for Day Six; `tools/new_day.py` does this) with the scene files
+   (`ch01_dayN_scenes_01_15.rpy`, ...) and a `ch01_dayN_visuals.rpy` with the stable image names. Text placeholders are fine until
    art lands: `lc_placeholder_text(...)` (defined at init -1 in
    `game/chapters/ch01/day2/ch01_day2_visuals.rpy`) draws the stand-in card.
-2. **Chapter registry.** Add the day to `CHAPTERS` and `CHAPTER_ORDER` in
-   `game/python-packages/lc_chapters.py` (number, words, `review_day` = `ch01_dN`, neutral
-   title, route titles including `repair`; darryn picks the titles from drafted options). If
-   the day has a "likes watching" exhibition beat, add its variant story key to
-   `NTS_VARIANT_KEYS` there. Add `define lc_chapter_card_dayN = lc_chapters.card_text("dayN")`
-   in `game/systems/lc_chapters.rpy` (plus `lc_chapter_complete_card_dayN` if the day shows a
-   "Chapter N complete" end card).
+2. **Chapter registry.** Write the day's `CHAPTER` entry in `lc_days/dayN.py` (in `game/python-packages/`)
+   (number, words, `review_day` = `ch01_dN`, neutral title, route titles including `repair`;
+   darryn picks the titles from drafted options), add `"dayN"` to `DAY_MODULES` in
+   `lc_days/__init__.py` and to `CHAPTER_ORDER` in `game/python-packages/lc_chapters.py`. If the
+   day has a "likes watching" exhibition beat, set `NTS_VARIANT_KEY` in `lc_days/dayN.py`. The
+   title card `define lc_chapter_card_dayN = lc_chapters.card_text("dayN")` goes in the pack's
+   `ch01_dayN_chapter.rpy` (`lc_chapter_complete_card_dayN` is still in
+   `game/systems/lc_chapters.rpy`).
 
    **2b. The other per-day tables** (nothing fails loudly when one is missed):
    - `DAY_FLAGS` in `game/python-packages/lc_ui_logic.py`: add
      `(N, "ch01_day_0N_started", "ch01_day_0N_complete")` at the top. The journal's
      "DAY N" heading (`story_day_number`, shown by `game/screens/scrapbook_ui.rpy`) reads it.
-   - `GALLERY_TAB_ACCENTS` in `game/systems/gallery.rpy`: the tab's tint (cosmetic; a
-     missing tab falls back to the Prologue colour).
+   - The Gallery tab's tint is the `accent=` of the pack's `gallery_tab(...)` call
+     (`ch01_dayN_gallery.rpy`).
    - `tests/test_lc_chapters.py` (`test_registry_is_complete`) asserts `CHAPTER_ORDER`
      exactly: add the new id there.
    - `game/systems/choice_path_tags.rpy` (init 6) wraps only `format_day2_risk_choice`,
      `format_day4_gate_choice` and `format_day5_gate_choice`. A new gate formatter
      (`format_dayN_*_choice`) must join that list, or its cards get no path stamp in Full mode.
    - The previous last day ends with a runtime hand-off instead of a jump: Day Five's
-     `label ch01_day5_scene_16_finish` in `game/chapters/ch01/ch01_day5_scenes_09_16.rpy`
+     `label ch01_day5_scene_16_finish` in `game/chapters/ch01/day5/ch01_day5_scenes_09_16.rpy`
      has an `if renpy.has_label("ch01_day6_start"): jump expression "ch01_day6_start"` block
      and a temporary "Current development build ends here" card, marked "replace with the
      literal jump". Replace both with `jump ch01_dayN_start` (Days 3-5 are
      Scriptwriter-owned: needs darryn's go-ahead) and give the new last day the same block
      for Day N+1.
-   - `_lc_review_humanize` in `game/systems/day_review.rpy` strips the `ch01_d1_` ...
-     `ch01_d6_` prefixes from choice ids that have no readable caption; from Day Seven on,
-     add the day's prefix.
+   - `_lc_review_humanize` in `game/systems/day_review.rpy` strips each review day's own prefix
+     (`ch01_dN_`, from `LC_REVIEW_DAYS`) from choice ids that have no readable caption, so a new
+     Day's review row is enough.
 3. **Start label.** Follow `label ch01_day2_start` in
    `game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy`:
    `$ lc_review_begin("ch01_dN")` (it also names new saves after the chapter),
@@ -217,24 +218,27 @@ Work through the steps in order; each names the file that owns the table.
    `label ch01_day5_scene_16_finish`), then `$ set_story_flag("ch01_day_0N_complete")`,
    `scene black` / `with fade`, `call lc_day_review("ch01_dN") from lc_review_return_ch01_dN`,
    then the hand-off to the next day (step 2b).
-5. **Day review.** Add the day to `LC_REVIEW_DAYS` (label, chapter, `route_key` = the end
-   route value), `LC_REVIEW_NIGHT` and `LC_REVIEW_TICKET` in `game/systems/day_review.rpy`.
+5. **Day review.** Register the day's `LC_REVIEW_DAYS["ch01_dN"]` row (label, chapter,
+   `route_key` = the end route value) in the pack's `ch01_dayN_chapter.rpy`; add it to
+   `LC_REVIEW_NIGHT` and `LC_REVIEW_TICKET` in `game/systems/day_review.rpy`.
    Day-specific route overrides go in `lc_review_route`. Every new route key needs an entry
    in `LC_REVIEW_ROUTES` and in `ROUTE_FAMILY` in `lc_chapters.py`
    (`tests/test_lc_chapters.py` checks the pair), in `LC_REVIEW_DIARY` (keyed by route, or by
    `(day_id, route)` for a day-specific pair of lines) and a branch in
    `lc_character_titles`; both are keyed by route and fall back to generic text otherwise.
-   Map the day's choice ids to a style in `LC_CHOICE_STYLE` (unmapped days keep the
-   route-based titles) and add `LC_MOMENT_STICKERS` rules if the day has sticker moments.
-6. **Choices.** Register every choice id in an `init 1 python:` block with
-   `CHOICE_EFFECTS.update({...})` and `CHOICE_TAGS.update({...})` (see the top of
-   `game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy`), score them by the rules in
+   Map the day's choice ids to a style with `LC_CHOICE_STYLE.update({...})` (unmapped days keep
+   the route-based titles) and append `LC_MOMENT_STICKERS` rules if the day has sticker
+   moments, both in the pack's registrations file (Day One's is the example).
+6. **Choices.** Register every choice id in the pack's `ch01_dayN_registrations.rpy`
+   (`init 1 python:`, `CHOICE_EFFECTS.update({...})` and `CHOICE_TAGS.update({...})`), score
+   them by the rules in
    `docs/STAT_MODEL.md`, and use them in menus as
    `$ x_text = format_choice("id", "Caption")` + `"[x_text]":` + `$ apply_choice("id")`.
    `tests/test_choice_scoring.py`, `tests/test_choice_path_tags.py` and
-   `test_every_story_choice_id_is_registered` check them. Add `LC_CHOICE_CG_COUNT` rows in
-   `game/systems/choice_path_tags.rpy` for menus that unlock different CG counts, and wrap any
-   new gate formatter (step 2b).
+   `test_every_story_choice_id_is_registered` check them. Add `LC_CHOICE_CG_COUNT.update({...})`
+   rows in the registrations file for menus that unlock different CG counts, and wrap any new
+   gate formatter (step 2b). Every story key the day sets gets a ledger line at the end of the
+   registrations file (`docs/DAY_PACK.md`).
 7. **Hidden POV.** Register each moment in the day's visuals file in an `init 1 python:`
    block with `lc_pov_register(...)` and bracket its lines with `lc_pov_begin` /
    `lc_pov_end` (`docs/HIDDEN_POV.md`; Day Two's breakfast is the example). Pass
@@ -251,17 +255,17 @@ Work through the steps in order; each names the file that owns the table.
    demand. Incoming calls, hesitating replies and "leave it on read" are in
    `docs/PHONE_MOMENTS.md`; pass them to the Moments strip with `lc_phone_moment_register(...)`.
 9. **Sprites and gallery.** Stage sprites with `cast(...)` / `face(...)`
-   (`docs/SPRITE_STAGING.md`). Add a `GALLERY_TABS` row (`("ch01_dN", "Day N", "ch01", N)`)
-   and `gallery_row(...)` entries in `game/systems/gallery_data.rpy`, and list text-placeholder
-   CGs in `GALLERY_PLACEHOLDER_IMAGES`; no unlock lines go in story files. The day review
+   (`docs/SPRITE_STAGING.md`). In the pack's `ch01_dayN_gallery.rpy` call
+   `gallery_tab("ch01_dN", "Day N", "ch01", N, accent=...)`, add `gallery_row(...)` entries, and
+   list text-placeholder CGs with `GALLERY_PLACEHOLDER_IMAGES.update([...])`; no unlock lines go
+   in story files. The day review
    only shows a CG as a photo when it is a page of a gallery entry on the day's tab.
-10. **Chapter Select (optional).** Add the day to `CH01_SELECT_DAYS` and seed it in
-    `chapter_select_apply` in `game/systems/chapter_select.rpy` (mark the earlier days
-    complete, store the values the start label reads, return `"ch01_dayN_start"`). Add an
-    `elif _cs_entry == "ch01_dayN_start": jump ch01_dayN_start` branch in
-    `label ch01_chapter_select_entry` (its `else` jumps to `ch01_day4_start`). If the day has
-    its own route presets, add them in `game/systems/chapter_select.rpy` and pick them in
-    `game/screens/chapter_select_screen.rpy` (`cs_routes` and the preset heading).
+10. **Chapter Select (optional).** In the pack's `ch01_dayN_chapter.rpy` (init 1), write a seed
+    function that calls the earlier Days' `*_select_finished` seeds in order, stores the values the
+    start label reads and returns `"ch01_dayN_start"`, then register it:
+    `CHAPTER_SELECT_PRESETS["dayN"] = dict(label=..., note=..., heading=..., routes=..., seed=...)`.
+    The engine (`game/systems/chapter_select.rpy`) and the screen read the registry; neither names
+    a Day.
 11. **Tests, baselines and docs.** When the day's writing pass lands, add its story files to
     the `STORY` list in `tests/test_typed_names.py` and the `MIGRATED` list in
     `tests/test_cast_staging.py`. A new day adds init side effects and changes pinned tables,
@@ -313,7 +317,7 @@ Work through the steps in order; each names the file that owns the table.
 | Feature | File(s) | Doc | Tests |
 |---|---|---|---|
 | Sprite staging | `game/systems/cast_staging.rpy`, `game/systems/dialogue_staging.rpy` | `docs/SPRITE_STAGING.md` | `tests/test_cast_staging.py` |
-| Choices and effects | `game/systems/choice_engine.rpy`, `game/systems/stat_model_v2_later_days.rpy` | `docs/STAT_MODEL.md` | `tests/test_choice_scoring.py` |
+| Choices and effects | `game/systems/choice_engine.rpy`, each Day pack's `*_registrations.rpy` | `docs/STAT_MODEL.md` | `tests/test_choice_scoring.py` |
 | Choice path / CG stamps | `game/systems/choice_path_tags.rpy` | `docs/STAT_MODEL.md` | `tests/test_choice_path_tags.py`, `tests/test_choice_cg_stamp.py` |
 | Stats | `game/systems/stats.rpy`, `game/python-packages/lc_stat_model.py` | `docs/STAT_MODEL.md` | `tests/test_stat_model.py`, `tests/test_stat_runtime.py` |
 | Stat colours | `game/systems/stat_delta_colours.rpy` | `docs/STAT_MODEL.md` | `tests/test_stat_delta_colours.py` |
@@ -331,16 +335,16 @@ Work through the steps in order; each names the file that owns the table.
 | Hidden POV | `game/systems/hidden_pov.rpy`, `game/systems/hidden_pov_chime.rpy` | `docs/HIDDEN_POV.md` | `tests/test_hidden_pov.py` |
 | Discoveries and Moments strip | `game/systems/discovery.rpy`, `game/python-packages/lc_discovery.py`, `game/screens/day_review_screen.rpy` (`lc_review_moments`) | `docs/HIDDEN_POV.md` | `tests/test_discovery.py` |
 | Ryan's thoughts | `game/systems/thoughts.rpy`, `game/python-packages/lc_thoughts.py`, `game/screens/thoughts_screen.rpy` | `docs/THOUGHTS.md` | `tests/test_thoughts.py` |
-| Things Ryan noticed | `game/systems/notice.rpy`, `game/python-packages/lc_notice.py`, `game/screens/notice_screen.rpy`, `game/screens/phone_sweetheart.rpy` (Status pins) | `docs/NOTICES.md` | `tests/test_notice.py` |
+| Things Ryan noticed | `game/systems/notice.rpy`, `game/python-packages/lc_notice.py`, `game/screens/notice_screen.rpy`, `game/screens/phone_app_status.rpy` (Status pins) | `docs/NOTICES.md` | `tests/test_notice.py` |
 | Leia's side (errand map, visit log, outcomes, +2/day cap) | `game/systems/leia_side.rpy`, `game/python-packages/lc_leia_side.py`, `game/screens/leia_map_screen.rpy`, `game/dev/dev_leia_side.rpy` (demo) | `docs/LEIA_SIDE.md` | `tests/test_leia_side.py` |
 | Feed app (social feed on the phone) | `game/systems/feed.rpy`, `game/python-packages/lc_feed.py`, `game/screens/phone_feed.rpy`, `game/chapters/ch01/day2/ch01_day2_feed.rpy` (Day Two posts) | `docs/FEED.md` | `tests/test_feed.py` |
 | Phone moments (calls, hesitation typing, leave on read) | `game/systems/phone_moments.rpy`, `game/python-packages/lc_phone_moments.py`, `game/screens/phone_call.rpy`, `game/dev/dev_phone_moments.rpy` (demo) | `docs/PHONE_MOMENTS.md` | `tests/test_phone_moments.py` |
 | Gallery | `game/systems/gallery.rpy`, `game/systems/gallery_data.rpy`, `game/screens/gallery_screen.rpy` | `docs/BUILD_HANDOFF.md` | `tests/test_gallery_flags.py` |
 | Phone data | `game/systems/phone_state.rpy`, `game/systems/phone_presentation_logic.rpy`, `game/systems/phone_group_avatar.rpy` | this file | `tests/test_phone_replies.py`, `tests/test_phone_read_state.py`, `tests/test_phone_group_avatar.py` |
-| Phone UI | `game/screens/phone_sweetheart.rpy`, `game/screens/phone_hud.rpy`, `game/screens/phone_screen.rpy`, `game/screens/phone_input_blocker.rpy`, `game/screens/phone_wallpaper.rpy`, `game/screens/gameplay_toasts.rpy` | this file | `tests/test_phone_layout.py`, `tests/test_phone_back_navigation.py`, `tests/test_phone_wallpaper.py` |
+| Phone UI | `game/screens/phone_sweetheart.rpy` (handset, home, Messages, Photos grid, Shop), `game/screens/phone_app_status.rpy`, `game/screens/phone_app_settings.rpy`, `game/screens/phone_app_photos.rpy` (photo viewer), `game/screens/phone_hud.rpy`, `game/screens/phone_screen.rpy`, `game/screens/phone_input_blocker.rpy`, `game/screens/phone_wallpaper.rpy`, `game/screens/gameplay_toasts.rpy` | this file | `tests/test_phone_layout.py`, `tests/test_phone_back_navigation.py`, `tests/test_phone_wallpaper.py` |
 | Wardrobe, shop, economy | `game/systems/wardrobe_logic.rpy`, `game/systems/outfits_data.rpy`, `game/systems/outfit_display.rpy`, `game/systems/love_outfit_control.rpy`, `game/systems/economy.rpy`, `game/screens/wardrobe_screen.rpy`, `game/screens/shop_screen.rpy` | this file | `tests/test_shop_coming_soon.py` |
 | Effects and audio | `game/systems/lc_fx.rpy`, `game/systems/lc_audio_scene_lock.rpy`, `game/systems/lc_breath.rpy`, `game/systems/lc_typing_sounds.rpy` | this file | `tests/test_lc_fx.py`, `tests/test_bgm.py`, `tests/test_audio_scene_lock.py`, `tests/test_breaths.py`, `tests/test_typing_sounds.py` |
-| UI skin and stock screens | `game/screens/scrapbook_ui.rpy`, `game/screens.rpy`, `game/screens/common_scroll.rpy` | `docs/DIALOGUE_STYLE.md` | `tests/test_scrapbook_ui.py`, `tests/test_glass_menu.py`, `tests/test_text_styles.py` |
+| UI skin and stock screens | `game/screens/scrapbook_ui.rpy`, `game/screens/quick_menu.rpy`, `game/screens/demo_end_card.rpy`, `game/screens.rpy`, `game/screens/common_scroll.rpy` | `docs/DIALOGUE_STYLE.md` | `tests/test_scrapbook_ui.py`, `tests/test_glass_menu.py`, `tests/test_text_styles.py` |
 | Hover fade and cursor | `game/systems/lc_hover_fade.rpy`, `game/systems/lc_cursor.rpy` | this file | `tests/test_smooth_hover.py`, `tests/test_cursor.py` |
 | Title screen | `game/systems/title_screen.rpy`, `game/systems/title_customiser.rpy`, `game/systems/lc_title_touch.rpy`, `game/screens/title_screen.rpy`, `game/screens/title_customiser.rpy` | `docs/TITLE_SCREEN.md` | `tests/test_title_screen.py`, `tests/test_title_customiser.py`, `tests/test_title_leia_touch.py` |
 | Release switch | `game/00_release_build.rpy`, `game/options.rpy` | `docs/BRANCH_AND_RELEASE_POLICY.md`, `docs/RELEASE_JOIPLAY.md` | `tests/test_release_from_main.py` |

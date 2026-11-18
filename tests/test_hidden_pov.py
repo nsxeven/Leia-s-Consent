@@ -29,7 +29,7 @@ class HiddenPovSourceTests(unittest.TestCase):
 
     def test_gallery_id_and_source_scope_stay_stable(self):
         registry = REGISTRY.read_text(encoding="utf-8")
-        gallery = (ROOT / "game/systems/gallery_data.rpy").read_text(encoding="utf-8")
+        gallery = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "game/chapters").rglob("*_gallery.rpy")))
         self.assertIn('image="cg ch01_d2_breakfast_julian_pov"', registry)
         self.assertIn('source="cg ch01_d2_breakfast_02"', registry)
         self.assertIn('gallery_row("d2_breakfast_pov"', gallery)

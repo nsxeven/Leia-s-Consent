@@ -29,43 +29,13 @@ NIGHT_PARTS = frozenset({
     "invitation",
 })
 
-# Image attributes that contain a night token but are daytime scenes.
-DAY_EXCEPTIONS = frozenset({
-    "ch01_drive_to_dinner",
-})
+# Image attributes that contain a night token but are daytime scenes (each Day pack adds its
+# own: UI_DAY_EXCEPTIONS in game/python-packages/lc_days/<day>.py).
+DAY_EXCEPTIONS = frozenset()
 
 # Night or late-evening images whose names carry no night token.
-# Add new night CGs here when their name does not say so.
-NIGHT_EXCEPTIONS = frozenset({
-    # Day 1: walk to the shop, drive back, carry, lounge
-    "ch01_walk_back_01",
-    "ch01_walk_back_call",
-    "ch01_trip_catch",
-    "ch01_trip_catch_followup",
-    "ch01_trip_catch_aftermath",
-    "ch01_drive_back_seating",
-    "ch01_julian_carry",
-    "ch01_carry_walk",
-    "ch01_carry_dress_shift",
-    "ch01_lounge_micro_test",
-    # Day 2: sunset pool, game night, bedroom finales
-    "ch01_d2_love_pool_oral_01",
-    "ch01_d2_love_pool_oral_02",
-    "ch01_d2_julian_underwear_reveal",
-    "ch01_d2_love_bedroom_01",
-    "ch01_d2_love_bedroom_02",
-    "ch01_d2_exhib_bed_open_01",
-    "ch01_d2_exhib_bed_open_02",
-    "ch01_d2_exhib_bed_open_03",
-    "ch01_d2_exhib_bed_open_04",
-    # Day 4: terrace at night
-    "ch01_d4_exhib_watching",
-    "ch01_d4_exhib_terrace_01",
-    "ch01_d4_exhib_terrace_02",
-    "ch01_d4_ntr_terrace_talk",
-    # Day 5: sunset deck
-    "ch01_d5_ntr_deck_alone",
-})
+# Add new night CGs to the Day pack (UI_NIGHT_EXCEPTIONS) when their name does not say so.
+NIGHT_EXCEPTIONS = frozenset()  # each Day's UI_NIGHT_EXCEPTIONS in lc_days/<day>.py (added at import)
 
 # Cues from the style-guide motion sheet. Playback is a no-op until audio exists.
 UI_CUES = {
@@ -84,13 +54,29 @@ SPEAKER_COLORS = {
     "julian": "#5f8a32",
 }
 
-DAY_FLAGS = (
-    (5, "ch01_day_05_started", "ch01_day_05_complete"),
-    (4, "ch01_day_04_started", "ch01_day_04_complete"),
-    (3, "ch01_day_03_started", "ch01_day_03_complete"),
-    (2, "ch01_day_02_started", "ch01_day_02_complete"),
-    (1, "ch01_started", "ch01_day_01_complete"),
-)
+DAY_FLAGS = ()  # each Day's UI_DAY_FLAG in lc_days/<day>.py (added at import, latest Day first)
+
+# Flag that means the story has begun (the first Day's UI_STORY_START_FLAG).
+STORY_START_FLAG = None
+
+
+def _install_day_packs():
+    """Add every Day's journal flags and paper exceptions (game/python-packages/lc_days/<day>.py).
+    DAY_FLAGS ends up latest Day first. Runs once, at import."""
+    global DAY_FLAGS, STORY_START_FLAG, NIGHT_EXCEPTIONS, DAY_EXCEPTIONS
+    import lc_days
+    flags = list(DAY_FLAGS)
+    for day in lc_days.modules():
+        if hasattr(day, "UI_DAY_FLAG"):
+            flags.append(tuple(day.UI_DAY_FLAG))
+        if hasattr(day, "UI_STORY_START_FLAG") and STORY_START_FLAG is None:
+            STORY_START_FLAG = day.UI_STORY_START_FLAG
+        NIGHT_EXCEPTIONS = NIGHT_EXCEPTIONS | frozenset(getattr(day, "UI_NIGHT_EXCEPTIONS", ()))
+        DAY_EXCEPTIONS = DAY_EXCEPTIONS | frozenset(getattr(day, "UI_DAY_EXCEPTIONS", ()))
+    DAY_FLAGS = tuple(sorted(flags, key=lambda row: row[0], reverse=True))
+
+
+_install_day_packs()
 
 
 def _attribute_key(image_name):
@@ -134,7 +120,7 @@ def story_day_number(flags):
     for day, _started, complete in DAY_FLAGS:
         if flags.get(complete):
             return day
-    if flags.get("prologue_started"):
+    if STORY_START_FLAG and flags.get(STORY_START_FLAG):
         return 0
     return None
 

@@ -1,0 +1,122 @@
+{
+ "game/python-packages/lc_leia_side.py": {
+  "ids": [
+   "ch01_d2_cafe"
+  ],
+  "reason": "example image name inside an error message"
+ },
+ "game/screens/chapter_select_screen.rpy": {
+  "ids": [
+   "ch01_chapter_select_entry",
+   "ch01_chapter_select_pending"
+  ],
+  "reason": "save names: persistent.ch01_chapter_select_pending and Start(\"ch01_chapter_select_entry\") (renaming breaks persistent data)"
+ },
+ "game/screens/day_review_screen.rpy": {
+  "ids": [
+   "lc_day1_dream"
+  ],
+  "reason": "save name: persistent.lc_day1_dream (the dream-scene preference; renaming loses players' setting)"
+ },
+ "game/screens/route_explorer_screen.rpy": {
+  "ids": [
+   "ch01_day_02_complete",
+   "ch01_started"
+  ],
+  "reason": "Route Explorer is an unused-but-built feature, left as it is (Darryn, plan scope)"
+ },
+ "game/screens/scrapbook_ui.rpy": {
+  "ids": [
+   "ch01_dinner_arrival",
+   "ch01_drive_to_dinner",
+   "ch01_pool_day",
+   "ch01_restaurant_bar"
+  ],
+  "reason": "LC_UI_SHOTS screenshot tour (dev only): the tour label stages real Day One backgrounds and CGs; it is a label, kept in place so saved statement names do not move"
+ },
+ "game/systems/cast_staging.rpy": {
+  "ids": [
+   "prologue_leia_enter_right",
+   "prologue_leia_right",
+   "prologue_other_enter_left",
+   "prologue_other_left"
+  ],
+  "reason": "generic staging transforms that kept their historical prologue_ names (scripts and saves use them)"
+ },
+ "game/systems/chapter_select.rpy": {
+  "ids": [
+   "ch01_chapter_select_entry",
+   "ch01_chapter_select_pending",
+   "ch01_chapter_select_unlocked"
+  ],
+  "reason": "save names: the entry label ch01_chapter_select_entry (screens Start it) and persistent.ch01_chapter_select_* fields (renaming breaks saves and persistent data)"
+ },
+ "game/systems/day_review.rpy": {
+  "ids": [
+   "lc_day1_dream"
+  ],
+  "reason": "save name: default persistent.lc_day1_dream (the dream-scene preference; renaming loses players' setting)"
+ },
+ "game/systems/dialogue_staging.rpy": {
+  "ids": [
+   "prologue_leia_enter_right",
+   "prologue_leia_right",
+   "prologue_other_enter_left",
+   "prologue_other_left"
+  ],
+  "reason": "generic staging transforms that kept their historical prologue_ names (scripts and saves use them)"
+ },
+ "game/systems/discovery.rpy": {
+  "ids": [
+   "ch01_chapter_select_unlocked",
+   "ch01_d2"
+  ],
+  "reason": "old-profile migration: the Moments-strip legacy check runs at init 0, before any Day pack registers (init 1), and reads persistent.ch01_chapter_select_unlocked (a persistent name). Moving the row would make it miss"
+ },
+ "game/systems/full_transparency_route_explorer.rpy": {
+  "ids": [
+   "ch01_day1_route_pressure",
+   "ch01_day_02_complete",
+   "ch01_route_explorer_focus",
+   "ch01_started"
+  ],
+  "reason": "Route Explorer is an unused-but-built feature, left as it is (Darryn, plan scope)"
+ },
+ "game/systems/outfits_data.rpy": {
+  "ids": [
+   "ch01_d2_boutique_shop_open"
+  ],
+  "reason": "wardrobe data: the boutique outfit's row names the Day Two scene flag that opens it in the shop (outfits are shared wardrobe data, docs/DAY_PACK.md)"
+ },
+ "game/systems/phone_group_avatar.rpy": {
+  "ids": [
+   "ch01_d2_photo_group",
+   "ch01_pool_outfit",
+   "ch01_scene_05_complete"
+  ],
+  "reason": "save recovery: pre-feature saves get their group picture from Day 1/2 story flags"
+ },
+ "game/systems/save_compat.rpy": {
+  "ids": [
+   "ch01_day2_scene_03_maya_message",
+   "ch01_day2_scene_03_maya_message_v2",
+   "ch01_day2_scene_08_maya_julian",
+   "ch01_day2_scene_08_maya_julian_v2",
+   "ch01_day2_scene_13_girls_upstairs",
+   "ch01_day2_scene_13_girls_upstairs_v2",
+   "ch01_day2_scene_14_tie_foreshadow",
+   "ch01_day2_scene_14_tie_foreshadow_v2",
+   "ch01_day2_scene_20_dinner_outfit",
+   "ch01_day2_scene_20_dinner_outfit_love_control",
+   "ch01_scene_13_back_at_villa",
+   "ch01_scene_13_back_at_villa_asleep_revision",
+   "ch01_scene_17_julian_notices",
+   "ch01_scene_18_private_under_blanket",
+   "ch01_scene_24_looking_counts",
+   "ch01_scene_25_julian_put_on_spot",
+   "ch01_scene_27_late_photo_drop",
+   "ch01_scene_27_late_photo_drop_staged"
+  ],
+  "reason": "save compatibility: old label names kept as one-line jumps (renaming breaks saves)"
+ }
+}

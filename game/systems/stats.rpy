@@ -15,9 +15,6 @@
 #   lc_exhib_gained(prefix)                   Exhibitionism gained from choices with an id prefix
 #   lc_leia_tint(lane=None, lane_scene=False) Day Two line tint for Leia: 'shy' or a stat id
 #       (lc_stat_model.leia_tint; call once per tint point, branch on a local, end in a shy else)
-#   lc_d1_route_pressure()                    Day 1 end state ('ntr_seeded' / 'nts_seeded' /
-#       'mixed')
-#   lc_d1_love_bedtime(pressure)              Day 1 Love bedtime variant
 #   lc_current_lean()                         lean key for the Full 'Current lean' line
 #   lc_current_lean_label()                   its label
 #   lc_migrate_stats_v2() -> None             after_load: convert a pre-v2 save once
@@ -31,8 +28,10 @@
 #
 # Depends on: python-packages/lc_stat_model.py, systems/choice_engine.rpy, systems/story_state.rpy,
 #   game/defaults.rpy, systems/leia_side.rpy (lc_choice_applied_effects, lc_leia_is_side_choice),
-#   chapters/ch01/day2/ch01_day2_scenes_01_15.rpy (ch01_d2_route_lane, ch01_d2_love_exhib_blend)
-# Hooks: none (adds lc_migrate_stats_v2 to config.after_load_callbacks)
+#   systems/lc_hooks.rpy
+# Hooks: emits current_lean (lc_hook_filter; each Day pack's *_registrations.rpy adds its reader)
+#   and stats_v2_migrate (lc_hook_run, before a pre-v2 save is converted; listener Day Two);
+#   adds lc_migrate_stats_v2 to config.after_load_callbacks
 # Load order: default (init 0)
 # Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_runtime.py, tests/test_stat_model.py
 
@@ -135,40 +134,15 @@ init python:
                     total += amount
         return total
 
-    def lc_d1_route_pressure():
-        """Day 1 end state ('ntr_seeded' / 'nts_seeded' / 'mixed'). Story and Full readout share it."""
-        return lc_stat_model.d1_route_pressure(lc_stats_flat(), lc_route_explorer_for_lane())
-
-    def lc_d1_love_bedtime(pressure):
-        return lc_stat_model.d1_love_bedtime(pressure, lc_stats_flat())
-
     def lc_current_lean():
-        """Lean key for the Full 'Current lean' line, from the same resolvers the routes use."""
+        """Lean key for the Full 'Current lean' line, from the same resolvers the routes use.
+
+        Every Day pack adds a "current_lean" hook, fn(lean, flat) -> its own lean once the story
+        has reached that Day, else lean unchanged. Hooks run in play order, so the latest Day
+        that has something to say wins (Day 5's stored end route over Day 4's, and so on).
+        """
         flat = lc_stats_flat()
-        for key in ("ch01_d5_end_route", "ch01_d4_end_route"):
-            value = get_story_value(key, None)
-            if value:
-                return lc_stat_model.lean_from_route_value(value)
-        if has_story_flag("ch01_day_03_started"):
-            lane = get_story_value("ch01_d4_lane", None) or get_story_value("ch01_d3_lane", None)
-            if (lane == "love" and get_story_value("ch01_d3_strained_love", False)
-                    and not has_story_flag("ch01_day_03_complete")):
-                return "strained"
-            if lane:
-                return lc_stat_model.lean_from_route_value(lane)
-        if has_story_flag("ch01_day_02_complete"):
-            return lc_stat_model.lean_from_route_value(get_story_value("ch01_d2_end_route", "love"))
-        if has_story_flag("ch01_day_02_started"):
-            lane = ch01_d2_route_lane()
-            if ch01_d2_love_exhib_blend(lane):
-                return "love_exhib"
-            return lc_stat_model.lean_from_route_value(lane)
-        if has_story_flag("ch01_started"):
-            pressure = get_story_value("ch01_day1_route_pressure", None) or lc_d1_route_pressure()
-            if pressure == "mixed":
-                return "love" if lc_stat_model.d1_love_bedtime(pressure, flat) else "undecided"
-            return lc_stat_model.lean_from_route_value(pressure)
-        return "undecided"
+        return lc_hook_filter("current_lean", None, flat) or "undecided"
 
     def lc_current_lean_label():
         return lc_stat_model.LEAN_LABELS.get(lc_current_lean(), "Undecided")
@@ -177,26 +151,16 @@ init python:
         """after_load: convert a pre-v2 save once (formulas in lc_stat_model.migrate_stats).
 
         Story values, choice history, lanes and end states are never touched.
-        A save made mid-Day-2 keeps the lane the old rules gave it for the rest
-        of that day (ch01_d2_lane_migrated), so loading can't flip it.
+        The stats_v2_migrate hook (rel, par, ply) runs first with the old numbers: Day Two's pack
+        uses it so a save made mid-Day-2 keeps the lane the old rules gave it.
         """
         store_ = renpy.store
         rel = getattr(store_, "relationship_stats", None) or {}
         par = getattr(store_, "partner_stats", None) or {}
         ply = getattr(store_, "player_stats", None) or {}
         if lc_stat_model.is_legacy_stats(rel, par, ply):
-            if (has_story_flag("ch01_day_02_started") and not has_story_flag("ch01_day_02_complete")
-                    and get_story_value("ch01_d2_lane_migrated", None) is None):
-                d2_ids = choice_ids_with_prefix("ch01_d2_")
-                lane = lc_stat_model.legacy_d2_lane(
-                    rel, par, ply,
-                    get_story_value("ch01_day1_route_pressure", "mixed"),
-                    chapter_nonchalant_count("ch01"),
-                    choice_tag_count("nonchalant", d2_ids),
-                    choice_tag_count("open", d2_ids),
-                    choice_tag_count("attentive", d2_ids),
-                )
-                set_story_value("ch01_d2_lane_migrated", lane)
+            # A Day pack that needs the old numbers first (Day Two keeps a mid-day save's lane).
+            lc_hook_run("stats_v2_migrate", rel, par, ply)
             new_rel, new_par, new_ply, legacy = lc_stat_model.migrate_stats(rel, par, ply)
             store_.relationship_stats = new_rel
             store_.partner_stats = new_par

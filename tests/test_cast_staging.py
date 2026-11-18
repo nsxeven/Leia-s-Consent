@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MIGRATED = [
     "game/chapters/prologue/prologue.rpy",
-    "game/chapters/ch01/ch01_main.rpy",
+    "game/chapters/ch01/day1/ch01_main.rpy",
     "game/chapters/ch01/day1/ch01_scenes_04_06.rpy",
     "game/chapters/ch01/day1/ch01_scenes_07_13.rpy",
     "game/chapters/ch01/day1/ch01_scenes_14_30.rpy",

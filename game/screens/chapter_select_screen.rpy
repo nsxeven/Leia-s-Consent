@@ -1,7 +1,8 @@
 # Chapter Select screen - pick a day and a route preset, then start there
 #
 # Purpose: Menu page (tag menu) listing the days and route presets from systems/chapter_select.rpy;
-#   Start stores the pick and starts a new game through ch01_chapter_select_entry. Shown only when
+#   Start stores the pick and starts a new game through ch01_chapter_select_entry. The days,
+#   route lists and headings come from the presets the Day packs register (CHAPTER_SELECT_PRESETS). Shown only when
 #   chapter_select_unlocked(). QA gallery buttons appear when gallery_qa_tools_enabled().
 #
 # Public API (call these from scenes/screens):
@@ -19,7 +20,7 @@ screen chapter_select():
 
     tag menu
 
-    default cs_day = "day3"
+    default cs_day = chapter_select_default_day()
     default cs_route = "love"
 
     use game_menu(_("Chapter Select"), scroll="viewport"):
@@ -36,13 +37,13 @@ screen chapter_select():
             hbox:
                 spacing 16
                 box_wrap True
-                for day_id, day_label, day_note in CH01_SELECT_DAYS:
+                for day_id, day_label, day_note in chapter_select_days():
                     textbutton day_label:
                         action [SetScreenVariable("cs_day", day_id), SetScreenVariable("cs_route", "love")]
                         selected (cs_day == day_id)
 
-            $ cs_routes = CH01_SELECT_DAY2_ROUTES if cs_day == "day2" else (CH01_SELECT_DAY5_ROUTES if cs_day == "day5" else CH01_SELECT_END_ROUTES)
-            text (_("Day Two lane preset") if cs_day == "day2" else (_("Stored Day Four ending") if cs_day == "day5" else _("Stored Day Two ending"))) size 30
+            $ cs_routes = CHAPTER_SELECT_PRESETS[cs_day]["routes"]
+            text CHAPTER_SELECT_PRESETS[cs_day]["heading"] size 30
             vbox:
                 spacing 8
                 for route_id, route_label in cs_routes:

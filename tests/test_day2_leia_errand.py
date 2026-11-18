@@ -26,9 +26,10 @@ ERRAND = DAY2 / "ch01_day2_leia_errand.rpy"
 SC19B = DAY2 / "ch01_day2_scene_19b_leia_asks_maya.rpy"
 SC16_30 = DAY2 / "ch01_day2_scenes_16_30.rpy"
 SC01_15 = DAY2 / "ch01_day2_scenes_01_15.rpy"
+REG = DAY2 / "ch01_day2_registrations.rpy"  # Day Two choice rows, exempt lists, places
 FEED = DAY2 / "ch01_day2_feed.rpy"
 VISUALS = DAY2 / "ch01_day2_visuals.rpy"
-GALLERY = GAME / "systems" / "gallery_data.rpy"
+GALLERY = GAME / "chapters" / "ch01" / "day2" / "ch01_day2_gallery.rpy"
 
 R, P = "relationship", "partner"
 # The approved table (script.md section 4, canon call K5 for scene 30).
@@ -197,7 +198,7 @@ class ScoringTests(unittest.TestCase):
         self.assertEqual(m.CHOICE_ROUTE_FLAGS["ch01_d2_errand_walk_keep"], "lean")
 
     def test_only_her_choices_share_the_cap(self):
-        src = _read(ERRAND)
+        src = _read(REG)
         call = re.search(r'lc_leia_register_choices\(\s*"ch01_d2",(.*?)\)', src, re.S)
         self.assertIsNotNone(call)
         self.assertEqual(set(re.findall(r'"(\w+)"', call.group(1))), set(LEIA_IDS))
@@ -236,7 +237,7 @@ class ScoringTests(unittest.TestCase):
 
 class ExemptionTests(unittest.TestCase):
     def test_every_new_id_is_lane_and_end_route_exempt(self):
-        src = _read(SC01_15)
+        src = _read(REG)
         errand = _tuple(src, "CH01_D2_ERRAND_EXEMPT_CHOICES")
         self.assertEqual(set(errand), set(ALL_IDS))
         self.assertIn("CH01_D2_LANE_EXEMPT_CHOICES = (\"ch01_d2_knot_watch\",) + CH01_D2_ERRAND_EXEMPT_CHOICES", src)
@@ -284,8 +285,8 @@ class ExemptionTests(unittest.TestCase):
         sc30 = _label(SC16_30, "ch01_day2_scene_30_bedroom")
         self.assertIn("d2_love_exhib_blend = ch01_d2_love_exhib_blend(d2_lane)", sc30)
         self.assertNotIn("lc_stat_model.d2_love_exhib_blend(", sc30)
-        stats = _read(GAME / "systems" / "stats.rpy")
-        lean = stats.split("def lc_current_lean():", 1)[1].split("def lc_current_lean_label", 1)[0]
+        reg = _read(REG)  # Day Two's Full "Current lean" reader (current_lean hook)
+        lean = reg.split("def ch01_d2_current_lean(", 1)[1].split("def ch01_d2_keep_legacy_lane", 1)[0]
         self.assertIn("ch01_d2_love_exhib_blend(lane)", lean)
 
 
@@ -366,11 +367,11 @@ class ArtTests(unittest.TestCase):
     def test_cafe_cg_has_a_gallery_page(self):
         src = _read(GALLERY)
         self.assertRegex(src, r'gallery_row\("d2_cafe_stranger", "ch01_d2"')
-        placeholders = src.split("GALLERY_PLACEHOLDER_IMAGES = set([", 1)[1].split("])", 1)[0]
+        placeholders = src.split("GALLERY_PLACEHOLDER_IMAGES.update([", 1)[1].split("])", 1)[0]
         self.assertIn('"d2_cafe_stranger"', placeholders)
 
     def test_places_register_real_backgrounds(self):
-        src = _read(ERRAND)
+        src = _read(REG)
         self.assertIn('lc_leia_register_places("ch01_d2", CH01_D2_ERRAND_PLACES)', src)
         bgs = re.findall(r'"bg":\s*"([^"]+)"', src)
         self.assertEqual(bgs, ["bg ch01_d2_cafe", "bg ch01_shop_day", "bg ch01_restaurant_bar", "bg ch01_d2_boutique"])

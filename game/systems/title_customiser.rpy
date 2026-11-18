@@ -6,9 +6,10 @@
 #   screens/title_customiser.rpy.
 #
 # Public API (call these from scenes/screens):
-#   lc_title_register_outfit(outfit_id, label, base, chest, seen_tag=None, mature=False, default=False, always_unlocked=False, credit=None, hair=None, seen_cgs=()) -> None
-#       add/replace a title outfit (from an `init 1 python:` block)
-#   lc_title_register_background(bg_id, label, path, seen_tags=(), mature=False, default=False) -> None
+#   lc_title_register_outfit(outfit_id, label, base, chest, seen_tag=None, mature=False, default=False, always_unlocked=False, credit=None, hair=None, seen_cgs=(), order=None) -> None
+#       add/replace a title outfit (from an `init 1 python:` block; the Day packs register theirs
+#       in their first *_visuals.rpy, numbered with order= so the menu keeps one order)
+#   lc_title_register_background(bg_id, label, path, seen_tags=(), mature=False, default=False, order=None) -> None
 #       add/replace a title background
 #   lc_title_note_sprite(tag) -> None         cast system: note a shown sprite (unlocks outfits)
 #   lc_title_pick(kind, option_id) -> None    screen action: choose an option
@@ -34,7 +35,7 @@
 #   default persistent.lc_title_outfit        chosen outfit
 #   default persistent.lc_title_expression    chosen expression
 #
-# Internal (helpers for this file and its screens; do not call from scenes): lc_title_seen_tags,
+# Internal (helpers for this file and its screens; do not call from scenes): _lc_title_sorted, lc_title_seen_tags,
 #   lc_title_outfit, lc_title_background, lc_title_bg_image
 #
 # Example:
@@ -114,8 +115,16 @@ init -1 python:
     LC_TITLE_OUTFITS = []
     LC_TITLE_BACKGROUNDS = []
 
+    _lc_title_order = python_dict()  # internal: (kind, id) -> menu position (order=)
+
+    def _lc_title_sorted(items, kind):
+        """items in menu order: by order= (unset: after every ordered one), then registration."""
+        keyed = [(_lc_title_order.get((kind, o["id"]), 10 ** 9), n, o) for n, o in enumerate(items)]
+        return [o for _key, _n, o in sorted(keyed, key=lambda t: (t[0], t[1]))]
+
     def lc_title_register_outfit(outfit_id, label, base, chest, seen_tag=None, mature=False,
-                                 default=False, always_unlocked=False, credit=None, hair=None, seen_cgs=()):
+                                 default=False, always_unlocked=False, credit=None, hair=None, seen_cgs=(),
+                                 order=None):
         """Add (or replace) a title-screen outfit.
 
         base/chest: image paths on the 941 x 1672 Leia canvas.
@@ -125,6 +134,8 @@ init -1 python:
                     them also unlocks it (covers playthroughs from before this feature).
         always_unlocked: for outfits that are owned outright (e.g. a patron's pack).
         credit:     optional line shown under the sprite, e.g. "Outfit made for <name>".
+        order:      menu position (lower first); the Day packs number theirs so the menu keeps
+                    one order across Days.
         """
         global LC_TITLE_OUTFITS
         LC_TITLE_OUTFITS = [o for o in LC_TITLE_OUTFITS if o["id"] != outfit_id]
@@ -133,39 +144,20 @@ init -1 python:
             seen_tag=seen_tag, mature=bool(mature), default=bool(default),
             always_unlocked=bool(always_unlocked), credit=credit, seen_cgs=tuple(seen_cgs),
         ))
+        if order is not None:
+            _lc_title_order["outfit", outfit_id] = order
+        LC_TITLE_OUTFITS = _lc_title_sorted(LC_TITLE_OUTFITS, "outfit")
 
-    def lc_title_register_background(bg_id, label, path, seen_tags=(), mature=False, default=False):
-        """Add (or replace) a title-screen background; unlocks once any `bg <tag>` in seen_tags was shown."""
+    def lc_title_register_background(bg_id, label, path, seen_tags=(), mature=False, default=False, order=None):
+        """Add (or replace) a title-screen background; unlocks once any `bg <tag>` in seen_tags was shown.
+        order: menu position (lower first), as for outfits."""
         global LC_TITLE_BACKGROUNDS
         LC_TITLE_BACKGROUNDS = [b for b in LC_TITLE_BACKGROUNDS if b["id"] != bg_id]
         LC_TITLE_BACKGROUNDS.append(dict(id=bg_id, label=label, path=path, seen_tags=tuple(seen_tags),
                                          mature=bool(mature), default=bool(default)))
-
-    _d = LC_LEIA_SPRITE_DIR
-    lc_title_register_outfit("purple_dress", "Lilac dress", _d + "CH1/Base_PurpleDress.png", _d + "CH1/Chest_PurpleDress.png", "leia_purple_dress", default=True, seen_cgs=("ch01_dress_reveal",))
-    lc_title_register_outfit("casual", "Travel casual", _d + "PRO/Base_Casual.png", _d + "PRO/Chest_Casual.png", "leia_casual", seen_cgs=("prologue_departure", "ch01_villa_arrival"))
-    lc_title_register_outfit("prologue_party", "The party", _d + "PRO/Base_PrologueParty.png", _d + "PRO/Chest_PrologueParty.png", "leia_prologue_party", seen_cgs=("prologue_party_arrival", "prologue_party_couch"))
-    lc_title_register_outfit("blue_bikini", "Blue bikini", _d + "CH1/Base_BlueBikini.png", _d + "CH1/Chest_BlueBikini.png", "leia_blue_bikini", seen_cgs=("ch01_swimsuit_choice_blue", "ch01_sunscreen_blue", "ch01_sunscreen_apply_blue"))
-    lc_title_register_outfit("white_ruffle", "White ruffle", _d + "CH1/Base_WhiteRuffle.png", _d + "CH1/Chest_WhiteRuffle.png", "leia_white_ruffle", seen_cgs=("ch01_swimsuit_choice_white", "ch01_sunscreen_white", "ch01_sunscreen_apply_white"))
-    lc_title_register_outfit("lounge", "Loungewear", _d + "CH1/Base_Lounge.png", _d + "CH1/Chest_Lounge.png", "leia_lounge", seen_cgs=("ch01_movie_cuddle_blanket", "ch01_movie_blanket_hand", "ch01_movie_no_blanket", "ch01_movie_micro_test_glance"))
-    lc_title_register_outfit("towel", "Towel", _d + "CH1/Base_Towel.png", _d + "CH1/Chest_Towel.png", "leia_towel", mature=True, seen_cgs=("ch01_towel_call_down", "ch01_towel_shift_01"))
-    lc_title_register_outfit("purple_dress_wet", "Lilac dress (soaked)", _d + "CH1/Base_PurpleDressWet.png", _d + "CH1/Chest_PurpleDressWet.png", "leia_purple_dress_wet", mature=True, seen_cgs=("ch01_dinner_spill_02", "ch01_dinner_spill_03"))
-    lc_title_register_outfit("purple_dress_no_bra", "Lilac dress (no bra)", _d + "CH1/Base_PurpleDressNoBra.png", _d + "CH1/Chest_PurpleDressNoBra.png", "leia_purple_dress_no_bra", mature=True, seen_cgs=("ch01_dinner_sticky_bra", "ch01_dinner_restroom_return_01"))
-
-    _b = "images/backgrounds/"
-    lc_title_register_background("pool_evening", "Pool, evening", _b + "villa/villa_pool_evening.webp", ("ch01_pool_evening",), default=True)
-    lc_title_register_background("pool_day", "Pool, day", _b + "villa/villa_pool_day.webp", ("ch01_pool_day", "ch01_villa_pool"))
-    lc_title_register_background("pool_lounge", "Upstairs lounge", _b + "chapter 1/ch01_villa_pool_upstairs.webp", ("ch01_pool_lounge",))
-    lc_title_register_background("living_evening", "Living room, evening", _b + "villa/villa_living_evening.webp", ("ch01_villa_living_evening",))
-    lc_title_register_background("living_day", "Living room, day", _b + "villa/villa_living_day.webp", ("ch01_villa_living",))
-    lc_title_register_background("bedroom_evening", "Bedroom, evening", _b + "villa/villa_master_evening.webp", ("ch01_villa_bedroom_evening",))
-    lc_title_register_background("bedroom_day", "Bedroom, day", _b + "villa/villa_master_day.webp", ("ch01_master_bedroom",))
-    lc_title_register_background("entry_evening", "Villa door, evening", _b + "villa/villa_frontdoor_evening.webp", ("ch01_villa_entry_evening",))
-    lc_title_register_background("villa_arrival", "Arrival", _b + "chapter 1/ch01_villa_arrival.webp", ("ch01_villa_exterior",))
-    lc_title_register_background("restaurant", "Restaurant", _b + "chapter 1/ch01_restaurant.webp", ("ch01_restaurant_evening",))
-    lc_title_register_background("bar", "Bar", _b + "chapter 1/ch01_bar.webp", ("ch01_restaurant_bar",))
-    lc_title_register_background("prologue_party", "The party", _b + "prologue/PRO_party.webp", ("prologue_party",))
-    lc_title_register_background("prologue_bedroom", "Packing night", _b + "prologue/PRO_bedroom.webp", ("prologue_packing",))
+        if order is not None:
+            _lc_title_order["background", bg_id] = order
+        LC_TITLE_BACKGROUNDS = _lc_title_sorted(LC_TITLE_BACKGROUNDS, "background")
 
 init python:
 

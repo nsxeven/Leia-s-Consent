@@ -49,3 +49,16 @@ image cg prologue_departure = At("images/cg/prologue/PRO_CG_Departure_01.webp", 
 # Canonical positions (Leia always RIGHT, others LEFT, face inward) now live in
 # game/systems/dialogue_staging.rpy so every chapter reuses the same contract.
 # Legacy prologue_* transform names remain available as aliases.
+
+
+# Title screen (systems/title_customiser.rpy): this Day's Leia outfits and backgrounds. order= is
+#   the menu position shared by every Day (the Prologue and Day One interleave).
+# load order: init 1, after the registry (init -1).
+init 1 python:
+    _d = LC_LEIA_SPRITE_DIR
+    _b = "images/backgrounds/"
+    lc_title_register_outfit("casual", "Travel casual", _d + "PRO/Base_Casual.png", _d + "PRO/Chest_Casual.png", "leia_casual", seen_cgs=("prologue_departure", "ch01_villa_arrival"), order=20)
+    lc_title_register_outfit("prologue_party", "The party", _d + "PRO/Base_PrologueParty.png", _d + "PRO/Chest_PrologueParty.png", "leia_prologue_party", seen_cgs=("prologue_party_arrival", "prologue_party_couch"), order=30)
+
+    lc_title_register_background("prologue_party", "The party", _b + "prologue/PRO_party.webp", ("prologue_party",), order=120)
+    lc_title_register_background("prologue_bedroom", "Packing night", _b + "prologue/PRO_bedroom.webp", ("prologue_packing",), order=130)

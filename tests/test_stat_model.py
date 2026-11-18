@@ -78,10 +78,14 @@ class StatModelTests(unittest.TestCase):
         stats = read("systems/stats.rpy")
         self.assertIn("config.after_load_callbacks.append(lc_migrate_stats_v2)", stats)
         body = stats.split("def lc_migrate_stats_v2", 1)[1].split("\n    if lc_migrate_stats_v2", 1)[0]
-        self.assertIn('set_story_value("ch01_d2_lane_migrated", lane)', body)
+        self.assertIn('lc_hook_run("stats_v2_migrate", rel, par, ply)', body)
+        day2 = read("chapters/ch01/day2/ch01_day2_registrations.rpy")
+        keep = day2.split("def ch01_d2_keep_legacy_lane(", 1)[1].split("lc_hook_add(", 1)[0]
+        self.assertIn('set_story_value("ch01_d2_lane_migrated", lane)', keep)
+        self.assertIn('lc_hook_add("stats_v2_migrate", ch01_d2_keep_legacy_lane)', day2)
         for untouched in ("story_values =", "choice_history =", "ch01_d2_end_route", "story_flags ="):
             self.assertNotIn(untouched, body)
-        self.assertIn('migrated_lane=migrated', read("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy"))
+        self.assertIn('migrated_lane=migrated', read("chapters/ch01/day2/ch01_day2_registrations.rpy"))
 
     def test_legacy_lane_matches_the_old_resolver(self):
         rel, par, ply = OLD_DEFAULTS
@@ -109,8 +113,10 @@ class StatModelTests(unittest.TestCase):
     def test_full_lean_uses_the_route_resolvers(self):
         stats = read("systems/stats.rpy")
         lean = stats.split("def lc_current_lean():", 1)[1].split("def lc_current_lean_label", 1)[0]
-        self.assertIn("ch01_d2_route_lane()", lean)
-        self.assertIn("lc_d1_route_pressure()", lean)
+        self.assertIn('lc_hook_filter("current_lean", None, flat)', lean)
+        readers = read("chapters/ch01/day1/ch01_day1_registrations.rpy") + read("chapters/ch01/day2/ch01_day2_registrations.rpy")
+        self.assertIn("ch01_d2_route_lane()", readers.split("def ch01_d2_current_lean(", 1)[1])
+        self.assertIn("lc_d1_route_pressure()", readers.split("def ch01_d1_current_lean(", 1)[1])
         self.assertIn("lc_d1_route_pressure()", read("chapters/ch01/day1/ch01_scenes_14_30.rpy"))
         status = read("systems/status_display.rpy")
         self.assertIn("lc_current_lean()", status)
@@ -118,14 +124,16 @@ class StatModelTests(unittest.TestCase):
         self.assertNotIn("ntr_score", status)
 
     def test_day4_day5_thresholds_and_track_names_are_overridden(self):
-        late = read("systems/stat_model_v2_later_days.rpy")
-        self.assertIn("init 5 python:", late)
+        # The v2 thresholds and track-card names live in the Day packs (one definition each).
+        late = read("chapters/ch01/day4/ch01_day4_registrations.rpy") + read("chapters/ch01/day5/ch01_day5_registrations.rpy")
         for name in ("D4_EXHIBITION_BRIEF_REVEAL_MIN", "D5_BOLDER_SWIM_MIN", "D5_COMFORTABLE_MIN", "D5_COMFORTABLE_MIN_AFTER_BRIEF"):
             self.assertIn(name + " = LC_T[", late)
-        self.assertIn('("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM")', late)
+        for day in ("4", "5"):
+            self.assertIn("return lc_track_text_v2(_lc_d%s_track_text_v1())" % day, late)
+        self.assertIn('("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM")', read("systems/choice_engine.rpy"))
 
     def test_mixed_unresolved_starts_day3_as_strained_love(self):
-        day3 = read("chapters/ch01/ch01_day3_scenes.rpy")
+        day3 = read("chapters/ch01/day3/ch01_day3_scenes.rpy")
         self.assertIn('$ d3_lane = "ntr" if d3_end == "ntr_confirmed" else', day3)
         self.assertNotIn('("ntr_confirmed", "mixed_unresolved")', day3)
         self.assertIn('set_story_value("ch01_d3_strained_love", d3_strained)', day3)

@@ -10,8 +10,9 @@ change: this module only decides what the player reads.
       unresolved endings keep the neutral title.
 
 Titles chosen by darryn 2026-11-09 (options doc: chapter_title_options.md).
-Edit them HERE ONLY: every title card, the day review, Chapter Select, save
-names and the gallery read from this table.
+Each Day's entry lives in its Day pack (CHAPTER in game/python-packages/lc_days/<day>.py);
+this module assembles CHAPTERS from them. Edit titles THERE ONLY: every title card, the day
+review, Chapter Select, save names and the gallery read from this table.
 
 Pure Python (no Ren'Py import) so tests/ can load it directly.
 """
@@ -34,7 +35,9 @@ FAMILY_LABELS = {
 
 PLACEHOLDER_TITLES = False  # darryn picked the titles 2026-11-09
 
-CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
+import lc_days  # noqa: E402  (Day packs; lazy, no import cycle)
+
+CHAPTER_ORDER = tuple(lc_days.DAY_MODULES)  # play order (lc_days/__init__.py)
 
 # ---------------------------------------------------------------- REGISTRY
 # number       : chapter number shown as "Chapter N" (0 = Prologue)
@@ -45,74 +48,7 @@ CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
 # title        : NEUTRAL title (title cards, undecided reviews)
 # routes       : route-flavoured titles revealed by the day review (+ repair)
 #                (None = no route variant; the neutral title is used)
-CHAPTERS = {
-    "prologue": {
-        "number": 0, "number_word": "", "day": None, "day_word": "",
-        "review_day": None,
-        "title": 'Truth or Dare',
-        # The Prologue happens before any route exists.
-        "routes": {"love": None, "love_exhib": None, "nts": None, "ntr": None, "repair": None},
-    },
-    "day1": {
-        "number": 1, "number_word": "One", "day": 1, "day_word": "One",
-        "review_day": "ch01_d1",
-        "title": 'Sheer Curtains',
-        "routes": {
-            "love": 'Today Was Good',
-            "love_exhib": 'Can He Tell?',
-            "nts": 'A Third Person',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
-            "ntr": 'Spaces Left Open',
-            "repair": None,  # no repair ending this day; falls back to the Love title
-        },
-    },
-    "day2": {
-        "number": 2, "number_word": "Two", "day": 2, "day_word": "Two",
-        "review_day": "ch01_d2",
-        "title": 'Plus One',
-        "routes": {
-            "love": 'They Hide Enough',
-            "love_exhib": 'Leave Them Open',
-            "nts": 'Terrible Influence',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
-            "ntr": 'Are We Okay?',
-            "repair": 'Tell Her the Truth',
-        },
-    },
-    "day3": {
-        "number": 3, "number_word": "Three", "day": 3, "day_word": "Three",
-        "review_day": "ch01_d3",
-        "title": 'The Glass Wall',
-        "routes": {
-            "love": 'Curtains Drawn',
-            "love_exhib": 'Getting Braver',
-            "nts": 'Causing a Scene',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
-            "ntr": 'Typing…',
-            "repair": None,  # no repair ending this day; falls back to the Love title
-        },
-    },
-    "day4": {
-        "number": 4, "number_word": "Four", "day": 4, "day_word": "Four",
-        "review_day": "ch01_d4",
-        "title": 'Blue Hour',
-        "routes": {
-            "love": 'Badly, Slowly',
-            "love_exhib": 'One Slow Heartbeat',
-            "nts": 'Watching Her Decide',
-            "ntr": 'The Hairclip',
-            "repair": 'Back in Her Hair',
-        },
-    },
-    "day5": {
-        "number": 5, "number_word": "Five", "day": 5, "day_word": "Five",
-        "review_day": "ch01_d5",
-        "title": 'The Water',
-        "routes": {
-            "love": "Nobody's Cove",
-            "love_exhib": 'Still Me',
-            "nts": 'Her Biggest Fan',
-            "ntr": 'Reasonable Doubt',
-            "repair": 'The Second Try',
-        },
-    },
+CHAPTERS = {  # each Day's entry: CHAPTER in its lc_days/<day>.py (added at import)
 }
 
 # ------------------------------------------------- ROUTE KEY -> FAMILY TABLE
@@ -151,11 +87,27 @@ UNSURE_ROUTE_KEYS = ()  # all settled by darryn 2026-11-09
 # NTS vs Love + Exhibitionism (darryn 2026-11-09): an exhibition ending shows
 # the NTS title when Ryan chose "likes watching" that day. Only Days 4 and 5
 # have that beat so far, so Days 1-3 always show the Love + Exhib title.
-NTS_VARIANT_KEYS = {
-    "day4": "ch01_d4_exhib_variant",
-    "day5": "ch01_d5_exhib_variant",
-}
+NTS_VARIANT_KEYS = {}  # each Day's NTS_VARIANT_KEY in its lc_days/<day>.py (added at import)
 NTS_VARIANT = "ryan_likes_watching"
+
+def _install_day_packs():
+    """Put every Day's chapter entry (CHAPTER) and "likes watching" key (NTS_VARIANT_KEY) from
+    game/python-packages/lc_days/<day>.py in front, in play order, keyed by the module name.
+    Runs once, at import."""
+    rest, keys = dict(CHAPTERS), dict(NTS_VARIANT_KEYS)
+    CHAPTERS.clear()
+    NTS_VARIANT_KEYS.clear()
+    for day in lc_days.modules():
+        day_id = day.__name__.rsplit(".", 1)[-1]
+        if hasattr(day, "CHAPTER"):
+            CHAPTERS[day_id] = day.CHAPTER
+        if hasattr(day, "NTS_VARIANT_KEY"):
+            NTS_VARIANT_KEYS[day_id] = day.NTS_VARIANT_KEY
+    CHAPTERS.update(rest)
+    NTS_VARIANT_KEYS.update(keys)
+
+
+_install_day_packs()
 
 _REVIEW_DAY_CHAPTER = dict((c["review_day"], cid) for cid, c in CHAPTERS.items() if c["review_day"])
 

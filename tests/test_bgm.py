@@ -40,7 +40,7 @@ class BgmTests(unittest.TestCase):
         self.assertIn('lc_bgm("party")', prologue)
         self.assertIn('lc_bgm("cozy_home")', prologue)
         self.assertLess(prologue.index("lc_bgm_cut()"), prologue.index('lc_sfx("record_scratch")'))
-        self.assertIn('lc_bgm("sunny_island")', src(CH / "ch01_main.rpy"))
+        self.assertIn('lc_bgm("sunny_island")', src(CH / "day1" / "ch01_main.rpy"))
         pool = src(CH / "day1" / "ch01_scenes_04_06.rpy")
         self.assertIn('lc_bgm("cheeky")', pool)
         self.assertLess(pool.index("lc_bgm_cut()"), pool.index('lc_sfx("record_scratch")'))
