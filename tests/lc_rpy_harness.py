@@ -34,12 +34,14 @@ _HOOK_ADD = re.compile(r"^lc_hook_add\(\s*['\"]\w+['\"]\s*,\s*(\w+)\s*\)$")
 DAY_PACK_TABLES = {
     "CHOICE_EFFECTS": dict, "CHOICE_TAGS": dict, "LC_CHOICE_CG_COUNT": dict,
     "LC_CHOICE_STYLE": dict, "LC_MOMENT_STICKERS": tuple, "LC_REVIEW_DAYS": dict,
+    "CHAPTER_SELECT_PRESETS": dict,
 }
 
 
 def _store_builtins(env):
     env.setdefault("python_dict", dict)
     env.setdefault("python_list", list)
+    env.setdefault("_", lambda s: s)  # Ren'Py's translation marker
     for name, kind in DAY_PACK_TABLES.items():
         env.setdefault(name, kind())
 

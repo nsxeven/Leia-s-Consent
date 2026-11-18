@@ -260,13 +260,12 @@ contract.
    list text-placeholder CGs with `GALLERY_PLACEHOLDER_IMAGES.update([...])`; no unlock lines go
    in story files. The day review
    only shows a CG as a photo when it is a page of a gallery entry on the day's tab.
-10. **Chapter Select (optional).** Add the day to `CH01_SELECT_DAYS` and seed it in
-    `chapter_select_apply` in `game/systems/chapter_select.rpy` (mark the earlier days
-    complete, store the values the start label reads, return `"ch01_dayN_start"`). Add an
-    `elif _cs_entry == "ch01_dayN_start": jump ch01_dayN_start` branch in
-    `label ch01_chapter_select_entry` (its `else` jumps to `ch01_day4_start`). If the day has
-    its own route presets, add them in `game/systems/chapter_select.rpy` and pick them in
-    `game/screens/chapter_select_screen.rpy` (`cs_routes` and the preset heading).
+10. **Chapter Select (optional).** In the pack's `ch01_dayN_chapter.rpy` (init 1), write a seed
+    function that calls the earlier Days' `*_select_finished` seeds in order, stores the values the
+    start label reads and returns `"ch01_dayN_start"`, then register it:
+    `CHAPTER_SELECT_PRESETS["dayN"] = dict(label=..., note=..., heading=..., routes=..., seed=...)`.
+    The engine (`game/systems/chapter_select.rpy`) and the screen read the registry; neither names
+    a Day.
 11. **Tests, baselines and docs.** When the day's writing pass lands, add its story files to
     the `STORY` list in `tests/test_typed_names.py` and the `MIGRATED` list in
     `tests/test_cast_staging.py`. A new day adds init side effects and changes pinned tables,

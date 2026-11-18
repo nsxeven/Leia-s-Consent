@@ -33,7 +33,7 @@ files keep their old names, `ch01_main.rpy` and `ch01_scenes_*.rpy`).
 | `<prefix>_visuals.rpy` | this Day's `image bg ...` and `image cg ...` lines (and text placeholder cards) |
 | `<prefix>_registrations.rpy` | choice effects and tags, Full Transparency CG counts, review choice styles and stickers, Day helpers and thresholds, and the **story-key ledger** |
 | `<prefix>_gallery.rpy` | the Day's Gallery tab, its rows, and its CGs that are still placeholders |
-| `<prefix>_chapter.rpy` | the title-card line and the end-of-day review row |
+| `<prefix>_chapter.rpy` | the title-card line, the end-of-day review row, and the Day's Chapter Select preset (`CHAPTER_SELECT_PRESETS["dayN"]` and the seed functions that mark earlier Days finished) |
 | `game/python-packages/lc_days/<day>.py` | chapter titles (`CHAPTER`); Day 1's also holds its route rules, thoughts and journal flags |
 
 Every Day uses the same layout: scene files hold only labels, and all of a Day's choice rows,
@@ -68,16 +68,23 @@ Never reuse or rename a choice id.
 (`"ch01_dN_seen_" + name`) get one pattern line: `# key ch01_dN_seen_*: pending ...`.
 Keys are save data: never rename one.
 
-**CG files.** Save the image as `game/images/cg/ch01/CH1D<N>_CG_<Moment>_<NN>.webp` (for example
-`CH1D2_CG_PoolKnot_01.webp`; Prologue CGs are `game/images/cg/prologue/PRO_CG_<Moment>_<NN>.webp`).
-Declare it in the Day's `<prefix>_visuals.rpy`:
-`image cg ch01_dN_<moment>_01 = At("images/cg/ch01/CH1D<N>_CG_<Moment>_01.webp", prologue_fullscreen)`
-and show it in the scene with `show cg ch01_dN_<moment>_01`. When a CG replaces a text placeholder,
+**CG files.** Day N's CGs go in `game/images/cg/ch0N/`, named `CH<N>D<N>_CG_<Moment>_<NN>.webp`:
+Day 1 is `game/images/cg/ch01/CH1D1_CG_DriveToDinner_01.webp`, Day 2 is
+`game/images/cg/ch02/CH2D2_CG_Breakfast_01.webp`, and Prologue CGs are
+`game/images/cg/prologue/PRO_CG_<Moment>_<NN>.webp`. Close-ups add `Closeup` to the moment:
+`CH2D2_CG_BreakfastCloseup_01.webp`. The image NAME keeps the story ids, `ch01_dN_<moment>_<nn>`
+(chapter folder `ch0N` on disk, `ch01_dN_` in code). Declare it in the Day's `<prefix>_visuals.rpy`:
+`image cg ch01_d2_breakfast_01 = At("images/cg/ch02/CH2D2_CG_Breakfast_01.webp", prologue_fullscreen)`
+and show it in the scene with `show cg ch01_d2_breakfast_01`. (Day 1's older names have no `d1`,
+for example `ch01_drive_to_dinner`; never rename a shipped image name.) When a CG replaces a text placeholder,
 swap the `Composite(...)` line for the `At(...)` line (keep the image name) and remove the name from
 `GALLERY_PLACEHOLDER_IMAGES.update([...])` in the Day's `<prefix>_gallery.rpy`.
 
-**Backgrounds.** Save as `game/images/backgrounds/chapter 1/ch01_<place>.webp` and declare
-`image bg ch01_dN_<place> = "images/backgrounds/chapter 1/ch01_<place>.webp"` in the visuals file.
+**Backgrounds.** A place only one Day uses goes in `game/images/backgrounds/chapter N/ch0N_<place>.webp`
+(Day 2: `backgrounds/chapter 2/ch02_cafe.webp`). Shared villa rooms go in
+`game/images/backgrounds/villa/villa_<room>_<day|evening|night>.webp`. Declare it in the visuals file
+with the blur transform:
+`image bg ch01_d2_cafe = At("images/backgrounds/chapter 2/ch02_cafe.webp", prologue_bg_blur)`.
 
 **Sprites and outfits.** Character art goes in `game/images/sprites/<character>/`; each character's
 sprite definitions are in `game/sprites/<character>.rpy`. Placing sprites in scenes:

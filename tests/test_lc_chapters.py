@@ -119,7 +119,7 @@ class ChapterRegistryTests(unittest.TestCase):
         self.assertIn("config.start_callbacks", rpy)
         review = (GAME / "systems" / "day_review.rpy").read_text(encoding="utf-8")
         self.assertIn("store.save_name = lc_chapters.save_name(chapter_id)", review)
-        select = (GAME / "systems" / "chapter_select.rpy").read_text(encoding="utf-8")
+        select = "\n".join(p.read_text(encoding="utf-8") for p in sorted((GAME / "chapters").rglob("*_chapter.rpy")))
         for n in range(2, 6):
             self.assertIn('lc_chapters.select_label("day%d")' % n, select)
 
