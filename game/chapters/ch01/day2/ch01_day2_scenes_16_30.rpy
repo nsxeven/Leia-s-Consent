@@ -39,9 +39,21 @@ label ch01_day2_scene_16_forced_split:
 
     else:
         "[girlfriend_name] looked from the strangers to me, then crossed the few steps between us."
+
+        # The kiss and the hand (darryn 2026-11-19): a CG beat with the strangers' Hidden POV
+        # (one of the guys down the deck, watching). Both images are placeholders until the art lands.
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_pool_kiss
+        with dissolve
+        $ lc_pov_begin("d2_pool_kiss_stranger")
         "Without saying anything, she leaned in and kissed me."
         "I kissed her back and let one hand settle firmly on her ass."
         "[girlfriend_name] made a small surprised sound against my mouth."
+        $ lc_pov_end()
+        $ exit_cinematic_mode()
+        scene bg ch01_pool_day
+        with dissolve
+
         "When we separated, Maya was staring at us. [friend_name] had suddenly become very interested in his drink. The strangers had seen everything."
 
         if d2_lane == "exhibitionism":

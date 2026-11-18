@@ -14,6 +14,7 @@ init -2 python:
     GALLERY_PLACEHOLDER_IMAGES.update([
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_pool_top_accident",
+        "ch01_d2_pool_kiss", "ch01_d2_pool_kiss_stranger_pov",
         "d2_cafe_stranger",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
         "ch01_d2_dinner_reach", "ch01_d2_julian_underwear_reveal",
@@ -59,6 +60,12 @@ init -2 python:
         "Leia waits for his frappuccino, and a stranger leans in.",
         ["d2_cafe_stranger"],
         route="Leia's errand (every lane)")
+    gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
+        "Leia kisses Ryan by the pool, with an audience down the deck.",
+        [("ch01_d2_pool_kiss", "The kiss")])
+    gallery_row("d2_pool_kiss_pov", "ch01_d2", "A stranger's view (pool)",
+        "One of the guys down the deck didn't look away.",
+        [("ch01_d2_pool_kiss_stranger_pov", "A stranger's POV")], mature=True)
     gallery_row("d2_pool_top_accident", "ch01_d2", "The bee",
         "An accident in the pool: Leia hides behind Julian's shoulders.",
         ["ch01_d2_pool_top_accident"])

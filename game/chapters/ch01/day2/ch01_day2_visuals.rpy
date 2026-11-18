@@ -95,6 +95,20 @@ image cg ch01_d2_photo_group = At("images/cg/ch02/CH2D2_CG_GroupSelfie_01.png", 
 # Phone attachment alias (no cg prefix) for Maya's first Trip Group message.
 image ch01_d2_leia_maya_selfie = "cg ch01_d2_photo_leia_maya"
 
+# Scene 16 (Love and Exhibitionism lanes): Leia kisses Ryan by the pool table and his hand settles
+# on her ass; the stranger's view from down the deck is the Hidden POV. Placeholders until darryn
+# renders them; repoint at the files and re-place the sparkle on the watcher's eye (eye=, temple=).
+image cg ch01_d2_pool_kiss = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#2f7f98"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO POOL — {gf} KISSES {mc}\nHIS HAND ON HER ASS / STRANGERS DOWN THE DECK IN THE BACKGROUND\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+image cg ch01_d2_pool_kiss_stranger_pov = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#245f74"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nA STRANGER'S POV — FROM DOWN THE POOL DECK\n{gf} KISSING {mc}, HIS HAND ON HER ASS\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
+
 image cg ch01_d2_pool_top_accident = Composite(
     (1920, 1080),
     (0, 0), Solid("#277f9f"),
@@ -317,6 +331,19 @@ init 1 python:
         day_id="ch01_d2",
         label="Stranger, boutique",
         mood="noticed",
+    )
+    lc_pov_register(
+        "d2_pool_kiss_stranger",
+        image="cg ch01_d2_pool_kiss_stranger_pov",
+        source="cg ch01_d2_pool_kiss",
+        # Placeholder spot (background, where the strangers stand down the deck). When the art
+        # lands, switch to eye=(x, y), temple=... on the watching stranger (darryn 2026-11-19).
+        center=(1560, 300),
+        title="A stranger's POV",
+        mature=True,
+        day_id="ch01_d2",
+        label="Stranger, pool",
+        mood="watching",
     )
     # Moments strip: the two Day Two doors (systems/discovery.rpy). Marked when a non-neutral
     # answer is picked (Door A fix/watch, Door B nod/lap); the neutral answer plays today's text
