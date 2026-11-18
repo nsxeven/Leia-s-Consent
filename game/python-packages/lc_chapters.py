@@ -46,55 +46,7 @@ CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
 # title        : NEUTRAL title (title cards, undecided reviews)
 # routes       : route-flavoured titles revealed by the day review (+ repair)
 #                (None = no route variant; the neutral title is used)
-CHAPTERS = {
-    "day2": {
-        "number": 2, "number_word": "Two", "day": 2, "day_word": "Two",
-        "review_day": "ch01_d2",
-        "title": 'Plus One',
-        "routes": {
-            "love": 'They Hide Enough',
-            "love_exhib": 'Leave Them Open',
-            "nts": 'Terrible Influence',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
-            "ntr": 'Are We Okay?',
-            "repair": 'Tell Her the Truth',
-        },
-    },
-    "day3": {
-        "number": 3, "number_word": "Three", "day": 3, "day_word": "Three",
-        "review_day": "ch01_d3",
-        "title": 'The Glass Wall',
-        "routes": {
-            "love": 'Curtains Drawn',
-            "love_exhib": 'Getting Braver',
-            "nts": 'Causing a Scene',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
-            "ntr": 'Typing…',
-            "repair": None,  # no repair ending this day; falls back to the Love title
-        },
-    },
-    "day4": {
-        "number": 4, "number_word": "Four", "day": 4, "day_word": "Four",
-        "review_day": "ch01_d4",
-        "title": 'Blue Hour',
-        "routes": {
-            "love": 'Badly, Slowly',
-            "love_exhib": 'One Slow Heartbeat',
-            "nts": 'Watching Her Decide',
-            "ntr": 'The Hairclip',
-            "repair": 'Back in Her Hair',
-        },
-    },
-    "day5": {
-        "number": 5, "number_word": "Five", "day": 5, "day_word": "Five",
-        "review_day": "ch01_d5",
-        "title": 'The Water',
-        "routes": {
-            "love": "Nobody's Cove",
-            "love_exhib": 'Still Me',
-            "nts": 'Her Biggest Fan',
-            "ntr": 'Reasonable Doubt',
-            "repair": 'The Second Try',
-        },
-    },
+CHAPTERS = {  # each Day's entry: CHAPTER in its lc_days/<day>.py (added at import)
 }
 
 # ------------------------------------------------- ROUTE KEY -> FAMILY TABLE
@@ -133,10 +85,7 @@ UNSURE_ROUTE_KEYS = ()  # all settled by darryn 2026-11-09
 # NTS vs Love + Exhibitionism (darryn 2026-11-09): an exhibition ending shows
 # the NTS title when Ryan chose "likes watching" that day. Only Days 4 and 5
 # have that beat so far, so Days 1-3 always show the Love + Exhib title.
-NTS_VARIANT_KEYS = {
-    "day4": "ch01_d4_exhib_variant",
-    "day5": "ch01_d5_exhib_variant",
-}
+NTS_VARIANT_KEYS = {}  # each Day's NTS_VARIANT_KEY in its lc_days/<day>.py (added at import)
 NTS_VARIANT = "ryan_likes_watching"
 
 def _install_day_packs():

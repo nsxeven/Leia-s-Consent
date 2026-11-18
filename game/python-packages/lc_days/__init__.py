@@ -25,7 +25,7 @@ lc_stat_model at its end (it does, for THRESHOLDS) without an import cycle.
 import importlib
 
 # Play order. Engine tables are filled in this order.
-DAY_MODULES = ("prologue", "day1")
+DAY_MODULES = ("prologue", "day1", "day2", "day3", "day4", "day5")
 
 
 def modules():

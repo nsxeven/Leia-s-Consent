@@ -33,7 +33,7 @@ _HOOK_ADD = re.compile(r"^lc_hook_add\(\s*['\"]\w+['\"]\s*,\s*(\w+)\s*\)$")
 # loaded too, its own (empty) table replaces the stand-in first, as in game.
 DAY_PACK_TABLES = {
     "CHOICE_EFFECTS": dict, "CHOICE_TAGS": dict, "LC_CHOICE_CG_COUNT": dict,
-    "LC_CHOICE_STYLE": dict, "LC_MOMENT_STICKERS": tuple,
+    "LC_CHOICE_STYLE": dict, "LC_MOMENT_STICKERS": tuple, "LC_REVIEW_DAYS": dict,
 }
 
 
@@ -88,7 +88,9 @@ def load_blocks(anchors, env, packs=()):
     into another or moved to a new folder. The hook API file is always included:
     like Ren'Py itself, every system may call it. `packs` (Day names such as "day1") adds
     the registrations and chapter files of those Day packs, so their table rows load too."""
-    files = files_defining(anchors) | day_pack_files(*packs)
+    # Every Day's *_chapter.rpy registers its review row and title card, like in game.
+    files = files_defining(anchors) | day_pack_files(*packs) | {
+        m.relpath(p) for p in sorted((m.GAME / "chapters").rglob("*_chapter.rpy"))}
     if not files:
         raise LookupError(f"no file defines any of {sorted(anchors)}")
     files |= files_defining(["lc_hook_add"])

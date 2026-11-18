@@ -5,3 +5,8 @@
 
 # Opening title card (neutral title for everyone), shown by the Day's start label.
 define lc_chapter_card_day1 = lc_chapters.card_text("day1")
+
+# End-of-day review: this Day's row (systems/day_review.rpy). route_key = the end-route story key.
+init 1 python:
+    import lc_chapters
+    LC_REVIEW_DAYS["ch01_d1"] = {"label": lc_chapters.review_label("day1"), "chapter": "day1", "route_key": "ch01_day1_route_pressure"}

@@ -28,7 +28,7 @@ SC16_30 = DAY2 / "ch01_day2_scenes_16_30.rpy"
 SC01_15 = DAY2 / "ch01_day2_scenes_01_15.rpy"
 FEED = DAY2 / "ch01_day2_feed.rpy"
 VISUALS = DAY2 / "ch01_day2_visuals.rpy"
-GALLERY = GAME / "systems" / "gallery_data.rpy"
+GALLERY = GAME / "chapters" / "ch01" / "day2" / "ch01_day2_gallery.rpy"
 
 R, P = "relationship", "partner"
 # The approved table (script.md section 4, canon call K5 for scene 30).
@@ -366,7 +366,7 @@ class ArtTests(unittest.TestCase):
     def test_cafe_cg_has_a_gallery_page(self):
         src = _read(GALLERY)
         self.assertRegex(src, r'gallery_row\("d2_cafe_stranger", "ch01_d2"')
-        placeholders = src.split("GALLERY_PLACEHOLDER_IMAGES = set([", 1)[1].split("])", 1)[0]
+        placeholders = src.split("GALLERY_PLACEHOLDER_IMAGES.update([", 1)[1].split("])", 1)[0]
         self.assertIn('"d2_cafe_stranger"', placeholders)
 
     def test_places_register_real_backgrounds(self):

@@ -21,9 +21,9 @@ def review_routes_keys():
 
 
 def review_days():
-    src = (GAME / "systems" / "day_review.rpy").read_text(encoding="utf-8")
-    block = src.split("LC_REVIEW_DAYS = {", 1)[1].split("\n    }\n", 1)[0]
-    return dict(re.findall(r'"(ch01_d\d+)": \{[^}]*"chapter": "([a-z0-9]+)"', block))
+    # Each Day pack registers its review row in its *_chapter.rpy.
+    src = "\n".join(p.read_text(encoding="utf-8") for p in sorted((GAME / "chapters").rglob("*_chapter.rpy")))
+    return dict(re.findall(r'LC_REVIEW_DAYS\["(ch01_d\d+)"\] = \{[^}]*"chapter": "([a-z0-9]+)"', src))
 
 
 class ChapterRegistryTests(unittest.TestCase):

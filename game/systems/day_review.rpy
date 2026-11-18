@@ -85,6 +85,8 @@ init -5 python:
     # Moment stickers: up to two per day, in this priority order.
     # Each Day pack appends its rules (LC_MOMENT_STICKERS = LC_MOMENT_STICKERS + (...)).
     LC_MOMENT_STICKERS = ()
+    # {day_id: label/chapter/route_key}, one row per Day in play order (Day packs, init 1).
+    LC_REVIEW_DAYS = {}
 
 init 20 python:
     import os
@@ -92,15 +94,9 @@ init 20 python:
     import lc_chapters  # chapter registry (python-packages/lc_chapters.py)
 
     LC_REVIEW_GROUPS = ("relationship", "partner", "player")
-    # One chapter per day: labels and titles come from the chapter registry
+    # One review per day: each Day pack registers its row in LC_REVIEW_DAYS (its *_chapter.rpy,
+    # init 1; created at init -5 above). Labels and titles come from the chapter registry
     # (lc_chapters.py). "chapter" is the registry id; day ids stay ch01_dN.
-    LC_REVIEW_DAYS = {
-        "ch01_d1": {"label": lc_chapters.review_label("day1"), "chapter": "day1", "route_key": "ch01_day1_route_pressure"},
-        "ch01_d2": {"label": lc_chapters.review_label("day2"), "chapter": "day2", "route_key": "ch01_d2_end_route"},
-        "ch01_d3": {"label": lc_chapters.review_label("day3"), "chapter": "day3", "route_key": "ch01_d3_lane"},
-        "ch01_d4": {"label": lc_chapters.review_label("day4"), "chapter": "day4", "route_key": "ch01_d4_end_route"},
-        "ch01_d5": {"label": lc_chapters.review_label("day5"), "chapter": "day5", "route_key": "ch01_d5_end_route"},
-    }
     LC_REVIEW_ROUTES = {
         "mixed": ("Mixed / undecided", "The direction is still taking shape."),
         "love": ("Love", "Your time together ended on a close, private note."),

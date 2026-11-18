@@ -49,7 +49,7 @@ DAY_PACKS = (
 PACK_FILES = ("_registrations.rpy", "_gallery.rpy", "_chapter.rpy")
 
 # Days whose pack is not complete yet (shrink, never grow; ends empty).
-PENDING_PACKS = {"day1", "day2", "day3", "day4", "day5"}
+PENDING_PACKS = set()
 
 # ------------------------------------------------------------- engine day ids
 ENGINE_DIRS = ("systems", "screens")
@@ -232,7 +232,7 @@ class DayContractTests(unittest.TestCase):
         if pack["review"]:
             for needed in (rf"lc_review_begin\(\s*[\"']{pack['review']}[\"']",
                            rf"call lc_day_review\(\s*[\"']{pack['review']}[\"']",
-                           rf"lc_review_day\(\s*[\"']{pack['review']}[\"']"):
+                           rf"LC_REVIEW_DAYS\[\s*[\"']{pack['review']}[\"']\]"):
                 if not re.search(needed, text):
                     problems.append(f"review {pack['review']}: no match for {needed!r}")
         for suffix in PACK_FILES:
