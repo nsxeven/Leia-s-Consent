@@ -1493,6 +1493,11 @@ label ch01_day2_scene_11b_boutique:
     maya "Drink before we go back? I'm melting."
     gf "Please. Yes. Something with ice."
 
+    # Drinks at a mall café before heading back (darryn renders the BG; placeholder for now).
+    scene bg ch01_d2_mall_drinks
+    with dissolve
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
+
     "We found a table nearby and dropped the shopping bags around our feet."
 
     maya "Okay, that went way better than I expected."
@@ -1749,8 +1754,11 @@ label ch01_day2_scene_11b_boutique:
 
 label ch01_day2_scene_12_villa_pool_plan:
 
-    # Leaving the mall: no walk/villa outfits for Maya yet, so drop the mall cast.
-    $ cast()
+    # The walk back to the villa (darryn renders the BG; placeholder for now). Everyone is
+    # still in their café clothes.
+    scene bg ch01_d2_walk_back
+    with dissolve
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
 
     "We headed back toward [friend_name]'s place with Maya and [girlfriend_name] a few steps ahead of us."
 
@@ -1772,6 +1780,8 @@ label ch01_day2_scene_12_villa_pool_plan:
 
     scene bg ch01_villa_living
     with fade
+    # Everyone is still in their café clothes from the mall.
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
 
     "Maya stopped just inside."
 
@@ -1788,13 +1798,19 @@ label ch01_day2_scene_12_villa_pool_plan:
     gf "Come on, I'll show you around. Wait till you see the bathroom, it's ridiculous."
     "Yesterday [girlfriend_name] had been the newcomer. Today she was the one leading Maya through the villa like she'd already learned its shape."
 
+    scene bg ch01_pool_day
+    with dissolve
+    $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
+
     "They made it as far as the view outside before Maya stopped again."
 
     maya "Hold on. Is that a private pool?"
     friend "Yeah. I mean, it's not that big."
     maya "You didn't think that was relevant information? You let me talk about the resort pool for ten minutes."
-    friend "Relevant to what? I didn't want to lead with it. You can't just meet someone and go, hi, I'm [friend_name], there's a pool. That's a weird thing to say to a person."
-    maya "To everything! It's relevant to everything."
+    friend "Relevant to what? I didn't wanna be a weirdo and flex and be like, hi, I'm [friend_name] and I'm staying in a villa with a private pool, wanna come over? I might as well ask you if you're down to hook up."
+    $ face("maya", "shy")
+    maya "Well..."
+    $ face("maya", "neutral")
 
     gf "We were in it all afternoon yesterday."
     maya "And nobody told me to bring a swimsuit?"

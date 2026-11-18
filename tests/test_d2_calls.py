@@ -50,7 +50,9 @@ class LeiaCasualOutfitTests(unittest.TestCase):
     def test_cafe_and_mall_use_the_casual_sprite(self):
         self.assertTrue((GAME / "images/sprites/leia/PRO/Base_Casual.png").is_file())
         self.assertNotIn('leia="lounge"', SCENES)
-        self.assertEqual(SCENES.count('cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")'), 3)
+        # Café (3), then the mall drinks, the walk back, the villa and the pool view: everyone is
+        # still in their café clothes (darryn 2026-11-19).
+        self.assertEqual(SCENES.count('cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")'), 7)
         self.assertNotIn("TODO: Leia's café/mall CGs", SCENES)
 
     def test_boutique_casts_casual_then_hides_her_in_the_changing_room(self):
@@ -67,7 +69,7 @@ class LeiaCasualOutfitTests(unittest.TestCase):
         self.assertLess(boutique.index('cast_add(leia="casual"'), boutique.index("emerged in their normal clothes"))
         self.assertIn('$ cast(ryan="casual", leia="casual", maya="green_tube_top")\n    "Maya kept the red dress', body)
         villa = block(SCENES, "ch01_day2_scene_12_villa_pool_plan")
-        self.assertIn("$ cast()", villa.split('"We headed back', 1)[0])
+        self.assertIn('scene bg ch01_d2_walk_back', villa.split('"We headed back', 1)[0])
 
 
 class IsShePrettyMenuTests(unittest.TestCase):
