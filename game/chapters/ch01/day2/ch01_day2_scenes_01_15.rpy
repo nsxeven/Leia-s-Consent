@@ -1203,12 +1203,12 @@ label ch01_day2_scene_11b_boutique:
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
     $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
-        gf "I look terrified. Look at my face, that's a terrified face. And [player_name]'s going to do his stupid happy face when he sees it, I just know it."
+        gf "Don't look at my face. I'm so red right now, aren't I? And he's already got the picture, so he's definitely doing his stupid happy face over there."
     elif d2_tint == "exhibitionism":
-        gf "I look terrified. Look at my face, that's a terrified face. It's kind of good from the side, though. Don't you dare repeat that."
+        gf "Don't look at my face, I can feel how red it is. Is it bad? Like, actually bad, or just bad because it's me in it?"
     else:
-        gf "I look terrified. Look at my face, that's a terrified face."
-    maya "Both can be true. Terrified and hot. That's a whole look."
+        gf "Don't look at my face. I'm so red right now. I can feel it in my ears."
+    maya "You're red because you look like this, babe. That's allowed."
     maya "I'm serious, I'm actually jealous. I picked the wrong dress for myself and the right one for you, and now I have to live with that."
     gf "Maya, it's a size too small. I'm literally holding it on. Should I just try the bigger one?"
     maya "No! Absolutely not. The bigger one won't do this. This is the one."

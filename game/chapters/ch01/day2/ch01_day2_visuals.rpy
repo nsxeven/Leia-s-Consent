@@ -207,18 +207,9 @@ image cg ch01_d2_ntr_dream_wrong_room = Composite(
 
 image bg ch01_d2_mall = At("images/backgrounds/chapter 2/ch02_mall.webp", prologue_bg_blur)
 image bg ch01_d2_boutique = At("images/backgrounds/chapter 2/ch02_clothingstore.webp", prologue_bg_blur)
-# Placeholders until darryn renders them (2026-11-19): drinks at a mall café after the
-# boutique, and the walk back to the villa. Point them at the files when they land.
-image bg ch01_d2_mall_drinks = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#c9a98a"),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — MALL CAFÉ TABLE, AFTERNOON (bg ch01_d2_mall_drinks)\nFINAL ART PENDING (DARRYN)", size=44, color="#352f2b"),
-)
-image bg ch01_d2_walk_back = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#8fc3cf"),
-    (90, 70), Text("BACKGROUND PLACEHOLDER\nDAY TWO — WALK BACK TO THE VILLA, AFTERNOON (bg ch01_d2_walk_back)\nFINAL ART PENDING (DARRYN)", size=44, color="#ffffff"),
-)
+# Drinks at the mall café after the boutique, and the walk back to the villa (darryn 2026-11-19).
+image bg ch01_d2_mall_drinks = At("images/backgrounds/chapter 2/ch02_mallcafe.webp", prologue_bg_blur)
+image bg ch01_d2_walk_back = At("images/backgrounds/chapter 2/ch02_walkback.webp", prologue_bg_blur)
 
 # Boutique try-on (darryn 2026-11-17): Leia alone with the black cutout mini (01-03),
 # the mirror selfie she sends Ryan (Capture), asking Maya through the curtain (04),
