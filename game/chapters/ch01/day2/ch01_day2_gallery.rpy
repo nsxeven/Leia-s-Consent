@@ -12,7 +12,6 @@ init -2 python:
 
     # CGs that are still text placeholders (final art pending): remove a name when its art lands.
     GALLERY_PLACEHOLDER_IMAGES.update([
-        "ch01_d2_photo_leia_maya",
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_pool_top_accident",
         "d2_cafe_stranger",
@@ -38,8 +37,8 @@ init -2 python:
         [("ch01_d2_maya_reveal", "At the door"), ("ch01_d2_maya_cafe_01", "At the table"),
          ("ch01_d2_maya_cafe_02", "Getting along")])
     gallery_row("d2_photo_leia_maya", "ch01_d2", "Leia and Maya",
-        "A photo of Leia and Maya.",
-        ["ch01_d2_photo_leia_maya"])
+        "Maya's selfie with Leia, then the new Trip Group picture with all four.",
+        [("ch01_d2_photo_leia_maya", "Leia and Maya"), ("ch01_d2_photo_group", "Trip Group")])
     gallery_row("d2_mall_arrival", "ch01_d2", "Island mall",
         "Julian's quick shirt stop leads Leia and Maya past a boutique window and inside.",
         [("ch01_d2_mall_arrival", "Arriving"), ("ch01_d2_mall_boutique_window", "At the window"),

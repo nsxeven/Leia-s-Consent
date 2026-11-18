@@ -76,9 +76,15 @@ class MayaCafeTests(unittest.TestCase):
         self.assertIn('$ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', after_cafe_02)
 
     def test_walk_photo_is_separate_and_cafe_cast_ends(self):
-        self.assertIn('image cg ch01_d2_photo_leia_maya = Composite(', VISUALS)
+        # Final art (darryn 2026-11-19): Maya's selfie with Leia, then the Trip Group selfie.
+        self.assertIn('image cg ch01_d2_photo_leia_maya = At("images/cg/ch02/CH2D2_CG_MayaLeiaSelfie_01.webp"', VISUALS)
+        self.assertIn('image cg ch01_d2_photo_group = At("images/cg/ch02/CH2D2_CG_GroupSelfie_01.png"', VISUALS)
         self.assertIn('gallery_row("d2_photo_leia_maya"', GALLERY)
-        self.assertIn('"ch01_d2_photo_leia_maya",', GALLERY)  # still a placeholder
+        self.assertNotIn('        "ch01_d2_photo_leia_maya",\n', GALLERY)  # no longer a placeholder
+        walk = scene("ch01_day2_scene_09_photo_walk")
+        self.assertLess(walk.index("scene cg ch01_d2_photo_leia_maya"), walk.index("You have a trip group? And I'm not in it?"))
+        self.assertLess(walk.index("You have a trip group? And I'm not in it?"), walk.index("scene cg ch01_d2_photo_group"))
+        self.assertLess(walk.index("scene cg ch01_d2_photo_group"), walk.index("phone_group_maya_member = True"))
         self.assertIn("$ cast()", scene("ch01_day2_scene_09_photo_walk"))
 
     def test_gallery_has_distinct_three_page_sequence(self):

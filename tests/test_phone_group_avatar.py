@@ -83,7 +83,7 @@ class TripGroupAvatarTest(unittest.TestCase):
         two = (ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
         screen = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
         self.assertLess(one.index("phone_group_avatar_stage = \"trio\""), one.index("ch01_scene_05_complete"))
-        self.assertLess(two.index("phone_group_maya_member = True"), two.index("ch01_d2_photo_group"))
+        self.assertLess(two.index("phone_group_maya_member = True"), two.index('set_story_flag("ch01_d2_photo_group")'))
         self.assertEqual(screen.count("add phone_group_avatar():"), 2)
         self.assertNotIn('add "gui/phone/sprite_match/avatar_group.png":', screen)
 

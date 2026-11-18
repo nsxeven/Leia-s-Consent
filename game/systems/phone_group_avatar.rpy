@@ -2,8 +2,8 @@
 #
 # Purpose: The Trip Group starts without a photograph; the story sets the stage ('trio' after the
 #   Day 1 selfie, Maya joins on Day 2). Portraits are pre-rendered circular PNGs from
-#   tools/gen_phone_group_avatars.py. The four-person art is pending
-#   (images/cg/ch01/CH1D2_CG_GroupSelfie_Four.webp); until then it falls back to the trio.
+#   tools/gen_phone_group_avatars.py. The four-person picture is the Day 2 photo-walk selfie
+#   (images/cg/ch02/CH2D2_CG_GroupSelfie_01.png); without its avatar PNG it falls back to the trio.
 #
 # Public API (call these from scenes/screens):
 #   phone_group_avatar()                      the circular portrait (or the neutral disc) for header
@@ -33,7 +33,7 @@ default phone_group_maya_member = False
 image phone_avatar_group_four = DynamicDisplayable(phone_group_four_image)
 
 init python:
-    PHONE_GROUP_FOUR_ART = "images/cg/ch01/CH1D2_CG_GroupSelfie_Four.webp"
+    PHONE_GROUP_FOUR_ART = "images/cg/ch02/CH2D2_CG_GroupSelfie_01.png"
     PHONE_GROUP_FOUR_AVATAR = "gui/phone/sprite_match/avatar_group_four.png"
     PHONE_GROUP_TRIO_AVATARS = {
         "White": "gui/phone/sprite_match/avatar_group_trio_white.png",

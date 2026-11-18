@@ -825,22 +825,67 @@ label ch01_day2_scene_09_photo_walk:
     else:
         "Seeing [girlfriend_name] relax around Maya removed the last trace of tension from breakfast."
 
-    maya "Okay! Group photo first. Then combinations."
-    friend "Combinations? What does that mean? How many combinations?"
-    maya "All of them. You people took one decent photo yesterday, and now I have standards to live up to."
+    # Selfies (darryn 2026-11-19): Leia + Maya first (MayaLeiaSelfie_01, Maya holds the phone),
+    # then Julian brings up the Trip Group picture, Maya finds out she isn't in the group, and
+    # all four take the new group picture (GroupSelfie_01, Ryan holds the phone).
+    maya "Okay. Before anything else. You, me, selfie."
+    "She didn't wait for an answer. She hooked an arm around [girlfriend_name], held her phone out at arm's length and pulled her in until their heads touched."
+    gf "Wait, I'm not ready, my hair's doing a thing—"
+    maya "Your hair is perfect. Smile like I just said something rude."
+    "[girlfriend_name] laughed, and Maya took it right then."
+    $ lc_sfx("camera_shutter")
 
-    "The first group photo took three attempts because [friend_name] blinked in two of them."
-    friend "The sun is aggressive today. That's not on me."
-    maya "It's your eyelids. Your eyelids are the problem."
-    maya "Right, I'm joining the Trip Group, and this one's the group picture. Everyone's eyes are open, that's never happening again. Somebody add me."
-    gf "Yes, add her! And use this one, because we're all in it and [friend_name] actually has his eyes open."
-    friend "I do, somehow. Hang on, I'll add Maya and change the picture before we forget which one it was."
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_photo_leia_maya
+    with dissolve
+
+    maya "See? That's the one. You stopped thinking about the camera."
+    gf "Easy for you to say, you look like that in every photo."
+    maya "Correct. I'm extremely photogenic. It's a curse."
+    gf "You made me laugh on purpose, though. That's cheating."
+    maya "That's not cheating, that's technique. You owe me photography credit now."
+    gf "Absolutely not. I'm not crediting you."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_island_day
+    with dissolve
+
+    friend "Okay, that one's actually good. That reminds me, we should update the Trip Group picture. It's still the three of us at the pool yesterday."
+    maya "...Sorry. The what?"
+    friend "The Trip Group. The group chat. For the trip."
+    maya "You have a trip group? And I'm not in it?"
+    mc "You've been here for one lunch."
+    maya "One lunch, and I'm already a better member than all three of you. Wow. Okay. I see how it is."
+    gf "Oh my God, she's right, though. Add her! [friend_name], add her right now."
+    friend "I'm adding her! I'm adding her. Give me a second, I have to find the button."
+    maya "And we're taking a new picture for it. All four of us, right now, or it doesn't count."
+    mc "I've got the longest arms. Everyone get in."
+    "I held my phone up. Maya pulled [girlfriend_name] in under my arm, and [friend_name] squeezed in behind them with his sunglasses still on."
+    $ lc_sfx("camera_shutter")
+
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_photo_group
+    with dissolve
+
+    maya "Okay, that's so cute. Look at us."
+    gf "[friend_name], you kept your sunglasses on."
+    friend "Strategic. Nobody can prove I blinked."
+    maya "Coward. It's perfect, though. That's the group picture. Send it."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_island_day
+    with dissolve
+
+    "I sent it to the group, and [friend_name] finally found the button."
     $ phone_group_maya_member = True
     $ phone_add_message("group", "system", text=friend_name + " added Maya to the group.", message_id="ch01_trip_group_maya_added", mark_unread=False)
     $ phone_group_avatar_stage = "four"
     $ phone_add_message("group", "system", text=friend_name + " changed the group picture.", message_id="ch01_trip_group_four_photo", mark_unread=False)
+    $ phone_add_message("group", "maya", text="First post as an official member. You're welcome.", message_id="ch01_trip_group_maya_first_post", attachment_id="ch01_d2_leia_maya_selfie", attachment_label=girlfriend_name + " and Maya", mark_unread=False)
+    "Maya's first message in the group was the selfie of her and [girlfriend_name], obviously."
+    gf "Obviously."
 
-    maya "And it's going on [LC_FEED_APP_NAME], obviously. A photo this good doesn't get to live in a group chat."
+    maya "And the group one's going on [LC_FEED_APP_NAME]. A photo this good doesn't get to live in a group chat."
     "She was already typing a caption with one thumb."
     maya "Wait. [player_name], you're not even on [LC_FEED_APP_NAME], are you? I just tried to tag you and you don't exist."
     mc "I've never really needed it."
@@ -858,7 +903,7 @@ label ch01_day2_scene_09_photo_walk:
 
     "Then Maya started assigning pairs like a teacher on school photo day."
 
-    "We took the obvious ones first: all four of us, [girlfriend_name] and me, Maya and me, [friend_name] and Maya."
+    "We took the obvious ones next: [girlfriend_name] and me, Maya and me, [friend_name] and Maya."
 
     $ set_story_flag("ch01_d2_photo_group")
     $ set_story_flag("ch01_d2_photo_ryan_leia")
@@ -871,27 +916,12 @@ label ch01_day2_scene_09_photo_walk:
 
 label ch01_day2_scene_10_leia_maya_photo:
 
-    $ enter_cinematic_mode()
-    scene cg ch01_d2_photo_leia_maya
-    with dissolve
-
-    "Maya hooked an arm around [girlfriend_name] and immediately ruined her attempt at a careful pose by making her laugh."
-    "The resulting photo looked better than anything either of them had planned."
-
-    maya "See? That's the one. You stopped thinking about the camera."
-    gf "Easy for you to say, you look like that in every photo."
-    maya "Correct. I'm extremely photogenic. It's a curse."
-    gf "You made me laugh on purpose, though. That's cheating."
-    maya "That's not cheating, that's technique. You owe me photography credit now."
-    gf "Absolutely not. I'm not crediting you."
-
-    "[girlfriend_name] was still smiling when she looked at the result."
-
-    $ exit_cinematic_mode()
-    scene bg ch01_d2_island_day
-    with dissolve
-
-    "[girlfriend_name] saved the photo immediately."
+    # The Leia + Maya selfie itself now plays in scene 09, before the group picture.
+    "[girlfriend_name] had the selfie of her and Maya open on her phone again before we'd even reached the next shop."
+    gf "I'm actually keeping this one. Don't tell her."
+    mc "She's standing right there."
+    maya "I heard that! Credit. I want credit."
+    "[girlfriend_name] saved it anyway, still smiling."
 
     $ set_story_flag("ch01_d2_photo_leia_maya")
     $ set_story_flag("ch01_d2_scene_10_complete")

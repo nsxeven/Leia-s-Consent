@@ -232,7 +232,8 @@ D1_GROUP = [
     "ch01_trip_group_late_photo_leia_reply", "ch01_movie_photo_reply_ryan", "ch01_movie_photo_reply_followup_01",
     "ch01_trip_group_breakfast_warning", "ch01_trip_group_breakfast_leia_reply",
 ]
-D2_GROUP = ["ch01_d2_julian_wake_up", "ch01_trip_group_maya_added", "ch01_trip_group_four_photo"]
+D2_GROUP = ["ch01_d2_julian_wake_up", "ch01_trip_group_maya_added", "ch01_trip_group_four_photo",
+            "ch01_trip_group_maya_first_post"]
 D2_MAYA = ["ch01_d2_maya_lunch_checkin", "ch01_d2_maya_lunch_reply_ryan", "ch01_d2_maya_lunch_reply_followup_01",
            "ch01_d2_maya_dm_01", "ch01_d2_maya_dm_02"]
 D2_LEIA = ["ch01_d2_boutique_selfie", "ch01_d2_boutique_selfie_ask", "ch01_d2_boutique_selfie_reply",

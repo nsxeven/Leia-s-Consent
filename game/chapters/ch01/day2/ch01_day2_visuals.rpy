@@ -87,11 +87,11 @@ image cg ch01_d2_mall_boutique_window = At("images/cg/ch02/CH2D2_CG_Mall_02.webp
 # Maya holds up a red and a black dress to compare; Leia weighs in.
 image cg ch01_d2_shop_dresses = At("images/cg/ch02/CH2D2_CG_Shop_01.webp", prologue_fullscreen)
 
-image cg ch01_d2_photo_leia_maya = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#6b8fa0"),
-    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO PHOTO — {gf} + MAYA\nNEW FRIENDSHIP / RELAXED PAIRING", size=50, color="#ffffff"),
-)
+# Photo walk selfies (scene 09): Maya's selfie with Leia, then the new Trip Group picture.
+image cg ch01_d2_photo_leia_maya = At("images/cg/ch02/CH2D2_CG_MayaLeiaSelfie_01.webp", prologue_fullscreen)
+image cg ch01_d2_photo_group = At("images/cg/ch02/CH2D2_CG_GroupSelfie_01.png", prologue_fullscreen)
+# Phone attachment alias (no cg prefix) for Maya's first Trip Group message.
+image ch01_d2_leia_maya_selfie = "cg ch01_d2_photo_leia_maya"
 
 image cg ch01_d2_pool_top_accident = Composite(
     (1920, 1080),

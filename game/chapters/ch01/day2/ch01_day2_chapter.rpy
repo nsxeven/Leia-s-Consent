@@ -130,6 +130,8 @@ init 1 python:
         chapter_select_phone("group", "system", "ch01_trip_group_maya_added", friend_name + " added Maya to the group.")
         chapter_select_phone("group", "system", "ch01_trip_group_four_photo", friend_name + " changed the group picture.")
         chapter_select_phone_group("four", maya_member=True)
+        chapter_select_phone("group", "maya", "ch01_trip_group_maya_first_post", "First post as an official member. You're welcome.",
+                             attachment_id="ch01_d2_leia_maya_selfie", attachment_label=girlfriend_name + " and Maya")
         chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie", "", attachment_id="ch01_d2_changing_room_selfie",
                              attachment_label=girlfriend_name + " in the changing room")
         chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_ask", "Be honest. Is this too much?? Maya picked it. Obviously.")

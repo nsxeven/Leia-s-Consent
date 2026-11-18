@@ -20,6 +20,8 @@ SCALE = 4
 CROPS = {
     "CH1D1_CG_PoolSelfie_Trio_White.webp": (430, 0, 1470, 1040),
     "CH1D1_CG_PoolSelfie_Trio_Blue.webp": (430, 0, 1470, 1040),
+    # Day 2 group selfie: Maya, Ryan, Leia and Julian's faces span x ~520-1440.
+    "CH2D2_CG_GroupSelfie_01.png": (440, 0, 1520, 1080),
 }
 
 
@@ -50,7 +52,7 @@ def main():
         target = OUTPUT / f"avatar_group_trio_{color.lower()}.png"
         render_avatar(source).save(target)
         print(target)
-    four = GAME / "images/cg/ch01/CH1D2_CG_GroupSelfie_Four.webp"
+    four = GAME / "images/cg/ch02/CH2D2_CG_GroupSelfie_01.png"
     if four.exists():
         target = OUTPUT / "avatar_group_four.png"
         render_avatar(four).save(target)

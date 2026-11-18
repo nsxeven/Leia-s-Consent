@@ -689,11 +689,11 @@ class WiringTests(unittest.TestCase):
 
 
 class DayTwoIntroTests(unittest.TestCase):
-    def test_maya_intro_post_is_registered_text_only_and_stamped_by_the_story_clock(self):
+    def test_maya_intro_post_carries_the_group_selfie_and_is_stamped_by_the_story_clock(self):
         src = _read(DAY2_FEED)
         call = re.search(r'lc_feed_register\(\s*"d2_maya_group_photo".*?\)\n', src, re.S)
         self.assertIsNotNone(call)
-        self.assertNotIn("image=", call.group(0))
+        self.assertIn('image="cg ch01_d2_photo_group"', call.group(0))
         self.assertNotIn("mature=", call.group(0))
         self.assertNotIn("when=", call.group(0))
 
