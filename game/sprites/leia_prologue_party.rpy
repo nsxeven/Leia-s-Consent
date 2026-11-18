@@ -475,3 +475,38 @@ image leia_camisole_panty flustered = Fixed(lc_sprite_silhouette("leia_camisole_
 image leia_camisole_panty skeptical = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers skeptical"), xysize=(941, 1672))
 image leia_camisole_panty angry = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers angry"), xysize=(941, 1672))
 image leia_camisole_panty ahegao = Fixed(lc_sprite_silhouette("leia_camisole_panty_layers ahegao"), xysize=(941, 1672))
+
+# Day Two boutique: the black cutout mini she tries on (darryn's Latex Dress layers).
+# Same blink, expression, hair and breathing mechanics as the other Leia outfits.
+layeredimage leia_latex_dress_layers:
+    always "images/sprites/leia/CH2/Base_LatexDress.png"
+    always "images/sprites/leia/CH2/Chest_LatexDress.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral default:
+            "leia_expression_neutral_blink"
+        attribute smile:
+            "images/sprites/leia/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/leia/expressions/Shy.png"
+        attribute pout:
+            "images/sprites/leia/expressions/Pout.png"
+        attribute flustered:
+            "images/sprites/leia/expressions/Flustered.png"
+        attribute skeptical:
+            "images/sprites/leia/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/leia/expressions/Angry.png"
+        attribute ahegao:
+            "images/sprites/leia/expressions/Ahegao.png"
+
+    always "images/sprites/leia/Hair.png" at leia_hair_idle
+
+image leia_latex_dress neutral = Fixed(lc_sprite_silhouette("leia_latex_dress_layers neutral"), xysize=(941, 1672))
+image leia_latex_dress smile = Fixed(lc_sprite_silhouette("leia_latex_dress_layers smile"), xysize=(941, 1672))
+image leia_latex_dress shy = Fixed(lc_sprite_silhouette("leia_latex_dress_layers shy"), xysize=(941, 1672))
+image leia_latex_dress pout = Fixed(lc_sprite_silhouette("leia_latex_dress_layers pout"), xysize=(941, 1672))
+image leia_latex_dress flustered = Fixed(lc_sprite_silhouette("leia_latex_dress_layers flustered"), xysize=(941, 1672))
+image leia_latex_dress skeptical = Fixed(lc_sprite_silhouette("leia_latex_dress_layers skeptical"), xysize=(941, 1672))
+image leia_latex_dress angry = Fixed(lc_sprite_silhouette("leia_latex_dress_layers angry"), xysize=(941, 1672))
+image leia_latex_dress ahegao = Fixed(lc_sprite_silhouette("leia_latex_dress_layers ahegao"), xysize=(941, 1672))

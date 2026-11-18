@@ -1525,7 +1525,10 @@ label ch01_day2_scene_11b_boutique:
     $ exit_cinematic_mode()
     scene bg ch01_d2_boutique
     with dissolve
-    $ cast(ryan="casual")
+    # Leia in the try-on dress (Latex Dress sprite, darryn 2026-11-18). Maya's red
+    # dress has no sprite yet, so she stays off stage.
+    $ cast(ryan="casual", leia="latex_dress")
+    $ face("leia", "shy")
 
     "From my chair by the window, I watched [girlfriend_name] turn around."
     "Even from across the shop, the dress was a lot. She had both hands pulling the hem down at the front, and Maya was right behind her, holding the top up for her."
@@ -1535,6 +1538,7 @@ label ch01_day2_scene_11b_boutique:
     "Maya's voice carried across the entire boutique. Every head that hadn't already turned toward the changing rooms turned now."
     "A woman at the shoe wall stopped halfway into a sandal. Two guys by the jeans gave up pretending to look at jeans."
     "[girlfriend_name] went red from her collarbones up. She looked at the floor like she was hoping it would open up for her."
+    $ face("leia", "flustered")
     gf "Maya! Why would you yell?"
     maya "So he'd hear me! And it worked, look, everyone heard me."
     gf "That's not the good part!"
@@ -1568,6 +1572,7 @@ label ch01_day2_scene_11b_boutique:
     if d2_mall_ryan_present:
         "I crossed the shop. By the time I got there, [girlfriend_name] still had both hands on the hem, and Maya was still holding the top up for her."
         $ d2_selfie_reply = get_story_value("ch01_d2_boutique_selfie_reply")
+        $ face("leia", "shy")
         if d2_selfie_reply == "affection":
             gf "Don't say it again. If you say incredible again in front of all these people, I'm going to die. Right here, by the mirror."
             mc "I wasn't going to say it again."
@@ -1580,6 +1585,7 @@ label ch01_day2_scene_11b_boutique:
             gf "Yes. She did this to me. You can see that now. In person."
             maya "You're welcome. Both of you."
         elif d2_selfie_reply == "flat":
+            $ face("leia", "pout")
             gf "Still just nice?"
             mc "It's more than nice. Up close it's way more than nice. I just didn't know how to type it."
             gf "Okay. Thanks."
@@ -1679,12 +1685,15 @@ label ch01_day2_scene_11b_boutique:
         $ set_story_flag("ch01_d2_leia_noticed_julian_stare")
         $ set_story_value("ch01_d2_boutique_slip_witness", "julian")
 
+    $ face("leia", "flustered")
     "The man from the racks had already found somewhere else in the shop to be."
     maya "In my defense, he had really good taste."
     gf "I'm changing. Into my own clothes. Right now."
     maya "So that's a maybe."
     gf "That's a no, Maya."
 
+    $ cast_add(leia="casual", maya="green_tube_top")
+    $ face("leia", "neutral")
     "A few minutes later they emerged in their normal clothes. Maya had bought the red dress without hesitation."
     "[girlfriend_name] still had the black mini over one arm."
 
