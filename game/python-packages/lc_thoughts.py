@@ -65,270 +65,36 @@ TINT_LABELS = {
 #   ("flag", flag_id)            the story flag is set
 #   ("value_set", key)           the story value exists (any value but None)
 #   ("value_min", key, n)        the story value is a number >= n
-BEATS = {
-    "d1_photo_shoot": {"day": "ch01_d1", "test": ("value_min", "ch01_pool_capture_count", 1)},
-    "d1_towel": {"day": "ch01_d1", "test": ("flag", "ch01_scene_06_complete")},
-    "d1_dinner_stranger": {"day": "ch01_d1", "test": ("flag", "ch01_leia_stranger_second_glance")},
-    "d1_julian_carry": {"day": "ch01_d1", "test": ("value_set", "ch01_carry_response")},
-    "d1_sofa_glance": {"day": "ch01_d1", "test": ("value_set", "ch01_watching_response")},
-    "d1_dream": {"day": "ch01_d1", "test": ("flag", "ch01_day1_towel_dream_seen")},
-    "d2_breakfast": {"day": "ch01_d2", "test": ("flag", "ch01_d2_scene_04_complete")},
-    "d2_maya_cafe": {"day": "ch01_d2", "test": ("flag", "ch01_d2_scene_07_complete")},
-    "d2_boutique": {"day": "ch01_d2", "test": ("value_set", "ch01_d2_boutique_slip_witness")},
-    "d2_pool_bee": {"day": "ch01_d2", "test": ("value_set", "ch01_d2_pool_incident")},
-    "d2_dinner": {"day": "ch01_d2", "test": ("value_set", "ch01_d2_dinner_reach")},
-    "d2_game_night": {"day": "ch01_d2", "test": ("flag", "ch01_d2_strip_penalty_agreed")},
-}
+BEATS = {}  # each Day's THOUGHT_BEATS in lc_days/<day>.py (added at import)
 
 # The pool, in day order. Ids are save data once shipped: never rename one.
-THOUGHT_ORDER = (
-    "d1_photo_shoot",
-    "d1_towel",
-    "d1_dinner_stranger",
-    "d1_julian_carry",
-    "d1_sofa_glance",
-    "d1_dream",
-    "d2_breakfast",
-    "d2_maya_cafe",
-    "d2_boutique",
-    "d2_pool_bee",
-    "d2_dinner",
-    "d2_game_night",
-)
+THOUGHT_ORDER = ()  # each Day's THOUGHT_ORDER in lc_days/<day>.py (added at import)
 
-THOUGHTS = {
-    # Scene 5: Julian takes the pool photos (not offered if Ryan stopped the shoot).
-    # Source: ch01_scene_05_photography
-    "d1_photo_shoot": {
-        "day": "ch01_d1", "requires": "d1_photo_shoot",
-        "base": "She says every photo of her is terrible, and then [friend_name] gets one where "
-                "she actually looks happy. I should probably learn how to hold a phone properly.",
-        "variants": {
-            "love_lane": "Halfway through she laughed at herself and forgot to pose, and that was the "
-                         "best one. I'd have kept that one even if it came out blurry.",
-            "exhibitionism": "She stopped going stiff the moment she knew the camera liked her. I kind "
-                             "of loved watching that happen, more than I expected to.",
-            "temptation": "It took [friend_name] about two minutes to get the photo I haven't managed in "
-                          "four years. I'm trying really hard not to read anything into that.",
-        },
-    },
-    # Scene 6: the towel on the balcony; scene 7: she asks what he saw. Towel shift, "I was trying
-    # to tell you to get ready!", "You weren't two seconds ago!"; by the restaurant "the towel
-    # incident had disappeared beneath ordinary conversation".
-    # Source: ch01_scene_06_friendship_and_towel ch01_scene_07_did_he_see
-    "d1_towel": {
-        "day": "ch01_d1", "requires": "d1_towel",
-        "base": "She stood there arguing with me in a towel, completely sure she was winning. I still "
-                "don't know who was more embarrassed, her or [friend_name].",
-        "variants": {
-            "love_lane": "Bright red, clutching that towel, and she was still telling us off for not "
-                         "getting ready. That's just so her. I really wouldn't change a thing.",
-            "exhibitionism": "She went bright red, sure. But by the time we got to dinner she'd let it "
-                             "go, and I keep picturing the second before she noticed.",
-            "temptation": "She said he wasn't looking at the water two seconds before. I keep wondering "
-                          "how long he'd been looking, which is probably not a great thing to keep "
-                          "wondering.",
-            "trust": "Afterwards she asked me what [friend_name] actually saw, and she wanted the real "
-                     "answer, not the nice one. I like that she asks me.",
-        },
-    },
-    # Scene 9: she walks into the stranger, his drink soaks them both, he apologizes, her eyes
-    # follow his glance down; she turns down his photo offer and laughs at "we're both terrible at
-    # walking"; later a different man ("passerby") compliments the dress, then "Still stands" at
-    # the table. Source: ch01_scene_09_dinner
-    "d1_dinner_stranger": {
-        "day": "ch01_d1", "requires": "d1_dinner_stranger",
-        "base": "She walks straight into some guy, his drink goes everywhere, and he's the one who "
-                "keeps apologizing. I don't know why I'm still thinking about where her eyes went "
-                "after.",
-        "variants": {
-            "love_lane": "Soaked dress, no dinner photo, and a minute later she was laughing about it. "
-                         "I don't think she knows how good she is at that.",
-            "exhibitionism": "Later some other guy came past our table just to tell her the dress still "
-                             "looked incredible, and she lit up a little. Honestly, so did I. He wasn't "
-                             "wrong.",
-            "temptation": "He offered to take her photo and she took a second too long to answer. It's "
-                          "probably nothing. It's probably just me.",
-        },
-    },
-    # Scene 13: Ryan's lift "lasted about three seconds", Julian carries her ("get under the
-    # knees"), Ryan has the keys; her head settles on Julian's shoulder and she keeps sleeping;
-    # the dress slips on Julian's side and he says so. Source: ch01_scene_13_back_at_villa
-    "d1_julian_carry": {
-        "day": "ch01_d1", "requires": "d1_julian_carry",
-        "base": "I couldn't even get my own girlfriend out of the car. [friend_name] picked her up like "
-                "she weighed nothing, and I got to hold the keys.",
-        "variants": {
-            "love_lane": "I tried to carry her and lasted about three seconds. Next time I'm learning "
-                         "the knees thing, so I'm not just the guy holding the keys.",
-            "exhibitionism": "Her dress slipped, and he was the one who could see it, not me. I feel "
-                             "like I should mind that more than I do.",
-            "temptation": "Her head just settled on his shoulder and she kept sleeping. She didn't even "
-                          "know she was doing it. I just keep seeing it anyway.",
-            "trust": "When her dress slipped he told me straight away, even though it was awkward for "
-                     "both of us. I think that's what a real friend does.",
-        },
-    },
-    # Scene 21: legs across Ryan's lap; she "checked where his eyes were before settling again.
-    # It was quick. I still caught it." (true on every answer). Source: ch01_scene_21_watching_julian
-    "d1_sofa_glance": {
-        "day": "ch01_d1", "requires": "d1_sofa_glance",
-        "base": "When she moved on the sofa, she checked where [friend_name] was looking first. It was "
-                "quick. I'm not sure why I caught it, or why it's stuck with me.",
-        "variants": {
-            "love_lane": "She ended up with her legs across my lap like it was the most normal thing in "
-                         "the world. I'd honestly take a hundred more nights like that.",
-            "exhibitionism": "Why did that feel good to watch? She checked whether he could see her, and "
-                             "part of me sort of hoped he could.",
-            "temptation": "She checked where his eyes were before she settled back against me. It was "
-                          "quick, and I keep telling myself it didn't mean anything.",
-        },
-    },
-    # Scene 30: the dream (the dinner stranger, Ryan mute); he wakes and she is asleep beside him.
-    # The exhibitionism line recalls the real passerby at dinner, not the dream.
-    # Source: ch01_scene_30_end_day_one ch01_scene_09_dinner
-    "d1_dream": {
-        "day": "ch01_d1", "requires": "d1_dream",
-        "base": "It was only a dream. She was asleep right next to me the whole time. I just wish my "
-                "head would stop making things up at three in the morning.",
-        "variants": {
-            "love_lane": "I woke up and she was right there, breathing slow, half of her on my pillow. "
-                         "That's the real version, and that's the one I'm keeping.",
-            "exhibitionism": "The dream was awful. But at the real dinner, when some other guy went out "
-                             "of his way to tell her she looked incredible... I don't hate remembering "
-                             "that part. I'm not sure what to do with it.",
-            "temptation": "None of it happened, and I know that. So why did I wake up feeling like I'd "
-                          "already lost something?",
-            "trust": "I could tell her about the dream. She'd probably laugh at me, and then she'd hug "
-                     "me. I think I'd actually like that.",
-        },
-    },
-    # ---- Day Two (offered at the end of the Day Two review, kept for Day Three). Each text holds
-    # on every path where its beat is seen; the parts' variant sets differ so every thought can win
-    # its part (tests: test_every_day_two_thought_can_be_offered).
-    # Scene 3: "Is she pretty?" while she turns her cup a slow quarter-turn; scene 4: breakfast_04,
-    # "[friend_name], caught watching our faces, looked away." (every path).
-    # Source: ch01_day2_scene_03_maya_message ch01_day2_scene_04_jealousy_callback
-    "d2_breakfast": {
-        "day": "ch01_d2", "requires": "d2_breakfast",
-        "base": "She asked me if Maya was pretty and tried really hard to make it sound like nothing. "
-                "Then I looked up and [friend_name] was watching the two of us.",
-        "variants": {
-            "love_lane": "She asked if Maya was pretty, turning her cup like it was a totally casual "
-                         "question. Four years in, and a name on my phone can still do that to her. "
-                         "It's really cute.",
-            "exhibitionism": "[friend_name] got caught watching us at breakfast and looked away like "
-                             "he'd touched something hot. Part of me wanted to know what he'd been "
-                             "looking at.",
-            "temptation": "[friend_name] was watching her at breakfast, not us. I'm almost sure of it. "
-                          "I'm trying very hard not to be.",
-        },
-    },
-    # Scene 5: she glances at Ryan before telling Maya the "bad stuff"; scene 7: airports, "a loose
-    # plan with times on it", "don't pose. Just talk to whoever's holding the phone", "This is their
-    # table now. We're just sitting at it.", "I like her, she's staying." (every path).
-    # Source: ch01_day2_scene_05_meet_maya ch01_day2_scene_07_leia_maya_click
-    "d2_maya_cafe": {
-        "day": "ch01_d2", "requires": "d2_maya_cafe",
-        "base": "I was nervous about her meeting Maya. It took them about ten minutes to start ganging "
-                "up on me about airports, and by the end of lunch they were keeping each other.",
-        "variants": {
-            "love_lane": "She told Maya she likes a loose plan with times on it. I already knew that. "
-                         "I just really liked hearing her say it to somebody new.",
-            "exhibitionism": "Maya told her to stop posing and just talk to whoever's holding the "
-                             "phone. I have a feeling [girlfriend_name] is going to remember that one.",
-            "trust": "When Maya asked her for the bad stuff about me, she glanced at me first. Like "
-                     "she was checking which version I'd want her to tell. I noticed that.",
-        },
-    },
-    # Scene 11b: Maya lets go of the top (Ryan or [friend_name] there); the black mini comes home
-    # either way; "not wearing it outside" / Maya's "yet" / "Not yet"; at the table afterwards she
-    # talks about it with Ryan (she raises it, or tells him when he asks). Every witness path.
-    # Source: ch01_day2_scene_11b_boutique
-    "d2_boutique": {
-        "day": "ch01_d2", "requires": "d2_boutique",
-        "base": "Maya let go of that top for one second in the middle of a shop, and now that's the "
-                "only thing anyone's going to remember about that dress.",
-        "variants": {
-            "love_lane": "She swore she'd never wear that dress outside, ever, and it still came home "
-                         "with us. I really want to be there the day she changes her mind.",
-            "exhibitionism": "She said she'd never wear it outside. Maya heard 'yet.' Honestly, so "
-                             "did I.",
-            "trust": "Afterwards, at the table, she still talked to me about it. Even the parts she'd "
-                     "rather have forgotten.",
-        },
-    },
-    # Scene 17: the bee, the top comes off, the strangers on the deck see it (every split); scene 22:
-    # Maya's honey joke and Leia's "it was a really big bee" at dinner (every path).
-    # Source: ch01_day2_scene_17_pool_return ch01_day2_scene_22_sunset_couple
-    "d2_pool_bee": {
-        "day": "ch01_d2", "requires": "d2_pool_bee",
-        "base": "One bee, and the whole afternoon went sideways. [friend_name] is never going to live "
-                "it down, and to be fair, neither is that bikini top.",
-        "variants": {
-            "love_lane": "By dinner she was the one sticking up for [friend_name]. 'It was a really "
-                         "big bee.' She can laugh about anything eventually. That's my favorite thing "
-                         "about her.",
-            "exhibitionism": "Those guys down the deck saw the whole thing. I keep waiting to feel "
-                             "worse about that than I actually do.",
-            "temptation": "It was over in about ten seconds, and I keep replaying it like I could've "
-                          "done something different. I don't even know what.",
-        },
-    },
-    # Scene 22: Maya's honey joke, everyone's favorite part of the trip, [friend_name] on Ryan's
-    # ten-minute menu habit (every lane); scene 23 only decides who reaches for the dish.
-    # Source: ch01_day2_scene_22_sunset_couple ch01_day2_scene_23_dinner_reach
-    "d2_dinner": {
-        "day": "ch01_d2", "requires": "d2_dinner",
-        "base": "Dinner was [friend_name] getting roasted about bees and me getting roasted about "
-                "menus. Weirdly, that was the most normal I'd felt all day.",
-        "variants": {
-            "love_lane": "Maya made everybody pick a favorite part of the trip. I never said mine out "
-                         "loud. It's the way [girlfriend_name] laughs at her own jokes before she "
-                         "gets to the end of them.",
-            "trust": "[friend_name] told the whole table I still can't order in under ten minutes. "
-                     "[girlfriend_name] has watched me do it for four years and still lets me read "
-                     "her the whole menu.",
-            "temptation": "Somewhere around dessert I stopped keeping track of where everyone at that "
-                          "table was looking. I'm not sure that was a good idea.",
-        },
-    },
-    # Scene 26: Maya's burning-question rule; scene 27: Leia won't answer "Who here has found someone
-    # else in this room attractive?" and sits back down in her bra and panties, cheeks burning;
-    # [friend_name]'s shirt catches on his sunglasses; at Maya's question for her, her eyes come to
-    # Ryan first (every lane).
-    # Source: ch01_day2_scene_26_game_rules ch01_day2_scene_27_game_escalates
-    "d2_game_night": {
-        "day": "ch01_d2", "requires": "d2_game_night",
-        "base": "Maya made up a rule five minutes into the game, and everybody just went along with "
-                "it. [friend_name] got his shirt stuck on his sunglasses. Somehow that was the least "
-                "weird part.",
-        "variants": {
-            "love_lane": "When Maya finally asked her the one that actually mattered, she looked at "
-                         "me before she answered. I keep coming back to that.",
-            "exhibitionism": "She sat back down in her underwear with her cheeks burning, and I "
-                             "couldn't stop looking. Neither could anyone else, and I didn't hate it.",
-            "temptation": "Maya asked who'd found someone else in the room attractive, and "
-                          "[girlfriend_name] would rather take her clothes off than answer. I keep "
-                          "turning that over.",
-        },
-    },
-}
+THOUGHTS = {}  # each Day's THOUGHTS in lc_days/<day>.py (added at import)
 
 # One card per part of the day, in day order. Within a part the offer takes the seen thought
 # this save colours most (colour_count), else the first in day order.
-OFFER_PARTS = {
-    "ch01_d1": (
-        ("d1_photo_shoot", "d1_towel"),               # daytime
-        ("d1_dinner_stranger", "d1_julian_carry"),    # evening
-        ("d1_sofa_glance", "d1_dream"),               # night
-    ),
-    "ch01_d2": (
-        ("d2_breakfast", "d2_maya_cafe"),             # morning
-        ("d2_boutique", "d2_pool_bee"),               # afternoon
-        ("d2_dinner", "d2_game_night"),               # night
-    ),
-}
+OFFER_PARTS = {}  # each Day's THOUGHT_OFFER_PARTS in lc_days/<day>.py (added at import)
+
+
+def _install_day_packs():
+    """Put every Day's beats, thoughts and offer parts (game/python-packages/lc_days/<day>.py)
+    in front of the tables above, in play order. Runs once, at import."""
+    global BEATS, THOUGHT_ORDER, THOUGHTS, OFFER_PARTS
+    import lc_days
+    beats, order, thoughts, parts = {}, (), {}, {}
+    for day in lc_days.modules():
+        beats.update(getattr(day, "THOUGHT_BEATS", {}))
+        order += tuple(getattr(day, "THOUGHT_ORDER", ()))
+        thoughts.update(getattr(day, "THOUGHTS", {}))
+        parts.update(getattr(day, "THOUGHT_OFFER_PARTS", {}))
+    beats.update(BEATS)
+    thoughts.update(THOUGHTS)
+    parts.update(OFFER_PARTS)
+    BEATS, THOUGHT_ORDER, THOUGHTS, OFFER_PARTS = beats, order + THOUGHT_ORDER, thoughts, parts
+
+
+_install_day_packs()
 
 _DEFAULT_NAMES = {"player_name": "Ryan", "girlfriend_name": "Leia", "friend_name": "Julian"}
 

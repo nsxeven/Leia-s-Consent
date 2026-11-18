@@ -5,7 +5,8 @@ import unittest
 from pathlib import Path
 
 
-SOURCE = (Path(__file__).resolve().parents[1] / "game/screens/phone_sweetheart.rpy").read_text()
+from lc_screen_source import family_source  # noqa: E402
+SOURCE = family_source("phone")
 
 
 class FakeRenpy:

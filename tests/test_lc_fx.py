@@ -10,7 +10,7 @@ STORY = {
     name: (GAME / "chapters" / rel).read_text(encoding="utf-8")
     for name, rel in (
         ("prologue", "prologue/prologue.rpy"),
-        ("main", "ch01/ch01_main.rpy"),
+        ("main", "ch01/day1/ch01_main.rpy"),
         ("s04", "ch01/day1/ch01_scenes_04_06.rpy"),
         ("s07", "ch01/day1/ch01_scenes_07_13.rpy"),
         ("s14", "ch01/day1/ch01_scenes_14_30.rpy"),

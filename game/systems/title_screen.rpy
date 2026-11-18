@@ -32,16 +32,9 @@ init python:
 
     import time as _lc_time
 
-    LC_TITLE_SAFE_GALLERY = (
-        "pro_party_meet", "pro_first_kiss", "pro_four_years_on", "pro_departure",
-        "d1_arrival", "d1_swimsuit_choice", "d1_pool_sunscreen", "d1_pool_photos",
-        "d1_dress_reveal", "d1_drive_to_dinner", "d1_dinner_arrival", "d1_walk_back",
-        "d1_trip_catch", "d1_drive_back", "d1_julian_carry", "d1_night_pool",
-        "d1_julian_drink", "d1_movie_night", "d1_wake_up",
-        "d2_photo_leia_maya", "d2_boutique",
-        "d4_market_photo", "d4_photo_hunt",
-        "d5_snorkel", "d5_cove_lunch", "d5_sunset_deck", "d5_invitation",
-    )
+    # Gallery entry ids allowed on the default reel (non-mature memories); each Day pack adds its
+    # own in its *_gallery.rpy (init 1). Used for membership only.
+    LC_TITLE_SAFE_GALLERY = ()
 
     LC_TITLE_REEL_MIN = 9      # pad with "not yet..." cards up to this many
     LC_TITLE_REEL_MAX = 14     # cap (each card holds a full CG texture)

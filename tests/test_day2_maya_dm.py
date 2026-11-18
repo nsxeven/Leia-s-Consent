@@ -1,6 +1,6 @@
 """Day Two phone moment: Maya's late DM in scene 30 (ch01_d2_maya_dm).
 
-Content lives in game/chapters/ch01/day2/ch01_day2_scenes_16_30.rpy (init block at the top,
+Content lives in game/chapters/ch01/day2/ch01_day2_registrations.rpy (the init block) and ch01_day2_scenes_16_30.rpy (
 the beat in ch01_day2_scene_30_bedroom, the end-of-day settle in ch01_day2_scene_30_finish).
 The phone system itself is tested in tests/test_phone_moments.py.
 """
@@ -18,7 +18,8 @@ from lc_effective_effects import applied_choice_ids, effective_effects  # noqa: 
 from lc_rpy_harness import load  # noqa: E402
 from test_phone_moments import load_phone  # noqa: E402
 
-SCENES = (ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
+SCENES = ((ROOT / "game/chapters/ch01/day2/ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8") + "\n"
+          + (ROOT / "game/chapters/ch01/day2/ch01_day2_registrations.rpy").read_text(encoding="utf-8"))
 IDS = ("ch01_d2_maya_dm_reply", "ch01_d2_maya_dm_read", "ch01_d2_maya_dm_show",
        "ch01_d2_maya_dm_reply_late")
 

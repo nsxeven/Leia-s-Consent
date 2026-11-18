@@ -932,19 +932,19 @@ class MisuseGuardTests(unittest.TestCase):
 
     def test_map_sits_under_the_quick_menu(self):
         def zorder(src, screen):
-            block = src[src.index("screen %s(" % screen):]
-            return int(re.search(r"zorder (\d+)", block).group(1))
+            block = src[src.index("\nscreen %s(" % screen):]  # the definition, not a header line
+            return int(re.search(r"(?m)^\s+zorder (\d+)", block).group(1))
         self.assertLess(zorder(_read("game/screens/leia_map_screen.rpy"), "lc_leia_map_screen"),
-                        zorder(_read("game/screens/scrapbook_ui.rpy"), "quick_menu"))
+                        zorder(_read("game/screens/quick_menu.rpy"), "quick_menu"))
 
     def test_day_two_lane_subtracts_applied_effects(self):
-        src = _read("game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy")
+        src = _read("game/chapters/ch01/day2/ch01_day2_registrations.rpy")
         lane = src[src.index("def ch01_d2_route_lane():"):]
         lane = lane[:lane.index("return lc_stat_model.d2_route_lane(")]
         self.assertIn("lc_choice_applied_effects(exempt_id)", lane)
         self.assertNotIn("get_choice_effects(", lane)
         stats = _read("game/systems/stats.rpy")
-        exhib = stats[stats.index("def lc_exhib_gained(prefix):"):stats.index("def lc_d1_route_pressure")]
+        exhib = stats[stats.index("def lc_exhib_gained(prefix):"):stats.index("def lc_current_lean")]
         self.assertIn("lc_choice_applied_effects(choice_id)", exhib)
 
     def test_docs_show_the_call_form_and_the_helpers(self):

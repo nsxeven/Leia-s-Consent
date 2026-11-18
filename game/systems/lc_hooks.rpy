@@ -32,7 +32,11 @@
 #   systems/lc_tag_collection.rpy); choice_effects filter and choice_applied (choice_id, effects)
 #   from systems/choice_engine.rpy (listener systems/leia_side.rpy, Leia's +2/day cap);
 #   discovery_strip filter over the Moments strip items (systems/discovery.rpy; listener
-#   systems/leia_side.rpy, which also listens to review_finished)
+#   systems/leia_side.rpy, which also listens to review_finished); current_lean filter (lean, flat)
+#   from lc_current_lean and stats_v2_migrate (rel, par, ply) before a pre-v2 save converts
+#   (systems/stats.rpy; listeners: every Day pack's *_registrations.rpy, Day Two); review_route
+#   filter (route, day_id, value) from lc_review_route (systems/day_review.rpy; listeners Day One
+#   and Day Three *_chapter.rpy)
 # Load order: init -100, so every system can register from its own init block
 # Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_hooks.py
 

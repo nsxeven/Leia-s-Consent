@@ -1,152 +1,76 @@
-# Chapter Select - start a new game at Day 2-5 with a consistent preset
+# Chapter Select - start a new game at a later Day with a consistent preset
 #
 # Purpose: Seeds the story values, flags, stats and outfits a day reads, then jumps to that day's
-#   normal entry label; it never edits story scenes. CHAPTER_SELECT_RULE decides when the main-menu
-#   entry shows. The screen is screens/chapter_select_screen.rpy.
+#   normal entry label; it never edits story scenes. Each Day pack registers its own preset in
+#   CHAPTER_SELECT_PRESETS (its *_chapter.rpy, init 1): button label and note, the route list and
+#   heading the screen shows, and the seed function that fills the store. This file keeps the
+#   generic part: the registry, the reset every preset starts from, apply, and the unlock rule.
+#   CHAPTER_SELECT_RULE decides when the main-menu entry shows. The screen is
+#   screens/chapter_select_screen.rpy. Each Day pack's "finished" seed also fills the phone with
+#   what that Day delivered in play (its messages, Photos attachments, answered reply cards, the
+#   Trip Group picture) through the chapter_select_phone* helpers below: read, no banners.
 #
 # Public API (call these from scenes/screens):
 #   define CHAPTER_SELECT_RULE                'always' | 'developer' | 'unlocked' |
 #       'developer_or_unlocked' | 'never'
+#   define CHAPTER_SELECT_PRESETS             {day: dict(label, note, heading, routes, seed[, default,
+#       unlock_flag])}, filled by the Day packs in play order
+#   chapter_select_days()                     [(day, button label, note)] in play order
+#   chapter_select_default_day()              the Day the page opens on (registered default=True)
 #   chapter_select_unlocked()                 True when the main-menu Chapter Select entry should
 #       show
 #   chapter_select_apply(day, route)          seed a new game for (day, route preset); returns the
 #       entry label
 #   chapter_select_unlock_after_day_two(flag_id, value=True) -> None
-#       story_flag_set hook: first finished Day 2 unlocks it
+#       story_flag_set hook: the preset's unlock_flag (first finished Day Two) unlocks it
+#   chapter_select_phone(thread_id, sender_id, message_id, text="", attachment_id=None, attachment_label=None, display_time=None) -> None
+#       an earlier Day's message as play left it: read, no banner, sound or reply deadline;
+#       an attachment also lands in Photos
+#   chapter_select_phone_reply(prompt_id, option_id, left_on_read=None, time=None) -> None
+#       an earlier Day's reply card, already answered (the story value a pick records);
+#       left_on_read=thread_id also leaves the 'Seen' receipt stamped `time`
+#   chapter_select_phone_group(stage, maya_member=False) -> None
+#       the Trip Group picture stage ('trio' / 'four') and Maya's membership
 #   label ch01_chapter_select_entry           label the screen starts the new game through
 #
-# Internal (helpers for this file and its screens; do not call from scenes): _chapter_select_reset
+# Internal (helpers for this file and the Day packs' seed functions; do not call from scenes):
+#   _chapter_select_reset
 #
-# Example:
-#   textbutton "Chapters" action ShowMenu("chapter_select")   (screens/title_screen.rpy; the journal
-#   tab row in screens/scrapbook_ui.rpy adds a ("CHAPTERS", ShowMenu("chapter_select"), False) row)
+# Example (a Day pack's *_chapter.rpy):
+#   init 1 python:
+#       def ch01_d6_select_seed(route):
+#           ch01_d5_select_finished(route)          # earlier Days' "finished" seeds, in order
+#           return "ch01_day6_start"
+#       CHAPTER_SELECT_PRESETS["day6"] = dict(label=lc_chapters.select_label("day6"), note="...",
+#           heading=_("Stored Day Five ending"), routes=CH01_SELECT_DAY6_ROUTES, seed=ch01_d6_select_seed)
 #
 # Depends on: systems/lc_hooks.rpy, systems/story_state.rpy, systems/stats.rpy,
-#   systems/wardrobe_logic.rpy, systems/day_review.rpy (lc_review_reset),
-#   python-packages/lc_chapters.py, game/00_release_build.rpy
-# Hooks: listens to story_flag_set (unlock after ch01_day_02_complete)
-# Load order: init 10: after the story-state, stats and hook helpers (init <= 0) it calls while
-#   seeding presets
-# Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_chapters.py, tests/test_release_from_main.py,
-#   tests/test_behaviour_freeze.py
+#   systems/wardrobe_logic.rpy, systems/day_review.rpy (lc_review_reset), systems/phone_state.rpy
+#   (phone_store_message), systems/phone_group_avatar.rpy, python-packages/lc_phone_moments.py
+#   (read receipts), the Day packs' *_chapter.rpy (presets), game/00_release_build.rpy
+# Hooks: listens to story_flag_set (unlock after the registered unlock_flag)
+# Load order: define (init 0) for the registry, which the Day packs fill at init 1; the functions at
+#   init 10, after the story-state, stats and hook helpers (init <= 0) they call while seeding
+# Docs: docs/ARCHITECTURE.md, docs/DAY_PACK.md   Tests: tests/test_lc_chapters.py,
+#   tests/test_release_from_main.py, tests/test_behaviour_freeze.py,
+#   tests/test_chapter_select_phone.py
 
 define CHAPTER_SELECT_RULE = "developer_or_unlocked" if LC_IS_RELEASE else "always"  # game/00_release_build.rpy
+define CHAPTER_SELECT_PRESETS = {}  # filled by the Day packs (*_chapter.rpy, init 1), in play order
 
 init 10 python:
+    import lc_phone_moments
 
-    # Button labels come from the chapter registry (one chapter per day).
-    CH01_SELECT_DAYS = (
-        ("day2", lc_chapters.select_label("day2"), "Starts at the Day Two title card; the Day Two lane still depends on your choices."),
-        ("day3", lc_chapters.select_label("day3"), "Starts at Day Three with the chosen Day Two ending stored."),
-        ("day4", lc_chapters.select_label("day4"), "Starts at Day Four with Day Two and Day Three marked complete and their end state stored."),
-        ("day5", lc_chapters.select_label("day5"), "Starts at Day Five with Days Two to Four marked complete and a typical Day Four end state stored."),
-    )
+    def chapter_select_days():
+        """[(day, button label, note)] for every registered preset, in play order."""
+        return [(day, p["label"], p["note"]) for day, p in CHAPTER_SELECT_PRESETS.items()]
 
-    # Day Two entry presets: seeds only. The real end state is decided by play.
-    CH01_SELECT_DAY2_ROUTES = (
-        ("love", "Love lane"),
-        ("exhibitionism", "Exhibitionism lane"),
-        ("ntr_risk", "NTR-risk lane"),
-    )
-
-    # Day Three / Four presets: the five stored Day Two end states.
-    CH01_SELECT_END_ROUTES = (
-        ("love", "Love"),
-        ("exhibitionism", "Exhibitionism"),
-        ("love_repaired", "Love (repaired)"),
-        ("mixed_unresolved", "Mixed / unresolved"),
-        ("ntr_confirmed", "NTR confirmed"),
-    )
-
-    # Day Five presets: the five stored Day Four end routes (ch01_d4_end_route).
-    CH01_SELECT_DAY5_ROUTES = (
-        ("love", "Love"),
-        ("exhibitionism", "Exhibitionism"),
-        ("love_repaired", "Love (repaired)"),
-        ("ntr_unresolved", "NTR unresolved"),
-        ("ntr_confirmed", "NTR confirmed"),
-    )
-
-    # Per end-state values. "lane" is the Day Two lane vocabulary (love / exhibitionism / ntr_risk).
-    CH01_SELECT_END_PRESETS = {
-        "love": dict(
-            lane="love", bedroom="love_private", soft_gate=False, wink=False, confirmed=False,
-            pool_suspicion=False, pressure="mixed", stats=dict(love=60, trust=58, exh=10, tem=5), hist=[],
-        ),
-        "exhibitionism": dict(
-            lane="exhibitionism", bedroom="exhibition_open_curtains", soft_gate=False, wink=False, confirmed=False,
-            pool_suspicion=False, pressure="nts_seeded", stats=dict(love=55, trust=55, exh=43, tem=8), hist=["ch01_d2_morning_tease"],
-        ),
-        "love_repaired": dict(
-            lane="ntr_risk", bedroom="ntr_gate_repaired", soft_gate=True, wink=True, confirmed=False,
-            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=48, trust=48, exh=10, tem=15), hist=["ch01_d2_morning_dismiss"],
-        ),
-        "mixed_unresolved": dict(
-            lane="ntr_risk", bedroom="pool_suspicion_unresolved", soft_gate=False, wink=False, confirmed=False,
-            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=44, trust=44, exh=10, tem=20), hist=["ch01_d2_morning_dismiss"],
-        ),
-        "ntr_confirmed": dict(
-            lane="ntr_risk", bedroom="ntr_gate_accusation", soft_gate=True, wink=True, confirmed=True,
-            pool_suspicion=True, pressure="ntr_seeded", stats=dict(love=40, trust=40, exh=10, tem=24), hist=["ch01_d2_morning_dismiss"],
-        ),
-    }
-
-    # Day Two lane seeds (state at ch01_day2_start, not at the end of Day Two).
-    CH01_SELECT_DAY2_PRESETS = {
-        "love": dict(pressure="mixed", stats=dict(love=50, trust=50, exh=10, tem=10), hist=[]),
-        "exhibitionism": dict(pressure="nts_seeded", stats=dict(love=50, trust=50, exh=40, tem=10), hist=["ch01_d2_morning_tease"]),
-        "ntr_risk": dict(pressure="ntr_seeded", stats=dict(love=44, trust=50, exh=10, tem=20), hist=["ch01_d2_morning_dismiss"]),
-    }
-
-    # Day Four end state seeded for the Day Five presets (a typical playthrough of each route; the choices
-    # made are recorded in the values below). "d2" is the Day Two end state that leads to that Day Four lane.
-    CH01_SELECT_DAY5_PRESETS = {
-        "love": dict(
-            d2="love", lane="love", d3_variant="love_private",
-            stats=dict(love=57, trust=56, exh=12, tem=9),
-            d4=dict(end_variant="love_slow_dance", exposure_step="none", exhib_variant="none", photo_style="candid",
-                    dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="in", ntr_react=None,
-                    ntr_outcome="ntr_confirmed", ntr_fine_count=0, disclosure_when=None, leia_call=None,
-                    day_outfit_id="casual_default", day_outfit_source="leia"),
-            flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_photo_candid_taken"],
-        ),
-        "exhibitionism": dict(
-            d2="exhibitionism", lane="exhibitionism", d3_variant="exhibition_window",
-            stats=dict(love=53, trust=50, exh=66, tem=10),
-            d4=dict(end_variant="exhib_shared_step", exposure_step="brief_reveal", exhib_variant="shared_step", photo_style="posed",
-                    dusk_outfit_id="boutique_cutout_mini", dusk_outfit_source="leia", hook_reply="in", ntr_react=None,
-                    ntr_outcome="ntr_confirmed", ntr_fine_count=0, disclosure_when=None, leia_call="brief_reveal",
-                    day_outfit_id="casual_default", day_outfit_source="leia"),
-            flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_photo_pose_taken", "ch01_d4_exhib_brief_done"],
-        ),
-        "love_repaired": dict(
-            d2="ntr_confirmed", lane="ntr", d3_variant="ntr_restroom_nightmare",
-            stats=dict(love=50, trust=60, exh=11, tem=16),
-            d4=dict(end_variant="ntr_repaired_thanks", exposure_step="none", exhib_variant="none", photo_style="candid",
-                    dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="in", ntr_react="thanks",
-                    ntr_outcome="love_repaired", ntr_fine_count=0, disclosure_when="harbor_wall", leia_call=None,
-                    day_outfit_id="casual_default", day_outfit_source="leia"),
-            flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_photo_candid_taken", "ch01_d4_cutout_disclosed", "ch01_d4_club_story_deferred"],
-        ),
-        "ntr_unresolved": dict(
-            d2="mixed_unresolved", lane="ntr", d3_variant="ntr_restroom_nightmare",
-            stats=dict(love=43, trust=50, exh=10, tem=31),
-            d4=dict(end_variant="ntr_unresolved", exposure_step="none", exhib_variant="none", photo_style="candid",
-                    dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="maybe", ntr_react=None,
-                    ntr_outcome="ntr_unresolved", ntr_fine_count=0, disclosure_when=None, leia_call=None,
-                    day_outfit_id="casual_default", day_outfit_source="leia"),
-            flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_photo_candid_taken", "ch01_d4_cutout_partial"],
-        ),
-        "ntr_confirmed": dict(
-            d2="ntr_confirmed", lane="ntr", d3_variant="ntr_restroom_nightmare",
-            stats=dict(love=35, trust=45, exh=11, tem=45),
-            d4=dict(end_variant="ntr_confirmed", exposure_step="none", exhib_variant="none", photo_style="skipped",
-                    dusk_outfit_id="resort_dinner_dress", dusk_outfit_source="leia", hook_reply="maybe", ntr_react=None,
-                    ntr_outcome="ntr_confirmed", ntr_fine_count=3, disclosure_when=None, leia_call=None,
-                    day_outfit_id="casual_default", day_outfit_source="leia"),
-            flags=["ch01_d4_market_honey_bee_callback", "ch01_d4_ntr_soft_gate", "ch01_d4_photo_skipped", "ch01_d4_cutout_partial"],
-        ),
-    }
+    def chapter_select_default_day():
+        """The Day the Chapter Select page opens on: the preset registered with default=True."""
+        for day, p in CHAPTER_SELECT_PRESETS.items():
+            if p.get("default"):
+                return day
+        return next(iter(CHAPTER_SELECT_PRESETS), None)
 
     def chapter_select_unlocked():
         """True when the main-menu Chapter Select entry should be offered."""
@@ -165,7 +89,7 @@ init 10 python:
             return dev or unlocked
         return False
 
-    def _chapter_select_reset(stats, hist, pressure):
+    def _chapter_select_reset(stats, hist):
         lc_review_reset()
         store.story_flags = {}
         store.story_values = {}
@@ -184,99 +108,47 @@ init 10 python:
         store.money = 500
         set_phone_unlocked(True)
         set_phone_hud_enabled(True)
-        # Day One is treated as finished.
-        for flag in ("prologue_started", "ch01_started", "ch01_scene_30_complete", "ch01_day_01_complete", "ch01_scenes_14_30_complete"):
-            set_story_flag(flag)
-        set_story_value("ch01_day1_route_pressure", pressure)
-        set_story_value("ch01_dream_response", "grounded")
 
     def chapter_select_apply(day, route):
         """Seed a new game for the chosen day and route preset. Returns the entry label."""
-        if day == "day2":
-            p = CH01_SELECT_DAY2_PRESETS[route]
-            _chapter_select_reset(p["stats"], p["hist"], p["pressure"])
-            entry = "ch01_day2_start"
-        else:
-            # Day Five presets are keyed by the Day Four end route; "base" is the Day Two end state behind it.
-            d5p = CH01_SELECT_DAY5_PRESETS[route] if day == "day5" else None
-            base = d5p["d2"] if d5p else route
-            p = CH01_SELECT_END_PRESETS[base]
-            _chapter_select_reset(d5p["stats"] if d5p else p["stats"], p["hist"], p["pressure"])
-            lane = p["lane"]
-            set_story_value("ch01_d2_end_route", base)
-            set_story_value("ch01_d2_bedroom_variant", p["bedroom"])
-            for part in ("pre_split", "post_pool", "post_sunset", "dinner"):
-                set_story_value("ch01_d2_route_lane_" + part, lane)
-            set_story_value("ch01_d2_ntr_soft_gate", p["soft_gate"])
-            set_story_value("ch01_d2_dinner_wink", p["wink"])
-            set_story_value("ch01_d2_ntr_confirmed", p["confirmed"])
-            if base == "love_repaired":
-                set_story_value("ch01_d2_ntr_soft_gate_repaired", True)
-            if p["pool_suspicion"]:
-                set_story_flag("ch01_d2_pool_suspicion")
-            # Boutique: Black Cutout Mini owned, bought by Leia (Day Three text assumes she owns it).
-            set_story_value("ch01_d2_mall_outfit_source", "leia")
-            set_story_flag("ch01_d2_boutique_shop_open")
-            set_story_flag("ch01_d2_boutique_outfit_owned")
-            set_story_flag("ch01_d2_boutique_black_mini_reserved_day3")
-            for outfit_id in ("boutique_cutout_mini", "resort_dinner_dress"):
-                grant_story_outfit(outfit_id, equip=False)
-            set_story_value("ch01_d2_dinner_outfit", "secure_date")
-            set_story_value("ch01_d2_dinner_outfit_id", "resort_dinner_dress")
-            set_story_value("ch01_d2_dinner_outfit_source", "leia")
-            store.equipped_outfit = "resort_dinner_dress"
-            for flag in ("ch01_day_02_started", "ch01_d2_scene_30_complete", "ch01_day_02_complete"):
-                set_story_flag(flag)
-            # Every Day Two path installs the feed app on the photo walk (systems/feed.rpy).
-            lc_feed_install()
-            if day == "day3":
-                entry = "ch01_day3_start"
-            else:
-                for flag in ("ch01_day_03_started", "ch01_d3_complete", "ch01_day_03_complete"):
-                    set_story_flag(flag)
-                # Same mapping ch01_day3_start uses: mixed_unresolved starts Day Three as a
-                # strained Love track and only becomes NTR if Ryan walks away at the club.
-                # The Day Five presets name the Day Four lane they need explicitly.
-                d3_lane_value = "ntr" if base == "ntr_confirmed" else ("exhibitionism" if base == "exhibitionism" else "love")
-                if d5p:
-                    d3_lane_value = d5p["lane"]
-                if base == "mixed_unresolved":
-                    set_story_value("ch01_d3_strained_love", True)
-                set_story_value("ch01_d3_lane", d3_lane_value)
-                set_story_value("ch01_d3_end_variant", {"love": "love_private", "exhibitionism": "exhibition_window", "ntr": "ntr_restroom_nightmare"}[d3_lane_value])
-                # Day Four also reads these Day Three values (same values Day Three writes).
-                if d3_lane_value == "ntr":
-                    set_story_value("ch01_d3_ntr_repair_effort", "enjoy")  # Day Three's own default when unset
-                    set_story_value("ch01_d3_maya_dessert", "chocolate")
-                    set_story_flag("ch01_d3_cutout_secret")
-                else:
-                    set_story_value("ch01_d3_ntr_repair_effort", "none")
-                entry = "ch01_day4_start"
-                if day == "day5":
-                    # Day Four finished: seed what ch01_day5_start reads (stored Day Four values and flags).
-                    set_story_value("ch01_d2_pool_outfit", "pool_conservative")
-                    for flag in ("ch01_day_04_started", "ch01_day_04_complete", "ch01_d4_scene_16_complete"):
-                        set_story_flag(flag)
-                    set_story_value("ch01_d4_lane", d3_lane_value)
-                    set_story_value("ch01_d4_d3_variant", d5p["d3_variant"])
-                    set_story_value("ch01_d4_end_route", route)
-                    set_story_value("ch01_d4_end_route_pending", route)
-                    for key, value in d5p["d4"].items():
-                        set_story_value("ch01_d4_" + key, value)
-                    set_story_value("ch01_d4_ntr_confirmed", route in ("ntr_unresolved", "ntr_confirmed"))
-                    set_story_value("ch01_d4_ntr_repaired", route == "love_repaired")
-                    for flag in d5p["flags"]:
-                        set_story_flag(flag)
-                    store.equipped_outfit = d5p["d4"]["dusk_outfit_id"] if owns_outfit(d5p["d4"]["dusk_outfit_id"]) else "resort_dinner_dress"
-                    entry = "ch01_day5_start"
+        entry = CHAPTER_SELECT_PRESETS[day]["seed"](route)
         set_story_flag("chapter_select_used")
         set_story_value("chapter_select_preset", "{}:{}".format(day, route))
         return entry
 
+    # Phone history. A Day pack's "finished" seed replays what that Day put on the phone, in play
+    # order, as a player who read every chat would have it at the next Day's start.
+    def chapter_select_phone(thread_id, sender_id, message_id, text="", attachment_id=None,
+                             attachment_label=None, display_time=None):
+        """Chapter Select: one earlier-Day message, stored read (no banner, sound or reply deadline).
+        Stable message ids keep it idempotent; an attachment is indexed in Photos as in play."""
+        phone_store_message(thread_id, sender_id, text=text, message_id=message_id,
+                            attachment_id=attachment_id, attachment_label=attachment_label,
+                            mark_unread=False, notify=False, display_time=display_time)
+        return None
+
+    def chapter_select_phone_reply(prompt_id, option_id, left_on_read=None, time=None):
+        """Chapter Select: an earlier Day's reply card, answered with option_id (the story value
+        phone_choose_reply records, so the card is never offered again). The posted messages come
+        from chapter_select_phone. left_on_read=thread_id: the pick left the chat on read, so the
+        'Seen' receipt sits under its last incoming message, stamped `time`."""
+        set_story_value(prompt_id, option_id)
+        if left_on_read:
+            store.lc_phone_read_receipts = lc_phone_moments.record_left_on_read(
+                getattr(store, "lc_phone_read_receipts", None), left_on_read, prompt_id,
+                lc_phone_moments.last_incoming_id(phone_messages_for_thread(left_on_read)), time)
+        return None
+
+    def chapter_select_phone_group(stage, maya_member=False):
+        """Chapter Select: the Trip Group picture stage and whether Maya is in the group."""
+        store.phone_group_avatar_stage = stage
+        store.phone_group_maya_member = bool(maya_member)
+        return None
+
     # Unlock after the first completed Day Two, without editing any story scene.
     def chapter_select_unlock_after_day_two(flag_id, value=True):
-        """story_flag_set hook: the first finished Day Two unlocks Chapter Select."""
-        if flag_id == "ch01_day_02_complete" and value:
+        """story_flag_set hook: the first finished Day Two (a preset's unlock_flag) unlocks Chapter Select."""
+        if value and any(p.get("unlock_flag") == flag_id for p in CHAPTER_SELECT_PRESETS.values()):
             if not getattr(persistent, "ch01_chapter_select_unlocked", False):
                 persistent.ch01_chapter_select_unlocked = True
 
@@ -286,15 +158,7 @@ init 10 python:
 label ch01_chapter_select_entry:
     # Entered from the Chapter Select screen (Start) with the choice stored in
     # persistent.ch01_chapter_select_pending = (day, route).
-    $ _cs_pending = persistent.ch01_chapter_select_pending or ("day3", "love")
+    $ _cs_pending = persistent.ch01_chapter_select_pending or (chapter_select_default_day(), "love")
     $ _cs_entry = chapter_select_apply(_cs_pending[0], _cs_pending[1])
     $ persistent.ch01_chapter_select_pending = None
-    if _cs_entry == "ch01_day2_start":
-        jump ch01_day2_start
-    elif _cs_entry == "ch01_day3_start":
-        jump ch01_day3_start
-    elif _cs_entry == "ch01_day5_start":
-        jump ch01_day5_start
-    else:
-        jump ch01_day4_start
-
+    jump expression _cs_entry

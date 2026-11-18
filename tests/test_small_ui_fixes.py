@@ -13,7 +13,8 @@ class SmallUiFixTests(unittest.TestCase):
         self.assertEqual(src.count('text (_last_tip or "")'), 2)
 
     def test_settings_on_badge_is_right_aligned_bold_pill(self):
-        src = (ROOT / "game/screens/phone_sweetheart.rpy").read_text(encoding="utf-8")
+        from lc_screen_source import family_source
+        src = family_source("phone")
         block = src.split("screen lc_phone_settings_mode(mode_id):", 1)[1].split("\nscreen ", 1)[0]
         self.assertIn("xalign 1.0", block)
         self.assertIn('Frame("gui/phone/sprite_match/pill_white.png"', block)

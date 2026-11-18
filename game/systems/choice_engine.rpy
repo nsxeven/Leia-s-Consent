@@ -3,7 +3,8 @@
 # Purpose: Owns CHOICE_EFFECTS / CHOICE_TAGS (stable choice id -> effects and behaviour tags), the
 #   choice display mode (Immersive/Insight/Full/Developer), the caption formatter and apply_choice,
 #   which applies effects, records history and shows feedback. Story files only supply the caption
-#   text and the id; Day 2-5 register their ids with CHOICE_EFFECTS.update(...) at init 1-2.
+#   text and the id; every Day pack registers its ids with CHOICE_EFFECTS.update(...) in its
+#   *_registrations.rpy (init 1; docs/DAY_PACK.md).
 #
 # Public API (call these from scenes/screens):
 #   CHOICE_EFFECTS                            {choice_id: [(group, stat, amount), ...]} (extended by
@@ -18,6 +19,8 @@
 #   current_choice_mode()                     the active display mode ('normal', 'insight', 'full',
 #       'developer')
 #   choice_mode_label()                       display name of the active mode
+#   lc_track_text_v2(text)                    a Day's track card with the old stat-model headings
+#       renamed to route names (LC_TRACK_HEADINGS_V2)
 #   set_choice_display_mode(mode) -> None     set the global display mode
 #   get_choice_effects(choice_id)             copy of a choice's effects (legacy stats folded to v2)
 #   lc_choice_effective_effects(choice_id)    the effects apply_choice would apply now: the
@@ -91,361 +94,6 @@ init python:
         "dev_be_protective": [
             ("relationship", "trust", 3),
         ],
-        "ch01_outfit_bolder": [
-            ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_outfit_comfort": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_outfit_conservative": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_outfit_rush": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_photo_support": [
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_photo_more": [
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_photo_exit": [
-            ("relationship", "trust", 2),
-        ],
-        "ch01_photo_rush": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_towel_laugh": [
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_towel_boundary": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_towel_forget": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_towel_reassure": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_towel_honest": [
-            ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_towel_tease": [
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_towel_shrug": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_bra_reassure": [
-            ("relationship", "trust", 2),
-        ],
-        "ch01_bra_playful": [
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_bra_cover": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_bra_distracted": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_stranger_proud": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_stranger_territorial": [
-            ("relationship", "trust", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_stranger_encourage": [
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_catch_ignore": [],  # Neutral: no stats
-        "ch01_catch_check": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_catch_joke": [
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_catch_boundary": [
-            ("relationship", "trust", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_friend_reassure": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 2),
-        ],
-        "ch01_friend_tease": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_friend_boundary": [
-            ("relationship", "trust", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_julian_reassure": [
-            ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_julian_honest": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_julian_joke": [],  # Neutral: no stats
-        "ch01_julian_fine": [
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_carry_brush": [],  # Neutral: no stats
-        "ch01_carry_lookaway": [
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_carry_fix": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_carry_joke": [
-            ("partner", "exhibitionism", 1),
-        ],
-        # Upstairs talk before movie night (scene 14a): say it, enjoy it, or a slip.
-        "ch01_upstairs_honest": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_upstairs_liked": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_upstairs_swallow": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_upstairs_snap": [
-            ("relationship", "trust", -1),
-            ("relationship", "temptation", 1),
-        ],
-
-        # Movie-night / Day 1 continuation. Open choices raise Exhibitionism
-        # (often with Love); dismissive choices raise Temptation and cost Love
-        # or Trust, the pressure that can later feed the NTR route.
-        "ch01_movie_stop": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 2),
-        ],
-        "ch01_movie_subtle": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_movie_tease_presence": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_movie_dismiss_concern": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_can_tell_behave": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_can_tell_tease": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_can_tell_push": [
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_can_tell_dismiss": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_fidget_cover": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_fidget_tease": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_fidget_push": [
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_fidget_dismiss": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_private_apologize": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 2),
-        ],
-        "ch01_private_playful": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_private_curiosity": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_private_dismiss": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_noblanket_behave": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_noblanket_test": [
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_noblanket_tease": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_noblanket_phone": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_watch_claim": [
-            ("relationship", "love", 2),
-        ],
-        "ch01_watch_tease": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_watch_check": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_watch_ignore": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_micro_warn": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_micro_silent": [
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_micro_open": [
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_micro_dismiss": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_philosophy_couple": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_philosophy_trust": [
-            ("relationship", "trust", 2),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_philosophy_jealousy_fun": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_philosophy_dont_care": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_looking_enjoy": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_looking_harmless": [
-            ("relationship", "trust", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_looking_boundary": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_looking_dont_care": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 2),
-        ],
-        "ch01_julian_change_subject": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_julian_let_play": [],  # Neutral: no stats
-        "ch01_julian_put_spot": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_julian_dont_care": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_compliment_affirm": [
-            ("relationship", "love", 2),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_compliment_tease": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_compliment_enjoy": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_compliment_shrug": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_alone_apologize": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 2),
-        ],
-        "ch01_alone_curiosity": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_alone_open": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 3),
-        ],
-        "ch01_alone_dismiss": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_private_claim": [
-            ("relationship", "love", 2),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_private_open": [
-            ("relationship", "love", 1),
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_private_jealous": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_private_indifferent": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_d2_mall_go_to_leia": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d2_mall_leave_to_maya": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_d2_mall_reveal_affection": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d2_mall_reveal_open": [
-            ("partner", "exhibitionism", 2),
-        ],
-        "ch01_d2_mall_reveal_tease": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_d2_mall_reveal_flat": [
-            ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
-        ],
     }
 
     # Behavioral metadata is deliberately separate from stat effects. Later scenes
@@ -454,106 +102,6 @@ init python:
     CHOICE_TAGS = {
         "dev_encourage_curiosity": ("encouraging", "participating", "open"),
         "dev_be_protective": ("protective", "cautious"),
-        "ch01_outfit_bolder": ("encouraging", "open", "supportive"),
-        "ch01_outfit_comfort": ("neutral", "comfort-first", "supportive"),
-        "ch01_outfit_conservative": ("protective", "cautious", "respectful"),
-        "ch01_outfit_rush": ("neutral", "nonchalant", "distracted"),
-        "ch01_photo_support": ("encouraging", "supportive"),
-        "ch01_photo_more": ("encouraging", "participating", "open"),
-        "ch01_photo_exit": ("protective", "comfort-first", "supportive"),
-        "ch01_photo_rush": ("neutral", "nonchalant", "dismissive"),
-        "ch01_towel_laugh": ("encouraging", "lighthearted"),
-        "ch01_towel_boundary": ("protective", "respectful"),
-        "ch01_towel_forget": ("protective", "honest", "cautious"),
-        "ch01_towel_reassure": ("neutral", "supportive", "reassuring"),
-        "ch01_towel_honest": ("neutral", "honest", "supportive"),
-        "ch01_towel_tease": ("encouraging", "lighthearted", "open"),
-        "ch01_towel_shrug": ("neutral", "nonchalant", "dismissive"),
-        "ch01_bra_reassure": ("neutral", "supportive", "comfort-first"),
-        "ch01_bra_playful": ("encouraging", "participating", "open", "playful"),
-        "ch01_bra_cover": ("protective", "cautious", "respectful"),
-        "ch01_bra_distracted": ("neutral", "nonchalant", "distracted"),
-        "ch01_stranger_proud": ("encouraging", "supportive", "open", "attentive"),
-        "ch01_stranger_territorial": ("protective", "possessive", "cautious", "attentive"),
-        "ch01_stranger_encourage": ("encouraging", "participating", "open", "playful", "attentive"),
-        "ch01_catch_ignore": ("neutral", "trusting"),
-        "ch01_catch_check": ("neutral", "supportive", "protective", "attentive"),
-        "ch01_catch_joke": ("encouraging", "lighthearted", "open"),
-        "ch01_catch_boundary": ("protective", "cautious", "respectful"),
-        "ch01_friend_reassure": ("neutral", "honest", "supportive", "attentive"),
-        "ch01_friend_tease": ("encouraging", "lighthearted", "playful"),
-        "ch01_friend_boundary": ("neutral", "honest", "boundary-setting"),
-        "ch01_julian_reassure": ("encouraging", "trusting", "open"),
-        "ch01_julian_honest": ("protective", "honest", "respectful"),
-        "ch01_julian_joke": ("encouraging", "lighthearted", "trusting"),
-        "ch01_julian_fine": ("neutral", "nonchalant", "withdrawal"),
-        "ch01_carry_brush": ("encouraging", "trusting", "open"),
-        "ch01_carry_lookaway": ("protective", "possessive", "cautious"),
-        "ch01_carry_fix": ("neutral", "protective", "supportive"),
-        "ch01_carry_joke": ("encouraging", "lighthearted", "open", "playful"),
-        "ch01_upstairs_honest": ("neutral", "honest", "attentive", "supportive"),
-        "ch01_upstairs_liked": ("encouraging", "open", "honest", "attentive"),
-        "ch01_upstairs_swallow": ("neutral", "nonchalant", "withdrawal"),
-        "ch01_upstairs_snap": ("neutral", "defensive"),
-
-        "ch01_movie_stop": ("protective", "attentive", "supportive", "consent-first"),
-        "ch01_movie_subtle": ("encouraging", "participating", "open", "playful", "attentive"),
-        "ch01_movie_tease_presence": ("encouraging", "participating", "open", "playful", "attentive"),
-        "ch01_movie_dismiss_concern": ("neutral", "nonchalant", "dismissive"),
-        "ch01_can_tell_behave": ("protective", "attentive", "supportive"),
-        "ch01_can_tell_tease": ("encouraging", "open", "playful", "attentive"),
-        "ch01_can_tell_push": ("encouraging", "participating", "open", "risk-testing"),
-        "ch01_can_tell_dismiss": ("neutral", "nonchalant", "dismissive"),
-        "ch01_fidget_cover": ("neutral", "supportive", "attentive"),
-        "ch01_fidget_tease": ("encouraging", "playful", "open"),
-        "ch01_fidget_push": ("encouraging", "open", "risk-testing"),
-        "ch01_fidget_dismiss": ("neutral", "nonchalant", "dismissive"),
-        "ch01_private_apologize": ("neutral", "supportive", "attentive", "consent-first"),
-        "ch01_private_playful": ("encouraging", "open", "playful", "attentive"),
-        "ch01_private_curiosity": ("encouraging", "participating", "open", "honest", "attentive"),
-        "ch01_private_dismiss": ("neutral", "nonchalant", "dismissive"),
-        "ch01_noblanket_behave": ("neutral", "attentive", "supportive"),
-        "ch01_noblanket_test": ("encouraging", "open", "risk-testing"),
-        "ch01_noblanket_tease": ("encouraging", "open", "playful", "attentive"),
-        "ch01_noblanket_phone": ("neutral", "nonchalant", "distracted"),
-        "ch01_watch_claim": ("protective", "possessive", "attentive", "playful"),
-        "ch01_watch_tease": ("encouraging", "open", "playful", "attentive"),
-        "ch01_watch_check": ("neutral", "supportive", "attentive"),
-        "ch01_watch_ignore": ("neutral", "nonchalant", "distracted"),
-        "ch01_micro_warn": ("protective", "attentive", "respectful"),
-        "ch01_micro_silent": ("neutral", "trusting", "observant"),
-        "ch01_micro_open": ("encouraging", "participating", "open", "risk-testing"),
-        "ch01_micro_dismiss": ("neutral", "nonchalant", "dismissive"),
-        "ch01_philosophy_couple": ("protective", "possessive", "boundary-setting"),
-        "ch01_philosophy_trust": ("neutral", "honest", "trusting", "open"),
-        "ch01_philosophy_jealousy_fun": ("encouraging", "open", "playful", "possessive"),
-        "ch01_philosophy_dont_care": ("neutral", "nonchalant", "dismissive"),
-        "ch01_looking_enjoy": ("encouraging", "open", "playful", "attentive"),
-        "ch01_looking_harmless": ("neutral", "trusting", "open"),
-        "ch01_looking_boundary": ("protective", "boundary-setting", "attentive"),
-        "ch01_looking_dont_care": ("neutral", "nonchalant", "dismissive"),
-        "ch01_julian_change_subject": ("protective", "attentive", "boundary-setting"),
-        "ch01_julian_let_play": ("neutral", "trusting", "open"),
-        "ch01_julian_put_spot": ("encouraging", "open", "playful", "participating"),
-        "ch01_julian_dont_care": ("neutral", "nonchalant", "dismissive"),
-        "ch01_compliment_affirm": ("neutral", "supportive", "attentive", "possessive"),
-        "ch01_compliment_tease": ("encouraging", "playful", "possessive", "attentive"),
-        "ch01_compliment_enjoy": ("encouraging", "participating", "open", "attentive"),
-        "ch01_compliment_shrug": ("neutral", "nonchalant", "dismissive", "distracted"),
-        "ch01_alone_apologize": ("neutral", "supportive", "attentive", "consent-first"),
-        "ch01_alone_curiosity": ("neutral", "honest", "attentive", "open"),
-        "ch01_alone_open": ("encouraging", "participating", "open", "playful", "attentive"),
-        "ch01_alone_dismiss": ("neutral", "nonchalant", "dismissive"),
-        "ch01_private_claim": ("protective", "possessive", "attentive", "supportive"),
-        "ch01_private_open": ("encouraging", "open", "honest", "attentive"),
-        "ch01_private_jealous": ("protective", "possessive", "honest"),
-        "ch01_private_indifferent": ("neutral", "nonchalant", "dismissive"),
-        "ch01_d2_mall_go_to_leia": ("supportive", "attentive", "love-route"),
-        "ch01_d2_mall_leave_to_maya": ("neutral", "nonchalant", "dismissive", "withdrawal", "ntr-seed"),
-        "ch01_d2_mall_reveal_affection": ("supportive", "attentive", "love-route"),
-        "ch01_d2_mall_reveal_open": ("encouraging", "participating", "open", "exhibitionism-seed"),
-        "ch01_d2_mall_reveal_tease": ("encouraging", "playful", "attentive"),
-        "ch01_d2_mall_reveal_flat": ("neutral", "nonchalant", "distracted"),
     }
 
     STANCE_TAGS = ("encouraging", "neutral", "protective")
@@ -614,6 +162,27 @@ init python:
     def get_choice_tags(choice_id):
         """Return immutable behavioral tags for a stable choice ID."""
         return tuple(CHOICE_TAGS.get(choice_id, ()))
+
+
+    # Track cards (Insight / Full / Developer): a Day's *_track_text() passes its card through
+    # lc_track_text_v2 so the old stat-model headings read as route names.
+    # Old heading -> route name. "SHARED EXHIBITION (NTS)" was the Love +
+    # Exhibitionism track (nobody else joins in), so it no longer says NTS.
+    LC_TRACK_HEADINGS_V2 = (
+        ("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM"),
+        ("TRACK: DISTANCE, REPAIRED (NTR pressure)", "TRACK: NTR, REPAIRED"),
+        ("TRACK: DISTANCE, UNRESOLVED (NTR pressure)", "TRACK: NTR, UNRESOLVED"),
+        ("TRACK: DISTANCE, CONFIRMED (NTR pressure)", "TRACK: NTR, CONFIRMED"),
+        ("TRACK: DISTANCE (NTR pressure)", "TRACK: NTR"),
+    )
+
+    def lc_track_text_v2(text):
+        if not text:
+            return text
+        for old, new in LC_TRACK_HEADINGS_V2:
+            if text.startswith(old):
+                return new + text[len(old):]
+        return text
 
 
     def choice_ids_with_prefix(prefix, choice_ids=None):

@@ -3,50 +3,6 @@
 # Entry: ch01_day3_start (reached from ch01_day2_scene_30_finish). Day 2's stored ending is authoritative.
 # Exit: jumps to ch01_day4_start.
 
-init 1 python:
-    # Day Three's two menus. Ordinary scale (+/-1..2), same as Day Two's
-    # mid-day choices and Day Four's non-gate choices. Not a route lock:
-    # the lane is already set, and Day Four still reads that lane.
-    CHOICE_EFFECTS.update({
-        "ch01_d3_ntr_enjoy": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
-        ],
-        "ch01_d3_ntr_talk": [
-            ("relationship", "love", 2),
-            ("relationship", "trust", 2),
-            ("relationship", "boredom", -2),
-            ("partner", "secrecy", -1),
-        ],
-        "ch01_d3_ntr_withdraw": [
-            ("relationship", "love", -2),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
-            ("partner", "secrecy", 1),
-        ],
-        "ch01_d3_dessert_chocolate": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d3_dessert_recommended": [
-            ("player", "acceptance", 1),
-        ],
-        "ch01_d3_dessert_surprise": [
-            ("relationship", "love", 1),
-        ],
-    })
-
-    CHOICE_TAGS.update({
-        "ch01_d3_ntr_enjoy": ("supportive", "attentive", "repair"),
-        "ch01_d3_ntr_talk": ("supportive", "attentive", "honest", "repair"),
-        "ch01_d3_ntr_withdraw": ("neutral", "nonchalant", "dismissive", "withdrawal"),
-        "ch01_d3_dessert_chocolate": ("supportive", "attentive"),
-        "ch01_d3_dessert_recommended": ("neutral", "trusting"),
-        "ch01_d3_dessert_surprise": ("encouraging", "playful", "lighthearted"),
-    })
-
-
 label ch01_day3_start:
     $ lc_review_begin("ch01_d3")
     $ set_story_flag("ch01_day_03_started")

@@ -196,7 +196,7 @@ never capped and never refund the allowance.
   Don't call `lc_leia_applied_effects` for this: it returns `[]` for any id that is not hers, so
   Ryan's reply would silently stop being subtracted.
 - **End route (Day Two):** the errand ids, Ryan's confession reply and his scene 30 bring-up live in
-  `CH01_D2_ERRAND_EXEMPT_CHOICES` (`ch01_day2_scenes_01_15.rpy`), which joins the lane tuple and is
+  `CH01_D2_ERRAND_EXEMPT_CHOICES` (`ch01_day2_registrations.rpy`), which joins the lane tuple and is
   also subtracted (same applied values) by `ch01_d2_love_exhib_blend(lane)`, the scene 30 blend
   check and the Full "Current lean" readout. Door A (`ch01_d2_knot_watch`) only skips the lane.
   `tests/test_route_simulation.py` (`ErrandRouteTests`) plays every lane x visit order x told/kept

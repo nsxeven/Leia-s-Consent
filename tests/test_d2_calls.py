@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 SCENES = (CH01 / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
 POLISH = (CH01 / "day2" / "ch01_day2_scenes_01_15.rpy").read_text(encoding="utf-8")
 VISUALS = (CH01 / "day2" / "ch01_day2_visuals.rpy").read_text(encoding="utf-8")
-GALLERY = (GAME / "systems/gallery_data.rpy").read_text(encoding="utf-8")
+GALLERY = (GAME / "chapters/ch01/day2/ch01_day2_gallery.rpy").read_text(encoding="utf-8")
 POV = (GAME / "systems/hidden_pov.rpy").read_text(encoding="utf-8")
 
 

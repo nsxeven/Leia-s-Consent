@@ -288,7 +288,7 @@ class DiscoveryRuntimeTests(unittest.TestCase):
 class LegacyClearedTests(unittest.TestCase):
     """Review M2: a profile that finished Day Two before discoveries existed counts as cleared.
     The evidence is persistent.ch01_chapter_select_unlocked (set on the first finished Day Two,
-    systems/chapter_select.rpy), read once at init so this PR's own first clear is unaffected."""
+    systems/chapter_select.rpy, unlock flag in the Day Two pack), read once at init so this PR's own first clear is unaffected."""
 
     def boot(self, **persistent):
         self.persistent = SimpleNamespace(**persistent)

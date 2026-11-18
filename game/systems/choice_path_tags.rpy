@@ -46,13 +46,9 @@ transform lc_path_stamp_tilt:
 # stamp next to the path stamp. (min, max) = total CGs of that sequence the
 # player sees by picking this option; min != max shows a range because the
 # outcome depends on stats. Add an entry whenever options unlock different CGs.
-define LC_CHOICE_CG_COUNT = {
-    # Day 1 pool photos (ch01_scenes_04_06.rpy): capture 01 is already shown.
-    "ch01_photo_support": (2, 2),   # + capture 02
-    "ch01_photo_more": (3, 3),      # + captures 02 and 03
-    "ch01_photo_exit": (1, 2),      # capture 02 only if her Exhibitionism carries her on
-    "ch01_photo_rush": (1, 1),      # rushed: she stops after capture 01 (choice-sense pass)
-}
+define LC_CHOICE_CG_COUNT = {}  # filled by the Day packs (*_registrations.rpy, init 1)
+# Names of the Days' gate formatters (format_dayN_*_choice), wrapped below for the path stamp.
+define LC_GATE_FORMATTERS = []  # filled by the Day packs (*_registrations.rpy, init 1)
 define LC_CG_STAMP_INK = "#3b2a30"
 
 init 6 python:
@@ -120,6 +116,6 @@ init 6 python:
         formatter.lc_wrapped = original
         return formatter
 
-    for _lc_name in ("format_day2_risk_choice", "format_day4_gate_choice", "format_day5_gate_choice"):
+    for _lc_name in LC_GATE_FORMATTERS:
         if _lc_name in globals() and not hasattr(globals()[_lc_name], "lc_wrapped"):
             globals()[_lc_name] = _lc_path_gate_formatter(globals()[_lc_name])

@@ -133,8 +133,11 @@ class StoryChoicesStayOnOnePathTests(unittest.TestCase):
             defined |= set(re.findall(r"def (format_day\d+_\w*choice)\(", path.read_text(encoding="utf-8")))
         self.assertTrue(defined)
         src = TAGS_RPY.read_text(encoding="utf-8")
+        self.assertIn("for _lc_name in LC_GATE_FORMATTERS:", src)
+        packs = "\n".join(p.read_text(encoding="utf-8") for p in sorted((GAME / "chapters").rglob("*_registrations.rpy")))
         for name in sorted(defined):
-            self.assertIn('"{}"'.format(name), src, "add {} to the wrapper list in {}".format(name, TAGS_RPY.name))
+            self.assertIn('LC_GATE_FORMATTERS.append("{}")'.format(name), packs,
+                          "register {} in its Day's *_registrations.rpy (LC_GATE_FORMATTERS)".format(name))
 
 
 class PathStampTests(unittest.TestCase):

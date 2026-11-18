@@ -670,8 +670,8 @@ class WiringTests(unittest.TestCase):
         self.assertIn('lc_hook_add("phone_closed", _lc_feed_on_phone_closed)', src)
 
     def test_chapter_select_later_days_have_the_app(self):
-        src = _read(GAME / "systems" / "chapter_select.rpy")
-        apply = src.split("def chapter_select_apply(", 1)[1]
+        src = _read(GAME / "chapters" / "ch01" / "day2" / "ch01_day2_chapter.rpy")
+        apply = src.split("def ch01_d2_select_finished(", 1)[1]
         self.assertIn("lc_feed_install()", apply)
 
     def test_icon_comes_from_the_sprite_match_generator(self):

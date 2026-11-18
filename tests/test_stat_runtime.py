@@ -62,8 +62,17 @@ class StatRuntimeTests(unittest.TestCase):
         env["lc_leia_is_side_choice"] = lambda cid: False
         env["lc_choice_applied_effects"] = env["get_choice_effects"]
         exec(compile(_block("systems/stats.rpy", "init python:\n"), "stats_init", "exec"), env)
-        day2 = _block("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy", "init 1 python:\n", "\nlabel ")
+        from lc_rpy_harness import load_blocks
+        load_blocks([], env, packs=("day1",))  # Day One route helpers (its Day pack)
+        day2 = _block("chapters/ch01/day2/ch01_day2_registrations.rpy",
+                      "# Scenes 1-15 (was ch01_day2_scenes_01_15.rpy): choice rows, lane helpers, the gate formatter.\ninit 1 python:\n",
+                      "\n# Scenes 16-30")
         exec(compile(day2, "day2_init", "exec"), env)
+        # Full "Current lean" readers and the Day Two save migration live in the Day packs (hooks).
+        from lc_rpy_harness import load
+        load(["_lc_hooks", "lc_hook_add", "lc_hook_run", "lc_hook_filter",
+              "ch01_d1_current_lean", "ch01_d2_current_lean", "ch01_d2_keep_legacy_lane",
+              "ch01_d3_current_lean", "ch01_d4_current_lean", "ch01_d5_current_lean"], env)
         self.env = env
 
     def test_migration_runs_on_load_once(self):
