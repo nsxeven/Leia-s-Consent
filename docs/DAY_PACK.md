@@ -33,7 +33,7 @@ files keep their old names, `ch01_main.rpy` and `ch01_scenes_*.rpy`).
 | `<prefix>_visuals.rpy` | this Day's `image bg ...` and `image cg ...` lines (and text placeholder cards); the first visuals file also registers the Day's title-screen outfits and backgrounds (`lc_title_register_outfit(..., order=N)`) |
 | `<prefix>_registrations.rpy` | choice effects and tags, Full Transparency CG counts, review choice styles and stickers, Day helpers and thresholds, gate formatters (`LC_GATE_FORMATTERS.append(...)`), the Full "Current lean" reader (`lc_hook_add("current_lean", ...)`), and the **story-key ledger** |
 | `<prefix>_gallery.rpy` | the Day's Gallery tab, its rows, its CGs that are still placeholders, and the rows the title-screen reel may show (`LC_TITLE_SAFE_GALLERY`) |
-| `<prefix>_chapter.rpy` | the title-card line, the end-of-day review row, and the Day's Chapter Select preset (`CHAPTER_SELECT_PRESETS["dayN"]` and the seed functions that mark earlier Days finished) |
+| `<prefix>_chapter.rpy` | the title-card line, the end-of-day review row, and the Day's Chapter Select preset (`CHAPTER_SELECT_PRESETS["dayN"]` and the seed functions that mark earlier Days finished, including the Day's **phone history**) |
 | `game/python-packages/lc_days/<day>.py` | chapter titles (`CHAPTER`), route thresholds, gate / route-flag / repair choices and route resolvers (`STAT_*`), Ryan's thoughts (`THOUGHT_*`), journal flags and paper exceptions (`UI_*`); the names are listed in `lc_days/__init__.py` |
 
 Every Day uses the same layout: scene files hold only labels, and all of a Day's choice rows,
@@ -104,6 +104,23 @@ examples are in its visuals, feed and errand files.
 
 **Chapter titles.** Edit `CHAPTER` in `game/python-packages/lc_days/<day>.py`. Title cards, the day
 review, Chapter Select, save names and the Gallery all read it.
+
+**Phone history for Chapter Select.** When Chapter Select starts a later Day, the phone must already
+hold what the earlier Days sent. Each Day's `<prefix>_chapter.rpy` has a `..._select_phone()`
+function, called from that Day's "finished" seed, that lists the Day's texts in play order:
+
+```
+chapter_select_phone("group", "julian", "ch01_d6_beach_plan", "Beach at noon. Bring snacks.")
+chapter_select_phone_reply("ch01_d6_beach_reply", "yes")          # a reply card, already answered
+chapter_select_phone_group("four", maya_member=True)               # Trip Group picture / Maya
+```
+
+Copy the message id, thread, sender and text exactly from the story's `phone_add_message(...)` (same
+`display_time` when the story pins the clock). Where the Day branches, pick what the preset implies
+(its stored route values) or the reply card's default, and say which in a comment. Messages arrive
+read, with no banners. `tests/test_chapter_select_phone.py` fails when a seeded text no longer
+matches the story, when the story gains a text no preset seeds (seed it, or list it in
+`NOT_SEEDED` with the reason), and when a preset's phone differs from its expected table.
 
 ## A new Day
 

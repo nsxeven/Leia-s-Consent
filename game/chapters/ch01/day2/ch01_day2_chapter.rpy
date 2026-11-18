@@ -106,7 +106,53 @@ init 1 python:
             set_story_flag(flag)
         # Every Day Two path installs the feed app on the photo walk (systems/feed.rpy).
         lc_feed_install()
+        ch01_d2_select_phone(base)
         return p
+
+    # Ryan's answer to the changing-room selfie (a scored story menu) for each stored end state:
+    # the route-consistent pick (warm for Love, open for Exhibitionism, playful for the mixed night,
+    # flat for confirmed NTR). The preset's stats already include it, so nothing is scored here.
+    CH01_SELECT_D2_SELFIE_REPLY = {
+        "love": "affection", "love_repaired": "affection", "exhibitionism": "open",
+        "mixed_unresolved": "tease", "ntr_confirmed": "flat",
+    }
+
+    def ch01_d2_select_phone(base):
+        """Chapter Select: Day Two's phone as a player who read every chat has it at Day Three's start.
+        Reply cards take their defaults: Maya's lunch check-in "alive", her late DM left on read."""
+        chapter_select_phone("group", "julian", "ch01_d2_julian_wake_up", "Bro wake up", display_time="11:00")
+        chapter_select_phone("maya", "maya", "ch01_d2_maya_lunch_checkin",
+                             "You people alive? I'm near the resort around lunch. Still meeting?")
+        chapter_select_phone("maya", "player", "ch01_d2_maya_lunch_reply_ryan",
+                             "Alive. Barely. Lunch works, I'll send you where we are.")
+        chapter_select_phone("maya", "maya", "ch01_d2_maya_lunch_reply_followup_01", "Look at you, being organized 👍")
+        chapter_select_phone_reply("ch01_d2_maya_lunch_reply", "alive")
+        chapter_select_phone("group", "system", "ch01_trip_group_maya_added", friend_name + " added Maya to the group.")
+        chapter_select_phone("group", "system", "ch01_trip_group_four_photo", friend_name + " changed the group picture.")
+        chapter_select_phone_group("four", maya_member=True)
+        chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie", "", attachment_id="ch01_d2_changing_room_selfie",
+                             attachment_label=girlfriend_name + " in the changing room")
+        chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_ask", "Be honest. Is this too much?? Maya picked it. Obviously.")
+        reply = CH01_SELECT_D2_SELFIE_REPLY.get(base, "affection")
+        if reply == "affection":
+            chapter_select_phone("leia", "player", "ch01_d2_boutique_selfie_reply", "You look incredible.")
+            chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_followup", "You have to say that. You're biased.")
+        elif reply == "open":
+            chapter_select_phone("leia", "player", "ch01_d2_boutique_selfie_reply", "Didn't know you had that in you.")
+            chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_followup", "I DON'T. This is all Maya. I'm just standing in it.")
+        elif reply == "tease":
+            chapter_select_phone("leia", "player", "ch01_d2_boutique_selfie_reply", "Maya really did this to you?")
+            chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_followup", "Against my better judgment. VERY much against it.")
+        else:
+            chapter_select_phone("leia", "player", "ch01_d2_boutique_selfie_reply", "It's... nice.")
+            chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_followup", "Nice.")
+        chapter_select_phone("leia", "leia", "ch01_d2_boutique_selfie_stay",
+                             "Don't come over here. I'm not coming out in this. Changing room only.")
+        chapter_select_phone("maya", "maya", "ch01_d2_maya_dm_01", "you two okay in there? 👀", display_time="23:52")
+        chapter_select_phone("maya", "maya", "ch01_d2_maya_dm_02",
+                             "asking because it's very quiet through this wall and [friend_name] is pretending to be asleep. badly.",
+                             display_time="23:52")
+        chapter_select_phone_reply("ch01_d2_maya_dm", "read", left_on_read="maya", time="23:52")
 
     CHAPTER_SELECT_PRESETS["day2"] = dict(
         label=lc_chapters.select_label("day2"),
