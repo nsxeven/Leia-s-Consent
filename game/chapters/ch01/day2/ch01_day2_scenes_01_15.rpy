@@ -1022,22 +1022,35 @@ label ch01_day2_scene_11b_boutique:
     # Julian is off in menswear.
     $ cast(ryan="casual", leia="casual", maya="green_tube_top")
     "Maya kept the red dress over her arm. [girlfriend_name] drifted on to another rack, slower."
-    "She had watched the black dress through the window. Inside, she stopped at a rack and stared at something less daunting long enough for Maya to notice."
+    "She'd been eyeing the black dress through the window. Then she came around the last rack and stopped dead."
+
+    # Leia stops at the spotlit mannequin (DressReveal_01, darryn 2026-11-19).
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_boutique_dress_reveal
+    with dissolve
+
+    "In the middle of the floor, on its own little stage under a spotlight, a mannequin was wearing the most daunting dress in the shop."
+    "Black latex, so glossy it caught every light in the room. Two thin straps, a skirt that barely started before it stopped, and cutouts everywhere: one plunging down the chest, more running down both sides."
+    "It made the dress in the window look like something you'd wear to a job interview. It should have sent her straight back to the safe rack."
+    "Somehow it didn't. Something about it pulled her in, and she just stood there looking at it, long enough for Maya to notice."
 
     maya "That one. You want that one."
-    gf "What? I'm just looking."
+    gf "What? No. I'm just looking."
     maya "You've been staring at it for a full minute."
-    gf "I have not! I was looking at the... the stitching."
-    maya "The stitching. Okay. You absolutely have."
+    gf "I have not! I was looking at the... the shine. How do they even get it that shiny?"
+    maya "The shine. Okay. You absolutely have."
+    gf "It's just... I don't get how it even stays on. That's all. I'm curious. Like, from a design point of view."
+    maya "Oh, babe. That's not curious. That's wanting."
 
-    "[girlfriend_name] had been looking at something daring but still recognizably within reach."
-    "Maya looked beside it, found a much smaller black halter mini built from deep cutouts and two precarious front panels, and smiled."
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_boutique
+    with dissolve
+    $ cast(ryan="casual", leia="casual", maya="green_tube_top")
 
-    maya "Oh, no. No, actually, you're trying this one."
-    gf "That's not even the one I was looking at."
-    maya "I know. This one's better. Trust me."
-    gf "Maya, no. Look at it. How does it even stay on?"
-    maya "That's what the changing room is for. Go find out."
+    "Maya found the same dress on the rail beside the stage before [girlfriend_name] could stop her, and held it up against her."
+    maya "Yeah. No. You're trying this one."
+    gf "Maya, no. Look at it. Look at how little of it there is."
+    maya "That's what the changing room is for. Go find out how it stays on. From a design point of view."
 
     "[girlfriend_name] stared at the black dress, then at Maya."
     gf "I'm not wearing that outside. Ever."
@@ -1063,10 +1076,11 @@ label ch01_day2_scene_11b_boutique:
     with dissolve
 
     "Behind the curtain, [girlfriend_name] held the dress up at arm's length, put her other hand to her chin and looked at it for a long time."
-    "It looked even smaller in there. Two front panels, a halter tie and a lot of cutouts, and somehow it was supposed to hold her in."
+    "Off the mannequin it looked even smaller. A handful of shiny black latex, two thin straps and a lot of cutouts, and somehow it was supposed to hold her in."
     gf "Okay. It's a dress. People wear dresses. People wear dresses all the time."
     "Then she looked down at herself. White off-shoulder T-shirt, denim shorts, and plain white underwear under all of it. A bra and panties. Nothing exciting."
-    "She looked back at the dress. At the heart cut out of the chest, and the holes running down both sides."
+    "She looked back at the dress."
+    gf "Holes... everywhere." # under her breath
     "Every single one of them sat right where a bra strap or a waistband would be."
     "So her underwear would show. White straps poking out of every hole, like wearing socks with sandals, only worse, because the whole point of the dress was the holes."
     "Which meant the bra would have to come off. And honestly, the panties too, the way those side cutouts went. Which meant there'd be nothing under the dress. At all. In a mall. Behind a curtain that didn't quite reach the wall."
@@ -1082,6 +1096,15 @@ label ch01_day2_scene_11b_boutique:
     maya "Why do you think mine looks this good? Confidence and nothing else. Mostly nothing else."
     gf "Maya!"
     maya "What? Now you know! Everything off, dress on. I want to see."
+    # Eavesdropper (darryn 2026-11-19): someone outside might have heard, or might not.
+    "Outside the curtain, something shifted. A shuffle of feet, the soft scrape of a hanger on a rail, voices too muffled to make out."
+    "Then, low, barely more than a breath, a man's voice from somewhere close: \"...I wanna see that too.\""
+    "[girlfriend_name] froze with the dress halfway to her chest."
+    gf "Maya. Did you hear that?"
+    maya "Hear what?"
+    "She listened. Hangers. The shop music. Someone laughing over by the till. Nothing else."
+    gf "Somebody said... No. Nobody said anything. Great, now I'm hearing things."
+    maya "You're stalling, is what you're doing."
     "[girlfriend_name] looked at the curtain, then at the gap at its edge, then back at the dress."
     gf "If anyone opens this curtain, I'm just going to live in here now. This is my home."
     maya "Noted. Hurry up."
@@ -1091,7 +1114,7 @@ label ch01_day2_scene_11b_boutique:
 
     "The bra and panties went into her bag with the T-shirt and shorts. The dress went on easier than she expected, which somehow made it worse. Then she looked up at the mirror."
     gf "Oh. Oh, okay."
-    "The black hugged everything. The cutouts sat exactly where she'd been afraid they would, and the hem stopped a lot higher up her thighs than anything she owned."
+    "The latex hugged everything, cool and tight and squeaking faintly when she moved. The cutouts sat exactly where she'd been afraid they would, and the hem stopped a lot higher up her thighs than anything she owned."
     gf "Maya, how short is this supposed to be?"
     maya "Short! It's a mini, that's the whole idea of a mini!"
 
@@ -1099,7 +1122,7 @@ label ch01_day2_scene_11b_boutique:
     with dissolve
 
     "She turned to check the back, and the hem rode straight up with her."
-    "She tugged it down. The top shifted. She caught that with her other arm, pressed the front panels up against her chest and stood very, very still."
+    "She tugged it down. The top shifted. She caught that with her other arm, pressed the top of the dress up against her chest and stood very, very still."
     gf "Yeah, no. It's a size too small."
     maya "Is it, though? Or is it just a lot of dress?"
     gf "It's not a lot of anything, Maya, that's the problem. If I pull it down, the top goes, and if I fix the top, the bottom goes, and I only have two hands."
@@ -1233,7 +1256,7 @@ label ch01_day2_scene_11b_boutique:
     gf "Wait— my back? What's happening back there? Is something happening?"
     maya "Nothing! It's a very good back. Relax."
     gf "Okay, but you've got the top, right? Like, actually got it? Not just sort of touching it?"
-    "Maya took the back of the dress in both hands and lifted, so the front panels sat higher and stayed where they were supposed to."
+    "Maya took the back of the dress in both hands and lifted, so the neckline sat higher and stayed where it was supposed to."
     "[girlfriend_name] let go of her chest one finger at a time, like she didn't trust it, then grabbed the front of the hem and pulled it as low as it would go."
     maya "Got it. Top's mine, bottom's yours. Nothing's going anywhere. Now turn around."
     gf "And then what? I just stand there?"
@@ -1350,7 +1373,7 @@ label ch01_day2_scene_11b_boutique:
     maya "Okay, but look at how it sits, though. Look."
     "She hooked her thumbs under her own straps and tugged them up to show him the fit, laughing, completely delighted with herself."
     "Her thumbs had been the only thing holding [girlfriend_name]'s top up."
-    "The front panels of [girlfriend_name]'s dress dropped straight down to her waist."
+    "The top of [girlfriend_name]'s dress slid straight down to her waist."
     "For one long second, she just stood there with both hands still on the hem, like her brain hadn't caught up yet."
 
     scene cg ch01_d2_shop_showoff_04

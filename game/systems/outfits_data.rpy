@@ -155,7 +155,7 @@ init python:
         "boutique_cutout_mini": {
             "name": "Black Cutout Mini",
             "category": "bold",
-            "description": "The daring black halter mini Maya pushed Leia to try at the island boutique. Its separated front panels and extreme cutouts make it far outside Leia's usual comfort zone.",
+            "description": "The glossy black latex mini Maya pushed Leia to try at the island boutique. Thin straps, a very short hem and cutouts everywhere put it far outside Leia's usual comfort zone.",
             "cost": 280,
             "shop_visible": True,
             "story_grant": True,

@@ -45,7 +45,7 @@ init -2 python:
          ("ch01_d2_shop_dresses", "Red or black?")])
     gallery_row("d2_boutique", "ch01_d2", "Boutique",
         "Maya pushes Leia to try on the cutout mini, then talks her out of the changing room.",
-        [("ch01_d2_boutique_changing_room", "The dress"), ("ch01_d2_changing_room_02", "On"),
+        [("ch01_d2_boutique_dress_reveal", "On display"), ("ch01_d2_boutique_changing_room", "The dress"), ("ch01_d2_changing_room_02", "On"),
          ("ch01_d2_changing_room_03", "A size too small"), ("ch01_d2_changing_room_capture", "Selfie"),
          ("ch01_d2_changing_room_04", "Maya?"), ("ch01_d2_shop_showoff", "Facing the mirror")])
     gallery_row("d2_boutique_malfunction", "ch01_d2", "Wardrobe malfunction",

@@ -36,10 +36,11 @@ class ShopDressesTests(unittest.TestCase):
         order = ['scene cg ch01_d2_mall_boutique_window', '"[girlfriend_name] still followed her inside."',
                  'scene cg ch01_d2_shop_dresses', 'maya "Okay. Be honest. Red or black?"',
                  '"Maya kept the red dress over her arm.',
-                 'stared at something less daunting', 'scene cg ch01_d2_boutique_changing_room']
+                 'scene cg ch01_d2_boutique_dress_reveal', 'Something about it pulled her in',
+                 'scene cg ch01_d2_boutique_changing_room']
         offsets = [body.index(part) for part in order]
         self.assertEqual(offsets, sorted(offsets))
-        dresses = body.split("scene cg ch01_d2_shop_dresses", 1)[1].split("stared at something less daunting", 1)[0]
+        dresses = body.split("scene cg ch01_d2_shop_dresses", 1)[1].split("scene cg ch01_d2_boutique_dress_reveal", 1)[0]
         self.assertNotIn("cutout", dresses.lower())
         self.assertIn("long red slip", dresses)
         self.assertNotIn("red asymmetric cutout mini", SCENES)

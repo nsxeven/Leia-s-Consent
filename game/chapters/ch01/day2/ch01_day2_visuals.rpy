@@ -86,6 +86,8 @@ image cg ch01_d2_mall_arrival = At("images/cg/ch02/CH2D2_CG_Mall_01.webp", prolo
 image cg ch01_d2_mall_boutique_window = At("images/cg/ch02/CH2D2_CG_Mall_02.webp", prologue_fullscreen)
 # Maya holds up a red and a black dress to compare; Leia weighs in.
 image cg ch01_d2_shop_dresses = At("images/cg/ch02/CH2D2_CG_Shop_01.webp", prologue_fullscreen)
+# The black latex cutout mini on the spotlit mannequin that pulls Leia in.
+image cg ch01_d2_boutique_dress_reveal = At("images/cg/ch02/CH2D2_CG_DressReveal_01.webp", prologue_fullscreen)
 
 # Photo walk selfies (scene 09): Maya's selfie with Leia, then the new Trip Group picture.
 image cg ch01_d2_photo_leia_maya = At("images/cg/ch02/CH2D2_CG_MayaLeiaSelfie_01.webp", prologue_fullscreen)
