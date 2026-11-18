@@ -125,7 +125,7 @@ class StatModelTests(unittest.TestCase):
         self.assertIn('("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM")', late)
 
     def test_mixed_unresolved_starts_day3_as_strained_love(self):
-        day3 = read("chapters/ch01/ch01_day3_scenes.rpy")
+        day3 = read("chapters/ch01/day3/ch01_day3_scenes.rpy")
         self.assertIn('$ d3_lane = "ntr" if d3_end == "ntr_confirmed" else', day3)
         self.assertNotIn('("ntr_confirmed", "mixed_unresolved")', day3)
         self.assertIn('set_story_value("ch01_d3_strained_love", d3_strained)', day3)

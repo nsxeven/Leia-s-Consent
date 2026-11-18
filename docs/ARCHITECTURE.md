@@ -17,7 +17,7 @@ is placeholder art) lives in `docs/BUILD_HANDOFF.md`.
 | `game/chapters/ch01/` | Chapter One shared files: `ch01_main.rpy` (Day One scenes 1-3, entry `chapter_one_start`), `ch01_visuals.rpy` (images shared across days), `ch01_release_demo.rpy` (Day One demo gate and demo end) |
 | `game/chapters/ch01/day1/` | Day One scenes 4-30 and its phone moments, each scene file with a `*_visuals.rpy` partner |
 | `game/chapters/ch01/day2/` | Day Two scenes, the scene 19b side file and `ch01_day2_visuals.rpy` |
-| `game/chapters/ch01/` (`ch01_day3_*`, `ch01_day4_*`, `ch01_day5_*`) | Days Three to Five: scenes, choice registration and visuals. Scriptwriter-owned; they stay flat in `ch01/` until their own pass |
+| `game/chapters/ch01/day3/`, `game/chapters/ch01/day4/`, `game/chapters/ch01/day5/` | Days Three to Five: scenes, `*_registrations.rpy` (choice registration and helpers) and visuals |
 | `game/systems/` | reusable game systems: one feature per file, no story text |
 | `game/screens/` | feature screens (phone, review, gallery, menus, title screen) |
 | `game/sprites/` | layered character sprites |
@@ -195,7 +195,7 @@ Work through the steps in order; each names the file that owns the table.
      `format_day4_gate_choice` and `format_day5_gate_choice`. A new gate formatter
      (`format_dayN_*_choice`) must join that list, or its cards get no path stamp in Full mode.
    - The previous last day ends with a runtime hand-off instead of a jump: Day Five's
-     `label ch01_day5_scene_16_finish` in `game/chapters/ch01/ch01_day5_scenes_09_16.rpy`
+     `label ch01_day5_scene_16_finish` in `game/chapters/ch01/day5/ch01_day5_scenes_09_16.rpy`
      has an `if renpy.has_label("ch01_day6_start"): jump expression "ch01_day6_start"` block
      and a temporary "Current development build ends here" card, marked "replace with the
      literal jump". Replace both with `jump ch01_dayN_start` (Days 3-5 are

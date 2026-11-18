@@ -16,19 +16,19 @@ SCENE_FILES = [
     "day2/ch01_day2_scenes_01_15.rpy",
     "day2/ch01_day2_scenes_16_30.rpy",
     "day2/ch01_day2_scene_19b_leia_asks_maya.rpy",
-    "ch01_day3_scenes.rpy",
-    "ch01_day4_scenes_01_08.rpy",
-    "ch01_day4_scenes_09_16.rpy",
-    "ch01_day4_choice_registration.rpy",
-    "ch01_day5_scenes_01_08.rpy",
-    "ch01_day5_scenes_09_16.rpy",
-    "ch01_day5_choice_registration.rpy",
+    "day3/ch01_day3_scenes.rpy",
+    "day4/ch01_day4_scenes_01_08.rpy",
+    "day4/ch01_day4_scenes_09_16.rpy",
+    "day4/ch01_day4_registrations.rpy",
+    "day5/ch01_day5_scenes_01_08.rpy",
+    "day5/ch01_day5_scenes_09_16.rpy",
+    "day5/ch01_day5_registrations.rpy",
 ]
 VISUAL_FILES = [
     "day2/ch01_day2_visuals.rpy",
-    "ch01_day3_visuals.rpy",
-    "ch01_day4_visuals.rpy",
-    "ch01_day5_visuals.rpy",
+    "day3/ch01_day3_visuals.rpy",
+    "day4/ch01_day4_visuals.rpy",
+    "day5/ch01_day5_visuals.rpy",
 ]
 NAME_RE = re.compile(r"\b(?:Leia|Ryan|Julian|LEIA|RYAN|JULIAN)\b")
 CUSTOM = {"girlfriend_name": "Ava", "player_name": "Noah", "friend_name": "Eli"}
@@ -195,7 +195,7 @@ class AgeGateTests(unittest.TestCase):
 
 class Day3ChoiceTests(unittest.TestCase):
     def setUp(self):
-        source = (CH01 / "ch01_day3_scenes.rpy").read_text()
+        source = (CH01 / "day3" / "ch01_day3_scenes.rpy").read_text()
         # The effective Day Three effects are the v2 re-scoring in
         # systems/stat_model_v2_later_days.rpy (init 5 wins over the file's init 1).
         sys.path.insert(0, str(Path(__file__).resolve().parent))
