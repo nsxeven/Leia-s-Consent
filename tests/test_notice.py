@@ -25,7 +25,7 @@ SCREEN = GAME / "screens/notice_screen.rpy"
 VISUALS = GAME / "chapters/ch01/day2/ch01_day2_visuals.rpy"
 SC_01_15 = GAME / "chapters/ch01/day2/ch01_day2_scenes_01_15.rpy"
 SC_16_30 = GAME / "chapters/ch01/day2/ch01_day2_scenes_16_30.rpy"
-PHONE = GAME / "screens/phone_sweetheart.rpy"
+PHONE = GAME / "screens/phone_app_status.rpy"
 
 RESERVED = (("dialogue box", (0, 792, 1920, 288)), ("banner", (610, 0, 700, 116)))
 

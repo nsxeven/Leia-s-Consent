@@ -32,7 +32,7 @@
    "ch01_pool_day",
    "ch01_restaurant_bar"
   ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
+  "reason": "LC_UI_SHOTS screenshot tour (dev only): the tour label stages real Day One backgrounds and CGs; it is a label, kept in place so saved statement names do not move"
  },
  "game/systems/cast_staging.rpy": {
   "ids": [

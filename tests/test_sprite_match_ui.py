@@ -6,7 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-PHONE_SRC = (GAME / "screens" / "phone_sweetheart.rpy").read_text(encoding="utf-8")
+from lc_screen_source import family_source  # noqa: E402
+PHONE_SRC = family_source("phone")
 PREFS_SRC = (GAME / "screens" / "scrapbook_ui.rpy").read_text(encoding="utf-8")
 REVIEW_SRC = (GAME / "screens" / "day_review_screen.rpy").read_text(encoding="utf-8")
 

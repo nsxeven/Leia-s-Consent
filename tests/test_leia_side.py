@@ -932,10 +932,10 @@ class MisuseGuardTests(unittest.TestCase):
 
     def test_map_sits_under_the_quick_menu(self):
         def zorder(src, screen):
-            block = src[src.index("screen %s(" % screen):]
-            return int(re.search(r"zorder (\d+)", block).group(1))
+            block = src[src.index("\nscreen %s(" % screen):]  # the definition, not a header line
+            return int(re.search(r"(?m)^\s+zorder (\d+)", block).group(1))
         self.assertLess(zorder(_read("game/screens/leia_map_screen.rpy"), "lc_leia_map_screen"),
-                        zorder(_read("game/screens/scrapbook_ui.rpy"), "quick_menu"))
+                        zorder(_read("game/screens/quick_menu.rpy"), "quick_menu"))
 
     def test_day_two_lane_subtracts_applied_effects(self):
         src = _read("game/chapters/ch01/day2/ch01_day2_registrations.rpy")

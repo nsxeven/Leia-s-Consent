@@ -2,14 +2,14 @@
 #
 # Purpose: Defines the stock screens (say, input, choice, quick_menu, main_menu, game_menu, save,
 #   load, file_slots, preferences, history, confirm, skip_indicator, notify) and restyles the stock
-#   styles, plus the choice/phone toasts, adult notice, demo end screen, title cards and the
-#   LC_UI_SHOTS screenshot tour. End-of-day review screens are not here.
+#   styles, plus the choice/phone toasts, adult notice, title cards and the LC_UI_SHOTS screenshot
+#   tour. Split out: quick_menu (screens/quick_menu.rpy), the demo end card
+#   (screens/demo_end_card.rpy). End-of-day review screens are not here.
 #
 # Public API (call these from scenes/screens):
 #   screen say(who, what, think=False)        dialogue box (think=True for Ryan's inner voice)
 #   screen choice(items)                      choice cards (parses stat chips, path/CG stamps)
 #   screen input(prompt)                      name entry card
-#   screen quick_menu()                       keycap quick menu (desktop and touch variants)
 #   screen main_menu()                        uses lc_title_screen
 #   screen game_menu(title, scroll=None, yinitial=0.0, spacing=0, hints=None)
 #       glass journal frame for menu pages
@@ -17,7 +17,6 @@
 #   screen history()                          dialogue history
 #   screen confirm(message, yes_action, no_action)
 #       yes/no dialog
-#   screen lc_demo_end_screen()               demo end card with links
 #   screen lc_adult_notice_screen()           18+ notice
 #   screen lc_title_card(who, what)           chapter title card used by `centered`
 #   screen lc_journal_tabs(xpos=48)           side tabs of journal pages
@@ -795,51 +794,6 @@ screen choice(items):
 
                             if not dev:
                                 add "gui/scrapbook/tape_corner_pink_flip.png" xpos 760 ypos -20 at lc_only_hover
-
-
-## Quick menu #################################################################
-
-screen quick_menu():
-    zorder 100
-
-    if quick_menu and not lc_journal_menu_open() and not lc_phone_covers_scene():
-        # Same layout under the box for sprites and CGs. Keys stay opaque;
-        # only unavailable ones dim (lc_keycap_state).
-        $ ghost = False
-        hbox:
-            xpos 132
-            ypos 1040
-            spacing 0
-            use lc_keycap_button(lc_day_caption(), NullAction(), ghost=ghost)
-
-        hbox:
-            xpos 1788
-            xanchor 1.0
-            ypos 1040
-            spacing 8
-            use lc_keycap_button("BACK", Rollback(), "gui/scrapbook/icon_back.png", ghost=ghost)
-            use lc_keycap_button("LOG", ShowMenu("history"), "gui/scrapbook/icon_log.png", ghost=ghost)
-            use lc_keycap_button("SKIP", Skip(), "gui/scrapbook/icon_skip.png", ghost=ghost)
-            use lc_keycap_button("AUTO", Preference("auto-forward", "toggle"), "gui/scrapbook/icon_auto.png", selected_on=preferences.afm_enable, ghost=ghost)
-            use lc_keycap_button("SAVE", ShowMenu("save"), "gui/scrapbook/icon_save.png", ghost=ghost)
-            use lc_keycap_button("Q.SAVE", QuickSave(), "gui/scrapbook/icon_qsave.png", ghost=ghost)
-            use lc_keycap_button("Q.LOAD", QuickLoad(), "gui/scrapbook/icon_qload.png", ghost=ghost)
-            use lc_keycap_button("PREFS", ShowMenu("preferences"), "gui/scrapbook/icon_prefs.png", ghost=ghost)
-
-
-screen quick_menu():
-    variant "touch"
-    zorder 100
-
-    if quick_menu and not lc_journal_menu_open() and not lc_phone_covers_scene():
-        hbox:
-            xalign 0.5
-            ypos 1020
-            spacing 10
-            use lc_keycap_button("BACK", Rollback(), "gui/scrapbook/icon_back.png")
-            use lc_keycap_button("SKIP", Skip(), "gui/scrapbook/icon_skip.png")
-            use lc_keycap_button("AUTO", Preference("auto-forward", "toggle"), "gui/scrapbook/icon_auto.png")
-            use lc_keycap_button("MENU", ShowMenu("save"), "gui/scrapbook/icon_save.png")
 
 
 ## Menus ######################################################################
@@ -1622,153 +1576,6 @@ screen lc_adult_notice_screen():
 
     text "SHOWN ONCE  -  REMEMBERED ON THIS DEVICE" xalign 0.5 ypos 900 size 21 color "#9b8a80" font "fonts/Handjet-SemiBold.ttf"
     key "game_menu" action Return(False)
-
-
-## Demo end card (darryn): shown after the Day 1 review in demo builds
-## (LC_DAY1_DEMO_BUILD). Same living backdrop as the title screen, the one-line
-## logo with its sheen, a thank-you, upcoming releases, Patreon and Discord.
-define LC_PATREON_URL = "https://www.patreon.com/c/LeiasConsent"
-define LC_DISCORD_URL = "https://discord.gg/HYmrB8Gjwj"
-define LC_X_URL = "https://x.com/LeiasConsent"
-# Thread id link: survives F95 renaming the thread for each version.
-define LC_F95_URL = "https://f95zone.to/threads/321815/"
-
-transform lc_demo_in(delay=0.0, dy=22):
-    subpixel True
-    alpha 0.0
-    yoffset dy
-    pause delay
-    easein 0.75 alpha 1.0 yoffset 0
-
-transform lc_demo_slide(delay=0.0):
-    subpixel True
-    alpha 0.0
-    xoffset -40
-    pause delay
-    easein 0.6 alpha 1.0 xoffset 0
-
-define LC_DEMO_CTA_W = 330
-define LC_DEMO_CTA_H = 66
-define LC_DEMO_CTA_GAP = 18
-
-transform lc_demo_cta_pulse(phase=0.0):
-    # Breathes about its own centre; `phase` offsets each button's beat.
-    subpixel True
-    zoom 1.0
-    pause phase
-    block:
-        ease 0.9 zoom 1.05
-        ease 0.9 zoom 1.0
-        pause 0.9
-        repeat
-
-screen lc_demo_cta_button(col, row, label, idle_col, hover_col, url, delay, phase):
-    fixed at lc_demo_in(delay):
-        xpos col * (LC_DEMO_CTA_W + LC_DEMO_CTA_GAP)
-        ypos row * (LC_DEMO_CTA_H + LC_DEMO_CTA_GAP)
-        xysize (LC_DEMO_CTA_W, LC_DEMO_CTA_H)
-        button at lc_demo_cta_pulse(phase):
-            align (0.5, 0.5)
-            xysize (LC_DEMO_CTA_W, LC_DEMO_CTA_H)
-            background Solid(idle_col)
-            hover_background Solid(hover_col)
-            action [Function(lc_ui_play, "tap"), OpenURL(url)]
-            hovered Function(lc_ui_play, "tick")
-            text label font "fonts/Fredoka-SemiBold.ttf" size 24 color "#ffffff" xalign 0.5 yalign 0.5
-
-transform lc_demo_pulse:
-    subpixel True
-    zoom 1.0
-    block:
-        ease 0.9 zoom 1.06
-        ease 0.9 zoom 1.0
-        repeat
-
-transform lc_demo_glow:
-    alpha 0.35
-    block:
-        ease 1.4 alpha 0.85
-        ease 1.4 alpha 0.35
-        repeat
-
-screen lc_demo_release_row(title, note, badge, delay):
-    hbox at lc_demo_slide(delay):
-        spacing 18
-        fixed:
-            xysize (170, 40)
-            yalign 0.5
-            add Solid("#ff8fc0" if badge == "NEXT UP" else "#ffffff40") xysize (170, 40)
-            text badge font "fonts/Handjet-ExtraBold.ttf" size 18 color ("#3b1028" if badge == "NEXT UP" else "#ffffff") xalign 0.5 yalign 0.5
-            if badge == "NEXT UP":
-                add Solid("#ffffff40") xysize (170, 40) at lc_demo_glow
-        vbox:
-            spacing 2
-            yalign 0.5
-            text title font "fonts/Fredoka-SemiBold.ttf" size 34 color "#ffffff"
-            text note style "lc_title_small_text" size 22 color "#ffffffc0"
-
-screen lc_demo_end_screen():
-    modal True
-    zorder 190
-    on "show" action Function(lc_bgm, "polaroid_summer", 3.0)
-
-    # Living backdrop, same layers as the title screen.
-    add lc_title_bg_now() at lc_title_bg_drift
-    add "gui/title/light_leak.png"
-    add "gui/title/shade_left.png"
-    add SnowBlossom(Transform("gui/title/bokeh.png", alpha=0.6), count=18, border=60, xspeed=(-18, 18), yspeed=(-40, -12), start=4, horizontal=False)
-    add lc_title_leia_now() at lc_title_leia
-    add "gui/title/vignette.png"
-    add "gui/title/shade_bottom.png" yalign 1.0
-
-    # One-line logo with its sheen, floating.
-    fixed at lc_title_logo_in:
-        xpos 96
-        ypos 58
-        xysize (860, 140)
-        add lc_title_logo() at lc_title_logo_float
-
-    vbox:
-        xpos 136
-        ypos 236
-        xsize 900
-        spacing 14
-
-        text "Thank you for playing the demo!" font "fonts/Fredoka-SemiBold.ttf" size 54 color "#ffffff" at lc_demo_in(0.9)
-        text "You've finished the Prologue and Chapter One (Day One). Your tags, stickers and gallery unlocks are saved for the full game." style "lc_title_small_text" size 25 color "#ffffffd0" xmaximum 860 at lc_demo_in(1.2)
-
-        null height 18
-        text "UPCOMING RELEASES" font "fonts/Handjet-ExtraBold.ttf" size 26 color "#ff9fc8" at lc_demo_in(1.6)
-        use lc_demo_release_row("Day 2", "The next update", "NEXT UP", 1.9)
-        use lc_demo_release_row("Days 3–5", "In development", "SOON", 2.2)
-
-        null height 22
-        text "Follow along, get early builds and vote on what comes next:" style "lc_title_small_text" size 22 color "#ffffffb0" at lc_demo_in(2.6)
-        # Four calls to action in fixed slots (darryn 2026-11-09): each button
-        # enters and pulses on its own, centred in its slot, so the scaling never
-        # moves its neighbours or the text below.
-        fixed:
-            xysize (LC_DEMO_CTA_W * 2 + LC_DEMO_CTA_GAP, LC_DEMO_CTA_H * 2 + LC_DEMO_CTA_GAP)
-            use lc_demo_cta_button(0, 0, "SUPPORT ON PATREON", "#ff6fae", "#ff8fc0", LC_PATREON_URL, 2.8, 0.0)
-            use lc_demo_cta_button(1, 0, "JOIN THE DISCORD", "#5865f2", "#7983f5", LC_DISCORD_URL, 2.95, 0.45)
-            use lc_demo_cta_button(0, 1, "FOLLOW ON X", "#14171c", "#2b313b", LC_X_URL, 3.1, 0.9)
-            use lc_demo_cta_button(1, 1, "FEEDBACK ON F95", "#b8343f", "#d24a55", LC_F95_URL, 3.25, 1.35)
-        text "Enjoyed it? A like and a comment on the F95 thread really helps, and every bit of feedback gets read." style "lc_title_small_text" size 20 color "#ffffffa0" xmaximum 860 at lc_demo_in(3.45)
-
-        null height 4
-        fixed at lc_demo_in(3.6):
-            xysize (380, 50)
-            use lc_title_item("Main Menu", Return(), "back")
-
-    hbox:
-        xalign 1.0
-        xoffset -40
-        ypos 34
-        spacing 14
-        text "DEMO" style "lc_title_small_text" yalign 0.5
-        add "gui/title/badge18.png" yalign 0.5
-
-    key "game_menu" action Return()
 
 
 screen lc_shot_helper(name):

@@ -26,8 +26,8 @@ class RpyModelTests(unittest.TestCase):
     def test_effective_screen_winners(self):
         eff = m.effective("screen")
         self.assertTrue(eff["quick_menu"].relpath.endswith(".rpy"))
-        self.assertIn("scrapbook_ui", eff["quick_menu"].relpath)
-        self.assertIn("scrapbook_ui", eff["quick_menu@touch"].relpath)
+        self.assertIn("screens/quick_menu", eff["quick_menu"].relpath)
+        self.assertIn("screens/quick_menu", eff["quick_menu@touch"].relpath)
         self.assertIn("phone_sweetheart", eff["phone_screen"].relpath)
         self.assertIn("phone_sweetheart", eff["lc_phone_extra_apps"].relpath)
 

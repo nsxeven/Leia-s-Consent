@@ -8,7 +8,8 @@ SRC = (Path(__file__).resolve().parents[1] / "game" / "screens" / "scrapbook_ui.
 class QuickMenuKeycapTests(unittest.TestCase):
 
     def setUp(self):
-        self.src = SRC.read_text(encoding="utf-8")
+        from lc_screen_source import family_source
+        self.src = family_source("scrapbook")  # quick_menu.rpy + the keycap button in scrapbook_ui.rpy
 
     def block(self, start):
         i = self.src.index(start)

@@ -6,7 +6,8 @@ import lc_wallpaper_crop as wp
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-PHONE = (GAME / "screens" / "phone_sweetheart.rpy").read_text(encoding="utf-8")
+from lc_screen_source import family_source  # noqa: E402
+PHONE = family_source("phone")
 WALL = (GAME / "screens" / "phone_wallpaper.rpy").read_text(encoding="utf-8")
 ART = GAME / "gui" / "phone" / "sprite_match"
 
