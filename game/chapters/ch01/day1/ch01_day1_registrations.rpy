@@ -523,3 +523,78 @@ init 1 python:
 # Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
 #   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>
 # Patterns with * cover dynamic keys. Keys are save data: never rename one.
+# key ch01_accidental_catch_complete: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_alone_movie_response: read-by ch01_day2_scenes_01_15.rpy, ch01_scenes_14_30.rpy
+# key ch01_bra_response: read-by ch01_day2_scenes_01_15.rpy, ch01_scenes_07_13.rpy
+# key ch01_breakfast_phone_session_active: read-by ch01_phone_moments.rpy, ch01_scenes_14_30.rpy
+# key ch01_breakfast_reply_pending: read-by ch01_phone_moments.rpy
+# key ch01_can_tell_response: read-by ch01_scenes_14_30.rpy
+# key ch01_carry_response: read-by ch01_scenes_14_30.rpy, day1.py
+# key ch01_catch_response: read-by ch01_scenes_14_30.rpy
+# key ch01_compliment_response: read-by ch01_scenes_14_30.rpy
+# key ch01_day1_nonchalant_count: read-by ch01_scenes_14_30.rpy
+# key ch01_day1_route_pressure: read-by ch01_day1_chapter.rpy, ch01_day2_scenes_01_15.rpy, ch01_scenes_14_30.rpy +1 more
+# key ch01_day1_towel_dream_seen: read-by day1.py
+# key ch01_day_01_complete: read-by chapter_select.rpy, day1.py
+# key ch01_default_car_seating: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_dinner_bra_state: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_dinner_dress_state: pending set by ch01_scenes_07_13.rpy, ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_dinner_stranger_collision: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_dream_response: read-by ch01_day2_leia_errand.rpy, ch01_day2_scenes_01_15.rpy, ch01_day2_scenes_16_30.rpy +1 more
+# key ch01_driver_baseline_established: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_female_friend_meetup_seeded: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_female_friend_response: read-by ch01_day2_scenes_01_15.rpy
+# key ch01_first_outfit_choice_complete: pending set by ch01_main.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_julian_apology_response: read-by ch01_day2_scenes_16_30.rpy, ch01_scenes_14_30.rpy
+# key ch01_julian_attraction_prompt: read-by ch01_scenes_14_30.rpy
+# key ch01_julian_compliment_given: read-by ch01_scenes_14_30.rpy
+# key ch01_late_photo_followup_pending: read-by ch01_phone_moments.rpy
+# key ch01_late_photo_followup_stage: read-by ch01_phone_moments.rpy
+# key ch01_late_photo_force_complete_on_open: read-by ch01_phone_moments.rpy
+# key ch01_late_photo_phone_session_active: read-by ch01_phone_moments.rpy, ch01_scenes_14_30.rpy
+# key ch01_late_pool_photo_asset: pending set by ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_late_pool_photo_shared: pending set by ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_leia_buzz_state: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_leia_julian_comfort: read-by ch01_scenes_07_13.rpy
+# key ch01_leia_stranger_second_glance: read-by day1.py
+# key ch01_leia_wake_reason: read-by ch01_scenes_07_13.rpy
+# key ch01_looking_philosophy: read-by ch01_day2_scenes_16_30.rpy, ch01_scenes_14_30.rpy
+# key ch01_micro_test_response: read-by ch01_scenes_14_30.rpy
+# key ch01_movie_blanket_state: pending set by ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_movie_first_response: read-by ch01_scenes_14_30.rpy
+# key ch01_movie_night_started: pending set by ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_night_pool_attention: read-by ch01_day1_gallery.rpy
+# key ch01_night_pool_julian_glance: pending set by ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_noblanket_response: read-by ch01_scenes_14_30.rpy
+# key ch01_outfit_stance: read-by ch01_scenes_04_06.rpy
+# key ch01_photo_outcome: read-by ch01_scenes_04_06.rpy, ch01_scenes_14_30.rpy
+# key ch01_photo_stance: pending set by ch01_scenes_04_06.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_pool_capture_count: read-by ch01_day2_scenes_01_15.rpy, ch01_phone_moments.rpy, day1.py
+# key ch01_pool_outfit: read-by ch01_day2_scenes_01_15.rpy, ch01_main.rpy, ch01_phone_moments.rpy +3 more
+# key ch01_pool_phone_attachment_count: pending set by ch01_phone_moments.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_pool_phone_solo_photo_count: pending set by ch01_phone_moments.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_pool_photos_shared_to_group: read-by ch01_phone_moments.rpy
+# key ch01_private_attention_response: read-by ch01_day2_scenes_01_15.rpy
+# key ch01_private_movie_response: read-by ch01_scenes_14_30.rpy
+# key ch01_relationship_philosophy: pending set by ch01_scenes_14_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_return_car_seating: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_route_explorer_focus: pending set by full_transparency_route_explorer.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_ryan_julian_trust: read-by ch01_scenes_07_13.rpy
+# key ch01_scene_05_complete: read-by phone_group_avatar.rpy
+# key ch01_scene_06_complete: read-by ch01_phone_moments.rpy, day1.py
+# key ch01_scene_30_complete: read-by chapter_select.rpy
+# key ch01_scenes_01_03_complete: pending set by ch01_main.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_scenes_07_13_complete: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_scenes_14_30_complete: read-by chapter_select.rpy
+# key ch01_selected_photo_asset: pending set by ch01_scenes_04_06.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_started: read-by chapter_select.rpy, day1.py, dev_phone_shots.rpy +3 more
+# key ch01_sticky_bra_removed: pending set by ch01_scenes_07_13.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_stranger_response: read-by ch01_scenes_14_30.rpy
+# key ch01_towel_followup: read-by ch01_day2_scenes_01_15.rpy, ch01_phone_moments.rpy, ch01_scenes_14_30.rpy
+# key ch01_upstairs_response: read-by ch01_day2_scenes_01_15.rpy, ch01_day2_scenes_16_30.rpy, ch01_scenes_14_30.rpy
+# key ch01_villa_geography_established: pending set by ch01_main.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_watching_response: read-by day1.py
+# key love_outfit_last_request: pending set by love_outfit_control.rpy; nothing reads it yet (kept for later Days and saves)
+# key love_outfit_request_count: read-by love_outfit_control.rpy
+# key love_outfit_request_used: pending set by love_outfit_control.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_scene_*_complete: pending scene-done markers (30 keys; scene-done helper), nothing reads them yet

@@ -410,3 +410,58 @@ init 2 python:
                 continue
             options.append(outfit_id)
         return options
+
+
+# ------------------------------------------------------------------ story-key ledger
+# Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
+#   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>
+# Patterns with * cover dynamic keys. Keys are save data: never rename one.
+# key ch01_d4_club_story_deferred: read-by ch01_day5_registrations.rpy, chapter_select.rpy
+# key ch01_d4_cutout_disclosed: read-by ch01_day4_scenes_09_16.rpy, ch01_day5_registrations.rpy, chapter_select.rpy
+# key ch01_d4_cutout_partial: read-by chapter_select.rpy
+# key ch01_d4_d3_variant: read-by ch01_day4_scenes_01_08.rpy
+# key ch01_d4_day_outfit_id: pending set by ch01_day4_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_day_outfit_source: pending set by ch01_day4_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_disclosure_when: pending set by ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_dusk_daring: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_dusk_outfit_id: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_dusk_outfit_source: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_end_route: read-by ch01_day4_chapter.rpy, ch01_day5_registrations.rpy, ch01_day5_scenes_01_08.rpy +1 more
+# key ch01_d4_end_route_pending: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_end_variant: read-by ch01_day5_registrations.rpy
+# key ch01_d4_exhib_brief_done: read-by chapter_select.rpy
+# key ch01_d4_exhib_framing: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_exhib_ryan_likes_watching: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d4_exhib_tease_done: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_exhib_variant: read-by ch01_day4_scenes_09_16.rpy, ch01_day5_scenes_01_08.rpy, day4.py
+# key ch01_d4_exposure_step: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d4_hook_reply: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d4_hunt_winner: read-by ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy
+# key ch01_d4_lane: read-by ch01_day4_registrations.rpy, ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy +2 more
+# key ch01_d4_leia_call: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_love_exhib_seed: read-by ch01_day4_scenes_09_16.rpy, ch01_day5_scenes_01_08.rpy
+# key ch01_d4_love_mini_thanks: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_love_strained: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_market_honey_bee_callback: read-by chapter_select.rpy
+# key ch01_d4_maya_real_talk: pending set by ch01_day4_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_morning_reply: read-by ch01_day4_scenes_01_08.rpy
+# key ch01_d4_ntr_boundary_set: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_ntr_confirmed: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_ntr_fine_count: read-by ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy, ch01_day5_registrations.rpy
+# key ch01_d4_ntr_outcome: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_ntr_pressed_early: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_ntr_react: read-by ch01_day4_scenes_09_16.rpy
+# key ch01_d4_ntr_repaired: pending set by ch01_day4_scenes_09_16.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_ntr_repaired_curious: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_ntr_soft_gate: read-by chapter_select.rpy
+# key ch01_d4_photo_candid_taken: read-by chapter_select.rpy
+# key ch01_d4_photo_pose_taken: read-by chapter_select.rpy
+# key ch01_d4_photo_skipped: read-by chapter_select.rpy
+# key ch01_d4_photo_style: read-by ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy, ch01_day5_scenes_01_08.rpy
+# key ch01_d4_photo_swap_taken: pending set by ch01_day4_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d4_scene_16_complete: read-by chapter_select.rpy
+# key ch01_d4_wardrobe_friction: pending set by ch01_day4_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_day_04_complete: read-by chapter_select.rpy, lc_ui_logic.py
+# key ch01_day_04_started: read-by chapter_select.rpy, lc_ui_logic.py
+# key ch01_d4_scene_*_complete: pending scene-done markers (15 keys; scene-done helper), nothing reads them yet
+# key ch01_d4_*: pending dynamic keys set by chapter_select.rpy

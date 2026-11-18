@@ -560,3 +560,64 @@ init 2 python:
                 continue
             options.append(outfit_id)
         return options
+
+
+# ------------------------------------------------------------------ story-key ledger
+# Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
+#   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>
+# Patterns with * cover dynamic keys. Keys are save data: never rename one.
+# key ch01_d5_bee_rescued: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_bunk: read-by ch01_day5_scenes_09_16.rpy
+# key ch01_d5_clip_rescued_by_julian: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_clip_rescued_by_ryan: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_club_disclosed: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_d4_end: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_dare_offered: pending set by ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_disclosure_when: pending set by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_eaves_announced: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_eaves_listened: read-by ch01_day5_scenes_09_16.rpy
+# key ch01_d5_end_route: read-by ch01_day5_chapter.rpy, stats.rpy
+# key ch01_d5_end_route_pending: read-by ch01_day5_scenes_09_16.rpy
+# key ch01_d5_end_variant: pending set by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_evening_outfit_id: pending set by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_evening_outfit_source: pending set by ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_exhib_comfortable_done: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_exhib_framing: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d5_exhib_ryan_likes_watching: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_exhib_tease_done: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_exhib_variant: read-by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy, day5.py
+# key ch01_d5_exposure_step: read-by ch01_day5_scenes_09_16.rpy
+# key ch01_d5_invite_reply: pending set by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_julian_looked_after: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_julian_thanked: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_lane: read-by ch01_day5_registrations.rpy
+# key ch01_d5_leia_call: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_love_cove_done: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_love_strained: pending set by ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_maya_confided_early: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_ntr_boundary_set: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_ntr_curious: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_ntr_outcome: pending set by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_ntr_pressed: pending set by ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_ntr_react: read-by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy
+# key ch01_d5_ntr_reopened: read-by ch01_day5_scenes_09_16.rpy
+# key ch01_d5_ntr_repaired_by_disclosure: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_overheard_club: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_pack_outfit_id: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_pack_outfit_source: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_pass_signal: pending set by ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_phone_in_bag: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_photo_group: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_privacy_breach: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_private_photo: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_react_return: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d5_rope_bracelets: pending set by ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_secret_traded: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_snorkel_first: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d5_swim_outfit_id: read-by ch01_day5_scenes_01_08.rpy
+# key ch01_d5_track: read-by ch01_day5_registrations.rpy, ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy
+# key ch01_d5_truth_ryan: pending set by ch01_day5_scenes_01_08.rpy, ch01_day5_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d5_wardrobe_friction: pending set by ch01_day5_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_day_05_complete: read-by lc_ui_logic.py
+# key ch01_day_05_started: read-by lc_ui_logic.py
+# key ch01_d5_scene_*_complete: pending scene-done markers (16 keys; scene-done helper), nothing reads them yet
