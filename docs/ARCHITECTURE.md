@@ -265,7 +265,11 @@ contract.
     start label reads and returns `"ch01_dayN_start"`, then register it:
     `CHAPTER_SELECT_PRESETS["dayN"] = dict(label=..., note=..., heading=..., routes=..., seed=...)`.
     The engine (`game/systems/chapter_select.rpy`) and the screen read the registry; neither names
-    a Day.
+    a Day. If the Day sends texts, give its "finished" seed a `ch01_dN_select_phone(...)` that
+    replays them with `chapter_select_phone(...)` (and `chapter_select_phone_reply` /
+    `chapter_select_phone_group`), so later presets start with the Day's phone history
+    (`docs/DAY_PACK.md`, "Phone history for Chapter Select"; checked by
+    `tests/test_chapter_select_phone.py`).
 11. **Tests, baselines and docs.** When the day's writing pass lands, add its story files to
     the `STORY` list in `tests/test_typed_names.py` and the `MIGRATED` list in
     `tests/test_cast_staging.py`. A new day adds init side effects and changes pinned tables,
@@ -329,7 +333,7 @@ contract.
 | Hooks | `game/systems/lc_hooks.rpy` | this file | `tests/test_lc_hooks.py` |
 | Save compatibility | `game/systems/save_compat.rpy`, `game/systems/dev_source_checks.rpy`, `tools/clean_orphan_rpyc.py` | this file | `tests/test_save_names.py`, `tests/test_orphan_rpyc.py` |
 | Chapters | `game/systems/lc_chapters.rpy`, `game/python-packages/lc_chapters.py` | this file | `tests/test_lc_chapters.py` |
-| Chapter Select | `game/systems/chapter_select.rpy`, `game/screens/chapter_select_screen.rpy` | this file | `tests/test_lc_chapters.py` |
+| Chapter Select | `game/systems/chapter_select.rpy`, `game/screens/chapter_select_screen.rpy` | this file, `docs/DAY_PACK.md` | `tests/test_lc_chapters.py`, `tests/test_chapter_select_phone.py` |
 | Day review | `game/systems/day_review.rpy`, `game/screens/day_review_screen.rpy` | `docs/DAY_REVIEW.md` | `tests/test_day_review.py`, `tests/test_review_sfx.py` |
 | Tags and stickers | `game/systems/lc_tag_collection.rpy`, `game/screens/tag_collection_screen.rpy` | `docs/DAY_REVIEW.md` | `tests/test_tag_collection.py`, `tests/test_review_tags.py` |
 | Hidden POV | `game/systems/hidden_pov.rpy`, `game/systems/hidden_pov_chime.rpy` | `docs/HIDDEN_POV.md` | `tests/test_hidden_pov.py` |

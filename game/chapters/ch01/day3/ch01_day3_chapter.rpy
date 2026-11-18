@@ -41,6 +41,7 @@ init 1 python:
         ch01_d2_select_finished(route)
         return "ch01_day3_start"
 
+    # Day Three delivers no phone messages, so its "finished" seed adds no phone history.
     def ch01_d3_select_finished(base, lane=None):
         """Chapter Select: Day Three finished after Day Two end state `base`. `lane` names the
         Day Three lane outright (the Day Five presets do). Returns the Day Three lane."""

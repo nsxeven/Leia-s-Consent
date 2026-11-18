@@ -31,3 +31,27 @@ init 1 python:
             set_story_flag(flag)
         set_story_value("ch01_day1_route_pressure", pressure)
         set_story_value("ch01_dream_response", "grounded")
+        prologue_select_phone()
+        ch01_d1_select_phone()
+
+    def ch01_d1_select_phone():
+        """Chapter Select: Day One's phone as a player who read every chat has it at Day Two's start.
+        The preset stores no pool values, so the story's defaults apply: the White swimsuit and one
+        Capture photo (ch01_pool_capture_count 1: no pool reply card, the unsent favourite comes
+        late). The movie-photo card takes its default reply ("nice")."""
+        chapter_select_phone("group", "system", "ch01_trip_group_trio_photo", girlfriend_name + " changed the group picture.")
+        chapter_select_phone_group("trio")
+        chapter_select_phone("group", "julian", "ch01_trip_group_pool_capture_01", "Am I the best photographer or what?",
+                             attachment_id="ch01_photo_capture_01_a", attachment_label=girlfriend_name + " pool photo 01")
+        chapter_select_phone("group", "julian", "ch01_trip_group_late_pool_photo",
+                             "Forgot this one. Photographer of the year strikes again.",
+                             attachment_id="ch01_photo_late_favourite_white", attachment_label="Unsent pool favorite")
+        chapter_select_phone("group", "leia", "ch01_trip_group_late_photo_leia_react", "Okay this one's actually good.")
+        chapter_select_phone("group", "julian", "ch01_trip_group_late_photo_julian_reply", "Actually?")
+        chapter_select_phone("group", "leia", "ch01_trip_group_late_photo_leia_reply", "Don't ruin it.")
+        chapter_select_phone("group", "player", "ch01_movie_photo_reply_ryan", "Okay, that one's good. Thanks for sending it.")
+        chapter_select_phone("group", "julian", "ch01_movie_photo_reply_followup_01",
+                             "Glad you like it. I almost forgot it was still on my phone.")
+        chapter_select_phone_reply("ch01_movie_photo_reply", "nice")
+        chapter_select_phone("group", "julian", "ch01_trip_group_breakfast_warning", "Breakfast after 11 or I'm calling the police.")
+        chapter_select_phone("group", "leia", "ch01_trip_group_breakfast_leia_reply", "No promises.")
