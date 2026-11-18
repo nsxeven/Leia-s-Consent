@@ -1754,9 +1754,9 @@ label ch01_day2_scene_30_bedroom:
 
     if d2_errand_lane == "love" and (d2_seen_love_pool or d2_seen_love_shop):
         if d2_seen_love_pool and not d2_feed_pending:
-            think "That post was still sitting in my head. Stopped a creep at the resort café, got shot down by the same girl. Her boyfriend is a lucky man."
+            think "That café post was still sitting in my head."
         if d2_seen_love_shop and not d2_feed_pending:
-            think "And the one from the shop. A young lady bought the last chocolate muffins for her sweetheart today."
+            think "So was the one from the shop."
         $ d2_feed_love_text = format_choice("ch01_d2_feed_love_tease", "Tease her about the post.")
         menu:
             "[d2_feed_love_text]":

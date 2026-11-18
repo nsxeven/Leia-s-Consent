@@ -306,8 +306,9 @@ init 1 python:
         "d2_boutique_stranger",
         image="cg ch01_d2_shop_showoff_stranger_pov",
         source="cg ch01_d2_shop_showoff",
-        # Sparkle centre: the stranger by the racks, left background (darryn 2026-11-17).
-        center=(415, 230),
+        # The stranger by the racks, left background: beside his left eye, at the temple
+        # (darryn 2026-11-19; it used to sit on his chin).
+        eye=(430, 172), temple="left",
         title="A stranger's POV",
         mature=True,
         day_id="ch01_d2",

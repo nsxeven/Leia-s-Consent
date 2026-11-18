@@ -16,7 +16,9 @@
 #       (a missed-call row) never resolves an open reply card to its default
 #   phone_offer_reply(thread_id, prompt_id, options, default_id) -> bool
 #       queue a save-safe, stat-free reply card for a thread (option keys: id, text, followups,
-#       leave_on_read, hesitate, draft, send, choice_id)
+#       leave_on_read, hesitate, draft, send, choice_id, message_id). followups are (sender, text)
+#       or (sender, text, message_id); message_id keeps Ryan's bubble on an existing save id.
+#       To make the story WAIT for the pick and score it: the label in systems/phone_moments.rpy.
 #   phone_choose_reply(thread_id, option_id, staged=False, by_default=False) -> bool
 #       queue a picked reply (or post it at a story deadline); by_default: the card ran out, so
 #       a leave-on-read default with the chat closed and still unread leaves it unread and unseen
@@ -245,8 +247,8 @@ init python:
         if thread_id not in PHONE_THREAD_ORDER or not prompt_id:
             raise ValueError("Unknown thread or missing reply prompt ID")
         ids = [option["id"] for option in options]
-        if not 2 <= len(ids) <= 3 or len(set(ids)) != len(ids) or default_id not in ids:
-            raise ValueError("Reply prompts need 2-3 unique choices and a valid default")
+        if not 2 <= len(ids) <= 4 or len(set(ids)) != len(ids) or default_id not in ids:
+            raise ValueError("Reply prompts need 2-4 unique choices and a valid default")
         lc_phone_moments.validate_options(options)
         if has_story_value(prompt_id) or phone_pending_reply(thread_id):
             return False
@@ -276,9 +278,12 @@ init python:
                 phone_mark_thread_read(thread_id)
             steps = []
         else:
-            steps = [("player", option.get("send", option["text"]), prompt["id"] + "_ryan")]
-        steps.extend((sender, text, "{}_followup_{:02d}".format(prompt["id"], index + 1))
-                     for index, (sender, text) in enumerate(option.get("followups", ())))
+            steps = [("player", option.get("send", option["text"]), option.get("message_id") or prompt["id"] + "_ryan")]
+        # A follow-up is (sender, text) or (sender, text, message_id): the third item keeps an
+        # existing save id when a story text moves onto a reply card.
+        steps.extend((step[0], step[1], step[2] if len(step) > 2 and step[2] else
+                      "{}_followup_{:02d}".format(prompt["id"], index + 1))
+                     for index, step in enumerate(option.get("followups", ())))
         lc_hook_run("phone_reply_chosen", thread_id, prompt["id"], option, unopened=unopened)
         if staged and steps:
             # Save state contains plain strings, not callables or displayables.
@@ -333,7 +338,7 @@ init python:
             if frames:
                 LC_PHONE_TYPING[thread_id] = {"frames": frames, "start": _lc_phone_clock.time(),
                                               "step": lc_phone_moments.frame_step(frames),
-                                              "message_id": prompt["id"] + "_ryan"}
+                                              "message_id": option.get("message_id") or prompt["id"] + "_ryan"}
         return None
 
     def lc_phone_reply_caption(option):

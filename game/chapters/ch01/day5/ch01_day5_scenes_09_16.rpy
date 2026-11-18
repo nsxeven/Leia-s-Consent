@@ -742,7 +742,7 @@ label ch01_day5_scene_14_dawn_run:
                 message_id="ch01_d5_late_leia_ntr_unresolved",
                 mark_unread=True, notify=False,
             )
-        "A message on [girlfriend_name]'s thread, under 'Sorry.', under the draft that had finally landed."
+        "Her thread again, sent from the far end of the deck. She didn't look up from the water after she'd sent it."
     else:
         python:
             phone_add_message(

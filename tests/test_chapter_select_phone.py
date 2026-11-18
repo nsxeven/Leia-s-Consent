@@ -173,11 +173,15 @@ def story_index():
                     leave = _const(o.get("leave_on_read", ast.Constant(False)))
                     prompts[prompt][oid] = dict(leave=bool(leave), followups=[])
                     if not leave:
-                        index.setdefault(prompt + "_ryan", []).append(dict(
+                        ryan_id = _const(o["message_id"]) if "message_id" in o else prompt + "_ryan"
+                        prompts[prompt][oid]["ryan"] = ryan_id
+                        index.setdefault(ryan_id, []).append(dict(
                             thread=_const(call.args[0]), sender="player", rel=rel, line=line, order=None,
                             text=_candidates(o.get("send", o["text"]), assigns), attachment=None))
                     for n, pair in enumerate(o.get("followups", ast.List([])).elts, 1):
-                        mid = "{}_followup_{:02d}".format(prompt, n)
+                        # A third item keeps an existing save id (darryn 2026-11-19).
+                        mid = (_const(pair.elts[2]) if len(pair.elts) > 2
+                               else "{}_followup_{:02d}".format(prompt, n))
                         prompts[prompt][oid]["followups"].append(mid)
                         index.setdefault(mid, []).append(dict(
                             thread=_const(call.args[0]), sender=_const(pair.elts[0]), rel=rel, line=line,
@@ -404,7 +408,7 @@ class SeedTextsMatchTheStory(unittest.TestCase):
             left = _arg(call, 2, "left_on_read")
             if spec["leave"] != (left is not None):
                 problems.append(f"{rel}:{line}: {prompt}/{option} left_on_read must match the option")
-            posted = ([] if spec["leave"] else [prompt + "_ryan"]) + spec["followups"]
+            posted = ([] if spec["leave"] else [spec.get("ryan", prompt + "_ryan")]) + spec["followups"]
             missing = [m for m in posted if m not in seeded]
             if missing:
                 problems.append(f"{rel}:{line}: {prompt}/{option} posts {missing} but they are not seeded")

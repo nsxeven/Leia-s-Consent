@@ -63,7 +63,7 @@ label ch01_day2_scene_01_morning_after:
     think "Four years, and I still got whatever quarter of the bed she didn't need. I'd never once asked for it back."
     mc "Hey. [friend_name]'s awake. Which means we're officially late."
     gf "Mmhh... five more... hours."
-    mc "He sent 'Bro wake up.' That's the whole message. He's escalating."
+    mc "He's texting the group now. He's escalating."
     $ lc_notice_end()
 
     scene cg ch01_d2_leia_waking
@@ -1142,7 +1142,7 @@ label ch01_day2_scene_11b_boutique:
     $ cast(ryan="casual")
 
     $ lc_sfx("phone_notify")
-    "My phone buzzed against my leg."
+    "My phone buzzed against my leg. [girlfriend_name]."
     python:
         phone_add_message(
             "leia",
@@ -1162,50 +1162,29 @@ label ch01_day2_scene_11b_boutique:
             mark_unread=True,
         )
 
-    "A photo from [girlfriend_name]. The changing-room mirror, the black dress Maya had picked, one arm clamped across her chest and the other hand on the hem."
-    "Her face was trying very hard to look like this was all a joke."
-    "Underneath it: \"Be honest. Is this too much?? Maya picked it. Obviously.\""
+    # Ryan answers the selfie inside the phone (darryn 2026-11-19: phone replies are never
+    # dialogue menus, and the scene never repeats what the phone shows). The card carries the
+    # scored reveal choices (same choice ids, message ids and story value as before); the
+    # story waits for the pick, then lc_phone_await_reply applies the option's choice_id.
+    $ phone_offer_reply("leia", "ch01_d2_boutique_selfie_reply", [
+        {"id": "affection", "text": "You look incredible.", "choice_id": "ch01_d2_mall_reveal_affection",
+         "message_id": "ch01_d2_boutique_selfie_reply",
+         "followups": [("leia", "You have to say that. You're biased.", "ch01_d2_boutique_selfie_followup"), ("leia", "Don't come over here. I'm not coming out in this. Changing room only.", "ch01_d2_boutique_selfie_stay")]},
+        {"id": "open", "text": "Didn't know you had that in you.", "choice_id": "ch01_d2_mall_reveal_open",
+         "message_id": "ch01_d2_boutique_selfie_reply",
+         "followups": [("leia", "I DON'T. This is all Maya. I'm just standing in it.", "ch01_d2_boutique_selfie_followup"), ("leia", "Don't come over here. I'm not coming out in this. Changing room only.", "ch01_d2_boutique_selfie_stay")]},
+        {"id": "tease", "text": "Maya really did this to you?", "choice_id": "ch01_d2_mall_reveal_tease",
+         "message_id": "ch01_d2_boutique_selfie_reply",
+         "followups": [("leia", "Against my better judgment. VERY much against it.", "ch01_d2_boutique_selfie_followup"), ("leia", "Don't come over here. I'm not coming out in this. Changing room only.", "ch01_d2_boutique_selfie_stay")]},
+        {"id": "flat", "text": "It's... nice.", "choice_id": "ch01_d2_mall_reveal_flat",
+         "message_id": "ch01_d2_boutique_selfie_reply",
+         "followups": [("leia", "Nice.", "ch01_d2_boutique_selfie_followup"), ("leia", "Don't come over here. I'm not coming out in this. Changing room only.", "ch01_d2_boutique_selfie_stay")]},
+    ], "affection")
+    call lc_phone_await_reply("leia") from ch01_d2_boutique_selfie_await
+    $ d2_selfie_reply = get_story_value("ch01_d2_boutique_selfie_reply")
+    if d2_selfie_reply == "flat":
+        "I started typing that I meant really nice, deleted it, and didn't send anything after all."
 
-    # Ryan's reply to the selfie is the scored reveal reaction (same choice ids and
-    # effects as the old in-person reveal). It now plays on every lane, before the shout.
-    $ d2_mall_affection_text = format_choice("ch01_d2_mall_reveal_affection", "You look incredible.")
-    $ d2_mall_open_text = format_choice("ch01_d2_mall_reveal_open", "Didn't know you had that in you.")
-    $ d2_mall_tease_text = format_choice("ch01_d2_mall_reveal_tease", "Maya really did this to you?")
-    $ d2_mall_flat_text = format_choice("ch01_d2_mall_reveal_flat", "It's... nice.")
-
-    menu:
-        "[d2_mall_affection_text]":
-            $ apply_choice("ch01_d2_mall_reveal_affection")
-            $ set_story_value("ch01_d2_boutique_selfie_reply", "affection")
-            $ phone_send_player_message("leia", "You look incredible.", message_id="ch01_d2_boutique_selfie_reply")
-            $ phone_add_message("leia", "leia", text="You have to say that. You're biased.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
-            "Her answer came straight back: \"You have to say that. You're biased.\""
-            "I typed back that I was very biased and that it was still true. Three dots came up, went away, and came up again."
-
-        "[d2_mall_open_text]":
-            $ apply_choice("ch01_d2_mall_reveal_open")
-            $ set_story_value("ch01_d2_boutique_selfie_reply", "open")
-            $ phone_send_player_message("leia", "Didn't know you had that in you.", message_id="ch01_d2_boutique_selfie_reply")
-            $ phone_add_message("leia", "leia", text="I DON'T. This is all Maya. I'm just standing in it.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
-            "Her answer came straight back: \"I DON'T. This is all Maya. I'm just standing in it.\""
-
-        "[d2_mall_tease_text]":
-            $ apply_choice("ch01_d2_mall_reveal_tease")
-            $ set_story_value("ch01_d2_boutique_selfie_reply", "tease")
-            $ phone_send_player_message("leia", "Maya really did this to you?", message_id="ch01_d2_boutique_selfie_reply")
-            $ phone_add_message("leia", "leia", text="Against my better judgment. VERY much against it.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
-            "Her answer came straight back: \"Against my better judgment. VERY much against it.\""
-
-        "[d2_mall_flat_text]":
-            $ apply_choice("ch01_d2_mall_reveal_flat")
-            $ set_story_value("ch01_d2_boutique_selfie_reply", "flat")
-            $ phone_send_player_message("leia", "It's... nice.", message_id="ch01_d2_boutique_selfie_reply")
-            $ phone_add_message("leia", "leia", text="Nice.", message_id="ch01_d2_boutique_selfie_followup", mark_unread=True)
-            "Her answer took a while: \"Nice.\""
-            "Just the one word, with a full stop on it. I started typing that I meant really nice, and deleted it, and started again."
-
-    $ phone_add_message("leia", "leia", text="Don't come over here. I'm not coming out in this. Changing room only.", message_id="ch01_d2_boutique_selfie_stay", mark_unread=True)
-    "Another one landed before I'd even put the phone down: \"Don't come over here. I'm not coming out in this. Changing room only.\""
     "I put my phone away and stayed in my chair. Whatever happened next, it was going to be her call."
 
     $ enter_cinematic_mode()
@@ -1373,7 +1352,7 @@ label ch01_day2_scene_11b_boutique:
     maya "Okay, but look at how it sits, though. Look."
     "She hooked her thumbs under her own straps and tugged them up to show him the fit, laughing, completely delighted with herself."
     "Her thumbs had been the only thing holding [girlfriend_name]'s top up."
-    "The top of [girlfriend_name]'s dress slid straight down to her waist."
+    "The top of [girlfriend_name]'s dress peeled down with a soft squeak of latex and caught just below her nipples."
     "For one long second, she just stood there with both hands still on the hem, like her brain hadn't caught up yet."
 
     scene cg ch01_d2_shop_showoff_04

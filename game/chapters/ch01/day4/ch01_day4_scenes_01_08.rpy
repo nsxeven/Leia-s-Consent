@@ -169,32 +169,31 @@ label ch01_day4_scene_02_phone_morning:
     mc "I'm reading it."
     gf "Out loud."
 
-    $ d4_text_warm = format_choice("ch01_d4_text_warm", "Best three feet of my whole week.")
-    $ d4_text_flirt = format_choice("ch01_d4_text_flirt", "Come closer and I'll make it better.")
-    $ d4_text_coffee = format_choice("ch01_d4_text_coffee", "Coffee first. Then all of it.")
-
-    menu:
-        "[d4_text_warm]":
-            $ apply_choice("ch01_d4_text_warm")
-            $ phone_send_player_message("leia", "Best three feet of my whole week.", message_id="ch01_d4_player_text_warm")
-            gf "Okay. That one's going in the keepsake box."
-            mc "You have a keepsake box?"
-            gf "I have a box now."
-
-        "[d4_text_flirt]":
-            $ apply_choice("ch01_d4_text_flirt")
-            $ phone_send_player_message("leia", "Come closer and I'll make it better.", message_id="ch01_d4_player_text_flirt")
-            gf "Bold, for a man in yesterday's hair."
-            mc "You're still reading it again."
-            gf "I'm studying it."
-            "She closed the distance anyway, taking her time about it."
-
-        "[d4_text_coffee]":
-            $ apply_choice("ch01_d4_text_coffee")
-            $ phone_send_player_message("leia", "Coffee first. Then all of it.", message_id="ch01_d4_player_text_coffee")
-            gf "Coffee first. Fair. It's a very serious all of it."
-            mc "I'm a serious person."
-            gf "You're a man who needs a menu to choose a sandwich."
+    # Ryan answers in the phone (darryn 2026-11-19: phone replies are never dialogue menus).
+    # Same choice ids and message ids as before; the pick is story value ch01_d4_morning_text_reply.
+    $ phone_offer_reply("leia", "ch01_d4_morning_text_reply", [
+        {"id": "warm", "text": "Best three feet of my whole week.", "choice_id": "ch01_d4_text_warm",
+         "message_id": "ch01_d4_player_text_warm"},
+        {"id": "flirt", "text": "Come closer and I'll make it better.", "choice_id": "ch01_d4_text_flirt",
+         "message_id": "ch01_d4_player_text_flirt"},
+        {"id": "coffee", "text": "Coffee first. Then all of it.", "choice_id": "ch01_d4_text_coffee",
+         "message_id": "ch01_d4_player_text_coffee"},
+    ], "warm")
+    call lc_phone_await_reply("leia") from ch01_d4_morning_text_await
+    $ d4_text_pick = get_story_value("ch01_d4_morning_text_reply")
+    if d4_text_pick == "warm":
+        gf "Okay. That one's going in the keepsake box."
+        mc "You have a keepsake box?"
+        gf "I have a box now."
+    elif d4_text_pick == "flirt":
+        gf "Bold, for a man in yesterday's hair."
+        mc "You're still reading it again."
+        gf "I'm studying it."
+        "She closed the distance anyway, taking her time about it."
+    else:
+        gf "Coffee first. Fair. It's a very serious all of it."
+        mc "I'm a serious person."
+        gf "You're a man who needs a menu to choose a sandwich."
 
     $ set_story_flag("ch01_d4_scene_02_complete")
     jump ch01_day4_scene_03_wardrobe_morning
@@ -213,9 +212,7 @@ label ch01_day4_scene_02_phone_ntr:
             mark_unread=True, notify=True, notification_title=girlfriend_name,
         )
 
-    "One word, from the terrace, sent at 7:48."
-    "Then the three dots appeared under it. They stopped. Appeared again."
-    "I watched them the way I'd watched them in the restroom corridor, as if staring would make them say something."
+    "She was out on the terrace, close enough to call through the door. She'd texted instead."
 
     python:
         phone_add_message(
@@ -227,60 +224,36 @@ label ch01_day4_scene_02_phone_ntr:
 
     "She'd opened a door, and left it just far enough open that I could pretend not to see it."
 
-    $ d4_ntr_join = format_choice("ch01_d4_ntr_text_join", "Be right down. Save me the good chair.")
-    $ d4_ntr_later = format_choice("ch01_d4_ntr_text_later", "Give me twenty minutes.")
-    $ d4_ntr_fine = format_day4_gate_choice("ch01_d4_ntr_text_fine_soft", "I'm fine. Go ahead without me.", severity="soft", gate_label="D4-1")
 
-    menu:
-        "[d4_ntr_join]":
-            $ apply_choice("ch01_d4_ntr_text_join")
-            $ phone_send_player_message("leia", "Be right down. Save me the good chair.", message_id="ch01_d4_player_ntr_join")
-            $ set_story_value("ch01_d4_morning_reply", "joined")
-            "The dots appeared again almost at once."
-            python:
-                phone_add_message(
-                    "leia", "leia",
-                    text="The good chair is the one that wobbles. I'm keeping it warm.",
-                    message_id="ch01_d4_leia_morning_ntr_3",
-                    mark_unread=True, notify=False,
-                )
-            "It was the first thing she'd written me in two days that sounded like her."
+    # Ryan answers in the phone (same choice ids, message ids and story value as before).
+    $ phone_offer_reply("leia", "ch01_d4_morning_reply", [
+        {"id": "joined", "text": "Be right down. Save me the good chair.", "choice_id": "ch01_d4_ntr_text_join",
+         "message_id": "ch01_d4_player_ntr_join",
+         "followups": [("leia", "The good chair is the one that wobbles. I'm keeping it warm.", "ch01_d4_leia_morning_ntr_3")]},
+        {"id": "later", "text": "Give me twenty minutes.", "choice_id": "ch01_d4_ntr_text_later",
+         "message_id": "ch01_d4_player_ntr_later",
+         "followups": [("leia", "Okay.", "ch01_d4_leia_morning_ntr_3")]},
+        {"id": "fine", "text": "I'm fine. Go ahead without me.", "choice_id": "ch01_d4_ntr_text_fine_soft",
+         "message_id": "ch01_d4_player_ntr_fine",
+         "followups": [("leia", "Okay.", "ch01_d4_leia_morning_ntr_3")]},
+    ], "later")
+    call lc_phone_await_reply("leia") from ch01_d4_morning_ntr_await
+    $ d4_ntr_pick = get_story_value("ch01_d4_morning_reply")
+    if d4_ntr_pick == "joined":
+        "It was the first thing she'd written me in two days that sounded like her."
+    elif d4_ntr_pick == "later":
+        "Not a no. Not a yes. I told myself that counted as an answer."
+    else:
+        $ set_story_value("ch01_d4_ntr_fine_count", get_story_value("ch01_d4_ntr_fine_count", 0) + 1)
+        $ set_story_flag("ch01_d4_ntr_soft_gate")
+        "I knew exactly how many times in two days I'd given her the same sentence, and exactly how many times she'd taken it."
 
-        "[d4_ntr_later]":
-            $ apply_choice("ch01_d4_ntr_text_later")
-            $ phone_send_player_message("leia", "Give me twenty minutes.", message_id="ch01_d4_player_ntr_later")
-            $ set_story_value("ch01_d4_morning_reply", "later")
-            python:
-                phone_add_message(
-                    "leia", "leia",
-                    text="Okay.",
-                    message_id="ch01_d4_leia_morning_ntr_3",
-                    mark_unread=True, notify=False,
-                )
-            "Not a no. Not a yes. I told myself that counted as an answer."
-
-        "[d4_ntr_fine]":
-            $ apply_choice("ch01_d4_ntr_text_fine_soft")
-            $ phone_send_player_message("leia", "I'm fine. Go ahead without me.", message_id="ch01_d4_player_ntr_fine")
-            $ set_story_value("ch01_d4_morning_reply", "fine")
-            $ set_story_value("ch01_d4_ntr_fine_count", get_story_value("ch01_d4_ntr_fine_count", 0) + 1)
-            $ set_story_flag("ch01_d4_ntr_soft_gate")
-            "The dots came up. Went away. Came up."
-            python:
-                phone_add_message(
-                    "leia", "leia",
-                    text="Okay.",
-                    message_id="ch01_d4_leia_morning_ntr_3",
-                    mark_unread=True, notify=False,
-                )
-            "Just that. I knew exactly how many times in two days I'd given her the same sentence, and exactly how many times she'd taken it."
-
-            if current_choice_mode() == "developer":
-                centered "NTR SOFT GATE D4-1 - ch01_d4_ntr_soft_gate = True"
-            elif current_choice_mode() == "full":
-                centered "Major relationship consequence."
-            elif current_choice_mode() == "insight":
-                centered "[girlfriend_name] stops leaving doors open."
+        if current_choice_mode() == "developer":
+            centered "NTR SOFT GATE D4-1 - ch01_d4_ntr_soft_gate = True"
+        elif current_choice_mode() == "full":
+            centered "Major relationship consequence."
+        elif current_choice_mode() == "insight":
+            centered "[girlfriend_name] stops leaving doors open."
 
     $ set_story_flag("ch01_d4_scene_02_complete")
     jump ch01_day4_scene_03_wardrobe_morning

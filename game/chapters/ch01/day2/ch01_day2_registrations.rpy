@@ -702,7 +702,6 @@ init 10 python:
 # key ch01_d2_bikini_tie_loose: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_boutique_black_mini_reserved_day3: pending set by ch01_day2_scenes_16_30.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_boutique_outfit_owned: pending set by ch01_day2_scenes_01_15.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
-# key ch01_d2_boutique_selfie_reply: read-by ch01_day2_scenes_01_15.rpy
 # key ch01_d2_boutique_shop_open: read-by outfits_data.rpy
 # key ch01_d2_boutique_slip_witness: read-by ch01_day2_scenes_01_15.rpy, lc_thoughts.py
 # key ch01_d2_boutique_trial_outfit: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)

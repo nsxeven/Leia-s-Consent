@@ -949,43 +949,19 @@ label ch01_day4_scene_15_phone_hook:
                 )
             "Two more. Maya. And [friend_name], in a private thread."
 
-    $ d4_h_in = format_choice("ch01_d4_hook_in", "We're in.")
-    $ d4_h_ask = format_choice("ch01_d4_hook_ask_leia", ('Let me check with ' + girlfriend_name + ' first.'))
-    $ d4_h_maybe = format_choice("ch01_d4_hook_maybe", "Depends on tomorrow morning.")
-
-    menu:
-        "[d4_h_in]":
-            $ apply_choice("ch01_d4_hook_in")
-            $ phone_send_player_message("group", "We're in.", message_id="ch01_d4_player_hook_in")
-            $ set_story_value("ch01_d4_hook_reply", "in")
-            python:
-                phone_add_message(
-                    "group", "maya", text="Say it with more enthusiasm.",
-                    message_id="ch01_d4_group_hook_reply_in",
-                    mark_unread=True, notify=False,
-                )
-
-        "[d4_h_ask]":
-            $ apply_choice("ch01_d4_hook_ask_leia")
-            $ phone_send_player_message("group", ('Let me check with ' + girlfriend_name + ' first.'), message_id="ch01_d4_player_hook_ask")
-            $ set_story_value("ch01_d4_hook_reply", "ask_leia")
-            python:
-                phone_add_message(
-                    "group", "julian", text="That's the right answer. Annoying, but right.",
-                    message_id="ch01_d4_group_hook_reply_ask",
-                    mark_unread=True, notify=False,
-                )
-
-        "[d4_h_maybe]":
-            $ apply_choice("ch01_d4_hook_maybe")
-            $ phone_send_player_message("group", "Depends on tomorrow morning.", message_id="ch01_d4_player_hook_maybe")
-            $ set_story_value("ch01_d4_hook_reply", "maybe")
-            python:
-                phone_add_message(
-                    "group", "maya", text="Tomorrow morning is a very long time. See you on the dock.",
-                    message_id="ch01_d4_group_hook_reply_maybe",
-                    mark_unread=True, notify=False,
-                )
+    # Ryan answers the Trip Group in the phone (same choice ids, message ids and story value).
+    $ phone_offer_reply("group", "ch01_d4_hook_reply", [
+        {"id": "in", "text": "We're in.", "choice_id": "ch01_d4_hook_in",
+         "message_id": "ch01_d4_player_hook_in",
+         "followups": [("maya", "Say it with more enthusiasm.", "ch01_d4_group_hook_reply_in")]},
+        {"id": "ask_leia", "text": "Let me check with " + girlfriend_name + " first.", "choice_id": "ch01_d4_hook_ask_leia",
+         "message_id": "ch01_d4_player_hook_ask",
+         "followups": [("julian", "That's the right answer. Annoying, but right.", "ch01_d4_group_hook_reply_ask")]},
+        {"id": "maybe", "text": "Depends on tomorrow morning.", "choice_id": "ch01_d4_hook_maybe",
+         "message_id": "ch01_d4_player_hook_maybe",
+         "followups": [("maya", "Tomorrow morning is a very long time. See you on the dock.", "ch01_d4_group_hook_reply_maybe")]},
+    ], "in")
+    call lc_phone_await_reply("group") from ch01_d4_hook_await
 
     "I put the phone face up on the nightstand this time."
     "Somewhere beyond the curtains, the sea went on being the sea. Tomorrow we were leaving the villa behind for the first time, all four of us, with no map and no plan."

@@ -16,6 +16,12 @@
 #       and lc_phone_calls); a call already resolved in this save returns its outcome without
 #       ringing again. caller_id is a Messages thread id (PHONE_THREAD_ORDER)
 #   label lc_phone_call(caller_id, call_id, answer_label=None, ignore_label=None)
+#   label lc_phone_await_reply(thread_id)     a scored phone reply: the scene waits until the
+#       player answers that thread's reply card inside the phone (the banner or a "Reply to X"
+#       button opens it), posts it, then applies the picked option's choice_id once.
+#       Never use a dialogue menu for a phone reply.
+#   screen lc_phone_await(thread_id)          the wait (modal, see-through; shown by the label)
+#   default lc_phone_scored_replies           save state: prompt ids already scored
 #       the Ren'Py entry: rings, then calls answer_label or ignore_label (when given) and
 #       returns the outcome in _return
 #   lc_phone_call_outcome(call_id)            'answered' / 'ignored', or None (no call, old save)
@@ -43,7 +49,8 @@
 #       (unopened defaults: message_id/time None and unopened True)
 #
 # Internal (helpers for this file and its screens; do not call from scenes): _lc_phone_now_text,
-#   _lc_phone_moment_mark, _lc_phone_call_record
+#   _lc_phone_moment_mark, _lc_phone_call_record, lc_phone_await_begin, lc_phone_await_done,
+#   lc_phone_await_open, lc_phone_await_end
 #
 # Example:
 #   call lc_phone_call("maya", "ch01_d2_call_maya", answer_label="ch01_d2_maya_call_answered") from ch01_d2_maya_call
@@ -178,3 +185,71 @@ label lc_phone_call(caller_id, call_id, answer_label=None, ignore_label=None):
     elif _lc_phone_call_outcome == "ignored" and ignore_label:
         call expression ignore_label from lc_phone_call_ignore_return
     return lc_phone_call_outcome(call_id)
+
+# Scored phone replies (darryn 2026-11-19): a reply meant for the phone is picked inside the
+# phone, never from a dialogue menu. The scene offers a card with phone_offer_reply (options may
+# carry "choice_id"), then `call lc_phone_await_reply("leia") from <stable_id>`: the story waits
+# (a modal, see-through screen; only the banner and a "Reply" button take clicks) until the card
+# is answered, posts the reply and follow-ups, and applies that option's choice_id once.
+default lc_phone_scored_replies = set()
+
+init python:
+    def lc_phone_await_begin(thread_id):
+        """The open card's {"prompt": id, "choices": {option id: choice_id}}, or None."""
+        prompt = phone_pending_reply(thread_id)
+        if not prompt:
+            return None
+        return {"prompt": prompt["id"],
+                "choices": dict((o["id"], o.get("choice_id")) for o in prompt["options"])}
+
+    def lc_phone_await_done(thread_id):
+        """Answered, and its reply sequence posted (or the phone is closed)."""
+        if phone_pending_reply(thread_id):
+            return False
+        pending = (getattr(renpy.store, "phone_reply_delivery", None) or {}).get(thread_id)
+        return not pending or not renpy.get_screen("phone_screen")
+
+    def lc_phone_await_open(thread_id):
+        """The "Reply" button: open the phone on that chat."""
+        phone_finish_notification()
+        phone_mark_thread_read(thread_id)
+        renpy.store.lc_phone_deep_link = ("thread", thread_id)
+        renpy.show_screen("phone_screen")
+        renpy.restart_interaction()
+        return None
+
+    def lc_phone_await_end(thread_id, record):
+        """Post what is still queued and score the pick once per save."""
+        phone_flush_reply_delivery(thread_id)
+        if not record:
+            return None
+        pick = get_story_value(record["prompt"])
+        choice_id = record["choices"].get(pick)
+        if choice_id and record["prompt"] not in lc_phone_scored_replies:
+            lc_phone_scored_replies.add(record["prompt"])
+            apply_choice(choice_id)
+        return None
+
+
+screen lc_phone_await(thread_id):
+    # Below the phone (310) and the banner (620): it only blocks the dialogue click.
+    modal True
+    zorder 300
+    timer 0.2 repeat True action If(lc_phone_await_done(thread_id), Return(True))
+    if not renpy.get_screen("phone_screen"):
+        $ _who = phone_thread_label(thread_id)
+        textbutton "Reply to [_who]":
+            style "lc_phone_btn_primary"
+            text_style "lc_phone_btn_primary_text"
+            xsize 360
+            xalign 0.5
+            yalign 0.62
+            action Function(lc_phone_await_open, thread_id)
+
+
+label lc_phone_await_reply(thread_id):
+    $ _lc_phone_await = lc_phone_await_begin(thread_id)
+    if _lc_phone_await is not None:
+        call screen lc_phone_await(thread_id)
+    $ lc_phone_await_end(thread_id, _lc_phone_await)
+    return

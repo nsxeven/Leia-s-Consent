@@ -449,7 +449,6 @@ init 1 python:
 # key ch01_d4_exhib_tease_done: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d4_exhib_variant: read-by ch01_day4_scenes_09_16.rpy, ch01_day5_scenes_01_08.rpy, day4.py
 # key ch01_d4_exposure_step: read-by ch01_day5_scenes_01_08.rpy
-# key ch01_d4_hook_reply: read-by ch01_day5_scenes_01_08.rpy
 # key ch01_d4_hunt_winner: read-by ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy
 # key ch01_d4_lane: read-by ch01_day4_registrations.rpy, ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy +2 more
 # key ch01_d4_leia_call: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
@@ -458,7 +457,6 @@ init 1 python:
 # key ch01_d4_love_strained: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d4_market_honey_bee_callback: read-by chapter_select.rpy
 # key ch01_d4_maya_real_talk: pending set by ch01_day4_scenes_01_08.rpy; nothing reads it yet (kept for later Days and saves)
-# key ch01_d4_morning_reply: read-by ch01_day4_scenes_01_08.rpy
 # key ch01_d4_ntr_boundary_set: pending set by ch01_day4_scenes_09_16.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d4_ntr_confirmed: read-by ch01_day4_scenes_09_16.rpy
 # key ch01_d4_ntr_fine_count: read-by ch01_day4_scenes_01_08.rpy, ch01_day4_scenes_09_16.rpy, ch01_day5_registrations.rpy

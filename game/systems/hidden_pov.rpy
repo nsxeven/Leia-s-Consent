@@ -6,7 +6,9 @@
 #   at init 999 (developer builds fail loudly).
 #
 # Public API (call these from scenes/screens):
-#   lc_pov_register(moment_id, image, source, position=None, title="Optional view", mature=None, center=None, gallery_id=None, sfx=True, day_id=None, label=None, mood=None) -> None
+#   lc_pov_register(moment_id, image, source, position=None, title="Optional view", mature=None, center=None, gallery_id=None, sfx=True, day_id=None, label=None, mood=None, eye=None, temple=None) -> None
+#       a character's view: eye=(x, y) + temple="left"/"right" puts the sparkle beside the eye
+#   lc_pov_temple_center(eye, temple)         the sparkle centre that eye=/temple= produce
 #       register one moment (stable image/source/position) at init; day_id also registers it
 #       as a `pov` discovery on that day's Moments strip (label defaults to title)
 #   lc_pov_begin(moment_id) -> None           open the moment's scope (its sparkle may show)
@@ -100,13 +102,29 @@ init python:
             renpy.notify(text)
         return None
 
+    # Placement rule (darryn 2026-11-19): the sparkle hovers beside the watcher's eyes, just
+    # off the temple, never on the face. Register a character's POV with eye=(x, y) (the centre
+    # of the eye nearer the temple side) and temple="left"/"right" (which side of the face the
+    # free temple is on, as seen on screen); the centre is derived with these offsets.
+    LC_POV_TEMPLE_DX = 40
+    LC_POV_TEMPLE_DY = 10
+
+    def lc_pov_temple_center(eye, temple):
+        """Sparkle centre beside an eye, slightly out at the temple and a touch higher."""
+        if temple not in ("left", "right"):
+            raise ValueError("temple must be 'left' or 'right'")
+        dx = -LC_POV_TEMPLE_DX if temple == "left" else LC_POV_TEMPLE_DX
+        return (int(eye[0] + dx), int(eye[1] - LC_POV_TEMPLE_DY))
+
     def lc_pov_register(moment_id, image, source, position=None, title="Optional view",
                         mature=None, center=None, gallery_id=None, sfx=True,
-                        day_id=None, label=None, mood=None):
+                        day_id=None, label=None, mood=None, eye=None, temple=None):
         """Register one optional POV moment.
 
+        eye, temple: preferred for a character's view: (x, y) of the eye nearer the free temple
+                  and "left"/"right"; the sparkle sits beside it (lc_pov_temple_center).
         position: legacy (x, y) upper-left of a 64x64 slot (sparkle centre = +32).
-        center:   (x, y) sparkle centre; preferred for new moments.
+        center:   (x, y) sparkle centre, for a view that is not a face.
         mature:   None derives it from the Gallery row that lists `image`.
         sfx:      play the soft sparkle chime when the cue first appears.
         day_id:   review day (e.g. "ch01_d2"); when given the moment is also a `pov`
@@ -115,8 +133,14 @@ init python:
         """
         if moment_id in LC_POV_OPPORTUNITIES:
             raise ValueError("Duplicate optional POV: " + moment_id)
+        if eye is not None:
+            if center is not None or position is not None:
+                raise ValueError("POV %s: eye= replaces center=/position=" % moment_id)
+            center = lc_pov_temple_center(tuple(eye), temple)
+        elif temple is not None:
+            raise ValueError("POV %s: temple= needs eye=(x, y)" % moment_id)
         if (position is None) == (center is None):
-            raise ValueError("POV %s needs exactly one of position=(x, y) or center=(x, y)" % moment_id)
+            raise ValueError("POV %s needs exactly one of eye=, position=(x, y) or center=(x, y)" % moment_id)
         pair = center if center is not None else position
         if not (isinstance(pair, tuple) and len(pair) == 2):
             raise ValueError("POV position/center must be an (x, y) pixel pair")
