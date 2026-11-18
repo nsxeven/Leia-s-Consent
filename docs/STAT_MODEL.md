@@ -122,6 +122,11 @@ Day's registrations, or the scoring test fails.
 
 ## Route thresholds (`lc_stat_model.THRESHOLDS`)
 
+Day One's thresholds and route rules live in its Day pack (`game/python-packages/lc_days/day1.py`,
+`STAT_THRESHOLDS`); `lc_stat_model` adds them at import, so `THRESHOLDS` / `LC_T` hold every Day's.
+Days 2-5 are still in `lc_stat_model.py`. The Day 4/5 `D4_` / `D5_` constants are set from `LC_T` in
+their Day packs' registrations.
+
 Days 1-2 were scaled from the old numbers (Exhibitionism climbs about 2.2x faster, Temptation about
 1.25x) and tuned with `tests/test_route_simulation.py`. Day 3+ lanes still come from stored values.
 
