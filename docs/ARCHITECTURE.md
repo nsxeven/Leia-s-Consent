@@ -57,7 +57,7 @@ per name (see Rules). Priorities in use:
 | -1 | `game/chapters/ch01/day2/ch01_day2_visuals.rpy` | the `lc_placeholder_text` helper (text stand-in cards) that the Day 2-5 visuals files call |
 | 0 | most systems and screens | the default |
 | 1, 2 | day registration blocks (`CHOICE_EFFECTS.update`, Hidden POV `lc_pov_register`, Day 4/5 helpers at init 2) in `game/chapters/`; `game/chapters/ch01/ch01_release_demo.rpy` (init 1: the demo-build Gallery filter, not a day registration); `game/gui.rpy` font scaling; `game/sprites/julian.rpy` images | after the engine tables and init-0 helpers exist |
-| 5 | `game/systems/stat_model_v2_later_days.rpy`, `game/systems/lc_cursor.rpy` | v2 re-scoring after the Day 3-5 registration blocks; cursor after the hover timings |
+| 5 | `game/systems/lc_cursor.rpy` | cursor after the hover timings |
 | 6 | `game/systems/choice_path_tags.rpy` | wraps the gate formatters the day files define |
 | 10 | `game/systems/chapter_select.rpy`, `game/systems/love_outfit_control.rpy` | after the story, stats and wardrobe helpers |
 | 20, 21 | `game/systems/day_review.rpy`, then `game/systems/lc_tag_collection.rpy` | the tag collection reads the review tables |
@@ -91,17 +91,13 @@ Never rename a file to change when it loads; give the block an explicit priority
   still hold becomes a one-line `jump` in `game/systems/save_compat.rpy`.
   (`test_no_new_label_overrides`)
 - **One definition per name.** A screen, label or `def` defined twice is rejected
-  (`test_no_new_duplicate_definitions`). `ALLOW_DUP` is empty; the one exception is
-  `OUT_OF_SCOPE_DUP = {"def": {"ch01_d4_track_text", "ch01_d5_track_text"}}`: the Day 4/5
-  track-text functions live in the Scriptwriter-owned Day 4/5 files and are re-defined by
-  `game/systems/stat_model_v2_later_days.rpy` until those days get their own pass.
+  (`test_no_new_duplicate_definitions`). `ALLOW_DUP` and `OUT_OF_SCOPE_DUP` are empty.
   Allow-lists may only shrink (`test_allow_lists_only_shrink`).
 - **Add behaviour through hooks, not wrappers.** Re-defining another file's function
   (`_orig = f; def f(...)`) is the pattern the hooks replaced. Existing exceptions, kept
   until their own pass: `game/systems/day_review.rpy` wraps `config.show`
   (`lc_review_show`), `game/systems/lc_audio_scene_lock.rpy` wraps `config.scene`,
-  `game/systems/choice_path_tags.rpy` wraps the Day 2/4/5 gate formatters, and
-  `game/systems/stat_model_v2_later_days.rpy` re-defines the Day 4/5 track-text functions.
+  and `game/systems/choice_path_tags.rpy` wraps the Day 2/4/5 gate formatters.
   New code uses `lc_hooks` instead.
 - **Headers stay true.** Every system/screen file opens with a header
   (`test_system_and_screen_files_open_with_header`); every name its Public API or Internal
@@ -313,7 +309,7 @@ Work through the steps in order; each names the file that owns the table.
 | Feature | File(s) | Doc | Tests |
 |---|---|---|---|
 | Sprite staging | `game/systems/cast_staging.rpy`, `game/systems/dialogue_staging.rpy` | `docs/SPRITE_STAGING.md` | `tests/test_cast_staging.py` |
-| Choices and effects | `game/systems/choice_engine.rpy`, `game/systems/stat_model_v2_later_days.rpy` | `docs/STAT_MODEL.md` | `tests/test_choice_scoring.py` |
+| Choices and effects | `game/systems/choice_engine.rpy`, each Day pack's `*_registrations.rpy` | `docs/STAT_MODEL.md` | `tests/test_choice_scoring.py` |
 | Choice path / CG stamps | `game/systems/choice_path_tags.rpy` | `docs/STAT_MODEL.md` | `tests/test_choice_path_tags.py`, `tests/test_choice_cg_stamp.py` |
 | Stats | `game/systems/stats.rpy`, `game/python-packages/lc_stat_model.py` | `docs/STAT_MODEL.md` | `tests/test_stat_model.py`, `tests/test_stat_runtime.py` |
 | Stat colours | `game/systems/stat_delta_colours.rpy` | `docs/STAT_MODEL.md` | `tests/test_stat_delta_colours.py` |

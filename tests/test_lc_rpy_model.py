@@ -36,9 +36,9 @@ class RpyModelTests(unittest.TestCase):
         # apply_choice: the only copy, in choice_engine's init 90 block (folded in clean-up 2c).
         self.assertIn("choice_engine", eff["apply_choice"].relpath)
         self.assertEqual(eff["apply_choice"].priority, 90)
-        # ch01_d4_track_text: the init 5 re-score copy wins over the Day Four file.
-        self.assertIn("stat_model_v2_later_days", eff["ch01_d4_track_text"].relpath)
-        self.assertEqual(eff["ch01_d4_track_text"].priority, 5)
+        # ch01_d4_track_text: one copy, in the Day Four pack's init 2 block.
+        self.assertIn("ch01_day4_registrations", eff["ch01_d4_track_text"].relpath)
+        self.assertEqual(eff["ch01_d4_track_text"].priority, 2)
 
     def test_label_override_resolution(self):
         self.assertEqual(m.effective_label_body("ch01_scene_27_late_photo_drop"),

@@ -118,11 +118,13 @@ class StatModelTests(unittest.TestCase):
         self.assertNotIn("ntr_score", status)
 
     def test_day4_day5_thresholds_and_track_names_are_overridden(self):
-        late = read("systems/stat_model_v2_later_days.rpy")
-        self.assertIn("init 5 python:", late)
+        # The v2 thresholds and track-card names live in the Day packs (one definition each).
+        late = read("chapters/ch01/day4/ch01_day4_registrations.rpy") + read("chapters/ch01/day5/ch01_day5_registrations.rpy")
         for name in ("D4_EXHIBITION_BRIEF_REVEAL_MIN", "D5_BOLDER_SWIM_MIN", "D5_COMFORTABLE_MIN", "D5_COMFORTABLE_MIN_AFTER_BRIEF"):
             self.assertIn(name + " = LC_T[", late)
-        self.assertIn('("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM")', late)
+        for day in ("4", "5"):
+            self.assertIn("return lc_track_text_v2(_lc_d%s_track_text_v1())" % day, late)
+        self.assertIn('("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM")', read("systems/choice_engine.rpy"))
 
     def test_mixed_unresolved_starts_day3_as_strained_love(self):
         day3 = read("chapters/ch01/day3/ch01_day3_scenes.rpy")

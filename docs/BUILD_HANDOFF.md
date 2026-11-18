@@ -25,8 +25,8 @@ This file records what is true in the repository **now**. When code and any olde
 
 Five stats (Love, Trust, Exhibitionism, Sharing, Temptation) since stat model v2 (2026-11-08). Rules,
 thresholds, the scoring rule for new choices, colours and the save migration: `docs/STAT_MODEL.md`;
-code: `game/python-packages/lc_stat_model.py`. Day 3-5 choice effects are re-scored in
-`game/systems/stat_model_v2_later_days.rpy`.
+code: `game/python-packages/lc_stat_model.py`. Every Day's choice effects (already v2-scored) live
+in its Day pack's `*_registrations.rpy` (`docs/DAY_PACK.md`).
 
 ## Day Two end states
 

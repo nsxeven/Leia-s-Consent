@@ -7,9 +7,9 @@
 # Stable ids use the "ch01_d4_" prefix so chapter_nonchalant_count("ch01") and
 # choice_ids_with_prefix("ch01_d4_") pick them up.
 #
-# Effect rows are (group, stat, amount) with group in relationship / partner / player.
-# Verified stats: relationship love trust boredom momentum; partner curiosity temptation
-# exhibitionism boundary_looseness secrecy; player jealousy acceptance (see defaults.rpy).
+# Effect rows are (group, stat, amount) with group in relationship / partner / player, scored
+# with the stat model v2 rule (docs/STAT_MODEL.md, tests/test_choice_scoring.py). These are the
+# effective rows: the Day Four pack is the only place they are defined.
 #
 # Scale note: ordinary Day Four choices are +/-1..2 (slow burn). Gate choices follow the
 # Day Two gate scale (soft gate -1..2, hard gate up to -5). Nothing here moves a stat by more
@@ -26,45 +26,37 @@ init 1 python:
         ],
         "ch01_d4_text_flirt": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_d4_text_coffee": [
             ("relationship", "love", 1),
-            ("relationship", "boredom", -1),
         ],
 
         # --- 02 phone morning (NTR lane) ---
         "ch01_d4_ntr_text_join": [
             ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_d4_ntr_text_later": [
-            ("relationship", "boredom", 1),
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d4_ntr_text_fine_soft": [
             ("relationship", "love", -1),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "secrecy", 1),
+            ("relationship", "temptation", 3),
         ],
 
         # --- 03 wardrobe morning ---
         "ch01_d4_wardrobe_ryan_picks": [
             ("relationship", "love", 1),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_d4_wardrobe_leia_decides": [
-            ("relationship", "trust", 2),
             ("relationship", "love", 1),
+            ("relationship", "trust", 2),
         ],
         "ch01_d4_wardrobe_bolder": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_d4_wardrobe_comfort": [
             ("relationship", "love", 1),
@@ -72,30 +64,24 @@ init 1 python:
         ],
         "ch01_d4_ntr_compliment": [
             ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_d4_ntr_guarded": [
-            ("player", "jealousy", 1),
-            ("partner", "secrecy", 1),
+            ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d4_ntr_flat": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 1),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 1),
         ],
 
         # --- 04 breakfast ---
-        "ch01_d4_breakfast_leave_it": [
-            ("player", "acceptance", 1),
-            ("relationship", "trust", 1),
-        ],
+        "ch01_d4_breakfast_leave_it": [],  # Neutral: no stats
         "ch01_d4_breakfast_tease": [
             ("relationship", "love", 1),
         ],
         "ch01_d4_breakfast_ask_maya": [
             ("relationship", "trust", 1),
-            ("player", "acceptance", 1),
         ],
 
         # --- 06 photo hunt: how Ryan shoots Leia ---
@@ -104,64 +90,49 @@ init 1 python:
             ("relationship", "trust", 1),
         ],
         "ch01_d4_photo_pose": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_d4_photo_swap": [
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
         ],
         "ch01_d4_photo_skip": [
             ("relationship", "love", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "temptation", 1),
+            ("relationship", "temptation", 1),
         ],
 
         # --- 08 afternoon quiet ---
         "ch01_d4_julian_thanks": [
             ("relationship", "trust", 1),
         ],
-        "ch01_d4_julian_joke": [
-            ("player", "acceptance", 1),
-        ],
+        "ch01_d4_julian_joke": [],  # Neutral: no stats
         "ch01_d4_julian_deflect": [
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
         "ch01_d4_ntr_ask_gently": [
-            ("relationship", "love", 1),
             ("relationship", "trust", 2),
-            ("relationship", "boredom", -2),
-            ("partner", "secrecy", -2),
+            ("relationship", "temptation", -3),
         ],
         "ch01_d4_ntr_fine_soft2": [
             ("relationship", "love", -1),
-            ("relationship", "trust", -1),
-            ("relationship", "boredom", 2),
-            ("partner", "secrecy", 1),
+            ("relationship", "temptation", 3),
         ],
         "ch01_d4_ntr_press_early": [
-            ("player", "jealousy", 1),
             ("relationship", "trust", -1),
+            ("relationship", "temptation", 1),
         ],
 
         # --- 09 getting ready for dusk ---
         "ch01_d4_dusk_ryan_picks": [
             ("relationship", "love", 1),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 1),
         ],
         "ch01_d4_dusk_leia_decides": [
-            ("relationship", "trust", 2),
             ("relationship", "love", 1),
+            ("relationship", "trust", 2),
         ],
         "ch01_d4_dusk_bolder": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_d4_dusk_comfort": [
             ("relationship", "love", 1),
@@ -173,21 +144,15 @@ init 1 python:
             ("relationship", "love", 1),
             ("relationship", "trust", 1),
         ],
-        "ch01_d4_toast_group": [
-            ("player", "acceptance", 1),
-            ("relationship", "boredom", -1),
-        ],
+        "ch01_d4_toast_group": [],  # Neutral: no stats
         "ch01_d4_toast_dare": [
-            ("partner", "curiosity", 1),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 1),
         ],
 
         # --- 13 Love night ---
         "ch01_d4_love_slow_dance": [
             ("relationship", "love", 2),
             ("relationship", "trust", 1),
-            ("relationship", "boredom", -1),
         ],
         "ch01_d4_love_terrace_stay": [
             ("relationship", "love", 1),
@@ -195,89 +160,66 @@ init 1 python:
         ],
         "ch01_d4_love_open_door": [
             ("relationship", "love", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
 
         # --- 13 Exhibition night ---
         "ch01_d4_exhib_together": [
             ("relationship", "love", 1),
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_d4_exhib_like_watching": [
-            ("partner", "exhibitionism", 2),
-            ("player", "acceptance", 2),
-            ("relationship", "momentum", 1),
+            ("partner", "exhibitionism", 3),
         ],
         "ch01_d4_exhib_private": [
             ("relationship", "love", 2),
             ("relationship", "trust", 1),
         ],
         "ch01_d4_exhib_her_call": [
-            ("partner", "exhibitionism", 1),
             ("relationship", "trust", 1),
-            ("player", "acceptance", 1),
+            ("partner", "exhibitionism", 2),
         ],
         "ch01_d4_exhib_tease_then_me": [
-            ("partner", "exhibitionism", 1),
             ("relationship", "love", 1),
-            ("player", "jealousy", 1),
+            ("partner", "exhibitionism", 1),
         ],
 
         # --- 13 NTR night: repair gate ---
         "ch01_d4_ntr_gate_reconnect": [
-            ("relationship", "love", 2),
             ("relationship", "trust", 3),
-            ("relationship", "boredom", -3),
-            ("partner", "secrecy", -4),
-            ("partner", "temptation", -1),
+            ("relationship", "temptation", -5),
         ],
         "ch01_d4_ntr_gate_accuse_hard": [
             ("relationship", "love", -3),
             ("relationship", "trust", -3),
-            ("relationship", "boredom", 3),
-            ("player", "jealousy", 3),
-            ("partner", "secrecy", 3),
-            ("partner", "boundary_looseness", 2),
+            ("relationship", "temptation", 4),
         ],
         "ch01_d4_ntr_gate_withdraw_hard": [
             ("relationship", "love", -5),
             ("relationship", "trust", -4),
-            ("relationship", "boredom", 5),
-            ("partner", "temptation", 3),
-            ("partner", "secrecy", 3),
-            ("partner", "boundary_looseness", 2),
+            ("relationship", "temptation", 5),
         ],
         "ch01_d4_ntr_react_thanks": [
-            ("relationship", "trust", 2),
             ("relationship", "love", 1),
+            ("relationship", "trust", 2),
         ],
         "ch01_d4_ntr_react_boundary": [
-            ("relationship", "trust", 1),
             ("relationship", "love", 1),
-            ("partner", "boundary_looseness", -1),
+            ("relationship", "temptation", -1),
         ],
         "ch01_d4_ntr_react_curious": [
-            ("partner", "curiosity", 1),
-            ("partner", "exhibitionism", 1),
-            ("player", "acceptance", 2),
             ("relationship", "trust", 1),
+            ("partner", "exhibitionism", 3),
         ],
 
         # --- 15 phone hook ---
-        "ch01_d4_hook_in": [
-            ("player", "acceptance", 1),
-            ("relationship", "momentum", 1),
-        ],
+        "ch01_d4_hook_in": [],  # Neutral: no stats
         "ch01_d4_hook_ask_leia": [
-            ("relationship", "trust", 1),
             ("relationship", "love", 1),
+            ("relationship", "trust", 1),
         ],
         "ch01_d4_hook_maybe": [
-            ("relationship", "boredom", 1),
+            ("relationship", "temptation", 1),
         ],
     })
 
@@ -347,7 +289,7 @@ init 1 python:
 
 init 2 python:
 
-    D4_EXHIBITION_BRIEF_REVEAL_MIN = 26   # Leia's own Exhibitionism needed for her to choose 'brief reveal'
+    D4_EXHIBITION_BRIEF_REVEAL_MIN = LC_T["d4_brief_reveal"]   # Leia's own Exhibitionism needed for her to choose 'brief reveal' (stat model v2 scale)
     D4_NO_DAY_OUTFITS = ("boutique_cutout_mini", "after_hours_dress")
     D4_NO_DUSK_OUTFITS = ("casual_default",)
 
@@ -360,7 +302,7 @@ init 2 python:
         return choice_tag_count("nonchalant", ch01_d4_choice_ids())
 
 
-    def ch01_d4_track_text():
+    def _lc_d4_track_text_v1():
         """Track card for Insight / Full / Developer modes. Returns None in Normal mode.
 
         Reads stored state only. It never recomputes a lane.
@@ -395,6 +337,11 @@ init 2 python:
             get_story_value("ch01_d3_ntr_repair_effort", "?"),
             has_story_flag("ch01_d3_cutout_secret"),
         )
+
+
+    def ch01_d4_track_text():
+        """The track card with route-name headings (lc_track_text_v2, systems/choice_engine.rpy)."""
+        return lc_track_text_v2(_lc_d4_track_text_v1())
 
 
     def format_day4_gate_choice(choice_id, base_text, severity="soft", gate_label="D4-1"):

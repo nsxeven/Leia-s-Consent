@@ -37,10 +37,10 @@ ALLOW_PATCH_FILES = set()
 # The last five overrides were folded into their labels in clean-up PR 3.
 ALLOW_OVERRIDES = set()
 
-# Days 3-5 belong to their own later pass; their Day 4/5 track-text helpers are
-# re-scored in systems/stat_model_v2_later_days.rpy on purpose.
+# Days 3-5 story files keep their own (Scriptwriter) style; the duplicate Day 4/5 track-text
+# definitions were folded into their Day packs (modular backend), so OUT_OF_SCOPE_DUP is empty.
 OUT_OF_SCOPE = {"ch01_day3_", "ch01_day4_", "ch01_day5_"}
-OUT_OF_SCOPE_DUP = {"def": {"ch01_d4_track_text", "ch01_d5_track_text"}}
+OUT_OF_SCOPE_DUP = {}
 
 PATCH_NAME = re.compile(r"^z+_|_patch\.rpy$")
 

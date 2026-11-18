@@ -196,8 +196,7 @@ class AgeGateTests(unittest.TestCase):
 class Day3ChoiceTests(unittest.TestCase):
     def setUp(self):
         source = (CH01 / "day3" / "ch01_day3_scenes.rpy").read_text()
-        # The effective Day Three effects are the v2 re-scoring in
-        # systems/stat_model_v2_later_days.rpy (init 5 wins over the file's init 1).
+        # The effective Day Three effects: the Day Three pack (ch01_day3_registrations.rpy).
         sys.path.insert(0, str(Path(__file__).resolve().parent))
         from lc_effective_effects import effective_effects
         self.effects = effective_effects()

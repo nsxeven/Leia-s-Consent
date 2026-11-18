@@ -19,6 +19,8 @@
 #   current_choice_mode()                     the active display mode ('normal', 'insight', 'full',
 #       'developer')
 #   choice_mode_label()                       display name of the active mode
+#   lc_track_text_v2(text)                    a Day's track card with the old stat-model headings
+#       renamed to route names (LC_TRACK_HEADINGS_V2)
 #   set_choice_display_mode(mode) -> None     set the global display mode
 #   get_choice_effects(choice_id)             copy of a choice's effects (legacy stats folded to v2)
 #   lc_choice_effective_effects(choice_id)    the effects apply_choice would apply now: the
@@ -188,6 +190,27 @@ init python:
     def get_choice_tags(choice_id):
         """Return immutable behavioral tags for a stable choice ID."""
         return tuple(CHOICE_TAGS.get(choice_id, ()))
+
+
+    # Track cards (Insight / Full / Developer): a Day's *_track_text() passes its card through
+    # lc_track_text_v2 so the old stat-model headings read as route names.
+    # Old heading -> route name. "SHARED EXHIBITION (NTS)" was the Love +
+    # Exhibitionism track (nobody else joins in), so it no longer says NTS.
+    LC_TRACK_HEADINGS_V2 = (
+        ("TRACK: SHARED EXHIBITION (NTS)", "TRACK: LOVE + EXHIBITIONISM"),
+        ("TRACK: DISTANCE, REPAIRED (NTR pressure)", "TRACK: NTR, REPAIRED"),
+        ("TRACK: DISTANCE, UNRESOLVED (NTR pressure)", "TRACK: NTR, UNRESOLVED"),
+        ("TRACK: DISTANCE, CONFIRMED (NTR pressure)", "TRACK: NTR, CONFIRMED"),
+        ("TRACK: DISTANCE (NTR pressure)", "TRACK: NTR"),
+    )
+
+    def lc_track_text_v2(text):
+        if not text:
+            return text
+        for old, new in LC_TRACK_HEADINGS_V2:
+            if text.startswith(old):
+                return new + text[len(old):]
+        return text
 
 
     def choice_ids_with_prefix(prefix, choice_ids=None):

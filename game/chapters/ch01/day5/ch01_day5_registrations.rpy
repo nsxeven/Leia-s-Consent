@@ -7,9 +7,9 @@
 # Stable ids use the "ch01_d5_" prefix so chapter_nonchalant_count("ch01") and
 # choice_ids_with_prefix("ch01_d5_") pick them up.
 #
-# Effect rows are (group, stat, amount) with group in relationship / partner / player.
-# Verified stats: relationship love trust boredom momentum; partner curiosity temptation
-# exhibitionism boundary_looseness secrecy; player jealousy acceptance (see defaults.rpy).
+# Effect rows are (group, stat, amount) with group in relationship / partner / player, scored
+# with the stat model v2 rule (docs/STAT_MODEL.md, tests/test_choice_scoring.py). These are the
+# effective rows: the Day Five pack is the only place they are defined.
 #
 # Scale note: ordinary Day Five choices are +/-1..2 (slow burn), with +3 only for the two
 # trust-trade / honesty beats that Leia explicitly earns. Gate choices follow the Day Two /
@@ -22,20 +22,16 @@ init 1 python:
             # 01 packing (Love)
             "ch01_d5_pack_ryan_picks": [
                 ("relationship", "love", 1),
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_pack_leia_decides": [
-                ("relationship", "trust", 2),
                 ("relationship", "love", 1),
+                ("relationship", "trust", 2),
             ],
 
             # 01 packing (Exhibition)
             "ch01_d5_pack_bolder": [
-                ("partner", "curiosity", 1),
-                ("partner", "exhibitionism", 2),
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 3),
             ],
             "ch01_d5_pack_classic": [
                 ("relationship", "love", 1),
@@ -43,45 +39,39 @@ init 1 python:
             ],
             "ch01_d5_pack_her_call": [
                 ("relationship", "trust", 1),
-                ("partner", "exhibitionism", 1),
-                ("player", "acceptance", 1),
+                ("partner", "exhibitionism", 2),
             ],
 
             # 01 packing (NTR)
             "ch01_d5_ntr_pack_help": [
                 ("relationship", "love", 1),
-                ("relationship", "trust", 1),
-                ("relationship", "boredom", -1),
+                ("relationship", "temptation", -1),
             ],
             "ch01_d5_ntr_pack_joke": [
-                ("relationship", "boredom", -1),
                 ("relationship", "trust", 1),
             ],
             "ch01_d5_ntr_pack_nothing": [
-                ("relationship", "boredom", 1),
                 ("relationship", "love", -1),
+                ("relationship", "temptation", 1),
             ],
 
             # 02 Julian seasick
             "ch01_d5_julian_stay": [
                 ("relationship", "trust", 1),
-                ("player", "acceptance", 1),
             ],
-            "ch01_d5_julian_joke": [
-                ("player", "acceptance", 1),
-            ],
+            "ch01_d5_julian_joke": [],  # Neutral: no stats
             "ch01_d5_julian_leave": [
-                ("relationship", "boredom", 1),
+                ("relationship", "temptation", 1),
             ],
 
             # 03 no bars
             "ch01_d5_bars_bag": [
                 ("relationship", "love", 1),
                 ("relationship", "trust", 1),
-                ("relationship", "boredom", -1),
             ],
             "ch01_d5_bars_check": [
-                ("relationship", "boredom", 1),
+                ("relationship", "love", -1),
+                ("relationship", "temptation", 1),
             ],
 
             # 04 snorkel pairs
@@ -89,30 +79,22 @@ init 1 python:
                 ("relationship", "love", 1),
                 ("relationship", "trust", 1),
             ],
-            "ch01_d5_snorkel_maya_first": [
-                ("player", "acceptance", 1),
-            ],
+            "ch01_d5_snorkel_maya_first": [],  # Neutral: no stats
             "ch01_d5_snorkel_julian_first": [
-                ("relationship", "boredom", 1),
+                ("relationship", "temptation", 1),
             ],
             "ch01_d5_ntr_snorkel_stay": [
                 ("relationship", "love", -1),
-                ("relationship", "trust", -1),
-                ("relationship", "boredom", 2),
-                ("partner", "secrecy", 1),
+                ("relationship", "temptation", 3),
             ],
 
             # 05 cove lunch
             "ch01_d5_bee_calm": [
                 ("relationship", "trust", 1),
-                ("player", "acceptance", 1),
             ],
-            "ch01_d5_bee_film": [
-                ("relationship", "boredom", -1),
-                ("player", "acceptance", 1),
-            ],
+            "ch01_d5_bee_film": [],  # Neutral: no stats
             "ch01_d5_photo_share_group": [
-                ("player", "acceptance", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_photo_keep_album": [
                 ("relationship", "love", 1),
@@ -124,73 +106,58 @@ init 1 python:
             ],
             "ch01_d5_eaves_listen": [
                 ("relationship", "trust", -1),
-                ("partner", "secrecy", 1),
-                ("player", "jealousy", 1),
+                ("relationship", "temptation", 1),
             ],
 
             # 07 stern
             "ch01_d5_stern_thanks": [
                 ("relationship", "trust", 1),
             ],
-            "ch01_d5_stern_joke": [
-                ("player", "acceptance", 1),
-            ],
+            "ch01_d5_stern_joke": [],  # Neutral: no stats
             "ch01_d5_stern_push": [
-                ("player", "jealousy", 1),
                 ("relationship", "trust", -1),
+                ("relationship", "temptation", 1),
             ],
 
             # 08 Love cove
             "ch01_d5_love_swim_close": [
                 ("relationship", "love", 2),
                 ("relationship", "trust", 1),
-                ("relationship", "boredom", -1),
             ],
             "ch01_d5_love_swim_race": [
                 ("relationship", "love", 1),
-                ("relationship", "boredom", -2),
             ],
             "ch01_d5_love_secret_dream": [
                 ("relationship", "love", 1),
                 ("relationship", "trust", 3),
-                ("relationship", "boredom", -2),
             ],
             "ch01_d5_love_secret_mirror": [
                 ("relationship", "love", 2),
                 ("relationship", "trust", 2),
-                ("relationship", "boredom", -1),
             ],
             "ch01_d5_love_secret_owe": [
-                ("relationship", "trust", 1),
-                ("relationship", "boredom", 1),
+                ("relationship", "temptation", 1),
             ],
 
             # 08 Exhibition cove
             "ch01_d5_exhib_stay": [
                 ("relationship", "love", 1),
-                ("partner", "curiosity", 1),
-                ("partner", "exhibitionism", 2),
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 3),
             ],
             "ch01_d5_exhib_watching": [
-                ("partner", "exhibitionism", 2),
-                ("player", "acceptance", 2),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 3),
             ],
             "ch01_d5_exhib_private": [
                 ("relationship", "love", 2),
                 ("relationship", "trust", 1),
             ],
             "ch01_d5_exhib_her_call": [
-                ("partner", "exhibitionism", 1),
                 ("relationship", "trust", 1),
-                ("player", "acceptance", 1),
+                ("partner", "exhibitionism", 2),
             ],
             "ch01_d5_exhib_tease_then_me": [
-                ("partner", "exhibitionism", 1),
                 ("relationship", "love", 1),
-                ("player", "jealousy", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_photo_private_face": [
                 ("relationship", "love", 1),
@@ -198,9 +165,7 @@ init 1 python:
             ],
             "ch01_d5_photo_private_moment": [
                 ("relationship", "love", 1),
-                ("relationship", "trust", 1),
-                ("partner", "exhibitionism", 1),
-                ("player", "acceptance", 1),
+                ("partner", "exhibitionism", 2),
             ],
             "ch01_d5_photo_private_none": [
                 ("relationship", "love", 2),
@@ -209,100 +174,74 @@ init 1 python:
 
             # 08/09 NTR disclosure reactions
             "ch01_d5_ntr_react_thanks": [
-                ("relationship", "trust", 2),
                 ("relationship", "love", 1),
+                ("relationship", "trust", 2),
             ],
             "ch01_d5_ntr_react_boundary": [
-                ("relationship", "trust", 1),
                 ("relationship", "love", 1),
-                ("partner", "boundary_looseness", -1),
+                ("relationship", "temptation", -1),
             ],
             "ch01_d5_ntr_react_curious": [
-                ("partner", "curiosity", 1),
-                ("partner", "exhibitionism", 1),
-                ("player", "acceptance", 2),
                 ("relationship", "trust", 1),
+                ("partner", "exhibitionism", 3),
             ],
             "ch01_d5_ntr_gate_fine_hard": [
                 ("relationship", "love", -3),
                 ("relationship", "trust", -3),
-                ("relationship", "boredom", 3),
-                ("player", "jealousy", 1),
-                ("partner", "secrecy", 3),
-                ("partner", "boundary_looseness", 2),
+                ("relationship", "temptation", 4),
             ],
 
             # 09 sunset gates (NTR unresolved)
             "ch01_d5_ntr_u_ask_gently": [
-                ("relationship", "love", 2),
                 ("relationship", "trust", 3),
-                ("relationship", "boredom", -3),
-                ("partner", "secrecy", -3),
-                ("partner", "temptation", -1),
+                ("relationship", "temptation", -4),
             ],
             "ch01_d5_ntr_u_press_hard": [
                 ("relationship", "love", -3),
                 ("relationship", "trust", -3),
-                ("relationship", "boredom", 3),
-                ("player", "jealousy", 3),
-                ("partner", "secrecy", 3),
-                ("partner", "boundary_looseness", 2),
+                ("relationship", "temptation", 4),
             ],
             "ch01_d5_ntr_u_fine_hard": [
                 ("relationship", "love", -4),
                 ("relationship", "trust", -3),
-                ("relationship", "boredom", 4),
-                ("partner", "temptation", 3),
-                ("partner", "secrecy", 3),
-                ("partner", "boundary_looseness", 2),
+                ("relationship", "temptation", 5),
             ],
 
             # 09 sunset gates (NTR confirmed)
             "ch01_d5_ntr_c_go_to_her": [
                 ("relationship", "love", 2),
-                ("relationship", "trust", 2),
-                ("relationship", "boredom", -3),
-                ("partner", "secrecy", -2),
+                ("relationship", "temptation", -4),
             ],
             "ch01_d5_ntr_c_accuse_hard": [
                 ("relationship", "love", -2),
                 ("relationship", "trust", -2),
-                ("relationship", "boredom", 2),
-                ("player", "jealousy", 3),
-                ("partner", "secrecy", 2),
+                ("relationship", "temptation", 3),
             ],
             "ch01_d5_ntr_c_fine_hard": [
                 ("relationship", "love", -4),
                 ("relationship", "trust", -3),
-                ("relationship", "boredom", 4),
-                ("partner", "temptation", 3),
-                ("partner", "secrecy", 3),
-                ("partner", "boundary_looseness", 2),
+                ("relationship", "temptation", 5),
             ],
 
             # 09 evening wardrobe (Love)
             "ch01_d5_evening_ryan_picks": [
                 ("relationship", "love", 1),
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_evening_leia_decides": [
-                ("relationship", "trust", 2),
                 ("relationship", "love", 1),
+                ("relationship", "trust", 2),
             ],
 
             # 10 dinner truth round
             "ch01_d5_truth_honest": [
                 ("relationship", "love", 1),
                 ("relationship", "trust", 2),
-                ("relationship", "boredom", -1),
             ],
-            "ch01_d5_truth_funny": [
-                ("relationship", "boredom", -1),
-            ],
+            "ch01_d5_truth_funny": [],  # Neutral: no stats
             "ch01_d5_truth_dodge": [
-                ("relationship", "boredom", 1),
                 ("relationship", "trust", -1),
+                ("relationship", "temptation", 1),
             ],
             "ch01_d5_ask_sweet": [
                 ("relationship", "love", 1),
@@ -310,10 +249,10 @@ init 1 python:
             ],
             "ch01_d5_ask_brave": [
                 ("relationship", "trust", 1),
-                ("player", "acceptance", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_ask_silly": [
-                ("relationship", "boredom", -1),
+                ("relationship", "temptation", -1),
             ],
 
             # 11 bunk split
@@ -323,17 +262,14 @@ init 1 python:
             ],
             "ch01_d5_bunk_deck": [
                 ("relationship", "love", 1),
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_bunk_apart": [
                 ("relationship", "trust", 1),
             ],
             "ch01_d5_ntr_bunk_apart": [
                 ("relationship", "love", -1),
-                ("relationship", "trust", -1),
-                ("relationship", "boredom", 2),
-                ("partner", "secrecy", 1),
+                ("relationship", "temptation", 3),
             ],
 
             # 12 Love night
@@ -349,14 +285,10 @@ init 1 python:
             # 12 Exhibition night
             "ch01_d5_exhib_rule_wrist": [
                 ("relationship", "trust", 3),
-                ("partner", "exhibitionism", 1),
-                ("player", "acceptance", 1),
+                ("partner", "exhibitionism", 2),
             ],
             "ch01_d5_exhib_rule_dare": [
-                ("partner", "exhibitionism", 1),
-                ("partner", "curiosity", 1),
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 2),
             ],
             "ch01_d5_exhib_rule_skip": [
                 ("relationship", "love", 1),
@@ -365,23 +297,22 @@ init 1 python:
 
             # 15 pier invitation
             "ch01_d5_invite_in": [
-                ("player", "acceptance", 1),
-                ("relationship", "momentum", 1),
+                ("partner", "exhibitionism", 1),
             ],
             "ch01_d5_invite_ask_leia": [
-                ("relationship", "trust", 1),
                 ("relationship", "love", 1),
+                ("relationship", "trust", 1),
             ],
             "ch01_d5_invite_maybe": [
-                ("relationship", "boredom", 1),
+                ("relationship", "temptation", 1),
             ],
             "ch01_d5_invite_read_aloud": [
-                ("relationship", "trust", 1),
                 ("relationship", "love", 1),
-                ("relationship", "boredom", -1),
+                ("relationship", "temptation", -1),
             ],
             "ch01_d5_invite_keep_quiet": [
-                ("relationship", "boredom", 1),
+                ("relationship", "trust", -1),
+                ("relationship", "temptation", 1),
             ],
     })
 
@@ -482,9 +413,9 @@ init 1 python:
 
 init 2 python:
 
-    D5_BOLDER_SWIM_MIN = 24                 # Leia's own Exhibitionism needed to wear the bolder swimsuit by choice
-    D5_COMFORTABLE_MIN = 34                 # Exhibitionism needed for the 'comfortable' cove step
-    D5_COMFORTABLE_MIN_AFTER_BRIEF = 30     # lower bar if Day Four's step was already 'brief_reveal'
+    D5_BOLDER_SWIM_MIN = LC_T["d5_bolder_swim"]                 # Leia's own Exhibitionism needed to wear the bolder swimsuit by choice (v2 scale)
+    D5_COMFORTABLE_MIN = LC_T["d5_comfortable"]                 # Exhibitionism needed for the 'comfortable' cove step (v2 scale)
+    D5_COMFORTABLE_MIN_AFTER_BRIEF = LC_T["d5_comfortable_after_brief"]     # lower bar if Day Four's step was already 'brief_reveal' (v2 scale)
     D5_NO_PACK_OUTFITS = ("boutique_cutout_mini", "after_hours_dress")
     D5_NO_EVENING_OUTFITS = ("casual_default",)
 
@@ -519,7 +450,7 @@ init 2 python:
         return "comfortable" if exhibitionism >= needed else "ties_loosened"
 
 
-    def ch01_d5_track_text():
+    def _lc_d5_track_text_v1():
         """Track card for Insight / Full / Developer modes. None in Normal mode.
 
         Reads stored state only. It never recomputes a track."""
@@ -561,6 +492,11 @@ init 2 python:
             has_story_flag("ch01_d4_cutout_disclosed"),
             has_story_flag("ch01_d4_club_story_deferred"),
         )
+
+
+    def ch01_d5_track_text():
+        """The track card with route-name headings (lc_track_text_v2, systems/choice_engine.rpy)."""
+        return lc_track_text_v2(_lc_d5_track_text_v1())
 
 
     def format_day5_gate_choice(choice_id, base_text, severity="soft", gate_label="D5-1"):

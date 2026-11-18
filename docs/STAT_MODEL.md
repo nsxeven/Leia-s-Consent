@@ -94,9 +94,8 @@ says, how she reacts), not by what Ryan meant.
 
 ## How to score a new choice
 
-1. Give it a stable id (`ch01_d6_<beat>_<answer>`) and register effects: Day 1 in
-   `systems/choice_engine.rpy`, Day 2 in `ch01_day2_scenes_01_15.rpy`, Day 3+ in the day's
-   registration file or `systems/stat_model_v2_later_days.rpy` (Day 3-5 files are Scriptwriter-owned).
+1. Give it a stable id (`ch01_d6_<beat>_<answer>`) and register its effects in its Day pack's
+   `*_registrations.rpy` (`docs/DAY_PACK.md`).
 2. Decide the ONE path the answer pushes, then pick the matching shape:
    - Love: Love and/or Trust up (`+1` ordinary, `+2` strong, `+3` key beat).
    - Love+Exhib: Exhibitionism up, optionally Love or Trust up. Never Temptation or Sharing with it.
@@ -115,10 +114,10 @@ says, how she reacts), not by what Ryan meant.
 6. Run `python -m unittest tests.test_choice_scoring tests.test_choice_path_tags` (with
    `PYTHONPATH=game/python-packages`); a failure names the choice and the reason.
 
-Day 1 effects live in `systems/choice_engine.rpy`, Day 2 in `ch01_day2_scenes_01_15.rpy`. The Day 3-5
-registration files are Scriptwriter-owned, so their effects are re-scored in
-`systems/stat_model_v2_later_days.rpy` (init 5, the effective definition). A new Day 3-5 choice
-needs a v2 entry there (or v2 stats in its own file), or the scoring test fails.
+Each Day's effects live in its Day pack's `*_registrations.rpy` (Day 2's are still next to its
+scenes in `ch01_day2_scenes_01_15.rpy` and the other Day 2 files). Days 3-5 are written there with
+the v2 scores directly (the old init 5 re-scoring file is gone). A new choice needs v2 stats in its
+Day's registrations, or the scoring test fails.
 `get_choice_effects()` still folds any old-style tuple at runtime so a stale entry can't crash a save.
 
 ## Route thresholds (`lc_stat_model.THRESHOLDS`)
