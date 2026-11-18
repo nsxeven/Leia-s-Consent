@@ -1525,10 +1525,11 @@ label ch01_day2_scene_11b_boutique:
     $ exit_cinematic_mode()
     scene bg ch01_d2_boutique
     with dissolve
-    # Leia in the try-on dress (Latex Dress sprite, darryn 2026-11-18). Maya's red
-    # dress has no sprite yet, so she stays off stage.
-    $ cast(ryan="casual", leia="latex_dress")
+    # Both in their try-on dresses (Leia's Latex Dress and Maya's Red Dress sprites,
+    # darryn 2026-11-18).
+    $ cast(ryan="casual", leia="latex_dress", maya="red_dress")
     $ face("leia", "shy")
+    $ face("maya", "smile")
 
     "From my chair by the window, I watched [girlfriend_name] turn around."
     "Even from across the shop, the dress was a lot. She had both hands pulling the hem down at the front, and Maya was right behind her, holding the top up for her."
@@ -1686,6 +1687,7 @@ label ch01_day2_scene_11b_boutique:
         $ set_story_value("ch01_d2_boutique_slip_witness", "julian")
 
     $ face("leia", "flustered")
+    $ face("maya", "shy")
     "The man from the racks had already found somewhere else in the shop to be."
     maya "In my defense, he had really good taste."
     gf "I'm changing. Into my own clothes. Right now."

@@ -61,7 +61,7 @@ class LeiaCasualOutfitTests(unittest.TestCase):
         # clothes once they have changed back.
         self.assertIn('$ cast_remove("leia", "maya")', before.split('"Maya kept the red dress', 1)[1])
         boutique = after.split("label ", 1)[0]
-        self.assertIn('$ cast(ryan="casual", leia="latex_dress")', boutique)
+        self.assertIn('$ cast(ryan="casual", leia="latex_dress", maya="red_dress")', boutique)
         self.assertLess(boutique.index('leia="latex_dress"'), boutique.index('cast_add(leia="casual", maya="green_tube_top")'))
         self.assertLess(boutique.index('cast_add(leia="casual"'), boutique.index("emerged in their normal clothes"))
         self.assertIn('$ cast(ryan="casual", leia="casual", maya="green_tube_top")\n    "Maya kept the red dress', body)

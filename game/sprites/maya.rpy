@@ -1,4 +1,4 @@
-# Maya — green tube top for the Day Two café sequence only.
+# Maya — green tube top (Day Two café and mall) and the red boutique try-on dress.
 # Her own 941x1672 Base -> animated Chest -> Expression rig uses Leia's
 # animation mechanics and silhouette, but none of Leia's art. Maya's Base
 # already contains her neutral face; no separate neutral or blink PNG exists.
@@ -27,3 +27,27 @@ image maya_green_tube_top smile = Fixed(lc_sprite_silhouette("maya_green_tube_to
 image maya_green_tube_top shy = Fixed(lc_sprite_silhouette("maya_green_tube_top_layers shy"), xysize=(941, 1672))
 image maya_green_tube_top skeptical = Fixed(lc_sprite_silhouette("maya_green_tube_top_layers skeptical"), xysize=(941, 1672))
 image maya_green_tube_top angry = Fixed(lc_sprite_silhouette("maya_green_tube_top_layers angry"), xysize=(941, 1672))
+
+# Day Two boutique: the red dress she tries on (and buys). Same rig as the tube top:
+# her neutral face is painted on Base, expressions overlay it.
+layeredimage maya_red_dress_layers:
+    always "images/sprites/maya/CH2/Base_RedDress.png"
+    always "images/sprites/maya/CH2/Chest_RedDress.png" at leia_chest_breathe
+
+    group expression:
+        attribute neutral null default
+        attribute smile:
+            "images/sprites/maya/expressions/Smile.png"
+        attribute shy:
+            "images/sprites/maya/expressions/Shy.png"
+        attribute skeptical:
+            "images/sprites/maya/expressions/Skeptical.png"
+        attribute angry:
+            "images/sprites/maya/expressions/Angry.png"
+
+image maya_red_dress = Fixed(lc_sprite_silhouette("maya_red_dress_layers neutral"), xysize=(941, 1672))
+image maya_red_dress neutral = Fixed(lc_sprite_silhouette("maya_red_dress_layers neutral"), xysize=(941, 1672))
+image maya_red_dress smile = Fixed(lc_sprite_silhouette("maya_red_dress_layers smile"), xysize=(941, 1672))
+image maya_red_dress shy = Fixed(lc_sprite_silhouette("maya_red_dress_layers shy"), xysize=(941, 1672))
+image maya_red_dress skeptical = Fixed(lc_sprite_silhouette("maya_red_dress_layers skeptical"), xysize=(941, 1672))
+image maya_red_dress angry = Fixed(lc_sprite_silhouette("maya_red_dress_layers angry"), xysize=(941, 1672))
