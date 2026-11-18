@@ -10,8 +10,9 @@ change: this module only decides what the player reads.
       unresolved endings keep the neutral title.
 
 Titles chosen by darryn 2026-11-09 (options doc: chapter_title_options.md).
-Edit them HERE ONLY: every title card, the day review, Chapter Select, save
-names and the gallery read from this table.
+Each Day's entry lives in its Day pack (CHAPTER in game/python-packages/lc_days/<day>.py);
+this module assembles CHAPTERS from them. Edit titles THERE ONLY: every title card, the day
+review, Chapter Select, save names and the gallery read from this table.
 
 Pure Python (no Ren'Py import) so tests/ can load it directly.
 """
@@ -46,25 +47,6 @@ CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
 # routes       : route-flavoured titles revealed by the day review (+ repair)
 #                (None = no route variant; the neutral title is used)
 CHAPTERS = {
-    "prologue": {
-        "number": 0, "number_word": "", "day": None, "day_word": "",
-        "review_day": None,
-        "title": 'Truth or Dare',
-        # The Prologue happens before any route exists.
-        "routes": {"love": None, "love_exhib": None, "nts": None, "ntr": None, "repair": None},
-    },
-    "day1": {
-        "number": 1, "number_word": "One", "day": 1, "day_word": "One",
-        "review_day": "ch01_d1",
-        "title": 'Sheer Curtains',
-        "routes": {
-            "love": 'Today Was Good',
-            "love_exhib": 'Can He Tell?',
-            "nts": 'A Third Person',  # not reachable yet: no NTS beat this day (see NTS_VARIANT_KEYS)
-            "ntr": 'Spaces Left Open',
-            "repair": None,  # no repair ending this day; falls back to the Love title
-        },
-    },
     "day2": {
         "number": 2, "number_word": "Two", "day": 2, "day_word": "Two",
         "review_day": "ch01_d2",
@@ -156,6 +138,26 @@ NTS_VARIANT_KEYS = {
     "day5": "ch01_d5_exhib_variant",
 }
 NTS_VARIANT = "ryan_likes_watching"
+
+def _install_day_packs():
+    """Put every Day's chapter entry (CHAPTER) and "likes watching" key (NTS_VARIANT_KEY) from
+    game/python-packages/lc_days/<day>.py in front, in play order, keyed by the module name.
+    Runs once, at import."""
+    import lc_days
+    rest, keys = dict(CHAPTERS), dict(NTS_VARIANT_KEYS)
+    CHAPTERS.clear()
+    NTS_VARIANT_KEYS.clear()
+    for day in lc_days.modules():
+        day_id = day.__name__.rsplit(".", 1)[-1]
+        if hasattr(day, "CHAPTER"):
+            CHAPTERS[day_id] = day.CHAPTER
+        if hasattr(day, "NTS_VARIANT_KEY"):
+            NTS_VARIANT_KEYS[day_id] = day.NTS_VARIANT_KEY
+    CHAPTERS.update(rest)
+    NTS_VARIANT_KEYS.update(keys)
+
+
+_install_day_packs()
 
 _REVIEW_DAY_CHAPTER = dict((c["review_day"], cid) for cid, c in CHAPTERS.items() if c["review_day"])
 

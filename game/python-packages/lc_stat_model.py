@@ -64,25 +64,12 @@ RETIRED_STATS = ("boredom", "curiosity", "acceptance", "secrecy", "boundary_loos
 # is Temptation +1 from the default 10, so one slip never seeds NTR and three do.
 # Day 3+ lanes still come from stored values.
 THRESHOLDS = {
-    # Day 1 end (ch01_scenes_14_30.rpy)
-    "d1_ntr_seed_temptation": 13,      # >= : ntr_seeded (three +1 slips; one never does)
-    "d1_exhib_seed": 30,               # >= (and below the NTR seed): nts_seeded ("Exhibition seeded")
-    "d1_love_bedtime_love": 54,
-    "d1_love_bedtime_trust": 54,
-    "d1_love_bedtime_temptation_max": 11,  # one slip still gets the Love bedtime
     # Day 2 lanes (ch01_d2_route_lane)
     "d2_risk_temptation": 15,          # >= with a Day 1 NTR seed (two more slips) ...
     "d2_risk_temptation_unseeded": 16, # ... or >= this without one (six slips in all)
     "d2_exhib_lane": 36,               # >= and gained Exhibitionism today
     "d2_love_exhib_blend": 28,         # love lane bedroom with an open-curtains edge
     # Her own call (Exhibitionism) in Day 1-2 dialogue
-    "d1_pool_shared_glance": 19,       # was exhibitionism/acceptance 14
-    "d1_can_tell_unsure": 28,          # was 18
-    "d1_can_tell_bold": 45,            # was 26
-    "d1_compliment_liked": 21,         # was curiosity 25
-    "d1_compliment_restless_temptation": 13,  # was boredom 16; = the Day 1 NTR seed
-    "d1_photo_confidence": 14,         # Exhibitionism (+3 bolder outfit), was curiosity+acceptance 38
-    "d1_photo_bolder_bonus": 3,
     "d2_morning_unsure": 28,           # was 18
     "d2_morning_bold": 45,             # was 26
     "d2_pool_outfit_bold": 36,         # was exhibitionism 22 or curiosity 27
@@ -411,35 +398,6 @@ def stat_id_for_label(label):
 
 # ---------------------------------------------------------------- routes
 
-def d1_route_pressure(stats, focus=None):
-    """Day 1 end state: 'ntr_seeded', 'nts_seeded' or 'mixed'.
-
-    `stats` is a flat {stat: value} dict; `focus` is the Route Explorer override.
-    """
-    if focus == "ntr_risk":
-        return "ntr_seeded"
-    if focus == "exhibitionism":
-        return "nts_seeded"
-    if focus is not None:
-        return "mixed"
-    t = THRESHOLDS
-    if stats["temptation"] >= t["d1_ntr_seed_temptation"]:
-        return "ntr_seeded"
-    if stats["exhibitionism"] >= t["d1_exhib_seed"]:
-        return "nts_seeded"
-    return "mixed"
-
-
-def d1_love_bedtime(pressure, stats):
-    t = THRESHOLDS
-    return (
-        pressure == "mixed"
-        and stats["love"] >= t["d1_love_bedtime_love"]
-        and stats["trust"] >= t["d1_love_bedtime_trust"]
-        and stats["temptation"] <= t["d1_love_bedtime_temptation_max"]
-    )
-
-
 def d2_route_lane(stats, day1_pressure, exhib_gained_today, focus=None, migrated_lane=None):
     """Day 2 lane: 'ntr_risk', 'exhibitionism' or 'love'."""
     if focus is not None:
@@ -584,3 +542,24 @@ def legacy_d2_lane(relationship, partner, player, day1_pressure, d1_nonchalant, 
     ):
         return "exhibitionism"
     return "love"
+
+
+# ---------------------------------------------------------------- Day packs
+def _install_day_packs():
+    """Add every Day's thresholds, gate and route-flag rows, repair choices and route resolvers
+    (game/python-packages/lc_days/<day>.py), in play order. Runs once, at import."""
+    global REPAIR_CHOICES
+    import lc_days
+    rest = dict(THRESHOLDS)  # thresholds not owned by a Day: after the Days', in play order
+    THRESHOLDS.clear()
+    for day in lc_days.modules():
+        THRESHOLDS.update(getattr(day, "STAT_THRESHOLDS", {}))
+        CHOICE_GATES.update(getattr(day, "STAT_CHOICE_GATES", {}))
+        CHOICE_ROUTE_FLAGS.update(getattr(day, "STAT_ROUTE_FLAGS", {}))
+        REPAIR_CHOICES = REPAIR_CHOICES | frozenset(getattr(day, "STAT_REPAIR_CHOICES", ()))
+        for name in getattr(day, "STAT_MODEL_EXPORTS", ()):
+            globals()[name] = getattr(day, name)
+    THRESHOLDS.update(rest)
+
+
+_install_day_packs()

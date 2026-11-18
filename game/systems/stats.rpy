@@ -15,9 +15,6 @@
 #   lc_exhib_gained(prefix)                   Exhibitionism gained from choices with an id prefix
 #   lc_leia_tint(lane=None, lane_scene=False) Day Two line tint for Leia: 'shy' or a stat id
 #       (lc_stat_model.leia_tint; call once per tint point, branch on a local, end in a shy else)
-#   lc_d1_route_pressure()                    Day 1 end state ('ntr_seeded' / 'nts_seeded' /
-#       'mixed')
-#   lc_d1_love_bedtime(pressure)              Day 1 Love bedtime variant
 #   lc_current_lean()                         lean key for the Full 'Current lean' line
 #   lc_current_lean_label()                   its label
 #   lc_migrate_stats_v2() -> None             after_load: convert a pre-v2 save once
@@ -134,13 +131,6 @@ init python:
                 if stat == "exhibitionism":
                     total += amount
         return total
-
-    def lc_d1_route_pressure():
-        """Day 1 end state ('ntr_seeded' / 'nts_seeded' / 'mixed'). Story and Full readout share it."""
-        return lc_stat_model.d1_route_pressure(lc_stats_flat(), lc_route_explorer_for_lane())
-
-    def lc_d1_love_bedtime(pressure):
-        return lc_stat_model.d1_love_bedtime(pressure, lc_stats_flat())
 
     def lc_current_lean():
         """Lean key for the Full 'Current lean' line, from the same resolvers the routes use."""

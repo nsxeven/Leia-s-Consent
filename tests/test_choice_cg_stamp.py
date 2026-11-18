@@ -10,9 +10,14 @@ POOL = (ROOT / "game/chapters/ch01/day1/ch01_scenes_04_06.rpy").read_text(encodi
 
 
 def counts():
-    block = TAGS.split("define LC_CHOICE_CG_COUNT = {", 1)[1].split("}", 1)[0]
-    return {m.group(1): (int(m.group(2)), int(m.group(3)))
-            for m in re.finditer(r'"(\w+)": \((\d+), (\d+)\)', block)}
+    # Each Day pack registers its rows: LC_CHOICE_CG_COUNT.update({...}) in its *_registrations.rpy.
+    regs = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "game/chapters").rglob("*_registrations.rpy")))
+    out = {}
+    for block in regs.split("LC_CHOICE_CG_COUNT.update({")[1:]:
+        block = block.split("})", 1)[0]
+        out.update({m.group(1): (int(m.group(2)), int(m.group(3)))
+                    for m in re.finditer(r'"(\w+)": \((\d+), (\d+)\)', block)})
+    return out
 
 
 class ChoiceCgStampTests(unittest.TestCase):

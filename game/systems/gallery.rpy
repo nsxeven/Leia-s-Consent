@@ -57,7 +57,7 @@
 # Example:
 #   text gallery_customize_names(page_info["label"])      (screens/gallery_screen.rpy)
 #
-# Depends on: systems/gallery_data.rpy (GALLERY_TABS, GALLERY_TABLE), systems/hidden_pov.rpy,
+# Depends on: systems/gallery_data.rpy (GALLERY_TABS, GALLERY_TABLE, GALLERY_TAB_ACCENTS), systems/hidden_pov.rpy,
 #   systems/chapter_select.rpy (CHAPTER_SELECT_RULE), python-packages/lc_chapters.py
 # Hooks: none
 # Load order: default (init 0); its data table loads at init -2
@@ -75,15 +75,8 @@ init python:
 
     GALLERY_TAB_IDS = tuple(t[0] for t in GALLERY_TABS)
 
-    # Card/preview tint per tab (used behind locked tiles and as the fallback fill).
-    GALLERY_TAB_ACCENTS = {
-        "prologue": "#6f617f",
-        "ch01_d1": "#8f5d75",
-        "ch01_d2": "#70566f",
-        "ch01_d3": "#7c6258",
-        "ch01_d4": "#556b78",
-        "ch01_d5": "#5f7a6a",
-    }
+    # Card/preview tint per tab (used behind locked tiles and as the fallback fill) is
+    # GALLERY_TAB_ACCENTS: each Day pack passes its accent to gallery_tab (systems/gallery_data.rpy).
 
     def _gallery_build_entries():
         entries = {}

@@ -944,7 +944,7 @@ class MisuseGuardTests(unittest.TestCase):
         self.assertIn("lc_choice_applied_effects(exempt_id)", lane)
         self.assertNotIn("get_choice_effects(", lane)
         stats = _read("game/systems/stats.rpy")
-        exhib = stats[stats.index("def lc_exhib_gained(prefix):"):stats.index("def lc_d1_route_pressure")]
+        exhib = stats[stats.index("def lc_exhib_gained(prefix):"):stats.index("def lc_current_lean")]
         self.assertIn("lc_choice_applied_effects(choice_id)", exhib)
 
     def test_docs_show_the_call_form_and_the_helpers(self):

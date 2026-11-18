@@ -62,6 +62,8 @@ class StatRuntimeTests(unittest.TestCase):
         env["lc_leia_is_side_choice"] = lambda cid: False
         env["lc_choice_applied_effects"] = env["get_choice_effects"]
         exec(compile(_block("systems/stats.rpy", "init python:\n"), "stats_init", "exec"), env)
+        from lc_rpy_harness import load_blocks
+        load_blocks([], env, packs=("day1",))  # Day One route helpers (its Day pack)
         day2 = _block("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy", "init 1 python:\n", "\nlabel ")
         exec(compile(day2, "day2_init", "exec"), env)
         self.env = env

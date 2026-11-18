@@ -85,7 +85,8 @@ class ChapterRegistryTests(unittest.TestCase):
         self.assertIn('centered "[lc_chapter_complete_card_day4]', text)
         # Every card variable used is defined in the bridge, as a plain name
         # (config.interpolate_exprs evaluates [x[y]] as Python, so no indexing).
-        rpy = (GAME / "systems" / "lc_chapters.rpy").read_text(encoding="utf-8")
+        rpy = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "lc_chapters.rpy",
+                                                                *sorted((GAME / "chapters").rglob("*_chapter.rpy"))])
         used = set(re.findall(r"\[(lc_chapter_(?:complete_)?card[^\]]*)\]", text))
         self.assertTrue(used)
         for name in used:
@@ -110,8 +111,11 @@ class ChapterRegistryTests(unittest.TestCase):
     def test_registry_bridge_and_save_names(self):
         rpy = (GAME / "systems" / "lc_chapters.rpy").read_text(encoding="utf-8")
         self.assertIn("import lc_chapters", rpy)
+        # Each Day's title-card variable is defined in its Day pack (*_chapter.rpy).
+        cards = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "lc_chapters.rpy",
+                                                                  *sorted((GAME / "chapters").rglob("*_chapter.rpy"))])
         for cid in lc_chapters.CHAPTER_ORDER[1:]:
-            self.assertIn('define lc_chapter_card_%s = lc_chapters.card_text("%s")' % (cid, cid), rpy)
+            self.assertIn('define lc_chapter_card_%s = lc_chapters.card_text("%s")' % (cid, cid), cards)
         self.assertIn("config.start_callbacks", rpy)
         review = (GAME / "systems" / "day_review.rpy").read_text(encoding="utf-8")
         self.assertIn("store.save_name = lc_chapters.save_name(chapter_id)", review)
@@ -173,9 +177,17 @@ class ChapterRegistryTests(unittest.TestCase):
         self.assertIsNone(lc_chapters.review_family("day4", "mixed", get))
 
     def test_registry_module_is_pure_python(self):
+        # The registry reads each Day's entry from its Day pack (lc_days); nothing else is imported,
+        # and the Day modules import only the standard library and the pure stat model.
         tree = ast.parse((GAME / "python-packages" / "lc_chapters.py").read_text(encoding="utf-8"))
-        imports = [n for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom))]
-        self.assertEqual(imports, [])
+        imports = [a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names]
+        imports += [n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)]
+        self.assertEqual(imports, ["lc_days"])
+        for path in sorted((GAME / "python-packages" / "lc_days").glob("*.py")):
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            names = {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
+            names |= {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)}
+            self.assertLessEqual(names, {"importlib", "lc_stat_model"}, path.name)
 
 
 if __name__ == "__main__":

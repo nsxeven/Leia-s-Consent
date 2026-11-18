@@ -49,7 +49,7 @@ DAY_PACKS = (
 PACK_FILES = ("_registrations.rpy", "_gallery.rpy", "_chapter.rpy")
 
 # Days whose pack is not complete yet (shrink, never grow; ends empty).
-PENDING_PACKS = {"prologue", "day1", "day2", "day3", "day4", "day5"}
+PENDING_PACKS = {"day1", "day2", "day3", "day4", "day5"}
 
 # ------------------------------------------------------------- engine day ids
 ENGINE_DIRS = ("systems", "screens")

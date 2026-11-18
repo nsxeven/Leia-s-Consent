@@ -14,8 +14,8 @@
 #   lc_chapter_set_save_name(chapter_id) -> None
 #       name new saves after a chapter
 #   lc_chapter_start_save_name() -> None      start callback: saves start as the Prologue
-#   define lc_chapter_card_day1               opening card text (same for day2 .. day5)
-#   define lc_chapter_card_day2               Day 2 opening card
+#   define lc_chapter_card_day2               Day 2 opening card (each Day pack defines its own
+#       in its *_chapter.rpy)
 #   define lc_chapter_complete_card_day4      Day 4 completion card (also day5)
 #
 # Example:
@@ -57,7 +57,6 @@ init -10 python:
         config.start_callbacks.append(lc_chapter_start_save_name)
 
 # Opening title cards (neutral title for everyone).
-define lc_chapter_card_day1 = lc_chapters.card_text("day1")
 define lc_chapter_card_day2 = lc_chapters.card_text("day2")
 define lc_chapter_card_day3 = lc_chapters.card_text("day3")
 define lc_chapter_card_day4 = lc_chapters.card_text("day4")

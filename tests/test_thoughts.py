@@ -325,7 +325,7 @@ class SeenBeatTests(unittest.TestCase):
 
     def test_every_thought_names_its_source_label(self):
         # Each thought's comment names the Day One label its words are checked against.
-        source = (ROOT / "game/python-packages/lc_thoughts.py").read_text(encoding="utf-8")
+        source = (ROOT / "game/python-packages/lc_days/day1.py").read_text(encoding="utf-8")
         day1 = ROOT / "game/chapters/ch01/day1"
         script = "\n".join(p.read_text(encoding="utf-8") for p in sorted(day1.glob("*.rpy")))
         for tid in lc_thoughts.day_thoughts(DAY1):

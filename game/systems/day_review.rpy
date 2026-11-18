@@ -73,6 +73,19 @@ default persistent.lc_title_style = "story"
 default persistent.lc_title_badges = False
 default persistent.lc_day1_dream = "ask"
 
+# load order: init -5 creates the tables the Day packs fill at init 1 (their *_registrations.rpy).
+init -5 python:
+    # ------------------------------------------------------------------
+    # Choice-style tags (darryn). How Ryan played the day sets both review
+    # tags, replacing the route-based pair. Confirmed story facts (separated,
+    # repair, betrayal known, sharing agreed + happened) still override.
+    # Days with no mapped choices keep the route-based titles until mapped.
+    # Each Day pack adds its own choice ids (LC_CHOICE_STYLE.update in its *_registrations.rpy).
+    LC_CHOICE_STYLE = {}
+    # Moment stickers: up to two per day, in this priority order.
+    # Each Day pack appends its rules (LC_MOMENT_STICKERS = LC_MOMENT_STICKERS + (...)).
+    LC_MOMENT_STICKERS = ()
+
 init 20 python:
     import os
     import lc_stat_model
@@ -285,54 +298,6 @@ init 20 python:
             return ("Uneasy Observer", "Growing Distant")
         return ("Curious Partner", "Affectionate Partner")
 
-    # ------------------------------------------------------------------
-    # Choice-style tags (darryn). How Ryan played the day sets both review
-    # tags, replacing the route-based pair. Confirmed story facts (separated,
-    # repair, betrayal known, sharing agreed + happened) still override.
-    # Days with no mapped choices keep the route-based titles until mapped.
-    LC_CHOICE_STYLE = {
-        # Day 1
-        "ch01_outfit_conservative": "protective", "ch01_outfit_comfort": "supportive", "ch01_outfit_bolder": "showoff",
-        "ch01_photo_exit": "protective", "ch01_photo_support": "supportive", "ch01_photo_more": "showoff",
-        "ch01_towel_boundary": "protective", "ch01_towel_laugh": "playful", "ch01_towel_forget": "detached",
-        "ch01_towel_reassure": "supportive", "ch01_towel_honest": "honest", "ch01_towel_tease": "playful",
-        "ch01_bra_cover": "protective", "ch01_bra_reassure": "supportive", "ch01_bra_playful": "playful",
-        "ch01_stranger_territorial": "protective", "ch01_stranger_proud": "showoff", "ch01_stranger_encourage": "showoff",
-        "ch01_catch_boundary": "protective", "ch01_catch_check": "supportive", "ch01_catch_ignore": "detached",
-        "ch01_catch_joke": "playful",
-        "ch01_friend_reassure": "supportive", "ch01_friend_tease": "playful", "ch01_friend_boundary": "honest",
-        "ch01_julian_reassure": "supportive", "ch01_julian_honest": "honest", "ch01_julian_joke": "playful",
-        "ch01_carry_lookaway": "protective", "ch01_carry_fix": "protective", "ch01_carry_brush": "supportive",
-        "ch01_carry_joke": "playful",
-        "ch01_upstairs_honest": "honest", "ch01_upstairs_liked": "showoff", "ch01_upstairs_swallow": "detached",
-        "ch01_upstairs_snap": "detached",
-        "ch01_movie_stop": "protective", "ch01_movie_subtle": "showoff", "ch01_movie_tease_presence": "playful",
-        "ch01_movie_dismiss_concern": "detached",
-        "ch01_can_tell_behave": "protective", "ch01_can_tell_tease": "playful", "ch01_can_tell_push": "showoff",
-        "ch01_can_tell_dismiss": "detached",
-        "ch01_private_apologize": "supportive", "ch01_private_playful": "playful", "ch01_private_curiosity": "honest",
-        "ch01_private_dismiss": "detached",
-        "ch01_noblanket_behave": "protective", "ch01_noblanket_test": "showoff", "ch01_noblanket_tease": "playful",
-        "ch01_noblanket_phone": "detached",
-        "ch01_watch_claim": "protective", "ch01_watch_tease": "playful", "ch01_watch_check": "supportive",
-        "ch01_watch_ignore": "detached",
-        "ch01_micro_warn": "protective", "ch01_micro_silent": "showoff", "ch01_micro_open": "showoff",
-        "ch01_micro_dismiss": "detached",
-        "ch01_philosophy_couple": "protective", "ch01_philosophy_trust": "honest",
-        "ch01_philosophy_jealousy_fun": "showoff", "ch01_philosophy_dont_care": "detached",
-        "ch01_julian_change_subject": "protective", "ch01_julian_let_play": "showoff", "ch01_julian_put_spot": "playful",
-        "ch01_julian_dont_care": "detached",
-        "ch01_compliment_affirm": "supportive", "ch01_compliment_tease": "protective", "ch01_compliment_enjoy": "showoff",
-        "ch01_compliment_shrug": "detached",
-        "ch01_alone_curiosity": "honest", "ch01_alone_open": "showoff", "ch01_alone_dismiss": "detached",
-        "ch01_alone_apologize": "supportive",
-        "ch01_private_claim": "protective", "ch01_private_open": "showoff", "ch01_private_jealous": "honest",
-        "ch01_private_indifferent": "detached",
-        "ch01_dream_curiosity": "honest", "ch01_dream_withdraw": "detached", "ch01_dream_ground": "supportive",
-        # Choice-sense pass slips (honest mistakes).
-        "ch01_outfit_rush": "detached", "ch01_photo_rush": "detached", "ch01_towel_shrug": "detached",
-        "ch01_bra_distracted": "detached", "ch01_julian_fine": "detached",
-    }
     LC_STYLE_TAGS = {
         "protective": ("Her Bodyguard", "Feeling Safe"),
         "supportive": ("Her Biggest Fan", "Comfortable in Her Skin"),
@@ -386,18 +351,6 @@ init 20 python:
         equipped tags)."""
         return lc_hook_filter("review_titles", lc_review_auto_titles(day_id))
 
-    # Moment stickers: up to two per day, in this priority order.
-    # "Asked First": the scene-20 flag set when Ryan promised to ask and did.
-    LC_MOMENT_STICKERS = (
-        ("Asked First", lambda day_id, ids: day_id == "ch01_d1" and bool(getattr(store, "ch01_grab_promised_to_ask", False))),
-        ("Told the Truth", lambda day_id, ids: "ch01_towel_honest" in ids),
-        ("Wardrobe Rescue", lambda day_id, ids: "ch01_carry_fix" in ids),
-        ("Eyes on Me", lambda day_id, ids: "ch01_watch_claim" in ids),
-        ("Let Her Decide", lambda day_id, ids: "ch01_micro_silent" in ids),
-        ("Proud of Her", lambda day_id, ids: "ch01_stranger_proud" in ids),
-        ("Kept His Cool", lambda day_id, ids: "ch01_julian_reassure" in ids),
-        ("Missed It", lambda day_id, ids: sum(1 for c in ("ch01_noblanket_phone", "ch01_watch_ignore", "ch01_compliment_shrug") if c in ids) >= 2),
-    )
 
     def lc_review_stickers(day_id, limit=2):
         if getattr(persistent, "lc_title_style", "story") == "off":

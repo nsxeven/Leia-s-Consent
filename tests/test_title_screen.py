@@ -25,7 +25,8 @@ class TitleScreenTests(unittest.TestCase):
         self.assertTrue((GAME / "images" / "backgrounds" / "villa" / "villa_pool_evening.webp").is_file())
 
     def test_safe_list_only_names_real_non_mature_entries(self):
-        data = (GAME / "systems" / "gallery_data.rpy").read_text(encoding="utf-8")
+        data = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "gallery_data.rpy",
+                                                                 *sorted((GAME / "chapters").rglob("*_gallery.rpy"))])
         rows = {}
         for match in re.finditer(r'gallery_row\("([^"]+)"(.*?)\]\)?(, mature=True)?', data, re.S):
             rows[match.group(1)] = bool(re.search(r"mature=True", data[match.start():data.find("\n    gallery_row(", match.end())] if data.find("\n    gallery_row(", match.end()) != -1 else data[match.start():]))
