@@ -1582,7 +1582,13 @@ label ch01_day2_scene_11b_boutique:
         gf "He looked away. He'd already looked away by the time I looked up, actually, and he went really red. And then he said sorry. Like, a lot."
         "She didn't sound defensive about it, just like someone handing me the version of events she had been left to work through without me."
 
-    gf "You've been kind of quiet today, though. Not in a bad way. Just quiet."
+    # Flow (darryn 2026-11-19): a Ryan who has been warm all day gets an attentive check-in about
+    # last night, not "you've been quiet". The detached version stays for dismissive/withdrawn picks.
+    $ d2_ryan_detached = (choice_tag_count("dismissive", ch01_d2_choice_ids()) + choice_tag_count("withdrawal", ch01_d2_choice_ids())) > 0
+    if d2_ryan_detached:
+        gf "You've been kind of quiet today, though. Not in a bad way. Just quiet."
+    else:
+        gf "Hey. Did you actually sleep last night, though? You were tossing around a lot. Like, a lot a lot."
 
     $ d2_postshop_sleep_text = format_choice("ch01_d2_postshop_sleep", "I didn't sleep well.")
     $ d2_postshop_head_text = format_choice("ch01_d2_postshop_head", "I've just got a lot in my head.")
@@ -1668,26 +1674,36 @@ label ch01_day2_scene_11b_boutique:
 
     "We left [girlfriend_name] and Maya at the table for a minute."
     "[friend_name] was still losing an argument with the card machine when the first two drinks came up, so I carried them back on my own."
-    "There was a big potted palm between the counter and our table. I was a couple of steps behind it when Maya lowered her voice."
+    "There was a big potted palm between the counter and our table. I was a couple of steps behind it when I heard my name."
 
-    maya "Hey. Everything okay?"
-    gf "With the dress? I mean, I bought it, so."
-    maya "No. With [player_name]."
-
-    "I stopped walking."
-
-    # Day Two incident (v0.2.0): Ryan overhears the talk. The milder version plays
-    # when he has already been present today (a repair pick, or he went to her at the mall).
+    # Day Two incident (v0.2.0): Ryan overhears the talk. The milder version plays when he has
+    # been present today (a repair pick, or he went to her at the mall): then Leia confides in
+    # Maya because she cares (darryn 2026-11-19). The worried version keeps "he's somewhere else".
     if choice_tag_count("repair", ch01_d2_choice_ids()) >= 1 or get_story_value("ch01_d2_mall_ryan_response") in ("reconnected", "came_over"):
         $ set_story_value("ch01_d2_overheard_talk", "mild")
-        gf "Yeah. I think so. He's just in his head today, he gets like that sometimes."
-        maya "People are allowed weird days. He's always been a bit like that. He goes quiet, and then he comes back."
-        gf "That's very insightful, actually."
-        maya "I know. I'm extremely emotionally intelligent. It's my best feature after my legs."
-        gf "Obviously. The legs are good."
-        think "It was kind, and it was about me, and I was hearing it from behind a plant."
+        gf "Can I tell you something kind of dumb? About [player_name]?"
+
+        "I stopped walking."
+
+        maya "Always. Dumb is my favorite kind."
+        if "ch01_d2_postshop_dream" in choice_history:
+            gf "He had a bad dream last night. About the guy who spilled the drink on me at dinner. He just told me, and he looked so embarrassed telling me."
+        else:
+            gf "I think he had a bad dream last night. He kept waking up and doing this thing with his pillow, and this morning he just said he was tired."
+        gf "And yesterday was a lot. People kept looking at me, like, all day. At dinner, at the pool. I think it got to him more than he lets on."
+        maya "And you want to fix it."
+        gf "No. Not fix him. I just want him to know I noticed. I want to do something nice for him tonight."
+        maya "Oh my God, that's so cute I might throw up. He's always been like that, you know. He goes quiet, and then he comes back. Just stay close."
+        gf "I can do close. Close I'm good at."
+        think "She'd noticed all of it. The bad night, the looks, me pretending I was fine. She wasn't worried about me. She was looking after me."
     else:
         $ set_story_value("ch01_d2_overheard_talk", "worried")
+        maya "Hey. Everything okay?"
+        gf "With the dress? I mean, I bought it, so."
+        maya "No. With [player_name]."
+
+        "I stopped walking."
+
         gf "I don't know. Honestly, I don't know."
         "She glanced toward the counter, where she thought I still was."
         gf "He's been somewhere else all morning."
@@ -1712,35 +1728,53 @@ label ch01_day2_scene_11b_boutique:
         "Maya, who I'd known for years, was explaining me to my girlfriend, who'd met her at lunch."
         think "Neither of them had said one unfair thing. Somehow that was the part that stung."
 
-    $ d2_overheard_own_text = format_choice("ch01_d2_overheard_own", "Put the drinks down and own it.")
-    $ d2_overheard_joke_text = format_choice("ch01_d2_overheard_joke", "Walk in loud: 'Is this the support group? Do I get a badge?'")
-    $ d2_overheard_pretend_text = format_choice("ch01_d2_overheard_pretend", "Step back, count to five, and come in like you heard nothing.")
+    # Ryan comes back to the table first; what he does with it is between him and Leia, said low
+    # so Maya isn't part of it (darryn 2026-11-19). Same choice ids and story values as before.
+    "I came around the palm and put the drinks down. Maya suddenly got very interested in her straw."
+
+    $ d2_overheard_own_text = format_choice("ch01_d2_overheard_own", "Lean in and tell her quietly you heard, and that you'll talk later.")
+    $ d2_overheard_joke_text = format_choice("ch01_d2_overheard_joke", "Lean in and whisper: 'Were you two talking about me?'")
+    $ d2_overheard_pretend_text = format_choice("ch01_d2_overheard_pretend", "Say nothing. Act like you didn't hear.")
 
     menu:
         "[d2_overheard_own_text]":
             $ apply_choice("ch01_d2_overheard_own")
             $ set_story_value("ch01_d2_overheard_response", "owned")
-            "I put the drinks down in front of them."
-            mc "So, I heard that. You're both right, which is annoying. I've been weird today. Can I tell you about it later? Just us."
-            gf "Oh my God. How much did you hear?"
-            mc "Enough. It's fair."
-            "Maya picked up her drink and became extremely interested in the menu board."
-            gf "...Later. Just us. I'm holding you to it."
+            "I sat down beside [girlfriend_name] and leaned in close, under the noise of the café."
+            mc "I heard some of that. Sorry. I didn't mean to listen."
+            if get_story_value("ch01_d2_overheard_talk") == "mild":
+                mc "The dream, and yesterday. You're right about both. Can I tell you about it later? Just us?"
+                gf "Oh my God, you heard all of it? The 'cute' part too?"
+                mc "Mostly the part where you noticed."
+                gf "...Later. Just us. I'm holding you to it."
+                "She found my hand under the table and squeezed it."
+            else:
+                mc "You're right, I've been weird today. Can I tell you about it later? Just us?"
+                gf "How much did you hear?"
+                mc "Enough. It's fair."
+                gf "...Later. Just us. I'm holding you to it."
+                "She didn't let go of my sleeve for a while after that."
 
         "[d2_overheard_joke_text]":
             $ apply_choice("ch01_d2_overheard_joke")
             $ set_story_value("ch01_d2_overheard_response", "joked")
-            mc "Is this the [player_name] support group? Do I get a badge?"
-            maya "You get a drink. Sit down."
-            "[girlfriend_name] went red and laughed into her hands. I sat down, and nobody said anything real after that."
+            "I sat down and leaned close to [girlfriend_name]'s ear."
+            mc "Were you two just talking about me?"
+            if get_story_value("ch01_d2_overheard_talk") == "mild":
+                gf "Maybe. Only good things. Don't let it go to your head."
+            else:
+                gf "Maybe. Drink your drink."
+            "She laughed, went a little red, and kissed my cheek. Nobody said anything real after that."
 
         "[d2_overheard_pretend_text]":
             $ apply_choice("ch01_d2_overheard_pretend")
             $ set_story_value("ch01_d2_overheard_response", "pretended")
-            "I stepped back behind the palm, counted to five, and walked up like I'd come straight from the counter."
             mc "Drinks. [friend_name]'s still fighting the card machine."
             "[girlfriend_name] smiled up at me like nothing had happened."
-            think "If she had something to say, she could say it to me. Apparently Maya got to hear it first."
+            if get_story_value("ch01_d2_overheard_talk") == "mild":
+                think "She'd been looking after me, and I'd heard it from behind a plant. I didn't know how to say that, so I didn't."
+            else:
+                think "If she had something to say, she could say it to me. Apparently Maya got to hear it first."
 
     "By the time [friend_name] got back with the rest, Maya had deliberately moved the conversation back to clothes."
     maya "For the record, I'm still saying the black one."

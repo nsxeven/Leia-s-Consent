@@ -86,9 +86,13 @@ class OverheardIncidentTests(unittest.TestCase):
         self.assertIn("Out loud.", worried)
 
     def test_milder_talk_when_ryan_has_been_present(self):
-        mild = self.cafe.split('set_story_value("ch01_d2_overheard_talk", "mild")', 1)[1].split("else:", 1)[0]
+        # darryn 2026-11-19: in the mild talk Leia confides in Maya because she cares (the bad
+        # night, yesterday's attention), and Ryan's answer is said to Leia quietly, not to the table.
+        mild = self.cafe.split('set_story_value("ch01_d2_overheard_talk", "mild")', 1)[1].split('set_story_value("ch01_d2_overheard_talk", "worried")', 1)[0]
         self.assertIn("He goes quiet, and then he comes back.", mild)
-        self.assertIn("from behind a plant", mild)
+        self.assertIn("bad dream last night", mild)
+        self.assertIn("from behind a plant", self.cafe)
+        self.assertIn("leaned in close, under the noise of the café", self.cafe)
 
     def test_pov_slip_fixed(self):
         self.assertNotIn("where [player_name] and [friend_name] were waiting", SCENES)
