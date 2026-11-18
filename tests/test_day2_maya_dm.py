@@ -207,7 +207,7 @@ class PlacementTests(unittest.TestCase):
         body = block("ch01_day2_scene_30_bedroom")
         order = ["$ d2_tint = lc_leia_tint(d2_lane, lane_scene=True)",
                  "$ ch01_d2_maya_dm_offer(d2_dm_mood)",
-                 '"My phone lit up on the nightstand. Maya, from the other side of the wall."',
+                 '"My phone lit up on the nightstand. Maya, texting from [friend_name]\'s room."',
                  'if get_story_value("ch01_d2_maya_dm") == "show":',
                  'elif get_story_value("ch01_d2_maya_dm") == "reply":',
                  "$ ch01_d2_maya_dm_end_show()",

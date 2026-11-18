@@ -31,7 +31,7 @@ label ch01_day2_scene_19b2_ryan_dozes:
     friend "That's what my grandad says, and then he snores through the entire news, every night, and wakes up and tells us what happened in it."
 
     if "ch01_d2_postshop_dream" in choice_history:
-        "I'd finally said the dream out loud at the mall. Saying it hadn't fixed anything, but it had made it smaller."
+        "I'd finally told her about the dream at the mall. I'd expected to feel stupid afterwards. Mostly I just felt tired, the good kind."
     elif get_story_value("ch01_dream_response") == "withdrew":
         "I hadn't slept much the night before, and I'd spent all day making a point of not thinking about why."
     else:
@@ -67,11 +67,11 @@ label ch01_day2_leia_errand:
         leia_think "It's a ridiculous dream. I still spent the whole drive back wondering how long he'd been carrying it around before he said anything."
         leia_think "So he doesn't get a bad dream and a sad afternoon. Pick one. Actually, no, he doesn't get either."
     else:
-        leia_think "He's been quiet all day. Not mean quiet, not even sulky quiet. Just sort of a few steps behind his own face."
+        leia_think "He's been quiet all day. Like, he answers when I talk to him, and he laughs in the right places, but it's like he's always a few seconds behind everyone."
         if "ch01_d2_postshop_sleep" in choice_history:
             leia_think "He says he didn't sleep well. That's probably true. I just don't think it's the whole thing."
         if get_story_value("ch01_d2_pool_response") == "accused":
-            leia_think "And whatever that was at the pool. Maybe I need an hour where I'm not waiting for him to say something, too. Both things can be true."
+            leia_think "And whatever that was at the pool. I'm still kind of... I don't know. Maybe I need an hour where I'm not waiting for him to say something, too."
         leia_think "I can't fix whatever's going on in his head. I can get him a caramel frappuccino, though. That part I can actually do."
 
     leia_think "Caramel frappuccino, extra caramel, from the café we had lunch at, because they do it properly. And chocolate muffins from the resort shop, if they've got any left. That's the plan. That's the entire plan."
@@ -84,7 +84,7 @@ label ch01_day2_leia_errand:
     gf "The café, and the shop. It's a surprise, so you didn't see me. You've got no idea where I went."
     friend "I didn't see anything. I'm not even here, I'm just a guy under an umbrella. I've been under this umbrella since we got back."
     friend "Should I be doing something, though? Like keeping him asleep? I don't really know how you'd do that. I'd probably just sit here and try not to drop anything."
-    gf "That's exactly it. That's the whole job. Don't drop anything."
+    gf "Yes! Perfect. Just sit there and try really, really hard not to drop anything."
     "He gave me a thumbs-up so serious that I had to leave before I laughed and woke [player_name] up."
 
     jump ch01_day2_errand_map
@@ -207,7 +207,7 @@ label ch01_day2_errand_cafe_love:
             gf "That's really sweet, and thank you, you didn't have to do any of that. But this drink is for my boyfriend. He's asleep by the pool, and I want it to be there when he wakes up."
             pool_guy "The guy from the pool? The one who..."
             gf "The one who kissed me right in front of you, yes. That one."
-            pool_guy "Yeah, okay. Fair enough. He's a lucky guy."
+            pool_guy "Ha. Yeah, okay, I can't really compete with that. Tell him I said hi. Or, actually, maybe don't."
             gf "I'm pretty lucky too. He's really nice. You'd like him, he'd probably thank you for this about five times."
             "He held his hands up, laughing, and went back to his friend at the corner table, who said something that made him shove him."
             leia_think "I just said it out loud to a total stranger, and it felt really nice. I should say it to [player_name] like that more. Not the stranger part."
@@ -218,7 +218,7 @@ label ch01_day2_errand_cafe_love:
             gf "That's nice of you, but no, thanks. I'm just here for the coffee."
             pool_guy "No, totally. Worth a shot."
             "He went back to his table without making it weird, which was more than the first guy had managed."
-            leia_think "Two guys in five minutes. I came out for a frappuccino, not to star in something."
+            leia_think "Two guys in five minutes. What is it with this café? I literally just wanted a frappuccino."
 
     barista "Large caramel frappuccino, extra caramel!"
     "My hands were still shaking a little when I took it. Not a lot. Enough that I held it with both of them."
@@ -260,7 +260,7 @@ label ch01_day2_errand_cafe_exhib:
             "He took it well. He even laughed, and told me to say hi to the bee for him, which made no sense at all, and I laughed anyway."
             barista "Large caramel frappuccino, extra caramel!"
 
-    leia_think "My face was hot all the way to my ears, and I didn't hate it. That's the part I'm going to have to think about."
+    leia_think "My whole face is hot, like, up to my ears, and I'm still smiling. I should probably feel a lot weirder about that than I do."
     return
 
 
@@ -278,7 +278,7 @@ label ch01_day2_errand_cafe_ntr:
     "It came out squeakier than I wanted. I spun around, and he was grinning at me, completely unbothered, like he'd told a joke and was waiting for me to laugh at it."
     cafe_stranger "Sorry. Couldn't help it. You can't lean on a counter like that in those shorts and expect nobody to notice."
 
-    "I had a whole speech in my head. A really good one, actually."
+    "In my head I was already telling him off. I had all of it, every word, exactly how I'd say it."
     "What I did instead was stand there with my face burning and say none of it."
     leia_think "Why aren't you saying anything? Say something. Say anything at all."
     "The worst part was the half a second right after, before I got angry, when something low in my stomach went warm and fluttery and I didn't know what to do with it."
@@ -378,7 +378,7 @@ label ch01_day2_errand_shop_first:
             gf "And I'm going to get him on his own before dinner. Our friend has to go upstairs to get ready eventually, and the second he does, I'm stealing him. My friend Maya says everybody leaves eventually, you just have to wait."
             shop_owner "Your friend's right. Steal him. They never know they need stealing until it's done."
             "She tucked two paper napkins into the bag, and a little plastic knife, in case I wanted to cut one in half and share it, she said."
-            leia_think "I just told a total stranger my whole plan, and now it feels real. Now I actually have to do it."
+            leia_think "Great. Now Margaret knows my whole plan, so now I actually have to go through with it."
 
         "[d2_errand_shop_keep_text]":
             $ apply_choice("ch01_d2_errand_shop_keep")
@@ -412,7 +412,7 @@ label ch01_day2_errand_shop_after_love:
             gf "I'm going to get him on his own before dinner. Our friend has to go upstairs to get ready eventually, and the second he does, I'm stealing him."
             shop_owner "Good. Steal him. They never know they need stealing until it's done."
             "She tucked two napkins into the bag, and a little plastic knife, in case we wanted to share one."
-            leia_think "The café guy is already turning into a story I'll tell later. This is the part I want to remember."
+            leia_think "I can barely even picture the café guy's face anymore. Harold counting in the hallway, though. I'm keeping that one."
 
         "[d2_errand_shop_keep_text]":
             $ apply_choice("ch01_d2_errand_shop_keep")
@@ -481,7 +481,7 @@ label ch01_day2_errand_walk_back:
             leia_think "Maybe I'll leave out how long I let him talk. Or maybe that's the bit I put in first. I can't tell yet which one would be more fun."
     else:
         "The walk back was the same ten minutes as the walk there. It felt a lot longer."
-        leia_think "So. That happened."
+        leia_think "Okay. I'm okay. It was one stupid second, and it's over."
         leia_think "Some guy I'll never see again did something gross, and I stood there like an idiot, and that's the whole story. That's all it was."
         if lc_leia_did("ch01_d2_cafe_ntr_lingered"):
             leia_think "Except I didn't just stand there. I let him keep talking. Part of me wanted to hear what he'd say next."

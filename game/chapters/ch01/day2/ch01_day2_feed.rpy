@@ -93,20 +93,21 @@ init 1 python:
 # Ryan's one-time reactions (docs/FEED.md): each plays once, after he closes the phone, the first
 # time he sees the post. One think line, so it fits wherever he reads it (walk home, game night, bed).
 label ch01_d2_feed_react_love_poolguy:
-    think "The resort café, this afternoon. Right about when she'd gone out for my frappuccino."
+    think "I worked out the time, and my stomach went cold. She'd hugged me for ages when she got back. I'd thought she was just in a good mood."
     return
 
 label ch01_d2_feed_react_love_shop:
-    think "The last box of chocolate muffins. I knew exactly whose sweetheart that was."
+    think "I'd eaten mine by the pool in about four bites without asking her a single thing about it. I wanted to go find her and say thank you again, properly this time."
     return
 
 label ch01_d2_feed_react_exhib:
-    think "So one of the guys from the pool had played hero at the café. That was why she'd come back from a coffee run all pink."
+    think "I read it twice. So that was why her cheeks were pink when she got back. I kept waiting to feel jealous, and mostly I just wanted her to tell me the whole thing herself."
     return
 
 label ch01_d2_feed_react_ntr:
     if get_story_value("ch01_d2_leia_told") == "told":
-        think "So this was the café. She'd already told me about it. Seeing it was still different."
+        think "She'd already told me all of it herself, on the lounger, before I'd even asked. I still had to put the phone face down for a minute."
     else:
         think "I looked at the photo for a long time. Then I zoomed in, to be sure it was her."
+        think "That same afternoon she'd sat on the end of my lounger and watched me drink my frappuccino, and she hadn't said one word."
     return

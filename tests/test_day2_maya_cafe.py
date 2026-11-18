@@ -31,12 +31,12 @@ class MayaCafeTests(unittest.TestCase):
         source = scene("ch01_day2_scene_05_meet_maya")
         locations = [source.index(part) for part in (
             'scene cg ch01_d2_maya_reveal',
-            '"By the time we reached the café, Maya was already waiting at the open doorway.',
+            '"By the time we reached the café, Maya was already waiting at the open doorway,',
             'maya "[player_name]! Wait, you\'re tan?',
             '"She hugged me',
             '"We ordered drinks and found a table',
             'scene cg ch01_d2_maya_cafe_01',
-            'mc "This is character assassination.',
+            'mc "Hey, I\'m right here. I\'m literally sitting right here',
         )]
         self.assertEqual(locations, sorted(locations))
         # Doorway reveal still cuts back to cafe sprites before the hug.
@@ -46,7 +46,7 @@ class MayaCafeTests(unittest.TestCase):
         self.assertIn('$ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', reveal)
         # cafe_01 is held through the character-assassination beat, then returns to sprites.
         cafe_01 = source.split("scene cg ch01_d2_maya_cafe_01", 1)[1]
-        self.assertLess(cafe_01.index('mc "This is character assassination.'),
+        self.assertLess(cafe_01.index('mc "Hey, I\'m right here. I\'m literally sitting right here'),
                         cafe_01.index("$ exit_cinematic_mode()"))
         after_cafe_01 = cafe_01.split('mc "I regret this meeting already.', 1)[1]
         self.assertEqual(after_cafe_01.count("$ exit_cinematic_mode()"), 1)

@@ -31,15 +31,15 @@ label ch01_day2_scene_19b_leia_asks_maya:
 
     maya "Wow. You just walked right up and asked."
     gf "You insulted his sunglasses within thirty seconds of meeting him."
-    maya "That is basic politeness."
+    maya "Somebody had to! They cover half his face. I was being, like, a good citizen about it."
     gf "You also remembered the bee thing."
-    maya "That is practical safety information."
+    maya "Okay, that was funny, though. And it's useful! If a bee shows up, we all need to know he's leaving first."
     gf "And you keep looking over when he isn't looking back."
     maya "I do not."
     gf "Maya. You do. I've seen you do it, like, four times."
     maya "I might. Occasionally. Scientifically."
     gf "So that's a yes."
-    maya "That's a 'you're annoying.'"
+    maya "That's a— no. That's a you're-annoying. Stop smiling at me like that."
 
     "[girlfriend_name] just grinned and waited. Maya held out for about three seconds."
 
@@ -100,7 +100,7 @@ label ch01_day2_scene_19c_back_outside:
             think "I'd thought I was hiding it pretty well. Apparently I'd been hiding it from nobody."
 
         mc "This is... thank you. Really. You didn't have to."
-        gf "I know I didn't. That's what makes it nice."
+        gf "I know. I wanted to, though. Now drink it before it melts all over you."
 
         if d2_errand_lane == "love":
             "She hugged me before I could sit all the way up. Longer than usual, with her face against my shoulder, like she'd had a longer walk than ten minutes. I didn't ask. I just let her."
@@ -138,13 +138,13 @@ label ch01_day2_scene_19c_back_outside:
         gf "Okay. I need to tell you something before I chicken out."
         mc "That sounds bad."
         gf "It's not bad bad. I don't think. Just let me get it all out, and then you can say stuff."
-        gf "At the café, some guy... he spanked me. And I didn't hate it as much as I should have."
+        gf "At the café, some guy... he spanked me. Like, a real smack, right on my butt, really loud."
         "I just looked at her."
         gf "He was gross. He was this sweaty guy with way too much aftershave, and he just did it while I was waiting for your drink, and I didn't even say anything. I just stood there."
         if lc_leia_did("ch01_d2_cafe_ntr_lingered"):
             gf "And then he kept talking, and I let him, for way longer than I should have. I didn't say yes to anything. I just didn't say no fast enough."
         gf "And for one second right after, before I got angry, I didn't hate it. That freaked me out way more than he did."
-        gf "I didn't want it to be a secret. So now it's not."
+        gf "I didn't want to sit on it all night and smile at you like nothing happened. So. That's all of it. That's everything."
 
         $ d2_confession_ask_text = format_choice("ch01_d2_confession_ask", "Ask her how it felt.")
         $ d2_confession_protect_text = format_choice("ch01_d2_confession_protect", "Make sure she's okay.")
@@ -168,9 +168,9 @@ label ch01_day2_scene_19c_back_outside:
                 $ set_story_value("ch01_d2_confession_reply", "protective")
                 mc "Hey. Are you okay? Did he do anything else? He didn't follow you out?"
                 gf "No. No, he just went back outside. I'm okay."
-                mc "You don't have to be okay about it. That's on him, not you. Some guy did that to you while you were buying me a coffee."
+                mc "You don't have to be okay about it. I mean, he's the one who did something wrong here. Some guy did that to you while you were buying me a coffee."
                 gf "But the part where I didn't hate it..."
-                mc "That's allowed too. I'm not going to be weird about it. I'm really glad you told me."
+                mc "I'm not— I'm not going to be weird about that part. I promise. I'm just really glad you told me."
                 "[girlfriend_name] let out a long breath and leaned her forehead against my shoulder."
                 gf "Me too. I was so scared you'd be weird about it."
 

@@ -79,7 +79,7 @@ class IsShePrettyMenuTests(unittest.TestCase):
         self.body = block(POLISH, "ch01_day2_scene_03_maya_message")
 
     def test_menu_follows_the_phone_reply_while_breakfast_is_up(self):
-        order = ['phone_offer_reply("maya"', 'gf "Is she pretty?"', "    menu:",
+        order = ['phone_offer_reply("maya"', 'gf "So is she, like... is she pretty? I\'m just asking."', "    menu:",
                  'set_story_flag("ch01_d2_maya_meetup_confirmed")', "$ lc_pov_end()",
                  "jump ch01_day2_scene_04_jealousy_callback"]
         offsets = [self.body.index(part) for part in order]
