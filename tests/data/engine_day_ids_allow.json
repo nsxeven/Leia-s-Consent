@@ -1,125 +1,9 @@
 {
- "game/python-packages/lc_chapters.py": {
-  "ids": [
-   "day1",
-   "day2",
-   "day3",
-   "day4",
-   "day5"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
  "game/python-packages/lc_leia_side.py": {
   "ids": [
    "ch01_d2_cafe"
   ],
   "reason": "example image name inside an error message"
- },
- "game/python-packages/lc_stat_model.py": {
-  "ids": [
-   "ch01_d2_bed_pool_accuse",
-   "ch01_d2_bed_pool_love",
-   "ch01_d2_errand_walk_keep",
-   "ch01_d2_overheard_own",
-   "ch01_d2_sunset_ignore_gate",
-   "ch01_d2_sunset_partial",
-   "ch01_d2_wink_accuse_hard",
-   "ch01_d2_wink_reject_hard",
-   "ch01_d2_wink_repair",
-   "ch01_d3_ntr_enjoy",
-   "ch01_d3_ntr_talk",
-   "ch01_d4_ntr_ask_gently",
-   "ch01_d4_ntr_compliment",
-   "ch01_d4_ntr_fine_soft2",
-   "ch01_d4_ntr_gate_accuse_hard",
-   "ch01_d4_ntr_gate_reconnect",
-   "ch01_d4_ntr_gate_withdraw_hard",
-   "ch01_d4_ntr_react_boundary",
-   "ch01_d4_ntr_text_fine_soft",
-   "ch01_d4_ntr_text_join",
-   "ch01_d5_invite_read_aloud",
-   "ch01_d5_ntr_bunk_apart",
-   "ch01_d5_ntr_c_accuse_hard",
-   "ch01_d5_ntr_c_fine_hard",
-   "ch01_d5_ntr_c_go_to_her",
-   "ch01_d5_ntr_gate_fine_hard",
-   "ch01_d5_ntr_pack_help",
-   "ch01_d5_ntr_react_boundary",
-   "ch01_d5_ntr_snorkel_stay",
-   "ch01_d5_ntr_u_ask_gently",
-   "ch01_d5_ntr_u_fine_hard",
-   "ch01_d5_ntr_u_press_hard",
-   "d1_nonchalant",
-   "d2_attentive",
-   "d2_exhib_lane",
-   "d2_game_drinks",
-   "d2_love_exhib_blend",
-   "d2_morning_bold",
-   "d2_morning_unsure",
-   "d2_nonchalant",
-   "d2_open",
-   "d2_pool_outfit_bold",
-   "d2_risk_temptation",
-   "d2_risk_temptation_unseeded",
-   "d2_route_lane",
-   "d2_tint_",
-   "d2_tint_exhibitionism",
-   "d2_tint_love",
-   "d2_tint_sharing",
-   "d2_tint_temptation",
-   "d2_tint_trust",
-   "d4_brief_reveal",
-   "d5_bolder_swim",
-   "d5_comfortable",
-   "d5_comfortable_after_brief",
-   "day1_pressure"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
- "game/python-packages/lc_thoughts.py": {
-  "ids": [
-   "ch01_d2",
-   "ch01_d2_boutique_slip_witness",
-   "ch01_d2_dinner_reach",
-   "ch01_d2_pool_incident",
-   "ch01_d2_scene_04_complete",
-   "ch01_d2_scene_07_complete",
-   "ch01_d2_strip_penalty_agreed",
-   "d2_boutique",
-   "d2_breakfast",
-   "d2_dinner",
-   "d2_game_night",
-   "d2_maya_cafe",
-   "d2_pool_bee"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
- "game/python-packages/lc_ui_logic.py": {
-  "ids": [
-   "ch01_d2_exhib_bed_open_01",
-   "ch01_d2_exhib_bed_open_02",
-   "ch01_d2_exhib_bed_open_03",
-   "ch01_d2_exhib_bed_open_04",
-   "ch01_d2_julian_underwear_reveal",
-   "ch01_d2_love_bedroom_01",
-   "ch01_d2_love_bedroom_02",
-   "ch01_d2_love_pool_oral_01",
-   "ch01_d2_love_pool_oral_02",
-   "ch01_d4_exhib_terrace_01",
-   "ch01_d4_exhib_terrace_02",
-   "ch01_d4_exhib_watching",
-   "ch01_d4_ntr_terrace_talk",
-   "ch01_d5_ntr_deck_alone",
-   "ch01_day_02_complete",
-   "ch01_day_02_started",
-   "ch01_day_03_complete",
-   "ch01_day_03_started",
-   "ch01_day_04_complete",
-   "ch01_day_04_started",
-   "ch01_day_05_complete",
-   "ch01_day_05_started"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
  },
  "game/screens/chapter_select_screen.rpy": {
   "ids": [
@@ -132,7 +16,7 @@
   "ids": [
    "lc_day1_dream"
   ],
-  "reason": "persistent.lc_day1_dream is a saved preference name (never renamed)"
+  "reason": "save name: persistent.lc_day1_dream (the dream-scene preference; renaming loses players' setting)"
  },
  "game/screens/route_explorer_screen.rpy": {
   "ids": [
@@ -167,41 +51,11 @@
   ],
   "reason": "save names: the entry label ch01_chapter_select_entry (screens Start it) and persistent.ch01_chapter_select_* fields (renaming breaks saves and persistent data)"
  },
- "game/systems/choice_path_tags.rpy": {
-  "ids": [
-   "format_day2_risk_choice",
-   "format_day4_gate_choice",
-   "format_day5_gate_choice"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
  "game/systems/day_review.rpy": {
   "ids": [
-   "ch01_d1",
-   "ch01_d1_",
-   "ch01_d2",
-   "ch01_d2_",
-   "ch01_d3",
-   "ch01_d3_",
-   "ch01_d3_ntr_repair_effort",
-   "ch01_d3_strained_love",
-   "ch01_d4",
-   "ch01_d4_",
-   "ch01_d5",
-   "ch01_d5_",
-   "ch01_d6_",
-   "ch01_day1_love_ending",
-   "day1",
-   "day2",
-   "day3",
-   "day4",
-   "day5",
-   "format_day2_risk_choice",
-   "format_day4_gate_choice",
-   "format_day5_gate_choice",
    "lc_day1_dream"
   ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
+  "reason": "save name: default persistent.lc_day1_dream (the dream-scene preference; renaming loses players' setting)"
  },
  "game/systems/dialogue_staging.rpy": {
   "ids": [
@@ -217,7 +71,7 @@
    "ch01_chapter_select_unlocked",
    "ch01_d2"
   ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
+  "reason": "old-profile migration: the Moments-strip legacy check runs at init 0, before any Day pack registers (init 1), and reads persistent.ch01_chapter_select_unlocked (a persistent name). Moving the row would make it miss"
  },
  "game/systems/full_transparency_route_explorer.rpy": {
   "ids": [
@@ -228,27 +82,11 @@
   ],
   "reason": "Route Explorer is an unused-but-built feature, left as it is (Darryn, plan scope)"
  },
- "game/systems/lc_chapters.rpy": {
-  "ids": [
-   "day4",
-   "day5",
-   "lc_chapter_complete_card_day4",
-   "lc_chapter_complete_card_day5"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
- "game/systems/love_outfit_control.rpy": {
-  "ids": [
-   "ch01_d2_end_route",
-   "d2_loose_low_cut"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
  "game/systems/outfits_data.rpy": {
   "ids": [
    "ch01_d2_boutique_shop_open"
   ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
+  "reason": "wardrobe data: the boutique outfit's row names the Day Two scene flag that opens it in the shop (outfits are shared wardrobe data, docs/DAY_PACK.md)"
  },
  "game/systems/phone_group_avatar.rpy": {
   "ids": [
@@ -280,100 +118,5 @@
    "ch01_scene_27_late_photo_drop_staged"
   ],
   "reason": "save compatibility: old label names kept as one-line jumps (renaming breaks saves)"
- },
- "game/systems/stats.rpy": {
-  "ids": [
-   "ch01_d2_",
-   "ch01_d2_end_route",
-   "ch01_d2_lane_migrated",
-   "ch01_d2_love_exhib_blend",
-   "ch01_d2_route_lane",
-   "ch01_d3_lane",
-   "ch01_d3_strained_love",
-   "ch01_d4_end_route",
-   "ch01_d4_lane",
-   "ch01_d5_end_route",
-   "ch01_day1_route_pressure",
-   "ch01_day_02_complete",
-   "ch01_day_02_started",
-   "ch01_day_03_complete",
-   "ch01_day_03_started",
-   "ch01_started",
-   "d1_love_bedtime",
-   "d2_ids"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
- "game/systems/title_customiser.rpy": {
-  "ids": [
-   "ch01_bar",
-   "ch01_dinner_restroom_return_01",
-   "ch01_dinner_spill_02",
-   "ch01_dinner_spill_03",
-   "ch01_dinner_sticky_bra",
-   "ch01_dress_reveal",
-   "ch01_master_bedroom",
-   "ch01_movie_blanket_hand",
-   "ch01_movie_cuddle_blanket",
-   "ch01_movie_micro_test_glance",
-   "ch01_movie_no_blanket",
-   "ch01_pool_day",
-   "ch01_pool_evening",
-   "ch01_pool_lounge",
-   "ch01_restaurant",
-   "ch01_restaurant_bar",
-   "ch01_restaurant_evening",
-   "ch01_sunscreen_apply_blue",
-   "ch01_sunscreen_apply_white",
-   "ch01_sunscreen_blue",
-   "ch01_sunscreen_white",
-   "ch01_swimsuit_choice_blue",
-   "ch01_swimsuit_choice_white",
-   "ch01_towel_call_down",
-   "ch01_towel_shift_01",
-   "ch01_villa_arrival",
-   "ch01_villa_bedroom_evening",
-   "ch01_villa_entry_evening",
-   "ch01_villa_exterior",
-   "ch01_villa_living",
-   "ch01_villa_living_evening",
-   "ch01_villa_pool",
-   "ch01_villa_pool_upstairs",
-   "prologue_bedroom",
-   "prologue_departure",
-   "prologue_packing",
-   "prologue_party",
-   "prologue_party_arrival",
-   "prologue_party_couch"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
- },
- "game/systems/title_screen.rpy": {
-  "ids": [
-   "d1_arrival",
-   "d1_dinner_arrival",
-   "d1_dress_reveal",
-   "d1_drive_back",
-   "d1_drive_to_dinner",
-   "d1_julian_carry",
-   "d1_julian_drink",
-   "d1_movie_night",
-   "d1_night_pool",
-   "d1_pool_photos",
-   "d1_pool_sunscreen",
-   "d1_swimsuit_choice",
-   "d1_trip_catch",
-   "d1_wake_up",
-   "d1_walk_back",
-   "d2_boutique",
-   "d2_photo_leia_maya",
-   "d4_market_photo",
-   "d4_photo_hunt",
-   "d5_cove_lunch",
-   "d5_invitation",
-   "d5_snorkel",
-   "d5_sunset_deck"
-  ],
-  "reason": "pending: Day content, moves to its Day pack (modular backend)"
  }
 }

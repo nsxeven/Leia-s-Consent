@@ -519,6 +519,20 @@ init 1 python:
     def lc_d1_love_bedtime(pressure):
         return lc_stat_model.d1_love_bedtime(pressure, lc_stats_flat())
 
+# Full "Current lean" (systems/stats.rpy lc_current_lean): Day One's reader.
+init 1 python:
+    def ch01_d1_current_lean(lean, flat):
+        """current_lean hook: Day One's pressure once the story has started."""
+        if has_story_flag("ch01_started"):
+            pressure = get_story_value("ch01_day1_route_pressure", None) or lc_d1_route_pressure()
+            if pressure == "mixed":
+                return "love" if lc_stat_model.d1_love_bedtime(pressure, flat) else "undecided"
+            return lc_stat_model.lean_from_route_value(pressure)
+        return lean
+
+    lc_hook_add("current_lean", ch01_d1_current_lean)
+
+
 # ------------------------------------------------------------------ story-key ledger
 # Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
 #   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>

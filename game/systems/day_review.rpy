@@ -87,6 +87,10 @@ init -5 python:
     LC_MOMENT_STICKERS = ()
     # {day_id: label/chapter/route_key}, one row per Day in play order (Day packs, init 1).
     LC_REVIEW_DAYS = {}
+    # Night card (day, NEUTRAL chapter title, caption) and ticket stub (title, detail) per Day
+    # (Day packs, init 1). lc_review_chapter_title() swaps in the route-flavoured title.
+    LC_REVIEW_NIGHT = {}
+    LC_REVIEW_TICKET = {}
 
 init 20 python:
     import os
@@ -176,20 +180,12 @@ init 20 python:
 
     def lc_review_route(day_id):
         value = get_story_value(LC_REVIEW_DAYS[day_id]["route_key"], "mixed")
-        if day_id == "ch01_d1" and getattr(store, "ch01_day1_love_ending", False):
-            return "love"
-        # Day Three's lane is fixed by Day Two. The two NTR choices still change
-        # how the recap describes the night, without relabeling the lane Day Four reads.
-        if day_id == "ch01_d3" and value == "ntr":
-            effort = get_story_value("ch01_d3_ntr_repair_effort", "none")
-            if effort == "talk":
-                return "ntr_talked"
-            if effort == "withdraw":
-                return "ntr_withdrew"
-        # mixed_unresolved starts Day Three as strained Love; talking it out at the club is a repair.
-        if (day_id == "ch01_d3" and value == "love" and get_story_value("ch01_d3_strained_love", False)
-                and get_story_value("ch01_d3_ntr_repair_effort", "none") == "talk"):
-            return "love_repaired"
+        # A Day pack can read its night differently (review_route hook, fn(route, day_id, value) ->
+        # a route for its own day_id, else route unchanged): Day One's love ending, Day Three's NTR
+        # choices and strained-Love repair (their *_chapter.rpy).
+        special = lc_hook_filter("review_route", None, day_id, value)
+        if special:
+            return special
         return value if value in LC_REVIEW_ROUTES else "mixed"
 
     def lc_review_finish(day_id):
@@ -394,22 +390,6 @@ init 20 python:
         "boundary_looseness": "boundary_looseness", "secrecy": "secrecy",
         "jealousy": "jealousy", "acceptance": "acceptance",
         "sharing": "sharing", "distance": "distance",
-    }
-    LC_REVIEW_NIGHT = {
-        # The middle field is the NEUTRAL chapter title from the registry;
-        # lc_review_chapter_title() swaps in the route-flavoured one.
-        "ch01_d1": ("DAY 1", lc_chapters.chapter_title("day1").upper(), "night falls over the villa…"),
-        "ch01_d2": ("DAY 2", lc_chapters.chapter_title("day2").upper(), "the lights along the water go low…"),
-        "ch01_d3": ("DAY 3", lc_chapters.chapter_title("day3").upper(), "night falls over the villa…"),
-        "ch01_d4": ("DAY 4", lc_chapters.chapter_title("day4").upper(), "the town folds up its awnings…"),
-        "ch01_d5": ("DAY 5", lc_chapters.chapter_title("day5").upper(), "the water keeps the last of the light…"),
-    }
-    LC_REVIEW_TICKET = {
-        "ch01_d1": ("VILLA NIGHT", "QUIET HOURS"),
-        "ch01_d2": ("SHORE PASS", "DAY TWO"),
-        "ch01_d3": ("CLUB NIGHT", "ADMIT ONE"),
-        "ch01_d4": ("MARKET DAY", "ONE STUB"),
-        "ch01_d5": ("BOAT DAY", "ALL ABOARD"),
     }
     # Two short handwritten lines. Route voice stays second-person, like the summaries.
     LC_REVIEW_DIARY = {
@@ -787,7 +767,7 @@ init 20 python:
         if not roots:
             return {}
         found = {}
-        calls = ("format_choice", "format_day2_risk_choice", "format_day4_gate_choice", "format_day5_gate_choice")
+        calls = ("format_choice",) + tuple(LC_GATE_FORMATTERS)  # the Days' gate formatters (systems/choice_path_tags.rpy)
         for dirpath, _dirs, files in (entry for r in roots for entry in os.walk(r)):
             for name in files:
                 if not name.endswith(".rpy"):
@@ -844,7 +824,8 @@ init 20 python:
 
     def _lc_review_humanize(choice_id):
         text = str(choice_id)
-        for prefix in ("ch01_d1_", "ch01_d2_", "ch01_d3_", "ch01_d4_", "ch01_d5_", "ch01_d6_", "ch01_", "dev_"):
+        # Each review day's own prefix first (ch01_dN_), then the chapter and dev prefixes.
+        for prefix in tuple(day + "_" for day in LC_REVIEW_DAYS) + ("ch01_", "dev_"):
             if text.startswith(prefix):
                 text = text[len(prefix):]
                 break

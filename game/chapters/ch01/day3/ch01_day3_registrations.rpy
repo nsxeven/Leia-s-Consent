@@ -39,6 +39,22 @@ init 1 python:
         "ch01_d3_dessert_surprise": ("encouraging", "playful", "lighthearted"),
     })
 
+# Full "Current lean" (systems/stats.rpy lc_current_lean): Day Three's reader.
+init 1 python:
+    def ch01_d3_current_lean(lean, flat):
+        """current_lean hook: the Day Three / Four lane once Day Three has started."""
+        if has_story_flag("ch01_day_03_started"):
+            lane = get_story_value("ch01_d4_lane", None) or get_story_value("ch01_d3_lane", None)
+            if (lane == "love" and get_story_value("ch01_d3_strained_love", False)
+                    and not has_story_flag("ch01_day_03_complete")):
+                return "strained"
+            if lane:
+                return lc_stat_model.lean_from_route_value(lane)
+        return lean
+
+    lc_hook_add("current_lean", ch01_d3_current_lean)
+
+
 # ------------------------------------------------------------------ story-key ledger
 # Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
 #   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>

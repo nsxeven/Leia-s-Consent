@@ -22,3 +22,11 @@ init -2 python:
     gallery_row("pro_departure", "prologue", "Departure",
         "Setting off for the villa.",
         ["prologue_departure"])
+
+
+# Title screen reel (systems/title_screen.rpy): this Day's rows that may show by default.
+# load order: init 1, after the reel's table (init 0).
+init 1 python:
+    LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (
+        "pro_party_meet", "pro_first_kiss", "pro_four_years_on", "pro_departure",
+    )

@@ -78,7 +78,11 @@ class StatModelTests(unittest.TestCase):
         stats = read("systems/stats.rpy")
         self.assertIn("config.after_load_callbacks.append(lc_migrate_stats_v2)", stats)
         body = stats.split("def lc_migrate_stats_v2", 1)[1].split("\n    if lc_migrate_stats_v2", 1)[0]
-        self.assertIn('set_story_value("ch01_d2_lane_migrated", lane)', body)
+        self.assertIn('lc_hook_run("stats_v2_migrate", rel, par, ply)', body)
+        day2 = read("chapters/ch01/day2/ch01_day2_registrations.rpy")
+        keep = day2.split("def ch01_d2_keep_legacy_lane(", 1)[1].split("lc_hook_add(", 1)[0]
+        self.assertIn('set_story_value("ch01_d2_lane_migrated", lane)', keep)
+        self.assertIn('lc_hook_add("stats_v2_migrate", ch01_d2_keep_legacy_lane)', day2)
         for untouched in ("story_values =", "choice_history =", "ch01_d2_end_route", "story_flags ="):
             self.assertNotIn(untouched, body)
         self.assertIn('migrated_lane=migrated', read("chapters/ch01/day2/ch01_day2_registrations.rpy"))
@@ -109,8 +113,10 @@ class StatModelTests(unittest.TestCase):
     def test_full_lean_uses_the_route_resolvers(self):
         stats = read("systems/stats.rpy")
         lean = stats.split("def lc_current_lean():", 1)[1].split("def lc_current_lean_label", 1)[0]
-        self.assertIn("ch01_d2_route_lane()", lean)
-        self.assertIn("lc_d1_route_pressure()", lean)
+        self.assertIn('lc_hook_filter("current_lean", None, flat)', lean)
+        readers = read("chapters/ch01/day1/ch01_day1_registrations.rpy") + read("chapters/ch01/day2/ch01_day2_registrations.rpy")
+        self.assertIn("ch01_d2_route_lane()", readers.split("def ch01_d2_current_lean(", 1)[1])
+        self.assertIn("lc_d1_route_pressure()", readers.split("def ch01_d1_current_lean(", 1)[1])
         self.assertIn("lc_d1_route_pressure()", read("chapters/ch01/day1/ch01_scenes_14_30.rpy"))
         status = read("systems/status_display.rpy")
         self.assertIn("lc_current_lean()", status)

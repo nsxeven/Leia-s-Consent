@@ -35,25 +35,7 @@ DAY_EXCEPTIONS = frozenset()
 
 # Night or late-evening images whose names carry no night token.
 # Add new night CGs to the Day pack (UI_NIGHT_EXCEPTIONS) when their name does not say so.
-NIGHT_EXCEPTIONS = frozenset({
-    # Day 2: sunset pool, game night, bedroom finales
-    "ch01_d2_love_pool_oral_01",
-    "ch01_d2_love_pool_oral_02",
-    "ch01_d2_julian_underwear_reveal",
-    "ch01_d2_love_bedroom_01",
-    "ch01_d2_love_bedroom_02",
-    "ch01_d2_exhib_bed_open_01",
-    "ch01_d2_exhib_bed_open_02",
-    "ch01_d2_exhib_bed_open_03",
-    "ch01_d2_exhib_bed_open_04",
-    # Day 4: terrace at night
-    "ch01_d4_exhib_watching",
-    "ch01_d4_exhib_terrace_01",
-    "ch01_d4_exhib_terrace_02",
-    "ch01_d4_ntr_terrace_talk",
-    # Day 5: sunset deck
-    "ch01_d5_ntr_deck_alone",
-})
+NIGHT_EXCEPTIONS = frozenset()  # each Day's UI_NIGHT_EXCEPTIONS in lc_days/<day>.py (added at import)
 
 # Cues from the style-guide motion sheet. Playback is a no-op until audio exists.
 UI_CUES = {
@@ -72,12 +54,7 @@ SPEAKER_COLORS = {
     "julian": "#5f8a32",
 }
 
-DAY_FLAGS = (
-    (5, "ch01_day_05_started", "ch01_day_05_complete"),
-    (4, "ch01_day_04_started", "ch01_day_04_complete"),
-    (3, "ch01_day_03_started", "ch01_day_03_complete"),
-    (2, "ch01_day_02_started", "ch01_day_02_complete"),
-)
+DAY_FLAGS = ()  # each Day's UI_DAY_FLAG in lc_days/<day>.py (added at import, latest Day first)
 
 # Flag that means the story has begun (the first Day's UI_STORY_START_FLAG).
 STORY_START_FLAG = None

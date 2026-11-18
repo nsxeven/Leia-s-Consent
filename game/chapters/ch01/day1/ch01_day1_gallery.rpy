@@ -94,3 +94,14 @@ init -2 python:
     gallery_row("d1_wake_up", "ch01_d1", "Waking up",
         "Ryan wakes from the dream. Leia is asleep beside him, exactly where she'd been.",
         ["ch01_dream_wake_night"])
+
+
+# Title screen reel (systems/title_screen.rpy): this Day's rows that may show by default.
+# load order: init 1, after the reel's table (init 0).
+init 1 python:
+    LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (
+        "d1_arrival", "d1_swimsuit_choice", "d1_pool_sunscreen", "d1_pool_photos",
+        "d1_dress_reveal", "d1_drive_to_dinner", "d1_dinner_arrival", "d1_walk_back",
+        "d1_trip_catch", "d1_drive_back", "d1_julian_carry", "d1_night_pool", "d1_julian_drink",
+        "d1_movie_night", "d1_wake_up",
+    )

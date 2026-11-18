@@ -37,3 +37,11 @@ init -2 python:
         "A quiet talk on the terrace.",
         ["ch01_d4_ntr_terrace_talk"],
         route="NTR lane")
+
+
+# Title screen reel (systems/title_screen.rpy): this Day's rows that may show by default.
+# load order: init 1, after the reel's table (init 0).
+init 1 python:
+    LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (
+        "d4_market_photo", "d4_photo_hunt",
+    )

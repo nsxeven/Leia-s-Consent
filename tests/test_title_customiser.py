@@ -5,7 +5,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / "game"
-SRC = (GAME / "systems" / "title_customiser.rpy").read_text(encoding="utf-8")
+# The registry, plus every Day pack's registrations (their *_visuals.rpy).
+SRC = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "title_customiser.rpy",
+                                                    *sorted((GAME / "chapters").rglob("*_visuals.rpy"))])
 
 
 def _calls(name):

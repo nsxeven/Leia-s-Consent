@@ -285,8 +285,8 @@ class ExemptionTests(unittest.TestCase):
         sc30 = _label(SC16_30, "ch01_day2_scene_30_bedroom")
         self.assertIn("d2_love_exhib_blend = ch01_d2_love_exhib_blend(d2_lane)", sc30)
         self.assertNotIn("lc_stat_model.d2_love_exhib_blend(", sc30)
-        stats = _read(GAME / "systems" / "stats.rpy")
-        lean = stats.split("def lc_current_lean():", 1)[1].split("def lc_current_lean_label", 1)[0]
+        reg = _read(REG)  # Day Two's Full "Current lean" reader (current_lean hook)
+        lean = reg.split("def ch01_d2_current_lean(", 1)[1].split("def ch01_d2_keep_legacy_lane", 1)[0]
         self.assertIn("ch01_d2_love_exhib_blend(lane)", lean)
 
 

@@ -88,3 +88,11 @@ init -2 python:
         [("ch01_d2_ntr_dream_strangers", "Strangers"), ("ch01_d2_ntr_dream_julian_pool", "Julian at the pool"),
          ("ch01_d2_ntr_dream_nhie", "Never Have I Ever"), ("ch01_d2_ntr_dream_wrong_room", "The wrong room")],
         mature=True, dream=True, route="NTR-risk lane")
+
+
+# Title screen reel (systems/title_screen.rpy): this Day's rows that may show by default.
+# load order: init 1, after the reel's table (init 0).
+init 1 python:
+    LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (
+        "d2_photo_leia_maya", "d2_boutique",
+    )

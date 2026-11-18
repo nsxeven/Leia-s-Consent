@@ -35,7 +35,9 @@ FAMILY_LABELS = {
 
 PLACEHOLDER_TITLES = False  # darryn picked the titles 2026-11-09
 
-CHAPTER_ORDER = ("prologue", "day1", "day2", "day3", "day4", "day5")
+import lc_days  # noqa: E402  (Day packs; lazy, no import cycle)
+
+CHAPTER_ORDER = tuple(lc_days.DAY_MODULES)  # play order (lc_days/__init__.py)
 
 # ---------------------------------------------------------------- REGISTRY
 # number       : chapter number shown as "Chapter N" (0 = Prologue)
@@ -92,7 +94,6 @@ def _install_day_packs():
     """Put every Day's chapter entry (CHAPTER) and "likes watching" key (NTS_VARIANT_KEY) from
     game/python-packages/lc_days/<day>.py in front, in play order, keyed by the module name.
     Runs once, at import."""
-    import lc_days
     rest, keys = dict(CHAPTERS), dict(NTS_VARIANT_KEYS)
     CHAPTERS.clear()
     NTS_VARIANT_KEYS.clear()

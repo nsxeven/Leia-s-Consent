@@ -202,9 +202,9 @@ contract.
      literal jump". Replace both with `jump ch01_dayN_start` (Days 3-5 are
      Scriptwriter-owned: needs darryn's go-ahead) and give the new last day the same block
      for Day N+1.
-   - `_lc_review_humanize` in `game/systems/day_review.rpy` strips the `ch01_d1_` ...
-     `ch01_d6_` prefixes from choice ids that have no readable caption; from Day Seven on,
-     add the day's prefix.
+   - `_lc_review_humanize` in `game/systems/day_review.rpy` strips each review day's own prefix
+     (`ch01_dN_`, from `LC_REVIEW_DAYS`) from choice ids that have no readable caption, so a new
+     Day's review row is enough.
 3. **Start label.** Follow `label ch01_day2_start` in
    `game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy`:
    `$ lc_review_begin("ch01_dN")` (it also names new saves after the chapter),

@@ -30,9 +30,13 @@ class TitleScreenTests(unittest.TestCase):
         rows = {}
         for match in re.finditer(r'gallery_row\("([^"]+)"(.*?)\]\)?(, mature=True)?', data, re.S):
             rows[match.group(1)] = bool(re.search(r"mature=True", data[match.start():data.find("\n    gallery_row(", match.end())] if data.find("\n    gallery_row(", match.end()) != -1 else data[match.start():]))
-        logic = (GAME / "systems" / "title_screen.rpy").read_text(encoding="utf-8")
-        block = logic.split("LC_TITLE_SAFE_GALLERY = (", 1)[1].split(")", 1)[0]
-        safe = re.findall(r'"([^"]+)"', block)
+        # Each Day pack adds its safe rows in its *_gallery.rpy.
+        safe = []
+        for path in sorted((GAME / "chapters").rglob("*_gallery.rpy")):
+            text = path.read_text(encoding="utf-8")
+            if "LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (" in text:
+                block = text.split("LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (", 1)[1].split(")", 1)[0]
+                safe += re.findall(r'"([^"]+)"', block)
         self.assertTrue(safe)
         for gallery_id in safe:
             self.assertIn(gallery_id, rows, gallery_id)

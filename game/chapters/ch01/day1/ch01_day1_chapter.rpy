@@ -10,6 +10,17 @@ define lc_chapter_card_day1 = lc_chapters.card_text("day1")
 init 1 python:
     import lc_chapters
     LC_REVIEW_DAYS["ch01_d1"] = {"label": lc_chapters.review_label("day1"), "chapter": "day1", "route_key": "ch01_day1_route_pressure"}
+    LC_REVIEW_NIGHT["ch01_d1"] = ("DAY 1", lc_chapters.chapter_title("day1").upper(), "night falls over the villa…")  # night card: day, neutral title, caption
+    LC_REVIEW_TICKET["ch01_d1"] = ("VILLA NIGHT", "QUIET HOURS")  # ticket stub: title, detail
+
+    # Day One's night reads Love when its love ending played (review_route hook).
+    def ch01_d1_review_route(route, day_id, value):
+        """review_route hook: the Day One love ending reads as Love."""
+        if day_id == "ch01_d1" and getattr(store, "ch01_day1_love_ending", False):
+            return "love"
+        return route
+
+    lc_hook_add("review_route", ch01_d1_review_route)
 
 # Chapter Select (systems/chapter_select.rpy): every later Day's preset starts from Day One done.
 init 1 python:

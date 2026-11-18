@@ -398,7 +398,7 @@ class DayTwoPoolTests(unittest.TestCase):
                 self.assertIn('set_story_value("%s",' % key, script, beat)
 
     def test_every_day_two_thought_names_its_source_label(self):
-        source = (ROOT / "game/python-packages/lc_thoughts.py").read_text(encoding="utf-8")
+        source = (ROOT / "game/python-packages/lc_days/day2.py").read_text(encoding="utf-8")
         script = self.script()
         for tid in lc_thoughts.day_thoughts(DAY2):
             before = source[:source.index('    "%s": {\n        "day"' % tid)].split("\n")[:-1]

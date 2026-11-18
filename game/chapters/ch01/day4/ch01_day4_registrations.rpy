@@ -412,6 +412,20 @@ init 2 python:
         return options
 
 
+# Engine hooks (systems/stats.rpy, systems/choice_path_tags.rpy): Day Four's Full "Current lean"
+#   reader and its gate formatter.
+init 1 python:
+    def ch01_d4_current_lean(lean, flat):
+        """current_lean hook: the stored Day Four end route once it is set."""
+        value = get_story_value("ch01_d4_end_route", None)
+        if value:
+            return lc_stat_model.lean_from_route_value(value)
+        return lean
+
+    lc_hook_add("current_lean", ch01_d4_current_lean)
+    LC_GATE_FORMATTERS.append("format_day4_gate_choice")
+
+
 # ------------------------------------------------------------------ story-key ledger
 # Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
 #   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>

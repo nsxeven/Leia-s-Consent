@@ -34,7 +34,8 @@ _HOOK_ADD = re.compile(r"^lc_hook_add\(\s*['\"]\w+['\"]\s*,\s*(\w+)\s*\)$")
 DAY_PACK_TABLES = {
     "CHOICE_EFFECTS": dict, "CHOICE_TAGS": dict, "LC_CHOICE_CG_COUNT": dict,
     "LC_CHOICE_STYLE": dict, "LC_MOMENT_STICKERS": tuple, "LC_REVIEW_DAYS": dict,
-    "CHAPTER_SELECT_PRESETS": dict,
+    "CHAPTER_SELECT_PRESETS": dict, "LC_REVIEW_NIGHT": dict, "LC_REVIEW_TICKET": dict,
+    "LC_GATE_FORMATTERS": list, "LC_TITLE_SAFE_GALLERY": tuple,
 }
 
 

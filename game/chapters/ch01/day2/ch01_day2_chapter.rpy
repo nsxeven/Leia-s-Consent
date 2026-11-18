@@ -10,6 +10,8 @@ define lc_chapter_card_day2 = lc_chapters.card_text("day2")
 init 1 python:
     import lc_chapters
     LC_REVIEW_DAYS["ch01_d2"] = {"label": lc_chapters.review_label("day2"), "chapter": "day2", "route_key": "ch01_d2_end_route"}
+    LC_REVIEW_NIGHT["ch01_d2"] = ("DAY 2", lc_chapters.chapter_title("day2").upper(), "the lights along the water go low…")  # night card: day, neutral title, caption
+    LC_REVIEW_TICKET["ch01_d2"] = ("SHORE PASS", "DAY TWO")  # ticket stub: title, detail
 
 # Chapter Select (systems/chapter_select.rpy): the Day Two preset, the five stored Day Two end
 #   states the Day Three / Four presets use, and the seed for "Day Two finished".

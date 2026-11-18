@@ -624,6 +624,76 @@ init 998 python:
     OUTFIT_DEFINITIONS["pool_bolder"]["description"] = "A more revealing two-piece tie bikini with less coverage and a bolder resort cut."
 
 
+# Engine hooks (systems/stats.rpy, systems/choice_path_tags.rpy): Day Two's Full "Current lean"
+#   reader, the pre-v2 save migration that keeps a mid-Day-2 lane, and the gate formatter.
+init 1 python:
+    def ch01_d2_current_lean(lean, flat):
+        """current_lean hook: the stored Day Two end route, or today's lane while Day Two runs."""
+        if has_story_flag("ch01_day_02_complete"):
+            return lc_stat_model.lean_from_route_value(get_story_value("ch01_d2_end_route", "love"))
+        if has_story_flag("ch01_day_02_started"):
+            lane = ch01_d2_route_lane()
+            if ch01_d2_love_exhib_blend(lane):
+                return "love_exhib"
+            return lc_stat_model.lean_from_route_value(lane)
+        return lean
+
+    def ch01_d2_keep_legacy_lane(rel, par, ply):
+        """stats_v2_migrate hook: a save made mid-Day-2 keeps the lane the old rules gave it for the
+        rest of that day (ch01_d2_lane_migrated), so loading can't flip it."""
+        if (has_story_flag("ch01_day_02_started") and not has_story_flag("ch01_day_02_complete")
+                and get_story_value("ch01_d2_lane_migrated", None) is None):
+            d2_ids = choice_ids_with_prefix("ch01_d2_")
+            lane = lc_stat_model.legacy_d2_lane(
+                rel, par, ply,
+                get_story_value("ch01_day1_route_pressure", "mixed"),
+                chapter_nonchalant_count("ch01"),
+                choice_tag_count("nonchalant", d2_ids),
+                choice_tag_count("open", d2_ids),
+                choice_tag_count("attentive", d2_ids),
+            )
+            set_story_value("ch01_d2_lane_migrated", lane)
+    lc_hook_add("current_lean", ch01_d2_current_lean)
+    lc_hook_add("stats_v2_migrate", ch01_d2_keep_legacy_lane)
+    LC_GATE_FORMATTERS.append("format_day2_risk_choice")
+
+
+# Love outfit control (systems/love_outfit_control.rpy): Day Two's narrative evening outfit, and the
+#   stored end route that earns Love outfit control.
+# load order: init 10, as when it lived in love_outfit_control.rpy (after the wardrobe data).
+init 10 python:
+    LOVE_OUTFIT_ROUTE_KEY = "ch01_d2_end_route"
+
+    # Day Two needs a distinct narrative outfit even though final art is still
+    # pending. Until final layers are generated it reuses the current bold
+    # placeholder layer.
+    if "d2_loose_low_cut" not in OUTFIT_DEFINITIONS:
+        OUTFIT_DEFINITIONS["d2_loose_low_cut"] = {
+            "name": "Loose Low-Cut Top + Fitted Skirt",
+            "category": "bold",
+            "description": "A loose low-cut evening top with a fitted skirt. The neckline shifts noticeably when Leia leans forward.",
+            "cost": 0,
+            "shop_visible": False,
+            "story_grant": True,
+            "shop_requirements": [],
+            "boldness": 70,
+            "exposure": 65,
+            "public_risk": 55,
+            "comfort": 45,
+            "playfulness": 65,
+            "elegance": 55,
+            "contexts": ("date", "restaurant", "nightlife", "evening"),
+            "asset_id": "leia_outfit_d2_loose_low_cut",
+            "wear_paths": [
+                {
+                    "id": "story_d2_evening",
+                    "label": "Day Two evening outfit",
+                    "requirements": [],
+                },
+            ],
+        }
+
+
 # ------------------------------------------------------------------ story-key ledger
 # Every story flag / value this Day sets, one line each (tests/test_day_packs.py checks it):
 #   # key <name>: read-by <who reads it>     or     # key <name>: pending <why nothing reads it yet>

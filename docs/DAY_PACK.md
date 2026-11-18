@@ -30,11 +30,11 @@ files keep their old names, `ch01_main.rpy` and `ch01_scenes_*.rpy`).
 | File | What goes in it |
 |---|---|
 | `<prefix>_scenes*.rpy` | the dialogue: one `label` per scene |
-| `<prefix>_visuals.rpy` | this Day's `image bg ...` and `image cg ...` lines (and text placeholder cards) |
-| `<prefix>_registrations.rpy` | choice effects and tags, Full Transparency CG counts, review choice styles and stickers, Day helpers and thresholds, and the **story-key ledger** |
-| `<prefix>_gallery.rpy` | the Day's Gallery tab, its rows, and its CGs that are still placeholders |
+| `<prefix>_visuals.rpy` | this Day's `image bg ...` and `image cg ...` lines (and text placeholder cards); the first visuals file also registers the Day's title-screen outfits and backgrounds (`lc_title_register_outfit(..., order=N)`) |
+| `<prefix>_registrations.rpy` | choice effects and tags, Full Transparency CG counts, review choice styles and stickers, Day helpers and thresholds, gate formatters (`LC_GATE_FORMATTERS.append(...)`), the Full "Current lean" reader (`lc_hook_add("current_lean", ...)`), and the **story-key ledger** |
+| `<prefix>_gallery.rpy` | the Day's Gallery tab, its rows, its CGs that are still placeholders, and the rows the title-screen reel may show (`LC_TITLE_SAFE_GALLERY`) |
 | `<prefix>_chapter.rpy` | the title-card line, the end-of-day review row, and the Day's Chapter Select preset (`CHAPTER_SELECT_PRESETS["dayN"]` and the seed functions that mark earlier Days finished) |
-| `game/python-packages/lc_days/<day>.py` | chapter titles (`CHAPTER`); Day 1's also holds its route rules, thoughts and journal flags |
+| `game/python-packages/lc_days/<day>.py` | chapter titles (`CHAPTER`), route thresholds, gate / route-flag / repair choices and route resolvers (`STAT_*`), Ryan's thoughts (`THOUGHT_*`), journal flags and paper exceptions (`UI_*`); the names are listed in `lc_days/__init__.py` |
 
 Every Day uses the same layout: scene files hold only labels, and all of a Day's choice rows,
 tags, CG counts, lane helpers and exempt lists sit in its `<prefix>_registrations.rpy`.

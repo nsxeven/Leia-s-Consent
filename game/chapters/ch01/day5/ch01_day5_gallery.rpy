@@ -63,3 +63,11 @@ init -2 python:
     gallery_row("d5_invitation", "ch01_d5", "The invitation",
         "A printed invitation pinned to a post on the dawn pier.",
         ["ch01_d5_invitation"])
+
+
+# Title screen reel (systems/title_screen.rpy): this Day's rows that may show by default.
+# load order: init 1, after the reel's table (init 0).
+init 1 python:
+    LC_TITLE_SAFE_GALLERY = LC_TITLE_SAFE_GALLERY + (
+        "d5_snorkel", "d5_cove_lunch", "d5_sunset_deck", "d5_invitation",
+    )

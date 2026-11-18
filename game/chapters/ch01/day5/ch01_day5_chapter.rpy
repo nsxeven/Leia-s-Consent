@@ -6,10 +6,15 @@
 # Opening title card (neutral title for everyone), shown by the Day's start label.
 define lc_chapter_card_day5 = lc_chapters.card_text("day5")
 
+# "CHAPTER 5 COMPLETE" heading (temporary end-of-build card).
+define lc_chapter_complete_card_day5 = lc_chapters.complete_card_text("day5")
+
 # End-of-day review: this Day's row (systems/day_review.rpy). route_key = the end-route story key.
 init 1 python:
     import lc_chapters
     LC_REVIEW_DAYS["ch01_d5"] = {"label": lc_chapters.review_label("day5"), "chapter": "day5", "route_key": "ch01_d5_end_route"}
+    LC_REVIEW_NIGHT["ch01_d5"] = ("DAY 5", lc_chapters.chapter_title("day5").upper(), "the water keeps the last of the light…")  # night card: day, neutral title, caption
+    LC_REVIEW_TICKET["ch01_d5"] = ("BOAT DAY", "ALL ABOARD")  # ticket stub: title, detail
 
 # Chapter Select (systems/chapter_select.rpy): the Day Five preset, keyed by the stored Day Four end
 #   route, with the Day Four end state each one seeds.
