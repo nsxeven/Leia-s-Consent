@@ -621,7 +621,7 @@ label ch01_day2_scene_20_dinner_outfit:
         scene cg ch01_d2_love_pool_oral_02
         with dissolve
 
-        "What followed was quick, reckless and deliberately hidden from the rest of the villa."
+        "What followed was quick and reckless, and she'd picked the one spot the rest of the villa couldn't see."
         "When we finally pulled ourselves back together, [girlfriend_name] was trying not to laugh at how absurdly pleased with herself she looked."
 
         $ exit_cinematic_mode()
@@ -651,7 +651,7 @@ label ch01_day2_scene_20_dinner_outfit:
             gf "Us, dummy. I like us. And maybe— okay, maybe a little bit the being-outside part, too."
         else:
             gf "Us. I— I like us. That's all."
-        "There was nothing complicated in the way she said it."
+        "She said it simply, with her eyes on the water, like it was the easiest thing she'd said all day."
 
         $ set_story_value("ch01_d2_sunset_response", "love_connected")
         $ set_story_flag("ch01_d2_love_sunset_oral")
@@ -963,7 +963,7 @@ label ch01_day2_scene_22_sunset_couple:
     $ d2_lane = get_story_value("ch01_d2_route_lane_dinner", ch01_d2_route_lane())
 
     if get_story_value("ch01_d2_ntr_soft_gate", False):
-        "[girlfriend_name] was not hostile. She laughed with Maya, argued with [friend_name] and enjoyed dinner."
+        "[girlfriend_name] laughed with Maya and argued with [friend_name] and had a good time, with no edge in any of it."
         "What changed was smaller: she stopped checking whether I was following every moment. I let her stop, and I didn't really register it until somewhere around dessert."
     elif d2_lane == "exhibitionism":
         "Every so often [girlfriend_name] caught my eye across the table and smiled like we were carrying a private conversation nobody else could hear."
@@ -1065,7 +1065,7 @@ label ch01_day2_scene_24_dinner_aftermath:
         "[girlfriend_name] never checked whether I had noticed."
     elif get_story_value("ch01_d2_dinner_reach") == "smiled_at_ryan":
         "Later [girlfriend_name] caught me looking again."
-        "The satisfied little smile she gave me closed the loop without either of us saying a word."
+        "She gave me a small, satisfied smile, and neither of us said a word about it."
     else:
         "Dinner stayed easy. Maya and [friend_name] did most of the arguing while [girlfriend_name] and I enjoyed the show."
 
@@ -1340,7 +1340,7 @@ label ch01_day2_scene_27_game_escalates:
 
     if d2_lane == "exhibitionism":
         "Before sitting, she checked my face."
-        "The embarrassment was real, but so was the little spark behind it."
+        "Her cheeks were burning, and under the embarrassment I could see a little spark of something else."
     elif d2_soft_gate:
         "She didn't look over at me first. I only realized that afterwards."
         "She simply folded the dress beside her and sat down."
@@ -1419,7 +1419,7 @@ label ch01_day2_scene_27_game_escalates:
 
     if d2_lane == "exhibitionism":
         "[girlfriend_name] looked at me, then drank."
-        "We both knew exactly what she meant."
+        "I could feel my ears going warm, because I knew exactly what she was thinking about."
     elif d2_soft_gate and lc_stat("exhibitionism") >= LC_T["d2_game_drinks"]:
         "[girlfriend_name] drank after a pause."
         "She did not explain."
@@ -1796,7 +1796,7 @@ label ch01_day2_scene_30_bedroom:
         "[girlfriend_name] caught me watching her from the bathroom doorway and gave me the same look she'd given me last night, right here, when I'd admitted I didn't hate people noticing her."
         think "She could've laughed at me. Or gone quiet and wondered what kind of guy says that."
         think "Instead she'd checked my face to make sure I meant it, and then actually sat me down and made me talk about it once [friend_name] had gone to bed."
-        think "She'd made it something we were in on together, instead of something I had to keep to myself. I still didn't know how to tell her how much that mattered."
+        "She'd turned it into something we were both in on, and I still hadn't worked out how to tell her how glad I was about that."
         mc "We should do that more. Say the stuff out loud, I mean. Instead of me being all mysterious."
         gf "Oh my god. Are you quoting me to me?"
         "She laughed at herself before I could."
@@ -1913,7 +1913,7 @@ label ch01_day2_scene_30_bedroom:
             "[d2_feed_letgo_text]":
                 $ apply_choice("ch01_d2_feed_let_go")
                 $ set_story_value("ch01_d2_feed_bringup", "let_go")
-                "I put the phone down. Whatever else had happened on that walk, she'd come back with my frappuccino and the last box of muffins. That told me most of what I needed to know."
+                "I put the phone down. Whatever else had happened on that walk, she'd come back with my frappuccino and the last box of muffins, and that was good enough for me tonight."
 
     elif d2_errand_lane == "exhibitionism" and lc_feed_any_seen("d2_feed_exhib_poolguy", "d2_feed_exhib_poolguy_linger"):
         think "The post from the café was still open on my phone. She's TAKEN, boys. And underneath it, a bunch of strangers working out exactly which girl from the pool she was."
@@ -2059,15 +2059,15 @@ label ch01_day2_scene_30_love:
 
     "She pulled me onto the bed with her."
     if get_story_flag("ch01_d2_love_sunset_oral"):
-        "After the reckless little moment outside at sunset, this was slower and familiar: kisses, laughter, hands that already knew where they belonged."
+        "After the reckless little moment outside at sunset, this was slower and familiar, a lot of kissing and a bit of laughter, and neither of us had to work out where our hands went."
     else:
-        "It was slow and familiar: kisses, laughter, hands that already knew where they belonged."
+        "It was slow and familiar, a lot of kissing and a little laughter, and neither of us had to work out where our hands went."
 
     scene cg ch01_d2_love_bedroom_02
     with dissolve
 
     "We had sex with the curtains drawn, the rest of the villa reduced to distant sounds beyond the room."
-    "Nothing about it needed an audience."
+    "Neither of us thought about the curtains again."
 
     $ exit_cinematic_mode()
     scene bg ch01_villa_bedroom_night  # night art (darryn)
@@ -2331,8 +2331,8 @@ label ch01_day2_scene_30_ntr_nightmare:
             mc "You too. If you're angry, tell me you're angry."
             gf "Deal. Okay. Deal."
 
-            "Nothing about the conversation erased the day."
-            "It did put us back on the same side of it."
+            "The wink and the long quiet day were still sitting there between us."
+            "But her hand was in mine, and we were on the same side of it again."
 
             $ set_story_value("ch01_d2_ntr_soft_gate_repaired", True)
             $ set_story_value("ch01_d2_end_route", "love_repaired")

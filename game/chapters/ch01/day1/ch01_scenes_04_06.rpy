@@ -45,7 +45,7 @@ label ch01_scene_04_pool_arrival:
         $ cast_add(leia="white_ruffle")
         $ face("leia", "neutral")
         with dissolve
-        "She walked out in the swimsuit she already trusted—flattering, familiar, and comfortable enough that she did not need to think about it."
+        "She walked out in the swimsuit she already trusted: flattering, familiar, and comfortable enough that she did not need to think about it."
         mc "You look good."
         $ face("leia", "smile")
         # Day One echo E9: the rushed swimsuit answer ("They both look fine").
@@ -97,7 +97,7 @@ label ch01_scene_04_pool_arrival:
 
     $ lc_flash("#e6f6ff", 0.45, 0.5)
     $ lc_sfx("splash_big")
-    "She caught my wrist, stepped backward—and pulled me into the pool with her." with lc_shake("m")
+    "She caught my wrist, stepped backward, and pulled me into the pool with her." with lc_shake("m")
 
     mc "Seriously? I was just— okay. Traitor."
     gf "You were taking forever! And it's so hot, I was basically doing you a favor."
@@ -253,7 +253,7 @@ label ch01_scene_05_photography:
             # Hold the successful second capture on screen for a dialogue beat.
             # Without this, the branch exits cinematic mode immediately and the
             # photo is visible for only the transition frame.
-            "The second shot was different. She looked relaxed this time—caught mid-smile instead of trying to pose."
+            "The second shot was different. She looked relaxed this time, caught mid-smile instead of trying to pose."
             gf "Oh, wait, I actually like that one. Look, my arms aren't even weird!"
 
             $ exit_cinematic_mode()
@@ -481,7 +481,7 @@ label ch01_scene_06_friendship_and_towel:
     mc "You take way too much credit for that kiss."
     friend "Maybe. But I'd like a plaque. A small one."
 
-    "I laughed. This was [friend_name]—the same person who had been there before [girlfriend_name] and me, and who had helped make us possible without ever asking for anything in return."
+    "I laughed. That was [friend_name] all over: he'd been around before [girlfriend_name] and me, and he'd helped make us possible without ever asking for anything back."
 
     $ lc_sfx("sliding_door")
     gf "[player_name]!"

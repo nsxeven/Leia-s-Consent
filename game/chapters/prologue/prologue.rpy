@@ -110,8 +110,8 @@ label prologue_start:
         "I am definitely in trouble.":
             $ set_story_value("prologue_ryan_first_impression", "smitten")
             think "Right."
-            "So the problem wasn't that she was intimidating anymore."
-            "The problem was that now I actually liked talking to her."
+            "So she wasn't intimidating anymore, and that should have been the good news."
+            "Except now I actually liked talking to her, which was a much bigger problem."
 
     "The longer the night went on, the easier it became to notice something else about her."
     "[girlfriend_name] wasn't shy exactly. She could talk to anyone."
@@ -253,7 +253,7 @@ label prologue_start:
     $ lc_flash("#ffe2cf", 0.4, 0.9)
     $ lc_sfx("leia_kiss")  # darryn's kiss sound (VOICE slider)
     "Then she kissed me."
-    "Brief. Warm. Just awkward enough to be real."
+    "It was brief and warm, and awkward enough that nobody could have planned it."
     $ lc_bgm_resume()
     $ lc_unduck()
     $ lc_sfx("cheer_small")

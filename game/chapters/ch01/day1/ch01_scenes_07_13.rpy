@@ -100,7 +100,7 @@ label ch01_scene_07_did_he_see:
     with dissolve
     $ lc_breath_once()  # Leia's soft inhale on her CG (darryn)
 
-    "She had changed into the dress she packed for dinner—elegant enough for the restaurant, fitted enough that I immediately forgot what I was about to say."
+    "She had changed into the dress she packed for dinner. It was elegant enough for the restaurant, and fitted enough that I immediately forgot what I was about to say."
 
     gf "What? Why are you looking at me like that? Is it too much?"
     mc "No. I just... forgot what I was going to say."
@@ -185,7 +185,7 @@ label ch01_scene_08_drive_to_dinner:
 
     $ lc_sfx("leia_laugh")
     "She laughed and rested her hand on my thigh for a moment before turning the volume up."
-    "None of us thought twice about who sat where. It was just how we'd always done it."
+    "None of us thought twice about who sat where, since it was just how we'd always done it."
 
     $ exit_cinematic_mode()
 
@@ -303,7 +303,7 @@ label ch01_scene_09_dinner:
     scene cg ch01_dinner_spill_02
     with dissolve
 
-    "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build—and more of him than he probably intended—hard to miss."
+    "The wet white fabric clung far more closely than it had a few seconds earlier, making his muscular build, and more of him than he probably intended, hard to miss."
     "[girlfriend_name] followed his glance downward."
     "For a second, she forgot to look away."
 
@@ -584,7 +584,7 @@ label ch01_scene_10_after_dinner_drinks:
     mc "I have a few. There's a folder."
     friend "You kept a folder? Of my haircut? That's actually so mean."
 
-    "Whatever awkwardness had lingered over dinner seemed to fade as they traded stories."
+    "Whatever awkwardness was left over from dinner seemed to fade as they traded stories."
 
     $ set_story_value("ch01_leia_buzz_state", "lightly_buzzed")
     $ set_story_value("ch01_leia_julian_comfort", get_story_value("ch01_leia_julian_comfort", 0) + 1)
@@ -620,7 +620,7 @@ label ch01_scene_11_walk_and_catch:
     $ lc_duck(0.35)  # music dips for the call
     $ lc_sfx_loop("phone_ring", fadein=0.0)  # darryn's ringtone, rings until Ryan answers
     "My phone started ringing." with lc_shake("s")
-    "The name on the screen belonged to a female friend from back home—someone I had not expected to hear from on this trip."
+    "The name on the screen belonged to a female friend from back home, someone I had not expected to hear from on this trip."
 
     $ lc_sfx_loop_stop(0.25)
     $ lc_unduck()
@@ -924,7 +924,7 @@ label ch01_scene_12_shop_and_drive_back:
             "It wasn't, really. I just didn't want to be the guy who made it a thing."
             friend "Okay. If you say so."
 
-    "For a moment it was just the two of us again—the same easy friendship we'd had long before this trip."
+    "For a moment it was just the two of us again, the same easy friendship we'd had long before this trip."
     "Behind us, [girlfriend_name] shifted in her sleep and pulled her arms closer around herself."
 
     $ set_story_flag("ch01_scene_12_complete")

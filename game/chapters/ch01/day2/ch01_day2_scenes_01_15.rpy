@@ -390,7 +390,7 @@ label ch01_day2_scene_01_morning_after:
     if get_story_value("ch01_dream_response") == "grounded":
         "The dream still existed somewhere at the back of my mind, but daylight had put it back where it belonged."
     elif get_story_value("ch01_dream_response") == "curious":
-        "The dream had lost its sharp edges by morning. The uncomfortable question it left behind had not."
+        "The dream had lost its sharp edges by morning, though the uncomfortable question it left behind was still sitting there."
     elif get_story_value("ch01_dream_response") == "withdrew":
         "I had managed not to think about the dream again. Mostly. Keeping it there felt easier than examining it."
 
@@ -475,7 +475,7 @@ label ch01_day2_scene_01_morning_after:
             with dissolve
 
             if d2_morning_withdrew:
-                "She studied it quietly this time, no longer asking me to judge it."
+                "She studied it this time, no longer asking me to judge it."
             elif get_story_value("ch01_dream_response") == "curious":
                 gf "Wait, I actually like this one more. My arm's doing a weird thing, but my face is better."
                 mc "You look more relaxed in this one."
@@ -494,12 +494,12 @@ label ch01_day2_scene_01_morning_after:
 
             if d2_morning_withdrew:
                 "Another good photo. Another moment where she seemed more interested in sharing it with me than I was capable of being."
-                "[girlfriend_name] lingered on it for a second, then locked the phone without asking."
+                "[girlfriend_name] stayed on it for a second, then locked the phone without asking."
             elif get_story_value("ch01_dream_response") == "curious":
                 gf "I definitely wasn't this comfortable at the start. Not even close."
                 mc "No. You really weren't."
                 gf "Is that a bad thing?"
-                "There was no accusation in the question. She genuinely wanted to know."
+                "She asked it plainly, like she genuinely wanted to know."
                 mc "I don't know yet. I mean, I don't think so. I just don't know what it is yet."
                 gf "That's honest, at least. I'll take honest."
             else:
@@ -684,7 +684,7 @@ label ch01_day2_scene_02_breakfast:
         gf "Coffee?"
         mc "Please. A lot of it."
         "She poured mine before her own without thinking about it."
-        "Small, ordinary, automatic. Four years reduced to a gesture neither of us noticed anymore."
+        "It was small and automatic, the kind of gesture four years turns into, and neither of us noticed it anymore."
     else:
         gf "Coffee?"
         mc "Only if you're admitting you stole the duvet."
@@ -779,7 +779,7 @@ label ch01_day2_scene_03_maya_message:
             gf "Okay."
             mc "Okay?"
             gf "I asked. You answered."
-            "There was something almost deliberate about how easily she accepted it."
+            "She'd accepted it a little too easily, like she had already decided how she was going to take the answer."
 
     if get_story_value("ch01_dream_response") == "withdrew":
         "Her answer should have reassured me. Instead, I found myself wondering whether I had been offering her the same honesty since I woke up."
@@ -1041,7 +1041,7 @@ label ch01_day2_scene_07_leia_maya_click:
     gf "Too late. I like her, she's staying."
     maya "Same. I'm keeping her."
 
-    "It was said jokingly, but [girlfriend_name]'s posture had changed. She wasn't [player_name]'s girlfriend meeting [player_name]'s friend anymore. She was talking to Maya on her own terms."
+    "It was said jokingly, but [girlfriend_name]'s posture had changed. She had stopped being the girlfriend meeting my friend and was just talking to Maya, on her own terms."
 
     # Who saw what (B1): only when this save opened Julian's breakfast view (lc_pov_seen_in_save,
     # save-local). Not opened, or an old save: nothing extra plays. Flavor only, no stats.
@@ -1095,7 +1095,7 @@ label ch01_day2_scene_08_maya_julian:
     friend "I respect bees. I just respect them from a reasonable distance. Is that a crime?"
     gf "Oh my God, you're actually scared of bees."
 
-    "The bee left. The information did not."
+    "The bee wandered off a second later, but Maya and [girlfriend_name] had clearly filed the whole thing away for later."
 
     $ set_story_flag("ch01_d2_julian_bee_fear_seeded")
     $ set_story_flag("ch01_d2_scene_08_complete")
@@ -1225,7 +1225,7 @@ label ch01_day2_scene_11_missing_pair:
             gf "Wow, okay. You're very enthusiastic about this."
             mc "It's for the album. Historical documentation."
             friend "I hate all of you. Fine. Where do you want me? Here?"
-            "[girlfriend_name] stood beside [friend_name] for the photo. It was harmless. The fact that she checked my reaction first was the more interesting part."
+            "[girlfriend_name] stood beside [friend_name] for the photo. It was harmless, though what I kept thinking about afterward was that she'd checked my face first."
 
         "[d2_pair_redirect_text]":
             $ apply_choice("ch01_d2_photo_pair_redirect")
@@ -1818,7 +1818,7 @@ label ch01_day2_scene_11b_boutique:
         gf "[friend_name] was there."
         "I looked at her."
         gf "He looked away. He'd already looked away by the time I looked up, actually, and he went really red. And then he said sorry. Like, a lot."
-        "The way she said it wasn't defensive. It was simply the version of events she'd been left to process without me."
+        "She didn't sound defensive about it, just like someone handing me the version of events she had been left to work through without me."
 
     gf "You've been kind of quiet today, though. Not in a bad way. Just quiet."
 
@@ -2072,7 +2072,7 @@ label ch01_day2_scene_13_girls_upstairs:
     maya "The little one. Obviously the little one, I'm not even going to pretend I'm neutral about this."
     maya "So say it. Out loud. Which one are you putting on?"
 
-    "Yesterday [girlfriend_name] had asked me that question. Today she had to answer it herself."
+    "[girlfriend_name] had asked me that same question yesterday, and today she had to answer it herself."
 
     if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
