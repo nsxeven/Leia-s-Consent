@@ -46,7 +46,6 @@ init -2 python:
         # Day 2
         "ch01_d2_photo_leia_maya",
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
-        "ch01_d2_boutique_slip_ryan", "ch01_d2_boutique_slip_julian",
         "ch01_d2_pool_top_accident",
         "d2_cafe_stranger",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
@@ -201,11 +200,14 @@ init -2 python:
         [("ch01_d2_mall_arrival", "Arriving"), ("ch01_d2_mall_boutique_window", "At the window"),
          ("ch01_d2_shop_dresses", "Red or black?")])
     gallery_row("d2_boutique", "ch01_d2", "Boutique",
-        "Maya pushes Leia to try on the cutout mini, then talks her out of the changing room. Slip pages depend on who is there.",
+        "Maya pushes Leia to try on the cutout mini, then talks her out of the changing room.",
         [("ch01_d2_boutique_changing_room", "The dress"), ("ch01_d2_changing_room_02", "On"),
          ("ch01_d2_changing_room_03", "A size too small"), ("ch01_d2_changing_room_capture", "Selfie"),
-         ("ch01_d2_changing_room_04", "Maya?"), ("ch01_d2_shop_showoff", "Facing the mirror"),
-         ("ch01_d2_boutique_slip_ryan", "Slip (Ryan)"), ("ch01_d2_boutique_slip_julian", "Slip (Julian)")])
+         ("ch01_d2_changing_room_04", "Maya?"), ("ch01_d2_shop_showoff", "Facing the mirror")])
+    gallery_row("d2_boutique_malfunction", "ch01_d2", "Wardrobe malfunction",
+        "A stranger compliments Maya, and Maya lets go of the one thing she promised to hold.",
+        [("ch01_d2_shop_showoff_02", "The compliment"), ("ch01_d2_shop_showoff_03", "Showing off"),
+         ("ch01_d2_shop_showoff_04", "Everyone saw"), ("ch01_d2_shop_showoff_05", "Covered (sort of)")], mature=True)
     gallery_row("d2_boutique_pov", "ch01_d2", "A stranger's view",
         "Somebody by the racks stopped pretending to look at shirts.",
         [("ch01_d2_shop_showoff_stranger_pov", "A stranger's POV")], mature=True)

@@ -1602,25 +1602,44 @@ label ch01_day2_scene_11b_boutique:
         friend "You look good, though. Really. Okay. I'm going back to the shirts."
         gf "...Thanks."
 
+    # Wardrobe malfunction (darryn 2026-11-18): ShopShowOff_02-05, shared by both witness
+    # branches (Ryan or Julian is off-frame, watching); the branches differ in text only.
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_shop_showoff_02
+    with dissolve
+
     "The man from the racks had drifted closer while all that was going on. He wasn't looking at [girlfriend_name] now, though. He was looking at Maya."
     boutique_stranger "Sorry, I'm not trying to be weird. I just have to say, that red is unreal on you."
     maya "Oh my God. Stop. Really?"
     boutique_stranger "Really. You should get it."
     maya "I'm getting it! I was getting it anyway, but now I'm definitely getting it. Wait, say that again, slower."
-    "She laughed and turned toward him, and both her hands came up to push her hair back over her shoulders."
-    "They were the hands that had been holding [girlfriend_name]'s top up."
-    "One side of [girlfriend_name]'s top slipped straight down."
 
-    gf "Maya!"
+    scene cg ch01_d2_shop_showoff_03
+    with dissolve
+
+    maya "Okay, but look at how it sits, though. Look."
+    "She hooked her thumbs under her own straps and tugged them up to show him the fit, laughing, completely delighted with herself."
+    "Her thumbs had been the only thing holding [girlfriend_name]'s top up."
+    "The front panels of [girlfriend_name]'s dress dropped straight down to her waist."
+    "For one long second, she just stood there with both hands still on the hem, like her brain hadn't caught up yet."
+
+    scene cg ch01_d2_shop_showoff_04
+    with dissolve
+
+    gf "Maya!" with lc_punch()
+    "Both her hands flew up to cover her chest, and the hem she'd been holding down went straight back up her thighs."
+    "The whole corridor saw it. The stranger saw it. The woman at the shoe wall saw it."
 
     if d2_mall_ryan_present:
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_boutique_slip_ryan
+        "I saw it. She looked straight at me while it happened, eyes huge, like I could somehow undo it from where I was standing."
+        "Maya spun around, horrified."
+
+        scene cg ch01_d2_shop_showoff_05
         with dissolve
 
-        "[girlfriend_name] caught the loose panel almost immediately and clamped it back into place."
-        "Maya froze, horrified."
-        maya "Sorry! Sorry, sorry, I've got it, I've got it."
+        "She threw both arms around [girlfriend_name] and pulled her in close, front to front, covering her the only way she could."
+        "From behind, it did absolutely nothing for either of them."
+        maya "Sorry! Sorry sorry sorry, I've got you, I've got you."
         gf "Maya! You were holding it, you were literally standing there holding it and you just let go!"
         maya "I know! He was being nice to me, and I got distracted, and my hands just went."
         gf "I can't believe this is happening in a shop."
@@ -1631,20 +1650,20 @@ label ch01_day2_scene_11b_boutique:
         $ set_story_value("ch01_d2_boutique_slip_witness", "ryan")
 
     else:
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_boutique_slip_julian
-        with dissolve
-
-        "[girlfriend_name] caught the loose panel and pulled it back into place."
-        "[friend_name] hadn't made it back to the shirts yet. He was still standing right there when it slipped."
+        "[friend_name] hadn't made it back to the shirts yet. He was still standing right there when it happened."
         "He looked, and he kept looking for a moment after he should have stopped."
         "Then he caught himself. His eyes jerked up to the ceiling lights, and the red was already climbing his neck before [girlfriend_name] lifted her head."
         "She looked up in time to catch the end of it: [friend_name], bright red, looking anywhere but at her."
-        "She didn't say anything. She just held the panel a little tighter against herself, and he saw her do it."
+        "She didn't say anything. She just held her arms a little tighter across herself, and he saw her do it."
 
-        "Maya, focused entirely on fixing the top, missed the exchange."
+        scene cg ch01_d2_shop_showoff_05
+        with dissolve
 
-        maya "Sorry! Sorry, sorry, I've got it, I've got it."
+        "Maya threw both arms around [girlfriend_name] and pulled her in close, front to front, covering her the only way she could."
+        "From behind, it did absolutely nothing for either of them."
+        "Maya, focused entirely on covering her up, missed the exchange."
+
+        maya "Sorry! Sorry sorry sorry, I've got you, I've got you."
         gf "Maya. You were holding it."
         maya "I know! He was being nice to me, and I got distracted, and my hands just went."
         gf "I can't believe this is happening in a shop."
@@ -1783,7 +1802,7 @@ label ch01_day2_scene_11b_boutique:
         mc "Yeah. I saw."
         gf "I wanted to disappear. Like, into the floor. Just gone."
         if get_story_value("ch01_d2_mall_ryan_response") == "reconnected" or get_story_value("ch01_d2_mall_entry_lane") != "ntr_risk":
-            mc "You caught it, though. Really fast."
+            mc "You covered up really fast, though. And Maya was on you in about half a second."
             gf "Barely. My whole soul left my body."
             "Her embarrassment had already softened enough for her to roll her eyes at herself."
         else:
@@ -1813,7 +1832,7 @@ label ch01_day2_scene_11b_boutique:
         mc "So what happened in there? After I, um. After I stayed out."
         gf "Nothing. Nothing dramatic."
         "She turned her cup slowly between her hands."
-        gf "The top slipped a little. Some guy started complimenting Maya, and she just let go."
+        gf "The top came down. Like, all the way. Some guy started complimenting Maya, and she just let go."
         mc "Oh."
         gf "[friend_name] was there."
         "I looked at her."

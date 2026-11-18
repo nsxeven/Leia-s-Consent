@@ -216,6 +216,12 @@ image cg ch01_d2_changing_room_03 = At("images/cg/ch02/CH2D2_CG_ChangingRoom_03.
 image cg ch01_d2_changing_room_capture = At("images/cg/ch02/CH2D2_CG_ChangingRoom_Capture.webp", prologue_fullscreen)
 image cg ch01_d2_changing_room_04 = At("images/cg/ch02/CH2D2_CG_ChangingRoom_04.webp", prologue_fullscreen)
 image cg ch01_d2_shop_showoff = At("images/cg/ch02/CH2D2_CG_ShopShowOff_01.webp", prologue_fullscreen)
+# Wardrobe malfunction (darryn 2026-11-18): the stranger walks up (02), Maya shows off her
+# straps and lets go (03), everyone sees (04), Maya hugs Leia to cover her (05).
+image cg ch01_d2_shop_showoff_02 = At("images/cg/ch02/CH2D2_CG_ShopShowOff_02.webp", prologue_fullscreen)
+image cg ch01_d2_shop_showoff_03 = At("images/cg/ch02/CH2D2_CG_ShopShowOff_03.webp", prologue_fullscreen)
+image cg ch01_d2_shop_showoff_04 = At("images/cg/ch02/CH2D2_CG_ShopShowOff_04.webp", prologue_fullscreen)
+image cg ch01_d2_shop_showoff_05 = At("images/cg/ch02/CH2D2_CG_ShopShowOff_05.webp", prologue_fullscreen)
 # Hidden POV: the stranger by the racks (left of ShopShowOff_01).
 image cg ch01_d2_shop_showoff_stranger_pov = At("images/cg/ch02/CH2D2_CG_ShopShowOffCloseup_01.webp", prologue_fullscreen)
 # Phone photo alias for the selfie Leia sends Ryan (bubbles need a non-cg name).
@@ -235,6 +241,7 @@ image cg ch01_d2_boutique_reveal_julian = Composite(
     (90, 70), lc_placeholder_text("CG PLACEHOLDER\nBOUTIQUE REVEAL — {friend} PRESENT\nWIDER FRAMING / PUBLIC BOUTIQUE CONTEXT", size=48, color="#ffffff"),
 )
 
+# Retired slip placeholders (replaced by ShopShowOff_02-05); kept defined so old saves load.
 image cg ch01_d2_boutique_slip_ryan = Composite(
     (1920, 1080),
     (0, 0), Solid("#744958"),
