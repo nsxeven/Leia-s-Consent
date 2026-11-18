@@ -193,12 +193,15 @@ init 1 python:
             ("relationship", "love", -1),
             ("relationship", "temptation", 1),
         ],
-        # Post-shop "You've been kind of quiet" menu: flavor since v0.2.0 (darryn).
-        # Its question is now scored 25 lines later by the cafe incident below. The
-        # repair tags stay, so these still pick which cafe talk Ryan overhears.
+        # Post-shop check-in menu: the warm answers stay flavor (their repair tags pick which cafe
+        # talk Ryan overhears). darryn 2026-11-19: with the pair-photo choice cut, "I'm fine." counts
+        # again and "act like you didn't hear" counts double, so the NTR slide takes three steps here.
         "ch01_d2_postshop_sleep": [],  # Flavor: no stats
         "ch01_d2_postshop_head": [],  # Flavor: no stats
-        "ch01_d2_postshop_shut_down": [],  # Flavor: no stats
+        "ch01_d2_postshop_shut_down": [
+            ("relationship", "love", -1),
+            ("relationship", "temptation", 1),
+        ],
         # Day Two incident (v0.2.0): Ryan overhears Leia and Maya at the cafe.
         "ch01_d2_overheard_own": [
             ("relationship", "trust", 1),
@@ -207,7 +210,7 @@ init 1 python:
         "ch01_d2_overheard_joke": [],  # Flavor: no stats
         "ch01_d2_overheard_pretend": [
             ("relationship", "love", -1),
-            ("relationship", "temptation", 1),
+            ("relationship", "temptation", 2),
         ],
         "ch01_d2_maya_reassure": [
             ("relationship", "love", 1),
@@ -727,7 +730,6 @@ init 10 python:
 # key ch01_d2_julian_upstairs_before_sunset: pending set by ch01_day2_scene_19b_leia_asks_maya.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_knot_response: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_lane_migrated: read-by ch01_day2_scenes_01_15.rpy, stats.rpy
-# key ch01_d2_leia_julian_photo: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_leia_maya_comfort: pending set by ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_leia_noticed_julian_stare: read-by ch01_day2_scenes_01_15.rpy
 # key ch01_d2_leia_told: read-by ch01_day2_feed.rpy, ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_scenes_16_30.rpy
@@ -757,10 +759,7 @@ init 10 python:
 # key ch01_d2_overheard_response: read-by ch01_day2_scenes_01_15.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_overheard_talk: read-by ch01_day2_scenes_01_15.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_photo_group: read-by phone_group_avatar.rpy
-# key ch01_d2_photo_julian_maya: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_photo_leia_maya: read-by ch01_day2_gallery.rpy
-# key ch01_d2_photo_ryan_leia: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
-# key ch01_d2_photo_ryan_maya: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_pool_attention: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_pool_incident: read-by ch01_day2_scenes_16_30.rpy, lc_thoughts.py
 # key ch01_d2_pool_outfit: read-by ch01_day2_scenes_01_15.rpy, ch01_day5_registrations.rpy

@@ -901,14 +901,9 @@ label ch01_day2_scene_09_photo_walk:
     $ lc_feed_release("d2_maya_group_photo")
     "My phone buzzed in my hand the second she gave it back. Maya had already posted."
 
-    "Then Maya started assigning pairs like a teacher on school photo day."
-
-    "We took the obvious ones next: [girlfriend_name] and me, Maya and me, [friend_name] and Maya."
-
+    # The pair photos ("complete the set") were cut (darryn 2026-11-19): the walk is the Leia + Maya
+    # selfie and the Trip Group selfie only.
     $ set_story_flag("ch01_d2_photo_group")
-    $ set_story_flag("ch01_d2_photo_ryan_leia")
-    $ set_story_flag("ch01_d2_photo_ryan_maya")
-    $ set_story_flag("ch01_d2_photo_julian_maya")
 
     $ lc_phone_clear_story_time()
     jump ch01_day2_scene_10_leia_maya_photo
@@ -930,42 +925,8 @@ label ch01_day2_scene_10_leia_maya_photo:
 
 label ch01_day2_scene_11_missing_pair:
 
-    maya "Wait, wait. We're missing one."
-    friend "Are we? I think we got everybody. We got everybody, right?"
-    maya "[girlfriend_name] and [friend_name]. You two haven't had one."
-
-    "[girlfriend_name] looked at [friend_name], then at me."
-
-    $ d2_pair_encourage_text = format_choice("ch01_d2_photo_pair_encourage", "Go on. Complete the set.")
-    $ d2_pair_redirect_text = format_choice("ch01_d2_photo_pair_redirect", "We've got enough photos. Come here, babe.")
-    $ d2_pair_shrug_text = format_choice("ch01_d2_photo_pair_shrug", "Mm? Yeah, sure. Go ahead.")
-
-    menu:
-        "[d2_pair_encourage_text]":
-            $ apply_choice("ch01_d2_photo_pair_encourage")
-            $ set_story_value("ch01_d2_leia_julian_photo", "taken")
-            mc "Go on. Complete the set."
-            gf "Wow, okay. You're very enthusiastic about this."
-            mc "It's for the album. Historical documentation."
-            friend "I hate all of you. Fine. Where do you want me? Here?"
-            "[girlfriend_name] stood beside [friend_name] for the photo. It was harmless, though what I kept thinking about afterward was that she'd checked my face first."
-
-        "[d2_pair_redirect_text]":
-            $ apply_choice("ch01_d2_photo_pair_redirect")
-            $ set_story_value("ch01_d2_leia_julian_photo", "redirected")
-            mc "We've got enough photos. Come here, babe."
-            "[girlfriend_name] came back toward me without argument."
-            gf "Possessive photographer. Okay. I'll allow it."
-            mc "Sorry. I just wanted you over here."
-
-        "[d2_pair_shrug_text]":
-            $ apply_choice("ch01_d2_photo_pair_shrug")
-            $ set_story_value("ch01_d2_leia_julian_photo", "shrugged")
-            mc "Mm? Yeah, sure, go ahead."
-            "I was still squinting at the map on my phone. [girlfriend_name]'s eyes stayed on me a little longer than they needed to."
-            gf "Okay."
-            "She took the photo with [friend_name]. It was ordinary. I just hadn't looked up for it."
-
+    # Cut (darryn 2026-11-19): the "we're missing one" pair photo and its choice. The label stays
+    # so a save made inside it still loads; it goes straight on to the mall.
     $ set_story_flag("ch01_d2_scene_11_complete")
     jump ch01_day2_scene_11b_boutique
 

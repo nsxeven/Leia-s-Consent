@@ -59,13 +59,13 @@ D2_PRE = [
     ["ch01_d2_morning_reassure", "ch01_d2_morning_tease", "ch01_d2_morning_dismiss"],
     ["ch01_d2_maya_reassure", "ch01_d2_maya_tease_jealousy", "ch01_d2_maya_open_honest"],
     ["ch01_d2_maya_include", "ch01_d2_maya_catchup", "ch01_d2_maya_dismiss_leia"],
-    ["ch01_d2_photo_pair_encourage", "ch01_d2_photo_pair_redirect", "ch01_d2_photo_pair_shrug"],
     ["ch01_d2_mall_go_to_leia", "ch01_d2_mall_leave_to_maya"],
     ["ch01_d2_mall_reveal_affection", "ch01_d2_mall_reveal_open", "ch01_d2_mall_reveal_tease",
      "ch01_d2_mall_reveal_flat"],
+    ["ch01_d2_postshop_sleep", "ch01_d2_postshop_head", "ch01_d2_postshop_shut_down"],
     ["ch01_d2_overheard_own", "ch01_d2_overheard_joke", "ch01_d2_overheard_pretend"],
 ]
-MALL_GO, MALL_REVEAL = 4, 5
+MALL_GO, MALL_REVEAL = 3, 4
 POOL = ["ch01_d2_pool_reassure", "ch01_d2_pool_honest_jealous", "ch01_d2_pool_accuse"]
 SUNSET = ["ch01_d2_sunset_connect", "ch01_d2_sunset_partial", "ch01_d2_sunset_ignore_gate"]
 BED = {"ch01_d2_bed_pool_love": "love", "ch01_d2_bed_pool_exhibition": "exhibitionism",
@@ -248,7 +248,7 @@ PERSONAS = [
     ("three slips on Day 1, then Love", THREE_SLIPS, LOVE, {}, ("ntr_seeded", False, "love", False)),
     # Slow burn both ways: a loving Day 1 doesn't make Day 2 immune. Slipping on every
     # Day 2 answer (six slips) opens the NTR-risk lane; the sunset talk still repairs it.
-    ("Love on Day 1, slips on half of Day 2", LOVE, [LOVE, NTR, LOVE, LOVE, NTR, LOVE, NTR, LOVE], {},
+    ("Love on Day 1, slips on half of Day 2", LOVE, [LOVE, NTR, LOVE, LOVE, LOVE, NTR, NTR, LOVE], {},
      ("mixed", True, "love", False)),
     ("Love on Day 1, slips all through Day 2", LOVE, NTR, {}, ("mixed", True, "ntr_confirmed", False)),
     ("Love on Day 1, slips all through Day 2, opens up at sunset", LOVE, NTR,
@@ -311,9 +311,11 @@ class RouteSimulationTests(unittest.TestCase):
             for cid in menu:
                 d = m.effect_deltas(EFF[cid])
                 if d.get("temptation", 0) > 0 and cid not in m.CHOICE_GATES:
-                    self.assertEqual(d["temptation"], 1, cid)
+                    # darryn 2026-11-19: hearing Leia confide and pretending not to counts double
+                    # (it replaced the cut pair-photo slip).
+                    self.assertEqual(d["temptation"], 2 if cid == "ch01_d2_overheard_pretend" else 1, cid)
                     self.assertGreaterEqual(min(d.get("love", 0), d.get("trust", 0)), -2, cid)
-                    self.assertIn(tag(cid), ("May lead to NTR",), cid)
+                    self.assertIn(tag(cid), ("NTR",) if cid == "ch01_d2_overheard_pretend" else ("May lead to NTR",), cid)
 
     def test_every_day1_and_day2_menu_offers_a_slip(self):
         # Principle 5: each scored menu has a believable slip, so stamps show a real spread.

@@ -405,8 +405,10 @@ class DreamReplyOption(unittest.TestCase):
 
     def test_existing_postshop_options_stay_flavor(self):
         eff = effective_effects()
-        for cid in ("ch01_d2_postshop_sleep", "ch01_d2_postshop_head", "ch01_d2_postshop_shut_down"):
+        for cid in ("ch01_d2_postshop_sleep", "ch01_d2_postshop_head"):
             self.assertEqual(eff[cid], [], cid)
+        # darryn 2026-11-19: "I'm fine." counts again since the pair-photo choice was cut.
+        self.assertEqual(eff["ch01_d2_postshop_shut_down"], [("relationship", "love", -1), ("relationship", "temptation", 1)])
         captions = [o["caption"] for o in postshop_menu()["options"]]
         self.assertEqual(captions[:1], ["[d2_postshop_sleep_text]"])
         self.assertLessEqual(len(captions), 5)

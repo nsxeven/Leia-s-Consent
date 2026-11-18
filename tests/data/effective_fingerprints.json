@@ -213,7 +213,7 @@
   "vcentered.screen": "d4770f0cd3111a2f"
  },
  "choice_effects": {
-  "table": "7d6269d85fc8c79b"
+  "table": "0c3526f98ed99c04"
  },
  "class": {
   "LCChoiceToastRuntime": "933cce13b06696f3",
@@ -1291,9 +1291,9 @@
   "CHAPTER_SELECT_PRESETS[\"day4\"] = dict( #22147125cbea7df6": 1,
   "CHAPTER_SELECT_PRESETS[\"day5\"] = dict( #4edb2a2d119e792c": 1,
   "CHOICE_EFFECTS.update({ #04e1c242fd982829": 1,
+  "CHOICE_EFFECTS.update({ #1a26871bc1f2abc4": 1,
   "CHOICE_EFFECTS.update({ #2fa8e84c38ae64dc": 1,
   "CHOICE_EFFECTS.update({ #31b4708de524a217": 1,
-  "CHOICE_EFFECTS.update({ #60cc3707687edc98": 1,
   "CHOICE_EFFECTS.update({ #9046da727430760a": 1,
   "CHOICE_EFFECTS.update({ #90822173bb6fa613": 1,
   "CHOICE_EFFECTS.update({ #994adddeb2dcff92": 1,
@@ -1930,9 +1930,9 @@
   "ch01_day2_scene_07_leia_maya_click": "18c28be033eb79c5",
   "ch01_day2_scene_08_maya_julian": "991e19b4c8e40425",
   "ch01_day2_scene_08_maya_julian_v2": "991e19b4c8e40425",
-  "ch01_day2_scene_09_photo_walk": "28550ea100ce09e3",
+  "ch01_day2_scene_09_photo_walk": "86ee3a4ec6f585be",
   "ch01_day2_scene_10_leia_maya_photo": "244a4df28d5ace22",
-  "ch01_day2_scene_11_missing_pair": "6760fbd2785bde7e",
+  "ch01_day2_scene_11_missing_pair": "8e3e7889c662ae25",
   "ch01_day2_scene_11b_boutique": "74b015a7a4332d4c",
   "ch01_day2_scene_12_villa_pool_plan": "9fa7a2e1b0c4b0ee",
   "ch01_day2_scene_13_girls_upstairs": "ea66bc2f526f7caf",

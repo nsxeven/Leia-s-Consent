@@ -49,14 +49,15 @@ class OverheardIncidentTests(unittest.TestCase):
     def test_scores_match_the_approved_proposal(self):
         self.assertEqual(deltas(self.eff["ch01_d2_overheard_own"]), {"trust": 1, "temptation": -1})
         self.assertEqual(self.eff["ch01_d2_overheard_joke"], [])
-        self.assertEqual(deltas(self.eff["ch01_d2_overheard_pretend"]), {"love": -1, "temptation": 1})
+        # darryn 2026-11-19: counts double since the pair-photo choice was cut.
+        self.assertEqual(deltas(self.eff["ch01_d2_overheard_pretend"]), {"love": -1, "temptation": 2})
 
     def test_path_tags(self):
         tag = lambda cid: m.choice_route_tag(cid, self.eff[cid])
         self.assertIn("ch01_d2_overheard_own", m.REPAIR_CHOICES)
         self.assertEqual(tag("ch01_d2_overheard_own"), "Repair")
         self.assertEqual(tag("ch01_d2_overheard_joke"), "Neutral")
-        self.assertEqual(tag("ch01_d2_overheard_pretend"), "May lead to NTR")
+        self.assertEqual(tag("ch01_d2_overheard_pretend"), "NTR")
 
     def test_choice_tags(self):
         self.assertIn('"ch01_d2_overheard_own": ("attentive", "honest", "repair")', SCENES)
@@ -97,10 +98,11 @@ class OverheardIncidentTests(unittest.TestCase):
     def test_pov_slip_fixed(self):
         self.assertNotIn("where [player_name] and [friend_name] were waiting", SCENES)
 
-    def test_route_simulation_scores_the_incident_not_postshop(self):
+    def test_route_simulation_scores_the_incident_and_postshop(self):
+        # darryn 2026-11-19: the post-shop "I'm fine." counts again, so the simulation plays it.
         src = (ROOT / "tests" / "test_route_simulation.py").read_text(encoding="utf-8")
         self.assertIn('"ch01_d2_overheard_own", "ch01_d2_overheard_joke", "ch01_d2_overheard_pretend"', src)
-        self.assertNotIn('["ch01_d2_postshop_sleep"', src)
+        self.assertIn('["ch01_d2_postshop_sleep", "ch01_d2_postshop_head", "ch01_d2_postshop_shut_down"]', src)
 
 
 class PostshopIsFlavorTests(unittest.TestCase):
@@ -108,7 +110,9 @@ class PostshopIsFlavorTests(unittest.TestCase):
     def test_postshop_has_no_stats_but_keeps_its_lines_and_repair_tags(self):
         eff = effective_effects()
         for cid in ("ch01_d2_postshop_sleep", "ch01_d2_postshop_head", "ch01_d2_postshop_shut_down"):
-            self.assertEqual(eff[cid], [], cid)
+            # darryn 2026-11-19: "I'm fine." scores again (Love -1, Temptation +1); the others stay flavor.
+            want = [("relationship", "love", -1), ("relationship", "temptation", 1)] if cid.endswith("shut_down") else []
+            self.assertEqual(eff[cid], want, cid)
             self.assertNotIn(cid, m.REPAIR_CHOICES)
             self.assertIn('apply_choice("{}")'.format(cid), SCENES)
         self.assertIn('"ch01_d2_postshop_sleep": ("supportive", "attentive", "honest", "repair")', SCENES)
