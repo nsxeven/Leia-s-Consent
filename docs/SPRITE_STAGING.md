@@ -11,7 +11,7 @@ dialogue decides who stands where.
 | Scene opens | Nobody on screen. A sprite appears on that character's **first line**, then stays. |
 | Leia speaks | Leia on the **right**, always. |
 | Ryan speaks | Ryan on the **left**. |
-| Julian / stranger / Maya / anyone else speaks | They take the **left** slot (Ryan steps out). They **stay** through narration and Leia's lines until Ryan or another guest speaks. No flicker. |
+| Julian / stranger / Maya / anyone else speaks | A guest already on stage stays put. Otherwise they take an **empty** slot (left first), or step in for **whoever on stage spoke least recently**: Ryan steps out, or, if Leia has gone quiet, the guest stands in her place (darryn 2026-11-19). Leia and Ryan take their home slot back on their next line. No flicker. |
 | Leia is **not** in the cast (car while she sleeps, villa arrival) | Ryan left, the guest on the **right**. |
 | Leia joins mid-scene while a guest is on the right | The guest steps out; they come back on the left when they next speak. |
 | CG / cinematic mode up | No sprites. They come back on the next spoken line after the CG. |

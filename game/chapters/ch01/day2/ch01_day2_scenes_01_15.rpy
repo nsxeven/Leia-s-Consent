@@ -1325,6 +1325,7 @@ label ch01_day2_scene_11b_boutique:
         gf "Maya—"
         maya "What? We need a second opinion, and he's right there."
 
+        $ cast_add(julian="evening")
         "[friend_name] appeared from the next section holding two nearly identical shirts."
 
         friend "Oh."
@@ -1479,6 +1480,7 @@ label ch01_day2_scene_11b_boutique:
         maya "She said 'outside.' I heard 'yet.'"
         "[girlfriend_name] gave Maya a look and said nothing."
 
+    $ cast_add(julian="evening")
     "[friend_name] eventually returned with a shopping bag."
 
     maya "That's literally the shirt you're already wearing."

@@ -1387,6 +1387,8 @@
   "lc_sprite_enter_yoffset",
   "lc_sprite_yoffset",
   "lc_stage",
+  "lc_stage_spoke",
+  "lc_stage_tick",
   "lc_stat_model_version",
   "lc_thoughts_kept",
   "lc_title_facts",

@@ -25,6 +25,8 @@
 #   default lc_faces                          save state: {who: expression}
 #   default lc_stage                          save state: {'left': who, 'right': who}
 #   default lc_cast_held                      save state: True between cast_hold() and cast_resume()
+#   default lc_stage_spoke                    save state: {who: tick of their last line} this scene
+#   default lc_stage_tick                     save state: line counter for lc_stage_spoke
 #
 # Internal (helpers for this file and its screens; do not call from scenes): _lc_sprite_name,
 #   _lc_slot_for, _lc_occupant, _lc_put, _lc_staging_blocked, _lc_refresh, _lc_clear_slots
@@ -49,6 +51,8 @@ default lc_cast = {}
 default lc_faces = {}
 default lc_stage = {"left": None, "right": None}
 default lc_cast_held = False
+default lc_stage_spoke = {}
+default lc_stage_tick = 0
 
 init python:
 
@@ -83,11 +87,25 @@ init python:
         return None
 
     def _lc_slot_for(who):
+        """Leia's home is the right slot, Ryan's the left. A guest who is already on stage
+        stays put. A new guest takes an empty slot (the left first) and otherwise steps in for
+        whoever on stage spoke least recently (darryn 2026-11-19: if Leia has gone quiet, the
+        guest stands in her place; she takes it back on her next line). Without Leia in the
+        cast, a guest stands on the right."""
         if who == "leia":
             return "right"
-        if "leia" in store.lc_cast or who == "ryan":
+        if who == "ryan":
             return "left"
-        return "right"
+        for slot in ("left", "right"):
+            if _lc_occupant(slot) == who:
+                return slot
+        if "leia" not in store.lc_cast:
+            return "right"
+        free = [slot for slot in ("left", "right") if _lc_occupant(slot) is None]
+        if free:
+            return free[0]
+        spoke = store.lc_stage_spoke
+        return min(("left", "right"), key=lambda slot: spoke.get(_lc_occupant(slot), -1))
 
     def _lc_occupant(slot):
         if renpy.showing(LC_SLOT_TAG[slot]):
@@ -122,6 +140,8 @@ init python:
         """Put `who` on stage for the line they are about to say."""
         if who is None or who not in store.lc_cast or _lc_staging_blocked():
             return
+        store.lc_stage_tick += 1
+        store.lc_stage_spoke[who] = store.lc_stage_tick
         slot = _lc_slot_for(who)
         current = _lc_occupant(slot)
         if current == who:
@@ -148,6 +168,7 @@ init python:
         store.lc_cast = dict((k, v) for k, v in members.items() if v)
         store.lc_faces = {}
         store.lc_cast_held = False
+        store.lc_stage_spoke = {}
         _lc_clear_slots()
 
     LC_OUTFIT_CHANGE_SFX = "cloth_change"
