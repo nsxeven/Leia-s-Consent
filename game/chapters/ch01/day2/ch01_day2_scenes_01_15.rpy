@@ -1212,15 +1212,15 @@ label ch01_day2_scene_11b_boutique:
     scene cg ch01_d2_changing_room_04
     with dissolve
 
-    "On the other side of the shop, [girlfriend_name]'s head came out from behind the curtain. Just her head."
-    gf "Maya? Are you out there?"
-    maya "I'm out here looking amazing. Let me see you."
-    gf "No. I'm asking for thoughts. Verbal thoughts, through the curtain."
-    maya "You sent [player_name] a picture and you won't show me? I'm the one who picked it!"
-    gf "That's different. He's— that's different."
-    maya "Babe. Open the curtain."
-    "The curtain opened about a hand's width. Maya looked through it for a long second."
+    # ChangingRoom_04: Leia has pulled the curtain partway open with one hand, the other arm
+    # clamped across her chest; Maya (back to camera) is right outside.
+    "On the other side of the shop, [girlfriend_name]'s curtain slid open partway. She stood in the gap with one hand still gripping the fabric and the other arm clamped across her chest."
+    gf "Maya? Okay. Thoughts. Quick ones, before I change my mind."
+    "Maya was already standing right outside, in her red dress. She looked at [girlfriend_name] for a long second."
     maya "Oh, I hate you. Babe, you look so hot right now it's actually kind of annoying."
+    gf "That's not a thought. That's a noise."
+    maya "You sent [player_name] a picture and I only get half a curtain? I'm the one who picked it!"
+    gf "That's different. He's— that's different. And half a curtain is all anyone's getting."
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
     $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
@@ -1239,7 +1239,7 @@ label ch01_day2_scene_11b_boutique:
     maya "It's a great plan. You look this hot and you don't want to show it off? Come on. Two steps. The mirror out here is way better anyway."
     gf "The mirror in here is fine."
     maya "The mirror in there is a little sad and you know it."
-    "[girlfriend_name] looked at her for a long moment. Then, very slowly, the curtain opened the rest of the way."
+    "[girlfriend_name] looked at her for a long moment. Then, very slowly, she let go of the curtain and it swung open the rest of the way."
 
     scene cg ch01_d2_shop_showoff
     with dissolve
