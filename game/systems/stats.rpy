@@ -28,7 +28,7 @@
 #
 # Depends on: python-packages/lc_stat_model.py, systems/choice_engine.rpy, systems/story_state.rpy,
 #   game/defaults.rpy, systems/leia_side.rpy (lc_choice_applied_effects, lc_leia_is_side_choice),
-#   chapters/ch01/day2/ch01_day2_scenes_01_15.rpy (ch01_d2_route_lane, ch01_d2_love_exhib_blend)
+#   chapters/ch01/day2/ch01_day2_registrations.rpy (ch01_d2_route_lane, ch01_d2_love_exhib_blend)
 # Hooks: none (adds lc_migrate_stats_v2 to config.after_load_callbacks)
 # Load order: default (init 0)
 # Docs: docs/STAT_MODEL.md   Tests: tests/test_stat_runtime.py, tests/test_stat_model.py

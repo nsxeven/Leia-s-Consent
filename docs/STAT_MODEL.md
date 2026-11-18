@@ -114,8 +114,7 @@ says, how she reacts), not by what Ryan meant.
 6. Run `python -m unittest tests.test_choice_scoring tests.test_choice_path_tags` (with
    `PYTHONPATH=game/python-packages`); a failure names the choice and the reason.
 
-Each Day's effects live in its Day pack's `*_registrations.rpy` (Day 2's are still next to its
-scenes in `ch01_day2_scenes_01_15.rpy` and the other Day 2 files). Days 3-5 are written there with
+Each Day's effects live in its Day pack's `*_registrations.rpy`, Day 2 included. Days 3-5 are written there with
 the v2 scores directly (the old init 5 re-scoring file is gone). A new choice needs v2 stats in its
 Day's registrations, or the scoring test fails.
 `get_choice_effects()` still folds any old-style tuple at runtime so a stale entry can't crash a save.

@@ -36,9 +36,8 @@ files keep their old names, `ch01_main.rpy` and `ch01_scenes_*.rpy`).
 | `<prefix>_chapter.rpy` | the title-card line and the end-of-day review row |
 | `game/python-packages/lc_days/<day>.py` | chapter titles (`CHAPTER`); Day 1's also holds its route rules, thoughts and journal flags |
 
-Day 2 keeps most of its choice rows next to its scenes (`ch01_day2_scenes_01_15.rpy` and the other
-Day 2 files); its `ch01_day2_registrations.rpy` holds the rest and the ledger. That was left as it
-is on purpose.
+Every Day uses the same layout: scene files hold only labels, and all of a Day's choice rows,
+tags, CG counts, lane helpers and exempt lists sit in its `<prefix>_registrations.rpy`.
 
 ## How to add each kind of content
 

@@ -938,7 +938,7 @@ class MisuseGuardTests(unittest.TestCase):
                         zorder(_read("game/screens/scrapbook_ui.rpy"), "quick_menu"))
 
     def test_day_two_lane_subtracts_applied_effects(self):
-        src = _read("game/chapters/ch01/day2/ch01_day2_scenes_01_15.rpy")
+        src = _read("game/chapters/ch01/day2/ch01_day2_registrations.rpy")
         lane = src[src.index("def ch01_d2_route_lane():"):]
         lane = lane[:lane.index("return lc_stat_model.d2_route_lane(")]
         self.assertIn("lc_choice_applied_effects(exempt_id)", lane)

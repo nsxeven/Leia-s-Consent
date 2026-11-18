@@ -26,6 +26,7 @@ ERRAND = DAY2 / "ch01_day2_leia_errand.rpy"
 SC19B = DAY2 / "ch01_day2_scene_19b_leia_asks_maya.rpy"
 SC16_30 = DAY2 / "ch01_day2_scenes_16_30.rpy"
 SC01_15 = DAY2 / "ch01_day2_scenes_01_15.rpy"
+REG = DAY2 / "ch01_day2_registrations.rpy"  # Day Two choice rows, exempt lists, places
 FEED = DAY2 / "ch01_day2_feed.rpy"
 VISUALS = DAY2 / "ch01_day2_visuals.rpy"
 GALLERY = GAME / "chapters" / "ch01" / "day2" / "ch01_day2_gallery.rpy"
@@ -197,7 +198,7 @@ class ScoringTests(unittest.TestCase):
         self.assertEqual(m.CHOICE_ROUTE_FLAGS["ch01_d2_errand_walk_keep"], "lean")
 
     def test_only_her_choices_share_the_cap(self):
-        src = _read(ERRAND)
+        src = _read(REG)
         call = re.search(r'lc_leia_register_choices\(\s*"ch01_d2",(.*?)\)', src, re.S)
         self.assertIsNotNone(call)
         self.assertEqual(set(re.findall(r'"(\w+)"', call.group(1))), set(LEIA_IDS))
@@ -236,7 +237,7 @@ class ScoringTests(unittest.TestCase):
 
 class ExemptionTests(unittest.TestCase):
     def test_every_new_id_is_lane_and_end_route_exempt(self):
-        src = _read(SC01_15)
+        src = _read(REG)
         errand = _tuple(src, "CH01_D2_ERRAND_EXEMPT_CHOICES")
         self.assertEqual(set(errand), set(ALL_IDS))
         self.assertIn("CH01_D2_LANE_EXEMPT_CHOICES = (\"ch01_d2_knot_watch\",) + CH01_D2_ERRAND_EXEMPT_CHOICES", src)
@@ -370,7 +371,7 @@ class ArtTests(unittest.TestCase):
         self.assertIn('"d2_cafe_stranger"', placeholders)
 
     def test_places_register_real_backgrounds(self):
-        src = _read(ERRAND)
+        src = _read(REG)
         self.assertIn('lc_leia_register_places("ch01_d2", CH01_D2_ERRAND_PLACES)', src)
         bgs = re.findall(r'"bg":\s*"([^"]+)"', src)
         self.assertEqual(bgs, ["bg ch01_d2_cafe", "bg ch01_shop_day", "bg ch01_restaurant_bar", "bg ch01_d2_boutique"])

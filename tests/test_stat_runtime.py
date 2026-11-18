@@ -64,7 +64,9 @@ class StatRuntimeTests(unittest.TestCase):
         exec(compile(_block("systems/stats.rpy", "init python:\n"), "stats_init", "exec"), env)
         from lc_rpy_harness import load_blocks
         load_blocks([], env, packs=("day1",))  # Day One route helpers (its Day pack)
-        day2 = _block("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy", "init 1 python:\n", "\nlabel ")
+        day2 = _block("chapters/ch01/day2/ch01_day2_registrations.rpy",
+                      "# Scenes 1-15 (was ch01_day2_scenes_01_15.rpy): choice rows, lane helpers, the gate formatter.\ninit 1 python:\n",
+                      "\n# Scenes 16-30")
         exec(compile(day2, "day2_init", "exec"), env)
         self.env = env
 

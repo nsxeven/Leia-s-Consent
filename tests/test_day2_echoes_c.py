@@ -28,6 +28,7 @@ from lc_story_menus import menus  # noqa: E402
 DAY2 = ROOT / "game" / "chapters" / "ch01" / "day2"
 D2A = DAY2 / "ch01_day2_scenes_01_15.rpy"
 D2B = DAY2 / "ch01_day2_scenes_16_30.rpy"
+D2R = DAY2 / "ch01_day2_registrations.rpy"  # Day Two choice rows
 VISUALS = DAY2 / "ch01_day2_visuals.rpy"
 SAY = re.compile(r'^(\w+)?\s*"((?:[^"\\]|\\.)*)"\s*$')
 
@@ -234,7 +235,7 @@ class LeiasVersion(unittest.TestCase):
         self.assertEqual(eff["ch01_d2_boutique_her_version"], [("relationship", "trust", 1)])
         self.assertEqual(m.scoring_violations("ch01_d2_boutique_her_version",
                                               eff["ch01_d2_boutique_her_version"]), [])
-        a = src(D2A)
+        a = src(D2R)
         self.assertIn('"ch01_d2_boutique_her_version": ("attentive", "honest", "curious")', a)
 
     def test_her_version_differs_from_the_first_one(self):
@@ -390,7 +391,7 @@ class DreamReplyOption(unittest.TestCase):
         eff = effective_effects()
         self.assertEqual(eff["ch01_d2_postshop_dream"], [("relationship", "love", 1), ("relationship", "trust", 1)])
         self.assertEqual(m.choice_route_tag("ch01_d2_postshop_dream", eff["ch01_d2_postshop_dream"]), "Love")
-        self.assertIn('"ch01_d2_postshop_dream": ("supportive", "attentive", "honest", "repair")', src(D2A))
+        self.assertIn('"ch01_d2_postshop_dream": ("supportive", "attentive", "honest", "repair")', src(D2R))
         opt = next(o for o in postshop_menu()["options"] if o["caption"] == "[d2_postshop_dream_text]")
         self.assertEqual(opt["applied"], ["ch01_d2_postshop_dream"])
 

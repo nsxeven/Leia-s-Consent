@@ -9,127 +9,12 @@
 #   ch01_d2_errand_lane. Reason (K1): "dream" only if he told her the dream after the mall.
 # - Her choices share the +2/day cap (lc_leia_register_choices); Day Two's paths never reach it.
 #   Every id here, Ryan's confession reply and the scene 30 bring-up are left out of tonight's lane
-#   and end route (CH01_D2_ERRAND_EXEMPT_CHOICES in ch01_day2_scenes_01_15.rpy).
+#   and end route (CH01_D2_ERRAND_EXEMPT_CHOICES, ch01_day2_registrations.rpy). Her choice rows and map places
+#   are registered there too..
 # - Art: bg ch01_shop_day (K2) and cg d2_cafe_stranger are placeholders until darryn renders them
 #   (ch01_day2_visuals.rpy). The walks use ch01_d2_island_day (day art; ch01_roadside is night).
 # - Old saves already past 19b never see any of this (19c keeps its original line).
 
-init 1 python:
-    CHOICE_EFFECTS.update({
-        # Café (Love lane): thank him and tell him about Ryan / brush him off.
-        "ch01_d2_errand_cafe_love_thank": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_d2_errand_cafe_love_brush": [],  # Neutral: no stats
-        # Café (Exhibitionism lane): let the chat run / mention Ryan now.
-        "ch01_d2_errand_cafe_exhib_linger": [
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_d2_errand_cafe_exhib_mention": [],  # Neutral: no stats
-        # Café (NTR-risk lane): how long she hesitates. The ending is the same either way.
-        "ch01_d2_errand_cafe_ntr_linger": [
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_d2_errand_cafe_ntr_shut": [],  # Neutral: no stats
-        # Resort shop (shop first on Love/Exhib; after the café on Love).
-        "ch01_d2_errand_shop_tell": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_d2_errand_shop_keep": [],  # Neutral: no stats
-        # Resort shop after the café (Exhibitionism lane): the fridge-door reflection.
-        "ch01_d2_errand_shop_mirror_leave": [
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_d2_errand_shop_mirror_fix": [],  # Neutral: no stats
-        # Walk back (NTR-risk lane, her inner voice). Stores ch01_d2_leia_told.
-        "ch01_d2_errand_walk_tell": [
-            ("relationship", "sharing", 1),
-        ],
-        # Stamps "NTR" in Full mode (canon call K4: lc_stat_model.CHOICE_ROUTE_FLAGS "lean").
-        "ch01_d2_errand_walk_keep": [
-            ("relationship", "temptation", 1),
-        ],
-        # Ryan's reply to her confession (19c, told path). His own pick: never capped.
-        "ch01_d2_confession_ask": [
-            ("relationship", "sharing", 1),
-        ],
-        "ch01_d2_confession_protect": [
-            ("relationship", "love", 1),
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d2_confession_brush": [],  # Neutral: no stats
-        # Scene 30 "saw a post" bring-up (canon call K5). Ryan's picks: never capped.
-        "ch01_d2_feed_love_tease": [
-            ("relationship", "love", 1),
-        ],
-        "ch01_d2_feed_exhib_show": [
-            ("partner", "exhibitionism", 1),
-        ],
-        "ch01_d2_feed_told_aside": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d2_feed_kept_ask": [
-            ("relationship", "trust", 1),
-        ],
-        "ch01_d2_feed_kept_silent": [
-            ("relationship", "temptation", 1),
-        ],
-        "ch01_d2_feed_let_go": [],  # Neutral: no stats
-    })
-
-    CHOICE_TAGS.update({
-        "ch01_d2_errand_cafe_love_thank": ("honest", "attentive", "love-route"),
-        "ch01_d2_errand_cafe_love_brush": ("neutral",),
-        "ch01_d2_errand_cafe_exhib_linger": ("playful", "open", "curious"),
-        "ch01_d2_errand_cafe_exhib_mention": ("neutral", "honest"),
-        "ch01_d2_errand_cafe_ntr_linger": ("curious", "ntr-seed"),
-        "ch01_d2_errand_cafe_ntr_shut": ("boundary-setting",),
-        "ch01_d2_errand_shop_tell": ("honest", "supportive", "love-route"),
-        "ch01_d2_errand_shop_keep": ("neutral",),
-        "ch01_d2_errand_shop_mirror_leave": ("playful", "open"),
-        "ch01_d2_errand_shop_mirror_fix": ("neutral",),
-        "ch01_d2_errand_walk_tell": ("honest", "open", "trusting"),
-        "ch01_d2_errand_walk_keep": ("withdrawal", "ntr-seed"),
-        "ch01_d2_confession_ask": ("curious", "open", "honest"),
-        "ch01_d2_confession_protect": ("protective", "supportive", "attentive"),
-        "ch01_d2_confession_brush": ("neutral", "nonchalant", "dismissive"),
-        "ch01_d2_feed_love_tease": ("playful", "attentive"),
-        "ch01_d2_feed_exhib_show": ("encouraging", "open", "playful"),
-        "ch01_d2_feed_told_aside": ("supportive", "trusting", "honest"),
-        "ch01_d2_feed_kept_ask": ("attentive", "honest"),
-        "ch01_d2_feed_kept_silent": ("nonchalant", "withdrawal"),
-        "ch01_d2_feed_let_go": ("neutral", "trusting"),
-    })
-
-    # Her own choices: their gains share the day's +2 cap (docs/LEIA_SIDE.md). Ryan's confession
-    # reply and his scene 30 bring-up are his, so they are never registered here.
-    lc_leia_register_choices(
-        "ch01_d2",
-        "ch01_d2_errand_cafe_love_thank", "ch01_d2_errand_cafe_love_brush",
-        "ch01_d2_errand_cafe_exhib_linger", "ch01_d2_errand_cafe_exhib_mention",
-        "ch01_d2_errand_cafe_ntr_linger", "ch01_d2_errand_cafe_ntr_shut",
-        "ch01_d2_errand_shop_tell", "ch01_d2_errand_shop_keep",
-        "ch01_d2_errand_shop_mirror_leave", "ch01_d2_errand_shop_mirror_fix",
-        "ch01_d2_errand_walk_tell", "ch01_d2_errand_walk_keep",
-    )
-
-# Map cards (lc_leia_map). Text fields are player-visible. Place ids are save data: never rename.
-# Each open place is also a Moments strip moment on the Day Two review (leia_ch01_d2_cafe/_shop).
-define CH01_D2_ERRAND_PLACES = [
-    {"id": "cafe", "label": "Café", "bg": "bg ch01_d2_cafe",
-     "hint": "The café from lunch. They do his caramel frappuccino.",
-     "done": "Frappuccino: got it."},
-    {"id": "shop", "label": "Resort shop", "bg": "bg ch01_shop_day",
-     "hint": "Snacks, sunscreen, inflatable everything. Hopefully chocolate muffins.",
-     "done": "Muffins: got them."},
-    {"id": "bar", "label": "Resort bar", "bg": "bg ch01_restaurant_bar", "locked": True,
-     "locked_reason": "A bar, on my own, at four in the afternoon? Not on day two. Maybe if Maya comes next time."},
-    {"id": "boutique", "label": "Boutique", "bg": "bg ch01_d2_boutique", "locked": True,
-     "locked_reason": "I've had enough of that boutique for one day, thank you."},
-]
-
-init 1 python:
-    lc_leia_register_places("ch01_d2", CH01_D2_ERRAND_PLACES)
 
 
 # B01: Ryan dozes off on the lounger (his narration), right after 19b.

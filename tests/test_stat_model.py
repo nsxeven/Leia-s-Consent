@@ -81,7 +81,7 @@ class StatModelTests(unittest.TestCase):
         self.assertIn('set_story_value("ch01_d2_lane_migrated", lane)', body)
         for untouched in ("story_values =", "choice_history =", "ch01_d2_end_route", "story_flags ="):
             self.assertNotIn(untouched, body)
-        self.assertIn('migrated_lane=migrated', read("chapters/ch01/day2/ch01_day2_scenes_01_15.rpy"))
+        self.assertIn('migrated_lane=migrated', read("chapters/ch01/day2/ch01_day2_registrations.rpy"))
 
     def test_legacy_lane_matches_the_old_resolver(self):
         rel, par, ply = OLD_DEFAULTS
