@@ -36,6 +36,8 @@ label ch01_day2_scene_01_morning_after:
     # 11:00 = the time Julian set last night ("Breakfast after 11 or I'm calling the police").
     # Keep this diegetic time local to the wake beat; it is rollback-safe and
     # each delivered message keeps its own time when the thread is revisited.
+    # Day One's leftover group replies land first, so "No promises." can't sit under "Bro wake up".
+    $ ch01_day1_settle_pending_phone()
     $ lc_phone_set_story_time("11:00")
     $ lc_sfx("phone_notify")
     "My phone buzzed against the nightstand until I gave up and looked at it. 11:00, on the dot."
