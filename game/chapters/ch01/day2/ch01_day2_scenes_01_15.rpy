@@ -2171,13 +2171,15 @@ label ch01_day2_scene_15_pool_group:
     mc "If it helps, they do this to me too. You never really get used to it."
 
     "Then [friend_name] sent me inside for towels. When I came back out, Maya and [girlfriend_name] had their heads together on one lounger."
-    # LeiaMayaPool_02 (darryn 2026-11-19): Ryan's POV over the towels, the girls caught on the
-    # lounger. The art has Leia in the red bikini, so the CG plays only when she picked it;
-    # otherwise the beat stays on sprites (path rule: never show what this save didn't pick).
-    $ d2_towels_cg = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"
-    if d2_towels_cg:
-        $ enter_cinematic_mode()
-        scene cg ch01_d2_pool_towels
+    # LeiaMayaPool_Red_01 / _White_01 (darryn 2026-11-19): Ryan's POV over the towels, the girls
+    # caught on the lounger, in whichever bikini Leia picked upstairs (red = pool_bolder,
+    # white with navy trim = pool_conservative; old saves with no pick see the white one).
+    $ enter_cinematic_mode()
+    if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+        scene cg ch01_d2_pool_towels_red
+        with dissolve
+    else:
+        scene cg ch01_d2_pool_towels_white
         with dissolve
     $ face("maya", "smile")
     maya "—so he has no idea? None at all?"
@@ -2192,10 +2194,9 @@ label ch01_day2_scene_15_pool_group:
     $ face("leia", "smile")
     "She was grinning at me over the towels, the way she does when she's planning something and is terrible at hiding it."
     think "Whatever it was, I was going to be the last person at this pool to find out. That seemed about right."
-    if d2_towels_cg:
-        $ exit_cinematic_mode()
-        scene bg ch01_pool_day
-        with dissolve
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_day
+    with dissolve
 
     "After that the afternoon went slow and warm. We drifted between the water and the loungers, and somebody's drink was always going flat on the edge of the pool."
 

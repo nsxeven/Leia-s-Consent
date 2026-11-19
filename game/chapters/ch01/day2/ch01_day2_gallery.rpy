@@ -69,7 +69,8 @@ init -2 python:
         route="Leia's errand (every lane)")
     gallery_row("d2_pool_afternoon", "ch01_d2", "Pool afternoon",
         "Two bikinis on the bed, and two girls on a lounger very obviously not talking about sunscreen.",
-        [("ch01_d2_bikini_choice", "Options"), ("ch01_d2_pool_towels", "Towels")])
+        [("ch01_d2_bikini_choice", "Options"), ("ch01_d2_pool_towels_white", "Towels (white)"),
+         ("ch01_d2_pool_towels_red", "Towels (red)")])
     gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
         "Leia kisses Ryan by the pool, with an audience down the deck.",
         [("ch01_d2_pool_kiss", "The kiss")])
