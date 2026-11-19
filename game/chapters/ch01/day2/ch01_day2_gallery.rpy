@@ -36,10 +36,14 @@ init -2 python:
     gallery_row("d2_meet_maya", "ch01_d2", "Meeting Maya",
         "Maya arrives at the café; the first conversation turns into a new friendship.",
         [("ch01_d2_maya_reveal", "At the door"), ("ch01_d2_maya_cafe_01", "At the table"),
-         ("ch01_d2_maya_cafe_02", "Getting along"), ("ch01_d2_julian_bee", "Bee!")])
+         ("ch01_d2_maya_cafe_02", "Getting along"), ("ch01_d2_leia_maya_photos", "Photos"),
+         ("ch01_d2_julian_bee", "Bee!")])
     gallery_row("d2_photo_leia_maya", "ch01_d2", "Leia and Maya",
         "Maya's selfie with Leia, then the new Trip Group picture with all four.",
         [("ch01_d2_photo_leia_maya", "Leia and Maya"), ("ch01_d2_photo_group", "Trip Group")])
+    gallery_row("d2_cafe_julian_pov", "ch01_d2", "Julian's view (lunch)",
+        "Leia leaning across the table, from the seat right behind her.",
+        [("ch01_d2_leia_maya_photos_julian_pov", "Julian's POV")], mature=True)
     gallery_row("d2_mall_arrival", "ch01_d2", "Island mall",
         "Julian's quick shirt stop leads Leia and Maya past a boutique window and inside.",
         [("ch01_d2_mall_arrival", "Arriving"), ("ch01_d2_mall_boutique_window", "At the window"),

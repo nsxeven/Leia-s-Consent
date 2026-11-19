@@ -814,13 +814,27 @@ label ch01_day2_scene_07_leia_maya_click:
 
     "They were joking, but [girlfriend_name] was sitting differently now, elbows on the table, turned all the way toward Maya. She'd come to lunch to meet my friend. Somewhere in the last half hour, Maya had turned into her friend too."
 
+    # LeiaMayaPhotos_01 (darryn 2026-11-19): Leia kneels up on her chair and leans across the table
+    # to show Maya her phone; Julian is behind them. Plays for everyone, with Julian's Hidden POV
+    # (LeiaMayaPhotosCloseup_01). Ryan only clocks it if this save opened the breakfast view (B1).
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_leia_maya_photos
+    with dissolve
+    $ lc_pov_begin("d2_cafe_julian_photos")
+    "[girlfriend_name] knelt up on her chair and leaned all the way across the table to show Maya another photo."
+    "Maya leaned in with her chin on her hand, and the two of them giggled at the screen like nobody else was at the table."
+    "[friend_name], sitting right behind them, suddenly had a lot of interest in the ceiling."
+    $ lc_pov_end()
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+
     # Who saw what (B1): only when this save opened Julian's breakfast view (lc_pov_seen_in_save,
     # save-local). Not opened, or an old save: nothing extra plays. Flavor only, no stats.
     if lc_pov_seen_in_save("d2_breakfast_julian"):
         $ d2_witness_lane = ch01_d2_route_lane()
         $ face("leia", "smile")
-        "[girlfriend_name] knelt up on her chair and leaned all the way across the table to show Maya another photo."
-        "[friend_name]'s eyes went with her. They came back about half a second later than they should have, and went straight into his glass."
+        "[friend_name]'s eyes had gone with her. They came back about half a second later than they should have, and went straight into his glass."
         friend "These are really good drinks, by the way. Has everyone tried theirs? I'm just, um. I'm really enjoying mine."
         think "That was twice today. At breakfast I'd caught him watching us too, and he'd looked away with exactly the same face."
         $ face("leia", "skeptical")

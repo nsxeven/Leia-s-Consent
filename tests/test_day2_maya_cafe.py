@@ -70,7 +70,7 @@ class MayaCafeTests(unittest.TestCase):
         cafe_02 = source.split("scene cg ch01_d2_maya_cafe_02", 1)[1]
         self.assertLess(cafe_02.index('maya "What about you?'),
                         cafe_02.index("$ exit_cinematic_mode()"))
-        after_cafe_02 = cafe_02.split('maya "So next time, don\'t pose.', 1)[1]
+        after_cafe_02 = cafe_02.split('maya "So next time, don\'t pose.', 1)[1].split("# LeiaMayaPhotos_01", 1)[0]
         self.assertEqual(after_cafe_02.count("$ exit_cinematic_mode()"), 1)
         self.assertIn("$ exit_cinematic_mode()\n    scene bg ch01_d2_cafe", after_cafe_02)
         self.assertIn('$ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")', after_cafe_02)

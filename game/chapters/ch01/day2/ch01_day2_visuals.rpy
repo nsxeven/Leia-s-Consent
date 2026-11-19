@@ -82,6 +82,8 @@ image cg ch01_d2_leia_waking = At("images/cg/ch02/CH2D2_CG_LeiaSleeping_02.webp"
 image cg ch01_d2_maya_reveal = At("images/cg/ch02/CH2D2_CG_MayaReveal_01.webp", prologue_fullscreen)
 image cg ch01_d2_maya_cafe_01 = At("images/cg/ch02/CH2D2_CG_MayaCafe_01.webp", prologue_fullscreen)
 image cg ch01_d2_maya_cafe_02 = At("images/cg/ch02/CH2D2_CG_MayaCafe_02.webp", prologue_fullscreen)
+image cg ch01_d2_leia_maya_photos = At("images/cg/ch02/CH2D2_CG_LeiaMayaPhotos_01.webp", prologue_fullscreen)
+image cg ch01_d2_leia_maya_photos_julian_pov = At("images/cg/ch02/CH2D2_CG_LeiaMayaPhotosCloseup_01.webp", prologue_fullscreen)
 image cg ch01_d2_julian_bee = At("images/cg/ch02/CH2D2_CG_JulianBee_01.webp", prologue_fullscreen)
 image cg ch01_d2_mall_cafe_overheard = At("images/cg/ch02/CH2D2_CG_MallCafe_01.webp", prologue_fullscreen)
 image cg ch01_d2_mall_arrival = At("images/cg/ch02/CH2D2_CG_Mall_01.webp", prologue_fullscreen)
@@ -333,6 +335,18 @@ init 1 python:
         day_id="ch01_d2",
         label="Stranger, boutique",
         mood="noticed",
+    )
+    lc_pov_register(
+        "d2_cafe_julian_photos",
+        image="cg ch01_d2_leia_maya_photos_julian_pov",
+        source="cg ch01_d2_leia_maya_photos",
+        # Julian behind the girls, right background: beside his right eye (as seen), at the temple.
+        eye=(1695, 270), temple="right",
+        title="Julian's POV",
+        mature=True,
+        day_id="ch01_d2",
+        label="Julian, lunch",
+        mood="caught",
     )
     lc_pov_register(
         "d2_pool_kiss_stranger",
