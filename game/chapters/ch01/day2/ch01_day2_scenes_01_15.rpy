@@ -2204,7 +2204,22 @@ label ch01_day2_scene_15_pool_group:
 
     # Door A (new mechanics program, approved by Darryn): Ryan spots the scene 14 knot
     # working loose. Placed after the lane record above, so it can't change today's pool split.
+    # GroupPool_Red_01 / _White_01 (darryn 2026-11-19): Ryan's POV in the water behind Leia, Maya
+    # splashing Julian, drinks on the edge; her knot still tied. Bikini follows her pick upstairs
+    # (red = pool_bolder, white with navy trim otherwise). Cut back before the knot works loose.
+    $ enter_cinematic_mode()
+    if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+        scene cg ch01_d2_group_pool_red
+        with dissolve
+    else:
+        scene cg ch01_d2_group_pool_white
+        with dissolve
     "Later, [girlfriend_name] was standing in the shallow end with her back to me, laughing at something Maya had said."
+    "Maya had declared war on [friend_name] the second he got back in the water, and [friend_name] was losing it with a lot of dignity and no skill at all."
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_day
+    with dissolve
+
     "The knot at the back of her top had worked itself half loose. One string hung a lot lower than the other."
     think "Nobody else had noticed yet. Maya was busy splashing [friend_name], and [girlfriend_name] had no idea."
 

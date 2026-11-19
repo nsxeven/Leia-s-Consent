@@ -87,6 +87,8 @@ image cg ch01_d2_leia_maya_photos_julian_pov = At("images/cg/ch02/CH2D2_CG_LeiaM
 image cg ch01_d2_bikini_choice = At("images/cg/ch02/CH2D2_CG_LeiaBikiniChoice_01.webp", prologue_fullscreen)
 # Towels POV, one per bikini Leia picked upstairs (ch01_d2_pool_outfit).
 image cg ch01_d2_pool_towels_red = At("images/cg/ch02/CH2D2_CG_LeiaMayaPool_Red_01.webp", prologue_fullscreen)
+image cg ch01_d2_group_pool_red = At("images/cg/ch02/CH2D2_CG_GroupPool_Red_01.webp", prologue_fullscreen)
+image cg ch01_d2_group_pool_white = At("images/cg/ch02/CH2D2_CG_GroupPool_White_01.webp", prologue_fullscreen)
 image cg ch01_d2_pool_towels_white = At("images/cg/ch02/CH2D2_CG_LeiaMayaPool_White_01.webp", prologue_fullscreen)
 image cg ch01_d2_julian_bee = At("images/cg/ch02/CH2D2_CG_JulianBee_01.webp", prologue_fullscreen)
 image cg ch01_d2_mall_cafe_overheard = At("images/cg/ch02/CH2D2_CG_MallCafe_01.webp", prologue_fullscreen)
