@@ -243,6 +243,8 @@ label ch01_day2_scene_17_pool_return:
             think "I'd told her it was coming loose, and she'd fixed it. It hadn't made any difference at all."
         elif get_story_value("ch01_d2_knot_response") == "watched":
             think "I'd watched that knot slip all afternoon and said nothing. I just hadn't pictured it going like this."
+        elif get_story_value("ch01_d2_knot_response") == "touched":
+            think "An hour ago I'd had my hands all over her and left that knot exactly how it was. I hadn't been thinking about the knot."
 
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
@@ -301,6 +303,9 @@ label ch01_day2_scene_17_pool_return:
         elif get_story_value("ch01_d2_knot_response") == "watched":
             gf "Wait, why don't you look surprised? You saw it was loose earlier, didn't you?"
             mc "...Maybe a little."
+        elif get_story_value("ch01_d2_knot_response") == "touched":
+            gf "Don't look at me like that. You were right behind me earlier, you could've fixed it."
+            mc "I was busy."
         $ set_story_value("ch01_d2_pool_incident", "leia_maya_bee_top_off")
 
     else:
@@ -337,6 +342,8 @@ label ch01_day2_scene_17_pool_return:
             gf "You even told me it was loose. I fixed it! I fixed it properly!"
         elif get_story_value("ch01_d2_knot_response") == "watched":
             gf "That's why you were staring at me earlier! You saw it coming, didn't you? You're terrible."
+        elif get_story_value("ch01_d2_knot_response") == "touched":
+            gf "You were right there earlier. Your hands were literally right there. And you just left it."
         "By the time Maya and [friend_name] returned with the drinks, I was handing it back to her."
         maya "Wait, what happened? Why is everyone wet?"
         gf "Bee. Don't ask."

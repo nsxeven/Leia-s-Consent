@@ -119,7 +119,7 @@ class DayTwoTintCallsPassTheLane(unittest.TestCase):
             self.assertTrue(variants, where)
             if variants & {"love", "temptation"}:
                 self.assertTrue(args, "%s branches on %s but passes no lane" % (where, sorted(variants)))
-        self.assertGreaterEqual(seen, 9)
+        self.assertGreaterEqual(seen, 7)  # scene 13's two bikini tints became lane branches (darryn 2026-11-19)
 
 if __name__ == "__main__":
     unittest.main()

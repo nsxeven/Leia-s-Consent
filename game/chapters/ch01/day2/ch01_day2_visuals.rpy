@@ -113,6 +113,13 @@ image cg ch01_d2_pool_kiss = Composite(
     (0, 0), Solid("#2f7f98"),
     (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO POOL — {gf} KISSES {mc}\nHIS HAND ON HER ASS / STRANGERS DOWN THE DECK IN THE BACKGROUND\nFINAL ART PENDING", size=48, color="#ffffff"),
 )
+# Scene 15b (red bikini, Exhibitionism or NTR lane; darryn 2026-11-19): Ryan behind Leia in the
+# shallow end, her bikini pulled aside under the water. One CG for both lanes; placeholder until rendered.
+image cg ch01_d2_pool_knot_touch = Composite(
+    (1920, 1080),
+    (0, 0), Solid("#2a6f86"),
+    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO POOL — {mc} BEHIND {gf} IN THE SHALLOW END\nRED BIKINI PULLED ASIDE UNDER THE WATER\nFINAL ART PENDING", size=48, color="#ffffff"),
+)
 image cg ch01_d2_pool_kiss_stranger_pov = Composite(
     (1920, 1080),
     (0, 0), Solid("#245f74"),

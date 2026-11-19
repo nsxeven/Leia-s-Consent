@@ -2077,39 +2077,101 @@ label ch01_day2_scene_13_girls_upstairs:
     $ face("maya", "smile")
     $ face("leia", "shy")
 
-    if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
-        $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
-        # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
-        if d2_tint == "exhibitionism":
-            $ face("leia", "flustered")
-            gf "The smaller one. Yeah. The smaller one, before I talk myself out of it. I kind of want to see who notices."
-        elif d2_tint == "temptation":
-            $ face("leia", "neutral")
-            gf "The smaller one. I think. Yeah. I'm not running this one past [player_name], either, I'm just deciding."
-        else:
-            $ face("leia", "shy")
-            gf "The smaller one. I think. Yeah. The smaller one, before I talk myself out of it."
-        maya "Then wear the smaller one."
+    # Which bikini (darryn 2026-11-19), by lane, not by a stat bar any more:
+    # - Love: white, always. Leia keeps the red one for Ryan's eyes only.
+    # - Exhibitionism: the player picks; a white pick gets one "are you sure?" from Maya.
+    # - NTR risk, Ryan detached today: Leia vents, Maya pitches the red one as jealousy bait,
+    #   the player picks for her. NTR risk with a warm Ryan: white, a nice pool day with him.
+    # The picks are flavour (no stats) and come before the pre-split lane record.
+    $ d2_bikini_lane = ch01_d2_route_lane()
+    $ d2_ryan_detached = (choice_tag_count("dismissive", ch01_d2_choice_ids()) + choice_tag_count("withdrawal", ch01_d2_choice_ids())) > 0
+    if d2_bikini_lane == "exhibitionism":
+        $ face("leia", "flustered")
+        gf "Okay. Okay, okay. Don't rush me."
+        $ d2_bikini_red_text = format_choice("ch01_d2_bikini_red", "The red one.")
+        $ d2_bikini_white_text = format_choice("ch01_d2_bikini_white", "The white one.")
+        menu:
+            "[d2_bikini_red_text]":
+                $ apply_choice("ch01_d2_bikini_red")
+                $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
+                gf "The red one. Before I talk myself out of it. I kind of want to see who notices."
+                $ face("maya", "smile")
+                maya "Thank you. Finally. That's all I wanted."
+            "[d2_bikini_white_text]":
+                $ apply_choice("ch01_d2_bikini_white")
+                $ face("maya", "skeptical")
+                maya "Are you sure? Like, actually sure? Because you've been looking at the red one this whole time, babe. Last chance."
+                $ face("leia", "shy")
+                $ d2_bikini_red2_text = format_choice("ch01_d2_bikini_red_second", "...Fine. The red one.")
+                $ d2_bikini_white2_text = format_choice("ch01_d2_bikini_white_second", "I'm sure. The white one.")
+                menu:
+                    "[d2_bikini_red2_text]":
+                        $ apply_choice("ch01_d2_bikini_red_second")
+                        $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
+                        $ face("leia", "flustered")
+                        gf "Ugh. Fine. Give me the red one. If anyone stares, I'm blaming you."
+                        $ face("maya", "smile")
+                        maya "Deal. I'll take all the blame. Happily."
+                    "[d2_bikini_white2_text]":
+                        $ apply_choice("ch01_d2_bikini_white_second")
+                        $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
+                        $ face("leia", "smile")
+                        gf "I'm sure. White. Today I just want to float around and not think about it."
+                        maya "Okay. I'm not reasonable, I'm patient. That red one isn't going anywhere, and neither am I."
+    elif d2_bikini_lane == "ntr_risk" and d2_ryan_detached:
+        $ face("leia", "pout")
+        gf "Honestly? I don't even know who I'd be dressing up for. He's been somewhere else all day."
+        $ face("maya", "skeptical")
+        maya "Still?"
+        gf "Still. Every time I ask, I get, like, half an answer. It's like talking to him through a window."
+        $ face("maya", "neutral")
+        maya "Okay. Can I tell you how I deal with this? You're allowed to ignore me."
+        gf "Please. Anything."
+        $ face("maya", "smile")
+        maya "I don't talk it out. I fight it out, and then I fuck it out. So wear the red one. Let him watch everybody else look at you. He'll come right back into his body, trust me."
+        $ face("leia", "flustered")
+        gf "Maya! Is that, like... is that healthy?"
+        maya "It's not unhealthy. It's fast. It's worked on every guy I've ever met."
         $ face("leia", "skeptical")
-        gf "That's it? That's your advice?"
-        maya "That's it. You already knew. I just say it back to people, it's a whole service."
+        "[girlfriend_name] looked down at the red one for a long moment."
+        $ d2_bikini_ntr_red_text = format_choice("ch01_d2_bikini_ntr_red", "Take Maya's advice. The red one.")
+        $ d2_bikini_ntr_white_text = format_choice("ch01_d2_bikini_ntr_white", "No games. The white one.")
+        menu:
+            "[d2_bikini_ntr_red_text]":
+                $ apply_choice("ch01_d2_bikini_ntr_red")
+                $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
+                $ set_story_value("ch01_d2_bikini_jealousy", "red")
+                $ face("leia", "neutral")
+                gf "...Okay. The red one. If he's going to be somewhere else, he can at least see what he's missing."
+                $ face("maya", "smile")
+                maya "That's my girl."
+            "[d2_bikini_ntr_white_text]":
+                $ apply_choice("ch01_d2_bikini_ntr_white")
+                $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
+                $ set_story_value("ch01_d2_bikini_jealousy", "declined")
+                $ face("leia", "shy")
+                gf "No. I don't want to trick him into looking at me. I want him to actually be here. The white one."
+                $ face("maya", "neutral")
+                maya "Okay. That's fair. The offer stands, though."
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
-        # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
-        $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
-        if d2_tint == "temptation":
-            $ face("leia", "neutral")
-            gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day. And I'm not even asking [player_name] this time, it's my bikini."
+        if d2_bikini_lane == "ntr_risk":
+            $ face("leia", "smile")
+            gf "The white one. Honestly? I just want a nice, normal pool day with him. That's the whole plan."
+            $ face("maya", "smile")
+            maya "That's disgustingly sweet. Fine. White one."
         else:
             $ face("leia", "shy")
-            gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day."
-        $ face("maya", "skeptical")
-        maya "Boo. The little one was right there, and it's so cute. Fine. Normal pool day."
-        $ face("leia", "smile")
-        gf "Wait, that's it? You're surprisingly reasonable."
-        $ face("maya", "smile")
-        maya "I'm not reasonable, I'm patient. That little one isn't going anywhere, and neither am I."
+            # The boutique slip plays on every Day Two path; gated anyway (path rule).
+            if get_story_value("ch01_d2_boutique_slip_witness") in ("ryan", "julian"):
+                gf "After the shop? Absolutely not. If anyone's seeing me in that, it's him. Just him."
+            else:
+                gf "Absolutely not. If anyone's seeing me in that, it's him. Just him. Not a whole pool."
+            $ face("maya", "smile")
+            maya "Oh my God. You're saving it."
+            $ face("leia", "flustered")
+            gf "I'm not saving it! I'm just... Okay. Yes. I'm saving it."
+            maya "That's so cute I might be sick. Fine. White one. The red one's going in your bag, though."
 
     $ grant_story_outfit(get_story_value("ch01_d2_pool_outfit"), equip=True)
     $ set_story_flag("ch01_d2_scene_13_complete")
@@ -2226,6 +2288,12 @@ label ch01_day2_scene_15_pool_group:
     $ d2_knot_fix_text = format_choice("ch01_d2_knot_fix", "Swim over and fix it quietly.")
     $ d2_knot_tell_text = format_choice("ch01_d2_knot_tell", "Lean in and tell her.")
     $ d2_knot_watch_text = format_choice("ch01_d2_knot_watch", "Say nothing. See how long it holds.")
+    # Red bikini on the Exhibitionism or NTR lane only (darryn 2026-11-19): a fourth option,
+    # scored per lane, after the lane record like the rest of Door A.
+    $ d2_touch_lane = get_story_value("ch01_d2_route_lane_pre_split", "love")
+    $ d2_touch_red = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"
+    $ d2_knot_touch_exhib_text = format_choice("ch01_d2_knot_touch_exhib", "Move in behind her. Don't fix it.")
+    $ d2_knot_touch_ntr_text = format_choice("ch01_d2_knot_touch_ntr", "Move in behind her. Don't fix it.")
 
     menu:
         "[d2_knot_fix_text]":
@@ -2266,8 +2334,89 @@ label ch01_day2_scene_15_pool_group:
             else:
                 think "I should have said something. Part of me just wanted to see how long it would hold."
 
+        "[d2_knot_touch_exhib_text]" if d2_touch_red and d2_touch_lane == "exhibitionism":
+            $ apply_choice("ch01_d2_knot_touch_exhib")
+            $ set_story_value("ch01_d2_knot_response", "touched")
+            $ lc_discovery_mark("d2_knot_door")
+            jump ch01_day2_scene_15b_knot_touch
+
+        "[d2_knot_touch_ntr_text]" if d2_touch_red and d2_touch_lane == "ntr_risk":
+            $ apply_choice("ch01_d2_knot_touch_ntr")
+            $ set_story_value("ch01_d2_knot_response", "touched")
+            $ lc_discovery_mark("d2_knot_door")
+            jump ch01_day2_scene_15b_knot_touch
+
     $ set_story_flag("ch01_d2_scene_15_complete")
 
+    jump ch01_day2_scene_16_forced_split
+
+
+label ch01_day2_scene_15b_knot_touch:
+
+    # Door A, fourth answer (darryn 2026-11-19): red bikini, Exhibitionism or NTR lane. Ryan moves in
+    # instead of fixing the knot. Sprites (the red bikini sprite is pending; the bikini sprite stands
+    # in), one CG shared by both lanes, and the knot stays loose (scene 17 has its own echo).
+    $ d2_touch_ntr = get_story_value("ch01_d2_route_lane_pre_split", "love") == "ntr_risk"
+    "I didn't fix it. I waded up behind her instead, close enough that the water moved when I did, and put both hands on her waist."
+    $ face("leia", "shy")
+    gf "Oh! Hi. What are you doing?"
+    if not d2_touch_ntr:
+        mc "Looking. You're making it very easy."
+        mc "This bikini, the way you've been standing all afternoon. You know exactly what you're showing me."
+        $ face("leia", "flustered")
+        gf "I do not! It's just small. A small bikini isn't the same thing as doing it on purpose."
+        mc "Your knot's been coming undone for ten minutes, and you haven't fixed it once."
+        gf "...I didn't know it was coming undone."
+        mc "Sure you didn't."
+        $ face("leia", "smile")
+        "She leaned back against me anyway. Then a little further."
+        gf "Okay. Maybe I didn't totally hate you looking."
+    else:
+        mc "You knelt on that chair at lunch and leaned all the way across the table. [friend_name] was sitting right behind you."
+        $ face("leia", "skeptical")
+        gf "I was showing Maya a photo."
+        if lc_pov_seen_in_save("d2_breakfast_julian"):
+            mc "He watched you do it. That's twice today he's looked at you like that."
+        mc "And now this. Do you even think about who's looking at you?"
+        $ face("leia", "pout")
+        gf "Do you? You've barely looked at me all day."
+        if get_story_value("ch01_d2_bikini_jealousy") == "red":
+            think "It hit me, way too late, that she might have put this one on for exactly this."
+        mc "I'm looking now."
+        $ face("leia", "flustered")
+        "My hands tightened on her waist. She went very still, and then she didn't pull away."
+        if get_story_value("ch01_d2_bikini_jealousy") == "red":
+            gf "...Good. Took you long enough."
+        else:
+            gf "...You're jealous."
+            mc "Yeah."
+            gf "Okay. I think I like you jealous."
+
+    "At the far end, Maya was halfway through drowning [friend_name]. Nobody was looking our way."
+    mc "Tell me to stop."
+    $ face("leia", "flustered")
+    gf "...Don't you dare."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_pool_knot_touch
+    with dissolve
+    "Under the water I slid my fingers along the edge of her bikini bottoms and pulled them to the side."
+    "She caught her breath when I found her clit, and grabbed my wrist. Not to stop me. To keep my hand exactly where it was."
+    gf "[player_name]... they're right there."
+    mc "Then be quiet."
+    "I kept going in slow circles. She pressed her face into my shoulder and tried to stay quiet. She wasn't very good at it."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_day
+    with dissolve
+    maya "Are you two coming back over here or what?"
+    "[girlfriend_name] jerked away from me so fast she nearly went under, then slapped a wave of water straight into my face."
+    $ face("leia", "flustered")
+    gf "We're coming! He was being annoying!"
+    $ face("leia", "smile")
+    "She swam back toward them without looking at me. Her ears were bright red, and the loose string was still trailing behind her in the water."
+
+    $ set_story_flag("ch01_d2_scene_15_complete")
     jump ch01_day2_scene_16_forced_split
 
 
