@@ -102,6 +102,7 @@ def run(nodes, ns, out):
 def play(lines, values=None, flags=(), pov_seen=(), kept=None, lane="love", tint="shy", **local):
     values = dict(values or {})
     ns = {
+        "face": lambda who, expr: None,  # sprite expressions: staging only
         "get_story_value": lambda k, d=None: values.get(k, d),
         "set_story_value": values.__setitem__,
         "has_story_flag": lambda f: f in flags,
