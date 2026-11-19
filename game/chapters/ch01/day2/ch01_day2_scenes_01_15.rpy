@@ -2312,8 +2312,16 @@ label ch01_day2_scene_15_pool_group:
     # scored per lane, after the lane record like the rest of Door A.
     $ d2_touch_lane = get_story_value("ch01_d2_route_lane_pre_split", "love")
     $ d2_touch_red = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"
-    $ d2_knot_touch_exhib_text = format_choice("ch01_d2_knot_touch_exhib", "Move in behind her. Don't fix it.")
-    $ d2_knot_touch_ntr_text = format_choice("ch01_d2_knot_touch_ntr", "Move in behind her. Don't fix it.")
+    # NTR lane: red worn to bait a detached Ryan -> the jealous version (NTR); red worn "for him"
+    # with a warm Ryan -> the NTS seed (darryn 2026-11-19: set the stage for NTS early).
+    $ d2_touch_open = d2_touch_red and d2_touch_lane in ("exhibitionism", "ntr_risk")
+    $ d2_touch_jealous = get_story_value("ch01_d2_bikini_jealousy") == "red"
+    if d2_touch_lane == "exhibitionism":
+        $ d2_knot_touch_text = format_choice("ch01_d2_knot_touch_exhib", "Move in behind her. Don't fix it.")
+    elif d2_touch_jealous:
+        $ d2_knot_touch_text = format_choice("ch01_d2_knot_touch_ntr", "Move in behind her. Don't fix it.")
+    else:
+        $ d2_knot_touch_text = format_choice("ch01_d2_knot_touch_nts", "Move in behind her. Don't fix it.")
 
     menu:
         "[d2_knot_fix_text]":
@@ -2354,14 +2362,14 @@ label ch01_day2_scene_15_pool_group:
             else:
                 think "I should have said something. Part of me just wanted to see how long it would hold."
 
-        "[d2_knot_touch_exhib_text]" if d2_touch_red and d2_touch_lane == "exhibitionism":
-            $ apply_choice("ch01_d2_knot_touch_exhib")
-            $ set_story_value("ch01_d2_knot_response", "touched")
-            $ lc_discovery_mark("d2_knot_door")
-            jump ch01_day2_scene_15b_knot_touch
-
-        "[d2_knot_touch_ntr_text]" if d2_touch_red and d2_touch_lane == "ntr_risk":
-            $ apply_choice("ch01_d2_knot_touch_ntr")
+        "[d2_knot_touch_text]" if d2_touch_open:
+            if d2_touch_lane == "exhibitionism":
+                $ apply_choice("ch01_d2_knot_touch_exhib")
+            elif d2_touch_jealous:
+                $ apply_choice("ch01_d2_knot_touch_ntr")
+            else:
+                $ apply_choice("ch01_d2_knot_touch_nts")
+                $ set_story_value("ch01_d2_nts_seed", "pool_admission")
             $ set_story_value("ch01_d2_knot_response", "touched")
             $ lc_discovery_mark("d2_knot_door")
             jump ch01_day2_scene_15b_knot_touch
@@ -2391,19 +2399,34 @@ label ch01_day2_scene_15b_knot_touch:
         $ face("leia", "smile")
         "She leaned back against me anyway. Then a little further."
         gf "Okay. Maybe I didn't totally hate you looking."
+    elif get_story_value("ch01_d2_nts_seed") == "pool_admission":
+        # NTS seed (warm Ryan, red worn for him): the first "seen" step, said out loud by both.
+        mc "You knelt on that chair at lunch and leaned all the way across the table. [friend_name] was sitting right behind you."
+        $ face("leia", "skeptical")
+        gf "I was showing Maya a photo."
+        mc "I know. I saw him look."
+        if lc_pov_seen_in_save("d2_breakfast_julian"):
+            mc "He looked at breakfast too. That's twice today."
+        $ face("leia", "shy")
+        gf "...Are you mad?"
+        mc "No. That's the weird part."
+        "I didn't know how to say the rest, so I said it into her hair."
+        mc "I didn't hate it."
+        $ face("leia", "flustered")
+        gf "...You didn't?"
+        mc "No."
+        "She was quiet for a second. Then she leaned back against me again, slower this time."
+        gf "I put this on for you, you know. I just... didn't totally hate the rest of the pool noticing either."
     else:
+        # NTR, jealous (red worn to bait a detached Ryan).
         mc "You knelt on that chair at lunch and leaned all the way across the table. [friend_name] was sitting right behind you."
         $ face("leia", "skeptical")
         gf "I was showing Maya a photo."
         if lc_pov_seen_in_save("d2_breakfast_julian"):
             mc "He watched you do it. That's twice today he's looked at you like that."
         mc "And now this. Do you even think about who's looking at you?"
-        if get_story_value("ch01_d2_bikini_jealousy") == "for_him":
-            $ face("leia", "shy")
-            gf "I think about who I want looking. I put this on for you, you know."
-        else:
-            $ face("leia", "pout")
-            gf "Do you? You've barely looked at me all day."
+        $ face("leia", "pout")
+        gf "Do you? You've barely looked at me all day."
         if get_story_value("ch01_d2_bikini_jealousy") == "red":
             think "It hit me, way too late, that she might have put this one on for exactly this."
         mc "I'm looking now."

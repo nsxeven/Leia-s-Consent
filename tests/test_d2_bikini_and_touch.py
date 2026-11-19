@@ -47,14 +47,18 @@ class Bikini(unittest.TestCase):
 
 class Touch(unittest.TestCase):
     def test_option_only_red_and_exhib_or_ntr(self):
-        self.assertIn('"[d2_knot_touch_exhib_text]" if d2_touch_red and d2_touch_lane == "exhibitionism":', A)
-        self.assertIn('"[d2_knot_touch_ntr_text]" if d2_touch_red and d2_touch_lane == "ntr_risk":', A)
+        self.assertIn('"[d2_knot_touch_text]" if d2_touch_open:', A)
+        self.assertIn('d2_touch_open = d2_touch_red and d2_touch_lane in ("exhibitionism", "ntr_risk")', A)
+        for cid in ("exhib", "ntr", "nts"):
+            self.assertIn('apply_choice("ch01_d2_knot_touch_%s")' % cid, A)
         self.assertIn('d2_touch_red = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"', A)
 
     def test_scores_and_lane_exempt(self):
         self.assertIn('"ch01_d2_knot_touch_exhib": [\n            ("partner", "exhibitionism", 1),\n            ("relationship", "love", 1),', REG.replace("\r\n", "\n"))
-        self.assertIn('"ch01_d2_knot_touch_ntr": [\n            ("partner", "exhibitionism", 1),\n        ],', REG.replace("\r\n", "\n"))
-        self.assertIn('"ch01_d2_knot_touch_exhib", "ch01_d2_knot_touch_ntr") + CH01_D2_ERRAND_EXEMPT_CHOICES', REG)
+        reg = REG.replace("\r\n", "\n")
+        self.assertIn('"ch01_d2_knot_touch_ntr": [\n            ("relationship", "temptation", 1),\n            ("relationship", "trust", -1),', reg)
+        self.assertIn('"ch01_d2_knot_touch_nts": [\n            ("relationship", "sharing", 1),\n        ],', reg)
+        self.assertIn('"ch01_d2_knot_touch_exhib", "ch01_d2_knot_touch_ntr", "ch01_d2_knot_touch_nts") + CH01_D2_ERRAND_EXEMPT_CHOICES', REG)
 
     def test_scene_consent_cg_and_knot_left_loose(self):
         body = label(A, "ch01_day2_scene_15b_knot_touch")
