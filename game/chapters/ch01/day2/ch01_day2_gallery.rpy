@@ -67,6 +67,9 @@ init -2 python:
         "Leia waits for his frappuccino, and a stranger leans in.",
         ["d2_cafe_stranger"],
         route="Leia's errand (every lane)")
+    gallery_row("d2_pool_afternoon", "ch01_d2", "Pool afternoon",
+        "Two bikinis on the bed, and two girls on a lounger very obviously not talking about sunscreen.",
+        [("ch01_d2_bikini_choice", "Options"), ("ch01_d2_pool_towels", "Towels")])
     gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
         "Leia kisses Ryan by the pool, with an audience down the deck.",
         [("ch01_d2_pool_kiss", "The kiss")])

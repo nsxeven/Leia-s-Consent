@@ -2056,17 +2056,26 @@ label ch01_day2_scene_13_girls_upstairs:
     # Just the girls upstairs, still in their café clothes (Ryan is outside with the drinks).
     $ cast(leia="casual", maya="green_tube_top")
 
+    # LeiaBikiniChoice_01 (darryn 2026-11-19): the two bikinis laid out on the bed, the white one
+    # with navy trim (pool_conservative) and the glossy red one (pool_bolder). Held for the question.
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_bikini_choice
+    with dissolve
     "Upstairs, [girlfriend_name] laid both bikinis across the bed while Maya changed beside her."
-    "Both were two-piece tie bikinis. The difference was coverage: one familiar and safer, the other cut noticeably smaller."
+    "Both were two-piece tie bikinis. A white one with navy trim that she'd worn plenty of times, and a glossy red one, cut a lot smaller."
 
-    $ face("maya", "smile")
     maya "Oh, you brought options. Okay, I see you."
-    $ face("leia", "shy")
     gf "One is comfortable, and one requires a lot of confidence. Like, a lot."
-    maya "The little one. Obviously the little one, I'm not even going to pretend I'm neutral about this."
+    maya "The red one. Obviously the red one, I'm not even going to pretend I'm neutral about this."
     maya "So say it. Out loud. Which one are you putting on?"
 
     "[girlfriend_name] had asked me that same question yesterday, and today she had to answer it herself."
+
+    $ exit_cinematic_mode()
+    scene bg ch01_master_bedroom
+    with dissolve
+    $ face("maya", "smile")
+    $ face("leia", "shy")
 
     if lc_stat("exhibitionism") >= LC_T["d2_pool_outfit_bold"]:
         $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
@@ -2162,6 +2171,14 @@ label ch01_day2_scene_15_pool_group:
     mc "If it helps, they do this to me too. You never really get used to it."
 
     "Then [friend_name] sent me inside for towels. When I came back out, Maya and [girlfriend_name] had their heads together on one lounger."
+    # LeiaMayaPool_02 (darryn 2026-11-19): Ryan's POV over the towels, the girls caught on the
+    # lounger. The art has Leia in the red bikini, so the CG plays only when she picked it;
+    # otherwise the beat stays on sprites (path rule: never show what this save didn't pick).
+    $ d2_towels_cg = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"
+    if d2_towels_cg:
+        $ enter_cinematic_mode()
+        scene cg ch01_d2_pool_towels
+        with dissolve
     $ face("maya", "smile")
     maya "—so he has no idea? None at all?"
     gf "None. And you are not allowed to—"
@@ -2175,6 +2192,10 @@ label ch01_day2_scene_15_pool_group:
     $ face("leia", "smile")
     "She was grinning at me over the towels, the way she does when she's planning something and is terrible at hiding it."
     think "Whatever it was, I was going to be the last person at this pool to find out. That seemed about right."
+    if d2_towels_cg:
+        $ exit_cinematic_mode()
+        scene bg ch01_pool_day
+        with dissolve
 
     "After that the afternoon went slow and warm. We drifted between the water and the loungers, and somebody's drink was always going flat on the edge of the pool."
 
