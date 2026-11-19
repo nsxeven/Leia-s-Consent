@@ -33,7 +33,10 @@ class Bikini(unittest.TestCase):
         rest = self.s13.split("elif d2_bikini_lane == \"ntr_risk\" and d2_ryan_detached:", 1)[1].split("\n    else:", 1)[1]
         self.assertIn('set_story_value("ch01_d2_pool_outfit", "pool_conservative")', rest)
         self.assertNotIn("pool_bolder", rest)  # Love and warm NTR: always white
-        self.assertIn("nice, normal pool day with him", rest)
+        warm = self.s13.split('    elif d2_bikini_lane == "ntr_risk":', 1)[1].split("\n    else:", 1)[0]
+        self.assertIn("nice, normal pool day with him", warm)  # warm NTR still gets the pick
+        self.assertIn('apply_choice("ch01_d2_bikini_ntr_red")', warm)
+        self.assertIn('"ch01_d2_bikini_jealousy", "for_him"', warm)
         self.assertIn("it's him. Just him", rest)
 
     def test_bikini_picks_are_flavour(self):

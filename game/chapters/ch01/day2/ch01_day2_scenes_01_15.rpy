@@ -2153,25 +2153,45 @@ label ch01_day2_scene_13_girls_upstairs:
                 gf "No. I don't want to trick him into looking at me. I want him to actually be here. The white one."
                 $ face("maya", "neutral")
                 maya "Okay. That's fair. The offer stands, though."
+    elif d2_bikini_lane == "ntr_risk":
+        # NTR lane with a warm Ryan (darryn 2026-11-19): the player still picks, so being kind
+        # today never costs the red-bikini scene. No jealousy plan here, just Maya being Maya.
+        $ face("leia", "smile")
+        gf "Honestly? I just want a nice, normal pool day with him. He's been really sweet today."
+        $ face("maya", "smile")
+        maya "Then reward him. Wear the red one. Sweet guys deserve nice things too, babe."
+        $ face("leia", "shy")
+        $ d2_bikini_ntr_warm_red_text = format_choice("ch01_d2_bikini_ntr_red", "...Okay. The red one. For him.")
+        $ d2_bikini_ntr_warm_white_text = format_choice("ch01_d2_bikini_ntr_white", "The white one. A normal pool day.")
+        menu:
+            "[d2_bikini_ntr_warm_red_text]":
+                $ apply_choice("ch01_d2_bikini_ntr_red")
+                $ set_story_value("ch01_d2_pool_outfit", "pool_bolder")
+                $ set_story_value("ch01_d2_bikini_jealousy", "for_him")
+                $ face("leia", "flustered")
+                gf "Okay. The red one. But it's for him. Not for the whole pool."
+                $ face("maya", "smile")
+                maya "Sure. Tell the whole pool that."
+            "[d2_bikini_ntr_warm_white_text]":
+                $ apply_choice("ch01_d2_bikini_ntr_white")
+                $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
+                $ face("leia", "smile")
+                gf "The white one. A nice, normal pool day. That's the whole plan."
+                $ face("maya", "smile")
+                maya "That's disgustingly sweet. Fine. White one."
     else:
         $ set_story_value("ch01_d2_pool_outfit", "pool_conservative")
-        if d2_bikini_lane == "ntr_risk":
-            $ face("leia", "smile")
-            gf "The white one. Honestly? I just want a nice, normal pool day with him. That's the whole plan."
-            $ face("maya", "smile")
-            maya "That's disgustingly sweet. Fine. White one."
+        $ face("leia", "shy")
+        # The boutique slip plays on every Day Two path; gated anyway (path rule).
+        if get_story_value("ch01_d2_boutique_slip_witness") in ("ryan", "julian"):
+            gf "After the shop? Absolutely not. If anyone's seeing me in that, it's him. Just him."
         else:
-            $ face("leia", "shy")
-            # The boutique slip plays on every Day Two path; gated anyway (path rule).
-            if get_story_value("ch01_d2_boutique_slip_witness") in ("ryan", "julian"):
-                gf "After the shop? Absolutely not. If anyone's seeing me in that, it's him. Just him."
-            else:
-                gf "Absolutely not. If anyone's seeing me in that, it's him. Just him. Not a whole pool."
-            $ face("maya", "smile")
-            maya "Oh my God. You're saving it."
-            $ face("leia", "flustered")
-            gf "I'm not saving it! I'm just... Okay. Yes. I'm saving it."
-            maya "That's so cute I might be sick. Fine. White one. The red one's going in your bag, though."
+            gf "Absolutely not. If anyone's seeing me in that, it's him. Just him. Not a whole pool."
+        $ face("maya", "smile")
+        maya "Oh my God. You're saving it."
+        $ face("leia", "flustered")
+        gf "I'm not saving it! I'm just... Okay. Yes. I'm saving it."
+        maya "That's so cute I might be sick. Fine. White one. The red one's going in your bag, though."
 
     $ grant_story_outfit(get_story_value("ch01_d2_pool_outfit"), equip=True)
     $ set_story_flag("ch01_d2_scene_13_complete")
@@ -2378,8 +2398,12 @@ label ch01_day2_scene_15b_knot_touch:
         if lc_pov_seen_in_save("d2_breakfast_julian"):
             mc "He watched you do it. That's twice today he's looked at you like that."
         mc "And now this. Do you even think about who's looking at you?"
-        $ face("leia", "pout")
-        gf "Do you? You've barely looked at me all day."
+        if get_story_value("ch01_d2_bikini_jealousy") == "for_him":
+            $ face("leia", "shy")
+            gf "I think about who I want looking. I put this on for you, you know."
+        else:
+            $ face("leia", "pout")
+            gf "Do you? You've barely looked at me all day."
         if get_story_value("ch01_d2_bikini_jealousy") == "red":
             think "It hit me, way too late, that she might have put this one on for exactly this."
         mc "I'm looking now."
