@@ -36,6 +36,8 @@ label ch01_day2_scene_01_morning_after:
     # 11:00 = the time Julian set last night ("Breakfast after 11 or I'm calling the police").
     # Keep this diegetic time local to the wake beat; it is rollback-safe and
     # each delivered message keeps its own time when the thread is revisited.
+    # Day One's leftover group replies land first, so "No promises." can't sit under "Bro wake up".
+    $ ch01_day1_settle_pending_phone()
     $ lc_phone_set_story_time("11:00")
     $ lc_sfx("phone_notify")
     "My phone buzzed against the nightstand until I gave up and looked at it. 11:00, on the dot."
@@ -90,6 +92,7 @@ label ch01_day2_scene_01_morning_after:
     # Day One echo: the upstairs talk before movie night (ch01_upstairs_response).
     # honest/liked = the loving path, so Ryan thanks her (out loud and in his head).
     if get_story_value("ch01_upstairs_response") == "honest":
+        $ face("leia", "smile")
         "She caught me watching her and smiled into the pillow."
         gf "You carried me up those stairs last night. Like a sack of laundry, and I'm pretty sure my hip hit the railing on the way up, but you actually carried me."
         mc "You said badly was fine. I did exactly what I was told."
@@ -98,27 +101,34 @@ label ch01_day2_scene_01_morning_after:
         gf "It wasn't weird. You told me a thing. I like it when you tell me things."
         think "Four years, and she still made the hard stuff easier to say than it had any right to be."
     elif get_story_value("ch01_upstairs_response") == "liked":
+        $ face("leia", "smile")
         gf "I've been lying here thinking about our talk last night. The proper one."
         mc "Good thinking or bad thinking?"
         gf "Good. Mostly good. I keep replaying the bit where you actually said stuff, in real sentences, without me having to drag every word out of you."
         mc "You did drag a few out. But thank you. For making me do it, and for upstairs before that. I told you I didn't hate people noticing you, and you didn't look at me like I was a freak."
+        $ face("leia", "flustered")
         gf "Oh, I freaked out. Internally. Very quietly. And then I decided I didn't hate it either, so."
         think "I'd half expected her to go looking for the catch. She'd checked my face, decided I meant it, and then held me to the talk instead of letting it slide. I didn't know what I'd done to get that lucky."
     elif get_story_value("ch01_upstairs_response") == "swallowed":
         "She was on her side of the bed, close enough to touch and not quite touching."
+        $ face("leia", "skeptical")
         gf "Are you still tired? Last night you said you were just tired."
         mc "No. I slept it off. I'm good."
+        $ face("leia", "shy")
         gf "Okay. Good."
         think "Last night she'd decided to believe me because I'd asked her to. This morning she was still being careful with me, and that was my doing."
     elif get_story_value("ch01_upstairs_response") == "snapped":
         "Over her shoulder, the dinner dress lay folded on the chair. Neatly. She never folds anything."
         if get_story_value("ch01_dream_response") == "withdrew":
+            $ face("leia", "pout")
             gf "Morning."
             "She said it carefully, the way you'd step around something on the floor in the dark. I let her."
         else:
             mc "Hey. What I said upstairs last night. The 'stay awake next time' thing. That was a crap thing to say."
+            $ face("leia", "pout")
             gf "It was kind of a crap thing to say."
             mc "Yeah. You were tired. You're allowed to be tired. I was just being— I don't know. Sorry."
+            $ face("leia", "shy")
             gf "Okay. Thank you. That's a lot better than the half a sentence you gave me in the dark."
             mc "Yeah. That one didn't really count."
             "She shifted half an inch closer, which for [girlfriend_name], after a fight, was practically a hug."
@@ -126,11 +136,13 @@ label ch01_day2_scene_01_morning_after:
     # Day One continuity: Julian already sent every earned solo pool Capture to
     # Trip Group last night. Review that same inventory here instead of creating
     # a second photo-count/route state for the morning.
+    $ face("leia", "neutral")
     $ d2_morning_pool_photos = ch01_pool_capture_assets()
     $ d2_morning_withdrew = get_story_value("ch01_dream_response") == "withdrew"
 
     if d2_morning_pool_photos:
         "[girlfriend_name] reached for her phone and opened the photos [friend_name] had sent the night before."
+        $ face("leia", "smile")
         gf "I still think he was way too pleased with himself, sending these at midnight like a proud dad, but..."
         gf "This one's actually not bad. Like, I'd let my mom see this one."
 
@@ -230,43 +242,55 @@ label ch01_day2_scene_01_morning_after:
     # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
     $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
     if d2_tint == "love":
+        $ face("leia", "smile")
         gf "You were a menace last night, by the way. During the movie. My menace, but still a menace."
     elif d2_tint == "temptation":
         gf "You were kind of a menace last night, by the way. During the movie."
         "She said it to her phone, thumb still scrolling, like it had only just crossed her mind."
     else:
+        $ face("leia", "pout")
         gf "You were kind of a menace last night, you know. During the movie. I didn't forget."
     mc "Good morning to you too."
+    $ face("leia", "flustered")
     gf "I'm serious. I spent half that movie trying to act normal."
     mc "You were the one who kept checking if he was looking. Sorry. You were, a bit."
 
     if lc_stat("exhibitionism") < LC_T["d2_morning_unsure"]:
         gf "I was checking that he wasn't! That's a completely different direction of checking."
     elif lc_stat("exhibitionism") < LC_T["d2_morning_bold"]:
+        $ face("leia", "pout")
         gf "That is not the same thing, and you know it isn't."
         mc "Sure. Totally different."
         gf "It isn't! Stop saying it like that."
     else:
+        $ face("leia", "smile")
         gf "You have no evidence of that."
         mc "I was sitting right next to you. I have eyes."
         gf "Eyes are circumstantial."
 
     # Day One echo: the scene 28 talk about movie night (ch01_alone_movie_response).
     if get_story_value("ch01_alone_movie_response") == "apologized":
+        $ face("leia", "smile")
         gf "You did check on me after, though. When he went to bed. That was really sweet. I'm still saying menace."
     elif get_story_value("ch01_alone_movie_response") == "curious":
+        $ face("leia", "smile")
         gf "So did you figure it out? Last night you said you were still figuring out how I reacted."
         mc "I've had seven hours. Most of them asleep."
+        $ face("leia", "shy")
         gf "Well, I haven't figured it out either. Me, I mean. For the record."
     elif get_story_value("ch01_alone_movie_response") == "open":
+        $ face("leia", "smile")
         gf "And don't think I forgot the other thing. The 'I liked watching you get nervous' thing."
         mc "You said 'a little.'"
+        $ face("leia", "flustered")
         gf "I said a little! I was tired! A little is still a little, it doesn't grow overnight."
     elif get_story_value("ch01_alone_movie_response") == "dismissed":
+        $ face("leia", "pout")
         gf "I know, I know. It was just messing around."
         "She said it exactly the way I'd said it last night, flat and quick, and looked back at her phone."
         think "It sounded worse in her mouth than it had in mine."
 
+    $ face("leia", "neutral")
     $ d2_morning_reassure_text = format_choice("ch01_d2_morning_reassure", "Relax. I was only teasing you.")
     $ d2_morning_tease_text = format_choice("ch01_d2_morning_tease", "I liked seeing you curious.")
     $ d2_morning_dismiss_text = format_choice("ch01_d2_morning_dismiss", "It wasn't a big deal.")
@@ -275,35 +299,43 @@ label ch01_day2_scene_01_morning_after:
         "[d2_morning_reassure_text]":
             $ apply_choice("ch01_d2_morning_reassure")
             mc "Relax. I was only teasing you."
+            $ face("leia", "smile")
             gf "I know. I just like hearing you say it."
             "She moved closer and rested her forehead briefly against my shoulder."
 
         "[d2_morning_tease_text]":
             $ apply_choice("ch01_d2_morning_tease")
             mc "I liked seeing you curious."
+            $ face("leia", "flustered")
             gf "Curious? Curious about what?"
             mc "I don't know. That's kind of the point. You looked like you were figuring something out."
+            $ face("leia", "smile")
             gf "You're impossible. You know that? Completely impossible."
             "She was smiling when she said it."
 
         "[d2_morning_dismiss_text]":
             $ apply_choice("ch01_d2_morning_dismiss")
             mc "It wasn't a big deal."
+            $ face("leia", "pout")
             gf "Right."
             "The subject died more quickly than it needed to."
 
+    $ face("leia", "neutral")
     "For a moment neither of us said anything."
 
     if get_story_value("ch01_dream_response") == "withdrew":
         "[girlfriend_name] shifted closer anyway, her shoulder settling against mine."
         "I felt the invitation in it. I just didn't quite know what to do with it."
+        $ face("leia", "skeptical")
         gf "Hey. You okay? You've got your thinking face on again."
         mc "Yeah. Just didn't sleep that well."
         "She watched me for another second, then let me have the answer."
     elif get_story_value("ch01_dream_response") == "curious":
+        $ face("leia", "smile")
         "[girlfriend_name] shifted closer, warm and familiar against my side."
         think "She was right here, warm and normal. That should have made the dream easier to dismiss. Somehow it only made my reaction to it stranger."
     else:
+        $ face("leia", "smile")
         "[girlfriend_name] shifted closer and stole the last corner of duvet I still technically owned."
         mc "Seriously? That was my last corner."
         gf "You weren't using it properly."
@@ -311,6 +343,7 @@ label ch01_day2_scene_01_morning_after:
         gf "That's not using it, babe. That's just storing it on you."
 
     "A few minutes later, [girlfriend_name] finally pushed herself out of bed and stretched."
+    $ face("leia", "smile")
     gf "I'm showering before [friend_name] sends a second text. His second texts are always worse than the first one."
     mc "He's probably been up for an hour already. Standing in front of the fridge."
     gf "He's always awake when there's food. It's like a sixth sense with him."
@@ -542,32 +575,40 @@ label ch01_day2_scene_05_meet_maya:
     # Leia's café/mall CGs show the white off-shoulder top and denim shorts
     # (casual / PRO/Base_Casual.png).
     $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
+    $ face("maya", "smile")
     "She hugged me the way people do when they've known you too long to bother being polite about it."
+    $ face("leia", "skeptical")
     "[girlfriend_name] watched the greeting carefully."
 
     # Day One echo: the scene 29 talk (ch01_private_attention_response).
     if get_story_value("ch01_private_attention_response") == "jealous":
         "When Maya let go of me, [girlfriend_name] leaned in close enough that only I could hear."
+        $ face("leia", "pout")
         gf "Okay. I get it now. The 'a little jealous' thing from last night. I'm a little jealous."
         mc "Only a little?"
         gf "Don't use my own lines on me. I'll be fine in five minutes."
     elif get_story_value("ch01_private_attention_response") == "claimed":
         "When Maya let go of me, [girlfriend_name] slid her hand into mine and kept it there."
+        $ face("leia", "smile")
         gf "Just so we're clear, the 'mine' thing goes both ways."
         mc "Yeah. Obviously."
         gf "Good. I'm not complaining. I'm just saying."
     elif get_story_value("ch01_private_attention_response") == "open":
         "[girlfriend_name] caught me watching her instead of Maya."
+        $ face("leia", "flustered")
         gf "Don't do the face. The 'I like seeing you get attention' face. She hasn't even said hi to me yet."
         mc "She's about to."
+        $ face("leia", "smile")
         gf "Still weird, babe. Not bad weird. But weird."
     elif get_story_value("ch01_private_attention_response") == "indifferent":
         "Usually, after something like that, she'd look at me to see what I thought. This time she didn't."
 
     maya "And you're [girlfriend_name]. Finally. Hi! Sorry, I feel like I already know you."
+    $ face("leia", "shy")
     gf "Hi. Sorry, hi. Finally? How long have you been waiting for this?"
     maya "Years. I've been hearing about you for years. He talks about you like you invented coffee."
 
+    $ face("leia", "flustered")
     "[girlfriend_name] slowly turned toward me."
 
     gf "Years? You talk about me? To people?"
@@ -575,10 +616,13 @@ label ch01_day2_scene_05_meet_maya:
     maya "Constantly. Every time we got lunch. It's honestly exhausting."
     friend "Thank you. Finally someone else gets it. I've been suffering through this alone for four years."
 
+    $ face("leia", "smile")
     "Maya introduced herself to [friend_name] and, within thirty seconds, had already made fun of his sunglasses."
 
+    $ face("maya", "skeptical")
     maya "Those sunglasses cost more than my flight. Don't lie to me. They do, don't they?"
     friend "They're... they're just sunglasses. They were on sale. Kind of."
+    $ face("maya", "smile")
     maya "He went red. That's a yes."
 
     "We ordered drinks and found a table near the open side of the café."
@@ -605,6 +649,7 @@ label ch01_day2_scene_05_meet_maya:
     with dissolve
     $ cast(ryan="casual", leia="casual", julian="evening", maya="green_tube_top")
     $ face("maya", "smile")
+    $ face("leia", "smile")
     maya "Good. That means it's going well. That's how you know."
 
     $ set_story_flag("ch01_d2_scene_05_complete")
@@ -614,6 +659,7 @@ label ch01_day2_scene_05_meet_maya:
 label ch01_day2_scene_06_jealousy_test:
 
     "Maya and I fell briefly into the shorthand of old stories and mutual friends."
+    $ face("leia", "shy")
     "[girlfriend_name] listened instead of jumping in. It was the kind of quiet she went into at parties, small enough that Maya, halfway through a story, missed it. I didn't miss it. I just didn't do anything about it yet."
 
     $ d2_maya_include_text = format_choice("ch01_d2_maya_include", ('Pull ' + girlfriend_name + ' into the conversation.'))
@@ -625,6 +671,7 @@ label ch01_day2_scene_06_jealousy_test:
             $ apply_choice("ch01_d2_maya_include")
             mc "Wait, tell her the airport story. She's never heard the airport story."
             maya "No, you tell her, because you're the one who caused it. I was an innocent bystander."
+            $ face("leia", "smile")
             gf "Now I need to hear this. What did you do at an airport?"
             "[girlfriend_name] shifted closer to the conversation instead of sitting outside it."
 
@@ -634,28 +681,37 @@ label ch01_day2_scene_06_jealousy_test:
 
         "[d2_maya_dismiss_text]":
             $ apply_choice("ch01_d2_maya_dismiss_leia")
+            $ face("leia", "pout")
             "One old story turned into three. I didn't notice [girlfriend_name] had gone quiet until she looked at me, and by then Maya was already halfway into the next one."
+            $ face("leia", "smile")
             "By the time Maya turned the conversation toward her, [girlfriend_name] was smiling again, but the delay had registered."
 
     "Then Maya put both elbows on the table and pointed her straw at [girlfriend_name]."
 
     maya "Okay, enough [player_name] history. Tell me something about you that he wouldn't think to tell me."
+    $ face("leia", "flustered")
     gf "Oh no. That's a dangerous amount of freedom. Okay. Um."
     mc "Hey. I tell people things about you."
     maya "You tell people the boring things. Overruled. Go, [girlfriend_name]."
 
     if get_story_value("ch01_dream_response") == "withdrew":
+        $ face("leia", "shy")
         "[girlfriend_name] glanced at me before answering. It was brief, but after the morning we'd had, I noticed it."
     else:
         "[girlfriend_name] thought about it like she was picking one card out of a whole hand."
 
+    $ face("leia", "smile")
     gf "I hate folding laundry."
+    $ face("maya", "skeptical")
     maya "That's it? That's your secret?"
     gf "I mean I really hate it. I will live out of a clean laundry basket for a week."
     mc "Two weeks. I've seen two weeks."
+    $ face("leia", "pout")
     gf "Nobody asked for your testimony, babe."
+    $ face("maya", "smile")
     maya "No, that's perfect. I do the same thing with a chair. There's a chair in my room that's just clothes now. Okay, keep going, what else?"
 
+    $ face("leia", "smile")
     "The conversation stopped being mine and Maya's reunion after that."
 
     $ set_story_flag("ch01_d2_scene_06_complete")
@@ -667,14 +723,18 @@ label ch01_day2_scene_07_leia_maya_click:
     "The awkwardness lasted considerably less time than I'd expected."
     "Maya asked [girlfriend_name] one question about the resort. [girlfriend_name] answered with a story. One story became three."
 
+    $ face("maya", "skeptical")
     maya "Wait, wait. You actually like traveling with him? On purpose?"
+    $ face("leia", "smile")
     gf "Most of the time? I'd say eighty percent."
     mc "Eighty?"
     gf "Airports bring out the worst in you, babe. You know they do."
+    $ face("maya", "smile")
     maya "Thank you! Wait, no, keep going, I need details."
     gf "He gets convinced every line is the wrong line, and then he moves us, and then that line's the wrong line too."
     maya "THANK you. Somebody finally said it."
     mc "I have instincts. Sometimes the other line is faster."
+    $ face("maya", "skeptical")
     maya "No, you have anxiety with luggage. That's different from instincts."
 
     "[girlfriend_name] laughed hard enough to cover her mouth."
@@ -713,14 +773,19 @@ label ch01_day2_scene_07_leia_maya_click:
     # morning showed only the group selfie. Same value and default as ch01_pool_capture_assets().
     if int(get_story_value("ch01_pool_capture_count", 1)) > 0:
         "[girlfriend_name] scrolled back to one of yesterday's pool photos."
+        $ face("leia", "smile")
         gf "I did get better eventually, though. Look, by the end I wasn't even posing."
+        $ face("maya", "smile")
         maya "See? This one's really good. Who took this one?"
         gf "[friend_name] did."
         maya "Ugh. Annoying. I was really hoping I could insult his photography too."
+        $ face("maya", "skeptical")
         maya "Seriously, though. [player_name], you've had four years. Where's your version of this?"
         gf "He has about four hundred photos of me squinting at a menu."
         friend "In my defense, she'd stopped posing by then. She was mostly looking past me at [player_name]. I just pressed the button."
+        $ face("leia", "flustered")
         gf "Well, it's going on my lock screen. Don't look at me like that, it's the best one of me on the whole trip."
+        $ face("leia", "smile")
         "She did it right there at the table, then turned the phone around to show me."
         # Ryan's thoughts (B3): the Day One photo thought, if he kept it. Otherwise today's line.
         if lc_thought_kept("ch01_d1") == "d1_photo_shoot":
@@ -729,17 +794,22 @@ label ch01_day2_scene_07_leia_maya_click:
             think "Yesterday I'd been the photographer in this relationship. Apparently that had a shelf life. At least I was the one she'd been looking at."
     else:
         "[girlfriend_name] scrolled back to yesterday's group selfie instead. It was the only pool photo she still had."
+        $ face("leia", "smile")
         gf "This is all that's left from the pool. I'm the one holding the phone, so it's mostly my arm and everybody's foreheads."
+        $ face("maya", "smile")
         maya "Foreheads are underrated. You all look like you actually like each other, that's the hard part."
+        $ face("maya", "skeptical")
         maya "Seriously, though. [player_name], you've had four years. Where's your version of this?"
         gf "He has about four hundred photos of me squinting at a menu."
         think "Four years as the photographer in this relationship, and my best work was apparently a menu and a squint."
 
+    $ face("maya", "neutral")
     "[friend_name] looked at me over his drink."
 
     friend "You know you've completely lost control of this, right? This is their table now. We're just sitting at it."
     mc "Yeah. I think introducing them was a mistake."
     gf "Too late. I like her, she's staying."
+    $ face("maya", "smile")
     maya "Same. I'm keeping her."
 
     "They were joking, but [girlfriend_name] was sitting differently now, elbows on the table, turned all the way toward Maya. She'd come to lunch to meet my friend. Somewhere in the last half hour, Maya had turned into her friend too."
@@ -748,17 +818,22 @@ label ch01_day2_scene_07_leia_maya_click:
     # save-local). Not opened, or an old save: nothing extra plays. Flavor only, no stats.
     if lc_pov_seen_in_save("d2_breakfast_julian"):
         $ d2_witness_lane = ch01_d2_route_lane()
+        $ face("leia", "smile")
         "[girlfriend_name] knelt up on her chair and leaned all the way across the table to show Maya another photo."
         "[friend_name]'s eyes went with her. They came back about half a second later than they should have, and went straight into his glass."
         friend "These are really good drinks, by the way. Has everyone tried theirs? I'm just, um. I'm really enjoying mine."
         think "That was twice today. At breakfast I'd caught him watching us too, and he'd looked away with exactly the same face."
+        $ face("leia", "skeptical")
         "[girlfriend_name] sat back down and caught us both at it: him studying his ice, me studying him."
         if d2_witness_lane == "exhibitionism":
+            $ face("leia", "flustered")
             "She went a little pink and tugged the hem of her shorts down. Then she checked my face, and whatever she found there made her smile into her straw."
         elif d2_witness_lane == "ntr_risk":
+            $ face("leia", "pout")
             "For a second she looked at me like she was waiting for me to say something. I didn't, so she went back to Maya."
         else:
             gf "What? Why are you two being weird?"
+            $ face("leia", "smile")
             "She looked from him to me, worked it out about a second later, and burst out laughing."
             gf "Oh my God. Babe. You've got the guard dog face on."
             mc "I don't have a guard dog face."
@@ -773,8 +848,10 @@ label ch01_day2_scene_07_leia_maya_click:
 
 label ch01_day2_scene_08_maya_julian:
 
+    $ face("leia", "neutral")
     "Maya's attention eventually shifted to [friend_name]."
 
+    $ face("maya", "smile")
     maya "So you're the rich one. [player_name] told me."
     friend "He— wow. Okay. It's not really— it's my family, it's not me. I don't do anything. The villa's just a booking, anyone could've— can we look at the menu? I think I'm getting the fish. Is anyone else getting the fish?"
     maya "No, relax, the sunglasses are your personality. The money's just supporting cast."
@@ -783,19 +860,31 @@ label ch01_day2_scene_08_maya_julian:
     think "I'd told her that once, years ago, and forgotten about it. I should have known Maya would keep it."
     "[girlfriend_name] leaned toward me."
 
+    $ face("leia", "smile")
     gf "They get along. Like, really get along."
     mc "She only insults people she likes. I'm going to owe him a drink for that one, though."
     gf "Oh, so that's why she's so mean to you. Okay, that actually explains a lot, babe."
 
     "A bee wandered close to the table."
-    "[friend_name] stopped mid-sentence and leaned sharply away from it."
+
+    # JulianBee_01 (darryn 2026-11-19): Julian recoiling from the bee, hands up, eyes watering.
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_julian_bee
+    with dissolve
+    "[friend_name] stopped mid-sentence and nearly came out of his chair, both hands up like he was about to fight it and lose."
 
     maya "...Are you scared of bees?"
     friend "No. No. Is it gone? It's gone, right?"
     maya "You moved six inches without using your feet."
     friend "I respect bees. I just respect them from a reasonable distance. Is that a crime?"
-    gf "Oh my God, you're actually scared of bees."
+    gf "Oh my God, you're actually scared of bees. Your eyes are watering."
+    friend "It's sunscreen. It's the sunscreen."
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ face("maya", "smile")
+    $ face("leia", "smile")
     "The bee wandered off a second later, but Maya and [girlfriend_name] had clearly filed the whole thing away for later."
 
     $ set_story_flag("ch01_d2_julian_bee_fear_seeded")
@@ -991,6 +1080,7 @@ label ch01_day2_scene_11b_boutique:
     # The mall CGs show the café outfits (Leia casual, Maya green tube top).
     # Julian is off in menswear.
     $ cast(ryan="casual", leia="casual", maya="green_tube_top")
+    $ face("maya", "smile")
     "Maya kept the red dress over her arm. [girlfriend_name] drifted on to another rack, slower."
     "She'd been eyeing the black dress through the window. Then she came around the last rack and stopped dead."
 
@@ -1017,17 +1107,21 @@ label ch01_day2_scene_11b_boutique:
     with dissolve
     $ cast(ryan="casual", leia="casual", maya="green_tube_top")
 
+    $ face("maya", "smile")
     "Maya found the same dress on the rail beside the stage before [girlfriend_name] could stop her, and held it up against her."
     maya "Yeah. No. You're trying this one."
+    $ face("leia", "flustered")
     gf "Maya, no. Look at it. Look at how little of it there is."
     maya "That's what the changing room is for. Go find out how it stays on. From a design point of view."
 
+    $ face("leia", "skeptical")
     "[girlfriend_name] stared at the black dress, then at Maya."
     gf "I'm not wearing that outside. Ever."
     maya "I didn't say outside! I said try it. Nobody's buying anything."
     gf "Why? What's the point if I'm not wearing it?"
     maya "Because you've been staring at that rack like it owes you money, and I want to see your face when you see yourself in it. And I want to see you in it. Here. Changing room's right there. Go."
 
+    $ face("leia", "shy")
     "[girlfriend_name] hesitated, then took the hanger from her."
     $ set_story_flag("ch01_d2_maya_pushed_boutique_tryon")
     $ set_story_value("ch01_d2_boutique_trial_outfit", "boutique_cutout_mini")
@@ -1259,6 +1353,7 @@ label ch01_day2_scene_11b_boutique:
                 $ set_story_value("ch01_d2_mall_ryan_response", "ignored")
                 $ d2_mall_ryan_present = False
                 mc "You two are fine! Maya's better at this than me. I'll just get in the way."
+                $ face("leia", "pout")
                 "There was a short pause from over by the mirror."
                 gf "...Okay."
     else:
@@ -1272,22 +1367,26 @@ label ch01_day2_scene_11b_boutique:
         if d2_selfie_reply == "affection":
             gf "Don't say it again. If you say it out loud in front of all these people, I'm going to die. Right here, by the mirror."
             mc "I wasn't going to say it again."
+            $ face("leia", "flustered")
             "I was absolutely going to say it again. She could tell, and she went even redder."
         elif d2_selfie_reply == "open":
             gf "Don't. Don't do the face. I can literally see you thinking about what you texted me."
             mc "I'm thinking it a little."
             maya "He's thinking it a lot. Look at him."
         elif d2_selfie_reply == "tease":
+            $ face("leia", "skeptical")
             gf "So now you've seen it in person. You and the whole shop. Thanks to her."
             maya "You're welcome. Both of you."
         elif d2_selfie_reply == "flat":
             $ face("leia", "pout")
             gf "Well? Is it any better up close, or is it still... you know."
             mc "It's way better. That text was bad, I know. You look amazing up close. I just didn't know how to type it."
+            $ face("leia", "shy")
             gf "Okay. Thanks."
             "She tugged the hem down again and didn't quite look at me."
         else:
             gf "Well? Say something, I'm dying here."
+        $ face("leia", "shy")
         "People were still looking. She knew it, too. She kept her eyes on me like I was the only safe place left to put them."
 
     else:
@@ -1303,6 +1402,7 @@ label ch01_day2_scene_11b_boutique:
         friend "I— sorry, I wasn't ready for a test. I came over here about shirts. Nobody said there'd be a test."
         gf "Maya, not him— oh my God. [friend_name], you don't have to look. You really don't have to look."
         friend "You look good, though. Really. Okay. I'm going back to the shirts."
+        $ face("leia", "shy")
         gf "...Thanks."
 
     # Wardrobe malfunction (darryn 2026-11-18): ShopShowOff_02-05, shared by both witness
@@ -1386,8 +1486,11 @@ label ch01_day2_scene_11b_boutique:
     $ face("maya", "shy")
     "The man from the racks had already found somewhere else in the shop to be."
     maya "Okay. In my defense... no, I don't have a defense. He had really good taste and I'm an idiot. I'm so sorry, babe."
+    $ face("leia", "pout")
     gf "I'm changing. Into my own clothes. Right now."
+    $ face("maya", "smile")
     maya "So that's a maybe."
+    $ face("leia", "skeptical")
     gf "That's a no, Maya."
 
     $ cast_add(leia="casual", maya="green_tube_top")
@@ -1413,10 +1516,12 @@ label ch01_day2_scene_11b_boutique:
         if owns_outfit("boutique_cutout_mini"):
             $ set_story_value("ch01_d2_mall_outfit_source", "ryan")
             $ set_story_flag("ch01_d2_boutique_outfit_owned")
+            $ face("leia", "flustered")
             gf "Wait, you actually bought it? When did you— you actually bought it."
             mc "You looked really good in it. And you kept looking at it."
             gf "That doesn't mean I'm wearing it outside."
             maya "Not yet, you're not."
+            $ face("leia", "skeptical")
             "[girlfriend_name] gave Maya a look and said nothing."
         else:
             # Ryan chose not to buy it, so Leia buys the Black Cutout Mini herself.
@@ -1425,6 +1530,7 @@ label ch01_day2_scene_11b_boutique:
                 "I closed the Shop without buying anything."
             else:
                 "I left the dress where it was."
+            $ face("leia", "shy")
             "[girlfriend_name] looked back at the black dress for several seconds, then carried it to the counter herself."
             $ grant_story_outfit("boutique_cutout_mini", equip=False)
             $ set_story_value("ch01_d2_mall_outfit_source", "leia")
@@ -1432,8 +1538,10 @@ label ch01_day2_scene_11b_boutique:
             mc "Wait, you're buying it?"
             gf "I'm not wearing it outside. I just— I don't know. I want to own it."
             maya "Mm-hm. Not yet."
+            $ face("leia", "skeptical")
             "[girlfriend_name] gave Maya a look and said nothing."
     else:
+        $ face("leia", "shy")
         "[girlfriend_name] looked down at the black dress for several seconds before carrying it to the counter herself."
         # If Ryan already owns it, his purchase stands (source "ryan"); otherwise Leia buys it.
         if owns_outfit("boutique_cutout_mini"):
@@ -1444,13 +1552,16 @@ label ch01_day2_scene_11b_boutique:
         $ set_story_flag("ch01_d2_boutique_outfit_owned")
 
         mc "You bought it? The black one?"
+        $ face("leia", "flustered")
         gf "Yeah. Don't look at me like that."
         mc "I thought you said it was too much."
+        $ face("leia", "skeptical")
         gf "I said I wasn't wearing it outside. That's a different thing."
         maya "She said 'outside.' I heard 'yet.'"
         "[girlfriend_name] gave Maya a look and said nothing."
 
     $ cast_add(julian="evening")
+    $ face("leia", "neutral")
     "[friend_name] eventually returned with a shopping bag."
 
     maya "That's literally the shirt you're already wearing."
@@ -1461,6 +1572,7 @@ label ch01_day2_scene_11b_boutique:
     "We stepped back outside into the early-afternoon heat with considerably more shopping than [friend_name]'s five-minute shirt stop had promised."
 
     maya "Drink before we go back? I'm melting."
+    $ face("leia", "smile")
     gf "Please. Yes. Something with ice."
 
     # Drinks at a mall café before heading back (darryn renders the BG; placeholder for now).
@@ -1470,7 +1582,9 @@ label ch01_day2_scene_11b_boutique:
 
     "We found a table nearby and dropped the shopping bags around our feet."
 
+    $ face("maya", "smile")
     maya "Okay, that went way better than I expected."
+    $ face("leia", "skeptical")
     gf "For who? Better for who, exactly?"
     maya "For me! Obviously for me. I got a dress, a stranger told me I look unreal, and the black one's coming home with us. Best day of anyone at this table."
     gf "Coming home with us isn't the same as wearing it. Those are, like, two completely different things, and you know they are."
@@ -1478,75 +1592,99 @@ label ch01_day2_scene_11b_boutique:
 
     friend "For what it's worth, I think you should keep it. Even if it just lives in your suitcase."
     "He said it mostly to his drink."
+    $ face("leia", "shy")
     gf "Thanks, [friend_name]."
     maya "See? He agrees with me."
+    $ face("leia", "smile")
     gf "You're impossible, you know that? He was being nice."
     "She was laughing when she said it."
 
     "Maya and [friend_name] started arguing over whether his new shirt was actually different from the one he'd arrived in."
     # Flow: after "Let Maya handle it" (ch01_d2_mall_ryan_response "ignored") she doesn't lean in or joke.
     if get_story_value("ch01_d2_mall_ryan_response") == "ignored":
+        $ face("leia", "pout")
         "[girlfriend_name] stayed on her side of the table and watched them argue. When I looked over, she was already looking at her drink."
     else:
+        $ face("leia", "smile")
         "[girlfriend_name] leaned slightly closer to me."
 
         # Day One echo: the sticky bra at dinner (ch01_bra_response). A private aside:
         # Leia kept the bra out of Julian's hearing on Day One, so she still does.
         if get_story_value("ch01_bra_response") == "playful_open":
+            $ face("leia", "pout")
             gf "This trip has it out for my clothes. Last night my bra quit on me at dinner, and today Maya tried to put me in two napkins and a string."
             mc "Last night you were smiling, though."
+            $ face("leia", "flustered")
             gf "That was my stressed face! I told you it was my stressed face."
+            $ face("leia", "smile")
             "She was smiling now, too."
         elif get_story_value("ch01_bra_response") == "reassuring":
+            $ face("leia", "skeptical")
             gf "If I ever wear that thing, don't tell me 'you'll be fine.' You said that about the sticky bra last night."
             mc "And you were fine."
             gf "I was fine. I was also braless in a restaurant, babe."
             mc "Fine and braless. Those aren't opposites."
+            $ face("leia", "smile")
             "She laughed into her drink and nearly choked on the ice."
         elif get_story_value("ch01_bra_response") == "cautious":
             gf "If I ever do wear that thing out, you're on lookout duty again. Like last night with the bra."
             mc "I mostly watched the bathroom door."
+            $ face("leia", "shy")
             gf "Very professionally, though. It was sweet. I noticed."
         elif get_story_value("ch01_bra_response") == "distracted":
+            $ face("leia", "pout")
             gf "If I ever do wear that thing, I'm telling you first, and you're putting the menu down. Last night you told the menu to go for it."
             mc "I said sorry."
+            $ face("leia", "smile")
             gf "You did. I'm still bringing it up."
 
     if get_story_value("ch01_d2_boutique_slip_witness") == "ryan":
+        $ face("leia", "shy")
         gf "You saw that, right? In there?"
         mc "The dress? Yeah, I saw the dress."
         gf "No, when it slipped. When Maya let go."
         mc "Yeah. I saw."
+        $ face("leia", "flustered")
         gf "I wanted to disappear. Like, into the floor. Just gone."
         if get_story_value("ch01_d2_mall_ryan_response") == "reconnected" or get_story_value("ch01_d2_mall_entry_lane") != "ntr_risk":
             mc "You covered up really fast, though. And Maya was on you in about half a second."
             gf "Barely. My whole soul left my body."
+            $ face("leia", "smile")
             "Her embarrassment had already softened enough for her to roll her eyes at herself."
         else:
             mc "It was an accident. Maya was fixing it."
+            $ face("leia", "shy")
             gf "I know. I know it was."
 
         # Day One echo: "Did he see?" after the towel (ch01_towel_followup).
         if get_story_value("ch01_towel_followup") == "honest":
+            $ face("leia", "shy")
             gf "Did anyone else see? Not-nice version, please. Like yesterday."
             mc "Honestly? The guy who was talking to Maya, and probably the woman at the shoe wall. And me. I checked, because I knew you'd ask."
             gf "Okay. That's... more than I wanted. But okay. Thank you."
+            $ face("leia", "smile")
             gf "This is why I ask you, you know. You're the one who doesn't give me the nice version."
         elif get_story_value("ch01_towel_followup") == "reassured":
+            $ face("leia", "skeptical")
             gf "Did anyone else see? And don't do the 'he looked away pretty much immediately' thing again."
             mc "Just the guy Maya was talking to, and maybe the woman by the shoes. Nobody else was close enough. I checked."
+            $ face("leia", "shy")
             gf "Just them. Okay. I can live with just them."
         elif get_story_value("ch01_towel_followup") == "teased":
+            $ face("leia", "skeptical")
             gf "And if you say one word about curtains, I'm leaving you here with the mannequins."
             mc "I wasn't going to say curtains."
+            $ face("leia", "smile")
             gf "You were thinking curtains. I can see you thinking curtains."
         elif get_story_value("ch01_towel_followup") == "brushed_off":
+            $ face("leia", "pout")
             gf "And before you say it, it's a big deal. To me. A little bit."
             "She said it before I'd even opened my mouth, like she already knew what was coming."
             mc "I wasn't going to say it wasn't."
             "I had been, a little."
     else:
         mc "So what happened in there? After I, um. After I stayed out."
+        $ face("leia", "shy")
         gf "Nothing. Nothing dramatic."
         "She turned her cup slowly between her hands."
         gf "The top came down. Like, all the way. Some guy started complimenting Maya, and she just let go."
@@ -1558,6 +1696,7 @@ label ch01_day2_scene_11b_boutique:
 
     # Flow (darryn 2026-11-19): a Ryan who has been warm all day gets an attentive check-in about
     # last night, not "you've been quiet". The detached version stays for dismissive/withdrawn picks.
+    $ face("leia", "neutral")
     $ d2_ryan_detached = (choice_tag_count("dismissive", ch01_d2_choice_ids()) + choice_tag_count("withdrawal", ch01_d2_choice_ids())) > 0
     if d2_ryan_detached:
         gf "You've been kind of quiet today, though. Not in a bad way. Just quiet."
@@ -1580,6 +1719,7 @@ label ch01_day2_scene_11b_boutique:
             mc "I didn't sleep well."
             gf "Yeah, I noticed. You kept doing the thing with the pillow."
             mc "Sorry. I didn't mean to keep you up."
+            $ face("leia", "smile")
             gf "You don't have to apologize for being tired, babe. I just wanted to know you're okay."
             "It wasn't the whole truth, but at least I had stopped pretending there was nothing to explain."
 
@@ -1588,14 +1728,17 @@ label ch01_day2_scene_11b_boutique:
             mc "I had a weird dream last night. I never told you about it. It's kind of stupid."
             gf "A weird dream? What kind of weird?"
             mc "The guy from dinner. The drink guy. He was there, and you were there, and I couldn't move or say anything. I just had to watch."
+            $ face("leia", "skeptical")
             "[girlfriend_name] stared at me for a second."
             $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
             if d2_tint == "temptation":
                 gf "Okay, babe, that's a pretty weird dream."
+                $ face("leia", "smile")
                 gf "It was just a guy with a drink. He said sorry, like, nine times."
                 mc "I know. I know it was."
                 "She patted my hand and went back to her drink. It was nice of her. It just wasn't what I'd been hoping for."
             else:
+                $ face("leia", "smile")
                 "Then she laughed at me. Properly, with her whole face."
                 gf "The drink guy? You've been carrying the drink guy around since last night? Come here, you."
                 "She leaned over and hugged me, right there at the table, shopping bags and all."
@@ -1607,24 +1750,30 @@ label ch01_day2_scene_11b_boutique:
             mc "I've just got a lot in my head."
             gf "Anything you want to talk about? You don't have to."
             mc "Not yet. Maybe later? I don't really know how to say it yet."
+            $ face("leia", "smile")
             gf "Okay. Later's fine."
             "She didn't push. She just bumped her knee against mine under the table and left it there."
 
         "[d2_postshop_shut_text]":
             $ apply_choice("ch01_d2_postshop_shut_down")
             mc "I'm fine."
+            $ face("leia", "skeptical")
             "[girlfriend_name] watched me for a second."
+            $ face("leia", "pout")
             gf "Okay."
             "This time the word meant she was done asking."
 
         "[d2_postshop_version_text]" if d2_leia_version_offered:
             $ apply_choice("ch01_d2_boutique_her_version")
             mc "Hang on. Back up a second. Did he really look away that fast?"
+            $ face("leia", "shy")
             "[girlfriend_name] stopped turning her cup."
             gf "Technically, yeah. By the time I looked up he was staring at the ceiling."
+            $ face("leia", "flustered")
             gf "But nobody goes that red from looking at a ceiling. He looked, babe. I don't know for how long, and I keep wondering. And he knew I knew, and I honestly thought he was going to pass out into the shirts."
             $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
             if d2_tint == "love":
+                $ face("leia", "shy")
                 gf "And the whole time I just kept wishing it was you standing there instead. Is that dumb? That's dumb."
                 mc "It's not dumb. I should've been there."
                 "She hooked her ankle around mine under the table and left it there."
@@ -1632,22 +1781,33 @@ label ch01_day2_scene_11b_boutique:
                 gf "And I didn't hate it as much as I probably should have. Mostly I kept wondering what your face would've done. Don't make that face, I'm telling you, aren't I?"
                 "She was pink to the ears, and she still didn't look away from me."
             elif d2_tint == "temptation":
+                $ face("leia", "neutral")
                 gf "It was nothing. He said sorry about fifty times. I don't even know why I told it the other way first."
                 "She shrugged and went back to her drink, like that was the end of it."
             else:
+                $ face("leia", "shy")
                 gf "I don't know why I told it the other way first. I think I just wanted it to be smaller than it was."
                 mc "Thanks for telling me the real one."
+                $ face("leia", "smile")
                 gf "You asked for the real one. I like it when you ask."
+            $ face("leia", "skeptical")
             gf "You totally dodged my question, though. Don't think I didn't notice."
             mc "...Later?"
+            $ face("leia", "smile")
             gf "Later. I'm holding you to later."
 
+    $ face("leia", "neutral")
     "[friend_name] stood and picked up his shopping bag."
     friend "I'm getting another drink before we go. Anyone want anything? [player_name], come help me carry."
     mc "Yeah, I'll come."
 
     "We left [girlfriend_name] and Maya at the table for a minute."
     "[friend_name] was still losing an argument with the card machine when the first two drinks came up, so I carried them back on my own."
+    # MallCafe_01 (darryn 2026-11-19): Ryan's POV, two drinks in hand, stopped behind the potted
+    # palm; Leia and Maya at the table with their backs to him. Held for the whole overheard talk.
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_mall_cafe_overheard
+    with dissolve
     "There was a big potted palm between the counter and our table. I was a couple of steps behind it when I heard my name."
 
     # Day Two incident (v0.2.0): Ryan overhears the talk. The milder version plays when he has
@@ -1655,6 +1815,7 @@ label ch01_day2_scene_11b_boutique:
     # Maya because she cares (darryn 2026-11-19). The worried version keeps "he's somewhere else".
     if choice_tag_count("repair", ch01_d2_choice_ids()) >= 1 or get_story_value("ch01_d2_mall_ryan_response") in ("reconnected", "came_over"):
         $ set_story_value("ch01_d2_overheard_talk", "mild")
+        $ face("leia", "shy")
         gf "Can I tell you something kind of dumb? About [player_name]?"
 
         "I stopped walking."
@@ -1666,18 +1827,21 @@ label ch01_day2_scene_11b_boutique:
             gf "I think he had a bad dream last night. He kept waking up and doing this thing with his pillow, and this morning he just said he was tired."
         gf "And yesterday was a lot. People kept looking at me, like, all day. At dinner, at the pool. I think it got to him more than he lets on."
         maya "And you want to fix it."
+        $ face("leia", "smile")
         gf "No. Not fix him. I just want him to know I noticed. I want to do something nice for him tonight."
         maya "Oh my God, that's so cute I might throw up. He's always been like that, you know. He goes quiet, and then he comes back. Just stay close."
         gf "I can do close. Close I'm good at."
         think "She'd noticed all of it. The bad night, the looks, me pretending I was fine. She wasn't worried about me. She was looking after me."
     else:
         $ set_story_value("ch01_d2_overheard_talk", "worried")
+        $ face("maya", "neutral")
         maya "Hey. Everything okay?"
         gf "With the dress? I mean, I bought it, so."
         maya "No. With [player_name]."
 
         "I stopped walking."
 
+        $ face("leia", "pout")
         gf "I don't know. Honestly, I don't know."
         "She glanced toward the counter, where she thought I still was."
         gf "He's been somewhere else all morning."
@@ -1696,7 +1860,9 @@ label ch01_day2_scene_11b_boutique:
                 gf "He apologized this morning, which, good. I just still don't know what it was actually about."
         else:
             gf "Not that I know of. He says he's fine."
+        $ face("maya", "smile")
         maya "Then maybe give him a little time. And if he's still doing it tonight, tell him. Out loud. He's always been better once somebody makes him say it."
+        $ face("leia", "neutral")
         gf "Yeah. Okay."
         "For once, [girlfriend_name] let the problem sit instead of immediately trying to solve it."
         "Maya, who I'd known for years, was explaining me to my girlfriend, who'd met her at lunch."
@@ -1704,6 +1870,11 @@ label ch01_day2_scene_11b_boutique:
 
     # Ryan comes back to the table first; what he does with it is between him and Leia, said low
     # so Maya isn't part of it (darryn 2026-11-19). Same choice ids and story values as before.
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_mall_drinks
+    with dissolve
+    $ face("leia", "neutral")
+    $ face("maya", "shy")
     "I came around the palm and put the drinks down. Maya suddenly got very interested in her straw."
 
     $ d2_overheard_own_text = format_choice("ch01_d2_overheard_own", "Lean in and tell her quietly you heard, and that you'll talk later.")
@@ -1718,12 +1889,15 @@ label ch01_day2_scene_11b_boutique:
             mc "I heard some of that. Sorry. I didn't mean to listen."
             if get_story_value("ch01_d2_overheard_talk") == "mild":
                 mc "The dream, and yesterday. You're right about both. Can I tell you about it later? Just us?"
+                $ face("leia", "flustered")
                 gf "Oh my God, you heard all of it? The 'cute' part too?"
                 mc "Mostly the part where you noticed."
+                $ face("leia", "shy")
                 gf "...Later. Just us. I'm holding you to it."
                 "She found my hand under the table and squeezed it."
             else:
                 mc "You're right, I've been weird today. Can I tell you about it later? Just us?"
+                $ face("leia", "shy")
                 gf "How much did you hear?"
                 mc "Enough. It's fair."
                 gf "...Later. Just us. I'm holding you to it."
@@ -1735,15 +1909,19 @@ label ch01_day2_scene_11b_boutique:
             "I sat down and leaned close to [girlfriend_name]'s ear."
             mc "Were you two just talking about me?"
             if get_story_value("ch01_d2_overheard_talk") == "mild":
+                $ face("leia", "smile")
                 gf "Maybe. Only good things. Don't let it go to your head."
             else:
+                $ face("leia", "smile")
                 gf "Maybe. Drink your drink."
+            $ face("leia", "shy")
             "She laughed, went a little red, and kissed my cheek. Nobody said anything real after that."
 
         "[d2_overheard_pretend_text]":
             $ apply_choice("ch01_d2_overheard_pretend")
             $ set_story_value("ch01_d2_overheard_response", "pretended")
             mc "Drinks. [friend_name]'s still fighting the card machine."
+            $ face("leia", "smile")
             "[girlfriend_name] smiled up at me like nothing had happened."
             if get_story_value("ch01_d2_overheard_talk") == "mild":
                 think "She'd been looking after me, and I'd heard it from behind a plant. I didn't know how to say that, so I didn't."
@@ -1751,9 +1929,12 @@ label ch01_day2_scene_11b_boutique:
                 think "If she had something to say, she could say it to me. Apparently Maya got to hear it first."
 
     "By the time [friend_name] got back with the rest, Maya had deliberately moved the conversation back to clothes."
+    $ face("maya", "smile")
     maya "For the record, I'm still saying the black one."
+    $ face("leia", "skeptical")
     gf "And I'm still saying fitting room only. Fitting room and suitcase."
     maya "For now. Fitting room for now."
+    $ face("leia", "smile")
     gf "You're exhausting. I love it, but you're exhausting."
 
     $ set_story_flag("ch01_d2_scene_11b_boutique_complete")
@@ -1771,14 +1952,19 @@ label ch01_day2_scene_12_villa_pool_plan:
     "We headed back toward [friend_name]'s place with Maya and [girlfriend_name] a few steps ahead of us."
 
     if choice_tag_count("repair", ch01_d2_choice_ids()) >= 1:
+        $ face("leia", "smile")
         "[girlfriend_name] drifted back toward me before long and slipped her hand into mine."
     elif ch01_d2_route_lane() == "exhibitionism":
+        $ face("leia", "flustered")
         gf "[player_name]. Tell her she's insane. Please."
+        $ face("maya", "smile")
         maya "He doesn't get a vote, he's biased."
+        $ face("leia", "smile")
         gf "He gets an advisory vote. Like a little advisor."
         mc "As your advisor, I think you're both insane."
         "[girlfriend_name] turned forward again, still laughing with Maya but keeping me inside the conversation."
     elif ch01_d2_route_lane() == "ntr_risk":
+        $ face("leia", "pout")
         "[girlfriend_name] looked back once."
         "I was half a step behind, somewhere else again."
         if get_story_value("ch01_d2_overheard_response") == "pretended" and get_story_value("ch01_d2_overheard_talk") == "worried":
@@ -1793,16 +1979,20 @@ label ch01_day2_scene_12_villa_pool_plan:
 
     "Maya stopped just inside."
 
+    $ face("maya", "smile")
     maya "Wait. Wait, wait."
     maya "This is where you're staying? This? All of this?"
     friend "It's a booking. It's not, like, mine, it's just something we booked. Do you want a drink? We have drinks. We have a lot of drinks, actually."
 
     "She looked around the living room, then back at [friend_name]."
 
+    $ face("maya", "skeptical")
     maya "The sunglasses make sense now."
     friend "Can we not do the sunglasses again? Please? Thank you."
+    $ face("maya", "smile")
     maya "That wasn't a compliment, but you're welcome."
 
+    $ face("leia", "smile")
     gf "Come on, I'll show you around. Wait till you see the bathroom, it's ridiculous."
     "Yesterday [girlfriend_name] had been the newcomer. Today she was the one leading Maya through the villa like she'd already learned its shape."
 
@@ -1812,19 +2002,24 @@ label ch01_day2_scene_12_villa_pool_plan:
 
     "They made it as far as the view outside before Maya stopped again."
 
+    $ face("maya", "smile")
     maya "Hold on. Is that a private pool?"
     friend "Yeah. I mean, it's not that big."
+    $ face("maya", "skeptical")
     maya "You didn't think that was relevant information? You let me talk about the resort pool for ten minutes."
     friend "Relevant to what? I didn't wanna be a weirdo and flex and be like, hi, I'm [friend_name] and I'm staying in a villa with a private pool, wanna come over? I might as well ask you if you're down to hook up."
     $ face("maya", "shy")
     maya "Well..."
     $ face("maya", "neutral")
 
+    $ face("leia", "smile")
     gf "We were in it all afternoon yesterday."
+    $ face("maya", "skeptical")
     maya "And nobody told me to bring a swimsuit?"
 
     "Maya paused, then looked down at the day bag she'd been carrying since the café."
 
+    $ face("maya", "smile")
     maya "Actually—wait. I did bring one."
     gf "Wait, you just carry a swimsuit around with you?"
     maya "We're on an island, [girlfriend_name]. I always have a swimsuit. Always."
@@ -1844,11 +2039,15 @@ label ch01_day2_scene_13_girls_upstairs:
 
     scene bg ch01_master_bedroom
     with dissolve
+    # Just the girls upstairs, still in their café clothes (Ryan is outside with the drinks).
+    $ cast(leia="casual", maya="green_tube_top")
 
     "Upstairs, [girlfriend_name] laid both bikinis across the bed while Maya changed beside her."
     "Both were two-piece tie bikinis. The difference was coverage: one familiar and safer, the other cut noticeably smaller."
 
+    $ face("maya", "smile")
     maya "Oh, you brought options. Okay, I see you."
+    $ face("leia", "shy")
     gf "One is comfortable, and one requires a lot of confidence. Like, a lot."
     maya "The little one. Obviously the little one, I'm not even going to pretend I'm neutral about this."
     maya "So say it. Out loud. Which one are you putting on?"
@@ -1860,12 +2059,16 @@ label ch01_day2_scene_13_girls_upstairs:
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
         $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
         if d2_tint == "exhibitionism":
+            $ face("leia", "flustered")
             gf "The smaller one. Yeah. The smaller one, before I talk myself out of it. I kind of want to see who notices."
         elif d2_tint == "temptation":
+            $ face("leia", "neutral")
             gf "The smaller one. I think. Yeah. I'm not running this one past [player_name], either, I'm just deciding."
         else:
+            $ face("leia", "shy")
             gf "The smaller one. I think. Yeah. The smaller one, before I talk myself out of it."
         maya "Then wear the smaller one."
+        $ face("leia", "skeptical")
         gf "That's it? That's your advice?"
         maya "That's it. You already knew. I just say it back to people, it's a whole service."
     else:
@@ -1873,11 +2076,16 @@ label ch01_day2_scene_13_girls_upstairs:
         # Subtle Day Two tint (lc_leia_tint): shy by default; the stat furthest over its bar colours the line.
         $ d2_tint = lc_leia_tint(ch01_d2_route_lane())
         if d2_tint == "temptation":
+            $ face("leia", "neutral")
             gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day. And I'm not even asking [player_name] this time, it's my bikini."
         else:
+            $ face("leia", "shy")
             gf "I think the more covered one today? Yesterday was a lot. I want a normal pool day."
+        $ face("maya", "skeptical")
         maya "Boo. The little one was right there, and it's so cute. Fine. Normal pool day."
+        $ face("leia", "smile")
         gf "Wait, that's it? You're surprisingly reasonable."
+        $ face("maya", "smile")
         maya "I'm not reasonable, I'm patient. That little one isn't going anywhere, and neither am I."
 
     $ grant_story_outfit(get_story_value("ch01_d2_pool_outfit"), equip=True)
@@ -1889,16 +2097,24 @@ label ch01_day2_scene_14_tie_foreshadow:
 
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
         "[girlfriend_name] changed into the bolder tie bikini while still talking to Maya, fastening the top with less attention than the knot deserved."
+        $ cast_add(leia="blue_bikini")
+        $ face("maya", "skeptical")
         maya "Hey, double-knot that."
+        $ face("leia", "smile")
         gf "It's fine, it's a bikini, not a parachute."
+        $ face("maya", "smile")
         maya "Babe, that's exactly what someone says right before the parachute doesn't open."
         gf "It's held up so far."
         maya "So far you haven't had me talking at you the whole time you tied it."
     else:
         "[girlfriend_name] changed into the more covered tie bikini while Maya borrowed the mirror and most of the counter space."
+        $ cast_add(leia="blue_bikini")
         "She tied the top while answering Maya, gave the knot one quick tug, and moved on."
+        $ face("maya", "skeptical")
         maya "Double-knot that, though."
+        $ face("leia", "smile")
         gf "This is the safe one! It's been to, like, three beaches."
+        $ face("maya", "smile")
         maya "Three beaches is a lot of beaches for one knot, babe. Double it. For me."
         gf "It's fine. I tugged it. Look, tugged."
 
@@ -1913,25 +2129,36 @@ label ch01_day2_scene_15_pool_group:
 
     scene bg ch01_pool_day
     with fade
+    # Pool outfits: Ryan, Leia (her bikini sprite) and Julian have pool art; Maya has no swimwear
+    # sprite yet, so she speaks off-sprite rather than standing there in her café top.
+    $ cast(ryan="pool", leia="blue_bikini", julian="pool")
 
     # Flow: Ryan sees the bikini she picked upstairs without him (scene 13).
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+        $ face("leia", "shy")
         "[girlfriend_name] had come down in the smaller one. She caught me noticing, went pink, and didn't go back up to change."
+    $ face("leia", "smile")
     "The four of us spent the first half hour together."
     "Maya immediately discovered [friend_name]'s hatred of being splashed. [girlfriend_name] immediately used that information against him."
 
+    $ face("maya", "skeptical")
     maya "Wait, you guys did this all day yesterday? Without me?"
     gf "Most of the afternoon. Before the whole dinner thing."
     friend "They bullied me yesterday too, for the record. This is a pattern. I want that noted somewhere."
     mc "If it helps, they do this to me too. You never really get used to it."
 
     "Then [friend_name] sent me inside for towels. When I came back out, Maya and [girlfriend_name] had their heads together on one lounger."
+    $ face("maya", "smile")
     maya "—so he has no idea? None at all?"
     gf "None. And you are not allowed to—"
+    $ face("leia", "flustered")
+    $ face("maya", "shy")
     "They both saw me at the same time and stopped."
     gf "Hi! Towels. Amazing. Thank you."
+    $ face("maya", "smile")
     maya "We were talking about sunscreen."
     gf "Very boring sunscreen stuff."
+    $ face("leia", "smile")
     "She was grinning at me over the towels, the way she does when she's planning something and is terrible at hiding it."
     think "Whatever it was, I was going to be the last person at this pool to find out. That seemed about right."
 
@@ -1955,8 +2182,10 @@ label ch01_day2_scene_15_pool_group:
             $ set_story_value("ch01_d2_knot_response", "fixed")
             $ lc_discovery_mark("d2_knot_door")
             "I waded over behind her, caught both strings before anything could happen, and tied them again. Double knot, this time."
+            $ face("leia", "flustered")
             gf "Oh! What are you— wait. Was it coming undone?"
             mc "A little. It's fine now. Nobody saw."
+            $ face("leia", "smile")
             "She reached back, found the new knot, and squeezed my fingers over it for a second before she let go."
 
         "[d2_knot_tell_text]":
@@ -1964,7 +2193,9 @@ label ch01_day2_scene_15_pool_group:
             $ set_story_value("ch01_d2_knot_response", "told")
             "I leaned in close to her ear."
             mc "Babe. Your knot's coming undone. At the back."
+            $ face("leia", "shy")
             "She tied it again with both hands behind her, glancing at Maya the whole time to make sure she hadn't seen."
+            $ face("leia", "smile")
             gf "Thank you. If Maya asks, it was double-knotted all along."
 
         "[d2_knot_watch_text]":
@@ -1976,8 +2207,10 @@ label ch01_day2_scene_15_pool_group:
             # Love lane (scene 16's else: Ryan and Leia stay at the pool): ends playful and warm.
             if get_story_value("ch01_d2_route_lane_pre_split", "love") not in ("ntr_risk", "exhibitionism"):
                 "She turned around halfway through a laugh and caught me."
+                $ face("leia", "skeptical")
                 gf "What? Why are you staring at me like that?"
                 mc "No reason. Just looking."
+                $ face("leia", "smile")
                 "She splashed me for it, then swam over and kissed me anyway. The knot held through that too."
             else:
                 think "I should have said something. Part of me just wanted to see how long it would hold."

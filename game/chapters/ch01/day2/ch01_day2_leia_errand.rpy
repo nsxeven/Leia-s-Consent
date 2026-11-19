@@ -87,6 +87,7 @@ label ch01_day2_leia_errand:
         else:
             leia_think "I can't fix whatever's going on in his head. I can get him a caramel frappuccino, though. That part I can actually do."
 
+    $ face("leia", "smile")
     leia_think "Caramel frappuccino, extra caramel, from the café we had lunch at, because they do it properly. And chocolate muffins from the resort shop, if they've got any left. That's the plan. That's the entire plan."
 
     "I ran upstairs, pulled my shorts and top back on over my bikini and grabbed my purse, then came back down on tiptoe for no reason at all, since he was outside and asleep."
@@ -146,11 +147,14 @@ label ch01_day2_errand_cafe:
 
     "The café from lunch was half empty. A couple were sharing a little fan at the corner table, and the girl behind the counter was wiping down the coffee machine."
     barista "Hi! You were here earlier, right? With the big group?"
+    $ face("leia", "shy")
     gf "You remember us? That's a bit embarrassing. Yes, hi. Can I get a caramel frappuccino, a large one, with extra caramel? Like, on top and in it, if that's a thing you can do."
     barista "That's a thing. Give me a few minutes."
 
+    $ face("leia", "smile")
     leia_think "He'll read the whole menu next time too, and ask what's good, and then order exactly this. Four years, and he's never once ordered anything else."
 
+    $ face("leia", "skeptical")
     "I leaned on the counter to wait, and somebody leaned on it right next to me. A lot closer than he needed to be."
 
     $ cast()
@@ -187,11 +191,13 @@ label ch01_day2_errand_cafe_rescue:
     pool_guy "Her friend. We're over there. You good, man? You're kind of standing on her."
     "For a second nobody moved. Then the stranger laughed, like the whole thing had been a joke from the start, picked up his beer and wandered back out onto the terrace."
 
+    $ face("leia", "smile")
     gf "Thank you. Seriously. I didn't really know what to do there. I was just going to stand still until he got bored."
     pool_guy "No problem. Guys like that fold the second somebody else is watching."
     pool_guy "Sorry for pretending to know you, by the way. I mean, I sort of do. From the pool."
 
     if d2_errand_lane == "exhibitionism":
+        $ face("leia", "skeptical")
         gf "Yep. That's me. You were the one doing all the staring."
         # Flow: he only recaps what happened on this save's pool split (ch01_d2_split).
         if get_story_value("ch01_d2_split") == "ryan_leia_julian_maya":
@@ -203,10 +209,13 @@ label ch01_day2_errand_cafe_rescue:
         else:
             pool_guy "In my defense, there was a lot going on to stare at. You and your friend, the strings thing, and then she..."
             "He made a small slapping motion with one hand and then immediately looked like he regretted it."
+        $ face("leia", "flustered")
         gf "Okay, we really don't need the whole recap."
+        $ face("leia", "smile")
         "I was laughing, though. I didn't totally mind the recap."
         jump ch01_day2_errand_cafe_exhib
     else:
+        $ face("leia", "flustered")
         gf "Yeah. Hi. I was really hoping I'd never see any of you again, no offense. It's not about you. It's about the bee."
         pool_guy "None taken. For what it's worth, I looked away really fast. Mostly. My buddy didn't, he's an animal."
         jump ch01_day2_errand_cafe_love
@@ -217,6 +226,7 @@ label ch01_day2_errand_cafe_love:
 
     "He laughed, and then he leaned on the counter too, a little closer than the gap the stranger had left."
     pool_guy "So can I buy you a drink? A real one. Since I saved you and everything."
+    $ face("leia", "skeptical")
     leia_think "Of course. He didn't even wait for the frappuccino to be ready."
 
     $ d2_errand_cafe_thank_text = format_choice("ch01_d2_errand_cafe_love_thank", "Thank him properly, then tell him about {}.".format(player_name))
@@ -225,6 +235,7 @@ label ch01_day2_errand_cafe_love:
         "[d2_errand_cafe_thank_text]":
             $ apply_choice("ch01_d2_errand_cafe_love_thank")
             $ lc_leia_mark("ch01_d2_cafe_love_thanked")
+            $ face("leia", "smile")
             gf "That's really sweet, and thank you, you didn't have to do any of that. But this drink is for my boyfriend. He's asleep by the pool, and I want it to be there when he wakes up."
             # Flow: no kiss at the pool on the drinks-run split (ch01_d2_split).
             if get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
@@ -233,8 +244,10 @@ label ch01_day2_errand_cafe_love:
                 pool_guy "Ha. Okay. Lucky guy. Tell him I said hi. Or, actually, maybe don't."
             else:
                 pool_guy "The guy from the pool? The one who..."
+                $ face("leia", "shy")
                 gf "The one who kissed me right in front of you, yes. That one."
                 pool_guy "Ha. Yeah, okay, I can't really compete with that. Tell him I said hi. Or, actually, maybe don't."
+            $ face("leia", "smile")
             gf "I'm pretty lucky too. He's really nice. You'd like him, he'd probably thank you for this about five times."
             "He held his hands up, laughing, and went back to his friend at the corner table, who said something that made him shove him."
             leia_think "I just said it out loud to a total stranger, and it felt really nice. I should say it to [player_name] like that more. Not the stranger part."
@@ -242,12 +255,15 @@ label ch01_day2_errand_cafe_love:
         "[d2_errand_cafe_brush_text]":
             $ apply_choice("ch01_d2_errand_cafe_love_brush")
             $ lc_leia_mark("ch01_d2_cafe_love_brushed")
+            $ face("leia", "neutral")
             gf "That's nice of you, but no, thanks. I'm just here for the coffee."
             pool_guy "No, totally. Worth a shot."
             "He went back to his table without making it weird, which was more than the first guy had managed."
+            $ face("leia", "skeptical")
             leia_think "Two guys in five minutes. What is it with this café? I literally just wanted a frappuccino."
 
     barista "Large caramel frappuccino, extra caramel!"
+    $ face("leia", "neutral")
     "My hands were still shaking a little when I took it. Not a lot. Enough that I held it with both of them."
     return
 
@@ -256,10 +272,13 @@ label ch01_day2_errand_cafe_love:
 label ch01_day2_errand_cafe_exhib:
 
     pool_guy "Can I at least buy you something? I did a whole rescue."
+    $ face("leia", "skeptical")
     gf "I'm literally waiting for a drink. You can't buy me a drink while I'm holding a drink."
     pool_guy "Then I'll wait with you. Bodyguard. In case he comes back."
+    $ face("leia", "shy")
     "He leaned on the counter, not as close as the first guy. Close enough that I noticed."
 
+    $ face("leia", "smile")
     leia_think "He's cute. He knows he's cute, which makes it less cute. And he's looking at me the way he did at the pool, except now I'm wearing a lot more clothes and it's still somehow the same look."
     leia_think "I could tell him about [player_name] right now. Or I could just let him talk for a bit. It's only talking."
 
@@ -270,8 +289,10 @@ label ch01_day2_errand_cafe_exhib:
             $ apply_choice("ch01_d2_errand_cafe_exhib_linger")
             $ lc_leia_mark("ch01_d2_cafe_exhib_lingered")
             "So I let him talk. He was here with three friends from college, he did something with spreadsheets for work, and the pool at their place was smaller than ours, which he seemed really bitter about."
+            $ face("leia", "flustered")
             "He kept finding reasons to look at me, and I kept letting him find them."
             pool_guy "So what are you doing tonight? Because there's a beach thing at the bar later, and if you and your friend wanted to..."
+            $ face("leia", "smile")
             "Then the barista called my drink. I picked it up and smiled at him like I'd been waiting for exactly this moment all along."
             if get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
                 gf "That sounds really fun. My boyfriend and I have dinner plans, though. This is his, by the way. He was at the pool too. The one you didn't notice."
@@ -290,12 +311,15 @@ label ch01_day2_errand_cafe_exhib:
                 pool_guy "Ah. Right, yeah. I think I remember him."
                 gf "You'd remember him if you met him properly."
             else:
+                $ face("leia", "shy")
                 gf "Thank you, really, but you don't need to stay. My boyfriend's back at the villa. He was the other guy at the pool, the one who, um. The kiss."
                 pool_guy "Ah. Right, yeah. I remember him. Pretty memorable."
+                $ face("leia", "smile")
                 gf "He is pretty memorable."
             "He took it well. He even laughed, and told me to say hi to the bee for him, which made no sense at all, and I laughed anyway."
             barista "Large caramel frappuccino, extra caramel!"
 
+    $ face("leia", "flustered")
     leia_think "My whole face is hot, like, up to my ears, and I'm still smiling. I should probably feel a lot weirder about that than I do."
     return
 
@@ -305,21 +329,26 @@ label ch01_day2_errand_cafe_ntr:
 
     "I looked around the café. The couple in the corner were still busy with their fan. The girl behind the counter had her back to us, fighting the blender."
     "Nobody was coming over."
+    $ face("leia", "skeptical")
     gf "I'm fine, thanks. I'm just waiting for my drink."
     cafe_stranger "Sure you are."
 
     "I turned back to the counter, and he smacked my ass."
     "Not a tap. A proper, loud smack, right through my shorts, loud enough to hear over the blender."
+    $ face("leia", "angry")
     gf "Hey!"
     "It came out squeakier than I wanted. I spun around, and he was grinning at me, completely unbothered, like he'd told a joke and was waiting for me to laugh at it."
     cafe_stranger "Sorry. Couldn't help it. You can't lean on a counter like that in those shorts and expect nobody to notice."
 
     "In my head I was already telling him off. I had all of it, every word, exactly how I'd say it."
+    $ face("leia", "flustered")
     "What I did instead was stand there with my face burning and say none of it."
     leia_think "Why aren't you saying anything? Say something. Say anything at all."
     "The worst part was the half a second right after, before I got angry, when something low in my stomach went warm and fluttery and I didn't know what to do with it."
     cafe_stranger "See? You're smiling."
+    $ face("leia", "pout")
     gf "I'm not smiling."
+    $ face("leia", "shy")
     "I was, a little. I could feel it on my face, and I hated it."
     cafe_stranger "So what's your name? You staying around here? Because I'm in one of the beach bungalows, and they're way nicer than wherever you're..."
 
@@ -329,10 +358,12 @@ label ch01_day2_errand_cafe_ntr:
         "[d2_errand_cafe_linger_text]":
             $ apply_choice("ch01_d2_errand_cafe_ntr_linger")
             $ lc_leia_mark("ch01_d2_cafe_ntr_lingered")
+            $ face("leia", "flustered")
             "I didn't say no straight away. I let him finish that sentence, and the one after it, about the bungalow and the hot tub and the view of the water."
             "He was standing very close again. I didn't step away. I didn't step closer either. I just stood there and let him talk, and felt my face getting hotter."
             leia_think "What are you doing? You're here to buy his frappuccino. You're standing here waiting for his frappuccino."
             "Then the blender stopped, the café went very quiet, and whatever that was broke."
+            $ face("leia", "skeptical")
             gf "No. I'm good. Thanks."
             cafe_stranger "You sure? You don't look sure."
             gf "I'm sure."
@@ -341,12 +372,14 @@ label ch01_day2_errand_cafe_ntr:
         "[d2_errand_cafe_shut_text]":
             $ apply_choice("ch01_d2_errand_cafe_ntr_shut")
             $ lc_leia_mark("ch01_d2_cafe_ntr_shut")
+            $ face("leia", "angry")
             gf "No. Don't. I'm not interested, and you can't just do that to people."
             "My voice shook, but it came out, which was something."
             cafe_stranger "Wow. Relax, it was a joke."
             gf "It wasn't funny."
             "He rolled his eyes, said something about uptight tourists and went back out to the terrace."
 
+    $ face("leia", "pout")
     "I didn't tell him who the drink was for. I didn't say anything else at all."
     barista "Large caramel frappuccino, extra caramel! Have a good one!"
     "The couple in the corner had a phone out now, held up sideways. I didn't think anything of it."
@@ -377,6 +410,7 @@ label ch01_day2_errand_shop:
         shop_owner "Last box. You must really want those."
         gf "They're for my boyfriend. They're his favorite."
     else:
+        $ face("leia", "smile")
         leia_think "Yes. Mine. Sorry, banana bread."
         "The woman at the till had reading glasses on a chain, a name badge that said MARGARET, and a radio playing something old and quiet. She watched me carry the box over like I'd won it at a fair."
         shop_owner "Last box. You must really want those."
@@ -397,19 +431,25 @@ label ch01_day2_errand_shop_first:
 
     shop_owner "And what's he done to earn the last box?"
     if d2_errand_reason == "dream":
+        $ face("leia", "neutral")
         gf "Nothing, really. He had a bad dream last night and he finally told me about it today, and I keep thinking about how long he sat on it first. He's asleep by the pool now, and I want him to wake up to his favorite things."
     elif get_story_value("ch01_d2_errand_ryan_mood") == "warm":
+        $ face("leia", "smile")
         gf "Nothing, really. He barely slept last night, and he's been lovely all day anyway. He's asleep by the pool now, and I want him to wake up to his favorite things."
     else:
+        $ face("leia", "neutral")
         gf "Nothing, really. That's kind of the point. He's been a bit quiet today, and he's asleep by the pool, and I want him to wake up to his favorite things."
+    $ face("leia", "smile")
     gf "A caramel frappuccino and these. That's it, that's all it takes. He's very easy to please. It's one of the best things about him."
     shop_owner "How long have you two been together?"
     gf "Four years."
     shop_owner "Four years, and you're still running out for his muffins while he naps."
     "She rang them up slowly, smiling at the box like it reminded her of something."
+    $ face("leia", "shy")
     shop_owner "I remember being this in love. Forty-one years with my Harold, and I'd still have done this for him. I still do, some days, when he's being nice."
 
     if d2_errand_lane == "ntr_risk":
+        $ face("leia", "smile")
         gf "I'm also trying to get him on his own before dinner. Our friend has to go upstairs to get ready eventually, and the second he does, I'm stealing him."
         shop_owner "Good. Steal him. They never know they need stealing until it's done."
         return
@@ -420,17 +460,21 @@ label ch01_day2_errand_shop_first:
         "[d2_errand_shop_tell_text]":
             $ apply_choice("ch01_d2_errand_shop_tell")
             $ lc_leia_mark("ch01_d2_shop_told_owner")
+            $ face("leia", "smile")
             gf "And I'm going to get him on his own before dinner. Our friend has to go upstairs to get ready eventually, and the second he does, I'm stealing him. My friend Maya says everybody leaves eventually, you just have to wait."
             shop_owner "Your friend's right. Steal him. They never know they need stealing until it's done."
             "She tucked two paper napkins into the bag, and a little plastic knife, in case I wanted to cut one in half and share it, she said."
+            $ face("leia", "flustered")
             leia_think "Great. Now Margaret knows my whole plan, so now I actually have to go through with it."
 
         "[d2_errand_shop_keep_text]":
             $ apply_choice("ch01_d2_errand_shop_keep")
             $ lc_leia_mark("ch01_d2_shop_kept_plan")
+            $ face("leia", "smile")
             gf "Oh, I'm just going to be nice to him. That's the plan."
             shop_owner "Well. Enjoy being nice to him."
             "She didn't push. She just tucked a couple of napkins into the bag."
+            $ face("leia", "shy")
             leia_think "Some of it I want to keep just for us. It's not a secret plan if I tell the muffin lady."
     return
 
@@ -438,11 +482,14 @@ label ch01_day2_errand_shop_first:
 # B11: shop after the café, Love lane. Same tell/keep menu and ids as B10.
 label ch01_day2_errand_shop_after_love:
 
+    $ face("leia", "shy")
     "I put the frappuccino down on the counter to get my purse out, and my hand still wasn't totally steady."
     shop_owner "You alright, sweetheart? You look a bit shaken."
+    $ face("leia", "pout")
     gf "Some guy at the café was being gross. It's fine. Someone stepped in."
     "It came out wobblier than I meant it to."
     shop_owner "Then tell me about this boyfriend instead. Go on. What's he like?"
+    $ face("leia", "smile")
     gf "He's really nice. That sounds boring, I know. He's quiet, and he reads the whole menu every time and then orders the same thing, and he counts out loud when I'm getting ready, which is so annoying, and he notices everything. Like, the stuff I don't even know I'm doing."
     "By the time I ran out of things to say, my hands had stopped shaking."
     shop_owner "I remember being this in love."
@@ -464,6 +511,7 @@ label ch01_day2_errand_shop_after_love:
             $ lc_leia_mark("ch01_d2_shop_kept_plan")
             gf "Just being nice to him. That's the whole plan."
             shop_owner "Well. Enjoy being nice to him."
+            $ face("leia", "shy")
             leia_think "Some of it's just for us. Even the muffin lady doesn't get all of it."
     return
 
@@ -476,8 +524,11 @@ label ch01_day2_errand_shop_after_exhib:
     gf "Nothing. He's just mine."
     "She laughed at that, and started ringing them up."
     "While she did, I caught my reflection in the glass door of the drinks fridge."
+    $ face("leia", "flustered")
     "My top had slid further off my shoulder than it was supposed to. My hair was a mess from the walk, and my cheeks were still pink."
+    $ face("leia", "smile")
     leia_think "Huh. I look kind of good, actually. Like somebody who just got hit on twice in one café. Which, to be fair, I did."
+    $ face("leia", "flustered")
     leia_think "Pool guy definitely saw this shoulder. He saw a lot more than this shoulder two hours ago, so what's a shoulder."
 
     $ d2_errand_mirror_leave_text = format_choice("ch01_d2_errand_shop_mirror_leave", "Leave your top as it is.")
@@ -486,12 +537,14 @@ label ch01_day2_errand_shop_after_exhib:
         "[d2_errand_mirror_leave_text]":
             $ apply_choice("ch01_d2_errand_shop_mirror_leave")
             $ lc_leia_mark("ch01_d2_shop_top_left")
+            $ face("leia", "smile")
             "I left it. I picked up the muffins and the frappuccino and walked out with my shoulder bare, and the guy stacking water bottles by the door looked, and I let him."
             leia_think "[player_name] is going to notice the second he opens his eyes. Good."
 
         "[d2_errand_mirror_fix_text]":
             $ apply_choice("ch01_d2_errand_shop_mirror_fix")
             $ lc_leia_mark("ch01_d2_shop_top_fixed")
+            $ face("leia", "shy")
             "I tugged the top back up where it belonged and pushed my hair into something a bit more decent."
             leia_think "Calm down. You bought muffins. You're not in a music video."
     return
@@ -500,10 +553,13 @@ label ch01_day2_errand_shop_after_exhib:
 # B13: shop after the café, NTR-risk lane. No stat choice (keeps her side at +2).
 label ch01_day2_errand_shop_after_ntr:
 
+    $ face("leia", "flustered")
     "My face was still hot. I could feel exactly where his hand had been, which was stupid. It had been one second."
     shop_owner "You alright, love? You're all red."
+    $ face("leia", "shy")
     gf "Just the heat."
     "She looked at me over her glasses a moment longer than I liked. Then she rang them up and didn't ask anything else."
+    $ face("leia", "pout")
     leia_think "Just the heat. Sure. It's the heat."
     return
 

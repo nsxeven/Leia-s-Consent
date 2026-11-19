@@ -241,6 +241,36 @@ init 998 python:
         renpy.restart_interaction()
         return None
 
+    def ch01_day1_settle_pending_phone():
+        # Day One's group-chat replies wait for the player to open the thread. If they never did,
+        # land them before Day Two's first message (darryn 2026-11-19: "No promises." showed up
+        # under Julian's 11:00 "Bro wake up", as if Leia answered it). Silent, already read, and
+        # stamped with Day One's time (story time is cleared here), so the thread reads in order.
+        prev_time = getattr(renpy.store, "lc_phone_story_time", None)
+        renpy.store.lc_phone_story_time = None
+        try:
+            if has_story_flag("ch01_late_photo_followup_pending"):
+                for step in (1, 2, 3):
+                    if get_story_value("ch01_late_photo_followup_stage", 0) < step:
+                        ch01_late_photo_deliver_step(step)
+                clear_story_flag("ch01_late_photo_followup_pending")
+                clear_story_flag("ch01_late_photo_phone_session_active")
+                set_story_value("ch01_late_photo_force_complete_on_open", False)
+            if has_story_flag("ch01_breakfast_reply_pending"):
+                phone_add_message(
+                    "group",
+                    "leia",
+                    text="No promises.",
+                    message_id="ch01_trip_group_breakfast_leia_reply",
+                    mark_unread=False,
+                    notify=False,
+                )
+                clear_story_flag("ch01_breakfast_reply_pending")
+                clear_story_flag("ch01_breakfast_phone_session_active")
+        finally:
+            renpy.store.lc_phone_story_time = prev_time
+        return None
+
     def ch01_breakfast_phone_closed_early():
         # Unlike the late-photo chain, this reply should not generate another
         # outside-the-Phone notification. It simply waits for the next thread open.
