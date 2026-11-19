@@ -866,16 +866,25 @@ label ch01_day2_scene_08_maya_julian:
     gf "Oh, so that's why she's so mean to you. Okay, that actually explains a lot, babe."
 
     "A bee wandered close to the table."
-    "[friend_name] stopped mid-sentence and leaned sharply away from it."
 
-    $ face("maya", "skeptical")
+    # JulianBee_01 (darryn 2026-11-19): Julian recoiling from the bee, hands up, eyes watering.
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_julian_bee
+    with dissolve
+    "[friend_name] stopped mid-sentence and nearly came out of his chair, both hands up like he was about to fight it and lose."
+
     maya "...Are you scared of bees?"
     friend "No. No. Is it gone? It's gone, right?"
-    $ face("maya", "smile")
     maya "You moved six inches without using your feet."
     friend "I respect bees. I just respect them from a reasonable distance. Is that a crime?"
-    gf "Oh my God, you're actually scared of bees."
+    gf "Oh my God, you're actually scared of bees. Your eyes are watering."
+    friend "It's sunscreen. It's the sunscreen."
 
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_cafe
+    with dissolve
+    $ face("maya", "smile")
+    $ face("leia", "smile")
     "The bee wandered off a second later, but Maya and [girlfriend_name] had clearly filed the whole thing away for later."
 
     $ set_story_flag("ch01_d2_julian_bee_fear_seeded")
@@ -1794,6 +1803,11 @@ label ch01_day2_scene_11b_boutique:
 
     "We left [girlfriend_name] and Maya at the table for a minute."
     "[friend_name] was still losing an argument with the card machine when the first two drinks came up, so I carried them back on my own."
+    # MallCafe_01 (darryn 2026-11-19): Ryan's POV, two drinks in hand, stopped behind the potted
+    # palm; Leia and Maya at the table with their backs to him. Held for the whole overheard talk.
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_mall_cafe_overheard
+    with dissolve
     "There was a big potted palm between the counter and our table. I was a couple of steps behind it when I heard my name."
 
     # Day Two incident (v0.2.0): Ryan overhears the talk. The milder version plays when he has
@@ -1856,6 +1870,9 @@ label ch01_day2_scene_11b_boutique:
 
     # Ryan comes back to the table first; what he does with it is between him and Leia, said low
     # so Maya isn't part of it (darryn 2026-11-19). Same choice ids and story values as before.
+    $ exit_cinematic_mode()
+    scene bg ch01_d2_mall_drinks
+    with dissolve
     $ face("leia", "neutral")
     $ face("maya", "shy")
     "I came around the palm and put the drinks down. Maya suddenly got very interested in her straw."
