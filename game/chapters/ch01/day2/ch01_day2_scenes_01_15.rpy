@@ -337,7 +337,11 @@ label ch01_day2_scene_02_breakfast:
     scene cg ch01_d2_breakfast_01
     with fade
     $ lc_notice_begin("d2_notice_breakfast_smile")  # Things Ryan noticed (docs/NOTICES.md)
-    "Breakfast started with the kind of easy rhythm we'd found by the end of yesterday."
+    # Flow: a strained Day One ending or a cold morning pick doesn't get the "easy rhythm" opener.
+    if get_story_value("ch01_upstairs_response") in ("snapped", "swallowed") or get_story_value("ch01_dream_response") == "withdrew" or "ch01_d2_morning_dismiss" in choice_history:
+        "Breakfast ran on [friend_name]'s energy, which was lucky, because ours hadn't really arrived yet."
+    else:
+        "Breakfast started with the kind of easy rhythm we'd found by the end of yesterday."
 
     friend "Oh, look who's alive. I was about to send a search party. I had a whole message drafted and everything."
     gf "Mostly alive. Your couch did something to my back, I think."
@@ -484,7 +488,7 @@ label ch01_day2_scene_03_maya_message:
 
 label ch01_day2_scene_04_jealousy_callback:
 
-    "The subject should have ended there, but [girlfriend_name]'s curiosity survived breakfast."
+    "The subject should have ended there, but [girlfriend_name]'s curiosity survived the second coffee."
 
     if get_story_value("ch01_female_friend_response") == "teased_jealousy":
         gf "And for the record, I'm still not jealous. I'm just asking things. Normally."
@@ -499,7 +503,11 @@ label ch01_day2_scene_04_jealousy_callback:
         mc "That's allowed. I'm curious what she makes of you, too."
         gf "Wait, so she's going to be reviewing me? Great. That's great. No pressure at all."
 
-    "Whatever tiny tension had been there stayed small enough to joke about."
+    # Flow: same strained test as the breakfast opener.
+    if get_story_value("ch01_upstairs_response") in ("snapped", "swallowed") or get_story_value("ch01_dream_response") == "withdrew" or "ch01_d2_morning_dismiss" in choice_history:
+        "Whatever was underneath it, nobody at the table named it."
+    else:
+        "Whatever tiny tension had been there stayed small enough to joke about."
 
     # These are reactions to the conversation, not a reward for using the
     # optional phone reply. No line assumes Ryan sent a message.
@@ -933,6 +941,7 @@ label ch01_day2_scene_11_missing_pair:
 
 label ch01_day2_scene_11b_boutique:
 
+    "Two shops later, [friend_name] stopped in the middle of the path and looked down at his own shirt like it had betrayed him."
     friend "Before we head back, can we stop for a second? I need a shirt. The one I brought got sunscreen all down the front."
     maya "You're wearing a shirt. You own, like, twelve versions of that exact shirt, I can tell."
     friend "They're not all the same. Okay, some of them are. But this one has sunscreen down the whole front, like a map of everywhere I missed, and I can't wear a map to dinner."
@@ -1475,29 +1484,33 @@ label ch01_day2_scene_11b_boutique:
     "She was laughing when she said it."
 
     "Maya and [friend_name] started arguing over whether his new shirt was actually different from the one he'd arrived in."
-    "[girlfriend_name] leaned slightly closer to me."
+    # Flow: after "Let Maya handle it" (ch01_d2_mall_ryan_response "ignored") she doesn't lean in or joke.
+    if get_story_value("ch01_d2_mall_ryan_response") == "ignored":
+        "[girlfriend_name] stayed on her side of the table and watched them argue. When I looked over, she was already looking at her drink."
+    else:
+        "[girlfriend_name] leaned slightly closer to me."
 
-    # Day One echo: the sticky bra at dinner (ch01_bra_response). A private aside:
-    # Leia kept the bra out of Julian's hearing on Day One, so she still does.
-    if get_story_value("ch01_bra_response") == "playful_open":
-        gf "This trip has it out for my clothes. Last night my bra quit on me at dinner, and today Maya tried to put me in two napkins and a string."
-        mc "Last night you were smiling, though."
-        gf "That was my stressed face! I told you it was my stressed face."
-        "She was smiling now, too."
-    elif get_story_value("ch01_bra_response") == "reassuring":
-        gf "If I ever wear that thing, don't tell me 'you'll be fine.' You said that about the sticky bra last night."
-        mc "And you were fine."
-        gf "I was fine. I was also braless in a restaurant, babe."
-        mc "Fine and braless. Those aren't opposites."
-        "She laughed into her drink and nearly choked on the ice."
-    elif get_story_value("ch01_bra_response") == "cautious":
-        gf "If I ever do wear that thing out, you're on lookout duty again. Like last night with the bra."
-        mc "I mostly watched the bathroom door."
-        gf "Very professionally, though. It was sweet. I noticed."
-    elif get_story_value("ch01_bra_response") == "distracted":
-        gf "If I ever do wear that thing, I'm telling you first, and you're putting the menu down. Last night you told the menu to go for it."
-        mc "I said sorry."
-        gf "You did. I'm still bringing it up."
+        # Day One echo: the sticky bra at dinner (ch01_bra_response). A private aside:
+        # Leia kept the bra out of Julian's hearing on Day One, so she still does.
+        if get_story_value("ch01_bra_response") == "playful_open":
+            gf "This trip has it out for my clothes. Last night my bra quit on me at dinner, and today Maya tried to put me in two napkins and a string."
+            mc "Last night you were smiling, though."
+            gf "That was my stressed face! I told you it was my stressed face."
+            "She was smiling now, too."
+        elif get_story_value("ch01_bra_response") == "reassuring":
+            gf "If I ever wear that thing, don't tell me 'you'll be fine.' You said that about the sticky bra last night."
+            mc "And you were fine."
+            gf "I was fine. I was also braless in a restaurant, babe."
+            mc "Fine and braless. Those aren't opposites."
+            "She laughed into her drink and nearly choked on the ice."
+        elif get_story_value("ch01_bra_response") == "cautious":
+            gf "If I ever do wear that thing out, you're on lookout duty again. Like last night with the bra."
+            mc "I mostly watched the bathroom door."
+            gf "Very professionally, though. It was sweet. I noticed."
+        elif get_story_value("ch01_bra_response") == "distracted":
+            gf "If I ever do wear that thing, I'm telling you first, and you're putting the menu down. Last night you told the menu to go for it."
+            mc "I said sorry."
+            gf "You did. I'm still bringing it up."
 
     if get_story_value("ch01_d2_boutique_slip_witness") == "ryan":
         gf "You saw that, right? In there?"
@@ -1901,6 +1914,9 @@ label ch01_day2_scene_15_pool_group:
     scene bg ch01_pool_day
     with fade
 
+    # Flow: Ryan sees the bikini she picked upstairs without him (scene 13).
+    if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+        "[girlfriend_name] had come down in the smaller one. She caught me noticing, went pink, and didn't go back up to change."
     "The four of us spent the first half hour together."
     "Maya immediately discovered [friend_name]'s hatred of being splashed. [girlfriend_name] immediately used that information against him."
 

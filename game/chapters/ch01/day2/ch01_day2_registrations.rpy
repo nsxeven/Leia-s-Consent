@@ -711,18 +711,19 @@ init 10 python:
 # key ch01_d2_confession_reply: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_dare_signal: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_dinner_outfit: read-by ch01_day2_scenes_16_30.rpy
-# key ch01_d2_dinner_outfit_id: pending set by ch01_day2_scenes_16_30.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d2_dinner_outfit_id: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_dinner_outfit_source: pending set by ch01_day2_scenes_16_30.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_dinner_reach: read-by ch01_day2_gallery.rpy, ch01_day2_scenes_16_30.rpy, lc_thoughts.py
 # key ch01_d2_dinner_wink: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_end_route: read-by ch01_day2_chapter.rpy, ch01_day3_scenes.rpy, ch01_day4_registrations.rpy +4 more
 # key ch01_d2_errand_lane: read-by ch01_day2_feed.rpy, ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_errand_reason: read-by ch01_day2_scene_19b_leia_asks_maya.rpy
+# key ch01_d2_errand_ryan_mood: read-by ch01_day2_leia_errand.rpy, ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_exhibition_bedroom_open_curtains: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_exhibition_pool_shared_with_ryan: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_exhibition_pool_tease: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_exhibition_sunset_shared: read-by ch01_day2_scenes_16_30.rpy
-# key ch01_d2_feed_bringup: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d2_feed_bringup: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_julian_bee_fear_seeded: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_julian_reveal_seen: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_julian_shades_removed: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
@@ -749,7 +750,7 @@ init 10 python:
 # key ch01_d2_maya_sleeping: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_maya_stays_for_drinks: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_nhie_julian_clothes: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
-# key ch01_d2_nhie_leia_clothes: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d2_nhie_leia_clothes: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_nhie_leia_topless_covering: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_nhie_maya_clothes: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_nhie_maya_nude: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
@@ -763,7 +764,7 @@ init 10 python:
 # key ch01_d2_pool_attention: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_pool_incident: read-by ch01_day2_scenes_16_30.rpy, lc_thoughts.py
 # key ch01_d2_pool_outfit: read-by ch01_day2_scenes_01_15.rpy, ch01_day5_registrations.rpy
-# key ch01_d2_pool_response: read-by ch01_day2_leia_errand.rpy
+# key ch01_d2_pool_response: read-by ch01_day2_leia_errand.rpy, ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_pool_suspicion: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_route_lane_dinner: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_route_lane_post_pool: read-by ch01_day2_leia_errand.rpy, ch01_day2_scenes_16_30.rpy
@@ -772,7 +773,7 @@ init 10 python:
 # key ch01_d2_scene_04_complete: read-by lc_thoughts.py
 # key ch01_d2_scene_07_complete: read-by lc_thoughts.py
 # key ch01_d2_scene_30_complete: read-by chapter_select.rpy
-# key ch01_d2_split: read-by ch01_day2_scenes_16_30.rpy
+# key ch01_d2_split: read-by ch01_day2_leia_errand.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_strip_penalty_agreed: read-by lc_thoughts.py
 # key ch01_d2_sunset_noticed: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_sunset_response: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)

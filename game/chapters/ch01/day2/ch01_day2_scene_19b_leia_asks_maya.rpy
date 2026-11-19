@@ -95,6 +95,9 @@ label ch01_day2_scene_19c_back_outside:
         if get_story_value("ch01_d2_errand_reason") == "dream":
             gf "You had a bad night, and you actually told me about it, so you get your favorite things. That's the rule now."
             think "I'd told her about the dream mostly to get it out of my head. I hadn't expected her to do anything with it."
+        elif get_story_value("ch01_d2_errand_ryan_mood") == "warm":
+            gf "You barely slept last night, and you were nice to me all day anyway. So you get your favorite things. That's the rule now."
+            think "I'd figured a bad night didn't count as long as I was nice all day. She'd been counting anyway."
         else:
             gf "You've been quiet all day. I can't fix that, but I can do frappuccinos. So."
             think "I'd thought I was hiding it pretty well. Apparently I'd been hiding it from nobody."
@@ -125,11 +128,19 @@ label ch01_day2_scene_19c_back_outside:
 
     "He headed upstairs, leaving [girlfriend_name] and me alone beside the water."
 
-    # v0.2.0 flavor: pays off the scene 15 "very boring sunscreen stuff" whisper.
-    gf "Finally. That was the very boring sunscreen stuff, by the way."
-    mc "[friend_name] going to get ready was the secret?"
-    gf "Getting you on your own before dinner was the secret. I asked Maya how you get one person alone in a house full of people, and she said just wait, everybody leaves eventually."
-    gf "I was ready to be really disappointed in that advice, and then it worked. Don't tell her it worked."
+    # Flow: after "It just looked... convenient" at the pool, the secret lands quietly.
+    if get_story_value("ch01_d2_pool_response") == "accused":
+        gf "That was the sunscreen thing, by the way. Getting you on your own before dinner. I asked Maya how you do that in a house full of people."
+        if d2_errand_lane is None:
+            gf "I almost didn't, after the pool."
+        else:
+            gf "I almost didn't, after the pool. But I'd already bought the muffins, so."
+    else:
+        # v0.2.0 flavor: pays off the scene 15 "very boring sunscreen stuff" whisper.
+        gf "Finally. That was the very boring sunscreen stuff, by the way."
+        mc "[friend_name] going to get ready was the secret?"
+        gf "Getting you on your own before dinner was the secret. I asked Maya how you get one person alone in a house full of people, and she said just wait, everybody leaves eventually."
+        gf "I was ready to be really disappointed in that advice, and then it worked. Don't tell her it worked."
 
     # Leia's confession (told path, NTR-risk errand only). Ryan's reply is his own scored choice:
     # never capped, and left out of tonight's lane and end route (CH01_D2_ERRAND_EXEMPT_CHOICES).

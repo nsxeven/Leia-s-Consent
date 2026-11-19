@@ -54,6 +54,10 @@ label ch01_day2_leia_errand:
     $ set_story_value("ch01_d2_errand_lane", d2_errand_lane)
     $ d2_errand_reason = "dream" if "ch01_d2_postshop_dream" in choice_history else "off"
     $ set_story_value("ch01_d2_errand_reason", d2_errand_reason)
+    # Flow: Ryan's mood so far, by the café test (any dismissive/withdrawal pick today). Stored before
+    # her own picks can add tags; her thoughts here, the shop, 19c and the sunset read it.
+    $ d2_errand_ryan_mood = "detached" if (choice_tag_count("dismissive", ch01_d2_choice_ids()) + choice_tag_count("withdrawal", ch01_d2_choice_ids())) > 0 else "warm"
+    $ set_story_value("ch01_d2_errand_ryan_mood", d2_errand_ryan_mood)
 
     scene bg ch01_villa_entry_day
     with dissolve
@@ -64,15 +68,24 @@ label ch01_day2_leia_errand:
 
     if d2_errand_reason == "dream":
         leia_think "He told me about that dream at the mall. The drink guy, and him not being able to move, and just having to watch the whole thing."
-        leia_think "It's a ridiculous dream. I still spent the whole drive back wondering how long he'd been carrying it around before he said anything."
+        leia_think "It's a ridiculous dream. I still spent the whole walk back wondering how long he'd been carrying it around before he said anything."
         leia_think "So he doesn't get a bad dream and a sad afternoon. Pick one. Actually, no, he doesn't get either."
     else:
-        leia_think "He's been quiet all day. Like, he answers when I talk to him, and he laughs in the right places, but it's like he's always a few seconds behind everyone."
-        if "ch01_d2_postshop_sleep" in choice_history:
-            leia_think "He says he didn't sleep well. That's probably true. I just don't think it's the whole thing."
+        if d2_errand_ryan_mood == "warm":
+            leia_think "He's been really sweet today. He's also been yawning all afternoon, and half the night he kept doing this thing with his pillow, like he was fighting it."
+            leia_think "He says he's just tired. Which, okay, probably. I still want to do something about it."
+            if get_story_value("ch01_d2_overheard_talk") == "mild":
+                leia_think "I told Maya I wanted to do something nice for him tonight. Okay. This is the something."
+        else:
+            leia_think "He's been quiet all day. Like, he answers when I talk to him, and he laughs in the right places, but it's like he's always a few seconds behind everyone."
+            if "ch01_d2_postshop_sleep" in choice_history:
+                leia_think "He says he didn't sleep well. That's probably true. I just don't think it's the whole thing."
         if get_story_value("ch01_d2_pool_response") == "accused":
             leia_think "And whatever that was at the pool. I'm still kind of... I don't know. Maybe I need an hour where I'm not waiting for him to say something, too."
-        leia_think "I can't fix whatever's going on in his head. I can get him a caramel frappuccino, though. That part I can actually do."
+        if d2_errand_ryan_mood == "warm":
+            leia_think "I can't make him sleep. I can get him a caramel frappuccino, though. That part I can actually do."
+        else:
+            leia_think "I can't fix whatever's going on in his head. I can get him a caramel frappuccino, though. That part I can actually do."
 
     leia_think "Caramel frappuccino, extra caramel, from the café we had lunch at, because they do it properly. And chocolate muffins from the resort shop, if they've got any left. That's the plan. That's the entire plan."
 
@@ -180,8 +193,16 @@ label ch01_day2_errand_cafe_rescue:
 
     if d2_errand_lane == "exhibitionism":
         gf "Yep. That's me. You were the one doing all the staring."
-        pool_guy "In my defense, there was a lot going on to stare at. You and your friend, the strings thing, and then she..."
-        "He made a small slapping motion with one hand and then immediately looked like he regretted it."
+        # Flow: he only recaps what happened on this save's pool split (ch01_d2_split).
+        if get_story_value("ch01_d2_split") == "ryan_leia_julian_maya":
+            pool_guy "In my defense, there was a lot going on to stare at. You, your boyfriend, the whole... kiss situation."
+            "He waved a hand at nothing in particular and then immediately looked like he regretted it."
+        elif get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+            pool_guy "In my defense, there was a lot going on to stare at. The stretching, and then the bee, and then your..."
+            "He made a vague little gesture at his own chest and then immediately looked like he regretted it."
+        else:
+            pool_guy "In my defense, there was a lot going on to stare at. You and your friend, the strings thing, and then she..."
+            "He made a small slapping motion with one hand and then immediately looked like he regretted it."
         gf "Okay, we really don't need the whole recap."
         "I was laughing, though. I didn't totally mind the recap."
         jump ch01_day2_errand_cafe_exhib
@@ -205,9 +226,15 @@ label ch01_day2_errand_cafe_love:
             $ apply_choice("ch01_d2_errand_cafe_love_thank")
             $ lc_leia_mark("ch01_d2_cafe_love_thanked")
             gf "That's really sweet, and thank you, you didn't have to do any of that. But this drink is for my boyfriend. He's asleep by the pool, and I want it to be there when he wakes up."
-            pool_guy "The guy from the pool? The one who..."
-            gf "The one who kissed me right in front of you, yes. That one."
-            pool_guy "Ha. Yeah, okay, I can't really compete with that. Tell him I said hi. Or, actually, maybe don't."
+            # Flow: no kiss at the pool on the drinks-run split (ch01_d2_split).
+            if get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+                pool_guy "The guy from the pool? The one who went off for drinks with your friend?"
+                gf "Yes. That one. He's mine."
+                pool_guy "Ha. Okay. Lucky guy. Tell him I said hi. Or, actually, maybe don't."
+            else:
+                pool_guy "The guy from the pool? The one who..."
+                gf "The one who kissed me right in front of you, yes. That one."
+                pool_guy "Ha. Yeah, okay, I can't really compete with that. Tell him I said hi. Or, actually, maybe don't."
             gf "I'm pretty lucky too. He's really nice. You'd like him, he'd probably thank you for this about five times."
             "He held his hands up, laughing, and went back to his friend at the corner table, who said something that made him shove him."
             leia_think "I just said it out loud to a total stranger, and it felt really nice. I should say it to [player_name] like that more. Not the stranger part."
@@ -246,17 +273,26 @@ label ch01_day2_errand_cafe_exhib:
             "He kept finding reasons to look at me, and I kept letting him find them."
             pool_guy "So what are you doing tonight? Because there's a beach thing at the bar later, and if you and your friend wanted to..."
             "Then the barista called my drink. I picked it up and smiled at him like I'd been waiting for exactly this moment all along."
-            gf "That sounds really fun. My boyfriend and I have dinner plans, though. This is his, by the way. He's the guy from the pool. The one who kissed me."
-            pool_guy "Of course he is. Yeah. Course he is."
+            if get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+                gf "That sounds really fun. My boyfriend and I have dinner plans, though. This is his, by the way. He was at the pool too. The one you didn't notice."
+                pool_guy "Of course he was. Yeah. Course he was."
+            else:
+                gf "That sounds really fun. My boyfriend and I have dinner plans, though. This is his, by the way. He's the guy from the pool. The one who kissed me."
+                pool_guy "Of course he is. Yeah. Course he is."
             gf "Thank you for the rescue, though. I mean that."
             leia_think "His face. That was a little bit mean. It was also a little bit fun. [player_name] would have loved his face."
 
         "[d2_errand_cafe_mention_text]":
             $ apply_choice("ch01_d2_errand_cafe_exhib_mention")
             $ lc_leia_mark("ch01_d2_cafe_exhib_mentioned")
-            gf "Thank you, really, but you don't need to stay. My boyfriend's back at the villa. He was the other guy at the pool, the one who, um. The kiss."
-            pool_guy "Ah. Right, yeah. I remember him. Pretty memorable."
-            gf "He is pretty memorable."
+            if get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+                gf "Thank you, really, but you don't need to stay. My boyfriend's back at the villa. He was at the pool too, by the table."
+                pool_guy "Ah. Right, yeah. I think I remember him."
+                gf "You'd remember him if you met him properly."
+            else:
+                gf "Thank you, really, but you don't need to stay. My boyfriend's back at the villa. He was the other guy at the pool, the one who, um. The kiss."
+                pool_guy "Ah. Right, yeah. I remember him. Pretty memorable."
+                gf "He is pretty memorable."
             "He took it well. He even laughed, and told me to say hi to the bee for him, which made no sense at all, and I laughed anyway."
             barista "Large caramel frappuccino, extra caramel!"
 
@@ -334,10 +370,17 @@ label ch01_day2_errand_shop:
 
     "Inside, it was one long room of snacks, sunscreen and inflatable things, with a fridge humming along the back wall."
     "There was exactly one box of chocolate muffins left, on the bottom shelf, behind a whole tower of banana bread."
-    leia_think "Yes. Mine. Sorry, banana bread."
-    "The woman at the till had reading glasses on a chain, a name badge that said MARGARET, and a radio playing something old and quiet. She watched me carry the box over like I'd won it at a fair."
-    shop_owner "Last box. You must really want those."
-    gf "They're not for me. I mean, I'm going to steal one. But they're for my boyfriend. They're his favorite."
+    # Flow: straight after the café on the NTR-risk lane (the smack), the shop opens subdued.
+    if d2_errand_lane == "ntr_risk" and not lc_leia_visited_first("ch01_d2", "shop"):
+        "I pulled it out from behind the banana bread and didn't let myself think about anything else."
+        "The woman at the till had reading glasses on a chain, a name badge that said MARGARET, and a radio playing something old and quiet."
+        shop_owner "Last box. You must really want those."
+        gf "They're for my boyfriend. They're his favorite."
+    else:
+        leia_think "Yes. Mine. Sorry, banana bread."
+        "The woman at the till had reading glasses on a chain, a name badge that said MARGARET, and a radio playing something old and quiet. She watched me carry the box over like I'd won it at a fair."
+        shop_owner "Last box. You must really want those."
+        gf "They're not for me. I mean, I'm going to steal one. But they're for my boyfriend. They're his favorite."
 
     if lc_leia_visited_first("ch01_d2", "shop"):
         jump ch01_day2_errand_shop_first
@@ -355,6 +398,8 @@ label ch01_day2_errand_shop_first:
     shop_owner "And what's he done to earn the last box?"
     if d2_errand_reason == "dream":
         gf "Nothing, really. He had a bad dream last night and he finally told me about it today, and I keep thinking about how long he sat on it first. He's asleep by the pool now, and I want him to wake up to his favorite things."
+    elif get_story_value("ch01_d2_errand_ryan_mood") == "warm":
+        gf "Nothing, really. He barely slept last night, and he's been lovely all day anyway. He's asleep by the pool now, and I want him to wake up to his favorite things."
     else:
         gf "Nothing, really. That's kind of the point. He's been a bit quiet today, and he's asleep by the pool, and I want him to wake up to his favorite things."
     gf "A caramel frappuccino and these. That's it, that's all it takes. He's very easy to please. It's one of the best things about him."
@@ -497,12 +542,18 @@ label ch01_day2_errand_walk_back:
                 $ apply_choice("ch01_d2_errand_walk_tell")
                 $ set_story_value("ch01_d2_leia_told", "told")
                 leia_think "I'm telling him. Tonight, before I lose my nerve. Before dinner, even, if [friend_name] ever goes upstairs."
-                leia_think "He's been so far away all day. Maybe if I give him something real, he'll give me something real back."
+                if get_story_value("ch01_d2_errand_ryan_mood") == "warm":
+                    leia_think "He's been so sweet all day, and he still feels half somewhere else. Maybe if I give him something real, he'll give me something real back."
+                else:
+                    leia_think "He's been so far away all day. Maybe if I give him something real, he'll give me something real back."
 
             "[d2_errand_walk_keep_text]":
                 $ apply_choice("ch01_d2_errand_walk_keep")
                 $ set_story_value("ch01_d2_leia_told", "kept")
-                leia_think "It was nothing. A stranger, a stupid joke, one second. He's already stuck in his own head about something. He doesn't need this in there too."
+                if get_story_value("ch01_d2_errand_ryan_mood") == "warm":
+                    leia_think "It was nothing. A stranger, a stupid joke, one second. He barely slept last night. He doesn't need this in his head too."
+                else:
+                    leia_think "It was nothing. A stranger, a stupid joke, one second. He's already stuck in his own head about something. He doesn't need this in there too."
                 leia_think "And if a tiny part of me wants to keep it, just for me, nobody has to know about that part either."
 
     scene bg ch01_villa_entry_day

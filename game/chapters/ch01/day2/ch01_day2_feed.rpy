@@ -49,9 +49,9 @@ init 1 python:
     lc_feed_register(
         "d2_feed_exhib_poolguy", "ch01_d2", "Dan", "dan.on.tour",
         "stopped a creep at the café and it was the girl from the pool next door. she's TAKEN, boys 😭",
-        comments=[("mikey_k", "THE pool girl?? the one with the strings??"),
+        comments=[("mikey_k", "THE pool girl?? the bikini top girl??"),
                   ("dan.on.tour", "we don't talk about the pool"),
-                  ("mikey_k", "her bf is the guy who grabbed her ass right in front of us. he is living my life")],
+                  ("mikey_k", "and her bf was at the pool too. he is living my life")],
         likes=96, when=lambda: ch01_d2_errand_stamp("cafe"),
         unlock={"ch01_d2_errand_lane": "exhibitionism", "leia_did_not": "ch01_d2_cafe_exhib_lingered"},
         reaction="ch01_d2_feed_react_exhib")
@@ -59,9 +59,9 @@ init 1 python:
     lc_feed_register(
         "d2_feed_exhib_poolguy_linger", "ch01_d2", "Dan", "dan.on.tour",
         "stopped a creep at the café, then spent 10 min talking to the girl from the pool next door. she's TAKEN, boys 😭",
-        comments=[("mikey_k", "THE pool girl?? the one with the strings??"),
+        comments=[("mikey_k", "THE pool girl?? the bikini top girl??"),
                   ("dan.on.tour", "we don't talk about the pool"),
-                  ("mikey_k", "her bf is the guy who grabbed her ass right in front of us. he is living my life")],
+                  ("mikey_k", "and her bf was at the pool too. he is living my life")],
         likes=96, when=lambda: ch01_d2_errand_stamp("cafe"),
         unlock={"ch01_d2_errand_lane": "exhibitionism", "leia_did": "ch01_d2_cafe_exhib_lingered"},
         reaction="ch01_d2_feed_react_exhib")

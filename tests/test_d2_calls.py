@@ -133,7 +133,7 @@ class ProofreadOverflowTests(unittest.TestCase):
         b19 = (CH01 / "day2" / "ch01_day2_scene_19b_leia_asks_maya.rpy").read_text(encoding="utf-8")
         d16 = (CH01 / "day2" / "ch01_day2_scenes_16_30.rpy").read_text(encoding="utf-8")
         d1 = (CH01 / "day1" / "ch01_scenes_07_13.rpy").read_text(encoding="utf-8")
-        self.assertIn('everybody leaves eventually."\n    gf "I was ready', b19)
+        self.assertIn('everybody leaves eventually."\n        gf "I was ready', b19)
         self.assertIn('at some point in the night."\n    "One arm', SCENES)
         self.assertIn('what kind of guy says that."\n        think "Instead', d16)
         self.assertIn("and more of him than he probably intended", d1)

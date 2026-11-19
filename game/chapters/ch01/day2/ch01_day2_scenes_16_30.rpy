@@ -87,6 +87,9 @@ label ch01_day2_scene_16_forced_split:
         mc "What do you mean? I'm just... I'm here. I'm hanging out."
         maya "[girlfriend_name] keeps checking whether you're still in the room. You're standing right next to her, and she keeps checking."
         think "Was she? I hadn't seen her do it once, and I'd been standing right there."
+        maya "Just look at her once in a while. Like, actually look. That's it, that's the whole speech."
+        mc "That's the whole speech?"
+        maya "I had a longer one. You looked like you were going to throw up, so I cut it."
 
         "Back at the pool, [friend_name] glanced toward the path we'd disappeared down."
         friend "That was not about drinks. Nobody needs help carrying four drinks."
@@ -222,6 +225,7 @@ label ch01_day2_scene_17_pool_return:
         friend "Then don't look at them. That's what I'm doing. It's working great."
         gf "I already looked!"
 
+        "Maya didn't bring it up again on the walk back. She just handed me the heavier drinks."
         "Maya and I rounded the corner carrying the drinks."
         "Then I stopped."
 
@@ -402,7 +406,8 @@ label ch01_day2_scene_18_pool_aftermath:
 
         "She lowered her voice."
         gf "The strings thing was on purpose. Like, I want you to know that part was me."
-        gf "Maya was being Maya, and she asked, and I said yes, and I knew they were looking the whole time."
+        mc "What strings thing?"
+        gf "My bottoms. I pulled them up. Higher. While they were looking. Maya asked if I wanted to, and I said yes."
         "She glanced toward the strangers again, then back at me."
         gf "But that? The top?"
         gf "That was so not on purpose. I need you to know that."
@@ -446,7 +451,11 @@ label ch01_day2_scene_19_change_for_evening:
     with dissolve
 
     "The pool incident took most of the energy out of the afternoon."
-    "For a while the four of us stayed around the table, drinking water, drying off, and letting the embarrassment turn back into something we could laugh about."
+    # Flow: after "It just looked... convenient" nobody laughs it off.
+    if get_story_value("ch01_d2_pool_response") == "accused":
+        "For a while the four of us stayed around the table, drinking water and drying off. Maya and [friend_name] did most of the talking. [girlfriend_name] sat at the far end and didn't look at me much."
+    else:
+        "For a while the four of us stayed around the table, drinking water, drying off, and letting the embarrassment turn back into something we could laugh about."
 
     maya "I actually have to go home if I'm going to look like a person tonight. I have pool hair. This is pool hair."
     friend "You look fine. I mean, you look good. You look like you, which is— yeah. Fine."
@@ -474,7 +483,7 @@ label ch01_day2_scene_20_dinner_outfit:
     $ d2_lane = get_story_value("ch01_d2_route_lane_post_pool", ch01_d2_route_lane())
 
     "The sun had dropped low enough to turn the water orange."
-    "For the first time since Maya arrived, there was nobody else filling the silence."
+    "[friend_name] still hadn't come back down."
 
     if d2_lane == "love":
         "[girlfriend_name] leaned against the railing beside me, then glanced toward the upper floor."
@@ -540,30 +549,43 @@ label ch01_day2_scene_20_dinner_outfit:
     elif d2_lane == "exhibitionism":
         "[girlfriend_name] sat beside me, knees drawn up, still thinking about the pool."
 
-        gf "Maya is such a bad influence. She's genuinely terrible."
-        mc "Which part are we blaming her for?"
-        gf "The strings. The bikini strings."
-        mc "Oh. Those strings."
-        gf "Don't. Don't say it like that."
-        mc "You pulled them higher while two guys were staring at you."
-        gf "When you say it like that, it sounds terrible."
-        mc "I'm not complaining. I'm really, really not complaining."
+        # Flow: this lane is read after the pool, so it can follow any split. She only brings up
+        # what happened on this save's split (ch01_d2_split); old saves keep the strings version.
+        if get_story_value("ch01_d2_split") == "ryan_leia_julian_maya":
+            gf "Okay, so. The pool. When I kissed you in front of those guys."
+            mc "You started that."
+            gf "I know I started it! And then you grabbed my ass, and they were all watching, and I didn't hate it. That's the part I keep thinking about."
+            mc "The part where they were watching?"
+            gf "Knowing they were looking. Knowing you knew they were looking."
+        elif get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+            gf "Before the bee. When I stretched by the table? One of those guys watched me the whole time."
+            mc "I didn't even see that."
+            gf "I know. You were on your phone. And I kind of liked it anyway. Them looking."
+        else:
+            gf "Maya is such a bad influence. She's genuinely terrible."
+            mc "Which part are we blaming her for?"
+            gf "The strings. The bikini strings."
+            mc "Oh. Those strings."
+            gf "Don't. Don't say it like that."
+            mc "You pulled them higher while two guys were staring at you."
+            gf "When you say it like that, it sounds terrible."
+            mc "I'm not complaining. I'm really, really not complaining."
 
-        "[girlfriend_name] covered her face for a second, then peeked at me through her fingers."
+            "[girlfriend_name] covered her face for a second, then peeked at me through her fingers."
 
-        gf "And then she smacked my ass! In front of them!"
-        mc "You didn't look that angry about it."
-        gf "I was embarrassed. That's a different face."
-        mc "I didn't say you weren't embarrassed."
-        gf "[player_name]."
-        mc "What? I'm just asking."
+            gf "And then she smacked my ass! In front of them!"
+            mc "You didn't look that angry about it."
+            gf "I was embarrassed. That's a different face."
+            mc "I didn't say you weren't embarrassed."
+            gf "[player_name]."
+            mc "What? I'm just asking."
 
-        "She lasted another few seconds before giving up."
+            "She lasted another few seconds before giving up."
 
-        gf "...Fine. It was kind of hot."
-        mc "Wait, the spanking part?"
-        gf "No— I mean, kind of? The whole thing."
-        gf "Knowing they were looking. Knowing you knew they were looking."
+            gf "...Fine. It was kind of hot."
+            mc "Wait, the spanking part?"
+            gf "No— I mean, kind of? The whole thing."
+            gf "Knowing they were looking. Knowing you knew they were looking."
         mc "And losing your top?"
         gf "No."
         "She answered that one immediately."
@@ -586,7 +608,12 @@ label ch01_day2_scene_20_dinner_outfit:
 
         "She laughed, and some of the red went out of her face."
 
-        gf "I think the part I liked most was, like... that I got to come back and tell you. That you'd know."
+        if get_story_value("ch01_d2_split") == "ryan_leia_julian_maya":
+            gf "I think the part I liked most was, like... that it was you. That you were right there, and you knew."
+        elif get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+            gf "I think the part I liked most is, like... telling you now. That you know."
+        else:
+            gf "I think the part I liked most was, like... that I got to come back and tell you. That you'd know."
 
         think "That part, I liked a lot."
 
@@ -611,7 +638,12 @@ label ch01_day2_scene_20_dinner_outfit:
         mc "Yeah, sure. What's up?"
         gf "Are we okay?"
         "I looked at her."
-        gf "Because every time I look at you today, you're, like, somewhere else. You're here, but you're not here."
+        # Flow: Ryan's mood when she left on her errand (ch01_d2_errand_ryan_mood, the café test); a
+        # brushed-off confession counts as distant. Old saves keep the original line.
+        if get_story_value("ch01_d2_errand_ryan_mood") == "warm" and "ch01_d2_confession_brush" not in choice_history:
+            gf "Because you've been really sweet today, and I still keep feeling like you're, like, a step behind your own face. You're here, but you're not all the way here."
+        else:
+            gf "Because every time I look at you today, you're, like, somewhere else. You're here, but you're not here."
         gf "And if something's bothering you, you can just tell me. Even if it's dumb. Especially if it's dumb."
 
         # Café incident payoff (scene 11b): Maya's "out loud" advice only exists in the worried talk.
@@ -631,8 +663,13 @@ label ch01_day2_scene_20_dinner_outfit:
 
                 mc "No. I'm not really okay."
                 "[girlfriend_name] waited."
-                mc "I slept badly, and then the pool thing looked insane for about three seconds, and I think I've been... jealous? Kind of? And instead of just saying any of that, I've been acting like an idiot all day."
-                gf "Babe. Nothing happened with [friend_name]. You know that, right?"
+                # Flow: the pool and [friend_name] only come up if her top came off with him there.
+                if get_story_value("ch01_d2_pool_incident") == "leia_julian_bee_top_off":
+                    mc "I slept badly, and then the pool thing looked insane for about three seconds, and I think I've been... jealous? Kind of? And instead of just saying any of that, I've been acting like an idiot all day."
+                    gf "Babe. Nothing happened with [friend_name]. You know that, right?"
+                else:
+                    mc "I slept badly, and then I spent the whole day stuck in my own head about stuff I couldn't even explain to myself. And instead of just saying any of that, I've been acting like an idiot."
+                    gf "Babe. You could've just said that. You know that, right?"
                 mc "I know. I do know."
                 gf "Then when your brain starts telling you something else, talk to me. Don't just go quiet on me."
                 mc "Yeah. I can do that. I'll try."
@@ -1217,7 +1254,13 @@ label ch01_day2_scene_27_game_escalates:
 
     "[girlfriend_name] looked down at herself, then stood."
 
-    "She slipped out of her dinner dress and stood there for a second in just her bra and panties, cheeks burning."
+    # Flow: what comes off is what she wore to dinner (ch01_d2_dinner_outfit_id).
+    if get_story_value("ch01_d2_dinner_outfit_id") == "d2_loose_low_cut":
+        "She pulled her top over her head, stepped out of her skirt, and stood there for a second in just her bra and panties, cheeks burning."
+    elif get_story_value("ch01_d2_dinner_outfit_id") in (None, "resort_dinner_dress"):
+        "She slipped out of her dinner dress and stood there for a second in just her bra and panties, cheeks burning."
+    else:
+        "She slipped out of what she'd worn to dinner and stood there for a second in just her bra and panties, cheeks burning."
     gf "Okay. Okay, nobody say anything. Literally nobody."
 
     if d2_lane == "exhibitionism":
@@ -1225,7 +1268,7 @@ label ch01_day2_scene_27_game_escalates:
         "She was pink all the way down her neck, and under the embarrassment I could see a little spark of something else."
     elif d2_soft_gate:
         "She didn't look over at me first. I only realized that afterwards."
-        "She simply folded the dress beside her and sat down."
+        "She simply folded her clothes beside her and sat down."
     else:
         "She sat back down and scooted straight over to my side again, like being next to me made it better."
 
@@ -1594,7 +1637,9 @@ label ch01_day2_scene_29_game_winds_down:
     friend "I— okay. The couch is genuinely fine. It's a good couch."
     maya "[friend_name]."
     friend "And I'm not a rich boy. I've slept on couches. Some of them were basically floors."
+    friend "Wait. Are you sure? Actually sure? You've had a lot to drink, and the room's still going to be there tomorrow, and so is the couch, so you could just decide then. I'm not putting a deadline on it. There isn't a deadline."
     maya "I told [girlfriend_name] this afternoon. Way before any of this. Come on."
+    "[girlfriend_name] nodded at him, very seriously, like a witness."
     "He went red all the way to his ears."
 
     "Maya scooped her dress off the floor, caught [friend_name] by the wrist and started pulling him toward the corridor."
@@ -1618,8 +1663,10 @@ label ch01_day2_scene_29_game_winds_down:
 
     $ d2_lane = get_story_value("ch01_d2_route_lane_dinner", ch01_d2_route_lane())
 
-    if d2_lane == "love":
-        "[girlfriend_name] found her dress, looked at it, then decided putting it back on for the walk upstairs was unnecessary."
+    # Flow: what she's wearing follows the game (ch01_d2_nhie_leia_clothes), not only the lane: on the
+    # Love lane after "I'm fine" at sunset she went topless too. Old saves (no value) keep the lane split.
+    if d2_lane == "love" and get_story_value("ch01_d2_nhie_leia_clothes") != "panties_covering_chest":
+        "[girlfriend_name] picked up her clothes, looked at them, then decided putting them back on for the walk upstairs was unnecessary."
         if get_story_value("ch01_d2_dare_signal") == "lap":
             "She stayed in her bra and panties and slid back onto my lap like she'd never left it."
         else:
@@ -1923,15 +1970,25 @@ label ch01_day2_scene_30_bedroom:
 
 label ch01_day2_scene_30_love:
 
-    "[girlfriend_name] crossed to the window and pulled the curtains shut."
+    # Flow: a strained night (pool suspicion talked down, "I'm fine" at sunset, or the café post found
+    # the hard way) skips the curtain joke and the "really good day" ending.
+    $ d2_love_strained = "ch01_d2_bed_pool_love" in choice_history or get_story_value("ch01_d2_ntr_soft_gate", False) or get_story_value("ch01_d2_feed_bringup") in ("kept_asked", "kept_silent")
 
-    gf "There. Better."
-    mc "You know those don't really hide anything."
-    gf "They hide enough. Okay, they hide, like, the general idea. It's the thought that counts."
-    mc "That's not what you said yesterday."
-    gf "Shut up. Yesterday was different, and I'm not explaining why."
+    if d2_love_strained:
+        "[girlfriend_name] pulled the curtains shut and didn't make a joke about them."
+        "For a while neither of us said anything."
+        gf "Can we just... not do today for a minute? Just this bit."
+        mc "Yeah. Just this bit."
+    else:
+        "[girlfriend_name] crossed to the window and pulled the curtains shut."
 
-    "The thin fabric still let the light and the shapes through. [girlfriend_name] didn't look at it again."
+        gf "There. Better."
+        mc "You know those don't really hide anything."
+        gf "They hide enough. Okay, they hide, like, the general idea. It's the thought that counts."
+        mc "That's not what you said yesterday."
+        gf "Shut up. Yesterday was different, and I'm not explaining why."
+
+        "The thin fabric still let the light and the shapes through. [girlfriend_name] didn't look at it again."
 
     gf "Come here."
 
@@ -1940,7 +1997,9 @@ label ch01_day2_scene_30_love:
     with dissolve
 
     "She pulled me onto the bed with her."
-    if get_story_flag("ch01_d2_love_sunset_oral"):
+    if d2_love_strained:
+        "It was slow and quiet, and neither of us had to work out where our hands went."
+    elif get_story_flag("ch01_d2_love_sunset_oral"):
         "After the reckless little moment outside at sunset, this was slower and familiar, a lot of kissing and a bit of laughter, and neither of us had to work out where our hands went."
     else:
         "It was slow and familiar, a lot of kissing and a little laughter, and neither of us had to work out where our hands went."
@@ -1957,11 +2016,17 @@ label ch01_day2_scene_30_love:
 
     "Afterward [girlfriend_name] curled against me."
 
-    gf "Today was a really good day."
-    mc "Yeah. It really was. Weirdly good, actually."
-    gf "Even the bee?"
-    mc "Especially the bee."
-    gf "You're such an idiot."
+    if d2_love_strained:
+        gf "Today was a really weird day."
+        mc "Yeah. It was."
+        gf "This bit was good, though. Can we keep this bit?"
+        mc "We're keeping this bit."
+    else:
+        gf "Today was a really good day."
+        mc "Yeah. It really was. Weirdly good, actually."
+        gf "Even the bee?"
+        mc "Especially the bee."
+        gf "You're such an idiot."
 
     $ set_story_value("ch01_d2_bedroom_variant", "love_private")
     $ set_story_value("ch01_d2_end_route", "love")
@@ -1970,19 +2035,29 @@ label ch01_day2_scene_30_love:
 
 label ch01_day2_scene_30_exhibition:
 
-    "[girlfriend_name] looked toward the glass wall."
+    # Flow: after "I haven't stopped thinking about it" (ch01_d2_bed_pool_exhibition) she works out the
+    # other part herself at the glass, instead of a cut straight to the curtain.
+    $ d2_exhib_from_pool_talk = "ch01_d2_bed_pool_exhibition" in choice_history
+    if d2_exhib_from_pool_talk:
+        "She sat with that for a second. Then she got up, went to the glass wall, and put her hand on the curtain without closing it."
+        gf "So if I left these open... is that the other part?"
+        mc "...Maybe. Yeah."
+        gf "Okay. Then I'm leaving them."
+        "She was blushing hard. She came back to the bed and pulled me down with her."
+    else:
+        "[girlfriend_name] looked toward the glass wall."
 
-    "I got up and reached for the edge of the curtain."
+        "I got up and reached for the edge of the curtain."
 
-    "She was off the bed before I'd pulled it an inch, her hand over mine on the fabric."
-    "For a second I thought she was going to finish closing it herself."
+        "She was off the bed before I'd pulled it an inch, her hand over mine on the fabric."
+        "For a second I thought she was going to finish closing it herself."
 
-    gf "Leave them."
+        gf "Leave them."
 
-    "She was blushing hard, and she didn't let go of my hand."
+        "She was blushing hard, and she didn't let go of my hand."
 
-    "She tugged me away from the window and back toward the bed."
-    gf "Come back here. I want them open."
+        "She tugged me away from the window and back toward the bed."
+        gf "Come back here. I want them open."
 
     $ enter_cinematic_mode()
     scene cg ch01_d2_exhib_bed_open_01
@@ -1991,7 +2066,10 @@ label ch01_day2_scene_30_exhibition:
     "We stayed on the bed, the curtains still pushed back, the lit pool and the walkway right there past the glass."
 
     gf "You're staring."
-    mc "I mean... yeah. You've kind of been making that really hard not to do all night."
+    if d2_exhib_from_pool_talk:
+        mc "I've been staring all night. I just wasn't saying why."
+    else:
+        mc "I mean... yeah. You've kind of been making that really hard not to do all night."
     gf "Did you like it?"
     mc "Which part?"
     gf "You know which part."
