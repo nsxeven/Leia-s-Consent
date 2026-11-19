@@ -2022,6 +2022,8 @@ label ch01_day2_scene_13_girls_upstairs:
 
     scene bg ch01_master_bedroom
     with dissolve
+    # Just the girls upstairs, still in their café clothes (Ryan is outside with the drinks).
+    $ cast(leia="casual", maya="green_tube_top")
 
     "Upstairs, [girlfriend_name] laid both bikinis across the bed while Maya changed beside her."
     "Both were two-piece tie bikinis. The difference was coverage: one familiar and safer, the other cut noticeably smaller."
@@ -2078,6 +2080,7 @@ label ch01_day2_scene_14_tie_foreshadow:
 
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
         "[girlfriend_name] changed into the bolder tie bikini while still talking to Maya, fastening the top with less attention than the knot deserved."
+        $ cast_add(leia="blue_bikini")
         $ face("maya", "skeptical")
         maya "Hey, double-knot that."
         $ face("leia", "smile")
@@ -2088,6 +2091,7 @@ label ch01_day2_scene_14_tie_foreshadow:
         maya "So far you haven't had me talking at you the whole time you tied it."
     else:
         "[girlfriend_name] changed into the more covered tie bikini while Maya borrowed the mirror and most of the counter space."
+        $ cast_add(leia="blue_bikini")
         "She tied the top while answering Maya, gave the knot one quick tug, and moved on."
         $ face("maya", "skeptical")
         maya "Double-knot that, though."
@@ -2108,6 +2112,9 @@ label ch01_day2_scene_15_pool_group:
 
     scene bg ch01_pool_day
     with fade
+    # Pool outfits: Ryan, Leia (her bikini sprite) and Julian have pool art; Maya has no swimwear
+    # sprite yet, so she speaks off-sprite rather than standing there in her café top.
+    $ cast(ryan="pool", leia="blue_bikini", julian="pool")
 
     # Flow: Ryan sees the bikini she picked upstairs without him (scene 13).
     if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
