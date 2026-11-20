@@ -14,7 +14,7 @@ init -2 python:
     GALLERY_PLACEHOLDER_IMAGES.update([
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_pool_top_accident",
-        "ch01_d2_pool_kiss", "ch01_d2_pool_kiss_stranger_pov", "ch01_d2_pool_knot_touch",
+        "ch01_d2_pool_kiss", "ch01_d2_pool_kiss_stranger_pov",
         "d2_cafe_stranger",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
         "ch01_d2_dinner_reach", "ch01_d2_julian_underwear_reveal",
@@ -80,7 +80,9 @@ init -2 python:
          ("ch01_d2_strangers_stare_red_pov", "A stranger's POV (red)")], mature=True)
     gallery_row("d2_pool_knot_touch", "ch01_d2", "Loose knot",
         "He was supposed to fix it.",
-        [("ch01_d2_pool_knot_touch", "Under the water")], mature=True)
+        [("ch01_d2_pool_ass_01", "The steps"), ("ch01_d2_pool_ass_02", "Not up here"),
+         ("ch01_d2_underwater_play_01", "Under the water"), ("ch01_d2_underwater_play_02", "Both hands"),
+         ("ch01_d2_underwater_play_03", "Don't you dare stop")], mature=True)
     gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
         "Leia kisses Ryan by the pool, with an audience at the wall.",
         [("ch01_d2_pool_kiss", "The kiss")])

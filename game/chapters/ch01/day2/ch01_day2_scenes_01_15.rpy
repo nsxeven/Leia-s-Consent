@@ -2400,56 +2400,58 @@ label ch01_day2_scene_15_pool_group:
 label ch01_day2_scene_15b_knot_touch:
 
     # Door A, fourth answer (darryn 2026-11-19): red bikini, Exhibitionism or NTR lane. Ryan moves in
-    # instead of fixing the knot. Sprites (the red bikini sprite is pending; the bikini sprite stands
-    # in), one CG shared by both lanes, and the knot stays loose (scene 17 has its own echo).
+    # instead of fixing the knot. Full lewd beat on CGs: PoolAssRed_01 (the grab, on the pool steps),
+    # PoolAssRed_02 (bottoms pulled aside; Leia stops him, not in front of people), then
+    # UnderwaterPlay_01-03 (aside and spread, both hands, fingering) to her release. Three voices:
+    # Exhibitionism (teasing), NTS seed (warm Ryan, "I didn't hate it"), NTR (jealous, detached Ryan).
+    # The knot stays loose (scene 17 has its own echo).
     $ d2_touch_ntr = get_story_value("ch01_d2_route_lane_pre_split", "love") == "ntr_risk"
-    "I didn't fix it. I waded up behind her instead, close enough that the water moved when I did, and put both hands on her waist."
-    $ face("leia", "shy")
-    gf "Oh! Hi. What are you doing?"
+    $ d2_touch_nts = get_story_value("ch01_d2_nts_seed") == "pool_admission"
+    "I didn't fix it. I waited instead."
+    "A minute later she waded over to the steps, climbed up two of them and leaned out over the edge for her drink, elbows on the hot tiles, still laughing at something Maya had said."
+    "Which left her bent forward right in front of me, the red bikini riding up, the loose string swinging against her back."
+
+    $ enter_cinematic_mode()
+    scene cg ch01_d2_pool_ass_01
+    with dissolve
+    "I came up the steps behind her and took a slow, full handful of her ass."
+    gf "Hey! What are you doing?"
     if not d2_touch_ntr:
-        mc "Looking. You're making it very easy."
-        mc "This bikini, the way you've been standing all afternoon. You know exactly what you're showing me."
-        $ face("leia", "flustered")
-        gf "I do not! It's just small. A small bikini isn't the same thing as doing it on purpose."
+        mc "Enjoying the view. You're making it very easy."
+        mc "This bikini, bent over like that. You know exactly what you're showing me."
+        gf "I do not! I'm getting my drink. A small bikini isn't the same thing as doing it on purpose."
         mc "Your knot's been coming undone for ten minutes, and you haven't fixed it once."
         gf "...I didn't know it was coming undone."
         mc "Sure you didn't."
-        $ face("leia", "smile")
-        "She leaned back against me anyway. Then a little further."
+        "She didn't stand up. She stayed bent over the edge and pushed back into my hand, just a little."
         gf "Okay. Maybe I didn't totally hate you looking."
-    elif get_story_value("ch01_d2_nts_seed") == "pool_admission":
+    elif d2_touch_nts:
         # NTS seed (warm Ryan, red worn for him): the first "seen" step, said out loud by both.
         mc "You knelt on that chair at lunch and leaned all the way across the table. [friend_name] was sitting right behind you."
-        $ face("leia", "skeptical")
         gf "I was showing Maya a photo."
         mc "I know. I saw him look."
         if lc_pov_seen_in_save("d2_breakfast_julian"):
             mc "He looked at breakfast too. That's twice today."
-        $ face("leia", "shy")
         gf "...Are you mad?"
         mc "No. That's the weird part."
-        "I didn't know how to say the rest, so I said it into her hair."
+        "I squeezed, slow, and said the rest to the back of her neck."
         mc "I didn't hate it."
-        $ face("leia", "flustered")
         gf "...You didn't?"
         mc "No."
-        "She was quiet for a second. Then she leaned back against me again, slower this time."
+        "She was quiet for a second. Then she pushed back into my hand, slower this time."
         gf "I put this on for you, you know. I just... didn't totally hate the rest of the pool noticing either."
     else:
         # NTR, jealous (red worn to bait a detached Ryan).
         mc "You knelt on that chair at lunch and leaned all the way across the table. [friend_name] was sitting right behind you."
-        $ face("leia", "skeptical")
         gf "I was showing Maya a photo."
         if lc_pov_seen_in_save("d2_breakfast_julian"):
             mc "He watched you do it. That's twice today he's looked at you like that."
-        mc "And now this. Do you even think about who's looking at you?"
-        $ face("leia", "pout")
+        mc "And now this. Bent over in front of everyone. Do you even think about who's looking at you?"
         gf "Do you? You've barely looked at me all day."
         if get_story_value("ch01_d2_bikini_jealousy") == "red":
             think "It hit me, way too late, that she might have put this one on for exactly this."
         mc "I'm looking now."
-        $ face("leia", "flustered")
-        "My hands tightened on her waist. She went very still, and then she didn't pull away."
+        "My fingers dug in. She went very still, and then she didn't pull away."
         if get_story_value("ch01_d2_bikini_jealousy") == "red":
             gf "...Good. Took you long enough."
         else:
@@ -2457,25 +2459,89 @@ label ch01_day2_scene_15b_knot_touch:
             mc "Yeah."
             gf "Okay. I think I like you jealous."
 
-    "At the far end, Maya was halfway through drowning [friend_name]. Nobody was looking our way."
+    "I hooked a finger under the edge of her bikini bottoms and drew them to the side."
+    scene cg ch01_d2_pool_ass_02
+    with dissolve
+    "Warm air on wet skin. She gasped, and for one second she let me look."
+    "Then her hand shot back and caught my wrist."
+    gf "[player_name]! Not up here. Maya's right there, and [friend_name] could turn around any second."
+    if not d2_touch_ntr:
+        gf "Being looked at is one thing. This is... this is so much more than being looked at."
+        think "She liked being watched. I knew that by now. But not like this. Not yet."
+    elif d2_touch_nts:
+        gf "I said I didn't hate people noticing. I didn't say I wanted them seeing that."
+        mc "Not yet?"
+        gf "...Don't put words in my mouth."
+        think "She didn't say no, though. I noticed that."
+    else:
+        gf "You barely look at me all morning, and now you want me like this, in front of everybody?"
+        mc "I want you. I don't care who's around."
+        gf "Well, I do."
+        "She held my wrist a moment longer. Then her voice dropped."
+        gf "...I didn't say stop, though."
+
+    "She didn't let go of my wrist. She stepped down off the step, back into the water, until it closed over her hips, then her waist, and she pulled my hand down with her."
+    gf "Under the water. Nobody can see under the water."
+    "We drifted a few steps out from the edge, my chest to her back, the two of us just standing close in the shallow end like any couple."
     mc "Tell me to stop."
-    $ face("leia", "flustered")
     gf "...Don't you dare."
 
-    $ enter_cinematic_mode()
-    scene cg ch01_d2_pool_knot_touch
+    scene cg ch01_d2_underwater_play_01
     with dissolve
-    "Under the water I slid my fingers along the edge of her bikini bottoms and pulled them to the side."
-    "She caught her breath when I found her clit, and grabbed my wrist. Not to stop me. To keep my hand exactly where it was."
-    gf "[player_name]... they're right there."
-    mc "Then be quiet."
-    "I kept going in slow circles. She pressed her face into my shoulder and tried to stay quiet. She wasn't very good at it."
+    "Under the surface everything went slow and blue. I pulled the red fabric aside again, and this time she let me. My thumb spread her open, gently."
+    "Above the water she kept her face perfectly normal, watching Maya and [friend_name] like nothing was happening."
+    gf "...Oh my God."
+    if not d2_touch_ntr:
+        mc "Anyone looking over here just sees us standing close."
+        gf "Is that supposed to help?"
+        mc "Does it?"
+        gf "...A little. Shut up."
+    elif d2_touch_nts:
+        mc "Imagine if they could see what I'm doing right now."
+        gf "Shut up."
+        "She shivered anyway, and it had nothing to do with the water."
+    else:
+        mc "Mine. Say it."
+        gf "...Yours. God. Yours."
+
+    scene cg ch01_d2_underwater_play_02
+    with dissolve
+    "I took her ass in both hands and squeezed, pulling her back against me, spreading her a little wider under the water."
+    "She bit her lip. Her breathing had gone short and shallow."
+    gf "[player_name]... please."
+    mc "Please what?"
+    gf "Don't make me say it out here."
+
+    scene cg ch01_d2_underwater_play_03
+    with dissolve
+    "I slid two fingers into her. She was slick and hot in a way that had nothing to do with the pool."
+    "Slow at first. Then less slow. Her fingers found my forearm under the water and held on."
+    "Across the pool, Maya shoved [friend_name] under for the third time and came up shrieking with laughter."
+    maya "[girlfriend_name]! Are you watching this? He can't even swim!"
+    gf "Y-yeah! I see! It's... so bad!"
+    "Her voice cracked on the last word. I curled my fingers, and she had to turn her face into my shoulder."
+    gf "Don't stop. Don't you dare stop."
+    "I didn't."
+    "She came a few seconds later, pressed hard against my chest, her whole body tightening around my fingers in long, helpless pulses. She made one small sound into my skin and swallowed the rest."
+    "I held her through it until her legs stopped shaking."
+    if not d2_touch_ntr:
+        gf "That was so much worse than being looked at."
+        mc "Worse?"
+        gf "Better. Shut up. Don't look at me."
+    elif d2_touch_nts:
+        gf "...Don't tell anyone I liked the part where somebody might see."
+        mc "Who would I tell?"
+        gf "I mean it. Not even me."
+    else:
+        gf "...Okay. You're a little bit forgiven."
+        mc "Only a little?"
+        gf "Don't push it."
 
     $ exit_cinematic_mode()
     scene bg ch01_pool_day
     with dissolve
     maya "Are you two coming back over here or what?"
-    "[girlfriend_name] jerked away from me so fast she nearly went under, then slapped a wave of water straight into my face."
+    "[girlfriend_name] jerked away from me so fast she nearly went under, tugged her bikini bottoms back into place under the water, then slapped a wave of water straight into my face."
     $ face("leia", "flustered")
     gf "We're coming! He was being annoying!"
     $ face("leia", "smile")

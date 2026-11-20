@@ -62,7 +62,11 @@ class Touch(unittest.TestCase):
 
     def test_scene_consent_cg_and_knot_left_loose(self):
         body = label(A, "ch01_day2_scene_15b_knot_touch")
-        self.assertLess(body.index("Tell me to stop."), body.index("scene cg ch01_d2_pool_knot_touch"))
+        order = ["scene cg ch01_d2_pool_ass_01", "scene cg ch01_d2_pool_ass_02", "Not up here.",
+                 "Tell me to stop.", "scene cg ch01_d2_underwater_play_01",
+                 "scene cg ch01_d2_underwater_play_02", "scene cg ch01_d2_underwater_play_03"]
+        idx = [body.index(x) for x in order]
+        self.assertEqual(idx, sorted(idx))
         self.assertIn("Don't you dare.", body)
         self.assertIn("loose string was still trailing", body)
         self.assertIn("jump ch01_day2_scene_16_forced_split", body)
