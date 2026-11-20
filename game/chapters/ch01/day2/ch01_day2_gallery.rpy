@@ -71,15 +71,21 @@ init -2 python:
         "Two bikinis on the bed, and two girls on a lounger very obviously not talking about sunscreen.",
         [("ch01_d2_bikini_choice", "Options"), ("ch01_d2_pool_towels_white", "Towels (white)"),
          ("ch01_d2_pool_towels_red", "Towels (red)"), ("ch01_d2_group_pool_white", "Shallow end (white)"),
-         ("ch01_d2_group_pool_red", "Shallow end (red)")])
+         ("ch01_d2_group_pool_red", "Shallow end (red)"), ("ch01_d2_loose_strap_white", "The knot (white)"),
+         ("ch01_d2_loose_strap_red", "The knot (red)"), ("ch01_d2_strangers_stare_white", "At the wall (white)"),
+         ("ch01_d2_strangers_stare_red", "At the wall (red)")])
+    gallery_row("d2_pool_strangers_pov", "ch01_d2", "A stranger's view (the wall)",
+        "From the other side of the wall, the view was different.",
+        [("ch01_d2_strangers_stare_white_pov", "A stranger's POV (white)"),
+         ("ch01_d2_strangers_stare_red_pov", "A stranger's POV (red)")], mature=True)
     gallery_row("d2_pool_knot_touch", "ch01_d2", "Loose knot",
         "He was supposed to fix it.",
         [("ch01_d2_pool_knot_touch", "Under the water")], mature=True)
     gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
-        "Leia kisses Ryan by the pool, with an audience down the deck.",
+        "Leia kisses Ryan by the pool, with an audience at the wall.",
         [("ch01_d2_pool_kiss", "The kiss")])
     gallery_row("d2_pool_kiss_pov", "ch01_d2", "A stranger's view (pool)",
-        "One of the guys down the deck didn't look away.",
+        "One of the guys at the wall didn't look away.",
         [("ch01_d2_pool_kiss_stranger_pov", "A stranger's POV")], mature=True)
     gallery_row("d2_pool_top_accident", "ch01_d2", "The bee",
         "An accident in the pool: Leia hides behind Julian's shoulders.",

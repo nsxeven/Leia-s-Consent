@@ -315,7 +315,7 @@ class DoorMoments(unittest.TestCase):
 PHOTO = (D2A, "# Ryan's thoughts (B3): the Day One photo thought", '    "[friend_name] looked at me over his drink."')
 CARRY = (D2B, "# Ryan's thoughts (B3): the Day One carry thought",
          '        "[girlfriend_name] shook her head at Maya\'s back, red to the ears, and didn\'t so much as glance '
-         'down the deck. Once they were gone, she leaned into me instead."')
+         'at the wall. Once they were gone, she leaned into me instead."')
 DINNER = (D2B, "# Ryan's thoughts (B3): the Day One dinner thought", '    $ set_story_flag("ch01_d2_scene_22_complete")')
 SOFA = (D2B, "# Ryan's thoughts (B3): the Day One sofa thought", '    $ set_story_value("ch01_d2_nhie_leia_clothes", "bra_panties")')
 

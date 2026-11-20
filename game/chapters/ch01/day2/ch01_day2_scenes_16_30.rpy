@@ -6,7 +6,7 @@ label ch01_day2_scene_16_forced_split:
 
     $ d2_lane = get_story_value("ch01_d2_route_lane_pre_split", "love")
 
-    "Eventually all four of us climbed out together and collapsed around the poolside table."
+    "Eventually all four of us climbed out. [friend_name] and I took the table by the cooler, and the girls claimed the lounger next to it, kneeling up on the cushion side by side."
     "[friend_name] handed out what was left in the cooler, and Maya had hers raised before he'd even sat down."
 
     maya "Wait, toast. To unexpected shopping trips."
@@ -16,16 +16,39 @@ label ch01_day2_scene_16_forced_split:
     mc "To surviving day two? Most of it, anyway."
     gf "Yes. That one. To surviving."
 
-    "Four glasses met in the middle."
+    "Four glasses met over the gap between the table and the lounger."
 
-    "A little farther down the pool deck, a couple of guys had been glancing our way often enough for Maya to notice."
-    maya "Don't look now, but—"
-    "[girlfriend_name] looked immediately."
+    # StrangersStare_Red_01 / _White_01 (darryn 2026-11-19): Ryan's view of the girls kneeling on
+    # the lounger, Maya whispering behind her hand, two guys leaning on the low stone wall by the
+    # villa gate behind them. Hidden POV: the guy without sunglasses (StrangersStare_*Closeup_01),
+    # the girls from behind. Bikini follows her pick upstairs.
+    $ enter_cinematic_mode()
+    if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+        scene cg ch01_d2_strangers_stare_red
+        with dissolve
+        $ lc_pov_begin("d2_pool_strangers_red")
+    else:
+        scene cg ch01_d2_strangers_stare_white
+        with dissolve
+        $ lc_pov_begin("d2_pool_strangers_white")
+    "Then Maya cupped a hand over her mouth and leaned into [girlfriend_name]'s ear, eyes sliding past her toward the wall."
+    maya "Don't look now, but there are two guys at the wall behind you. They've been leaning on it for, like, ten minutes."
+    "[girlfriend_name] went pink and stared straight ahead at me, very carefully not turning around."
+    gf "Behind me? As in, behind behind me?"
+    maya "We're kneeling on a lounger with our butts pointed right at the gate, babe. Yes. Behind behind."
+    "Over their heads I could see them: two guys from somewhere outside the villa, arms folded on top of the low stone wall like it was a balcony seat."
+    "One had sunglasses on. The other didn't bother pretending."
+    $ lc_pov_end()
+    $ exit_cinematic_mode()
+    scene bg ch01_pool_day
+    with dissolve
+
+    "[girlfriend_name] lasted about two seconds before she looked over her shoulder."
     maya "Every single time! Why does nobody ever just not look?"
     gf "Because you say it like that! You say it like there's a celebrity behind me."
-    "One of the men looked away, not quite fast enough."
-    gf "Maybe he's looking at you. You're the one in the, like, the strappy thing."
-    maya "Babe. He has two eyes, and neither of them is on me."
+    "The one with the sunglasses looked away, not quite fast enough."
+    gf "Maybe they're looking at you. You're the one in the, like, the strappy thing."
+    maya "Babe. They have four eyes between them, and none of them are on me."
 
     if d2_lane == "ntr_risk":
         "[girlfriend_name] looked toward me first."
@@ -145,12 +168,12 @@ label ch01_day2_scene_16_forced_split:
         # Ryan's thoughts (B3): the Day One carry thought, if he kept it. Otherwise nothing extra.
         if lc_thought_kept("ch01_d1") == "d1_julian_carry":
             think "Last night he'd carried her in from the car while I held the keys. Today he got the drinks, and I got to stay right here with her. I'd take that trade every time."
-        "[girlfriend_name] shook her head at Maya's back, red to the ears, and didn't so much as glance down the deck. Once they were gone, she leaned into me instead."
+        "[girlfriend_name] shook her head at Maya's back, red to the ears, and didn't so much as glance at the wall. Once they were gone, she leaned into me instead."
         gf "I really like her. Like, I didn't expect to like her this much."
         mc "Good. I was a bit nervous about that, after yesterday. You had about eleven questions about her."
         gf "That was due diligence. That's different. I was being thorough."
         mc "No, you were. More than me. I've known her for years and I couldn't tell you her middle name."
-        "She kissed my shoulder, still visibly embarrassed whenever she remembered the audience farther down the deck."
+        "She kissed my shoulder, still visibly embarrassed whenever she remembered the audience at the wall."
         $ set_story_value("ch01_d2_split", "ryan_leia_julian_maya")
 
     $ set_story_flag("ch01_d2_scene_16_complete")
@@ -203,7 +226,7 @@ label ch01_day2_scene_17_pool_return:
 
         gf "OH MY GOD!"
 
-        "[girlfriend_name] folded her arms across herself, then instinctively rushed behind [friend_name] and clung to his back, using him to shield herself from the people on the deck."
+        "[girlfriend_name] folded her arms across herself, then instinctively rushed behind [friend_name] and clung to his back, using him to shield herself from the guys at the wall."
         "[friend_name] went rigid with surprise, keeping his hands clear and his eyes turned away."
         gf "Don't look!"
         friend "I'm not! I'm looking at the— there's a tree. I'm looking at the tree."
@@ -217,7 +240,7 @@ label ch01_day2_scene_17_pool_return:
         gf "[friend_name!u]!"
 
         "[girlfriend_name] stayed tucked behind [friend_name] as he edged toward the floating top, still holding on to his shoulders."
-        "Over his shoulder, she caught sight of the strangers on the deck."
+        "Over his shoulder, she caught sight of the strangers at the wall."
         "They were staring."
         gf "Oh my God. Oh no."
         friend "What? What now? Is it the bee?"
@@ -284,7 +307,7 @@ label ch01_day2_scene_17_pool_return:
         "Maya pointed toward the bikini top floating away from them."
         "[girlfriend_name] looked down and folded her arms across herself."
         gf "...Oh my God."
-        "She darted behind Maya and clung to her back, using her friend as a shield from the strangers on the deck."
+        "She darted behind Maya and clung to her back, using her friend as a shield from the strangers at the wall."
         "Maya steadied herself, startled, then turned her attention toward the floating top."
         maya "I've got you. Stay behind me."
         "The strangers they had been teasing moments earlier were still watching."
@@ -333,7 +356,7 @@ label ch01_day2_scene_17_pool_return:
         gf "Oh my God. Oh my God, [player_name]."
         "Before I could say anything, she darted behind me and clung to my back, using me to block the strangers' view."
         mc "I've got you. Stay behind me."
-        "I kept myself between her and the deck as I moved toward the floating top."
+        "I kept myself between her and the wall as I moved toward the floating top."
         "She let go just long enough for me to retrieve it."
         # Door A echo (sc 15 knot): one line per answer; nothing plays when unset (old saves).
         if get_story_value("ch01_d2_knot_response") == "fixed":

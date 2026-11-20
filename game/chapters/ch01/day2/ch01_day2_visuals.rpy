@@ -89,6 +89,12 @@ image cg ch01_d2_bikini_choice = At("images/cg/ch02/CH2D2_CG_LeiaBikiniChoice_01
 image cg ch01_d2_pool_towels_red = At("images/cg/ch02/CH2D2_CG_LeiaMayaPool_Red_01.webp", prologue_fullscreen)
 image cg ch01_d2_group_pool_red = At("images/cg/ch02/CH2D2_CG_GroupPool_Red_01.webp", prologue_fullscreen)
 image cg ch01_d2_group_pool_white = At("images/cg/ch02/CH2D2_CG_GroupPool_White_01.webp", prologue_fullscreen)
+image cg ch01_d2_loose_strap_red = At("images/cg/ch02/CH2D2_CG_LooseStrap_Red_01.webp", prologue_fullscreen)
+image cg ch01_d2_loose_strap_white = At("images/cg/ch02/CH2D2_CG_LooseStrap_White_01.webp", prologue_fullscreen)
+image cg ch01_d2_strangers_stare_red = At("images/cg/ch02/CH2D2_CG_StrangersStare_Red_01.webp", prologue_fullscreen)
+image cg ch01_d2_strangers_stare_white = At("images/cg/ch02/CH2D2_CG_StrangersStare_White_01.webp", prologue_fullscreen)
+image cg ch01_d2_strangers_stare_red_pov = At("images/cg/ch02/CH2D2_CG_StrangersStare_RedCloseup_01.webp", prologue_fullscreen)
+image cg ch01_d2_strangers_stare_white_pov = At("images/cg/ch02/CH2D2_CG_StrangersStare_WhiteCloseup_01.webp", prologue_fullscreen)
 image cg ch01_d2_pool_towels_white = At("images/cg/ch02/CH2D2_CG_LeiaMayaPool_White_01.webp", prologue_fullscreen)
 image cg ch01_d2_julian_bee = At("images/cg/ch02/CH2D2_CG_JulianBee_01.webp", prologue_fullscreen)
 image cg ch01_d2_mall_cafe_overheard = At("images/cg/ch02/CH2D2_CG_MallCafe_01.webp", prologue_fullscreen)
@@ -360,6 +366,30 @@ init 1 python:
         day_id="ch01_d2",
         label="Julian, lunch",
         mood="caught",
+    )
+    # Strangers at the wall (darryn 2026-11-19): the guy without sunglasses, behind the girls at
+    # the top right; beside his right eye (as seen), at the temple. One moment per bikini.
+    lc_pov_register(
+        "d2_pool_strangers_red",
+        image="cg ch01_d2_strangers_stare_red_pov",
+        source="cg ch01_d2_strangers_stare_red",
+        eye=(1567, 184), temple="right",
+        title="A stranger's POV",
+        mature=True,
+        day_id="ch01_d2",
+        label="Stranger, the wall",
+        mood="watching",
+    )
+    lc_pov_register(
+        "d2_pool_strangers_white",
+        image="cg ch01_d2_strangers_stare_white_pov",
+        source="cg ch01_d2_strangers_stare_white",
+        eye=(1567, 184), temple="right",
+        title="A stranger's POV",
+        mature=True,
+        day_id="ch01_d2",
+        label="Stranger, the wall",
+        mood="watching",
     )
     lc_pov_register(
         "d2_pool_kiss_stranger",

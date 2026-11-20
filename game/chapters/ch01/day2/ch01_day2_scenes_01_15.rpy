@@ -2298,11 +2298,17 @@ label ch01_day2_scene_15_pool_group:
         with dissolve
     "Later, [girlfriend_name] was standing in the shallow end with her back to me, laughing at something Maya had said."
     "Maya had declared war on [friend_name] the second he got back in the water, and [friend_name] was losing it with a lot of dignity and no skill at all."
-    $ exit_cinematic_mode()
-    scene bg ch01_pool_day
-    with dissolve
 
-    "The knot at the back of her top had worked itself half loose. One string hung a lot lower than the other."
+    # LooseStrap_Red_01 / _White_01 (darryn 2026-11-19): close-up of the knot between her
+    # shoulder blades, one tail hanging long. Held through the choice; same bikini split.
+    if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+        scene cg ch01_d2_loose_strap_red
+        with dissolve
+    else:
+        scene cg ch01_d2_loose_strap_white
+        with dissolve
+    "Then I noticed the knot between her shoulder blades. It had worked itself half loose. One string hung a lot lower than the other."
+    think "One good tug, or one more wave from Maya, and that whole bow was coming apart."
     think "Nobody else had noticed yet. Maya was busy splashing [friend_name], and [girlfriend_name] had no idea."
 
     $ d2_knot_fix_text = format_choice("ch01_d2_knot_fix", "Swim over and fix it quietly.")
@@ -2325,6 +2331,9 @@ label ch01_day2_scene_15_pool_group:
 
     menu:
         "[d2_knot_fix_text]":
+            $ exit_cinematic_mode()
+            scene bg ch01_pool_day
+            with dissolve
             $ apply_choice("ch01_d2_knot_fix")
             $ set_story_value("ch01_d2_knot_response", "fixed")
             $ lc_discovery_mark("d2_knot_door")
@@ -2336,6 +2345,9 @@ label ch01_day2_scene_15_pool_group:
             "She reached back, found the new knot, and squeezed my fingers over it for a second before she let go."
 
         "[d2_knot_tell_text]":
+            $ exit_cinematic_mode()
+            scene bg ch01_pool_day
+            with dissolve
             $ apply_choice("ch01_d2_knot_tell")
             $ set_story_value("ch01_d2_knot_response", "told")
             "I leaned in close to her ear."
@@ -2346,6 +2358,9 @@ label ch01_day2_scene_15_pool_group:
             gf "Thank you. If Maya asks, it was double-knotted all along."
 
         "[d2_knot_watch_text]":
+            $ exit_cinematic_mode()
+            scene bg ch01_pool_day
+            with dissolve
             $ apply_choice("ch01_d2_knot_watch")
             $ set_story_value("ch01_d2_knot_response", "watched")
             $ lc_discovery_mark("d2_knot_door")
@@ -2363,6 +2378,9 @@ label ch01_day2_scene_15_pool_group:
                 think "I should have said something. Part of me just wanted to see how long it would hold."
 
         "[d2_knot_touch_text]" if d2_touch_open:
+            $ exit_cinematic_mode()
+            scene bg ch01_pool_day
+            with dissolve
             if d2_touch_lane == "exhibitionism":
                 $ apply_choice("ch01_d2_knot_touch_exhib")
             elif d2_touch_jealous:
