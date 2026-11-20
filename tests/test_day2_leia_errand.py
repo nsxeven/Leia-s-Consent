@@ -240,7 +240,7 @@ class ExemptionTests(unittest.TestCase):
         src = _read(REG)
         errand = _tuple(src, "CH01_D2_ERRAND_EXEMPT_CHOICES")
         self.assertEqual(set(errand), set(ALL_IDS))
-        self.assertIn("CH01_D2_LANE_EXEMPT_CHOICES = (\"ch01_d2_knot_watch\",) + CH01_D2_ERRAND_EXEMPT_CHOICES", src)
+        self.assertIn("CH01_D2_LANE_EXEMPT_CHOICES = (\"ch01_d2_knot_watch\", \"ch01_d2_knot_touch_exhib\", \"ch01_d2_knot_touch_ntr\", \"ch01_d2_knot_touch_nts\") + CH01_D2_ERRAND_EXEMPT_CHOICES", src)
 
     def _env(self, history, ledger=()):
         effects = {cid: list(e) for cid, e in ALL_IDS.items()}

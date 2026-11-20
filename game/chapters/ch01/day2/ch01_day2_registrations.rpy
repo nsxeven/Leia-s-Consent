@@ -307,6 +307,27 @@ init 1 python:
         "ch01_d2_knot_watch": [
             ("partner", "exhibitionism", 1),
         ],
+        # Door A, fourth answer (red bikini, Exhibitionism or NTR lane; darryn 2026-11-19).
+        "ch01_d2_knot_touch_exhib": [
+            ("partner", "exhibitionism", 1),
+            ("relationship", "love", 1),
+        ],
+        # NTR lane, detached Ryan, red worn to bait him: the over-jealous mistake (NTR shape).
+        "ch01_d2_knot_touch_ntr": [
+            ("relationship", "temptation", 1),
+            ("relationship", "trust", -1),
+        ],
+        # NTR lane, warm Ryan, red worn for him: the first NTS step, "seen" (darryn 2026-11-19).
+        "ch01_d2_knot_touch_nts": [
+            ("relationship", "sharing", 1),
+        ],
+        # Scene 13 bikini picks (darryn 2026-11-19): flavour, no stats; before the lane record.
+        "ch01_d2_bikini_red": [],  # Flavor: no stats
+        "ch01_d2_bikini_white": [],  # Flavor: no stats
+        "ch01_d2_bikini_red_second": [],  # Flavor: no stats
+        "ch01_d2_bikini_white_second": [],  # Flavor: no stats
+        "ch01_d2_bikini_ntr_red": [],  # Flavor: no stats
+        "ch01_d2_bikini_ntr_white": [],  # Flavor: no stats
         # Post-shop extras (new mechanics program, B1/B3). Each shows only when its condition holds.
         # Leia's version (B1): the boutique slip played with Julian there (Ryan-absent branch).
         "ch01_d2_boutique_her_version": [
@@ -359,6 +380,15 @@ init 1 python:
         "ch01_d2_knot_fix": ("protective", "attentive", "supportive"),
         "ch01_d2_knot_tell": ("neutral", "attentive", "honest"),
         "ch01_d2_knot_watch": ("encouraging", "curious", "open"),
+        "ch01_d2_knot_touch_exhib": ("encouraging", "open", "participating"),
+        "ch01_d2_knot_touch_ntr": ("protective", "jealous"),
+        "ch01_d2_knot_touch_nts": ("open", "honest", "participating"),
+        "ch01_d2_bikini_red": ("open", "playful"),
+        "ch01_d2_bikini_white": ("neutral",),
+        "ch01_d2_bikini_red_second": ("open", "playful"),
+        "ch01_d2_bikini_white_second": ("neutral",),
+        "ch01_d2_bikini_ntr_red": ("open",),
+        "ch01_d2_bikini_ntr_white": ("honest",),
         "ch01_d2_boutique_her_version": ("attentive", "honest", "curious"),
         "ch01_d2_postshop_dream": ("supportive", "attentive", "honest", "repair"),
     })
@@ -398,7 +428,7 @@ init 1 python:
         "ch01_d2_feed_kept_silent",
         "ch01_d2_feed_let_go",
     )
-    CH01_D2_LANE_EXEMPT_CHOICES = ("ch01_d2_knot_watch",) + CH01_D2_ERRAND_EXEMPT_CHOICES
+    CH01_D2_LANE_EXEMPT_CHOICES = ("ch01_d2_knot_watch", "ch01_d2_knot_touch_exhib", "ch01_d2_knot_touch_ntr", "ch01_d2_knot_touch_nts") + CH01_D2_ERRAND_EXEMPT_CHOICES
 
     def ch01_d2_route_lane():
         """Resolve the active Day Two lane (stat model v2: lc_stat_model.d2_route_lane).
@@ -705,6 +735,7 @@ init 10 python:
 # key ch01_d2_bikini_tie_loose: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_boutique_black_mini_reserved_day3: pending set by ch01_day2_scenes_16_30.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_boutique_outfit_owned: pending set by ch01_day2_scenes_01_15.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d2_bikini_jealousy: read-by ch01_day2_scenes_01_15.rpy
 # key ch01_d2_boutique_shop_open: read-by outfits_data.rpy
 # key ch01_d2_boutique_slip_witness: read-by ch01_day2_scenes_01_15.rpy, lc_thoughts.py
 # key ch01_d2_boutique_trial_outfit: pending set by ch01_day2_scenes_01_15.rpy; nothing reads it yet (kept for later Days and saves)
@@ -754,6 +785,7 @@ init 10 python:
 # key ch01_d2_nhie_leia_topless_covering: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_nhie_maya_clothes: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
 # key ch01_d2_nhie_maya_nude: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d2_nts_seed: read-by ch01_day2_scenes_01_15.rpy
 # key ch01_d2_ntr_confirmed: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_ntr_soft_gate: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_ntr_soft_gate_repaired: pending set by ch01_day2_scenes_16_30.rpy, chapter_select.rpy; nothing reads it yet (kept for later Days and saves)

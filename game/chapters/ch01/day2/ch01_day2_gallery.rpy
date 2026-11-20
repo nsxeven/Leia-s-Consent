@@ -14,7 +14,7 @@ init -2 python:
     GALLERY_PLACEHOLDER_IMAGES.update([
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_pool_top_accident",
-        "ch01_d2_pool_kiss", "ch01_d2_pool_kiss_stranger_pov",
+        "ch01_d2_pool_kiss", "ch01_d2_pool_kiss_stranger_pov", "ch01_d2_pool_knot_touch",
         "d2_cafe_stranger",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
         "ch01_d2_dinner_reach", "ch01_d2_julian_underwear_reveal",
@@ -70,7 +70,11 @@ init -2 python:
     gallery_row("d2_pool_afternoon", "ch01_d2", "Pool afternoon",
         "Two bikinis on the bed, and two girls on a lounger very obviously not talking about sunscreen.",
         [("ch01_d2_bikini_choice", "Options"), ("ch01_d2_pool_towels_white", "Towels (white)"),
-         ("ch01_d2_pool_towels_red", "Towels (red)")])
+         ("ch01_d2_pool_towels_red", "Towels (red)"), ("ch01_d2_group_pool_white", "Shallow end (white)"),
+         ("ch01_d2_group_pool_red", "Shallow end (red)")])
+    gallery_row("d2_pool_knot_touch", "ch01_d2", "Loose knot",
+        "He was supposed to fix it.",
+        [("ch01_d2_pool_knot_touch", "Under the water")], mature=True)
     gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
         "Leia kisses Ryan by the pool, with an audience down the deck.",
         [("ch01_d2_pool_kiss", "The kiss")])
