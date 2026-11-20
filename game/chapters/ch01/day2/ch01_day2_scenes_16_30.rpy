@@ -55,8 +55,24 @@ label ch01_day2_scene_16_forced_split:
         "I'd drifted half a step back from the table with my phone out, nodding along to whatever [friend_name] was saying without really hearing any of it."
         "She waited a second for me to look up. I only worked that out later. At the time I was still looking at my phone."
         "Then she turned back toward the strangers."
-        "[girlfriend_name] raised both arms over her head in a slow stretch, extending through her shoulders and back before letting them fall again."
+
+        # LeiaStretch_Red_01 / _White_01 (darryn 2026-11-19): Leia standing at the end of the
+        # lounger, back to the wall, arms up in a long stretch; Maya sitting on the lounger looking
+        # back over her shoulder with a knowing smile. Bikini follows her pick upstairs.
+        $ enter_cinematic_mode()
+        if get_story_value("ch01_d2_pool_outfit") == "pool_bolder":
+            scene cg ch01_d2_leia_stretch_red
+            with dissolve
+        else:
+            scene cg ch01_d2_leia_stretch_white
+            with dissolve
+        "[girlfriend_name] got up off the lounger, stood with her back to the wall and raised both arms over her head in a slow stretch, extending through her shoulders and back."
+        "She held it there. A lot longer than a stretch needed."
+        "Maya sat back on the lounger and glanced over her shoulder at the wall, then at [girlfriend_name], and smiled like she'd just been let in on something."
         "The same man kept looking."
+        $ exit_cinematic_mode()
+        scene bg ch01_pool_day
+        with dissolve
         "Maya noticed. I didn't, and apart from that loose string I didn't notice much of anything that afternoon until Maya started pointing it out."
         $ set_story_value("ch01_d2_pool_attention", "leia_stretched_without_ryan")
 

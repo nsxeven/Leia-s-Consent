@@ -73,7 +73,8 @@ init -2 python:
          ("ch01_d2_pool_towels_red", "Towels (red)"), ("ch01_d2_group_pool_white", "Shallow end (white)"),
          ("ch01_d2_group_pool_red", "Shallow end (red)"), ("ch01_d2_loose_strap_white", "The knot (white)"),
          ("ch01_d2_loose_strap_red", "The knot (red)"), ("ch01_d2_strangers_stare_white", "At the wall (white)"),
-         ("ch01_d2_strangers_stare_red", "At the wall (red)")])
+         ("ch01_d2_strangers_stare_red", "At the wall (red)"), ("ch01_d2_leia_stretch_white", "The stretch (white)"),
+         ("ch01_d2_leia_stretch_red", "The stretch (red)")])
     gallery_row("d2_pool_strangers_pov", "ch01_d2", "A stranger's view (the wall)",
         "From the other side of the wall, the view was different.",
         [("ch01_d2_strangers_stare_white_pov", "A stranger's POV (white)"),
