@@ -50,7 +50,11 @@ label ch01_day2_scene_16_forced_split:
     gf "Maybe they're looking at you. You're the one in the, like, the strappy thing."
     maya "Babe. They have four eyes between them, and none of them are on me."
 
-    if d2_lane == "ntr_risk":
+    # Kiss vs stretch (darryn 2026-11-19): NTR gets the stretch for the strangers, no kiss. Only
+    # the NTS seed (warm NTR, red, the pool admission in 15b) gets the kiss (Kiss_Red_01-02).
+    $ d2_nts_kiss = d2_lane == "ntr_risk" and get_story_value("ch01_d2_nts_seed") == "pool_admission"
+    $ d2_kiss_red = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"
+    if d2_lane == "ntr_risk" and not d2_nts_kiss:
         "[girlfriend_name] looked toward me first."
         "I'd drifted half a step back from the table with my phone out, nodding along to whatever [friend_name] was saying without really hearing any of it."
         "She waited a second for me to look up. I only worked that out later. At the time I was still looking at my phone."
@@ -77,18 +81,52 @@ label ch01_day2_scene_16_forced_split:
         $ set_story_value("ch01_d2_pool_attention", "leia_stretched_without_ryan")
 
     else:
-        "[girlfriend_name] looked from the strangers to me, then crossed the few steps between us."
+        "By then I'd given up the table and stretched out on the empty lounger beside theirs."
+        "[girlfriend_name] looked from the strangers to me. Then she climbed across onto my lounger on her hands and knees."
 
-        # The kiss and the hand (darryn 2026-11-19): a CG beat with the strangers' Hidden POV
-        # (one of the guys down the deck, watching). Both images are placeholders until the art lands.
+        # Kiss_White/Red_01-03 (darryn 2026-11-19): 01 Ryan's POV, her leaning in over him with the
+        # two guys at the wall behind her (Hidden POV: the guy on the right); 02 kissing, his hand on
+        # her ass; 03 (Exhibitionism + red only) he grabs, her bottoms slip aside, her eyes open.
         $ enter_cinematic_mode()
-        scene cg ch01_d2_pool_kiss
-        with dissolve
-        $ lc_pov_begin("d2_pool_kiss_stranger")
+        if d2_kiss_red:
+            scene cg ch01_d2_kiss_red_01
+            with dissolve
+            $ lc_pov_begin("d2_pool_kiss_stranger_red")
+        else:
+            scene cg ch01_d2_kiss_white_01
+            with dissolve
+            $ lc_pov_begin("d2_pool_kiss_stranger_white")
+        "She leaned over me, hair spilling off one shoulder, and smiled like she knew exactly what she was doing."
+        if d2_nts_kiss:
+            "She didn't check whether they were still watching. She didn't have to. She checked whether I'd noticed they were watching."
+            "I had. I put my phone face down on the cushion."
+        "Behind her, both guys at the wall had stopped pretending to talk to each other."
+        $ lc_pov_end()
+        if d2_kiss_red:
+            scene cg ch01_d2_kiss_red_02
+            with dissolve
+        else:
+            scene cg ch01_d2_kiss_white_02
+            with dissolve
         "Without saying anything, she leaned in and kissed me."
         "I kissed her back and let one hand settle firmly on her ass."
         "[girlfriend_name] made a small surprised sound against my mouth."
-        $ lc_pov_end()
+        $ d2_kiss_slip = d2_lane == "exhibitionism" and d2_kiss_red
+        if d2_kiss_slip:
+            "She didn't pull away. She pushed back into my hand instead."
+            "So I squeezed."
+            scene cg ch01_d2_kiss_red_03
+            with dissolve
+            "My fingers sank in, and the red bikini, already barely there, slid right off to one side."
+            "[girlfriend_name]'s eyes flew open mid-kiss. Neither of us moved."
+            "Up on her knees like that, there was exactly one direction it was all on show: straight back at the wall."
+            gf "...[player_name]. My bottoms."
+            mc "I know."
+            gf "They can see. Like, all of it."
+            mc "I know. Want me to fix it?"
+            "Her lips were still brushing mine. She didn't answer right away."
+            gf "...In a second."
+            "She counted to about three under her breath before she reached back and tugged the red fabric into place."
         $ exit_cinematic_mode()
         scene bg ch01_pool_day
         with dissolve
@@ -96,11 +134,27 @@ label ch01_day2_scene_16_forced_split:
         "When we separated, Maya was staring at us. [friend_name] had suddenly become very interested in his drink. The strangers had seen everything."
 
         if d2_lane == "exhibitionism":
-            "[girlfriend_name]'s face warmed, but she glanced toward the strangers once more before looking back at me."
-            maya "Hi, sorry, we're all still here. Just so you know. All of us."
-            gf "Oh my God. Nobody asked you to watch, Maya. You could've, like, looked somewhere else?"
-            maya "You did it right in front of me! Where was I supposed to look, at [friend_name]?"
-            $ set_story_value("ch01_d2_pool_attention", "couple_display_open")
+            if d2_kiss_slip:
+                "[girlfriend_name]'s face was burning, but she still glanced at the wall once more before she looked back at me."
+                maya "Hi, sorry, we're all still here. And I saw a lot more of you than I signed up for, babe."
+                gf "Oh my God. It slipped! It just slipped. Nobody asked you to look, Maya."
+                maya "It slipped for, like, three whole seconds. I counted. So did they."
+                $ set_story_value("ch01_d2_pool_attention", "couple_display_slip")
+            else:
+                "[girlfriend_name]'s face warmed, but she glanced toward the strangers once more before looking back at me."
+                maya "Hi, sorry, we're all still here. Just so you know. All of us."
+                gf "Oh my God. Nobody asked you to watch, Maya. You could've, like, looked somewhere else?"
+                maya "You did it right in front of me! Where was I supposed to look, at [friend_name]?"
+                $ set_story_value("ch01_d2_pool_attention", "couple_display_open")
+        elif d2_nts_kiss:
+            "[girlfriend_name] stayed where she was for a moment, forehead against mine."
+            gf "They're still looking."
+            mc "I know."
+            gf "...Do you mind?"
+            "I thought about it longer than I should have needed to."
+            mc "No. That's the weird part again."
+            "She smiled against my cheek like I'd given the right answer to a question she hadn't asked out loud."
+            $ set_story_value("ch01_d2_pool_attention", "couple_display_nts")
         else:
             "[girlfriend_name]'s face went pink the moment she remembered we had an audience."
             mc "Not that I'm complaining, but... what was that for?"
@@ -124,8 +178,14 @@ label ch01_day2_scene_16_forced_split:
         maya "Nope. Well, a bit. We do actually need drinks."
         maya "But what's going on with you today? And don't say nothing, I've known you way too long for nothing."
         mc "What do you mean? I'm just... I'm here. I'm hanging out."
-        maya "[girlfriend_name] keeps checking whether you're still in the room. You're standing right next to her, and she keeps checking."
-        think "Was she? I hadn't seen her do it once, and I'd been standing right there."
+        if get_story_value("ch01_d2_pool_attention") == "couple_display_nts":
+            maya "That kiss was cute. Those two guys at the wall thought so too. You saw them, right?"
+            mc "I saw them."
+            maya "And you just... let them have the show."
+            think "I hadn't thought of it like that. I hadn't stopped it, either."
+        else:
+            maya "[girlfriend_name] keeps checking whether you're still in the room. You're standing right next to her, and she keeps checking."
+            think "Was she? I hadn't seen her do it once, and I'd been standing right there."
         maya "Just look at her once in a while. Like, actually look. That's it, that's the whole speech."
         mc "That's the whole speech?"
         maya "I had a longer one. You looked like you were going to throw up, so I cut it."
@@ -600,13 +660,24 @@ label ch01_day2_scene_20_dinner_outfit:
 
         # Flow: this lane is read after the pool, so it can follow any split. She only brings up
         # what happened on this save's split (ch01_d2_split); old saves keep the strings version.
-        if get_story_value("ch01_d2_split") == "ryan_leia_julian_maya":
+        # Reads what this save actually saw at the wall (ch01_d2_pool_attention); old saves without
+        # it keep the split-based fallback.
+        $ d2_pool_att = get_story_value("ch01_d2_pool_attention", "")
+        if d2_pool_att == "couple_display_slip":
+            gf "Okay, so. The pool. When I kissed you in front of those guys."
+            mc "You started that."
+            gf "I know I started it! And then you grabbed my ass, and my bottoms slipped, and they saw everything, and I didn't fix it. Not straight away."
+            mc "You counted to three."
+            gf "I counted to three. That's the part I keep thinking about."
+            mc "The part where they were watching?"
+            gf "Knowing they were looking. Knowing you knew they were looking."
+        elif d2_pool_att.startswith("couple_display") or (not d2_pool_att and get_story_value("ch01_d2_split") == "ryan_leia_julian_maya"):
             gf "Okay, so. The pool. When I kissed you in front of those guys."
             mc "You started that."
             gf "I know I started it! And then you grabbed my ass, and they were all watching, and I didn't hate it. That's the part I keep thinking about."
             mc "The part where they were watching?"
             gf "Knowing they were looking. Knowing you knew they were looking."
-        elif get_story_value("ch01_d2_split") == "ryan_maya_leia_julian":
+        elif d2_pool_att == "leia_stretched_without_ryan" or (not d2_pool_att and get_story_value("ch01_d2_split") == "ryan_maya_leia_julian"):
             gf "Before the bee. When I stretched by the table? One of those guys watched me the whole time."
             mc "I didn't even see that."
             gf "I know. You were on your phone. And I kind of liked it anyway. Them looking."

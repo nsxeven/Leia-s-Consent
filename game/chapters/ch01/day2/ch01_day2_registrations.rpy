@@ -793,7 +793,7 @@ init 10 python:
 # key ch01_d2_overheard_talk: read-by ch01_day2_scenes_01_15.rpy, ch01_day2_scenes_16_30.rpy
 # key ch01_d2_photo_group: read-by phone_group_avatar.rpy
 # key ch01_d2_photo_leia_maya: read-by ch01_day2_gallery.rpy
-# key ch01_d2_pool_attention: pending set by ch01_day2_scenes_16_30.rpy; nothing reads it yet (kept for later Days and saves)
+# key ch01_d2_pool_attention: read-by ch01_day2_scenes_16_30.rpy
 # key ch01_d2_pool_incident: read-by ch01_day2_scenes_16_30.rpy, lc_thoughts.py
 # key ch01_d2_pool_outfit: read-by ch01_day2_scenes_01_15.rpy, ch01_day5_registrations.rpy
 # key ch01_d2_pool_response: read-by ch01_day2_leia_errand.rpy, ch01_day2_scene_19b_leia_asks_maya.rpy, ch01_day2_scenes_16_30.rpy

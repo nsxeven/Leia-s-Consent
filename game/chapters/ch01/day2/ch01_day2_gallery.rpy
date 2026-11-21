@@ -14,7 +14,7 @@ init -2 python:
     GALLERY_PLACEHOLDER_IMAGES.update([
         "ch01_d2_boutique_reveal_ryan", "ch01_d2_boutique_reveal_julian",
         "ch01_d2_pool_top_accident",
-        "ch01_d2_pool_kiss", "ch01_d2_pool_kiss_stranger_pov",
+        "ch01_d2_pool_kiss_stranger_pov",
         "d2_cafe_stranger",
         "ch01_d2_love_pool_oral_01", "ch01_d2_love_pool_oral_02",
         "ch01_d2_dinner_reach", "ch01_d2_julian_underwear_reveal",
@@ -86,7 +86,11 @@ init -2 python:
          ("ch01_d2_underwater_play_03", "Don't you dare stop")], mature=True)
     gallery_row("d2_pool_kiss", "ch01_d2", "In front of everyone",
         "Leia kisses Ryan by the pool, with an audience at the wall.",
-        [("ch01_d2_pool_kiss", "The kiss")])
+        [("ch01_d2_kiss_white_01", "Leaning in (white)"), ("ch01_d2_kiss_white_02", "The kiss (white)"),
+         ("ch01_d2_kiss_red_01", "Leaning in (red)"), ("ch01_d2_kiss_red_02", "The kiss (red)")])
+    gallery_row("d2_pool_kiss_slip", "ch01_d2", "In a second",
+        "His hand, her bottoms, and the wall had a view.",
+        [("ch01_d2_kiss_red_03", "It slipped")], mature=True)
     gallery_row("d2_pool_kiss_pov", "ch01_d2", "A stranger's view (pool)",
         "One of the guys at the wall didn't look away.",
         [("ch01_d2_pool_kiss_stranger_pov", "A stranger's POV")], mature=True)
