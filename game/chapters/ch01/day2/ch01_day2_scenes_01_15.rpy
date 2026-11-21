@@ -21,10 +21,9 @@ label ch01_day2_start:
 
     scene black
     with fade
-    centered "[lc_chapter_card_day2]"
+    call lc_chapter_card("day2")
     # Day Two parts (darryn 2026-11-19): Morning 1-12, The Pool 13-18, Evening 19-30. Display only.
-    $ lc_part_begin("day2", 1, "Morning")
-    centered "[lc_part_card]"
+    call lc_part_card("day2", 1, "Morning")
 
     jump ch01_day2_scene_01_morning_after
 
@@ -2049,10 +2048,9 @@ label ch01_day2_scene_12_villa_pool_plan:
     "[girlfriend_name] led her upstairs while [friend_name] and I dealt with drinks outside."
 
     $ set_story_flag("ch01_d2_scene_12_complete")
-    $ lc_part_begin("day2", 2, "The Pool")
     scene black
     with fade
-    centered "[lc_part_card]"
+    call lc_part_card("day2", 2, "The Pool")
     jump ch01_day2_scene_13_girls_upstairs
 
 

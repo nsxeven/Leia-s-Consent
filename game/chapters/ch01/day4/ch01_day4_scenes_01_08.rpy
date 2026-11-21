@@ -38,7 +38,7 @@ label ch01_day4_start:
 
     scene black
     with fade
-    centered "[lc_chapter_card_day4]"
+    call lc_chapter_card("day4")
 
     jump ch01_day4_scene_01_wake
 

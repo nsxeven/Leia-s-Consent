@@ -67,7 +67,7 @@ label ch01_day5_start:
 
     scene black
     with fade
-    centered "[lc_chapter_card_day5]"
+    call lc_chapter_card("day5")
 
     jump ch01_day5_scene_01_boarding
 

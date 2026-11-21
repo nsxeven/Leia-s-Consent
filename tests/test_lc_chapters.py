@@ -81,13 +81,13 @@ class ChapterRegistryTests(unittest.TestCase):
     def test_every_chapter_card_is_wired(self):
         text = "\n".join(p.read_text(encoding="utf-8") for p in [*(GAME / "chapters").rglob("*.rpy"), *(GAME / "dev").rglob("*.rpy")])
         for n in range(1, 6):
-            self.assertEqual(text.count('centered "[lc_chapter_card_day%d]"' % n), 1, n)
+            self.assertEqual(text.count('call lc_chapter_card("day%d")' % n), 1, n)
         self.assertIn('centered "[lc_chapter_complete_card_day4]', text)
         # Every card variable used is defined in the bridge, as a plain name
         # (config.interpolate_exprs evaluates [x[y]] as Python, so no indexing).
         rpy = "\n".join(p.read_text(encoding="utf-8") for p in [GAME / "systems" / "lc_chapters.rpy",
                                                                 *sorted((GAME / "chapters").rglob("*_chapter.rpy"))])
-        used = set(re.findall(r"\[(lc_chapter_(?:complete_)?card[^\]]*)\]", text))
+        used = set(re.findall(r"\[(lc_chapter_(?:complete_)?card[^\]]*)\]", text)) | {"lc_chapter_card_day%d" % n for n in range(1, 6)}
         self.assertTrue(used)
         for name in used:
             self.assertRegex(name, r"^lc_chapter_(complete_)?card_[a-z0-9]+$")

@@ -5,6 +5,8 @@
 
 # Opening title card (neutral title for everyone), shown by the Day's start label.
 define lc_chapter_card_day5 = lc_chapters.card_text("day5")
+# Title-card accent (screens/lc_title_cards.rpy), matching this Day's gallery tab.
+define lc_title_card_accent_day5 = "#5f7a6a"
 
 # "CHAPTER 5 COMPLETE" heading (temporary end-of-build card).
 define lc_chapter_complete_card_day5 = lc_chapters.complete_card_text("day5")

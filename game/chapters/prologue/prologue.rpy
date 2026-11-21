@@ -404,7 +404,7 @@ label prologue_start:
 
     scene black
     with fade
-    centered "[lc_chapter_card_day1]"
+    call lc_chapter_card("day1")
 
     $ exit_cinematic_mode()
 

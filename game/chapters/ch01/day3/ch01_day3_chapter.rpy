@@ -5,6 +5,8 @@
 
 # Opening title card (neutral title for everyone), shown by the Day's start label.
 define lc_chapter_card_day3 = lc_chapters.card_text("day3")
+# Title-card accent (screens/lc_title_cards.rpy), matching this Day's gallery tab.
+define lc_title_card_accent_day3 = "#7c6258"
 
 # End-of-day review: this Day's row (systems/day_review.rpy). route_key = the end-route story key.
 init 1 python:
