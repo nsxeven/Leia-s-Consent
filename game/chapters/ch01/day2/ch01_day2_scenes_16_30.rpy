@@ -50,11 +50,11 @@ label ch01_day2_scene_16_forced_split:
     gf "Maybe they're looking at you. You're the one in the, like, the strappy thing."
     maya "Babe. They have four eyes between them, and none of them are on me."
 
-    # Kiss vs stretch (darryn 2026-11-19): NTR with a detached Ryan gets the stretch for the
-    # strangers; a warm Ryan on NTR gets the kiss (Kiss_*_01-02) like Love and Exhibitionism.
-    $ d2_ryan_detached = (choice_tag_count("dismissive", ch01_d2_choice_ids()) + choice_tag_count("withdrawal", ch01_d2_choice_ids())) > 0
+    # Kiss vs stretch (darryn 2026-11-19): NTR gets the stretch for the strangers, no kiss. Only
+    # the NTS seed (warm NTR, red, the pool admission in 15b) gets the kiss (Kiss_Red_01-02).
+    $ d2_nts_kiss = d2_lane == "ntr_risk" and get_story_value("ch01_d2_nts_seed") == "pool_admission"
     $ d2_kiss_red = get_story_value("ch01_d2_pool_outfit") == "pool_bolder"
-    if d2_lane == "ntr_risk" and d2_ryan_detached:
+    if d2_lane == "ntr_risk" and not d2_nts_kiss:
         "[girlfriend_name] looked toward me first."
         "I'd drifted half a step back from the table with my phone out, nodding along to whatever [friend_name] was saying without really hearing any of it."
         "She waited a second for me to look up. I only worked that out later. At the time I was still looking at my phone."
@@ -97,8 +97,9 @@ label ch01_day2_scene_16_forced_split:
             with dissolve
             $ lc_pov_begin("d2_pool_kiss_stranger_white")
         "She leaned over me, hair spilling off one shoulder, and smiled like she knew exactly what she was doing."
-        if d2_lane == "ntr_risk":
-            "It was the first time all day she'd looked at me like that. I put my phone face down on the cushion without thinking about it."
+        if d2_nts_kiss:
+            "She didn't check whether they were still watching. She didn't have to. She checked whether I'd noticed they were watching."
+            "I had. I put my phone face down on the cushion."
         "Behind her, both guys at the wall had stopped pretending to talk to each other."
         $ lc_pov_end()
         if d2_kiss_red:
@@ -145,13 +146,15 @@ label ch01_day2_scene_16_forced_split:
                 gf "Oh my God. Nobody asked you to watch, Maya. You could've, like, looked somewhere else?"
                 maya "You did it right in front of me! Where was I supposed to look, at [friend_name]?"
                 $ set_story_value("ch01_d2_pool_attention", "couple_display_open")
-        elif d2_lane == "ntr_risk":
+        elif d2_nts_kiss:
             "[girlfriend_name] stayed where she was for a moment, forehead against mine."
-            gf "Hi."
-            mc "Hi. What was that for?"
-            gf "Nothing. You were actually here for a second. That's all."
-            "She said it lightly. It didn't land lightly."
-            $ set_story_value("ch01_d2_pool_attention", "couple_display_ntr_warm")
+            gf "They're still looking."
+            mc "I know."
+            gf "...Do you mind?"
+            "I thought about it longer than I should have needed to."
+            mc "No. That's the weird part again."
+            "She smiled against my cheek like I'd given the right answer to a question she hadn't asked out loud."
+            $ set_story_value("ch01_d2_pool_attention", "couple_display_nts")
         else:
             "[girlfriend_name]'s face went pink the moment she remembered we had an audience."
             mc "Not that I'm complaining, but... what was that for?"
@@ -175,9 +178,11 @@ label ch01_day2_scene_16_forced_split:
         maya "Nope. Well, a bit. We do actually need drinks."
         maya "But what's going on with you today? And don't say nothing, I've known you way too long for nothing."
         mc "What do you mean? I'm just... I'm here. I'm hanging out."
-        if get_story_value("ch01_d2_pool_attention") == "couple_display_ntr_warm":
-            maya "That kiss was cute. But she kissed you like she was checking you were still in there."
-            think "I'd thought it was just a kiss."
+        if get_story_value("ch01_d2_pool_attention") == "couple_display_nts":
+            maya "That kiss was cute. Those two guys at the wall thought so too. You saw them, right?"
+            mc "I saw them."
+            maya "And you just... let them have the show."
+            think "I hadn't thought of it like that. I hadn't stopped it, either."
         else:
             maya "[girlfriend_name] keeps checking whether you're still in the room. You're standing right next to her, and she keeps checking."
             think "Was she? I hadn't seen her do it once, and I'd been standing right there."

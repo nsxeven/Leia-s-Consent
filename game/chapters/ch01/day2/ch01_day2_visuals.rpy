@@ -113,7 +113,7 @@ image cg ch01_d2_photo_group = At("images/cg/ch02/CH2D2_CG_GroupSelfie_01.png", 
 # Phone attachment alias (no cg prefix) for Maya's first Trip Group message.
 image ch01_d2_leia_maya_selfie = "cg ch01_d2_photo_leia_maya"
 
-# Scene 16 kiss (Love, Exhibitionism, warm-Ryan NTR; darryn 2026-11-19): 01 her leaning in over
+# Scene 16 kiss (Love, Exhibitionism, NTS seed; darryn 2026-11-19): 01 her leaning in over
 # Ryan (his POV, the two guys at the wall behind her), 02 kissing with his hand on her ass, Red 03
 # (Exhibitionism + red only) her bottoms slip aside. Bikini follows her pick upstairs.
 image cg ch01_d2_kiss_white_01 = At("images/cg/ch02/CH2D2_CG_Kiss_White_01.webp", prologue_fullscreen)
