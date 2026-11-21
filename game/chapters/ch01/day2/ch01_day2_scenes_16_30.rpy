@@ -95,13 +95,13 @@ label ch01_day2_scene_16_forced_split:
         else:
             scene cg ch01_d2_kiss_white_01
             with dissolve
-            $ lc_pov_begin("d2_pool_kiss_stranger_white")
         "She leaned over me, hair spilling off one shoulder, and smiled like she knew exactly what she was doing."
         if d2_nts_kiss:
             "She didn't check whether they were still watching. She didn't have to. She checked whether I'd noticed they were watching."
             "I had. I put my phone face down on the cushion."
         "Behind her, both guys at the wall had stopped pretending to talk to each other."
-        $ lc_pov_end()
+        if d2_kiss_red:
+            $ lc_pov_end()
         if d2_kiss_red:
             scene cg ch01_d2_kiss_red_02
             with dissolve

@@ -129,11 +129,9 @@ image cg ch01_d2_pool_ass_02 = At("images/cg/ch02/CH2D2_CG_PoolAssRed_02.webp", 
 image cg ch01_d2_underwater_play_01 = At("images/cg/ch02/CH2D2_CG_UnderwaterPlay_01.webp", prologue_fullscreen)
 image cg ch01_d2_underwater_play_02 = At("images/cg/ch02/CH2D2_CG_UnderwaterPlay_02.webp", prologue_fullscreen)
 image cg ch01_d2_underwater_play_03 = At("images/cg/ch02/CH2D2_CG_UnderwaterPlay_03.webp", prologue_fullscreen)
-image cg ch01_d2_pool_kiss_stranger_pov = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#245f74"),
-    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nA STRANGER'S POV — FROM DOWN THE POOL DECK\n{gf} KISSING {mc}, HIS HAND ON HER ASS\nFINAL ART PENDING", size=48, color="#ffffff"),
-)
+# Red kiss Hidden POV (darryn 2026-11-21): the stranger's view from behind her, kneeling over Ryan
+# mid-kiss, his hand on her ass. Red only; the white kiss has no Hidden POV.
+image cg ch01_d2_pool_kiss_stranger_pov = At("images/cg/ch02/CH2D2_CG_StrangersStareKiss_Red_01.webp", prologue_fullscreen)
 
 image cg ch01_d2_pool_top_accident = Composite(
     (1920, 1080),
@@ -394,23 +392,11 @@ init 1 python:
         label="Stranger, the wall",
         mood="watching",
     )
-    # Kiss_*_01: the guy on the right at the wall, chin on his hand. The POV image itself is still
-    # a placeholder until its art lands (darryn 2026-11-19).
+    # Kiss_Red_01: the guy on the right at the wall, chin on his hand. Red only (darryn 2026-11-21).
     lc_pov_register(
         "d2_pool_kiss_stranger_red",
         image="cg ch01_d2_pool_kiss_stranger_pov",
         source="cg ch01_d2_kiss_red_01",
-        eye=(1707, 150), temple="right",
-        title="A stranger's POV",
-        mature=True,
-        day_id="ch01_d2",
-        label="Stranger, pool",
-        mood="watching",
-    )
-    lc_pov_register(
-        "d2_pool_kiss_stranger_white",
-        image="cg ch01_d2_pool_kiss_stranger_pov",
-        source="cg ch01_d2_kiss_white_01",
         eye=(1707, 150), temple="right",
         title="A stranger's POV",
         mature=True,
