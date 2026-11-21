@@ -488,7 +488,7 @@ label ch01_day2_scene_18_pool_aftermath:
     $ set_story_flag("ch01_d2_scene_18_complete")
     scene black
     with fade
-    call lc_part_card("day2", 3, "Evening")
+    call lc_part_card("day2", 3)
     jump ch01_day2_scene_19_change_for_evening
 
 

@@ -23,7 +23,7 @@ label ch01_day2_start:
     with fade
     call lc_chapter_card("day2")
     # Day Two parts (darryn 2026-11-19): Morning 1-12, The Pool 13-18, Evening 19-30. Display only.
-    call lc_part_card("day2", 1, "Morning")
+    call lc_part_card("day2", 1)
 
     jump ch01_day2_scene_01_morning_after
 
@@ -2050,7 +2050,7 @@ label ch01_day2_scene_12_villa_pool_plan:
     $ set_story_flag("ch01_d2_scene_12_complete")
     scene black
     with fade
-    call lc_part_card("day2", 2, "The Pool")
+    call lc_part_card("day2", 2)
     jump ch01_day2_scene_13_girls_upstairs
 
 

@@ -14,7 +14,8 @@
 #   lc_chapter_set_save_name(chapter_id) -> None
 #       name new saves after a chapter
 #   lc_chapter_start_save_name() -> None      start callback: saves start as the Prologue
-#   lc_part_begin(chapter_id, number, title)  part card text + save name inside a day
+#   lc_part_begin(chapter_id, number, title, subtitle="")  part card text + save name inside a day
+#   lc_part_title(chapter_id, number)         (title, route subtitle) from the Day pack
 #
 # Example:
 #   centered "[lc_chapter_card_day2]"
@@ -50,11 +51,15 @@ init -10 python:
         """Name new saves after the chapter being played (save slots + Continue card)."""
         store.save_name = lc_chapters.save_name(chapter_id)
 
-    def lc_part_begin(chapter_id, number, title):
-        """Start a part inside a day (display only): sets the card text for
-        `centered "[lc_part_card]"` and names new saves 'Chapter 2 · Day Two · The Pool'."""
-        store.lc_part_card = lc_chapters.part_card_text(chapter_id, number, title)
-        store.save_name = lc_chapters.part_save_name(chapter_id, title)
+    def lc_part_begin(chapter_id, number, title, subtitle=""):
+        """Start a part inside a day (display only): sets the plain card text and names new saves
+        'Chapter 2 · Day Two · Evening: Just Us'."""
+        store.lc_part_card = lc_chapters.part_card_text(chapter_id, number, title + ((": " + subtitle) if subtitle else ""))
+        store.save_name = lc_chapters.part_save_name(chapter_id, title, subtitle)
+
+    def lc_part_title(chapter_id, number):
+        """(title, route subtitle or '') for a part, from the Day pack's CHAPTER["parts"]."""
+        return lc_chapters.part_title(chapter_id, number, get_story_value)
 
     def lc_chapter_start_save_name():
         lc_chapter_set_save_name("prologue")

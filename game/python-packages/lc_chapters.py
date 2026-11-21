@@ -214,6 +214,17 @@ def save_name(chapter_id):
 _PART_WORDS = ("", "One", "Two", "Three", "Four", "Five", "Six")
 
 
+def part_title(chapter_id, number, get_value=None):
+    """(title, subtitle) for a part: subtitle is the route flavour, or '' when the part is neutral
+    or its route value isn't stored (old saves)."""
+    part = CHAPTERS[chapter_id].get("parts", {}).get(number, {})
+    title = part.get("title", "")
+    sub = ""
+    if part.get("route_key") and get_value is not None:
+        sub = part.get("routes", {}).get(get_value(part["route_key"], None), "") or ""
+    return title, sub
+
+
 def part_card_text(chapter_id, number, title):
     """Part card inside a day (darryn 2026-11-19): 'DAY TWO / PART TWO / THE POOL'. Display only."""
     text = ""
@@ -225,6 +236,6 @@ def part_card_text(chapter_id, number, title):
     return text
 
 
-def part_save_name(chapter_id, title):
-    """Save slot name inside a part: 'Chapter 2 · Day Two · The Pool'."""
-    return save_name(chapter_id) + " \u00b7 " + title
+def part_save_name(chapter_id, title, subtitle=""):
+    """Save slot name inside a part: 'Chapter 2 · Day Two · Evening: Just Us'."""
+    return save_name(chapter_id) + " \u00b7 " + title + ((": " + subtitle) if subtitle else "")

@@ -7,15 +7,16 @@
 #
 # Public API (call these from scenes):
 #   label lc_chapter_card(chapter_id)          polaroid: 'CHAPTER TWO / Plus One / Day Two' (call it)
-#   label lc_part_card(chapter_id, number, title)
-#       ticket stub: 'PART 2 | DAY TWO / The Pool' (call it); also names new saves after the part
+#   label lc_part_card(chapter_id, number)
+#       ticket stub: 'PART 3 | DAY TWO / Evening / Just Us' (call it); title and route subtitle
+#       come from the Day pack's CHAPTER["parts"]; also names new saves after the part
 #   lc_title_card_accent(chapter_id) -> str    the day's accent colour
 #
 # Example:
 #   scene black
 #   with fade
 #   call lc_chapter_card("day2")
-#   call lc_part_card("day2", 1, "Morning")
+#   call lc_part_card("day2", 1)
 #
 # Notes: a click skips the hold at once and the exit still plays (input never waits on a wind-up).
 #   Text is live Ren'Py text, so titles change in lc_chapters / the Day pack, never in art.
@@ -74,7 +75,7 @@ screen lc_chapter_card_screen(heading, title, day, accent):
                 text day font "fonts/Caveat-SemiBold.ttf" size 40 color "#70566f" xalign 0.5
 
 
-screen lc_part_card_screen(day, number, title, accent):
+screen lc_part_card_screen(day, number, title, subtitle, accent):
     zorder 150
     add Solid("#140e1c80") at lc_card_backdrop
     hbox at lc_ticket_motion:
@@ -102,7 +103,9 @@ screen lc_part_card_screen(day, number, title, accent):
                 spacing 4
                 if day:
                     text day.upper() font "fonts/Nunito-ExtraBold.ttf" size 22 color accent kerning 6
-                text title font "fonts/PatrickHand-Regular.ttf" size 76 color "#2a1f33"
+                text title font "fonts/PatrickHand-Regular.ttf" size (76 if not subtitle else 66) color "#2a1f33"
+                if subtitle:
+                    text subtitle font "fonts/Caveat-SemiBold.ttf" size 44 color accent
 
 
 label lc_chapter_card(chapter_id):
@@ -114,10 +117,12 @@ label lc_chapter_card(chapter_id):
     return
 
 
-label lc_part_card(chapter_id, number, title):
-    $ lc_part_begin(chapter_id, number, title)
+label lc_part_card(chapter_id, number):
+    # Title + route subtitle from the Day pack (CHAPTER["parts"]); every mode shows the subtitle.
+    $ _lc_part = lc_part_title(chapter_id, number)
+    $ lc_part_begin(chapter_id, number, _lc_part[0], _lc_part[1])
     $ lc_ui_play("paper")
-    show screen lc_part_card_screen(lc_chapters.day_label(chapter_id), number, title, lc_title_card_accent(chapter_id))
+    show screen lc_part_card_screen(lc_chapters.day_label(chapter_id), number, _lc_part[0], _lc_part[1], lc_title_card_accent(chapter_id))
     $ renpy.pause(2.2)
     hide screen lc_part_card_screen
     $ renpy.pause(0.5, hard=True)

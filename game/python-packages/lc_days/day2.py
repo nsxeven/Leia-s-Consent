@@ -15,6 +15,15 @@ CHAPTER = {
         "ntr": 'Are We Okay?',
         "repair": 'Tell Her the Truth',
     },
+    # Parts inside the day (darryn 2026-11-19), shown on the ticket-stub Part card. A part gets a
+    # route subtitle only when its route is already stored as it starts ("route_key"); otherwise it
+    # stays neutral, so the card never spoils a route. Missing/unknown value -> neutral.
+    "parts": {
+        1: {"title": "Morning"},
+        2: {"title": "The Pool"},
+        3: {"title": "Evening", "route_key": "ch01_d2_route_lane_post_pool",
+            "routes": {"love": "Just Us", "exhibitionism": "Showing Off", "ntr_risk": "Somewhere Else"}},
+    },
 }
 
 
