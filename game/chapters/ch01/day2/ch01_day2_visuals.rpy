@@ -113,14 +113,14 @@ image cg ch01_d2_photo_group = At("images/cg/ch02/CH2D2_CG_GroupSelfie_01.png", 
 # Phone attachment alias (no cg prefix) for Maya's first Trip Group message.
 image ch01_d2_leia_maya_selfie = "cg ch01_d2_photo_leia_maya"
 
-# Scene 16 (Love and Exhibitionism lanes): Leia kisses Ryan by the pool table and his hand settles
-# on her ass; the stranger's view from down the deck is the Hidden POV. Placeholders until darryn
-# renders them; repoint at the files and re-place the sparkle on the watcher's eye (eye=, temple=).
-image cg ch01_d2_pool_kiss = Composite(
-    (1920, 1080),
-    (0, 0), Solid("#2f7f98"),
-    (90, 70), lc_placeholder_text("CG PLACEHOLDER\nDAY TWO POOL — {gf} KISSES {mc}\nHIS HAND ON HER ASS / STRANGERS DOWN THE DECK IN THE BACKGROUND\nFINAL ART PENDING", size=48, color="#ffffff"),
-)
+# Scene 16 kiss (Love, Exhibitionism, warm-Ryan NTR; darryn 2026-11-19): 01 her leaning in over
+# Ryan (his POV, the two guys at the wall behind her), 02 kissing with his hand on her ass, Red 03
+# (Exhibitionism + red only) her bottoms slip aside. Bikini follows her pick upstairs.
+image cg ch01_d2_kiss_white_01 = At("images/cg/ch02/CH2D2_CG_Kiss_White_01.webp", prologue_fullscreen)
+image cg ch01_d2_kiss_white_02 = At("images/cg/ch02/CH2D2_CG_Kiss_White_02.webp", prologue_fullscreen)
+image cg ch01_d2_kiss_red_01 = At("images/cg/ch02/CH2D2_CG_Kiss_Red_01.webp", prologue_fullscreen)
+image cg ch01_d2_kiss_red_02 = At("images/cg/ch02/CH2D2_CG_Kiss_Red_02.webp", prologue_fullscreen)
+image cg ch01_d2_kiss_red_03 = At("images/cg/ch02/CH2D2_CG_Kiss_Red_03.webp", prologue_fullscreen)
 # Scene 15b (red bikini, Exhibitionism or NTR lane; darryn 2026-11-19): the grab on the pool steps,
 # bottoms pulled aside, then underwater (aside and spread, both hands, fingering). Red only: the
 # option needs the red bikini.
@@ -394,13 +394,24 @@ init 1 python:
         label="Stranger, the wall",
         mood="watching",
     )
+    # Kiss_*_01: the guy on the right at the wall, chin on his hand. The POV image itself is still
+    # a placeholder until its art lands (darryn 2026-11-19).
     lc_pov_register(
-        "d2_pool_kiss_stranger",
+        "d2_pool_kiss_stranger_red",
         image="cg ch01_d2_pool_kiss_stranger_pov",
-        source="cg ch01_d2_pool_kiss",
-        # Placeholder spot (background, where the strangers stand down the deck). When the art
-        # lands, switch to eye=(x, y), temple=... on the watching stranger (darryn 2026-11-19).
-        center=(1560, 300),
+        source="cg ch01_d2_kiss_red_01",
+        eye=(1707, 150), temple="right",
+        title="A stranger's POV",
+        mature=True,
+        day_id="ch01_d2",
+        label="Stranger, pool",
+        mood="watching",
+    )
+    lc_pov_register(
+        "d2_pool_kiss_stranger_white",
+        image="cg ch01_d2_pool_kiss_stranger_pov",
+        source="cg ch01_d2_kiss_white_01",
+        eye=(1707, 150), temple="right",
         title="A stranger's POV",
         mature=True,
         day_id="ch01_d2",
