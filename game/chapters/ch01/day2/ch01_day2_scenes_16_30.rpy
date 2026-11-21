@@ -486,6 +486,10 @@ label ch01_day2_scene_18_pool_aftermath:
 
     $ set_story_value("ch01_d2_route_lane_post_pool", ch01_d2_route_lane())
     $ set_story_flag("ch01_d2_scene_18_complete")
+    $ lc_part_begin("day2", 3, "Evening")
+    scene black
+    with fade
+    centered "[lc_part_card]"
     jump ch01_day2_scene_19_change_for_evening
 
 

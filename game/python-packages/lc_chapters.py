@@ -209,3 +209,22 @@ def select_label(chapter_id):
 def save_name(chapter_id):
     """Save slot / Continue card name: 'Chapter 2 · Day Two' or 'Prologue'."""
     return select_label(chapter_id)
+
+
+_PART_WORDS = ("", "One", "Two", "Three", "Four", "Five", "Six")
+
+
+def part_card_text(chapter_id, number, title):
+    """Part card inside a day (darryn 2026-11-19): 'DAY TWO / PART TWO / THE POOL'. Display only."""
+    text = ""
+    day = day_label(chapter_id)
+    if day:
+        text += "{size=28}" + day.upper() + "{/size}\n"
+    text += "{size=50}PART " + _PART_WORDS[number].upper() + "{/size}\n"
+    text += "{size=40}" + title.upper() + "{/size}"
+    return text
+
+
+def part_save_name(chapter_id, title):
+    """Save slot name inside a part: 'Chapter 2 · Day Two · The Pool'."""
+    return save_name(chapter_id) + " \u00b7 " + title

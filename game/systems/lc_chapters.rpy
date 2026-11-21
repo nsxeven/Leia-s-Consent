@@ -14,6 +14,7 @@
 #   lc_chapter_set_save_name(chapter_id) -> None
 #       name new saves after a chapter
 #   lc_chapter_start_save_name() -> None      start callback: saves start as the Prologue
+#   lc_part_begin(chapter_id, number, title)  part card text + save name inside a day
 #
 # Example:
 #   centered "[lc_chapter_card_day2]"
@@ -26,6 +27,8 @@
 # Hooks: none (adds lc_chapter_start_save_name to config.start_callbacks)
 # Load order: init -10: before anything (day review, gallery, Chapter Select) asks for titles
 # Docs: docs/ARCHITECTURE.md   Tests: tests/test_lc_chapters.py
+
+default lc_part_card = ""
 
 init -10 python:
     import lc_chapters
@@ -46,6 +49,12 @@ init -10 python:
     def lc_chapter_set_save_name(chapter_id):
         """Name new saves after the chapter being played (save slots + Continue card)."""
         store.save_name = lc_chapters.save_name(chapter_id)
+
+    def lc_part_begin(chapter_id, number, title):
+        """Start a part inside a day (display only): sets the card text for
+        `centered "[lc_part_card]"` and names new saves 'Chapter 2 · Day Two · The Pool'."""
+        store.lc_part_card = lc_chapters.part_card_text(chapter_id, number, title)
+        store.save_name = lc_chapters.part_save_name(chapter_id, title)
 
     def lc_chapter_start_save_name():
         lc_chapter_set_save_name("prologue")

@@ -1406,6 +1406,7 @@
   "lc_notice_active",
   "lc_notice_viewed",
   "lc_noticed_record",
+  "lc_part_card",
   "lc_phone_calls",
   "lc_phone_deep_link",
   "lc_phone_hearts",
